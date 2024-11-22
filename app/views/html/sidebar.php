@@ -175,8 +175,8 @@
         </div>
         <div class="accordion-content">
             <ul class="custom-list">
-                <li id="tab11" class="item tab-button" value="administrator_list">Administrator List</li>
-                <li id="tab17" class="item">Tab 12</li>
+                <li id="tab11" class="item tab-button" value="administrator_list">Administrator List</li> 
+                <li id="tab17" class="item tab-button" value="backup_recovery">Backup & Recovery</li>
                 <li id="tab18" class="item">Tab 13</li>
                 <li id="tab19" class="item">Tab 14</li>
                 <li id="tab20" class="item showPopUP">Tab 15</li>

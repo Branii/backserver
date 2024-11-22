@@ -209,7 +209,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0">Administrator List</h4>
+    <h4 class="card-title mb-0">System backups and recovery</h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pager1">
@@ -220,7 +220,7 @@
           <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
                     <input type="text" class="form-control queryholder" placeholder="Search ..." aria-label="Username" aria-describedby="basic-addon1" />
-          </div>
+                  </div>
 
 
 
@@ -303,7 +303,6 @@
       </table>
     </div>
   </div>
-
   <div class="px-4 py-3 border-top pager">
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
@@ -423,14 +422,12 @@
                             <img src="http://localhost/admin/app/assets/images/profile/user-10.jpg" value="user-10.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
                             <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;" ></i>
                           </a>
-                      </div>
+                        </div>
                       
                     </div>
-
                     <div class="form-floating mb-3" hidden>
                       <input type="text" class="form-control profile_picture" name="profile_picture" value="user-1.jpg"/>
                     </div>
-
                     <div class="form-floating mb-3">
                       <input type="text" class="form-control fullname" name="full_name" placeholder="Username" autocomplete="new-username"/>
                       <label>
@@ -438,7 +435,6 @@
                         <span class="border-start ps-3">Full Name</span>
                       </label>
                     </div>
-
                     <div class="form-floating mb-3" >
                       <input type="email" class="form-control fullemail" name="email" placeholder="Email" autocomplete="new-username"/>
                       <label>

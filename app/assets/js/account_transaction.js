@@ -299,10 +299,6 @@ $(function () {
     $(".queryholderx").hide();
   });
 
-  $('.tclose').click(function () {
-    $("#signup-modal").modal("hide");
-  });
-
   $(".numrows").change(function(){
     const numrow = $(this).val();
     fetchTrasaction(currentPage,numrow);

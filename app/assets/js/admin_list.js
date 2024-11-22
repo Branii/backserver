@@ -58,8 +58,33 @@ $(function () {
                     <td>${item.phone_number}</td>
                     <td>${item.two_factor_enabled}</td>
                     <td>${item.two_factor_method}</td>
-                    <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> Complete</td>
-                    <td><i value='' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
+                    <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> ${item.account_status}</td>
+
+                    <td>
+                   
+                        <div class="dropdown dropstart">
+                          <a href="javascript:void(0)" class="text-muted" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                             <i value='' class='bx bx-dots-vertical-rounded'' style='color:#868c87;font-size:18px;cursor:pointer;'></i>
+                          </a>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                              <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)">
+                                <i class="fs-4 ti ti-plus"></i>Add
+                              </a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)">
+                                <i class='bx bx-edit-alt' style='font-size:16px;'></i>Edit
+                              </a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)">
+                                <i class='bx bx-trash' style='font-size:16px;'></i>Delete
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
                 </tr>
             `;
     });
@@ -143,25 +168,15 @@ $(function () {
     );
     pagLink += "</ul>";
 
-    document.getElementById("pagination").innerHTML = pagLink;
+    document.getElementById("paginationAdmin").innerHTML = pagLink;
 
     // Add click event listeners
-    document.querySelectorAll("#pagination .page-link").forEach((link) => {
+    document.querySelectorAll("#paginationAdmin .page-link").forEach((link) => {
       link.addEventListener("click", function (e) {
         e.preventDefault();
         const newPage = +this.getAttribute("data-page");
         if (newPage > 0 && newPage <= totalPages) {
-          pagingType === "search"
-            ? filterTrasaction(
-                newPage,
-                pageLimit,
-                username,
-                orderid,
-                ordertype,
-                startdate,
-                enddate
-              )
-            : fetchTrasaction(newPage, pageLimit);
+          fetchAdmins(newPage, pageLimit)
         }
       });
     });
@@ -187,11 +202,5 @@ $(function () {
     $(".ava").hide()
     $(this).siblings(".ava").show();
   })
-
-  $('.tclose').click(function () {
-    if ($('#signup-modal').hasClass('show')) {
-      $('#signup-modal').modal('hide');
-    }
-  });
 
 });
