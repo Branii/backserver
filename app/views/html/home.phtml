@@ -238,29 +238,45 @@ session_start();;
         </div>
 
         <div class="rowr" style="padding:0px;overflow-x:hidden;">
+            
+              <div class="chrome__tab home">
+                <?php include "tabs/home.php" ?>
+              </div>
 
-          <div class="chrome__tab home">
-            <?php include "tabs/home.php" ?>
-          </div>
+              <div class="chrome__tab account_transaction">
+                <?php include "tabs/businessflow/account_transaction.php" ?>
+              </div>
 
-          <div class="chrome__tab account_transaction">
-            <?php include "tabs/businessflow/account_transaction.php" ?>
-          </div>
+              <div class="chrome__tab game_getting_statistics">
+                <?php include "tabs/businessflow/game_getting_statistics.php" ?>
+              </div>
 
-          <div class="chrome__tab game_getting_statistics">
-            <?php include "tabs/businessflow/game_getting_statistics.php" ?>
-          </div>
+              <div class="chrome__tab lottery_betting_record">
+                <?php include "tabs/businessflow/lottery_betting_record.php" ?>
+              </div>
+              <div class="chrome__tab userlogs">
+              <?php include "tabs/accountmanage/userlogs.php" ?>
+              </div>
+              
+              <div class="chrome__tab userlist">
+                <?php include "tabs/accountmanage/userlist.php" ?>
+              </div>
+          
+              <div class="chrome__tab invitation">
+                <?php include "tabs/promotionmanage/invitation_referallink.php" ?>
+              </div>
 
-          <div class="chrome__tab lottery_betting_record">
-            <?php include "tabs/businessflow/lottery_betting_record.php" ?>
-          </div>
+              <div class="chrome__tab quota">
+                <?php include "tabs/agentmanage/quota.php" ?>
+              </div>
 
-          <div class="chrome__tab administrator_list">
-            <?php include "tabs/system_management/administrator_list.php" ?>
-          </div>
+              <div class="chrome__tab administrator_list">
+                <?php include "tabs/system_management/administrator_list.php" ?>
+              </div>
 
-
-        </div>
+     
+         
+         </div>
 
       </div>
       <script>
@@ -293,6 +309,11 @@ session_start();;
     <script src="<?php echo BASE_URL; ?>assets/js/BootstrapMenu.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/admin_list.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/userlist.js"></script>
+    <!-- <script src="<?php echo BASE_URL; ?>assets/js/userlogs.js"></script> -->
+    <!-- <script src="<?php echo BASE_URL; ?>assets/js/referrallink.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/quota.js"></script> -->
+      <!-- <script src="<?php echo BASE_URL; ?>assets/js/lotterybet.js"></script> -->
 
 
     <!-- solar icons -->

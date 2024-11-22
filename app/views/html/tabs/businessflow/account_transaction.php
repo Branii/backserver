@@ -177,6 +177,7 @@
   background-color: orangered !important;
   border:none;
 }
+
 .tbl-header {
   position: sticky;
   top: 0;

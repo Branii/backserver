@@ -107,11 +107,9 @@
         </div>
         <div class="accordion-content">
             <ul class="custom-list">
-                <li id="tab16" class="item">Tab 11</li>
-                <li id="tab17" class="item">Tab 12</li>
-                <li id="tab18" class="item">Tab 13</li>
-                <li id="tab19" class="item">Tab 14</li>
-                <li id="tab20" class="item showPopUP">Tab 15</li>
+            <li id="tab1" class="tab-button item" value="userlist">Userlist</li>
+            <li id="tab2" class="tab-button item" value="userlogs">User Logs</li>
+               
             </ul>
         </div>
     </div>
@@ -121,7 +119,7 @@
         </div>
         <div class="accordion-content">
             <ul class="custom-list">
-                <li id="tab16" class="item">Tab 11</li>
+                <li id="tab16"  class="tab-button item" value="invitation">Invitation & Referal Links</li>
                 <li id="tab17" class="item">Tab 12</li>
                 <li id="tab18" class="item">Tab 13</li>
                 <li id="tab19" class="item">Tab 14</li>
@@ -149,7 +147,7 @@
         </div>
         <div class="accordion-content">
             <ul class="custom-list">
-                <li id="tab16" class="item">Tab 11</li>
+                <li id="tab16"class="tab-button item" value="quota">Quota Settings</li>
                 <li id="tab17" class="item">Tab 12</li>
                 <li id="tab18" class="item">Tab 13</li>
                 <li id="tab19" class="item">Tab 14</li>

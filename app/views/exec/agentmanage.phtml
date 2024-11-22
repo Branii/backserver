@@ -1,0 +1,42 @@
+<?php
+declare(strict_types=1);
+// header('Content-Type: application/json');
+
+
+$flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+
+if ($flag == "fetchquota") {
+
+        $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+        $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+        $result = (new AgentManageModel())->FetchQuotaData($page, $limit) ?? [];
+        echo json_encode([
+            'quota' => $result["data"],
+            'totalPages' => ceil($result['total'] / $limit)
+        ]);
+    
+}
+
+elseif($flag  == "updatequota"){
+
+    $rebateid = isset($this->viewData['rebateid']) ? (int) $this->viewData['rebateid'] : [];
+    $quota = isset($this->viewData['quota']) ? (int) $this->viewData['quota'] :[];
+    $result = (new AgentManageModel())->UpdateSingleQuota($rebateid,$quota) ?? [];
+    echo json_encode([$result]);
+}
+
+
+elseif($flag  == "UpdateAllquota"){
+
+    $quota = isset($this->viewData['quota']) ? (int) $this->viewData['quota'] :[];
+    $result = (new AgentManageModel())->UpdateAllQuota($quota) ?? [];
+    echo json_encode([$result]);
+}
+
+elseif($flag  == "filterRebate"){
+
+    $rebate = isset($this->viewData['quota']) ? (int) $this->viewData['quota'] :[];
+    $result = (new AgentManageModel())->FilterRebate($rebate) ?? [];
+    echo json_encode(["filterquota"=> $result['data']]);
+}
+
