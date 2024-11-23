@@ -1,0 +1,363 @@
+<?php 
+session_start();;
+!(new Controller)->isUserLoggedIn() ? header("location:../") : "";
+?>
+<!DOCTYPE html>
+<html oncontextmenu="return falsex" lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme"
+  data-layout="vertical" data-boxed-layout="full" data-card="shadow">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Favicon icon-->
+  <link rel="shortcut icon" type="image/png"
+    href="<?php echo BASE_URL; ?>assets/images/logos/favicon.png" />
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/toast/toast.css" />
+  <!-- Core Css -->
+  <link rel="stylesheet"
+    href="<?php echo BASE_URL; ?>assets/css/styles.css" />
+  <link rel="stylesheet"
+    href="<?php echo BASE_URL; ?>assets/css/chrometab.css" />
+  <link rel="stylesheet"
+    href="<?php echo BASE_URL; ?>assets/css/sidebar.css" />
+
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <title>Limvo Admin</title>
+  <style>
+    .chrome__tab {
+      /* width: 400px;
+        height: auto;
+        border: solid 2px #ccc; */
+      padding: 20px;
+      display: none;
+    }
+
+    .chromclass {
+      border-top: solid 3px orangered !important;
+    }
+
+    .chrome-tab-drag-handle {
+      cursor: pointer !important;
+    }
+
+    /* Custom Scrollbar for Webkit Browsers */
+    .table-wrapper::-webkit-scrollbar {
+      width: 5px;
+      /* Slimmer scrollbar width */
+      height: 5px;
+      /* Slimmer scrollbar height for horizontal scrolling */
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      /* Lighter background for track */
+      border-radius: 5px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      /* Blue color for thumb */
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb:hover {
+      background-color: #aaa;
+      /* Darker blue on hover */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="toast toast-onload align-items-center text-bg-primary border-0" role="alert" aria-live="assertive"
+    aria-atomic="true">
+    <div class="toast-body hstack align-items-start gap-6">
+      <i class="ti ti-alert-circle fs-6"></i>
+      <div>
+        <h5 class="text-white fs-3 mb-1">Welcome to Modernize</h5>
+        <h6 class="text-white fs-2 mb-0">Easy to costomize the Template!!!</h6>
+      </div>
+      <button type="button" class="btn-close btn-close-white fs-2 m-0 ms-auto shadow-none" data-bs-dismiss="toast"
+        aria-label="Close"></button>
+    </div>
+  </div>
+  <!-- Preloader -->
+  <!-- <div class="preloader">
+    <img src="<?php echo BASE_URL; ?>assets/images/logos/favicon.png"
+  alt="loader" class="lds-ripple img-fluid" />
+  </div> -->
+  <div id="main-wrapper">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar with-vertical" style="background:#F9F9F9">
+      <div><!-- ---------------------------------- -->
+        <!-- Start Vertical Layout Sidebar -->
+        <!-- ---------------------------------- -->
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="<?php echo BASE_URL; ?>main/index.html"
+            class="text-nowrap logo-img">
+            <img
+              src="<?php echo BASE_URL; ?>assets/images/logos/dark-logo.svg"
+              class="dark-logo" alt="Logo-Dark" />
+
+          </a>
+          <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
+            <i class="ti ti-x"></i>
+          </a>
+        </div>
+
+        <nav class="" data-simplebar>
+          <ul id="sidebarnav">
+
+            <?php include 'sidebar.php' ?>
+
+          </ul>
+        </nav>
+
+        <div class="p-3 mb-2 bg-white-subtle rounded mt-3"  style="position:relative;background:#F9F9F9;border-radius:10px;border:solid 1px #eee">
+          <div class="hstack gap-3">
+            <div class="john-img">
+            <img
+                src="<?php echo BASE_URL; ?>assets/images/profile/user-1.jpg"
+                class="rounded-circle" width="40" height="40" alt="modernize-img" />
+            </div>
+            <div class="john-title">
+              <h6 class="mb-0 fs-4 fw-semibold">Kofi Benson</h6>
+              <span class="fs-2">Designer</span>
+            </div>
+            <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
+            <div class="dropdown" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-title="Profile">
+              <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1"
+                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <i class='bx bx-dots-vertical-rounded'></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"
+                style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+                <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1"
+                  href="javascript:void(0);">
+                  <i class='bx bx-user-check'></i>Add User
+                </a>
+                <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1"
+                  href="javascript:void(0);">
+                  <i class='bx bx-pencil'></i>Change Password
+                </a>
+                <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1"
+                  href="javascript:void(0);">
+                  <i class="bx bx-trash fs-5"></i>Delete
+                </a>
+              </div>
+            </div>
+            </button>
+          </div>
+        </div>
+
+        <div class="btn-group p-3 mb-2 bg-white-subtle rounded " role="group" style="width:100%;border:solid 1px #eee;color:#bbb;background-color:#F9F9F9">
+          <button type="button" class="btn bg-white-subtle">
+            <i class='bx bx-bell' style="font-size: 20px;"></i>
+          </button>
+          <button type="button" class="btn bg-white-subtle ">
+            <a href="../admin/signout"> <i class='bx bx-power-off' style="font-size: 20px;"></i> </a>
+          </button>
+          <button type="button" class="btn bg-white-subtle ">
+            <i class='bx bx-history' style="font-size: 20px;"></i>
+          </button>
+          <button type="button" class="btn bg-white-subtle">
+            <i class='bx bx-cog' style="font-size: 20px;"></i>
+          </button>
+        </div>
+
+
+        <br>
+        <hr>
+
+        <!-- ---------------------------------- -->
+        <!-- Start Vertical Layout Sidebar -->
+        <!-- ---------------------------------- -->
+      </div>
+    </aside>
+    <!--  Sidebar End -->
+    <div class="page-wrapper">
+
+
+
+
+
+      <div class="containe-fluid">
+
+        <div class="surface">
+          <div class="mock-browser">
+            <div class="chrome-tabs" style="--tab-content-margin: 9px">
+              <div class="chrome-tabs-content">
+                <div class="chrome-tab" id="tabhead" active>
+                  <div class="chrome-tab-dividers"></div>
+                  <div class="chrome-tab-background">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <symbol id="chrome-tab-geometry-left" viewBox="0 0 214 36">
+                          <path d="M17 0h197v36H0v-2c4.5 0 9-3.5 9-8V8c0-4.5 3.5-8 8-8z" />
+                        </symbol>
+                        <symbol id="chrome-tab-geometry-right" viewBox="0 0 214 36">
+                          <use xlink:href="#chrome-tab-geometry-left" />
+                        </symbol>
+                        <clipPath id="crop">
+                          <rect class="mask" width="100%" height="100%" x="0" />
+                        </clipPath>
+                      </defs>
+                      <svg width="52%" height="100%">
+                        <use xlink:href="#chrome-tab-geometry-left" width="214" height="36"
+                          class="chrome-tab-geometry" />
+                      </svg>
+                      <g transform="scale(-1, 1)">
+                        <svg width="52%" height="100%" x="-100%" y="0">
+                          <use xlink:href="#chrome-tab-geometry-right" width="214" height="36"
+                            class="chrome-tab-geometry" />
+                        </svg>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="chrome-tab-content">
+                    <div class="chrome-tab-favicon" style="
+                    background-image: url('demo/images/google-favicon.ico');
+                  "></div>
+                    <div class="chrome-tab-title">Dashboard</div>
+                    <div class="chrome-tab-holder" hidden>home</div>
+                    <div class="chrome-tab-drag-handle chromclass"></div>
+                    <div class="chrome-tab-close" hidden></div>
+                  </div>
+                </div>
+              </div>
+              <div class="chrome-tabs-bottom-bar"></div>
+              <!-- Styles to prevent flash after JS initialization -->
+            </div>
+            <!-- <div class="chrome-tabs-optional-shadow-below-bottom-bar"></div> -->
+          </div>
+        </div>
+
+        <div class="rowr" style="padding:0px;overflow-x:hidden;">
+
+          <div class="chrome__tab home">
+            <?php include "tabs/home.php" ?>
+          </div>
+
+          <div class="chrome__tab account_transaction">
+            <?php include "tabs/businessflow/account_transaction.php" ?>
+          </div>
+
+          <div class="chrome__tab game_getting_statistics">
+            <?php include "tabs/businessflow/game_getting_statistics.php" ?>
+          </div>
+
+          <div class="chrome__tab lottery_betting_record">
+            <?php include "tabs/businessflow/lottery_betting_record.php" ?>
+          </div>
+
+          <div class="chrome__tab administrator_list">
+            <?php include "tabs/system_management/administrator_list.php" ?>
+          </div>
+
+
+        </div>
+
+      </div>
+      <script>
+        function handleColorTheme(e) {
+          document.documentElement.setAttribute("data-color-theme", e);
+        }
+      </script>
+
+    </div>
+    <div class="dark-transparent sidebartoggler"></div>
+    <script src="<?php echo BASE_URL; ?>assets/js/vendor.min.js"></script>
+    <!-- Import Js Files -->
+    <script src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script>
+    <script src="https://unpkg.com/draggabilly@2.2.0/dist/draggabilly.pkgd.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/bootstrap.bundle.min.js">
+    </script>
+    <script
+      src="<?php echo BASE_URL; ?>assets/libs/simplebar/dist/simplebar.min.js">
+    </script>
+    <script src="<?php echo BASE_URL; ?>assets/js/app.init.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/theme.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/app.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/sidebarmenu.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/chrometab.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/chairman.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/pagination.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/template.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/account_transaction.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/BootstrapMenu.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/admin_list.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
+
+
+    <!-- solar icons -->
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+    <script
+      src="<?php echo BASE_URL; ?>assets/libs/apexcharts/dist/apexcharts.min.js">
+    </script>
+    <script src="<?php echo BASE_URL; ?>assets/js/dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const tableContainer = document.querySelector('.table-wrapper');
+        const headerRow = document.querySelector('thead tr');
+
+        tableContainer.addEventListener('scroll', function() {
+          if (tableContainer.scrollTop > 0) {
+            headerRow.classList.add('sticky-header');
+          } else {
+            headerRow.classList.remove('sticky-header');
+          }
+        });
+
+      
+
+      });
+      // document.addEventListener('DOMContentLoaded', function () {
+      //   const tableWrapper = document.querySelector('.table-wrapper');
+      //   const rangeInput = document.getElementById('customRange1');
+
+      //   if (!tableWrapper || !rangeInput) {
+      //     console.error("Table wrapper or range input not found!");
+      //     return;
+      //   }
+
+      //   // Function to update the max value of the range input based on scrollable width
+      //   const updateRangeMax = () => {
+      //     const maxScrollLeft = tableWrapper.scrollWidth - tableWrapper.clientWidth;
+      //     rangeInput.max = maxScrollLeft > 0 ? maxScrollLeft : 0;
+      //   };
+
+      //   // Initial setup to set the range max value
+      //   updateRangeMax();
+
+      //   // Smooth scrolling based on range input
+      //   rangeInput.addEventListener('input', function () {
+      //     tableWrapper.scrollTo({
+      //       left: this.value,
+      //       behavior: 'smooth'
+      //     });
+      //   });
+
+      //   // Update the range slider based on the table's scroll position
+      //   tableWrapper.addEventListener('scroll', function () {
+      //     rangeInput.value = tableWrapper.scrollLeft;
+      //   });
+
+      //   // Adjust range max value on window resize
+      //   window.addEventListener('resize', updateRangeMax);
+
+      //   // Listen for table content load (if dynamic content is added)
+      //   const observer = new MutationObserver(updateRangeMax);
+      //   observer.observe(tableWrapper, { childList: true, subtree: true });
+      // });
+    </script>
+</body>
+
+</html>

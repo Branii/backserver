@@ -1,0 +1,48 @@
+<?php
+
+$flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+
+if ($flag == "addNewAdmin") {
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
+    $data = isset($this->viewData['data']) ? $this->viewData['data'] : '';
+    parse_str($data,$formData);
+    $formData['username'] = generateUsername();
+    $formData['password_hash'] = password_hash('1234', PASSWORD_BCRYPT);
+    $result = (new AdminModel())->addNewAdmin($formData);
+    if($result){
+        $result = (new AdminModel())->viewAllAdmin($page, $limit);
+        echo json_encode(['type'=>'success','message'=>'User added successfully','admins' => $result['data'],'totalPages' => ceil($result['total'] / $limit)]);
+    } else {
+        echo json_encode(['type'=>'error','message'=>'Some error occured']);
+    }
+
+} 
+
+if($flag == "viewAdmins") {
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $result = (new AdminModel())->viewAllAdmin($page, $limit);
+    //echo json_encode( $result);
+    echo json_encode([
+        'admins' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
+    
+}
+
+function generateUsername()
+{
+    $adjectives = ['Swift', 'Mighty', 'Brave', 'Silent', 'Clever', 'Witty', 'Bold', 'Sharp','Logos','Botafogo','Royal','Senior','Speed','Fast','Steel'];
+    $nouns = ['Tiger', 'Eagle', 'Wolf', 'Lion', 'Hawk', 'Bear', 'Shark', 'Panther','Purple','Hagar','Bull','Pecker','Deer','Wulder','Bender','Weaver'];
+
+    $adjective = $adjectives[array_rand($adjectives)];
+    $noun = $nouns[array_rand($nouns)];
+    $randomNumber = rand(10, 10000);
+
+    return $adjective . $noun . $randomNumber;
+}
+
+
+
+
