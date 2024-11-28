@@ -1,6 +1,6 @@
 {
     "name": "brenno-duarte/modern-php-exception",
-    "description": "Display PHP errors and exceptions in a modern and intuitive way",
+    "description": "PHP errors in a modern way",
     "license": "MIT",
     "keywords": [
         "exception",
@@ -12,18 +12,13 @@
         "php-exception"
     ],
     "require": {
-        "php": "^8.3",
-        "ext-mbstring": "*",
-        "ext-pdo": "*",
-        "symfony/yaml": "^7.0"
+        "php": "^8.2",
+        "codedungeon/php-cli-colors": "1.*"
     },
     "autoload": {
         "psr-4": {
             "ModernPHPException\\": "src/"
-        },
-        "files": [
-            "functions.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {

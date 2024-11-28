@@ -2,99 +2,93 @@
 
 namespace ModernPHPException\Trait;
 
-use ModernPHPException\Console\CliMessage;
-use ModernPHPException\{Occurrences, Solution};
-use ModernPHPException\Resources\{CpuUsage, HtmlTag, MemoryUsage};
+use ModernPHPException\Console\MessageTrait;
+use ModernPHPException\Solution;
 
 trait RenderTrait
 {
-    use HelpersTrait;
-    use HandlerAssetsTrait;
+    use MessageTrait;
 
     /**
-     * Render a fatal error
-     * @param \Throwable $e
-     * @param string $message
-     * 
+     * @var array
+     */
+    private array $indicesServer = [
+        'PHP_SELF',
+        'argv',
+        'argc',
+        'GATEWAY_INTERFACE',
+        'SERVER_ADDR',
+        'SERVER_NAME',
+        'SERVER_SOFTWARE',
+        'SERVER_PROTOCOL',
+        'REQUEST_METHOD',
+        'REQUEST_TIME',
+        'REQUEST_TIME_FLOAT',
+        'QUERY_STRING',
+        'DOCUMENT_ROOT',
+        'HTTP_ACCEPT',
+        'HTTP_ACCEPT_CHARSET',
+        'HTTP_ACCEPT_ENCODING',
+        'HTTP_ACCEPT_LANGUAGE',
+        'HTTP_CONNECTION',
+        'HTTP_HOST',
+        'HTTP_REFERER',
+        'HTTP_USER_AGENT',
+        'HTTPS',
+        'REMOTE_ADDR',
+        'REMOTE_HOST',
+        'REMOTE_PORT',
+        'REMOTE_USER',
+        'REDIRECT_REMOTE_USER',
+        'SCRIPT_FILENAME',
+        'SERVER_ADMIN',
+        'SERVER_PORT',
+        'SERVER_SIGNATURE',
+        'PATH_TRANSLATED',
+        'SCRIPT_NAME',
+        'REQUEST_URI',
+        'PHP_AUTH_DIGEST',
+        'PHP_AUTH_USER',
+        'PHP_AUTH_PW',
+        'AUTH_TYPE',
+        'PATH_INFO',
+        'ORIG_PATH_INFO'
+    ];
+
+    /**
      * @return void
      */
-    public static function renderFatalError(\Throwable $e, string $message): void
+    private function render(): void
     {
-        $css = 'body {
-            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu;
-        }
-        
-        .title {
-            color: #CD3333;
-            font-weight: 700;
-            font-size: 25px;
-        }
-        
-        .solution {
-            color: #008B00;
-            font-weight: 500;
-        }';
-
-        $title = HtmlTag::createElement('title')->text('Modern PHP Exception: Fatal Error');
-        $style = HtmlTag::createElement('style')->text($css);
-
-        $container = HtmlTag::createElement('body');
-        $container->addElement('p')->set('class', 'title')->text('Modern PHP Exception: Fatal Error');
-        $container->addElement('h4')->text($e->getMessage());
-        $container->addElement('span')->set('class', 'solution')->text('Solution: ');
-        $container->addElement('span')->text($message);
-
-        echo $title . PHP_EOL;
-        echo $style . PHP_EOL;
-
-        $container = str_replace(">", ">" . PHP_EOL, $container);
-        echo $container;
-    }
-
-    /**
-     * Register an occurrence in database
-     * 
-     * @return void 
-     */
-    protected function registerOccurrence(): void
-    {
-        if ($this->type == 'error') {
-            $type_error = $this->getError() . "-Error";
-        } elseif ($this->type == 'exception') {
-            $type_error = $this->info_error_exception['type_exception'] . "-" . $this->info_error_exception['namespace_exception'];
+        if (ob_get_contents()) {
+            ob_end_clean();
         }
 
-        Occurrences::enable($this->info_error_exception, $type_error, $this->config['production_mode']);
-    }
+        if ($this->config['production_mode'] === true) {
+            $this->productionMode();
+        }
 
-    /**
-     * Render full template with all resources
-     * 
-     * @return never
-     */
-    private function render(): never
-    {
-        if (ob_get_contents()) ob_end_clean();
         $this->renderCli();
 
-        if (
-            isset($_SERVER['REQUEST_METHOD']) &&
-            $_SERVER['REQUEST_METHOD'] != 'GET' ||
-            isset($_SERVER['CONTENT_TYPE']) &&
-            $_SERVER['CONTENT_TYPE'] == 'application/json'
-        ) {
-
+        if ($this->format == "json" || $this->config['type'] === "json") {
             $this->renderJson();
         }
+        
+        if ($this->format == "text" || $this->config['type'] === "text") {
+            $this->renderText();
+        }
 
-        if ($this->config['production_mode'] === true) $this->productionMode();
+        if ($this->config['title'] !== "") {
+            $this->title = $this->config['title'];
+        }
 
-        // Don't erase `$resources` variable
-        $resources = $this->loadResources();
+        if ($this->config['dark_mode'] === true) {
+            $this->useDarkTheme();
+        }
+
         $main_error = basename($this->main_file, '.php');
         $main_error = strtolower($main_error);
 
-        // Don't erase `$assets` variable
         $assets = $this->loadAssets($this->info_error_exception);
 
         include_once dirname(__DIR__) . '/View/templates/index.php';
@@ -102,136 +96,86 @@ trait RenderTrait
     }
 
     /**
-     * Enable production mode
-     *
      * @return void
      */
-    private function productionMode(): void
+    private function renderJson(): void
     {
-        include_once dirname(__DIR__) . '/View/templates/error-production.php';
-        exit;
-    }
+        echo "<title>" . $this->getTitle() . "</title>";
 
-    /**
-     * Unset trace without 'file' and 'line' keys
-     *
-     * @param array $trace
-     * 
-     * @return array
-     */
-    private function filterTrace(array $trace): array
-    {
-        foreach ($trace as $key => $value) {
-            if (!array_key_exists('file', $value) && !array_key_exists('line', $value)) unset($trace[$key]);
-        }
-
-        return $trace;
-    }
-
-    /**
-     * Load all resources
-     * 
-     * @return array
-     */
-    private function loadResources(): array
-    {
-        if ($this->config['title'] !== "") $this->title = $this->config['title'];
-        if ($this->config['dark_mode'] === true) $this->useDarkTheme();
-
-        $list_occurrences = null;
-        $cpu_usage = CpuUsage::getServerLoad();
-        $memory_usage = (new MemoryUsage())->getUsage();
-
-        if ($this->is_occurrence_enabled == true) {
-            $this->registerOccurrence();
-            $list_occurrences = Occurrences::listOccurrences();
-        }
-
-        return [
-            'cpu_usage' => $cpu_usage,
-            'memory_usage' => $memory_usage,
-            'list_occurrences' => $list_occurrences
-        ];
-    }
-
-    /**
-     * Render JSON exception/error if request method isn't GET
-     * 
-     * @return never
-     */
-    private function renderJson(): never
-    {
         if ($this->type == "error") {
-            echo json_encode(
-                [$this->getError() => $this->info_error_exception],
-                JSON_UNESCAPED_UNICODE
-            );
-        }
-
-        if ($this->type == "exception") {
-            echo json_encode(
-                [$this->info_error_exception['type_exception'] => $this->info_error_exception],
-                JSON_UNESCAPED_UNICODE
-            );
+            echo json_encode([$this->getError() => $this->info_error_exception], JSON_UNESCAPED_UNICODE);
+        } elseif ($this->type == "exception") {
+            if (!empty($this->trace)) {
+                echo json_encode([
+                    $this->info_error_exception['type_exception'] => $this->info_error_exception,
+                    "error" => $this->trace
+                ], JSON_UNESCAPED_UNICODE);
+            } else {
+                echo json_encode([$this->info_error_exception['type_exception'] => $this->info_error_exception], JSON_UNESCAPED_UNICODE);
+            }
         }
 
         exit;
     }
 
     /**
-     * Render exception/error in CLI
-     * 
+     * @return void
+     */
+    private function renderText(): void
+    {
+        include_once dirname(__DIR__) . '/View/templates/text-error.php';
+        exit;
+    }
+
+    /**
      * @return void
      */
     private function renderCli(): void
     {
-        if ($this->isCli() === true) {
-            echo PHP_EOL;
+        $verify = $this->isCli();
 
-            (isset($this->info_error_exception['type_exception'])) ?
-                CliMessage::error($this->info_error_exception['type_exception'])->print() :
-                CliMessage::error($this->getError())->print();
+        if ($verify == true) {
+            if (isset($this->info_error_exception['type_exception'])) {
+                echo "\n";
+                $this->error("[" . $this->info_error_exception['type_exception'] . "] " . $this->info_error_exception['message'])->print()->break(true);
+                $this->renderSolution();
+                $this->line("File: " . $this->info_error_exception['file'])->print()->break();
+                $this->line("Line: " . $this->info_error_exception['line'])->print()->break(true);
+                $this->getLines($this->info_error_exception['file'], $this->info_error_exception['line']);
 
-            CliMessage::line(" : " . $this->info_error_exception['message'])->print()->break(true);
-            $this->renderSolutionCli();
-            echo "at ";
-            CliMessage::warning($this->info_error_exception['file'])->print();
-            echo " : ";
-            CliMessage::warning($this->info_error_exception['line'])->print()->break(true);
-            $this->getLines($this->info_error_exception['file'], $this->info_error_exception['line']);
+                if (!empty($this->trace)) {
+                    echo PHP_EOL;
+                    $this->warning(count($this->trace) . " other error(s)")->print()->break();
+                }
 
-            if (!empty($this->trace)) {
-                echo PHP_EOL;
-                CliMessage::warning("Exception Trace")->print()->break(true);
+                foreach ($this->trace as $trace) {
+                    $this->info("Line: " . $trace['line'] . " | File: " . $trace['file'])->print()->break();
+                }
+            } else {
+                echo "\n";
+                $this->error("[" . $this->getError() . "] " . $this->info_error_exception['message'])->print()->break(true);
+                $this->line("File: " . $this->info_error_exception['file'])->print()->break();
+                $this->line("Line: " . $this->info_error_exception['line'])->print()->break();
+                $this->getLines($this->info_error_exception['file'], $this->info_error_exception['line']);
             }
 
-            foreach ($this->trace as $key => $trace) {
-                echo $key . "   ";
-                CliMessage::info($trace['file'])->print();
-                echo " : ";
-                CliMessage::info($trace['line'])->print()->break();
-            }
-
-            echo PHP_EOL;
             exit;
         }
     }
 
     /**
-     * Creates PHP code in CLI mode
-     * 
      * @param string $context
      * @param int $line
      * 
-     * @return self
+     * @return mixed
      */
-    private function getLines(string $context, int $line): self
+    private function getLines(string $context, int $line): mixed
     {
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 7; $i++) {
             $lines_up[] = $line + $i;
         }
 
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 7; $i++) {
             $lines_down[] = $line - $i;
         }
 
@@ -246,6 +190,8 @@ trait RenderTrait
             $is_resource = true;
         } else if (is_file($context)) {
             $fp = fopen($context, 'r');
+        } else {
+            return false;
         }
 
         $i = 0;
@@ -275,61 +221,53 @@ trait RenderTrait
 
         $fp = null;
 
+        $this->line("------------------------------------------------------------------------")->print()->break(true);
+
         foreach ($result as $key => $value) {
             if ($key == $line) {
-                CliMessage::errorLine("↪︎   " . $key . "| " . $value)->print()->break();
+                $this->warning($key . "| " . $value)->print();
             } else {
-                CliMessage::lineNumbers("   " . $key . "| ")->print();
-                CliMessage::info($value)->print()->break();
+                $this->line($key . "| " . $value)->print();
             }
         }
 
-        echo PHP_EOL;
+        echo PHP_EOL . PHP_EOL;
+
+        $this->line("------------------------------------------------------------------------")->print()->break();
+
         return $this;
     }
 
     /**
-     * Render solution in CLI
-     * 
      * @return void
      */
-    private function renderSolutionCli(): void
+    private function renderSolution(): void
     {
-        if (isset($this->info_error_exception['type_exception'])) {
-            $reflection = new \ReflectionClass($this->info_error_exception['namespace_exception']);
-            $exception = $reflection->newInstanceWithoutConstructor();
+        $exception = new $this->info_error_exception['namespace_exception'];
 
-            if (method_exists($exception, "getSolution")) {
-                $exception->getSolution();
-                $solution = new Solution();
+        if (method_exists($exception, "getSolution")) {
+            $exception->getSolution();
 
-                CliMessage::success("  " . $solution->getTitle())->print();
+            $solution = new Solution();
 
-                if (!empty($this->solution->getDescription()) || $this->solution->getDescription() != "") {
-                    echo " : ";
-                    CliMessage::success($solution->getDescription())->print()->break(true);
-                }
-
-                if (!empty($this->solution->getDocs()) || $this->solution->getDocs() != "") {
-                    CliMessage::info("  See more in: " . $solution->getDocs()["link"])->print()->break(true);
-                }
+            if (!empty($this->solution->getDescription()) || $this->solution->getDescription() != "") {
+                $this->success($solution->getTitle())->print();
+                $this->success(": " . $solution->getDescription())->print()->break(true);
+            } else {
+                $this->success($solution->getTitle())->print()->break(true);
             }
         }
     }
 
     /**
-     * Render error on console JS
-     * 
      * @return void
      */
     public function consoleJS(): void
     {
         if ($this->type == "error") {
-            $message = str_replace(["'", '"'], "", $this->info_error_exception['message']);
-            echo "console.error('[" . $this->getError() . "] " . $message . "')" . PHP_EOL;
+            echo "console.error('[" . $this->getError() . "] " . $this->info_error_exception['message'] . "')" . PHP_EOL;
         } elseif ($this->type == "exception") {
-            $message = str_replace(["'", '"'], "", $this->info_error_exception['message']);
-            echo "console.error('[" . $this->info_error_exception['type_exception'] . "] " . $message . "')" . PHP_EOL;
+            echo "console.error('[" . $this->info_error_exception['type_exception'] . "] " . $this->info_error_exception['message'] . "')" . PHP_EOL;
         }
 
         echo 'var user = {

@@ -3,7 +3,9 @@
         "catfan/medoo": "^2.1",
         "vlucas/phpdotenv": "^5.6",
         "josantonius/session": "^2.0",
-        "brenno-duarte/modern-php-exception": "^3.3"
+        "brenno-duarte/modern-php-exception": "^2.2"
+
+       
     },
     "autoload": {
         "psr-4": {

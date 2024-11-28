@@ -2,8 +2,6 @@
 
 namespace ModernPHPException;
 
-use LogicException;
-
 class Bench
 {
     /**
@@ -39,7 +37,10 @@ class Bench
      */
     public function end(): void
     {
-        if (!$this->hasStarted()) throw new LogicException("You must call start()");
+        if (!$this->hasStarted()) {
+            throw new \LogicException("You must call start()");
+        }
+
         $this->end_time = microtime(true);
         $this->memory_usage = memory_get_usage(true);
     }
@@ -48,29 +49,35 @@ class Bench
      * Returns the elapsed time, readable or not
      *
      * @param bool $raw
-     * @param null|string $format The format to display (printf format)
+     * @param string $format The format to display (printf format)
      * 
      * @return mixed
      * @throws LogicException
      */
-    public function getTime(bool $raw = false, ?string $format = null): mixed
+    public function getTime(bool $raw = false, string $format = null): mixed
     {
-        if (!$this->hasStarted()) throw new LogicException("You must call start()");
-        if (!$this->hasEnded()) throw new LogicException("You must call end()");
+        if (!$this->hasStarted()) {
+            throw new \LogicException("You must call start()");
+        }
+
+        if (!$this->hasEnded()) {
+            throw new \LogicException("You must call end()");
+        }
 
         $elapsed = $this->end_time - $this->start_time;
+
         return $raw ? $elapsed : self::readableElapsedTime($elapsed, $format);
     }
 
     /**
      * Returns the memory usage at the end checkpoint
      *
-     * @param  bool         $readable Whether the result must be human readable
-     * @param  null|string  $format   The format to display (printf format)
+     * @param  boolean $readable Whether the result must be human readable
+     * @param  string  $format   The format to display (printf format)
      * 
      * @return mixed
      */
-    public function getMemoryUsage(bool $raw = false, ?string $format = null): mixed
+    public function getMemoryUsage(bool $raw = false, string $format = null): mixed
     {
         return $raw ? $this->memory_usage : self::readableSize($this->memory_usage, $format);
     }
@@ -78,14 +85,15 @@ class Bench
     /**
      * Returns the memory peak, readable or not
      *
-     * @param  bool         $readable Whether the result must be human readable
-     * @param  null|string  $format   The format to display (printf format)
+     * @param  boolean $readable Whether the result must be human readable
+     * @param  string  $format   The format to display (printf format)
      * 
      * @return mixed
      */
-    public function getMemoryPeak(bool $raw = false, ?string $format = null): mixed
+    public function getMemoryPeak(bool $raw = false, string $format = null): mixed
     {
         $memory = memory_get_peak_usage(true);
+
         return $raw ? $memory : self::readableSize($memory, $format);
     }
 
@@ -103,9 +111,11 @@ class Bench
     {
         $arguments = func_get_args();
         array_shift($arguments);
+
         $this->start();
         $result = call_user_func_array($callable, $arguments);
         $this->end();
+
         return $result;
     }
 
@@ -113,22 +123,29 @@ class Bench
      * Returns a human readable memory size
      *
      * @param   int    $size
-     * @param   null|string $format   The format to display (printf format)
+     * @param   string $format   The format to display (printf format)
      * @param   int    $round
      * 
      * @return  string
      */
-    public static function readableSize(int $size, ?string $format = null, int $round = 3): string
+    public static function readableSize(int $size, string $format = null, int $round = 3): string
     {
         $mod = 1024;
-        if (is_null($format)) $format = '%.2f%s';
+
+        if (is_null($format)) {
+            $format = '%.2f%s';
+        }
+
         $units = explode(' ', 'B Kb Mb Gb Tb');
 
         for ($i = 0; $size > $mod; $i++) {
             $size /= $mod;
         }
 
-        if (0 === $i) $format = preg_replace('/(%.[\d]+f)/', '%d', $format);
+        if (0 === $i) {
+            $format = preg_replace('/(%.[\d]+f)/', '%d', $format);
+        }
+
         return sprintf($format, round($size, $round), $units[$i]);
     }
 
@@ -136,14 +153,16 @@ class Bench
      * Returns a human readable elapsed time
      *
      * @param float $microtime
-     * @param null|string  $format   The format to display (printf format)
+     * @param string  $format   The format to display (printf format)
      * @param int $round
      * 
      * @return string
      */
-    public static function readableElapsedTime(float $microtime, ?string $format = null, int $round = 3): string
+    public static function readableElapsedTime(float $microtime, string $format = null, int $round = 3): string
     {
-        if (is_null($format)) $format = '%.3f%s';
+        if (is_null($format)) {
+            $format = '%.3f%s';
+        }
 
         if ($microtime >= 1) {
             $unit = 's';
@@ -151,6 +170,7 @@ class Bench
         } else {
             $unit = 'ms';
             $time = round($microtime * 1000);
+
             $format = preg_replace('/(%.[\d]+f)/', '%d', $format);
         }
 
