@@ -267,18 +267,6 @@
   }
 
   /* Reduce the height of the select box */
-.selectlottery {
-    height: 35px; /* Adjust as needed for a smaller dropdown */
-    font-size: 14px; /* Make text smaller */
-    padding: 5px; /* Adjust padding inside the select */
-    border-radius: 5px; /* Optional: adds rounded corners */
-    width: 19%; /* Optional: set the width of the select box */
-}
-
-/* Optional: style the placeholder */
-.selectlottery option {
-    font-size: 14px; /* Ensure options have the same font size */
-}
 
 
 </style>
@@ -324,11 +312,11 @@
 
         </select>
 
-        <input  name ="startdate" type="date" class="form-control queryholderlist startdate" id="" aria-describedby="name"
+        <input  name ="startdate" type="date" class="form-control queryholderlist startdate"  aria-describedby="name"
           placeholder="Name" />
 
 
-        <input  name ="enddate" type="date" class="form-control queryholderlist enddate" id="" aria-describedby="name"
+        <input  name ="enddate" type="date" class="form-control queryholderlist enddate"  aria-describedby="name"
           placeholder="Name" />
 
         <!-- <button type="button" class="btn btn-outline-light text-dark queryholderlist addagents">

@@ -379,11 +379,11 @@ $(function () {
   });
 
   $(document).on("click", ".addagents", function () {
-    $("#addagent").modal("show");
+    $("#addagentmodal").modal("show");
   });
 
   $(".listclose").click(function () {
-    $("#addagent").modal("hide");
+    $("#addagentmodal").modal("hide");
   });
 
   async function fetchRebatedata() {
@@ -392,15 +392,23 @@ $(function () {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      
       const data = await response.json(); // Parse JSON response
-      // console.log(data);
-      //    return
-      let html = `<option value="all" class="options" selected>Choose Rebate</option>`;
-      data.forEach((rebate) => {
-        html += `<option value="${rebate.rebate}" class="options">${rebate.rebate}</option>`;
-      });
-
-      $("#rebatedata").html(html);
+     // console.log(data);
+      let html ="";
+    
+      // Check if data is not empty and iterate over it to generate options
+      if (Array.isArray(data) && data.length > 0) {
+        data.forEach((rebate) => {
+          html += `<option value="${rebate.rebate}" class="">${rebate.rebate}</option>`;
+        });
+      } else {
+        html += `<option value="" disabled>No rebates found</option>`; // If no data, show a message
+      }
+  
+      // Inject the options into the #rebatedata select element
+      $("#usererebate").html(html);
+  
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -577,4 +585,19 @@ $(function () {
       }
     );
   });
+
+  function tableScrolluserList() {
+    const tableContainerUser = document.querySelector(".table-wrapperuserlist");
+        const headerRowUserList = document.querySelector(".userlistheadrow");
+
+        tableContainerUser.addEventListener("scroll", function () {
+          if (tableContainerUser.scrollTop > 0) {
+            headerRowUserList.classList.add("sticky-headersUserlist");
+          } else {
+            headerRowUserList.classList.remove("sticky-headersUserlist");
+          }
+        });
+  }
+  tableScrolluserList();
+  
 });

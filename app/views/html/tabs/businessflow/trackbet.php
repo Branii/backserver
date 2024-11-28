@@ -227,7 +227,7 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-                <input name="username" class="queryholderlist form-control" id="selectuserlist" placeholder="Username"
+                <input name="username" class="queryholderlist form-control" id="selectuserlistt" placeholder="Username"
                     autocomplete="off"></input>
                 <input type="text" class="userIds" style="display:none" />
                 <ul class="queryholderxxt"></ul>
@@ -401,131 +401,17 @@
     </div>
 </div>
 
-<!--manage add agent modal -->
-<div class="card">
-    <div class="card-body">
-        <!-- Modal -->
-        <div id="addagent" class="modal fade" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <!-- Modal Header -->
-                        <div class="text-center mt-2 mb-4">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="text-infos">Add Agent</h5>
-                                <i class="bx bx-message-square-x listclose" style="color:#868c87;font-size:25px;cursor:pointer;"></i>
-                            </div>
-                        </div>
-
-                        <!-- Form -->
-                        <form id="agentform">
-
-
-                            <!-- Username Field -->
-                            <div class="form-floating mb-3">
-                                <input name="agentname" type="text" class="form-control border " placeholder="Username" />
-                                <label>
-                                    <i class="bx bx-user me-2 fs-4 text-infod"></i>
-                                    <span class="border-start  ps-3">Username</span>
-                                </label>
-                            </div>
-
-                            <!-- Email Field -->
-                            <div class="form-floating mb-3">
-                                <input name="agentemail" type="email" class="form-control border border-infos" placeholder="Email" />
-                                <label>
-                                    <i class="bx bx-envelope me-2 fs-4 text-infod"></i>
-                                    <span class="border-start  ps-3">Email address</span>
-                                </label>
-                            </div>
-
-                            <!-- Password Field -->
-                            <div class="form-floating mb-3">
-                                <input name="agentpassword" type="password" class="form-control border border-infs" placeholder="Password" />
-                                <label>
-                                    <i class="bx bx-lock me-2 fs-4 text-infoss"></i>
-                                    <span class="border-start  ps-3">Password</span>
-                                </label>
-                            </div>
-
-                            <!-- Confirm Password Field -->
-                            <div class="form-floating mb-3">
-                                <input name="agentpassword1" type="password" class="form-control border border-infos" placeholder="Confirm Password" />
-                                <label>
-                                    <i class="bx bx-lock me-2 fs-4 text-infos"></i>
-                                    <span class="border-start  ps-3">Confirm Password</span>
-                                </label>
-                            </div>
-
-                            <!-- Rebate Field -->
-                            <div class="form-floating mb-3">
-                                <select name="agentrebate" class="form-select form-control border border-infos" id="rebatedata">
-                                    <option value="" disabled selected>Select Rebate</option>
-                                    <!-- Dynamically populated options -->
-                                </select>
-                                <label>
-                                    <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
-                                    <span class="border-start  ps-3">Rebate</span>
-                                </label>
-                            </div>
-
-                            <!-- Submit Button -->
-                            <div class="d-md-flex align-items-center">
-                                <div class="form-check">
-                                    <!-- <input type="checkbox" class="form-check-input" id="sf2" value="check" /> -->
-                                    <label class="form-check-label" for="sf2">Verify before submit</label>
-                                </div>
-                                <div class="mt-3 mt-md-0 ms-auto">
-                                    <button type="button" class="btn hstack gap-6 btnaddagent" style="border:solid 1px #ccc">
-                                        <i class="bx bx-send loaders"></i>
-                                        Submit
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- <div class="d-flex justify-content-end mt-3">
-                                <button type="button" class="btn btn-light hstack gap-2 btnaddagent">
-                                    <i class="bx bx-send loaders"></i> Submit
-                                </button>
-                            </div> -->
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
-    </div>
-</div>
-
-
-<div id="danger-usertoast" class="modal fade" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Alert</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <p id="modal-message">This is a placeholder message.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 
 <!--manage user Quota -->
 
-<div id="viewbetsmodal" class="modal fade" tabindex="-1" aria-hidden="true">
+<div id="viewtrackmodal" class="modal fade" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-body">
         <div class="text-center mt-2 mb-4">
           <div class="d-flex justify-content-between">
-            <div>Bet Info</div>
+            <div>Track Bet Info</div>
             <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
           </div>
         </div>
@@ -534,14 +420,14 @@
           <div class="row">
             <div class="col-md-6">
               <table class="table table-bordered table-striped">
-                <tbody id="rowbet">
+                <tbody id="rowtrack1">
                 </tbody>
               </table>
             </div>
 
             <div class="col-md-6">
               <table class="table table-bordered table-striped">
-                <tbody id="rowbet1">
+                <tbody id="rowtrack">
                 </tbody>
               </table>
             </div>

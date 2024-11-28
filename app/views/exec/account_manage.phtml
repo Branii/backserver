@@ -61,7 +61,9 @@ if ($flag == "userlistdata") {
         'totalPages' => ceil($result['total'] / $limit)
     ]);
     
-} else if ($flag == "filteruserlist") {
+} 
+
+if ($flag == "filteruserlist") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
@@ -125,10 +127,16 @@ if ($flag == "userlistdata") {
         'userlists' => $bigArr,
         'totalPages' => ceil($result['total'] / $limit)
     ]);
-} elseif ($flag  == "fetchRebatedata") {
+} 
+
+
+if ($flag  == "fetchRebatedata") {
     $result = (new UserManageModel())->FetchRebateData() ?? [];
     echo json_encode($result);
-} elseif ($flag == "addAgent") {
+} 
+
+
+if ($flag == "addAgent") {
 
     $data = isset($this->viewData['data']) ? $this->viewData['data'] : '';
     parse_str($data, $parsedData);
@@ -152,7 +160,9 @@ if ($flag == "userlistdata") {
     }
 
     echo json_encode($result);
-} elseif ($flag == "fetchTopAgent") {
+} 
+
+if ($flag == "fetchTopAgent") {
 
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
@@ -194,7 +204,8 @@ if ($flag == "userlistdata") {
         'topagent' => $usersLists,
         'totalPages' => ceil($result['total'] / $limit)
     ]);
-} else if ($flag  == "userlogsdata") {
+} 
+ if ($flag  == "userlogsdata") {
 
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
@@ -204,7 +215,8 @@ if ($flag == "userlistdata") {
         'userlogs' => $result["data"],
         'totalPages' => ceil($result['total'] / $limit)
     ]);
-} elseif ($flag == "filterUserlogs") {
+} 
+if ($flag == "filterUserlogs") {
 
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
@@ -241,7 +253,10 @@ if ($flag == "userlistdata") {
         'userloggs' => $bigArr,
         'totalPages' => ceil($result['total'] / $limit)
     ]);
-} elseif ($flag == "getuserrebate") {
+} 
+
+
+if ($flag == "getuserrebate") {
 
     $uid = isset($this->viewData['uid']) ? $this->viewData['uid'] : '';
  
@@ -249,8 +264,8 @@ if ($flag == "userlistdata") {
     echo json_encode($result);
 } 
 
-elseif ($flag == "updateUsedquota") {
-
+if ($flag == "updateUsedquota") {
+    
     $uid = isset($this->viewData['uid']) ? $this->viewData['uid'] : '';
     $bonus_group = isset($this->viewData['bonus']) ? $this->viewData['bonus'] : '';
     $rebate_group = isset($this->viewData['rebate']) ? $this->viewData['rebate'] : '';

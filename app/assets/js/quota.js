@@ -43,7 +43,7 @@ $(function () {
         `../admin/fetchquota/${pagequota}/${pageLimit}`
       );
       const data = await response.json();
-      console.log(response);
+      // console.log(response);
       // return
       $("#maskquota").LoadingOverlay("hide");
       renderquota(data.quota);
