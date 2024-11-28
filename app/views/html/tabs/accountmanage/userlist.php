@@ -108,7 +108,7 @@
         display: none;
     }
 
-    .optionlist {
+    .queryholderxx .optionlist {
         text-align: left;
         border-bottom: solid 1px #eee;
         padding: 5px;
@@ -227,9 +227,9 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-                <input name="username" class="queryholderlist form-control" id="selectuserlist" placeholder="Username"
+                <input name="usernamelist" class="queryholderlist form-control" id="selectuserlist" placeholder="Username"
                     autocomplete="off"></input>
-                <input type="text" class="userId" style="display:none" />
+                <input type="text" class="userIds" style="display:none" />
                 <ul class="queryholderxx"></ul>
 
                 <select name="recharge" class="form-control form-select queryholderlist recharges"
@@ -389,7 +389,7 @@
 
 </div>
 
-<div class="modal fade" id="danger" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
+<div class="modal fade" id="dangerlist" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content modal-filled " style="background-color:#F9F9F9">
             <div class="modal-body p-4">
@@ -421,67 +421,81 @@
                         <!-- Modal Header -->
                         <div class="text-center mt-2 mb-4">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="text-info">Add Agent</h5>
+                                <h5 class="text-infos">Add Agent</h5>
                                 <i class="bx bx-message-square-x listclose" style="color:#868c87;font-size:25px;cursor:pointer;"></i>
                             </div>
                         </div>
 
                         <!-- Form -->
                         <form id="agentform">
+
+
                             <!-- Username Field -->
                             <div class="form-floating mb-3">
-                                <input name="agentname" type="text" class="form-control border border-info" placeholder="Username" />
+                                <input name="agentname" type="text" class="form-control border " placeholder="Username" />
                                 <label>
-                                    <i class="bx bx-user me-2 fs-4 text-info"></i>
-                                    <span class="border-start border-light ps-3">Username</span>
+                                    <i class="bx bx-user me-2 fs-4 text-infod"></i>
+                                    <span class="border-start  ps-3">Username</span>
                                 </label>
                             </div>
 
                             <!-- Email Field -->
                             <div class="form-floating mb-3">
-                                <input name="agentemail" type="email" class="form-control border border-info" placeholder="Email" />
+                                <input name="agentemail" type="email" class="form-control border border-infos" placeholder="Email" />
                                 <label>
-                                    <i class="bx bx-envelope me-2 fs-4 text-info"></i>
-                                    <span class="border-start border-info ps-3">Email address</span>
+                                    <i class="bx bx-envelope me-2 fs-4 text-infod"></i>
+                                    <span class="border-start  ps-3">Email address</span>
                                 </label>
                             </div>
 
                             <!-- Password Field -->
                             <div class="form-floating mb-3">
-                                <input name="agentpassword" type="password" class="form-control border border-info" placeholder="Password" />
+                                <input name="agentpassword" type="password" class="form-control border border-infs" placeholder="Password" />
                                 <label>
-                                    <i class="bx bx-lock me-2 fs-4 text-info"></i>
-                                    <span class="border-start border-info ps-3">Password</span>
+                                    <i class="bx bx-lock me-2 fs-4 text-infoss"></i>
+                                    <span class="border-start  ps-3">Password</span>
                                 </label>
                             </div>
 
                             <!-- Confirm Password Field -->
                             <div class="form-floating mb-3">
-                                <input name="agentpassword1" type="password" class="form-control border border-info" placeholder="Confirm Password" />
+                                <input name="agentpassword1" type="password" class="form-control border border-infos" placeholder="Confirm Password" />
                                 <label>
-                                    <i class="bx bx-lock me-2 fs-4 text-info"></i>
-                                    <span class="border-start border-info ps-3">Confirm Password</span>
+                                    <i class="bx bx-lock me-2 fs-4 text-infos"></i>
+                                    <span class="border-start  ps-3">Confirm Password</span>
                                 </label>
                             </div>
 
                             <!-- Rebate Field -->
                             <div class="form-floating mb-3">
-                                <select name="agentrebate" class="form-select form-control border border-info" id="rebatedata">
+                                <select name="agentrebate" class="form-select form-control border border-infos" id="rebatedata">
                                     <option value="" disabled selected>Select Rebate</option>
                                     <!-- Dynamically populated options -->
                                 </select>
                                 <label>
-                                    <i class="bx bx-list-ul me-2 fs-4 text-info"></i>
-                                    <span class="border-start border-info ps-3">Rebate</span>
+                                    <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
+                                    <span class="border-start  ps-3">Rebate</span>
                                 </label>
                             </div>
 
                             <!-- Submit Button -->
-                            <div class="d-flex justify-content-end mt-3">
-                                <button type="button" class="btn btn-info hstack gap-2 btnaddagent">
+                            <div class="d-md-flex align-items-center">
+                                <div class="form-check">
+                                    <!-- <input type="checkbox" class="form-check-input" id="sf2" value="check" /> -->
+                                    <label class="form-check-label" for="sf2">Verify before submit</label>
+                                </div>
+                                <div class="mt-3 mt-md-0 ms-auto">
+                                    <button type="button" class="btn hstack gap-6 btnaddagent" style="border:solid 1px #ccc">
+                                        <i class="bx bx-send loaders"></i>
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- <div class="d-flex justify-content-end mt-3">
+                                <button type="button" class="btn btn-light hstack gap-2 btnaddagent">
                                     <i class="bx bx-send loaders"></i> Submit
                                 </button>
-                            </div>
+                            </div> -->
                         </form>
                     </div>
                 </div>
@@ -492,23 +506,6 @@
     </div>
 </div>
 
-
-<div id="danger-usertoast" class="modal fade" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Alert</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <p id="modal-message">This is a placeholder message.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!--manage user modal -->
 <div class="card">
@@ -670,8 +667,8 @@
 
                         <!-- Form -->
                         <form id="agentformm">
-                        <input type="text" class="form-control userquotaid" hidden>
-                            <div class="modal-body scrollable-container" >
+                            <input type="text" class="form-control userquotaid" hidden>
+                            <div class="modal-body scrollable-container">
                                 <div style="overflow: hidden;">
                                     <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
                                         <thead>
@@ -680,7 +677,7 @@
                                                 <th class="font-weight-normal">Bonus Group</th>
                                                 <th class="font-weight-normal">Quota Used</th>
                                                 <th class="font-weight-normal">Quota Set</th>
-                                                
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -693,12 +690,19 @@
 
 
                             </div>
-                            <!-- Submit Button -->
-                            <div class="d-flex justify-content-end mt-3">
-                                <button type="button" class="btn btn-info hstack gap-2 updatequotabtn">
-                                    <i class="bx bx-send loaders"></i> Submit
-                                </button>
+                            <div class="d-md-flex align-items-center">
+                                <div class="form-check">
+                                    <!-- <input type="checkbox" class="form-check-input" id="sf2" value="check" /> -->
+                                    <label class="form-check-label" for="sf2">Verify before submit</label>
+                                </div>
+                                <div class="mt-3 mt-md-0 ms-auto">
+                                    <button type="button" class="btn hstack gap-6 updatequotabtn" style="border:solid 1px #ccc">
+                                        <i class="bx bx-send loaderquota"></i>
+                                        Submit
+                                    </button>
+                                </div>
                             </div>
+
                         </form>
                     </div>
                 </div>

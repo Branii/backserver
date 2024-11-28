@@ -102,7 +102,7 @@
   .queryholderx {
     width: 19%;
     position: absolute;
-    background-color: #fff;
+    background-color: red;
     color: #aaa;
     max-height: 300px;
     overflow-y: scroll;
@@ -111,7 +111,7 @@
     top: 90%;
     z-index: 9999;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    display: none;
+    /* display: nones; */
   }
 
   .option {
@@ -208,7 +208,9 @@
         <input name="username" class="queryholder form-control" id="selected" placeholder="Enter Username"
           autocomplete="off"></input>
         <input type="text" class="userId" style="display:none" />
-        <ul class="queryholderx"></ul>
+        <ul class="queryholderx">
+          
+        </ul>
 
         <input type="text" class="form-control queryholder orderid" id="nametext" aria-describedby="name"
           placeholder="Enter Oder ID">

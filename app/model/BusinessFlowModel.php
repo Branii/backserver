@@ -93,5 +93,77 @@ class BusinessFlowModel extends MEDOOHelper{
     }
 
 
+    
+    //NOTE -
+    ////////////// LOTTERY BETTING-//////////
+
+    public static function getAllGameIds(): array
+    {
+        $res = parent::selectAll("gamestable_map", ["bet_table"]);
+        return $res;
+    }
+
+    public static function fetchBetRecords($page, $limit): array
+    {
+        $startpoint = ($page * $limit) - $limit;
+        $res = self::getAllGameIds();
+         $data = [];
+         $totalRecords = 0;
+
+        foreach ($res as $tables) {
+            $gameTable = $tables['bet_table'];
+            $records = parent::query(
+                "SELECT $gameTable.*, users.username,game_type.name As game_type FROM $gameTable 
+             JOIN users ON users.uid = $gameTable.uid 
+             JOIN game_type ON game_type.gt_id = $gameTable.game_type 
+             ORDER BY $gameTable.bid DESC 
+             LIMIT :offset, :limit", ['offset' => $startpoint, 'limit' => $limit]
+            );
+
+            if (!empty($records)) {
+                $data = array_merge($data, $records);
+                $totalRecords += parent::count($gameTable); // Count only if there are records
+            }
+        }
+        usort($data, function ($a, $b) {
+            return strtotime($b["server_date"] . " " . $b["server_time"]) <=> strtotime($a["server_date"] . " " . $a["server_time"]);
+        });
+
+        return [
+            'data' =>$data ,
+            'total' => $totalRecords
+         ];
+    }
+
+
+    public static function fetchLotteryname(): array
+    {
+        return  $res = parent::selectAll("game_type", ["gt_id", "name"], ["ORDER" => ["lottery_type" => "ASC"]]);
+    }
+
+    public static function getLottery($gameId)
+    {
+        return  $res =  parent::selectOne("game_type", ["name"], ["gt_id" => $gameId])['name'];
+    }
+
+
+
+    
+    //NOTE -
+    //////////////TRACK RECORDS-//////////
+
+    public static function fetchTrackRecords($page, $limit): array
+    {
+        $startpoint = ($page * $limit) - $limit; 
+        $data = parent::query( 
+            "SELECT trackbet.*, COALESCE(users.username, 'N/A') AS username FROM trackbet   
+            JOIN users ON users.uid = trackbet.user_id  ORDER BY track_id DESC LIMIT :offset, :limit", 
+            ['offset' => $startpoint, 'limit' => $limit] 
+        ); 
+        $totalRecords  = parent::count('trackbet');
+        return ['data' => $data, 'total' => $totalRecords];
+    }
+
+    
  
 }

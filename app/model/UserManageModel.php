@@ -11,11 +11,11 @@ class UserManageModel extends MEDOOHelper
 
         $startpoint = ($page * $limit) - $limit; 
         $data = parent::query( 
-            "SELECT uid,username,nickname,agent_username,balance,recharge_level,state,
-            last_login_time,rebate,date_created,agent FROM users ORDER BY uid DESC LIMIT :offset, :limit", 
-            ['offset' => $startpoint, 'limit' => $limit] 
+            "SELECT uid, username, nickname, agent_username, balance, recharge_level, state, 
+            last_login_time, rebate, date_created, agent  FROM users ORDER BY uid DESC  LIMIT :startpoint, :limit", 
+            ['startpoint' => (int)$startpoint, 'limit' => (int)$limit] 
         ); 
-        $totalRecords  = parent::count('users');
+          $totalRecords  = parent::count('users');
         return ['data' => $data, 'total' => $totalRecords];
          
     }

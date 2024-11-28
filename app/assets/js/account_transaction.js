@@ -252,7 +252,44 @@ $(function () {
       }
     })
   }
-
+  // function performSearch() {
+  //   const query = $("#selected").val(); // Get the input value
+  
+  //   // if (!query.trim()) {
+  //   //   // If the query is empty, clear and hide the results
+  //   //   $(".queryholderx").hide().empty();
+  //   //   return;
+  //   // }
+  
+  //   // Send a POST request with the query
+  //   $.post(`../admin/filterusername/${query}`, function (response) {
+  //     if (typeof response === "string") {
+  //       // If the response is a string, hide the results
+  //       $(".queryholderx").hide().empty();
+  //     } else if (Array.isArray(response) && response.length > 0) {
+  //       // If the response is an array with data
+  //       let html = "";
+  
+  //       // Sort users alphabetically by username
+  //       response.sort((a, b) => a.username.localeCompare(b.username));
+  
+  //       // Generate HTML for the list items
+  //       response.forEach((user) => {
+  //         html += `<li value="${user.uid}" class="optionlist">${user.username}</li>`;
+  //       });
+  
+  //       // Display the sorted results
+  //       $(".queryholderx").html(html).show();
+  //     } else {
+  //       // If no results, clear and hide the container
+  //       $(".queryholderx").hide().empty();
+  //     }
+  //   }).fail(function (error) {
+  //     console.error("Error during the search request:", error);
+  //     $(".queryholderx").hide().empty(); // Hide results on error
+  //   });
+  // }
+  
   $(document).on("input", '#selected', function () {
     clearTimeout(timeout);
     $(".userId").val("")

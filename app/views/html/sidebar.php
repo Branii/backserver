@@ -68,6 +68,7 @@
                 <li id="tab1" class="tab-button item" value="account_transaction">Account Transactions</li>
                 <li id="tab2" class="tab-button item" value="game_getting_statistics">Game Betting Statistics</li>
                 <li id="tab3" class="tab-button item" value="lottery_betting_record">Lottery Betting Record</li>
+                <li id="tab3" class="tab-button item" value="Track">Track Bet Records</li>
                 <!-- <li id="tab4" class="item">Tab 4</li>
                     <li id="tab5" class="item">Tab 5</li> -->
             </ul>

@@ -1,4 +1,14 @@
 $(function () {
+
+  function showToast(title, message, type) {
+    $.toast({
+      position: "bottom-right",
+      title: title,
+      message: message,
+      type: type,
+      duration: 3000, // auto-dismiss after 3s
+    });
+  }
   const QuotaData = (data) => {
     let html = "";
 
@@ -148,8 +158,9 @@ $(function () {
     async function EditSingleQuota(rebatid,quota) {
         try {
         const response = await fetch(`../admin/updatequota/${rebatid}/${quota}`);
-        // const data = await response.json();
-        console.log(response);
+       if(response){
+        showToast("Success","quota updated successfully","success")
+       }
         } catch (error) {
         console.error("Error fetching data:", error);
         }
@@ -166,7 +177,7 @@ $(function () {
               $.post(`../admin/UpdateAllquota/${quotaval}`,
                 function(response) {
                   if(response){
-                    alert("updated")
+                    showToast("Success","quota updated successfully","success")
                     fetchquota(currentPagequota);
                   }
                 });
@@ -182,7 +193,7 @@ $(function () {
          $(document).on("keyup", ".userrebate", function () {
             const datarebate = $(this).val();
             if (datarebate === "") {
-                console.log("Input is empty. Resetting results.");
+                // console.log("Input is empty. Resetting results.");
                 renderquota([]); // Reset or clear results
                 let html = `
                 <tr class="no-results" >
@@ -196,7 +207,7 @@ $(function () {
              try {
                   $.post(`../admin/filterRebate/${datarebate}`,
                      function(response) {
-                        console.log(response)
+                        // console.log(response)
                         const data = JSON.parse(response);
                         renderquota(data.filterquota);  
                     });

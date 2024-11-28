@@ -186,11 +186,16 @@
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
+            <!-- <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
             <input type="text" class="form-control product-search ps-5 userrebate" id="input-rsearch" placeholder="Search Rebate..." />
             <i class="bx bx-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
             
-            </div>
+            </div> -->
+            <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
+                    <input type="text" class="form-control queryholder userrebate" placeholder="Search ..." aria-label="Username" aria-describedby="basic-addon1" />
+          </div>
+
         </span>
         <span class="toplist-center" aria-label=" navigation example">
             <!--enter is free-->

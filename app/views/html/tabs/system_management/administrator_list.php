@@ -99,7 +99,7 @@
     background-color: #FFF;
   }
 
-  .queryholderx {
+  .queryhold {
     width: 19%;
     position: absolute;
     background-color: #fff;

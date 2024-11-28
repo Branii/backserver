@@ -49,12 +49,11 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-
-    public function filterusername($username){
-        $this->view('exec/businessflow',['username'=>$username,'flag' => 'filterusername']);
+    public function filterusername($username)
+    {
+        $this->view('exec/businessflow', ['username' => $username, 'flag' => 'filterusername']);
         $this->view->render();
     }
-
     public function filtertransactions($username ='',$orderid ='',$ordertype ='',$startdate ='',$enddate ='',$pageNumber,$limit){
         $this->view('exec/businessflow',[
             'username' => $username,'orderid' => $orderid,
@@ -68,6 +67,41 @@ class adminController extends Controller {
 
     public function getTransactionBet($transactionId){
         $this->view('exec/businessflow',['transactionId'=>$transactionId, 'flag' => 'transactionBet']);
+        $this->view->render();
+    }
+
+   //NOTE -
+    //////////////LOTTERY BETS -//////////
+
+    public function lotterydata($pageNumber,$limit){
+        $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'lotterydata']);
+        $this->view->render();
+    }
+
+    public function viewBetstake($becode,$gametype){
+        $this->view('exec/businessflow',['betcode'=>$becode, 'gametype'=>$gametype,'flag' => 'viewBetstake']);
+        $this->view->render();
+    }
+
+    public function fetchLotteryname(){
+        $this->view('exec/businessflow',['flag' => 'fetchLotteryname']);
+        $this->view->render();
+    }
+    
+    public function searchusername($username){
+        $this->view('exec/businessflow',['username'=>$username,'flag' => 'searchusername']);
+        $this->view->render();
+    }
+
+    public function filterbetdata($betdata,$limit){
+        $this->view('exec/businessflow',['limit'=>$limit,'betdata'=>$betdata,'flag' => 'filterbetdata']);
+        $this->view->render();
+    }
+
+     //NOTE -
+    //////////////TRACK BET DATA -//////////
+    public function trackdata($pageNumber,$limit){
+        $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'trackdata']);
         $this->view->render();
     }
 
@@ -130,11 +164,7 @@ class adminController extends Controller {
     }
     
 
-    
   
-
-    
-
      //NOTE -
     ////////////// USERLIST LOGS -//////////
     public function userlogsdata($pageNumber, $limit)
