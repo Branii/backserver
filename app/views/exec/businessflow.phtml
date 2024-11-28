@@ -9,11 +9,11 @@ $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 if ($flag == "filterusername") {
 
     $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
-    $result = (new BusinessFlowModel())->filterusername($username);
-    if ($result) {
-        echo json_encode($result);
+    $result = (new BusinessFlow())->filterusername($username);
+    if($result){
+        echo json_encode([['username' => 'Nketiah']]);
     } else {
-        echo json_encode([['username' => '']]);
+        echo json_encode([['username' => 'Nketiah']]);
     }
 }
 

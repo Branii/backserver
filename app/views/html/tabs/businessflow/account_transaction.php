@@ -99,10 +99,9 @@
     background-color: #FFF;
   }
 
-  .queryholderx {
+  .acc_transaction_username {
     width: 19%;
     position: absolute;
-    background-color: red;
     color: #aaa;
     max-height: 300px;
     overflow-y: scroll;
@@ -111,7 +110,7 @@
     top: 90%;
     z-index: 9999;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    /* display: nones; */
+    display: none;
   }
 
   .option {
@@ -208,16 +207,12 @@
         <input name="username" class="queryholder form-control" id="selected" placeholder="Enter Username"
           autocomplete="off"></input>
         <input type="text" class="userId" style="display:none" />
-        <ul class="queryholderx">
-          
-        </ul>
+        <ul class="queryholderx"></ul>
 
         <input type="text" class="form-control queryholder orderid" id="nametext" aria-describedby="name"
           placeholder="Enter Oder ID">
 
-
-        <select name="order_type" class="form-control form-select queryholder ordertype"
-          data-bs-placeholder="Select Type">
+        <select name="order_type" class="form-control form-select queryholder ordertype" data-bs-placeholder="Select Type">
           <option value="0">Transaction Type</option>
           <option value="1">Deposit</option>
           <option value="2">Win Bonus</option>
@@ -232,17 +227,9 @@
           <option value="11">Bet Refund</option>
         </select>
 
+        <input type="date" class="form-control queryholder startdate" id="nameext1" aria-describedby="name" placeholder="Name" />
 
-        <input type="date" class="form-control queryholder startdate" id="nameext1" aria-describedby="name"
-          placeholder="Name" />
-
-
-
-        <input type="date" class="form-control queryholder enddate" id="nametex
-      " aria-describedby="name"
-          placeholder="Name" />
-
-
+        <input type="date" class="form-control queryholder enddate" id="nametex" aria-describedby="name" placeholder="Name" />
 
       </div>
     </span>
@@ -262,7 +249,7 @@
           <i class='bx bx-file-blank' style="font-size:20px"></i>
         </button>
         <button type="button" class="btn bg-white-subtle" value="right">
-          ::
+         ::
         </button>
         <button type="button" class="btn bg-white-subtle  refresh" value="right" aria-label="Refresh"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">

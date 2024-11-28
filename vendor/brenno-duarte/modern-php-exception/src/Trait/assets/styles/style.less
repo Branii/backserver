@@ -1,0 +1,241 @@
+html,
+body {
+    font-family: @default-font;
+    background-color: @color-4 !important;
+}
+
+pre {
+    font-family: @default-font;
+}
+
+.version-number {
+    color: @color-7;
+}
+
+.txt-dark-theme {
+    color: @color-7 !important;
+}
+
+.txt-dark-theme-2 {
+    color: @color-2 !important;
+}
+
+.txt-error-file {
+    color: @color-5 !important;
+}
+
+.card {
+    border: 0px;
+}
+
+.error-color {
+    background-color: @color-3 !important;
+}
+
+.occurrence-msg {
+    color: @color-3;
+}
+
+.font-error {
+    font-size: 20px !important;
+}
+
+.main-error::after {
+    display: none;
+}
+
+.accordion-button::after {
+    color: @color-7 !important;
+}
+
+.bench-title {
+    color: @color-7;
+}
+
+.hidden {
+    display: none;
+}
+
+.message {
+    word-wrap: break-word;
+}
+
+.submenu {
+    font-size: 14px;
+    color: @color-7;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover {
+        color: @color-3;
+    }
+}
+
+.list-group-item::before {
+    display: none;
+}
+
+.list-group-item:active {
+    background-color: @color-2 !important;
+}
+
+.modal-header,
+.modal-body,
+.modal-footer,
+.list-group-item,
+.accordion-button {
+    border: 0;
+    background-color: @color-6 !important;
+}
+
+.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    background: #F0F0F0;
+    font-family: @default-font;
+    letter-spacing: 0.5;
+
+    &-keyword,
+    &-attribute,
+    &-selector-tag,
+    &-meta-keyword,
+    &-doctag,
+    &-name {
+        font-weight: bold;
+    }
+
+    &-title,
+    &-section {
+        color: #880000;
+        font-weight: bold;
+    }
+
+    &-emphasis {
+        font-style: italic;
+    }
+
+    &-strong {
+        font-weight: bold;
+    }
+}
+
+.btn {
+    font-size: 12px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.8em 1.7em;
+    display: inline-block;
+    border-radius: 6em;
+    transition: all .2s;
+    border: none;
+    font-family: inherit;
+    font-weight: 500;
+    margin-left: 10px;
+
+    &-solution {
+        color: @white !important;
+        background-color: @green-2 !important;
+    }
+
+    &:hover {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* &:active {
+        transform : translateY(-1px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    } */
+
+    &:after {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 100px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all .4s;
+        background-color: @green-2;
+    }
+
+    /* &:hover:after {
+        transform: scaleX(1.0) scaleY(1.2);
+        opacity  : 0;
+    } */
+}
+
+.btn-version {
+    padding: 0.5em 1.3em;
+    border-radius: 6em;
+    border: none;
+    font-weight: 600;
+    color: @color-7 !important;
+    background-color: @color-6;
+    margin-left: 10px;
+}
+
+.bg {
+    &-info-exc {
+        font-weight: bold;
+        color: @color-5 !important;
+    }
+
+    &-main-info-exc {
+        background-color: @color-6 !important;
+    }
+
+    &-submenu {
+        background-color: @color-1 !important;
+    }
+
+    &-custom {
+        background-color: @color-6;
+    }
+
+    &-solution {
+        background-color: @green-1;
+    }
+}
+
+/* Works on Firefox */
+
+* {
+    /* scrollbar-width: @scroll-color-1;
+    scrollbar-color: @scroll-color-2 @scroll-color-2;
+ */
+    /* Works on Chrome, Edge, and Safari */
+
+    &::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: @scroll-color-1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: @scroll-color-2;
+        border-radius: 20px;
+        border: 3px solid @scroll-color-1;
+    }
+}
+
+.accordion-button:not(.collapsed) {
+    border: hidden !important;
+}
+
+.accordion-button:link,
+.accordion-button:visited,
+.accordion-button:hover,
+.accordion-button:active {
+    text-decoration: none !important;
+    border: hidden !important;
+    border-radius: 0% !important;
+}
+
+.accordion-button:focus {
+    border: hidden !important;
+}

@@ -1,14 +1,23 @@
 <?php 
-use Josantonius\Session\Session;
-(new Session)->start();
+// use Josantonius\Session\Session;
+// (new Session)->start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 class Model extends MEDOOHelper{
 
     public static function authenticate($email, $password){
-        $res = parent::selectOne("admin_tbl",'*',['email'=> $email]);
-        if(!empty($res) && password_verify($password, $res['password'])){
+        $res = parent::selectOne("system_administrators", '*',['email'=> $email]);
+        if(!empty($res) && password_verify($password, $res['password_hash'])){
            
-            (new Session)->set("isUserLoggedIn",value: $email);
-            (new Session)->regenerateId();
+            // (new Session)->set("isUserLoggedIn",$email);
+            // (new Session)->regenerateId();
+
+            $_SESSION['isUserLoggedIn'] = $email;
+            $_SESSION['isUserLoggedInId'] = $res['admin_id'];
+            
+            session_regenerate_id(true);
+            (new Controller)->addAdminLoggins($res['admin_id'], "Sign In", 'Signed Out', 'Signed In', $res['admin_id'], 'success');
            
             return [
                 'type' => 'success',
@@ -16,8 +25,7 @@ class Model extends MEDOOHelper{
                 'email' => $email,
                 'role' => $res['role'],
                 'Oauth' => $res['status'] == 'on' ? '../admin/Oauth' : 'Off',
-                'url' => '../limvo/admin/home',
-                'sessionId' => (new Session)->get("isUserLoggedIn")
+                'url' => '../limvo/admin/home'
             ];
         }else{
             return [
@@ -54,6 +62,31 @@ class Model extends MEDOOHelper{
 
         return $pagination;
 
+    }
+
+    public static function getUserPermissionSidebar(string $email){
+
+        try {
+            return parent::selectOne('system_administrators',['permissions'], ['email' => $email])['permissions'];
+        } catch (\Throwable $th) {
+           var_dump($th);
+        }
+    }
+
+    //admin_id	action_performed	created_date	created_time	ip_address	affected_entity	old_value	new_value	action_status
+    public static function addAdminLogs(string $adminId, string $actionPerformed, string $oldVal, string $newVal, string $affectedEntity, string $status){
+        $log_data = [
+            'admin_id' => $adminId,
+            'action_performed' => $actionPerformed,
+            'created_date' => date("Y-m-d"),
+            'created_time' => date("H:i:s"),
+            'ip_address' => 'ip_addresss',
+            'affected_entity' => $affectedEntity,
+            'old_value' => $oldVal,
+            'new_value' => $newVal,
+            'action_status' => $status,
+        ];
+        return parent::insert('admin_activity_logs',$log_data);
     }
 
 

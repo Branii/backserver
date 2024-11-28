@@ -1,4 +1,7 @@
 <style>
+  .perm{
+    border-bottom: solid 1px #eee;
+  }
   .pager {
     position: relative;
     /* Sets positioning context for absolute elements inside */
@@ -204,6 +207,10 @@
   border:solid 2px orangered
 }
 
+.maintext{
+  color:#000;
+}
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -281,7 +288,7 @@
               <h6 class="fs-4 fw-semibold mb-0">Two Factor Enabled</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Two Factor Method</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Activity Role</h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0">Account Status</h6>
@@ -496,5 +503,224 @@
 </div>
 </div>
 </div>
+
+
+<div id="view-profile" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
+<div class="modal-dialog modal-dialog-scrollable modal-lg">
+<div class="modal-content" style="padding:20px">
+<div class="d-flex justify-content-between">
+<h4 class="card-title">Admin Profile</h4>
+            <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
+          </div><p></p>
+          <div class="">
+              <!-- start Info Border with Icons -->
+              <div class="cardd">
+                <div class="card-body">
+
+                <div class="col-lg-12 d-flex align-items-stretch">
+                      <div class="card w-100 border position-relative overflow-hidden">
+                        <div class="card-body p-4">
+                          <div class="text-center">
+                            <img src="" alt="modernize-img" id="adminprofile" class="img-fluid rounded-circle" width="120" height="120">
+                            <div class="d-flex align-items-center justify-content-center my-4 gap-4">
+                               <h3 class="mb-0" id="pro_fullname">full_name</h3>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="col-12">
+                      <div class="card w-100 border position-relative overflow-hidden mb-0">
+                        <div class="card-body p-4">
+                          <h4 class="card-title">Personal Details</h4>
+                          <p class="card-subtitle mb-4">To change your personal detail , edit and save from here</p>
+                          <form>
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <div class="mb-3">
+                                  <label for="exampleInputtext" class="form-label">User name</label>
+                                  <input type="text" class="form-control" id="adminusername" placeholder="---">
+                                </div>
+                                <div class="mb-3">
+                                  <label for="exampleInputtext1" class=" form-label">Email address</label>
+                                  <input type="email" class="form-control" id="adminemail" placeholder="---">
+                                </div>
+                                <div class="mb-3">
+                                  <label for="exampleInputtext1" class="form-label">Mobile contact</label>
+                                  <input type="email" class="form-control" id="admincontact" placeholder="---">
+                                </div>
+                              </div>
+                              <div class="col-lg-6">
+                                <div class="mb-3">
+                                  <label for="exampleInputtext2" class="form-label">Recovery email</label>
+                                  <input type="text" class="form-control" id="adminrecovery" placeholder="---">
+                                </div>
+                                <div class="mb-3">
+                                  <label for="exampleInputtext2" class="form-label">Account status</label>
+                                  <input type="text" class="form-control" id="adminstatus" placeholder="---">
+                                </div>
+                                <div class="mb-3">
+                                  <label for="exampleInputtext3" class="form-label">Activity role</label>
+                                  <input type="text" class="form-control" id="adminrole" placeholder="---">
+                                </div>
+                              </div>
+                              <!-- <div class="col-12">
+                                <div>
+                                  <label for="exampleInputtext4" class="form-label">Address</label>
+                                  <input type="text" class="form-control" id="exampleInputtext4" placeholder="814 Howard Street, 120065, India">
+                                </div>
+                              </div> -->
+                              <div class="col-12">
+                                <div class="d-flex align-items-center justify-content-end mt-4 gap-6">
+                                  <!-- <button class="btn btn-primary">Save</button>
+                                  <button class="btn bg-danger-subtle text-danger">Cancel</button> -->
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                 
+                </div>
+              </div>
+              <!-- end Info Border with Icons -->
+            </div>
+</div>
+</div>
+</div>
+
+<div id="view-permissions" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
+<div class="modal-dialog modal-dialog-scrollable modal-lg">
+<div class="modal-content" style="padding:20px">
+<div class="d-flex justify-content-between">
+<h4 class="card-title adminName">
+</h4>
+
+<div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
+</div><p></p>
+<div class="permissionholder" style="overflow-y:scroll;max-height:500px;">
+
+
+</div>
+<div class="col-12">
+<div class="d-flex align-items-center justify-content-end mt-4 gap-6">
+<button class="btn bg-danger-subtle text-danger updateperm">Update permissions</button>
+</div>
+</div>   
+</div>
+</div>
+</div>
+
+
+<div class="modal fade" id="view-activity-logs" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="bs-example-modal-lg" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header d-flex align-items-center">
+        <h5 class="modal-title logname" id="myLargeModalLabel">
+          ...
+        </h5>
+        <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
+      </div>
+
+
+      <div class="px-4 py-3 border-bottom pager1">
+    <span class="top-left-btn">
+      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
+
+
+          <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
+                  <input type="text" class="form-control queryholder" placeholder="Search ..." aria-label="Username" aria-describedby="basic-addon1" />
+          </div>
+
+          <div class="input-group mb-3">
+                <input type="date" class="form-control queryholder datefrom" style="z-index:9999"/>
+          </div>
+
+          <div class="input-group mb-3">
+                <input type="date" class="form-control queryholder dateto" style="z-index:9999"/>
+          </div>
+
+
+      </div>
+    </span>
+    <span class="top-center" aria-label=" navigation example">
+      <!--enter is free-->
+    </span>
+    <span class="topp-right" id="paginations" aria-label="Page navigation example">
+
+      <div class="btn-group mb-2" role="group" aria-label="Basic example"
+        style="border:solid 1px #eee;color:#bbb;background-color:#fff">
+        <button type="button" class="btn bg-white-subtle " value="right" aria-label="PDF"
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PDF">
+          <i class='bx bx-file' style="font-size:20px"></i>
+        </button>
+        <button type="button" class="btn bg-white-subtle " value="right" aria-label="XLS"
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="XLS">
+          <i class='bx bx-file-blank' style="font-size:20px"></i>
+        </button>
+        <button type="button" class="btn bg-white-subtle rangelogs" value="right" aria-label="Filter"
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Filter">
+          <i class='bx bx-check-double loaderz' style="font-size:20px"></i>
+        </button>
+      </div>
+
+    </span>
+
+  </div>
+
+      <div class="modal-body" style="overflow-y:scroll;max-height:500px;">
+      <table class="table text-nowrap align-middle table-bordered">
+                  <thead class="text-dark fs-4">
+                    <tr>
+                      <!-- <th>
+                        <h6 class="fs-4 fw-semibold mb-0">Id</h6>
+                      </th> -->
+                      <th>
+                        <h6 class="fs-4 fw-semibold mb-0">Action</h6>
+                      </th>
+                      <th>
+                        <h6 class="fs-4 fw-semibold mb-0">Date</h6>
+                      </th>
+                      <th>
+                        <h6 class="fs-4 fw-semibold mb-0">Time</h6>
+                      </th>
+                      <th>
+                        <h6 class="fs-4 fw-semibold mb-0">Ip Address</h6>
+                      </th>
+                      <th>
+                        <h6 class="fs-4 fw-semibold mb-0">Affected</h6>
+                      </th>
+                      <th>
+                        <h6 class="fs-4 fw-semibold mb-0">Old Value</h6>
+                      </th>
+                      <th>
+                        <h6 class="fs-4 fw-semibold mb-0">New Value</h6>
+                      </th>
+                      <th>
+                        <h6 class="fs-4 fw-semibold mb-0">Status</h6>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminLogsContainer">
+                
+                  </tbody>
+        </table>
+      </div>
+      <div class="modal-footer" id="paginationAdminLogs" style="border-top:solid 1px #eee;">
+        <button type="button" class="btn bg-danger-subtle text-danger  waves-effect text-start" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+</div>
+</div>
+
+
+
                      
 

@@ -1,6 +1,10 @@
 <?php 
-session_start();;
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
 !(new Controller)->isUserLoggedIn() ? header("location:../") : "";
+// $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
+// echo $adminEmail;
 ?>
 <!DOCTYPE html>
 <html oncontextmenu="return falsex" lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme"
@@ -23,6 +27,9 @@ session_start();;
     href="<?php echo BASE_URL; ?>assets/css/chrometab.css" />
   <link rel="stylesheet"
     href="<?php echo BASE_URL; ?>assets/css/sidebar.css" />
+
+  <link rel="stylesheet"
+    href="<?php echo BASE_URL; ?>assets/css/daterangepicker.css" />
 
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -297,12 +304,9 @@ session_start();;
     <script src="<?php echo BASE_URL; ?>assets/js/vendor.min.js"></script>
     <!-- Import Js Files -->
     <script src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script>
-    <script src="https://unpkg.com/draggabilly@2.2.0/dist/draggabilly.pkgd.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/bootstrap.bundle.min.js">
-    </script>
-    <script
-      src="<?php echo BASE_URL; ?>assets/libs/simplebar/dist/simplebar.min.js">
-    </script>
+    <script src="<?php echo BASE_URL; ?>assets/js/draggabilly.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/libs/simplebar/dist/simplebar.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/app.init.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/theme.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/app.min.js"></script>
@@ -323,6 +327,9 @@ session_start();;
     <script src="<?php echo BASE_URL; ?>assets/js/lotterybet.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/trackbet.js"></script>
       
+        <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.init.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.js"></script>
+
 
     <!-- solar icons -->
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>

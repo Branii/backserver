@@ -10,6 +10,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
+        '98cbdd0232d3f0a4840955011b6faf90' => __DIR__ . '/..' . '/brenno-duarte/modern-php-exception/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -18,6 +19,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Symfony\\Component\\Yaml\\' => 23,
         ),
         'P' => 
         array (
@@ -25,6 +27,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         ),
         'M' => 
         array (
+            'ModernPHPException\\' => 19,
             'Medoo\\' => 6,
         ),
         'J' => 
@@ -58,9 +61,17 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
+        'Symfony\\Component\\Yaml\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/yaml',
+        ),
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
+        'ModernPHPException\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/brenno-duarte/modern-php-exception/src',
         ),
         'Medoo\\' => 
         array (
