@@ -31,15 +31,45 @@ if($flag == "viewAdmins") {
     
 }
 
+if($flag == "permissions") {
+    $encodedString = isset($this->viewData['permissionsData']) ? $this->viewData['permissionsData'] : '';
+    $userId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
+    $permissionsData = urldecode($encodedString);
+    $result = (new AdminModel())->updatePermissions($permissionsData, $userId);
+    echo $result >= 1 ? json_encode(['Updated successfully']) : json_encode(['Nothing updated']);
+}
+
+if($flag == "adminlogs") {
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
+    $userId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
+    $result = (new AdminModel())->getAdminLogs($page, $limit, $userId);
+    echo json_encode([
+        'adminLogs' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
+
+if($flag == "filterAdminLogs") {
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
+    $adminId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
+    $datefrom = isset($this->viewData['datefrom']) ? $this->viewData['datefrom'] : '';
+    $dateto = isset($this->viewData['dateto']) ? $this->viewData['dateto'] : '';
+    $result = (new AdminModel())->filterAdminLogs($page, $limit, $adminId, $datefrom, $dateto);
+    echo json_encode([
+        'adminLogs' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
+
 function generateUsername()
 {
     $adjectives = ['Swift', 'Mighty', 'Brave', 'Silent', 'Clever', 'Witty', 'Bold', 'Sharp','Logos','Botafogo','Royal','Senior','Speed','Fast','Steel'];
     $nouns = ['Tiger', 'Eagle', 'Wolf', 'Lion', 'Hawk', 'Bear', 'Shark', 'Panther','Purple','Hagar','Bull','Pecker','Deer','Wulder','Bender','Weaver'];
-
     $adjective = $adjectives[array_rand($adjectives)];
     $noun = $nouns[array_rand($nouns)];
     $randomNumber = rand(10, 10000);
-
     return $adjective . $noun . $randomNumber;
 }
 

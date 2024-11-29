@@ -23,8 +23,8 @@ $(function () {
                       <td>${item.order_id.substring(0, 7)}</td>
                       <td>${item.username}</td>
                       <td><i class='bx bxs-circle' style='color:${status[item.order_type].color};font-size:8px;margin-right:5px;'></i>${status[item.order_type].title}</td>
-                      <td>${item.account_change}</td>
-                      <td>${item.balance}</td>
+                      <td>${Number(item.account_change).toFixed(4)}</td>
+                      <td>${Number(item.balance).toFixed(4)}</td>
                       <td>${item.dateTime}</td>
                       <td>${item.order_id}</td>
                       <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> Complete</td>
@@ -234,21 +234,24 @@ $(function () {
   let userId;
   function performSearch() {
     const query = $('#selected').val();
-    $.post(`../admin/filterusername/${query}`, function (response) {
+
+      $.post(`../admin/filterusername/${query}`, function (response) {
 
       if (typeof response === 'string') {
-        $(".queryholderx").hide();
+        $(".acc_transaction_username").hide();
       } else if (typeof response === 'object') {
+        
         let html = '';
         // Sort users alphabetically by username
         response.sort((a, b) => a.username.localeCompare(b.username));
         // Generate HTML for the select options
         response.forEach((user) => {
-          html += `<li value="${user.uid}" class="option">${user.username}</li>`;
+          html += `<span value="${user.uid}" class="option">${user.username}</span>`;
         });
 
         // Insert the generated options into the <select> element
-        $(".queryholderx").html(html).show();
+        $(".acc_transaction_username").html(html).show();
+
       }
     })
   }
@@ -263,7 +266,7 @@ $(function () {
     $("#selected").val($(this).text())
     userId = $(this).attr('value')
     $(".userId").val(userId)
-    $(".queryholderx").hide()
+    $(".acc_transaction_username").hide()
   })
 
   $(document).on('click', '.executetrans', function () {
@@ -296,7 +299,7 @@ $(function () {
   })
 
   $(document).on('click', function () {
-    $(".queryholderx").hide();
+    $(".acc_transaction_username").hide();
   });
 
   $(".numrows").change(function(){

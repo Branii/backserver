@@ -1,0 +1,33 @@
+{
+    "name": "brenno-duarte/modern-php-exception",
+    "description": "Display PHP errors and exceptions in a modern and intuitive way",
+    "license": "MIT",
+    "keywords": [
+        "exception",
+        "throwable",
+        "exception-handler",
+        "error-handler",
+        "whoops",
+        "handler",
+        "php-exception"
+    ],
+    "require": {
+        "php": "^8.3",
+        "ext-mbstring": "*",
+        "ext-pdo": "*",
+        "symfony/yaml": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ModernPHPException\\": "src/"
+        },
+        "files": [
+            "functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "tests/"
+        }
+    }
+}

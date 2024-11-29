@@ -270,8 +270,8 @@ if ($flag == "userlistdata") {
     // Map the results to an array with keys
     $data = array_map(fn($result) => array_combine($keys, $result), $results);
     
-    $result = AgentManageModel::UpdateUserquotaData(json_encode($data), $uid);
-    echo json_encode($result);
+    $result = (new AgentManageModel())->UpdateUserquotaData(json_encode($data), $uid);
+    echo json_encode(value: $result);
 
 
 }

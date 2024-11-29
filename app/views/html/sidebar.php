@@ -57,130 +57,81 @@
 
     </ul>
 </nav> -->
+<?php
 
-<div class="accordion">
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i><span> Business Flow</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab1" class="tab-button item" value="account_transaction">Account Transactions</li>
-                <li id="tab2" class="tab-button item" value="game_getting_statistics">Game Betting Statistics</li>
-                <li id="tab3" class="tab-button item" value="lottery_betting_record">Lottery Betting Record</li>
-                <!-- <li id="tab4" class="item">Tab 4</li>
-                    <li id="tab5" class="item">Tab 5</li> -->
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i><span> Financial Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab6" class="item tab-button" value="tab6">Tab 6</li>
-                <li id="tab7" class="item tab-button" value="tab7">Tab 7</li>
-                <li id="tab8" class="item tab-button" value="tab8">Tab 8</li>
-                <li id="tab9" class="item tab-button" value="tab9">Tab 9</li>
-                <li id="tab10" class="item tab-button" value="tab10">Tab 10</li>
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i><span> Report Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab11" class="item tab-button" value="account_transaction">Tab 11</li>
-                <li id="tab12" class="item tab-button" value="account_transaction">Tab 12</li>
-                <li id="tab13" class="item tab-button" value="account_transaction">Tab 13</li>
-                <li id="tab14" class="item tab-button" value="account_transaction">Tab 14</li>
-                <li id="tab15" class="item  tab-button  showPopUP">Tab 15</li>
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i> <span> User Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-            <li id="tab1" class="tab-button item" value="userlist">Userlist</li>
-            <li id="tab2" class="tab-button item" value="userlogs">User Logs</li>
-               
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i> <span> Promotion Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab16"  class="tab-button item" value="invitation">Invitation & Referal Links</li>
-                <li id="tab17" class="item">Tab 12</li>
-                <li id="tab18" class="item">Tab 13</li>
-                <li id="tab19" class="item">Tab 14</li>
-                <li id="tab20" class="item showPopUP">Tab 15</li>
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i><span> User Bank Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab16" class="item">Tab 11</li>
-                <li id="tab17" class="item">Tab 12</li>
-                <li id="tab18" class="item">Tab 13</li>
-                <li id="tab19" class="item">Tab 14</li>
-                <li id="tab20" class="item showPopUP">Tab 15</li>
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i><span> Agent Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab16"class="tab-button item" value="quota">Quota Settings</li>
-                <li id="tab17" class="item">Tab 12</li>
-                <li id="tab18" class="item">Tab 13</li>
-                <li id="tab19" class="item">Tab 14</li>
-                <li id="tab20" class="item showPopUP">Tab 15</li>
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i>  <span> Game Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab16" class="item">Tab 11</li>
-                <li id="tab17" class="item">Tab 12</li>
-                <li id="tab18" class="item">Tab 13</li>
-                <li id="tab19" class="item">Tab 14</li>
-                <li id="tab20" class="item showPopUP">Tab 15</li>
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i><span> System Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab11" class="item tab-button" value="administrator_list">Administrator List</li> 
-                <li id="tab17" class="item tab-button" value="backup_recovery">Backup & Recovery</li>
-                <li id="tab18" class="item">Tab 13</li>
-                <li id="tab19" class="item">Tab 14</li>
-                <li id="tab20" class="item showPopUP">Tab 15</li>
-            </ul>
-        </div>
-    </div>
-</div>
+$adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
+$decode = (new Controller)->getUserPermissionSidebars($adminEmail);
+$permissions = json_decode($decode,true);
+// echo "<pre>";
+// print_r($permissions);
+$sidebarMenu = [
+    1 => ['title'=> 'Account Transaction Details', 'content' => 'account_transaction'],
+    2 => ['title'=> 'Game Betting Statistics', 'content' => 'Game'],
+    3 => ['title'=> 'Lottery Betting Record', 'content' => 'Lottery'],
+    4 => ['title'=> 'Track Records', 'content' => 'Track'],
+    5 => ['title'=> 'Deposit Record', 'content' => 'Deposit'],
+    6 => ['title'=> 'Withdrawal Records', 'content' => 'Withdrawal'],
+    7 => ['title'=> 'Finance Fund Changes', 'content' => 'Finance'],
+    8 => ['title'=> 'Win/Loss Report', 'content' => 'Win'],
+    9 => ['title'=> 'User List', 'content' => 'Userlist'],
+    10 => ['title'=> 'User Logs', 'content' => 'Userlogs'],
+    11 => ['title'=> 'Invitation & Referral Links', 'content' => 'Invitation'],
+    12 => ['title'=> 'Bank Card List', 'content' => 'Bank'],
+    13 => ['title'=> 'Quota Settings', 'content' => 'quota'],
+    14 => ['title'=> 'Lottery Draw Records', 'content' => 'lotterydraws'],
+    15 => ['title'=> 'Lottery Basic Parameters', 'content' => 'lotterybasic'],
+    16 => ['title'=> 'Lottery Bonus Parameters', 'content' => 'lotterybonus'],
+    17 => ['title'=> 'Administrator List', 'content' => 'administrator_list'],
+    18 => ['title'=> 'Backup & Recovery', 'content' => 'backup_recovery']
+  ];
+
+  $sidebarMain = [
+    1 => 'Business flow',
+    2 => 'Financial Management',
+    3 => 'Report Management',
+    4 => 'User Management',
+    5 => 'Promotion Management',
+    6 => 'User Bank Management',
+    7 => 'Game Management',
+    8 => 'Agent Management',
+    9 => 'System Management',
+  ];
+  
+//   $permission = [
+//     1=> [1,2,3,4],
+//     2 => [5,6,7],
+//     3 => [8],
+//     4 => [9,10],
+//     5 => [11],
+//     6=> [12],
+//     7 => [14,15,15],
+//     8 => [13],
+//     9=> [17,18]
+//   ];
+
+foreach ($permissions as $sidebar => $menu) {
+    ?>
+     <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+         <span><?=$sidebarMain[$sidebar]?></span>
+          </div>
+          <div class="accordion-content">
+              <ul class="custom-list">
+                <?php 
+  
+                 foreach ($menu as $item) {
+                    ?>
+                      <li id="tab1" class="tab-button item" value="<?=$sidebarMenu[$item]['content']?>"><?=$sidebarMenu[$item]['title']?></li>
+                    <?php
+                 }
+                
+                ?>
+              </ul>
+          </div>
+      </div>
+    <?php
+    # code...
+  }
+?>
+
+

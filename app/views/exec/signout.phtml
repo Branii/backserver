@@ -1,5 +1,6 @@
 <?php 
-
 session_start();
+$admin_id = $_SESSION['isUserLoggedInId'];
+(new Controller)->addAdminLoggins($admin_id, "Sign Out", 'Signed In', 'Signed Out', $admin_id, 'success');
 session_destroy();
 header("location:../");

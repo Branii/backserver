@@ -96,11 +96,9 @@ class AgentManageModel extends MEDOOHelper
 
     public static function UpdateUserquotaData($userData, $uid)
     {
-        $data = ["rebate_list" => $userData,];
-        $where = ["uid" => $uid];
-        $upudaterebatelist = parent::update("users", $data, $where);
+
+        $upudaterebatelist = parent::update("users", ["rebate_list" => $userData], ["uid" => $uid]);
         if ($upudaterebatelist > 0) {
-        // self::getRebateQuotaByUserId($uid);
             return "success";
         } else {
             return "No changes made to user data.";

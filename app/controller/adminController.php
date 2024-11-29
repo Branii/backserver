@@ -37,7 +37,31 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    // side bar datas
+    public function permissions($data, $adminId){
+        $this->view('exec/admins_exec',['flag'=> 'permissions','permissionsData'=>$data,'userId'=>$adminId]);
+        $this->view->render();
+    }
+
+    public function adminlogs($pageNumber,$limit,$adminId){
+        $this->view('exec/admins_exec',['page'=>$pageNumber,'limit'=>$limit, 'flag'=> 'adminlogs','userId'=>$adminId]);
+        $this->view->render();
+    }
+
+    public function filterAdminLogs($pageNumber, $limit, $adminId, $datefrom, $dateto){
+        $this->view('exec/admins_exec',[
+            'page'=>$pageNumber,
+            'limit'=>$limit, 
+            'flag'=> 'filterAdminLogs',
+            'userId'=>$adminId,
+            'datefrom'=>$datefrom,
+            'dateto'=>$dateto
+        ]);
+        $this->view->render();
+    }
+
+    
+
+    // side bar datas adminLogs
 
     public function transactiondata($pageNumber,$limit){
         $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'transactiondata']);
