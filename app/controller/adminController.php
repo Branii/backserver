@@ -47,6 +47,20 @@ class adminController extends Controller {
         $this->view->render();
     }
 
+    public function searchlogs($pageNumber,$limit,$adminId,$query){
+        $this->view('exec/admins_exec',[
+            'page'=>$pageNumber,
+            'limit'=>$limit,
+            'flag'=> 'searchlogs',
+            'userId'=>$adminId,
+            'query'=>$query,
+            ]
+        );
+        $this->view->render();
+    }
+
+    
+
     public function filterAdminLogs($pageNumber, $limit, $adminId, $datefrom, $dateto){
         $this->view('exec/admins_exec',[
             'page'=>$pageNumber,

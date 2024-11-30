@@ -1,9 +1,8 @@
 <?php
-
 require '../vendor/autoload.php';
 require_once("../autoload.php");
-
 use ModernPHPException\ModernPHPException;
+
 // Constants definition
 define("ROOT", dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define("APP", ROOT . 'app' . DIRECTORY_SEPARATOR);
@@ -25,6 +24,5 @@ spl_autoload_register(function ($className) use ($modules) {
         }
     }
 });
-
-(new ModernPHPException())->start();
+//(new ModernPHPException)->start();
 (new App());

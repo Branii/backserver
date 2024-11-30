@@ -7,9 +7,10 @@ $(function () {
       1: { title: "Deposit", color: "#4CAF50" },          // Green
       2: { title: "Win Bonus", color: "#FF9800" },         // Orange
       3: { title: "Bet Awarded", color: "#03A9F4" },       // Light Blue
-      4: { title: "Withdrawal", color: "#F44336" },        // Red
-      5: { title: "Bet Cancelled", color: "#9E9E9E" },     // Grey
-      6: { title: "Bet Deduct", color: "#E91E63" },        // Pink
+      4: { title: "Withdrawal", color: "#F44336" },  
+      5: { title: "Bet Deduct", color: "#E91E63" },       // Red
+      6: { title: "Bet Cancelled", color: "#9E9E9E" },     // Grey
+           // Pink
       7: { title: "Rebates", color: "#8BC34A" },           // Light Green
       8: { title: "Self Rebate", color: "#00BCD4" },       // Cyan
       9: { title: "Send Red Envelope", color: "#FF5722" }, // Deep Orange

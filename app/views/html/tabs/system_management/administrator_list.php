@@ -633,7 +633,7 @@
 
           <div class="input-group mb-3">
                   <span class="input-group-text" id="basic-addon1" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
-                  <input type="text" class="form-control queryholder" placeholder="Search ..." aria-label="Username" aria-describedby="basic-addon1" />
+                  <input type="text" class="form-control queryholder searchlogs" placeholder="Search ..." aria-label="Username" aria-describedby="basic-addon1" />
           </div>
 
           <div class="input-group mb-3">
