@@ -141,27 +141,27 @@
     }
 
     /* Custom Scrollbar for Webkit Browsers */
-    .table-wrapperlist::-webkit-scrollbar {
+    .table-wrapperuserlist::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
         /* Slimmer scrollbar height for horizontal scrolling */
     }
 
-    .table-wrapperlist::-webkit-scrollbar-track {
+    .table-wrapperuserlist::-webkit-scrollbar-track {
         background: #f1f1f1;
         /* Lighter background for track */
         border-radius: 5px;
     }
 
-    .table-wrapperlist::-webkit-scrollbar-thumb {
+    .table-wrapperuserlist::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .table-wrapperlist::-webkit-scrollbar-thumb:hover {
+    .table-wrapperuserlist::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
         /* Darker blue on hover */
     }
@@ -232,7 +232,7 @@
                 <input type="text" class="userIds" style="display:none" />
                 <ul class="queryholderuserlist"></ul>
 
-                <select name="recharge" class="form-control form-select queryholderlist recharges"
+                <select name="recharge" class="form-control form-select queryholder recharges"
                     data-bs-placeholder="Select Type">
                     <option value="">-Rechatge Level-</option>
                     <option value="1">Level One</option>
@@ -250,12 +250,12 @@
 
                 </select>
 
-                <!-- <input type="date" class="form-control queryholderlist startdates"  aria-describedby="name"
+                <input type="date" class="form-control queryholderlist startdates"  aria-describedby="name"
                     placeholder="Name" />
 
 
                 <input type="date" class="form-control queryholderlist enddates" aria-describedby="name"
-                    placeholder="Name" /> -->
+                    placeholder="Name" />
 
                 <!-- <button type="button" class="btn btn-outline-light text-dark queryholderlist addagents">
                     <i class='bx bx-user-plus'></i> Add Agent</button>
@@ -676,3 +676,5 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+

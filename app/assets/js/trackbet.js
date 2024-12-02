@@ -194,8 +194,8 @@ $(function () {
   
     $(".playerbet").click(function () {
       let direction = $(this).val();
-      const tableWrapper = $(".table-wrapperlist");
-      const tableWrappers = document.querySelector(".table-wrapperlist");
+      const tableWrapper = $(".table-wrappertrack");
+      const tableWrappers = document.querySelector(".table-wrappertrack");
       const scrollAmount = 1000; // Adjust as needed
       const scrollOptions = {
         behavior: "smooth",
@@ -239,7 +239,7 @@ $(function () {
       console.log(betdata);
       $(".loaderbet").remove("bx bx-check-double").addClass("bx bx-loader bx-spin");
       try {
-        $.post(`../admin/filterbetdata/${betdata}/${pageLimit}`,
+        $.post(`../admin/filterbetdatas/${betdata}/${pageLimit}`,
            function(response) {
                console.log(response)
               //  return
@@ -294,14 +294,14 @@ $(function () {
     
   
     // viewbets
-    $(document).on("click",".viewbets",function(){
-      $("#viewbetsmodal").modal("show")
-      const betcode = $(this).attr("data-betcode")
-      const gametype = $(this).attr("data-gametype")
-      $("#rowbet").html("")
-      $("#rowbe1").html("")
-      viewstakedBet(betcode,gametype)
-    })
+    // $(document).on("click",".viewbets",function(){
+    //   $("#viewbetsmodal").modal("show")
+    //   const betcode = $(this).attr("data-betcode")
+    //   const gametype = $(this).attr("data-gametype")
+    //   $("#rowbet").html("")
+    //   $("#rowbe1").html("")
+    //   viewstakedBet(betcode,gametype)
+    // })
   
     // async function viewstakedBet(betcode,gametype) {
     //   try {
@@ -385,6 +385,20 @@ $(function () {
     });
   });
   
+  
+  function tableScrolltrack() {
+    const tableContainerTrack = document.querySelector(".table-wrappertrack");
+        const headerRowTrack = document.querySelector(".trackheadrow");
+
+        tableContainerTrack.addEventListener("scroll", function () {
+          if (tableContainerTrack.scrollTop > 0) {
+            headerRowTrack.classList.add("sticky-headerstrack");
+          } else {
+            headerRowTrack.classList.remove("sticky-headerstrack");
+          }
+        });
+  }
+  tableScrolltrack();
   
   });
   

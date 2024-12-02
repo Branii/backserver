@@ -9,41 +9,30 @@ $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 if ($flag == "userlistdata") {
 
     $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
-    $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit
-    
-    // Fetch the user list data
-    $userModel = new UserManageModel();
-    $result = $userModel->FetchUserlistData($page, $limit);
-    
-    if (empty($result['data'])) {
-        echo json_encode([
-            'users' => [],
-            'totalPages' => 0
-        ]);
-        exit;
-    }
-    
+    $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
+    $result = (new UserManageModel())->FetchUserlistData($page, $limit);
+
     $usersList = [];
-    
+
     // Iterate over each user and fetch additional data
     foreach ($result['data'] as $data) {
         // Fetch additional user-specific data
-        $userlogins = $userModel->countUserLogs($data['uid']);
-        $referals = $userModel->getDirectReferrals($data['agent']);
-        $subor = $userModel->getSubordinate($data['agent']);
-        $totalsubordinate = $userModel->Fetchsubordinates($data['uid']);
-    
+        $userlogins = (new UserManageModel())->countUserLogs($data['uid']);
+        $referals = (new UserManageModel())->getDirectReferrals($data['agent_id']);
+        $subor = (new UserManageModel())->getSubordinate($data['agent_id']);
+        $totalsubordinate = (new UserManageModel())->Fetchsubordinates($data['uid']);
+
         // Determine relationship and subordinates status
         $relationship = '';
         $subordinates = '';
-    
-        if (!empty($data['agent_username']) && !empty($subor) && is_array($subor)) {
-            $relationship = $data['agent_username'] . ' ' . $referals . ' ' . $data['username'];
+
+        if (!empty($data['agent_name']  != "*****") && !empty($subor != "*****") && is_array($subor = !"*****")) {
+            $relationship = $data['agent_name'] . ' ' . $referals . ' ' . $data['username'];
             $subordinates = (count($subor) > 1) ? '...' : '';
-        } elseif (!empty($data['agent_username']) && empty($subor)) {
+        } elseif ($data['account_type'] == 2) {
             $relationship = "Top Agent";
         }
-    
+
         // Add data to the user list
         $usersList[] = array_merge($data, [
             'userlogins' => $userlogins,
@@ -54,14 +43,13 @@ if ($flag == "userlistdata") {
             'subordinates' => $subordinates
         ]);
     }
-    
+
     // Return the result as JSON
     echo json_encode([
         'users' => $usersList,
         'totalPages' => ceil($result['total'] / $limit)
     ]);
-    
-} 
+}
 
 if ($flag == "filteruserlist") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
@@ -127,13 +115,13 @@ if ($flag == "filteruserlist") {
         'userlists' => $bigArr,
         'totalPages' => ceil($result['total'] / $limit)
     ]);
-} 
+}
 
 
 if ($flag  == "fetchRebatedata") {
     $result = (new UserManageModel())->FetchRebateData() ?? [];
     echo json_encode($result);
-} 
+}
 
 
 if ($flag == "addAgent") {
@@ -142,17 +130,23 @@ if ($flag == "addAgent") {
     parse_str($data, $parsedData);
     $result = (new UserManageModel())->validateRegister($parsedData) ?? [];
     if ($result == []) {
-        $dateTime = date("Y-m-d H:i:s");
+        $dateTime = date("Y-m-d");
         $account_type = 2;
         $rebatelist =  (new UserManageModel())->fetchquotaData($parsedData['agentrebate']);
+        $nickname = (new UserManageModel())->generateRandomNickname();
+        $userstate = 1;
+        $userstatus = 1;
         $datas = [
             'username' => $parsedData['agentname'],
-            'agent_username' =>  $parsedData['agentname'],
-            'money_password' =>  md5($parsedData['agentpassword']),
-            'user_email' =>  $parsedData['agentemail'],
+            'nickname' => $nickname,
+            'agent_name' =>  $parsedData['agentname'],
+            'upassword' =>  password_hash($parsedData['agentpassword'], PASSWORD_BCRYPT),
+            'email' =>  $parsedData['agentemail'],
             'rebate' =>  $parsedData['agentrebate'],
             'account_type' => $account_type,
-            'date_created' => $dateTime,
+            'created_at' => $dateTime,
+            'user_state' => $userstate,
+            'user_status' => $userstatus,
             'rebate_list' => $rebatelist
         ];
 
@@ -160,7 +154,8 @@ if ($flag == "addAgent") {
     }
 
     echo json_encode($result);
-} 
+}
+
 
 if ($flag == "fetchTopAgent") {
 
@@ -204,8 +199,8 @@ if ($flag == "fetchTopAgent") {
         'topagent' => $usersLists,
         'totalPages' => ceil($result['total'] / $limit)
     ]);
-} 
- if ($flag  == "userlogsdata") {
+}
+if ($flag  == "userlogsdata") {
 
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
@@ -215,7 +210,7 @@ if ($flag == "fetchTopAgent") {
         'userlogs' => $result["data"],
         'totalPages' => ceil($result['total'] / $limit)
     ]);
-} 
+}
 if ($flag == "filterUserlogs") {
 
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
@@ -253,26 +248,23 @@ if ($flag == "filterUserlogs") {
         'userloggs' => $bigArr,
         'totalPages' => ceil($result['total'] / $limit)
     ]);
-} 
+}
 
 
 if ($flag == "getuserrebate") {
 
     $uid = isset($this->viewData['uid']) ? $this->viewData['uid'] : '';
- 
     $result = (new UserManageModel())->fetchUserRebateList($uid) ?? [];
     echo json_encode($result);
-} 
+}
 
 if ($flag == "updateUsedquota") {
-    
+
     $uid = isset($this->viewData['uid']) ? $this->viewData['uid'] : '';
     $bonus_group = isset($this->viewData['bonus']) ? $this->viewData['bonus'] : '';
     $rebate_group = isset($this->viewData['rebate']) ? $this->viewData['rebate'] : '';
     $quata_group = isset($this->viewData['quota']) ? $this->viewData['quota'] : '';
     $count_group = isset($this->viewData['count']) ? $this->viewData['count'] : '';
-    // echo $uid;
-    // exit;
 
     function parseEncodedData($data)
     {
@@ -283,10 +275,10 @@ if ($flag == "updateUsedquota") {
     $parsedRebate = parseEncodedData($rebate_group);
     $parsedQuota = parseEncodedData($quata_group);
     $parsedCount = parseEncodedData($count_group);
-    
+
     // Define keys for the final structured data
     $keys = ['odds_group', 'rebate', 'quota', 'counts'];
-    
+
     // Combine all parsed data into a structured array
     $results = [];
     foreach ($parsedBonus as $key => $value) {
@@ -298,10 +290,8 @@ if ($flag == "updateUsedquota") {
         ];
         $results[] = $row;
     }
-    
+
     // Map the results to an array with keys
-    $result =(new AgentManageModel())->UpdateUserquotaData(json_encode($results), $uid);
+    $result = (new AgentManageModel())->UpdateUserquotaData(json_encode($results), $uid);
     echo json_encode($result);
-
-
 }

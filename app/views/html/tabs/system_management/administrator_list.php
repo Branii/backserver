@@ -252,11 +252,11 @@
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="XLS">
           <i class='bx bx-file-blank' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle" value="right">
+        <button type="button" class="btn bg-white-subtle" value="right" data-bs-placement="top" data-bs-title="Add new">
           ::
         </button>
         <button type="button" class="btn bg-white-subtle" value="end" aria-label="Execute" data-bs-toggle="modal" data-bs-target="#add-new"
-          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add new">
+           data-bs-placement="top" data-bs-title="Add new">
           <i class='bx bx-plus' style="font-size:20px"></i>
         </button>
       </div>

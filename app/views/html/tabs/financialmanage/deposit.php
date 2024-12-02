@@ -224,21 +224,38 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperlist" id="masklinks" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperdeposit" id="masklinks" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4">
                     <tr>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Bonus Group</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Deposit ID</h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Rebate(%)</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Username</h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Quota</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Level</h6>
                         </th>
-
+						<th>
+                            <h6 class="fs-4 fw-semibold mb-0">Deposit Channel</h6>
+                        </th>
+						<th>
+                            <h6 class="fs-4 fw-semibold mb-0">Deposit Amount</h6>
+                        </th>
+						<th>
+                            <h6 class="fs-4 fw-semibold mb-0">Bonus Amount</h6>
+                        </th>
+						<th>
+                            <h6 class="fs-4 fw-semibold mb-0">Fee</h6>
+                        </th>
+						<th>
+                            <h6 class="fs-4 fw-semibold mb-0">Actual Amount Received</h6>
+                        </th>
+						<th>
+                            <h6 class="fs-4 fw-semibold mb-0">Deposit Time</h6>
+                        </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
                         </th>

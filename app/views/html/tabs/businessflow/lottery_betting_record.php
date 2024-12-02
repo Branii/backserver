@@ -283,8 +283,8 @@
       <div class="btn-group mb-2 " role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
         <input type="text" id="myInput" class="form-control queryholderlist usernames" placeholder="Search usernames">
-        <!-- <ul id="userDropdown"></ul> -->
-        <select  name ="usernames" class="form-control userDropdown" size="5" style="display: none;">
+        <input name ="usernames" type="hidden" class="userIdbet">
+        <select  class="form-control userDropdown" size="5" style="display: none;">
           <!-- Options will be populated dynamically -->
         </select>
 
@@ -336,14 +336,6 @@
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
         style="border:solid 1px #eee;color:#bbb;background-color:#fff">
 
-        <!-- <button type="button" class="btn bg-white-subtle addagents" value="end" aria-label="Get Top Agent"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add Agent">
-                    <i class='bx bxs-user-plus' style="font-size:20px"></i>
-                </button>
-                <button type="button" class="btn bg-white-subtle gettopagent" value="end" aria-label="Get Top Agent"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Get Top Agent">
-                    <i class='bx bxs-user-account' style="font-size:20px"></i>
-                </button> -->
         <button type="button" class="btn bg-white-subtle player betrefresh" value="right" aria-label="Refresh"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
           <i class='bx bx-refresh' style="font-size:20px"></i>

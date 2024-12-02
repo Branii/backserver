@@ -72,7 +72,7 @@
         cursor: pointer;
     }
 
-    .table-wrapperlist {
+    .table-wrappertrack {
         overflow: hidden;
         /* Hide the default scrollbar */
         white-space: nowrap;
@@ -141,27 +141,27 @@
     }
 
     /* Custom Scrollbar for Webkit Browsers */
-    .table-wrapperlist::-webkit-scrollbar {
+    .table-wrappertrack::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
         /* Slimmer scrollbar height for horizontal scrolling */
     }
 
-    .table-wrapperlist::-webkit-scrollbar-track {
+    .table-wrappertrack::-webkit-scrollbar-track {
         background: #f1f1f1;
         /* Lighter background for track */
         border-radius: 5px;
     }
 
-    .table-wrapperlist::-webkit-scrollbar-thumb {
+    .table-wrappertrack::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .table-wrapperlist::-webkit-scrollbar-thumb:hover {
+    .table-wrappertrack::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
         /* Darker blue on hover */
     }
@@ -205,12 +205,12 @@
         /* Rounded corners for the track */
     }
 
-    .tbl-header {
+    .tbl-trackhead {
         position: sticky;
         top: 0;
     }
 
-    .sticky-header {
+    .sticky-trackhead {
         position: relative;
         bottom: 1px;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
@@ -246,11 +246,11 @@
           
                </select>
 
-                <input type="date" class="form-control queryholderlist startdate" id="" aria-describedby="name"
+                <input type="date" class="form-control queryholderlist startdate"  aria-describedby="name"
                     placeholder="Name" />
 
 
-                <input type="date" class="form-control queryholderlist enddate" id="" aria-describedby="name"
+                <input type="date" class="form-control queryholderlist enddate"  aria-describedby="name"
                     placeholder="Name" />
 
                 <!-- <button type="button" class="btn btn-outline-light text-dark queryholderlist addagents">
@@ -294,10 +294,10 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperlist" id="maskbet" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrappertrack" id="maskbet" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
-                <thead class="text-dark fs-4 tbl-header">
-                    <tr>
+                <thead class="text-dark fs-4 tbl-trackhead">
+                    <tr class ="trackheadrow">
                     <th>
                     <h6 class="fs-4 fw-semibold mb-0">
                     Tracking ID</h6>

@@ -86,17 +86,9 @@ if ($flag == "filterbetdata") {
     parse_str($betadata, $parsedData);
     $sunquery =  (new BusinessFlow())->filterBetData($parsedData, $limit);
     $result = (new BusinessFlow())->getAllUserBetByUserId($sunquery);
-    $betArr = [];
-    foreach ($result['data'] as $data) {
-        $username = (new BusinessFlowModel())->getUsernameById($data['uid']);
-        $data['username'] = $username;
-        $lotteryname = (new BusinessFlowModel())->getLottery($data['game_type']);
-        $data['game_type'] = $lotteryname;
-        $betArr[] = $data;
-    }
 
     echo json_encode([
-        'filterbet' => $betArr,
+        'filterbet' =>$sunquery,
         'totalPages' => ceil($result['total'] / $limit)
     ]);
 }

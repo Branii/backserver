@@ -34,14 +34,14 @@ $(function () {
       html += `
                     <tr>
                         <td>${item.username}</td>
-                        <td></td>
+                        <td>${item.nickname}</td>
                         <td>VIP</td>
                         <td>${item.relationship}</td>
                         <td>${item.totalsubordinate}</td>
                         <td>${item.balance}</td> 
                         <td>${item.rebate}</td>
-                        <td>${item.date_created}</td>
-                        <td>${status[item.state]}</td>
+                        <td>${item.created_at}</td>
+                        <td>${status[item.user_state]}</td>
                    
                           <td>
                             
@@ -507,11 +507,11 @@ $(function () {
 
     const uid = $(this).attr("data-uid").trim();
     $(".userquotaid").val(uid);
+    console.log(uid)
 
     $.post(`../admin/getuserrebate/${uid}/`, function (data) {
-      const rebatelist = JSON.parse(data);
-      //  console.log(data);
-      //  return
+       const rebatelist = JSON.parse(data);
+     
       let tableBody = document
         .getElementById("quotatable")
         .getElementsByTagName("tbody")[0];

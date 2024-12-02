@@ -61,7 +61,7 @@ class AgentManageModel extends MEDOOHelper
         // Check if the update was successful
         if ($Singlequota > 0) {
           
-            $data = parent::query("SELECT uid, rebate FROM users");
+            $data = parent::query("SELECT uid, rebate FROM users_test");
             foreach ($data as $user) {
              $rebateData = parent::selectAll("rebate",["odds_group", "rebate", "quota", "counts"],["rebate[<=]"  => $user['rebate']]);
              self::UpdateUserquotaData(json_encode(($rebateData)),$user['uid']);
@@ -81,7 +81,7 @@ class AgentManageModel extends MEDOOHelper
 
         // Check if the update was successful
         if ($Allquota  > 0) {
-            $data = parent::query("SELECT uid, rebate FROM users");
+            $data = parent::query("SELECT uid, rebate FROM users_test");
             foreach ($data as $user) {
              $rebateData = parent::selectAll("rebate",["odds_group", "rebate", "quota", "counts"],["rebate[<=]"  => $user['rebate']]);
              self::UpdateUserquotaData(json_encode(($rebateData)),$user['uid']);
@@ -98,7 +98,7 @@ class AgentManageModel extends MEDOOHelper
     {
         
    
-        $updaterebatelist = parent::update( "users", ["rebate_list" => $userData], ["uid" => $uid]);
+        $updaterebatelist = parent::update( "users_test", ["rebate_list" => $userData], ["uid" => $uid]);
         if ($updaterebatelist > 0) {
         self::getRebateQuotaByUserId($uid);
             return "success";
@@ -145,7 +145,7 @@ class AgentManageModel extends MEDOOHelper
 
     public static function FilterRebate($rebate)
     {
-        $data = parent::selectAll("rebate", "*", [ "OR" => ["rebate[~]" => $rebate, "odds_group[~]" => $rebate] ]);
+        $data = parent::query( "SELECT * FROM rebate WHERE rebate LIKE :rebate", ['rebate' => "%$rebate%"]);
         return ['data' => $data];
     }
 

@@ -245,41 +245,100 @@ $(function () {
     fetchLotteryBet(currentPagebet);
   });
 
-  $(".executebet").click(function () {
- //   console.log("spinning");
-    const betdata = $(".betform").serialize();
-    console.log(betdata);
-    $(".loaderbet").remove("bx bx-check-double").addClass("bx bx-loader bx-spin");
-    try {
-      $.post(`../admin/filterbetdata/${betdata}/${pageLimit}`,
-         function(response) {
-             console.log(response)
-            //  return
-            const data = JSON.parse(response);
-            if (data.filterbet.length < 1) {
-              let html = `
-                  <tr class="no-results" >
-                  <td colspan="9">
-                       <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-                  </td>
-               </tr>`
-              $("#lotterydataContainer").html(html);
-              return
-            }
+//   $(".executebet").click(function () {
+//  //   console.log("spinning");
+//     const betdata = $(".betform").serialize();
+//     console.log(betdata);
+//     $(".loaderbet").remove("bx bx-check-double").addClass("bx bx-loader bx-spin");
+//     try {
+//       $.post(`../admin/filterbetdata/${betdata}/${pageLimit}`,
+//          function(response) {
+//              console.log(response)
+//             //  return
+//             const data = JSON.parse(response);
+//             if (data.filterbet.length < 1) {
+//               let html = `
+//                   <tr class="no-results" >
+//                   <td colspan="9">
+//                        <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+//                   </td>
+//                </tr>`
+//               $("#lotterydataContainer").html(html);
+//               return
+//             }
          
-            renderlottery(data.filterbet);
-            renderbetPagination(data.totalPages, currentPagebet,betdata);
-        document.getElementById("paging_infobet").innerHTML =
-          "Page " + currentPagebet + " of " + data.totalPages + " pages";
-        });
+//             renderlottery(data.filterbet);
+//             renderbetPagination(data.totalPages, currentPagebet,betdata);
+//         document.getElementById("paging_infobet").innerHTML =
+//           "Page " + currentPagebet + " of " + data.totalPages + " pages";
+//         });
         
-    } catch (error) {
-      console.error("Error fetching data:", error);
-     }
+//     } catch (error) {
+//       console.error("Error fetching data:", error);
+//      }
 
-  });
+//   });
 
 
+$(".executebet").click(function () {
+  const betdata = $(".betform").serialize(); // Serialize form data
+  console.log(betdata);
+
+  // Change loader class to show loading state
+  $(".loaderbet").removeClass("bx bx-check-double").addClass("bx bx-loader bx-spin");
+
+  try {
+      $.post(`../admin/filterbetdata/${betdata}/${pageLimit}`, function(response) {
+          console.log(response);
+ return
+          try {
+              const data = JSON.parse(response); // Parse the response
+
+              if (data.filterbet.length < 1) {
+                  let html = `
+                      <tr class="no-results">
+                          <td colspan="9">
+                              <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                          </td>
+                      </tr>`;
+                  $("#lotterydataContainer").html(html); // Display 'No results' message
+                  return;
+              }
+
+              // Render the filtered lottery data
+              renderlottery(data.filterbet);
+
+              // Render pagination
+              renderbetPagination(data.totalPages, currentPagebet, betdata);
+
+              // Update paging info
+              document.getElementById("paging_infobet").innerHTML =
+                  `Page ${currentPagebet} of ${data.totalPages} pages`;
+
+          } catch (error) {
+              console.error("Error parsing JSON response:", error);
+              // Optionally show a user-friendly message if JSON parsing fails
+          }
+
+          // Switch loader back to "check double" after processing
+          $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+
+      }).fail(function (error) {
+          console.error("Error fetching data:", error);
+          // Optionally handle the failure (show error message)
+
+          // Ensure the loader switches back to "check double" on error too
+          $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+      });
+
+  } catch (error) {
+      console.error("Error during request:", error);
+      // Handle any other errors that may occur during the execution of the function
+
+      // Ensure the loader switches back to "check double" if a general error occurs
+      $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+  }
+});
 
 
   async function fetchLotteryname() {
@@ -335,7 +394,7 @@ $(function () {
 let debounceTimeout =null; // To store the timeout ID
 $(document).ready(function () {
     // Event listener for keyup
-    $('#myInput').on('keyup', function () {
+    $(document).on('keyup','#myInput', function () {
         const query = $(this).val().trim();
 
         if (query.length > 2) { // Only trigger if input is more than 2 characters
@@ -389,12 +448,22 @@ $(document).ready(function () {
       const selectedOption = $(this).find('option:selected'); // Get the selected <option>
       const selectedUserId = selectedOption.val(); // Get user ID from the value attribute
       const selectedUsername = selectedOption.data('username'); // Get username from data-attribute
-  
-     $('#myInput').val(selectedUsername); // Set input field to selected username
-      $('.userDropdown').hide(); // Hide dropdown after selection
-      console.log(selectedUserId);
-       console.log(`Selected Username: ${selectedUsername}`);
+      if (selectedUserId) {
+        $('#myInput').val(selectedUsername); 
+        $('.userIdbet').val(selectedUserId); 
+        $('.userDropdown').hide();  
+      }
+   
   });
+
+  $(document).on('input', '#myInput', function () {
+    const inputValue = $(this).val(); // Get the current value of the input
+    if (!inputValue) {
+        // If input is cleared, reset the user ID as well
+        $('.userIdbet').val('');
+        console.log('User manually cleared the username');
+    }
+});
 });
 
 

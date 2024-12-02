@@ -9,14 +9,23 @@ class UserManageModel extends MEDOOHelper
     public static function FetchUserlistData($page, $limit): array
     {
 
-        $startpoint = ($page * $limit) - $limit; 
-        $data = parent::query( 
-            "SELECT uid, username, nickname, agent_username, balance, recharge_level, state, 
-            last_login_time, rebate, date_created, agent  FROM users ORDER BY uid DESC  LIMIT :startpoint, :limit", 
-            ['startpoint' => (int)$startpoint, 'limit' => (int)$limit] 
-        ); 
-          $totalRecords  = parent::count('users');
+        $startpoint = ($page - 1) * $limit;
+        $data = parent::query(
+            "SELECT uid, username, nickname, agent_name, balance, recharge_level, user_state,
+                    last_login, rebate, created_at, agent_id, account_type
+             FROM users_test
+             ORDER BY uid DESC
+             LIMIT :startpoint, :limit", 
+            [
+                'startpoint' => (int)$startpoint, 
+                'limit' => (int)$limit
+            ]
+        );
+        
+        $totalRecords = parent::count('users_test'); 
+
         return ['data' => $data, 'total' => $totalRecords];
+        
          
     }
     public static function countUserLogs($uid)
@@ -25,20 +34,20 @@ class UserManageModel extends MEDOOHelper
         return $logCount ?: null;
     }
 
-    public static function getDirectReferrals($uid)
+    public static function getDirectReferrals($agent_id)
     {
-        $total = parent::count("users", "*", ["agent" => $uid]);
+        $total = parent::count("users_test", "*", ["agent_id" => $agent_id]);
         return $total > 2 ? '...' : '->';
     }
-    public static function getSubordinate($agent)
+    public static function getSubordinate($agent_id)
     {
         
-        return  $data = parent::query("SELECT username FROM users WHERE agent = :agent", ['agent' => $agent]); 
+        return  $data = parent::query("SELECT username FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]); 
     }
 
     public static function Fetchsubordinates($uid)
     {
-        $totalCount = parent::count("users", "*", ["AND" => ["agent" => $uid, "account_type" => 3, "uid[!]" => $uid]]);
+        $totalCount = parent::count("users_test", "*", ["AND" => ["agent_id" => $uid, "account_type" => 3, "uid[!]" => $uid]]);
         return $totalCount;
     }
 
@@ -80,9 +89,8 @@ class UserManageModel extends MEDOOHelper
 
         try {
         
-            $inserAgentdata = parent::insert("users", $datas);
+            $inserAgentdata = parent::insert("users_test", $datas);
             if ($inserAgentdata) {
-
                 self::UpdateAgentTable($datas);
                 return "Success";
             }else {
@@ -98,9 +106,9 @@ class UserManageModel extends MEDOOHelper
          
         $startpoint = ($page * $limit) - $limit;
         $data = parent::selectAll(
-            "users",
-            ["uid","username", "nickname","agent_username","balance","recharge_level","state",
-            "last_login_time","rebate","date_created","agent"],
+            "users_test",
+            ["uid","username", "nickname","agent_name","balance","recharge_level","user_state",
+            "last_login_time","rebate","created_at","agent_id"],
             [  "account_type" => 2, "ORDER" => ["uid" => "DESC"], "LIMIT" => [$startpoint, $limit]]
         );
         $totalRecords = parent::count("users");
@@ -109,7 +117,7 @@ class UserManageModel extends MEDOOHelper
 
     public static function checkEmailExist($datas)
     {
-        return  $agentemail = parent::selectAll("users", ["user_email","uid"], ["user_email" => $datas]);
+        return  $agentemail = parent::selectAll("users_test", ["email","uid"], ["email" => $datas]);
     }
 
     public static function UpdateAgentTable($userData)
@@ -118,12 +126,12 @@ class UserManageModel extends MEDOOHelper
         $dates  = new DateTime();
         $date   = $dates->format('Y-m-d');
         $time   = $dates->format("H:i:s");
-        $agent  =  self::checkEmailExist($userData['user_email'])[0];
+        $agent  =  self::checkEmailExist($userData['email'])[0];
         $agentid =$agent['uid'] ;
         $data = [
             "agent_id" => $agentid,
             "agent_name" => $userData["username"],
-            "agent_email" => $userData["user_email"],
+            "agent_email" => $userData["email"],
             "agent_rebate" =>  $userData["rebate"],
             "date_created" =>  $date,
             "time_created" => $time,
@@ -203,14 +211,27 @@ class UserManageModel extends MEDOOHelper
     public static function fetchquotaData($userrebate)
     {
 
-        $data = parent::selectAll("rebate", ["odds_group", "rebate", "quota", "counts"], ["rebate[<=]" => $userrebate]);
+        $data = parent::query("SELECT odds_group, rebate, quota, counts FROM rebate WHERE rebate <= :rebate", ['rebate' => $userrebate]);
         return $serializedData = json_encode($data);
     }
 
+   public static   function generateRandomNickname() {
+        // List of random words to pick from
+        $adjectives = ['Swift', 'Bold', 'Clever', 'Brave', 'Mighty', 'Fierce', 'Silent', 'Electric', 'Lucky', 'Shiny'];
+        $animals = ['Tiger', 'Eagle', 'Wolf', 'Dragon', 'Panther', 'Fox', 'Bear', 'Shark', 'Lion', 'Falcon'];
 
+        $randomAdjective = $adjectives[array_rand($adjectives)];
+        $randomAnimal = $animals[array_rand($animals)];
+        $randomNumber = rand(100, 999); // Generates a random number between 100 and 999
+    
+        $nickname = $randomAdjective . $randomAnimal . $randomNumber;
+    
+        return $nickname;
+    }
 
     ////////////// USERLIST LIST END -//////////
     //NOTE -
+
     ////////////// USERLIST LOGS -//////////
     public static function FetchUserlogsData($page, $limit): array
     {
@@ -260,8 +281,8 @@ class UserManageModel extends MEDOOHelper
 
     public static function fetchUserRebateList($uid)
     {
-        $rebatelist = parent::selectOne("users","rebate_list", ["uid"=>$uid]);
-        return json_decode($rebatelist);
+         $rebatelist = parent::selectOne("users_test","*", ["uid"=>$uid])['rebate_list'];
+         return json_decode($rebatelist);
         
     }
 

@@ -265,6 +265,18 @@ if (session_status() == PHP_SESSION_NONE) {
               <div class="chrome__tab Track">
                 <?php include "tabs/businessflow/trackbet.php" ?>
               </div>
+
+              <div class="chrome__tab Deposit">
+                <?php include "tabs/financialmanage/deposit.php" ?>
+              </div>
+
+              <div class="chrome__tab Finance">
+                <?php include "tabs/financialmanage/finance_changes.php" ?>
+              </div>
+
+              <div class="chrome__tab Withdrawal">
+                <?php include "tabs/financialmanage/withrawal.php" ?>
+              </div>
             
               <div class="chrome__tab Userlogs">
               <?php include "tabs/accountmanage/userlogs.php" ?>
@@ -320,14 +332,15 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="<?php echo BASE_URL; ?>assets/js/admin_list.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/userlist.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/account_transaction.js"></script>
-    <!-- <script src="<?php echo BASE_URL; ?>assets/js/userlogs.js"></script> -->
-    <!-- <script src="<?php echo BASE_URL; ?>assets/js/referrallink.js"></script> -->
-    <!-- <script src="<?php echo BASE_URL; ?>assets/js/quota.js"></script> -->
-    <!-- <script src="<?php echo BASE_URL; ?>assets/js/lotterybet.js"></script> -->
-    <!-- <script src="<?php echo BASE_URL; ?>assets/js/trackbet.js"></script> -->
-    <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
-      
-        <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.init.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/userlogs.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/referrallink.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/quota.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/lotterybet.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/trackbet.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/finance_change.js"></script>
+    
+    <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script> 
+     <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.init.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.js"></script>
 
 
