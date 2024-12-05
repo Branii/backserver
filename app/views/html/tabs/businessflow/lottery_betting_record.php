@@ -288,11 +288,11 @@
           <!-- Options will be populated dynamically -->
         </select>
 
-            <select name="lotteryname" class="form-control form-select queryholderlist recharges selectlottery" 
+            <select name="lotteryname" class="form-control form-select queryholderlist typelottery selectlottery" 
             data-bs-placeholder="Select Type">
            </select>
 
-        <select name="betsate" class="form-control form-select queryholderlist "
+        <select name="betsate" class="form-control form-select queryholderlist betsate"
           data-bs-placeholder="Select Type">
           <option value="">-State-</option>
           <option value="1">Settled</option>
@@ -301,7 +301,7 @@
           <option value="7">Refund</option>
         </select>
 
-        <select name="betstatus" class="form-control form-select queryholderlist states"
+        <select name="betstatus" class="form-control form-select queryholderlist betstatus"
           data-bs-placeholder="Select Type">
           <option value="">-bet Status-</option>
           <option value="2">Win</option>
@@ -312,11 +312,11 @@
 
         </select>
 
-        <input  name ="startdate" type="date" class="form-control queryholderlist startdate"  aria-describedby="name"
+        <input  name ="startdate" type="date" class="form-control queryholderlist startdates"  aria-describedby="name"
           placeholder="Name" />
 
 
-        <input  name ="enddate" type="date" class="form-control queryholderlist enddate"  aria-describedby="name"
+        <input  name ="enddate" type="date" class="form-control queryholderlist enddates"  aria-describedby="name"
           placeholder="Name" />
 
         <!-- <button type="button" class="btn btn-outline-light text-dark queryholderlist addagents">

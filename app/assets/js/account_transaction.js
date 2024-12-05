@@ -18,10 +18,11 @@ $(function () {
     };
 
     data.forEach((item) => {
+      const username = item.username == '*****' ? item.nickname : item.username;
       html += `
                   <tr class="trow">
                       <td>${item.order_id.substring(0, 7)}</td>
-                      <td>${item.username}</td>
+                      <td>${username}</td>
                       <td><i class='bx bxs-circle' style='color:${status[item.order_type].color};font-size:8px;margin-right:5px;'></i>${status[item.order_type].title}</td>
                       <td>${Number(item.account_change).toFixed(4)}</td>
                       <td>${Number(item.balance).toFixed(4)}</td>
@@ -83,14 +84,14 @@ $(function () {
   };
 
   let currentPage = 1;
-  let pageLimit = 50;
+  let pageLimit = 45;
 
 
   async function fetchTrasaction(page,pageLimit) {
     try {
       const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
       const data = await response.json();
-
+ 
       $("#mask").LoadingOverlay("hide")
       render(data.users);
 
@@ -293,18 +294,18 @@ $(function () {
   //   });
   // }
   
-  $(document).on("input", '#selected', function () {
-    clearTimeout(timeout);
-    $(".userId").val("")
-    timeout = setTimeout(performSearch, 300);
-  })
+  // $(document).on("input", '#selected', function () {
+  //   clearTimeout(timeout);
+  //   $(".userId").val("")
+  //   timeout = setTimeout(performSearch, 300);
+  // })
 
-  $(document).on('click', '.option', function () {
-    $("#selected").val($(this).text())
-    userId = $(this).attr('value')
-    $(".userId").val(userId)
-    $(".acc_transaction_username").hide()
-  })
+  // $(document).on('click', '.option', function () {
+  //   $("#selected").val($(this).text())
+  //   userId = $(this).attr('value')
+  //   $(".userId").val(userId)
+  //   $(".acc_transaction_username").hide()
+  // })
 
   $(document).on('click', '.executetrans', function () {
 

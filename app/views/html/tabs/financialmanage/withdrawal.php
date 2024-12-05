@@ -72,7 +72,7 @@
         cursor: pointer;
     }
 
-    .table-wrapperdeposit {
+    .table-wrapperwithdraw {
         overflow: hidden;
         /* Hide the default scrollbar */
         white-space: nowrap;
@@ -88,7 +88,7 @@
         z-index: 10;
     }
 
-    .queryholderdeposit {
+    .queryholderwithdraw {
         width: 33%;
         margin-right: 5px;
         background-color: #FFF;
@@ -141,27 +141,27 @@
     }
 
     /* Custom Scrollbar for Webkit Browsers */
-    .table-wrapperdeposit::-webkit-scrollbar {
+    .table-wrapperwithdraw::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
         /* Slimmer scrollbar height for horizontal scrolling */
     }
 
-    .table-wrapperdeposit::-webkit-scrollbar-track {
+    .table-wrapperwithdraw::-webkit-scrollbar-track {
         background: #f1f1f1;
         /* Lighter background for track */
         border-radius: 5px;
     }
 
-    .table-wrapperdeposit::-webkit-scrollbar-thumb {
+    .table-wrapperwithdraw::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .table-wrapperdeposit::-webkit-scrollbar-thumb:hover {
+    .table-wrapperwithdraw::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
         /* Darker blue on hover */
     }
@@ -181,7 +181,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">Deposit Records</h4>
+        <h4 class="card-title mb-0">withdraw Records</h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
@@ -205,11 +205,11 @@
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
                 <!-- <i ' ></i> -->
-                <!-- <button type="button" class="btn bg-white-subtle player setalldeposit" value="right" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Set all deposit">
+                <!-- <button type="button" class="btn bg-white-subtle player setallwithdraw" value="right" aria-label="Refresh"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Set all withdraw">
                     <i class='bx bx-plus' style="font-size:20px"></i>
                 </button> -->
-                <button type="button" class="btn bg-white-subtle player refreshdeposit" value="right" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle player refreshwithdraw" value="right" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
                 </button>
@@ -224,13 +224,13 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperdeposit" id="masklinks" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperwithdraw" id="masklinks" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4">
                     <tr>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Deposit ID</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Withdraw ID</h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Username</h6>
@@ -239,31 +239,31 @@
                             <h6 class="fs-4 fw-semibold mb-0">Level</h6>
                         </th>
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Deposit Channel</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Bank Type</h6>
                         </th>
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Deposit Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Cardholder</h6>
                         </th>
 						
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Actual Amount Received</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Bank Card Number</h6>
                         </th>
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Deposit Time</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Withdrawal Amount</h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Receiving Bank</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Actual Withdrawal Amount</h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Receiving Card Number</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Withdrawal Application Time</h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
                         </th>
                     </tr>
                 </thead>
-                <tbody id="DepositContainer">
+                <tbody id="withdrawContainer">
 
                     <tr class="no-resultslist">
                         <td colspan="9">
@@ -282,23 +282,23 @@
                 <button type="button" class="btn bg-white-subtle playerlinks" value="startlinks">
                     <i class='bx bx-chevrons-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerdeposit" value="leftlinks">
+                <button type="button" class="btn bg-white-subtle playerwithdraw" value="leftlinks">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerdeposit" value="rightlinks">
+                <button type="button" class="btn bg-white-subtle playerwithdraw" value="rightlinks">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerdeposit" value="endlinks">
+                <button type="button" class="btn bg-white-subtle playerwithdraw" value="endlinks">
                     <i class='bx bx-chevrons-right' style="font-size:20px"></i>
                 </button>
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
 
-            <span id="paging_infodeposit" style="color:#aaa">---</span>
+            <span id="paging_infowithdraw" style="color:#aaa">---</span>
 
         </span>
-        <span class="toplist-right" id="paginationdeposit" aria-label="Page navigation example">
+        <span class="toplist-right" id="paginationwithdraw" aria-label="Page navigation example">
 
             <!--Dynamic pagination-->
 
@@ -308,7 +308,7 @@
 
 </div>
 
-<div class="modal fade" id="danger-deposits" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
+<div class="modal fade" id="danger-depobsits" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content modal-filled " style="background-color:#F9F9F9">
             <div class="modal-body p-4">
@@ -331,22 +331,22 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="addContactModavo" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
+<div class="modal fade" id="addContactMbodavo" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header d-flex align-items-center">
-                <div>  <h5>deposit</h5></div>
+                <div>  <h5>withdraw</h5></div>
                 <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' ></i></div>
             </div>
             <div class="modal-body">
                 <div class="add-contact-box">
                     <div class="add-contact-content">
-                        <form id="add[ContactModalTitle">
+                        <form id="add[CbontactModalTitle">
                              
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-3 contact-location">
-                                        <input type="text" id="c--deposit" class="form-control" placeholder="Update all deposit" />
+                                        <input type="text" id="c-b-withdraw" class="form-control" placeholder="Update all withdraw" />
                                     </div>
                                 </div>
                             </div>
@@ -357,7 +357,7 @@
             <div class="modal-footer">
                 <div class="d-flex gap-6 m-0">
                     <!-- <button id="btn-add" class="btn btn-light">Add</button> -->
-                    <button id="btn-setalldeposit[" class="btn btn-light" data-bs-dismiss="modal">Save</button>
+                    <button id="btn-setalldeposibt[" class="btn btn-light" data-bs-dismiss="modal">Save</button>
                     <button class="btn bg-danger-subtle text-danger" data-bs-dismiss="modal"> Discard
                     </button>
                 </div>

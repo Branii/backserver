@@ -31,9 +31,10 @@ $(function () {
     };
 
     data.forEach((item) => {
+      const username = item.username == '*****' ? item.nickname : item.username;
       html += `
                     <tr>
-                        <td>${item.username}</td>
+                        <td>${username}</td>
                         <td>${item.nickname}</td>
                         <td>VIP</td>
                         <td>${item.relationship}</td>
@@ -493,11 +494,6 @@ $(function () {
 
   //get top agent
   $(".gettopagent").click(function () {
-    $(".queryholder").val("");
-    $("#masklist").LoadingOverlay("show", {
-      background: "rgb(90,106,133,0.1)",
-      size: 3,
-    });
     fetchTopAgent(currentPagelist);
   });
 
@@ -511,7 +507,6 @@ $(function () {
 
     $.post(`../admin/getuserrebate/${uid}/`, function (data) {
        const rebatelist = JSON.parse(data);
-     
       let tableBody = document
         .getElementById("quotatable")
         .getElementsByTagName("tbody")[0];

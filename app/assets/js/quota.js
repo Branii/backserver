@@ -133,34 +133,35 @@ $(function () {
          });
   
 
-         $(document).on("keyup", ".userrebate", function () {
-            const datarebate = parseFloat($(this).val());
-            console.log(datarebate)
-            
-            if (datarebate === "") {
-                // console.log("Input is empty. Resetting results.");
-                renderquota([]); // Reset or clear results
-                let html = `
-                <tr class="no-results" >
-                <td colspan="9">
-                     <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-                </td>
-             </tr>`;
-          $("#quotaContainer").html(html);
-          return
-            }
-             try {
-                  $.post(`../admin/filterRebate/${datarebate}`,
-                     function(response) {
-                        // console.log(response)
-                        const data = JSON.parse(response);
-                        renderquota(data.filterquota);  
-                    });
-          
-                } catch (error) {
-                  console.error("Error fetching data:", error);
-                 }
-          });
      
-    
+        $(document).on("keyup", ".userrebate", function () {
+          const inputValue = $(this).val().trim(); // Remove any extra spaces
+          let datarebate = parseFloat(inputValue); // Try to convert to float
+       
+          // Check if the input is valid
+          if (isNaN(datarebate)) {
+              // Input is not a number
+              renderquota([]); // Reset or clear results
+              let html = `
+              <tr class="no-results" >
+                  <td colspan="9">
+                       <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                  </td>
+              </tr>`;
+              $("#quotaContainer").html(html);
+              return;
+          }
+      
+          // If valid number, make the API call
+          try {
+              $.post(`../admin/filterRebate/${datarebate}`, function(response) {
+                  const data = JSON.parse(response);
+                 renderquota(data.filterquota);  
+              
+              });
+          } catch (error) {
+              console.error("Error fetching data:", error);
+          }
+        });
+      
 });

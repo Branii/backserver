@@ -15,18 +15,16 @@ class UserManageModel extends MEDOOHelper
                     last_login, rebate, created_at, agent_id, account_type
              FROM users_test
              ORDER BY uid DESC
-             LIMIT :startpoint, :limit", 
+             LIMIT :startpoint, :limit",
             [
-                'startpoint' => (int)$startpoint, 
+                'startpoint' => (int)$startpoint,
                 'limit' => (int)$limit
             ]
         );
-        
-        $totalRecords = parent::count('users_test'); 
+
+        $totalRecords = parent::count('users_test');
 
         return ['data' => $data, 'total' => $totalRecords];
-        
-         
     }
     public static function countUserLogs($uid)
     {
@@ -41,8 +39,8 @@ class UserManageModel extends MEDOOHelper
     }
     public static function getSubordinate($agent_id)
     {
-        
-        return  $data = parent::query("SELECT username FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]); 
+
+        return  $data = parent::query("SELECT username FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
     }
 
     public static function Fetchsubordinates($uid)
@@ -88,12 +86,12 @@ class UserManageModel extends MEDOOHelper
     {
 
         try {
-        
+
             $inserAgentdata = parent::insert("users_test", $datas);
             if ($inserAgentdata) {
                 self::UpdateAgentTable($datas);
                 return "Success";
-            }else {
+            } else {
                 return "Failed";
             }
         } catch (Exception $e) {
@@ -103,31 +101,39 @@ class UserManageModel extends MEDOOHelper
 
     public static function FetchTopAgentData($page, $limit): array
     {
-         
+        // Calculate the starting point for pagination
         $startpoint = ($page * $limit) - $limit;
-        $data = parent::selectAll(
-            "users_test",
-            ["uid","username", "nickname","agent_name","balance","recharge_level","user_state",
-            "last_login_time","rebate","created_at","agent_id"],
-            [  "account_type" => 2, "ORDER" => ["uid" => "DESC"], "LIMIT" => [$startpoint, $limit]]
-        );
-        $totalRecords = parent::count("users");
+        $sql = "
+        SELECT 
+            uid, username, nickname, agent_name, balance, recharge_level, user_state, 
+            last_login, rebate, created_at, agent_id,account_type
+        FROM users_test
+        WHERE account_type = 2
+        ORDER BY uid DESC
+        LIMIT :startpoint, :limit
+      ";
+
+      $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+        // Count the total records with the same filter (for pagination)
+        $totalRecords = parent::count("users_test");
+
+        // Return the paginated data along with the total record count
         return ['data' => $data, 'total' => $totalRecords];
     }
 
     public static function checkEmailExist($datas)
     {
-        return  $agentemail = parent::selectAll("users_test", ["email","uid"], ["email" => $datas]);
+        return  $agentemail = parent::selectAll("users_test", ["email", "uid"], ["email" => $datas]);
     }
 
     public static function UpdateAgentTable($userData)
     {
-        
+
         $dates  = new DateTime();
         $date   = $dates->format('Y-m-d');
         $time   = $dates->format("H:i:s");
         $agent  =  self::checkEmailExist($userData['email'])[0];
-        $agentid =$agent['uid'] ;
+        $agentid = $agent['uid'];
         $data = [
             "agent_id" => $agentid,
             "agent_name" => $userData["username"],
@@ -137,7 +143,6 @@ class UserManageModel extends MEDOOHelper
             "time_created" => $time,
         ];
         return $Agentdata = parent::insert("agents", $data);
-        
     }
 
     public static function validateRegister($datas)
@@ -215,7 +220,8 @@ class UserManageModel extends MEDOOHelper
         return $serializedData = json_encode($data);
     }
 
-   public static   function generateRandomNickname() {
+    public static   function generateRandomNickname()
+    {
         // List of random words to pick from
         $adjectives = ['Swift', 'Bold', 'Clever', 'Brave', 'Mighty', 'Fierce', 'Silent', 'Electric', 'Lucky', 'Shiny'];
         $animals = ['Tiger', 'Eagle', 'Wolf', 'Dragon', 'Panther', 'Fox', 'Bear', 'Shark', 'Lion', 'Falcon'];
@@ -223,9 +229,9 @@ class UserManageModel extends MEDOOHelper
         $randomAdjective = $adjectives[array_rand($adjectives)];
         $randomAnimal = $animals[array_rand($animals)];
         $randomNumber = rand(100, 999); // Generates a random number between 100 and 999
-    
+
         $nickname = $randomAdjective . $randomAnimal . $randomNumber;
-    
+
         return $nickname;
     }
 
@@ -236,15 +242,23 @@ class UserManageModel extends MEDOOHelper
     public static function FetchUserlogsData($page, $limit): array
     {
         $startpoint = ($page * $limit) - $limit;
-        $data = parent::query(
-            "SELECT user_logs.*, COALESCE(users.username, 'N/A') AS username FROM user_logs   
-            JOIN users ON users.uid = user_logs.uid  ORDER BY ulog_id DESC LIMIT :offset, :limit",
-            ['offset' => $startpoint, 'limit' => $limit]
-        );
+        $sql = "
+        SELECT 
+            user_logs.*, 
+            users_test.nickname, 
+            COALESCE(users_test.username, 'N/A') AS username 
+        FROM user_logs   
+        JOIN users_test ON users_test.uid = user_logs.uid  
+        ORDER BY user_logs.ulog_id DESC 
+        LIMIT :startpoint, :limit
+    ";
+    
+    // Execute the query with pagination parameters
+      $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
         $totalRecords  = parent::count('user_logs');
         return ['data' => $data, 'total' => $totalRecords];
     }
-  
+
 
     public static function Filteruserlogs($page, $limit, $username, $startdate, $enddate)
     {
@@ -281,9 +295,7 @@ class UserManageModel extends MEDOOHelper
 
     public static function fetchUserRebateList($uid)
     {
-         $rebatelist = parent::selectOne("users_test","*", ["uid"=>$uid])['rebate_list'];
-         return json_decode($rebatelist);
-        
+        $rebatelist = parent::selectOne("users_test", "*", ["uid" => $uid])['rebate_list'];
+        return json_decode($rebatelist);
     }
-
 }

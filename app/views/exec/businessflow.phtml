@@ -10,7 +10,7 @@ if ($flag == "filterusername") {
 
     $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
     $result = (new BusinessFlow())->filterusername($username);
-    if($result){
+    if ($result) {
         echo json_encode([['username' => 'Nketiah']]);
     } else {
         echo json_encode([['username' => 'Nketiah']]);
@@ -21,7 +21,7 @@ if ($flag == "transactiondata") {
 
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $result = (new BusinessFlowModel())->FetchTrsansactionData($page, $limit) ?? [];
+    $result = (new BusinessFlowModel())->FetchTransactionData($page, $limit) ?? [];
     echo json_encode([
         'users' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit),
@@ -34,7 +34,6 @@ if ($flag == "lotterydata") {
     $page  = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $result = (new BusinessFlowModel())->fetchBetRecords($page, $limit) ?? [];
-
     echo json_encode([
         'lotterybet' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit)
@@ -49,15 +48,19 @@ if ($flag == "viewBetstake") {
     $drawTable = (new BusinessFlowModel())->getTables()[$gametype]['draw_table'];
     $result = (new BusinessFlowModel())->getBetDataByTransactionBet($betTable, $betcode)[0] ?? [];
     $close_and_opentimes = (new BusinessFlowModel())->getOpenAndCloseTimesByPeriod($result['bet_period'], $drawTable)[0] ?? [];
-    $username = (new BusinessFlowModel())->getUsernameById($result['uid']);
-    $lotteryname = (new BusinessFlowModel())->getLottery($result['game_type']);
+    $username = (new BusinessFlowModel())->getUsernameById($result['uid'])['username'];
+    $nickname = (new BusinessFlowModel())->getUsernameById($result['uid'])['nickname'];
+    $usernames = ($username == "*****") ? $nickname : $username;
+    $lotteryname = (new BusinessFlowModel())->getLottery($result['game_type'])['name'];
+    $betStatusMap = [2 => 'Win', 3 => 'Lost', 5 => 'Pending', 6 => 'Bet Cancelled', 7 => 'Refund'];
     $datta = json_decode($result['bet_odds'], true);  // Decode JSON
     $betodds = reset($datta) * $result['multiplier']  * $result['unit_stake'];
-    $result['username'] = $username;
+    $result['username'] = $usernames;
     $result['opening_time'] = $close_and_opentimes['opening_time'] ?? '';
     $result['closing_time'] = $close_and_opentimes['closing_time'] ?? '';
     $result['draw_number'] = $close_and_opentimes['draw_number'] ?? '';
     $result['bettype'] = ($result['bettype'] == 2) ? 'track' : ($result['bettype'] == 1 ? 'bet' : '');
+    $result['bet_status'] = isset($betStatusMap[$result['bet_status']]) ? $betStatusMap[$result['bet_status']] : 'unknown';
     $result['game_type'] = $lotteryname;
     $result['bet_odds'] = $betodds;
 
@@ -71,9 +74,22 @@ if ($flag == "fetchLotteryname") {
 
 if ($flag == "searchusername") {
     $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
-    $result = (new BusinessFlow())->Searchusername($username);
+    $result = (new BusinessFlowModel())->Searchusername($username);
+
+    $results = [];
+    foreach ($result as $value) {
+        // Add each item as an associative array with 'uid', 'username', and 'nickname'
+        $data = [
+            'uid' => $value['uid'],  // 'uid' is the key
+            'username' => $value['username'],  // 'username' value
+            'nickname' => $value['nickname'],  // 'nickname' value
+        ];
+        $results[] = $data;  // Append the formatted result to the $results array
+    }
+
+
     if ($result) {
-        echo json_encode($result);
+        echo json_encode($results);
     } else {
         echo json_encode([['username' => '']]);
     }
@@ -81,28 +97,46 @@ if ($flag == "searchusername") {
 
 if ($flag == "filterbetdata") {
 
-    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : "";
-    $betadata = isset($this->viewData['betdata']) ? $this->viewData['betdata'] : '';
-    parse_str($betadata, $parsedData);
-    $sunquery =  (new BusinessFlow())->filterBetData($parsedData, $limit);
-    $result = (new BusinessFlow())->getAllUserBetByUserId($sunquery);
+    $uid = isset($this->viewData['uid']) ? $this->viewData['uid'] : '';
+    $gametype = isset($this->viewData['gametype']) ? $this->viewData['gametype'] : '';
+    $betstate = isset($this->viewData['betstate']) ? $this->viewData['betstate'] : '';
+    $betstatus = isset($this->viewData['betstatus']) ? $this->viewData['betstatus'] : '';
+    $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
+    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+
+    $sunquery =  (new BusinessFlowModel())->filterBetData($uid, $gametype, $betstate, $betstatus, $enddate, $startdate);
+    $result = (new BusinessFlowModel())->getAllUserBetByUserId($sunquery,$page,$limit);
+
+    // $bigArr = [];
+    // foreach ($result['data'] as $data) {
+    //     $username = (new BusinessFlowModel())->getUsernameById($data['uid'])['username'];
+    //     $nickname = (new BusinessFlowModel())->getUsernameById($data['uid'])['nickname'];
+    //     $lotteryname = (new BusinessFlowModel())->getLottery($data['game_type'])['name'];
+    //     $gtid = (new BusinessFlowModel())->getLottery($data['game_type'])['gt_id'];
+    //     $data['username'] = $username;
+    //     $data['game_type'] = $lotteryname;
+    //     $data['nickname'] = $nickname;
+    //     $data['gt_id'] = $gtid;
+    //     $bigArr[] = $data;
+    // }
 
     echo json_encode([
-        'filterbet' =>$sunquery,
-        'totalPages' => ceil($result['total'] / $limit)
+        'filterbet' => $result,
+      //  'totalPages' => ceil($result['total'] / $limit)
     ]);
 }
 
 
-if($flag == "trackdata"){
+if ($flag == "trackdata") {
 
     $page  = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $result = (new BusinessFlowModel())->fetchTrackRecords($page, $limit) ?? [];
- 
+
     echo json_encode([
         'trackbet' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit)
     ]);
 }
-

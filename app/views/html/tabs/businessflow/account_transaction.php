@@ -212,7 +212,7 @@
         <ul class="queryholderx"></ul>
 
         <input type="text" class="form-control queryholder orderid" id="nametext" aria-describedby="name"
-          placeholder="Enter Oder ID">
+          placeholder="Enter Transaction ID">
 
         <select name="order_type" class="form-control form-select queryholder ordertype" data-bs-placeholder="Select Type">
           <option value="0">Transaction Type</option>

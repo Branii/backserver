@@ -78,7 +78,7 @@ if ($flag == "filteruserlist") {
 
     $bigArr = [];
     foreach ($result['data'] as $data) {
-        $username = (new BusinessFlowModel())->getUsernameById($data['uid']);
+        $username = (new BusinessFlowModel())->getUsernameById($data['uid'])['username'];
         $data['username'] = $username;
         $bigArr[] = $data;
         $userlogins = (new UserManageModel())->countUserLogs($data['uid']);
@@ -165,26 +165,22 @@ if ($flag == "fetchTopAgent") {
 
     $usersLists = [];
     foreach ($result['data'] as $data) {
-        //     // Fetch additional user-specific data
         $userlogins = (new UserManageModel())->countUserLogs($data['uid']);
-        $referals = (new UserManageModel())->getDirectReferrals($data['agent']);
-        $subor = (new UserManageModel())->getSubordinate($data['agent']);
+        $referals = (new UserManageModel())->getDirectReferrals($data['agent_id']);
+        $subor = (new UserManageModel())->getSubordinate($data['agent_id']);
         $totalsubordinate = (new UserManageModel())->Fetchsubordinates($data['uid']);
 
         $relationship = '';
         $subordinates = '';
 
-        if ($data['agent_username'] && !empty($subor) && is_array($subor)) {
-            $relationship = $data['agent_username'] . ' ' . $referals . ' ' . $data['username'];
-            $subordinates = (count($subor) > 1) ? '...' : "";
-        } elseif ($data['agent_username'] && empty($subor)) {
+        if (!empty($data['agent_name']  != "*****") && !empty($subor != "*****") && is_array($subor = !"*****")) {
+            $relationship = $data['agent_name'] . ' ' . $referals . ' ' . $data['username'];
+            $subordinates = (count($subor) > 1) ? '...' : '';
+        } elseif ($data['account_type'] == 2) {
             $relationship = "Top Agent";
-        } else {
-
-            $relationship = '';
-            $subordinates = '';
         }
 
+        // Add data to the user list
         $usersLists[] = array_merge($data, [
             'userlogins' => $userlogins,
             'referals' => $referals,
@@ -249,7 +245,6 @@ if ($flag == "filterUserlogs") {
         'totalPages' => ceil($result['total'] / $limit)
     ]);
 }
-
 
 if ($flag == "getuserrebate") {
 

@@ -141,27 +141,27 @@
     }
 
     /* Custom Scrollbar for Webkit Browsers */
-    .table-wrapperlist::-webkit-scrollbar {
+    .table-wrapperlogs::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
         /* Slimmer scrollbar height for horizontal scrolling */
     }
 
-    .table-wrapperlist::-webkit-scrollbar-track {
+    .table-wrapperlogs::-webkit-scrollbar-track {
         background: #f1f1f1;
         /* Lighter background for track */
         border-radius: 5px;
     }
 
-    .table-wrapperlist::-webkit-scrollbar-thumb {
+    .table-wrapperlogs::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .table-wrapperlist::-webkit-scrollbar-thumb:hover {
+    .table-wrapperlogs::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
         /* Darker blue on hover */
     }
@@ -216,7 +216,7 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperlist" id="masklogs" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperlogs" id="masklogs" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4">
                     <tr>

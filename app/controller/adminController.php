@@ -118,8 +118,17 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function filterbetdata($betdata,$limit){
-        $this->view('exec/businessflow',['limit'=>$limit,'betdata'=>$betdata,'flag' => 'filterbetdata']);
+    public function filterbetdata($uid,$gametype,$betstate,$betstatus,$enddate,$startdate,$page,$limit){
+        $this->view('exec/businessflow',[
+        'uid'=>$uid,
+        'gametype'=>$gametype,
+        'betstate'=>$betstate,
+        'betstatus'=>$betstatus,
+        'enddate'=>$enddate,
+        'startdate'=>$startdate,
+        'page'=>$page,
+        'limit'=>$limit,
+        'flag' => 'filterbetdata']);
         $this->view->render();
     }
 
@@ -242,8 +251,65 @@ class adminController extends Controller {
 
     public function filterRebate($rebate)
     {
-        $this->view('exec/agentmanage', ['quota' => $rebate, 'flag' => 'filterRebate']);
+        $this->view('exec/agentmanage', ['rebate' => $rebate, 'flag' => 'filterRebate']);
         $this->view->render();
     }
+
+
+ 
+       //NOTE -
+    //////////////Finance funds Records -//////////
+    // 
+    public function fetchfinance($pageNumber, $limit)
+    {
+        $this->view('exec/financial_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchfinance']);
+        $this->view->render();
+    }
+    public function addmoney($depositetype,$uid,$amount,$review)
+    {
+        $this->view('exec/financial_manage', ['depositetype' => $depositetype,'uid'=>$uid,
+        'amount' => $amount,'review'=>$review, 'flag' => 'addmoney']);
+        $this->view->render();
+    }
+
+    public function filterdeposit($uid,$depsosit,$startdate,$enddate,$page,$pageLimit)
+    {
+        $this->view('exec/financial_manage', [
+        'uid' => $uid,
+        'states' => $depsosit,
+        'startdate' => $startdate,
+        'enddate' => $enddate,
+         'page' => $page,
+         'limit' => $pageLimit,
+        'flag' => 'filterDeposit'
+    ]);
+        $this->view->render();
+
+    }
+
+    // public function filterRebate($rebate)
+    // {
+    //     $this->view('exec/agentmanage', ['rebate' => $rebate, 'flag' => 'filterRebate']);
+    //     $this->view->render();
+    // }
+
+        //NOTE -
+    //////////////Deposit Records -//////////
+    // 
+    public function fetchDeposit($pageNumber, $limit)
+    {
+        $this->view('exec/financial_manage', ['page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchDeposit']);
+        $this->view->render();
+    }
+    
+     //NOTE -
+    //////////////Withdrawal Records -//////////
+    // 
+    public function fetchwithdraw($pageNumber, $limit)
+    {
+        $this->view('exec/financial_manage', ['page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchwithdraw']);
+        $this->view->render();
+    }
+
     
 }

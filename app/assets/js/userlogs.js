@@ -10,10 +10,10 @@ $(function () {
 
         // // Extract city from IP information or use a fallback
         // const city = ipInfo?.geoplugin_city || 'Unknown';
-    
+        const username = item.username == '*****' ? item.nickname : item.username;
         html += `
                     <tr>
-                        <td>${item.username}</td>
+                        <td>${username}</td>
                         <td>${item.login_date + '' + item.login_time}</td>
                         <td>${item.ip}</td>
                         <td></td>
@@ -122,8 +122,8 @@ $(function () {
     $(".playerlogs").click(function () {
   
       let direction = $(this).val();
-      const tableWrapper = $(".table-wrapperlist");
-      const tableWrappers = document.querySelector(".table-wrapperlist");
+      const tableWrapper = $(".table-wrapperlogs");
+      const tableWrappers = document.querySelector(".table-wrapperlogs");
       const scrollAmount = 1000; // Adjust as needed
       const scrollOptions = {
         behavior: 'smooth',

@@ -145,7 +145,7 @@ class AgentManageModel extends MEDOOHelper
 
     public static function FilterRebate($rebate)
     {
-        $data = parent::query( "SELECT * FROM rebate WHERE rebate LIKE :rebate", ['rebate' => "%$rebate%"]);
+        $data = parent::query( "SELECT * FROM rebate WHERE rebate LIKE '%$rebate%' OR odds_group LIKE '%$rebate%'");
         return ['data' => $data];
     }
 

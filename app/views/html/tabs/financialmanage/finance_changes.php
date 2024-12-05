@@ -141,27 +141,27 @@
 	}
 
 	/* Custom Scrollbar for Webkit Browsers */
-	.table-wrapperlist::-webkit-scrollbar {
+	.table-wrapperfinance::-webkit-scrollbar {
 		width: 5px;
 		/* Slimmer scrollbar width */
 		height: 5px;
 		/* Slimmer scrollbar height for horizontal scrolling */
 	}
 
-	.table-wrapperlist::-webkit-scrollbar-track {
+	.table-wrapperfinance::-webkit-scrollbar-track {
 		background: #f1f1f1;
 		/* Lighter background for track */
 		border-radius: 5px;
 	}
 
-	.table-wrapperlist::-webkit-scrollbar-thumb {
+	.table-wrapperfinance::-webkit-scrollbar-thumb {
 		background-color: #ccc;
 		/* Blue color for thumb */
 		border-radius: 10px;
 		cursor: pointer;
 	}
 
-	.table-wrapperlist::-webkit-scrollbar-thumb:hover {
+	.table-wrapperfinance::-webkit-scrollbar-thumb:hover {
 		background-color: #aaa;
 		/* Darker blue on hover */
 	}
@@ -177,8 +177,8 @@
 		/* Optional: Make it stand out */
 	}
 
-	.financeDropdown {
-    /* width: 16%; */
+	.financeDropdowns {
+    /* width: 23%; */
     position: absolute;
     background-color: #fff;
     color: #aaa;
@@ -190,6 +190,27 @@
     z-index: 9999;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     display: none;
+  }
+
+	.financeDropdown {
+    width: 23%;
+    position: absolute;
+    background-color: #fff;
+    color: #aaa;
+    max-height: 300px;
+    overflow-y: scroll;
+    border-radius: 5px;
+    padding: 10px;
+    top: 90%;
+    z-index: 9999;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    display: none;
+  }
+
+  .queryholderlistt {
+    width: 29%;
+    margin-right: 5px;
+    background-color: #FFF;
   }
 
   /* Style for the scrollbar */
@@ -227,15 +248,38 @@
 
 	<div class="px-4 py-3 border-bottom pagerlist">
 		<span class="top-left-btn">
-			<!-- <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
-            <input type="text" class="form-control product-search ps-5 userrebate" id="input-rsearch" placeholder="Search Rebate..." />
-            <i class="bx bx-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
-            
-            </div> -->
-			<div class="input-group mb-3">
+			<div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
+          
+        <input type="text" id="financeDropdown" class="form-control queryholderlistt usernames" placeholder="Search usernames">
+        <input name ="usernames" type="hidden" class="userIdfinance">
+        <select  class="form-control financeDropdown" size="5" style="display: none;">
+          <!-- Options will be populated dynamically -->
+        </select>
+
+    
+
+        <select name="betsate" class="form-control form-select queryholderlistt depositestate "
+          data-bs-placeholder="Select Type">
+          <option value="">-State-</option>
+          <option value="1">Deposit</option>
+          <option value="4">Withdrawal</option>
+      
+        </select>
+
+
+        <input  name ="startdate" type="date" class="form-control queryholderlistt startfinance"  aria-describedby="name"
+          placeholder="Name" />
+
+
+        <input  name ="enddate" type="date" class="form-control queryholderlistt endfinance"  aria-describedby="name"
+          placeholder="Name" />
+
+            </div>
+			<!-- <div class="input-group mb-3">
 				<span class="input-group-text" id="basic-addon12" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
 				<input type="text" class="form-control queryholder userrebate" placeholder="Enter Rebate (%)" aria-label="Username" aria-describedby="basic-addon1" />
-			</div>
+			</div> -->
+			
 
 		</span>
 		<span class="toplist-center" aria-label=" navigation example">
@@ -255,9 +299,9 @@
 					data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
 					<i class='bx bx-refresh' style="font-size:20px"></i>
 				</button>
-				<button type="button" class="btn bg-white-subtle executeuserlinks" value="end" aria-label="Execute"
+				<button type="button" class="btn bg-white-subtle executefinance" value="end" aria-label="Execute"
 					data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-					<i class='bx bx-check-double loaderlinks' style="font-size:20px"></i>
+					<i class='bx bx-check-double loaderfinance' style="font-size:20px"></i>
 				</button>
 			</div>
 
@@ -266,7 +310,7 @@
 	</div>
 
 	<div class="card-body p-4">
-		<div class="table-responsive mb-4 border rounded-1 table-wrapperfinance" id="masklinks" style="height:530px;overflow-y:scroll;">
+		<div class="table-responsive mb-4 border rounded-1 table-wrapperfinance" id="maskfinance" style="height:530px;overflow-y:scroll;">
 			<table class="table text-nowrap mb-0 align-middle table-bordered">
 				<thead class="text-dark fs-4">
 					<tr>
@@ -332,10 +376,10 @@
 		</span>
 		<span class="toplist-center" aria-label=" navigation example">
 
-			<span id="paging_infoquota" style="color:#aaa">---</span>
+			<span id="paging_infofinance" style="color:#aaa">---</span>
 
 		</span>
-		<span class="toplist-right" id="paginationquota" aria-label="Page navigation example">
+		<span class="toplist-right" id="paginationfiance" aria-label="Page navigation example">
 
 			<!--Dynamic pagination-->
 
@@ -387,9 +431,9 @@
 					<!-- Username Field -->
 					<!-- Rebate Field -->
 					<div class="form-floating mb-3">
-						<select name="deposit" class="form-select form-control border border-infos" id="de">
-							<option value="2">Deposit</option>
-							<option value="3">Withdrawal</option>
+						<select name="deposit" class="form-select form-control border border-infos depositt">
+							<option value="1">Deposit</option>
+							<option value="4">Withdrawal</option>
 						</select>
 						<label>
 							<i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
@@ -399,8 +443,8 @@
 
 					<div class="form-floating mb-3">
 						<input type="text" id="financeinput" class="form-control" placeholder="Search usernames">
-						<input type="hidden" class="userIdField">
-						<select name="usernames" class="form-control financeDropdown" size="5" style="display: none;">
+						<input type="hidden" class="userIdFields">
+						<select name="usernames" class="form-control financeDropdowns" size="5" style="display: none;">
 							<!-- Options will be populated dynamically -->
 						</select>
 
@@ -411,7 +455,7 @@
 					</div>
 
 					<div class="form-floating mb-3">
-						<input name="agentname" type="text" class="form-control border " placeholder="Username" />
+						<input name="agentname" type="text" class="form-control border amount" placeholder="Username" />
 						<label>
 							<i class="bx bx-money me-2 fs-4 text-infod"></i>
 							<span class="border-start  ps-3">Enter Amount</span>
@@ -419,7 +463,7 @@
 					</div>
 
 					<div class="form-floating mb-3">
-						<input name="agentname" type="text" class="form-control border " placeholder="Username" />
+						<input name="agentname" type="text" class="form-control border review" placeholder="Username" />
 						<label>
 							<i class="bx bx-message me-2 fs-4 text-infod"></i>
 							<span class="border-start  ps-3">Reviews</span>
@@ -434,7 +478,7 @@
 							<label class="form-check-label" for="sf2">Verify before submit</label>
 						</div>
 						<div class="mt-3 mt-md-0 ms-auto">
-							<button type="button" class="btn hstack gap-6 btnaddagent" style="border:solid 1px #ccc">
+							<button type="button" class="btn hstack gap-6 addmoneybtn" style="border:solid 1px #ccc">
 								<i class="bx bx-send loaderfinance"></i>
 								Submit
 							</button>
