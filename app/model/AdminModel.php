@@ -96,4 +96,27 @@ class AdminModel extends MEDOOHelper
         return ['where'=>$where,'params'=>$params];
     }
 
+    public static function createNewBackup(string $backupFile, string $fileSize) {
+        $fileName = explode("/",$backupFile);
+        $data = [
+            'backup_name' => end($fileName),
+            'backup_type' => 'Full Backup',
+            'backup_path' => '/app/backups',
+            'backup_status' => 'Active',
+            'backup_date' => date("Y-m-d"),
+            'backup_time' => date("H:i:s"),
+            'backup_size' => $fileSize,
+            'encryption' => 'AES-256'
+        ];
+        return parent::insert('backups',$data);
+    }
+
+    public static function getAllBackups($page, $limit) {
+        $startpoint = ($page * $limit) - $limit;
+        $data = parent::query(" SELECT * FROM backups 
+        ORDER BY backup_id DESC 
+        LIMIT :offset, :limit",['offset' => $startpoint, 'limit' => $limit]);
+        $totalRecords  = parent::count('backups');
+        return ['data' => $data, 'total' => $totalRecords];
+    }
 }

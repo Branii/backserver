@@ -26,8 +26,8 @@ $(function () {
     };
 
     data.forEach((item) => {
-      let first = item.full_name.split(" ")[0][0];
-      let last = item.full_name.split(" ")[1][0];
+      let first = item.full_name.split(" ")[0][0] ?? "";
+      let last = item.full_name.split(" ")[1][0] ?? "";
 
       html += `
                 <tr class="trow">

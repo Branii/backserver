@@ -277,13 +277,32 @@ if (session_status() == PHP_SESSION_NONE) {
                 <?php include "tabs/agentmanage/quota.php" ?>
               </div>
 
+              <!--system managenet-->
+
               <div class="chrome__tab administrator_list">
                 <?php include "tabs/system_management/administrator_list.php" ?>
               </div>
 
-          <div class="chrome__tab backup_recovery">
-            <?php include "tabs/system_management/backup_recovery.php" ?>
-          </div>
+              <div class="chrome__tab backup_recovery">
+                <?php include "tabs/system_management/backup_recovery.php" ?>
+              </div>
+
+              <!--system managenet-->
+
+
+              <!--game managenet-->
+
+              <div class="chrome__tab lottery_draw_records">
+                <?php include "tabs/game_management/lottery_draw_records.php" ?>
+              </div>
+
+              <div class="chrome__tab backup_recovery">
+                <?php include "tabs/system_management/backup_recovery.php" ?>
+              </div>
+
+              <!--system managenet-->
+
+              
 
         </div>
 
@@ -307,18 +326,22 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="<?php echo BASE_URL; ?>assets/js/app.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/sidebarmenu.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/chrometab.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/chairman.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/pagination.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/template.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/account_transaction.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/BootstrapMenu.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/admin_list.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/userlist.js"></script>
-        <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.init.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/moment.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.init.js"></script>
 
+    <!--custom js-->
+    <script src="<?php echo BASE_URL; ?>assets/js/chairman.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/template.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/account_transaction.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/admin_list.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/userlist.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/backup.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/lottery_draws.js"></script>
   
 
     <!-- <script src="<?php echo BASE_URL; ?>assets/js/userlogs.js"></script> -->
@@ -353,6 +376,18 @@ if (session_status() == PHP_SESSION_NONE) {
             headerRow.classList.remove('sticky-header');
           }
         });
+
+      //backups
+      const tableContainerBackup = document.querySelector(".table-wrappereBackup");
+      const headerRowBackup = document.querySelector(".headrowBackup");
+
+      tableContainerBackup.addEventListener("scroll", function () {
+        if (tableContainerBackup.scrollTop > 0) {
+          headerRowBackup.classList.add("sticky-headerBackup");
+        } else {
+          headerRowBackup.classList.remove("sticky-headerBackup");
+        }
+      });
 
       
 
