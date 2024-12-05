@@ -350,5 +350,15 @@ class adminController extends Controller {
         $this->view->render();
     }
 
+
+     //NOTE -
+    //////////////Bank Cardlist Records -//////////
+    // 
+    public function   fetchbankcard($pageNumber, $limit)
+    {
+        $this->view('exec/userbank_manage', ['page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchbankcard']);
+        $this->view->render();
+    }
+  
     
 }

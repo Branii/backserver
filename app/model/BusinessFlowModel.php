@@ -5,14 +5,15 @@ class BusinessFlowModel extends MEDOOHelper{
 
     public static function FetchTransactionData($page, $limit): array 
     { 
-        $startpoint = ($page * $limit) - $limit; 
-        $data = parent::query( 
-            "SELECT transaction.*, COALESCE(users.username, 'N/A') AS username FROM transaction   
-            JOIN users ON users.uid = transaction.uid  ORDER BY trans_id DESC LIMIT :offset, :limit", 
-            ['offset' => $startpoint, 'limit' => $limit] 
-        ); 
+        $startpoint = ($page * $limit) - $limit;
+        $data = parent::query(
+            "SELECT transaction.*,users_test.email,users_test.contact,COALESCE(users_test.username, 'N/A') AS username FROM transaction   
+            JOIN users_test ON users_test.uid = transaction.uid  ORDER BY trans_id DESC LIMIT :offset, :limit",
+            ['offset' => $startpoint, 'limit' => $limit]
+        );
         $totalRecords  = parent::count('transaction');
-        return ['data' => $data, 'total' => $totalRecords];
+        $trasationIds = array_column($data, 'order_id');
+        return ['data' => $data, 'total' => $totalRecords, 'transactionIds' => $trasationIds];
     } 
 
     public static function FilterTrsansactionDataSubQuery($username ='', $orderid='', $ordertype='', $from='', $to=''){
@@ -158,22 +159,30 @@ class BusinessFlowModel extends MEDOOHelper{
 
     
     public static function Searchusername(string $username)
+
     {
+        $query = trim($username);  // Clean the input
+
         $data = parent::query(
-            "SELECT uid, username, nickname
-            FROM users_test 
-            WHERE username LIKE :search OR nickname LIKE :search
+            "SELECT uid, username, email,contact
+            FROM users_test
+            WHERE (username LIKE :search OR contact LIKE :search OR email LIKE :search)
             ORDER BY 
-                CASE 
+                CASE
                     WHEN username LIKE :startsWith THEN 1  -- Prioritize usernames that start with the search term
-                    WHEN nickname LIKE :startsWith THEN 1  -- Prioritize nicknames that start with the search term
-                    ELSE 2
-                END, 
-                username ASC 
+                    WHEN contact LIKE :startsWith THEN 2  -- Prioritize nicknames that start with the search term
+                    WHEN email LIKE :startsWith THEN 3  -- Prioritize emails that start with the search term
+                    ELSE 4
+                END,
+                username ASC
             LIMIT 50",
-            ['search' => "%$username%", 'startsWith' => "$username%"]
+            [
+                'search' => "%$query%",  // Search anywhere within username, nickname, or email
+                'startsWith' => "$query%" // Prioritize matches where the field starts with the query
+            ]
         );
-        return $data; 
+
+        return $data;
     }
 
 

@@ -72,7 +72,7 @@
         cursor: pointer;
     }
 
-    .table-wrapperwithdraw {
+    .table-wrapperbankcard {
         overflow: hidden;
         /* Hide the default scrollbar */
         white-space: nowrap;
@@ -88,7 +88,7 @@
         z-index: 10;
     }
 
-    .queryholderwithdraw {
+    .queryholderbankcard {
         width: 33%;
         margin-right: 5px;
         background-color: #FFF;
@@ -141,27 +141,27 @@
     }
 
     /* Custom Scrollbar for Webkit Browsers */
-    .table-wrapperwithdraw::-webkit-scrollbar {
+    .table-wrapperbankcard::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
         /* Slimmer scrollbar height for horizontal scrolling */
     }
 
-    .table-wrapperwithdraw::-webkit-scrollbar-track {
+    .table-wrapperbankcard::-webkit-scrollbar-track {
         background: #f1f1f1;
         /* Lighter background for track */
         border-radius: 5px;
     }
 
-    .table-wrapperwithdraw::-webkit-scrollbar-thumb {
+    .table-wrapperbankcard::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .table-wrapperwithdraw::-webkit-scrollbar-thumb:hover {
+    .table-wrapperbankcard::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
         /* Darker blue on hover */
     }
@@ -181,7 +181,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">Withdrawal Records</h4>
+        <h4 class="card-title mb-0">Bank Card List</h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
@@ -205,11 +205,11 @@
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
                 <!-- <i ' ></i> -->
-                <!-- <button type="button" class="btn bg-white-subtle player setallwithdraw" value="right" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Set all withdraw">
+                <!-- <button type="button" class="btn bg-white-subtle player setallbankcard" value="right" aria-label="Refresh"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Set all bankcard">
                     <i class='bx bx-plus' style="font-size:20px"></i>
                 </button> -->
-                <button type="button" class="btn bg-white-subtle player refreshwithdraw" value="right" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle player refreshbankcard" value="right" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
                 </button>
@@ -224,20 +224,15 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperwithdraw" id="masklinks" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbankcard" id="masklinks" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4">
                     <tr>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Withdraw ID</h6>
-                        </th>
-                        <th>
                             <h6 class="fs-4 fw-semibold mb-0">Username</h6>
                         </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Level</h6>
-                        </th>
+                      
 						<th>
                             <h6 class="fs-4 fw-semibold mb-0">Bank Type</h6>
                         </th>
@@ -249,21 +244,21 @@
                             <h6 class="fs-4 fw-semibold mb-0">Bank Card Number</h6>
                         </th>
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Withdrawal Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Successful bankcardal Count</h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Actual Withdrawal Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Binding Time</h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Withdrawal Application Time</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Status</h6>
                         </th>
-                        <th>
+                        <!-- <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
-                        </th>
+                        </th> -->
                     </tr>
                 </thead>
-                <tbody id="withdrawContainer">
+                <tbody id="bankcardContainer">
 
                     <tr class="no-resultslist">
                         <td colspan="9">
@@ -282,23 +277,23 @@
                 <button type="button" class="btn bg-white-subtle playerlinks" value="startlinks">
                     <i class='bx bx-chevrons-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerwithdraw" value="leftlinks">
+                <button type="button" class="btn bg-white-subtle playerbankcard" value="leftlinks">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerwithdraw" value="rightlinks">
+                <button type="button" class="btn bg-white-subtle playerbankcard" value="rightlinks">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerwithdraw" value="endlinks">
+                <button type="button" class="btn bg-white-subtle playerbankcard" value="endlinks">
                     <i class='bx bx-chevrons-right' style="font-size:20px"></i>
                 </button>
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
 
-            <span id="paging_infowithdraw" style="color:#aaa">---</span>
+            <span id="paging_infobankcard" style="color:#aaa">---</span>
 
         </span>
-        <span class="toplist-right" id="paginationwithdraw" aria-label="Page navigation example">
+        <span class="toplist-right" id="paginationbankcard" aria-label="Page navigation example">
 
             <!--Dynamic pagination-->
 
@@ -308,7 +303,7 @@
 
 </div>
 
-<div class="modal fade" id="danger-depobsits" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
+<div class="modal fade" id="danger-depobsitsc" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content modal-filled " style="background-color:#F9F9F9">
             <div class="modal-body p-4">
@@ -331,11 +326,11 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="addContactMbodavo" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
+<div class="modal fade" id="addContactMbodavov" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header d-flex align-items-center">
-                <div>  <h5>withdraw</h5></div>
+                <div>  <h5>bankcard</h5></div>
                 <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' ></i></div>
             </div>
             <div class="modal-body">
@@ -346,7 +341,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-3 contact-location">
-                                        <input type="text" id="c-b-withdraw" class="form-control" placeholder="Update all withdraw" />
+                                        <input type="text" id="c-b-bankcard" class="form-control" placeholder="Update all bankcard" />
                                     </div>
                                 </div>
                             </div>

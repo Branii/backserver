@@ -9,7 +9,7 @@ $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 if ($flag == "filterusername") {
 
     $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
-    $result = (new BusinessFlow())->filterusername($username);
+    $result = (new BusinessFlowModel())->filterusername($username);
     if ($result) {
         echo json_encode([['username' => 'Nketiah']]);
     } else {
@@ -82,7 +82,8 @@ if ($flag == "searchusername") {
         $data = [
             'uid' => $value['uid'],  // 'uid' is the key
             'username' => $value['username'],  // 'username' value
-            'nickname' => $value['nickname'],  // 'nickname' value
+            'email' => $value['email'], 
+            'contact' => $value['contact'],  // 'nickname' value
         ];
         $results[] = $data;  // Append the formatted result to the $results array
     }

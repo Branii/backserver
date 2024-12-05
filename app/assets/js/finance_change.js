@@ -19,7 +19,7 @@ $(function () {
 
           let types = item.deposit_withdrawal_type == 1 ? 'Deposit' :
           item.deposit_withdrawal_type == 4 ? 'Withdrawal' : '';
-          const username = item.username == '*****' ? item.nickname : item.username;
+          const username = item.username === '*****' ? item.email : (item.contact ||item.username);
 
         html += `
                       <tr>
@@ -173,7 +173,8 @@ $(function () {
     
                 const filteredUsers = response.flatMap(item => [
                     { "uid": item.uid, "username": item.username },
-                    { "uid": item.uid, "username": item.nickname }
+                    { "uid": item.uid, "username": item.email},
+                    { "uid": item.uid, "username": item.contact}
                 ]).filter(user => user.username !== '*****');
     
                 filteredUsers.forEach(user => {
@@ -266,7 +267,8 @@ $(function () {
     
                 const filteredUsers = response.flatMap(item => [
                     { "uid": item.uid, "username": item.username },
-                    { "uid": item.uid, "username": item.nickname }
+                    { "uid": item.uid, "username": item.email },
+                    { "uid": item.uid, "username": item.contact}
                 ]).filter(user => user.username !== '*****');
     
                 filteredUsers.forEach(user => {
@@ -341,7 +343,7 @@ $(function () {
           console.error("Error fetching data:", error);
           $(".loaderfinance").removeClass("bx-loader bx-spin").addClass("bx-check-double");
       });
-   });
+    });
   
     
     

@@ -19,10 +19,10 @@ $(function () {
     };
 
     data.forEach((item) => {
-      const username = item.username == '*****' ? item.nickname : item.username;
+      const username = item.username == '*****' ? item.email :(item.username || item.contact);
       html += `
                   <tr class="trow">
-                      <td>${item.order_id.substring(0, 7)}</td>
+                      <td>${Tr+ +item.order_id.substring(0, 7)}</td>
                       <td>${username}</td>
                       <td><i class='bx bxs-circle' style='color:${status[item.order_type].color};font-size:8px;margin-right:5px;'></i>${status[item.order_type].title}</td>
                       <td>${Number(item.account_change).toFixed(4)}</td>

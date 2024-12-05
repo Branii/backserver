@@ -147,7 +147,7 @@ $(function () {
       renderlottery(data.lotterybet);
 
       // Render pagination
-      renderbetPagination(data.totalPages, page, uidd,gametype,betsate,betstatus,startdates,enddates);
+      renderbetPagination(data.totalPages, page);
       document.getElementById("paging_infobet").innerHTML =
         "Page " + page + " of " + data.totalPages + " pages";
     } catch (error) {
