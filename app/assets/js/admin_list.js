@@ -26,8 +26,8 @@ $(function () {
     };
 
     data.forEach((item) => {
-      let first = item.full_name.split(" ")[0][0];
-      let last = item.full_name.split(" ")[1][0];
+      let first = item.full_name.split(" ")[0][0] ?? "";
+      let last = item.full_name.split(" ")[1][0] ?? "";
 
       html += `
                 <tr class="trow">
@@ -191,7 +191,21 @@ $(function () {
       const data = await response.json();
       console.log(data.adminLogs)
       renderAdminLogs(data.adminLogs);
-      renderPaginationForAdminLogs(data.totalPages, currentPage, adminId, datefrom, dateto);
+      renderPaginationForAdminLogsPaging(data.totalPages, currentPage, adminId, datefrom, dateto);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  async function searchlogs(currentPage, pageLimit, adminId, query)  {
+    try {
+      const response = await fetch(
+        `../admin/searchlogs/${currentPage}/${pageLimit}/${adminId}/${query}`
+      );
+      const data = await response.json();
+      console.log(data.adminLogs)
+      renderAdminLogs(data.adminLogs);
+      renderPaginationForAdminLogsSearch(data.totalPages, currentPage, adminId, query);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -307,6 +321,101 @@ $(function () {
     });
   }
 
+  function renderPaginationForAdminLogsPaging(totalPages, currentPage, adminId,datefrom, dateto) {
+    const createPageLink = (i, label = i, disabled = false, active = false) =>
+      `<li class='page-item ${disabled ? "disabled" : ""} ${
+        active ? "active" : ""
+      }'>
+            <a class='page-link' href='#' data-page='${i}'>${label}</a>
+          </li>`;
+    let pagLink = `<ul class='pagination justify-content-end'>`;
+
+    // Previous Button
+    pagLink += createPageLink(
+      currentPage - 1,
+      `<i class='bx bx-chevron-left'></i>`,
+      currentPage === 1
+    );
+
+    // Page numbers with ellipsis
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+        pagLink += createPageLink(i, i, false, i === currentPage);
+      } else if (i === currentPage - 3 || i === currentPage + 3) {
+        pagLink += createPageLink(i, "...", true);
+      }
+    }
+
+    // Next Button
+    pagLink += createPageLink(
+      currentPage + 1,
+      `<i class='bx bx-chevron-right'></i>`,
+      currentPage === totalPages
+    );
+    pagLink += "</ul>";
+
+    document.getElementById("paginationAdminLogs").innerHTML = pagLink;
+
+    // Add click event listeners
+    document.querySelectorAll("#paginationAdminLogs .page-link").forEach((link) => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const newPage = +this.getAttribute("data-page");
+        if (newPage > 0 && newPage <= totalPages) {
+          filterAdminLogs(newPage, pageLimit, adminId,datefrom, dateto);
+        }
+      });
+    });
+  }
+
+  function renderPaginationForAdminLogsSearch(totalPages, currentPage, adminId, query) {
+    const createPageLink = (i, label = i, disabled = false, active = false) =>
+      `<li class='page-item ${disabled ? "disabled" : ""} ${
+        active ? "active" : ""
+      }'>
+            <a class='page-link' href='#' data-page='${i}'>${label}</a>
+          </li>`;
+    let pagLink = `<ul class='pagination justify-content-end'>`;
+
+    // Previous Button
+    pagLink += createPageLink(
+      currentPage - 1,
+      `<i class='bx bx-chevron-left'></i>`,
+      currentPage === 1
+    );
+
+    // Page numbers with ellipsis
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+        pagLink += createPageLink(i, i, false, i === currentPage);
+      } else if (i === currentPage - 3 || i === currentPage + 3) {
+        pagLink += createPageLink(i, "...", true);
+      }
+    }
+
+    // Next Button
+    pagLink += createPageLink(
+      currentPage + 1,
+      `<i class='bx bx-chevron-right'></i>`,
+      currentPage === totalPages
+    );
+    pagLink += "</ul>";
+
+    document.getElementById("paginationAdminLogs").innerHTML = pagLink;
+
+    // Add click event listeners
+    document.querySelectorAll("#paginationAdminLogs .page-link").forEach((link) => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const newPage = +this.getAttribute("data-page");
+        if (newPage > 0 && newPage <= totalPages) {
+          filterAdminLogs(newPage, pageLimit, adminId, query);
+        }
+      });
+    });
+  }
+
+
   function tableScroll() {
     const tableContainerAdmin = document.querySelector(".table-wrappereAdmin");
     const headerRowAdmin = document.querySelector(".headrow");
@@ -357,6 +466,8 @@ $(function () {
   let bigArr = [] //permission array
   let graph = {};
   let userId;
+  let adminId
+  let timeout;
 
   $(document).on("click", ".admin_per", function () {
     const userdata = JSON.parse($(this).attr("value"));
@@ -473,7 +584,7 @@ $(function () {
   $(document).on("click", ".admin_logs", function(){
    
     const userdata = JSON.parse($(this).attr("value"));
-    let adminId = JSON.parse(userdata.admin_id);
+    adminId = JSON.parse(userdata.admin_id);
     console.log(adminId);
     $(".logname").text(userdata.full_name)
     getAdminLogs(currentPage, pageLimit, adminId)
@@ -481,14 +592,23 @@ $(function () {
   })
 
   $(document).on("click", ".rangelogs", function(){
-    const datefrom = $(".datefrom").val()
-    const dateto = $(".dateto").val()
-    if(datefrom == "" || dateto == ""){
+    let datefrom = $(".datefrom").val()
+    let dateto = $(".dateto").val()
+    if(datefrom == "" && dateto == ""){
       showToast("Information", "Select date(s) to filter", "info")
+    }else if(datefrom != "" && dateto == ""){
+      dateto = datefrom
+      filterAdminLogs(currentPage, pageLimit, adminId, datefrom, dateto) 
     }else{
       filterAdminLogs(currentPage, pageLimit, adminId, datefrom, dateto) 
     }
 
+  })
+
+  $(document).on("keyup", '.searchlogs', function () {
+    let query = $('.searchlogs').val();
+    clearTimeout(timeout);
+    timeout = setTimeout(searchlogs(currentPage, pageLimit, adminId,query) , 300);
   })
 
 

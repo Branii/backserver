@@ -638,6 +638,19 @@
           <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
 
+<<<<<<< HEAD
+          <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
+                  <input type="text" class="form-control queryholder searchlogs" placeholder="Search ..." aria-label="Username" aria-describedby="basic-addon1" />
+          </div>
+
+          <div class="input-group mb-3">
+                <input type="date" class="form-control queryholder datefrom" style="z-index:9999"/>
+          </div>
+
+          <div class="input-group mb-3">
+                <input type="date" class="form-control queryholder dateto" style="z-index:9999"/>
+=======
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
               <input type="text" class="form-control queryholder" placeholder="Search ..." aria-label="Username" aria-describedby="basic-addon1" />
@@ -673,6 +686,7 @@
               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Filter">
               <i class='bx bx-check-double loaderz' style="font-size:20px"></i>
             </button>
+>>>>>>> 19c95e74524176efecd5f1870dc487d4e551880d
           </div>
 
         </span>

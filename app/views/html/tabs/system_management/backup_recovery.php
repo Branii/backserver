@@ -77,7 +77,7 @@
 
   }
 
-  .table-wrapper {
+  .table-wrapperBackup{
     overflow: hidden;
     /* Hide the default scrollbar */
     white-space: nowrap;
@@ -137,7 +137,6 @@
   .no-resultsAdmin img {
     position: relative;
     top: 100px;
-
   }
 
   /* Custom Scrollbar for Webkit Browsers */
@@ -177,12 +176,12 @@
   background-color: orangered !important;
   border:none;
 }
-.tbl-headerAdmin {
+.tbl-headerBackup {
   position: sticky;
   top: 0;
 }
 
-.sticky-headerAdmin{
+.sticky-headerBackup{
   position: relative;
   bottom:1px;
   background-color: red;
@@ -204,6 +203,10 @@
   border:solid 2px orangered
 }
 
+.daterangepicker{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px  !important;
+}
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -219,7 +222,7 @@
 
           <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
-                    <input type="text" class="form-control queryholder" placeholder="Search ..." aria-label="Username" aria-describedby="basic-addon1" />
+                    <input type="text" class="form-control linkedCalendars queryholder" placeholder="Search ..." aria-label="Username" aria-describedby="basic-addon1" />
                   </div>
 
 
@@ -244,8 +247,12 @@
         <button type="button" class="btn bg-white-subtle" value="right" >
           ::
         </button>
-        <button type="button" class="btn bg-white-subtle" value="end" aria-label="Execute" data-bs-toggle="modal" data-bs-target="#add-new"
-          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add new">
+        <button type="button" class="btn bg-white-subtle refreshh" value="right" aria-label="Refresh"
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+          <i class='bx bx-refresh' style="font-size:20px"></i>
+        </button>
+        <button type="button" class="btn bg-white-subtle createnew" value="end"
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Create new">
           <i class='bx bx-plus' style="font-size:20px"></i>
         </button>
       </div>
@@ -255,43 +262,47 @@
   </div>
 
   <div class="card-body p-4">
-    <div class="table-responsive mb-4 border rounded-1 table-wrappereAdmin table-wrapper" id="mask" style="height:530px;overflow-y:scroll;">
+    <div class="table-responsive mb-4 border rounded-1 table-wrappereBackup table-wrapper" id="maskk" style="height:530px;overflow-y:scroll;">
       <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
-        <thead class="text-dark fs-4 tbl-headerAdmin">
-          <tr class="headrow">
+        <thead class="text-dark fs-4 tbl-headerBackup">
+          <tr class="headrowBackup">
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Avatar</h6>
+              <h6 class="fs-4 fw-semibold mb-0">#Id</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Username</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Ico</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Full Name</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Backup Name</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Initials</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Backup Type</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Email Address</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Backup Path</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Mobile Number</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Backup Size</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Two Factor Enabled</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Encryption Type</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Two Factor Method</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Backup Date</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Account Status</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Backu Time</h6>
             </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Backup Status</h6>
+            </th>
+      
             <th>
               <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
             </th>
           </tr>
         </thead> 
-        <tbody id="dataContainerAdmin" class="tbl-contentadmin">
+        <tbody id="dataContainerBackup" class="tbl-contentbackup">
 
           <tr class="no-resultsAdmin">
             <td colspan="9">
@@ -323,13 +334,13 @@
     </span>
     <span class="top-center" aria-label=" navigation example">
 
-      <span id="paging_info_admin" style="color:#aaa">---</span>
+      <span id="paging_info_backup" style="color:#aaa">---</span>
 
     </span>
 
    
     <span class="top-right-btn"  aria-label="Page navigation example">
-    <select class="left-element form-control numrows" style="font-size:12px">
+    <select class="left-element form-control numrowsbackup" style="font-size:12px">
             <!-- <option value="5" class="fromnumrows">5</option>
             <option value="10">10</option>
             <option value="20">20</option> -->
@@ -338,7 +349,7 @@
             <option value="200">200</option>
             <option value="500">500</option>
      </select>
-      <span id="paginationAdmin" class="right-element"> </span>
+      <span id="paginationBackup" class="right-element"> </span>
     </span>
 
   </div>

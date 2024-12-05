@@ -7,8 +7,8 @@ class BusinessFlowModel extends MEDOOHelper{
     { 
         $startpoint = ($page * $limit) - $limit; 
         $data = parent::query( 
-            "SELECT transaction.*, users_test.nickname, COALESCE(users_test.username, 'N/A') AS username FROM transaction   
-            JOIN users_test ON users_test.uid = transaction.uid  ORDER BY transaction.trans_id DESC LIMIT :offset, :limit", 
+            "SELECT transaction.*, COALESCE(users.username, 'N/A') AS username FROM transaction   
+            JOIN users ON users.uid = transaction.uid  ORDER BY trans_id DESC LIMIT :offset, :limit", 
             ['offset' => $startpoint, 'limit' => $limit] 
         ); 
         $totalRecords  = parent::count('transaction');

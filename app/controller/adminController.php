@@ -47,6 +47,18 @@ class adminController extends Controller {
         $this->view->render();
     }
 
+    public function searchlogs($pageNumber,$limit,$adminId,$query){
+        $this->view('exec/admins_exec',[
+            'page'=>$pageNumber,
+            'limit'=>$limit,
+            'flag'=> 'searchlogs',
+            'userId'=>$adminId,
+            'query'=>$query,
+            ]
+        );
+        $this->view->render();
+    }
+
     public function filterAdminLogs($pageNumber, $limit, $adminId, $datefrom, $dateto){
         $this->view('exec/admins_exec',[
             'page'=>$pageNumber,
@@ -59,7 +71,34 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    
+    public function getAllBackups($pageNumber,$limit){
+        $this->view('exec/admins_exec',data: ['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'getAllBackups']);
+        $this->view->render();
+    }
+
+    public function getAllgames(){
+        $this->view('exec/game_management',['flag' => 'getAllgames']);
+        $this->view->render();
+    }
+
+    public function getSpecificDraws($gameId, $datefrom, $dateto, $pageNumber, $limit){
+        $this->view('exec/game_management',[
+        'page'=>$pageNumber,
+        'limit'=>$limit, 
+        'flag'=> 'getSpecificDraws',
+        'gameId'=>$gameId,
+        'datefrom'=>$datefrom,
+        'dateto'=>$dateto
+    ]);
+    $this->view->render();
+    }
+
+    public function backup(){
+        $this->view('exec/admins_exec', [
+            'flag'=>'backup'
+        ]);
+        $this->view->render();
+    }
 
     // side bar datas adminLogs
 

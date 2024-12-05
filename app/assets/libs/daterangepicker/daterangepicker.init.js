@@ -1,7 +1,7 @@
 /*******************************************/
 // Basic Date Range Picker
 /*******************************************/
-$(".daterange").daterangepicker();
+//$(".daterange").daterangepicker();
 
 /*******************************************/
 // Date & Time
