@@ -28,7 +28,7 @@ $(function () {
        const betOddsObject = JSON.parse(item.bet_odds);
        const betOddsArray = Object.values(betOddsObject);
        const betodds = betOddsArray * item.multiplier * item.unit_stake;
-       const username = item.username == '*****' ? item.nickname : item.username;
+       const username = item.username == '*****' ? item.email :(item.username ||item.contact);
 
       console.log(item.username)
       htmls += `
@@ -147,7 +147,7 @@ $(function () {
       renderlottery(data.lotterybet);
 
       // Render pagination
-      renderbetPagination(data.totalPages, page);
+      renderbetPagination(data.totalPages,page,uidd,gametype,betsate,betstatus,startdates,enddates);
       document.getElementById("paging_infobet").innerHTML =
         "Page " + page + " of " + data.totalPages + " pages";
     } catch (error) {
@@ -439,7 +439,7 @@ $(document).ready(function () {
         // Only trigger if input is more than 2 characters
         if (query.length > 1) {
             clearTimeout(debounceTimeout); // Clear any existing timeout
-            debounceTimeout = setTimeout(fetchUsers, 500, query); // Call fetchUsers with the query after 500ms delay
+            debounceTimeout = setTimeout(fetchbetUser, 500, query); // Call fetchUsers with the query after 500ms delay
         } else {
             $('.userDropdown').hide(); // Hide dropdown if input is less than 3 characters
         }
@@ -467,7 +467,7 @@ $(document).ready(function () {
 });
 
 // Function to fetch and display users
-function fetchUsers(query) {
+function fetchbetUser(query) {
     let optionsHtml = '';
 
     $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
@@ -476,7 +476,8 @@ function fetchUsers(query) {
 
             const filteredUsers = response.flatMap(item => [
                 { "uid": item.uid, "username": item.username },
-                { "uid": item.uid, "username": item.nickname }
+                { "uid": item.uid, "username": item.email },
+                { "uid": item.uid, "username": item.contact }
             ]).filter(user => user.username !== '*****');
 
             filteredUsers.forEach(user => {

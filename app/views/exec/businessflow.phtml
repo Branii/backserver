@@ -23,7 +23,7 @@ if ($flag == "transactiondata") {
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $result = (new BusinessFlowModel())->FetchTransactionData($page, $limit) ?? [];
     echo json_encode([
-        'users' => $result['data'],
+        'transaction' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit),
     ]);
 }
@@ -110,22 +110,9 @@ if ($flag == "filterbetdata") {
     $sunquery =  (new BusinessFlowModel())->filterBetData($uid, $gametype, $betstate, $betstatus, $enddate, $startdate);
     $result = (new BusinessFlowModel())->getAllUserBetByUserId($sunquery,$page,$limit);
 
-    // $bigArr = [];
-    // foreach ($result['data'] as $data) {
-    //     $username = (new BusinessFlowModel())->getUsernameById($data['uid'])['username'];
-    //     $nickname = (new BusinessFlowModel())->getUsernameById($data['uid'])['nickname'];
-    //     $lotteryname = (new BusinessFlowModel())->getLottery($data['game_type'])['name'];
-    //     $gtid = (new BusinessFlowModel())->getLottery($data['game_type'])['gt_id'];
-    //     $data['username'] = $username;
-    //     $data['game_type'] = $lotteryname;
-    //     $data['nickname'] = $nickname;
-    //     $data['gt_id'] = $gtid;
-    //     $bigArr[] = $data;
-    // }
-
     echo json_encode([
-        'filterbet' => $result,
-      //  'totalPages' => ceil($result['total'] / $limit)
+        'filterbet' => $result['data'],
+       'totalPages' => ceil($result['total'] / $limit)
     ]);
 }
 

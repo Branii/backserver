@@ -22,7 +22,7 @@ $(function () {
       const username = item.username == '*****' ? item.email :(item.username || item.contact);
       html += `
                   <tr class="trow">
-                      <td>${Tr+ +item.order_id.substring(0, 7)}</td>
+                    <td>${'TR' + item.order_id.substring(0, 7)}</td>
                       <td>${username}</td>
                       <td><i class='bx bxs-circle' style='color:${status[item.order_type].color};font-size:8px;margin-right:5px;'></i>${status[item.order_type].title}</td>
                       <td>${Number(item.account_change).toFixed(4)}</td>
@@ -85,16 +85,18 @@ $(function () {
   };
 
   let currentPage = 1;
-  let pageLimit = 45;
+  let pageLimit = 21;
 
 
   async function fetchTrasaction(page,pageLimit) {
     try {
       const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
       const data = await response.json();
+      console.log(response)
+      // return
  
       $("#mask").LoadingOverlay("hide")
-      render(data.users);
+      render(data.transaction);
 
       // Render pagination
       renderPagination(data.totalPages, page,pageLimit, 'normal');

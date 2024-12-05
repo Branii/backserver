@@ -105,7 +105,7 @@ class UserManageModel extends MEDOOHelper
         $startpoint = ($page * $limit) - $limit;
         $sql = "
         SELECT 
-            uid, username, nickname, agent_name, balance, recharge_level, user_state, 
+            uid, username,email,contact, agent_name, balance, recharge_level, user_state, 
             last_login, rebate, created_at, agent_id,account_type
         FROM users_test
         WHERE account_type = 2
