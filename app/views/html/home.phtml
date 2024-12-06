@@ -389,6 +389,20 @@ if (session_status() == PHP_SESSION_NONE) {
         }
       });
 
+      //draws
+      const tableContainerDraws = document.querySelector(".table-wrapperDraws");
+      const headerRowDraws = document.querySelector(".headrowDraws");
+
+      tableContainerDraws.addEventListener("scroll", function () {
+        if (tableContainerDraws.scrollTop > 0) {
+          headerRowDraws.classList.add("sticky-headerDraws");
+        } else {
+          headerRowDraws.classList.remove("sticky-headerDraws");
+        }
+      });
+
+
+      
       
 
       });

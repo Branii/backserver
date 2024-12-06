@@ -81,7 +81,17 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    
+    public function getSpecificDraws($gameId, $datefrom, $dateto, $pageNumber, $limit){
+        $this->view('exec/game_management',[
+        'page'=>$pageNumber,
+        'limit'=>$limit, 
+        'flag'=> 'getSpecificDraws',
+        'gameId'=>$gameId,
+        'datefrom'=>$datefrom,
+        'dateto'=>$dateto
+    ]);
+    $this->view->render();
+    }
 
     public function backup(){
         $this->view('exec/admins_exec', [

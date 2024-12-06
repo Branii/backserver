@@ -29,60 +29,24 @@ $(function(){
         data.forEach((item) => {
           html += `
                     <tr class="trow">
-                        <td>${item.backup_id}</td>
-
-                        <td> 
-                           <div class="d-flex align-items-center"> <i class='bx bx-sushi' style="font-size:30px"></i> </div>
-                        </td>
-    
-                        <td>${item.backup_name}</td>
-                        <td>${item.backup_type}</td>
-                        <td>${item.backup_path}</td>
-                        <td>${item.backup_size}</td>
-                        <td>${item.encryption}</td>
-                        <td>${item.backup_date}</td>
-                        <td>${item.backup_time}</td>
-                        <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${item.backup_status}</span></td>
-                        <td>
-                        <div class="dropdown dropstart">
-                          <a href="javascript:void(0)" class="text-muted" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                             <i value='' class='bx bx-dots-vertical-rounded'' style='color:#868c87;font-size:18px;cursor:pointer;'></i>
-                          </a>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li value='${JSON.stringify(
-                              item
-                            )}' class='admin_pro'>
-                              <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view-profile">
-                                <i class='bx bx-refresh' style='font-size:20px;'></i>Restore Backup
-                              </a>
-                            </li>
-                            <li value='${JSON.stringify(
-                              item
-                            )}' class='admin_logs'>
-                              <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#view-activity-logs">
-                                <i class='bx bx-envelope' style='font-size:20px;'></i>Email Backup
-                              </a>
-                            </li>
-                             <li value='${JSON.stringify(
-                              item
-                            )}' class='admin_per'>
-                              <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#view-permissions">
-                                <i class='bx bx-trash' style='font-size:20px;'></i>Delete Backup
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      </td>
-                      
+                        <td>${item.draw_id}</td>
+                        <td>${item.period}</td>
+                        <td>${item.draw_number}</td>
+                        <td>${item.total_bet_amount}</td>
+                        <td>${item.total_won_amount}</td>
+                        <td>${item.closing_time}</td>
+                        <td>${item.time_added}</td>
+                        <td>${item.closing_time}</td>
+                        <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${item.draw_status}</span></td>
                     </tr>
                 `;
         });
         return html;
     };
 
-    const renderAllBackups = (data) => {
-        var html = backupTable(data);
-        $("#dataContainerDraw").html(html);
+    const renderDrawTable = (data) => {
+        var html = drawTable(data);
+        $("#dataContainerDraws").html(html);
     };
 
     let currentPage = 1;
@@ -94,28 +58,26 @@ $(function(){
           const response = await fetch(`../admin/getAllgames`);
           const data = await response.json();
           let html = ""
+          html += `<option>Select Game</option>`
           data.forEach((item) => {
              html += `<option value='${item.gt_id}'>${item.name}</option>`
           })
-          //renderAllBackups(data.backups);
-          //showToast("Success", "Backup created successfully", "success") 
-          //sibling.removeClass("bx-loader bx-spin").addClass("bx-plus");
+          $("#allGameNames").html(html)
         } catch (error) {
           console.error("Error fetching data:", error);
         }
-      }
-      getAllGames() 
+    }
+    getAllGames() 
 
-      async function getAllBackups(currentPage, pageLimit) {
+      async function getAllSpecificDraws(currentPage, pageLimit, gameId, datefrom, dateto) {
         try {
-          const response = await fetch(`../admin/getAllBackups/${currentPage}/${pageLimit}`);
+          const response = await fetch(`../admin/getSpecificDraws/${gameId}/${datefrom}/${dateto}/${currentPage}/${pageLimit}`);
           const data = await response.json();
-          //console.log(data);
-          renderAllBackups(data.backups);
-          $("#maskk").LoadingOverlay("hide")
-          //Render pagination
-          renderPaginationForBackups(data.totalPages, currentPage);
-          document.getElementById("paging_info_backup").innerHTML =
+          console.log(data);
+          renderDrawTable(data.gameDraws);
+          $("#maskkk").LoadingOverlay("hide")
+          renderPaginationForDraws(data.totalPages, currentPage,gameId, datefrom, dateto);
+          document.getElementById("paging_info_draws").innerHTML =
           "Page " + currentPage + " of " + data.totalPages + " pages";
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -123,7 +85,7 @@ $(function(){
       }
       //getAllBackups(currentPage, pageLimit);
 
-      function renderPaginationForBackups(totalPages, currentPage) {
+      function renderPaginationForDraws(totalPages, currentPage, gameId, datefrom, dateto) {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
           `<li class='page-item ${disabled ? "disabled" : ""} ${
             active ? "active" : ""
@@ -156,33 +118,48 @@ $(function(){
         );
         pagLink += "</ul>";
     
-        document.getElementById("paginationBackup").innerHTML = pagLink;
+        document.getElementById("paginationDraws").innerHTML = pagLink;
     
         // Add click event listeners
-        document.querySelectorAll("#paginationBackup .page-link").forEach((link) => {
+        document.querySelectorAll("#paginationDraws .page-link").forEach((link) => {
           link.addEventListener("click", function (e) {
             e.preventDefault();
             const newPage = +this.getAttribute("data-page");
             if (newPage > 0 && newPage <= totalPages) {
-              getAllBackups(newPage, pageLimit);
+              //getAllBackups(newPage, pageLimit);
+              getAllSpecificDraws(newPage, pageLimit, gameId, datefrom, dateto) 
             }
           });
         });
       }
 
 
-    $(".createnew").on("click",function(){
-      sibling = $(this).find('.bx-plus')
-      sibling.removeClass("bx-plus").addClass("bx-loader bx-spin");
-      createNewBackup()
+    $(".executegetdraws").on("click",function(){
+      let params = [$("#drawfrom").val(),$("#drawto").val()]
+      let gameId = $("#allGameNames").val()
+      console.log(gameId)
+      //const isEmpty = params.some(param => param === "")
+      if(gameId == "Select Game"){
+        showToast("Information", "Please select game", "info") 
+      }else{
+        getAllSpecificDraws(currentPage, pageLimit, gameId, params[0], params[1]) 
+      }
     })
 
-    $(".refreshh").on("click",function(){
-      $("#maskk").LoadingOverlay("show", {
-        background: "rgb(90,106,133,0.1)",
-        size: 3
-      });
-      getAllBackups(currentPage, pageLimit);
+    $(".refreshdraws").on("click",function(){
+      let params = [$("#drawfrom").val(),$("#drawto").val()]
+      let gameId = $("#allGameNames").val()
+      console.log(gameId)
+      //const isEmpty = params.some(param => param === "")
+      if(gameId == "Select Game"){
+        showToast("Information", "Please select game", "info") 
+      }else{
+        $("#maskkk").LoadingOverlay("show", {
+          background: "rgb(90,106,133,0.1)",
+          size: 3
+        });
+        getAllSpecificDraws(currentPage, pageLimit, gameId, params[0], params[1]) 
+      }
     })
 
     $(".numrowsbackup").change(function(){ 

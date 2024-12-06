@@ -181,7 +181,7 @@
   top: 0;
 }
 
-.sticky-header {
+.sticky-headerDraws {
   position: relative;
   bottom:1px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
@@ -203,24 +203,13 @@
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-        <select name="order_type" class="form-control form-select queryholder ordertype" data-bs-placeholder="Select Type">
-          <option value="0">Transaction Type</option>
-          <option value="1">Deposit</option>
-          <option value="2">Win Bonus</option>
-          <option value="3">Bet Awarded</option>
-          <option value="4">Withdrawal</option>
-          <option value="5">Bet Cancelled</option>
-          <option value="6">Bet Deduct</option>
-          <option value="7">Rebate</option>
-          <option value="8">Self Rebate</option>
-          <option value="9">Send Red Envelope</option>
-          <option value="10">Receive Red Envelope</option>
-          <option value="11">Bet Refund</option>
+        <select name="order_type" id="allGameNames" class="form-control form-select queryholder ordertype" data-bs-placeholder="Select Type">
+
         </select>
 
-        <input type="date" class="form-control queryholder startdate" id="nameext1" aria-describedby="name" placeholder="Name" />
+        <input type="date" class="form-control queryholder startdate" id="drawfrom"/>
 
-        <input type="date" class="form-control queryholder enddate" id="nametex" aria-describedby="name" placeholder="Name" />
+        <input type="date" class="form-control queryholder enddate" id="drawto"/>
 
       </div>
     </span>
@@ -242,11 +231,11 @@
         <button type="button" class="btn bg-white-subtle" value="right">
          ::
         </button>
-        <button type="button" class="btn bg-white-subtle  refresh" value="right" aria-label="Refresh"
+        <button type="button" class="btn bg-white-subtle  refreshdraws" value="right" aria-label="Refresh"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
           <i class='bx bx-refresh' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle executetrans" value="end" aria-label="Execute"
+        <button type="button" class="btn bg-white-subtle executegetdraws" value="end" aria-label="Execute"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
           <i class='bx bx-check-double loader' style="font-size:20px"></i>
         </button>
@@ -257,15 +246,18 @@
   </div>
 
   <div class="card-body p-4">
-    <div class="table-responsive mb-4 border rounded-1 table-wrapper" id="mask" style="height:530px;overflow-y:scroll;">
+    <div class="table-responsive mb-4 border rounded-1 table-wrapper table-wrapperDraws" id="maskkk" style="height:530px;overflow-y:scroll;">
       <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
         <thead class="text-dark fs-4 tbl-header">
-          <tr>
-            <th>
+          <tr class="headrowDraws">
+            <!-- <th>
               <h6 class="fs-4 fw-semibold mb-0">Lottery Type</h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0">Lottery Alias</h6>
+            </th> -->
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Draw Id</h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0">Issue Number</h6>
@@ -279,9 +271,9 @@
             <th>
               <h6 class="fs-4 fw-semibold mb-0">Win Amount</h6>
             </th>
-            <th>
+            <!-- <th>
               <h6 class="fs-4 fw-semibold mb-0">Draw Time</h6>
-            </th>
+            </th> -->
             <th>
               <h6 class="fs-4 fw-semibold mb-0">Sale Deadline</h6>
             </th>
@@ -289,20 +281,14 @@
               <h6 class="fs-4 fw-semibold mb-0">Actual Draw Time</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Sale Deadline</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Settlement Completion Time</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Settle Complete Time</h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0">Draw Status</h6>
             </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6> 
-            </th>
           </tr>
         </thead> 
-        <tbody id="dataContainer" class="tbl-content">
+        <tbody id="dataContainerDraws" class="tbl-content">
 
           <tr class="no-results">
             <td colspan="9">
@@ -334,7 +320,7 @@
     </span>
     <span class="top-center" aria-label=" navigation example">
 
-      <span id="paging_info" style="color:#aaa">---</span>
+      <span id="paging_info_draws" style="color:#aaa">---</span>
 
     </span>
 
@@ -351,7 +337,7 @@
             <option value="200">200</option>
             <option value="500">500</option>
      </select>
-      <span id="pagination" class="right-element"> </span>
+      <span id="paginationDraws" class="right-element"> </span>
     </span>
 
   </div>

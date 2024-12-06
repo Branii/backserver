@@ -9,15 +9,28 @@ error_reporting(E_ALL);
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 
 if ($flag == "getAllgames") {
-
     $result = (new GameManageModel())->getAllGames();
     if($result){
         echo json_encode($result);
     } else {
         echo json_encode(['type'=>'error','message'=>'Some error occured']);
     }
-
 } 
+
+if($flag == "getSpecificDraws") {
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
+    $gameId = isset($this->viewData['gameId']) ? $this->viewData['gameId'] : '';
+    $datefrom = isset($this->viewData['datefrom']) ? $this->viewData['datefrom'] : '';
+    $dateto = isset($this->viewData['dateto']) ? $this->viewData['dateto'] : '';
+    $result = (new GameManageModel())->filterGameDraws($page, $limit, $gameId, $datefrom, $dateto);
+    echo json_encode( $result);
+    exit;
+    echo json_encode([
+        'gameDraws' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
 
 if($flag == "viewAdmins") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
@@ -50,20 +63,7 @@ if($flag == "adminlogs") {
     ]);
 }
 
-if($flag == "filterAdminLogs") {
-    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
-    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
-    $adminId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
-    $datefrom = isset($this->viewData['datefrom']) ? $this->viewData['datefrom'] : '';
-    $dateto = isset($this->viewData['dateto']) ? $this->viewData['dateto'] : '';
-    $result = (new AdminModel())->filterAdminLogs($page, $limit, $adminId, $datefrom, $dateto);
-    // echo json_encode($result);
-    // exit;
-    echo json_encode([
-        'adminLogs' => $result['data'],
-        'totalPages' => ceil($result['total'] / $limit),
-    ]);
-}
+
 
 if($flag == "searchlogs") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
