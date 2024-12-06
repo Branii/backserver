@@ -1,4 +1,13 @@
 $(function () {
+  function showToast(title, message, type) {
+    $.toast({
+      position: "bottom-right",
+      title: title,
+      message: message,
+      type: type,
+      duration: 3000, // auto-dismiss after 3s
+    });
+  }
   const UserlistData = (data) => {
     let html = "";
     const status = {
@@ -25,14 +34,14 @@ $(function () {
       html += `
                     <tr>
                         <td>${item.username}</td>
-                        <td></td>
+                        <td>${item.nickname}</td>
                         <td>VIP</td>
                         <td>${item.relationship}</td>
                         <td>${item.totalsubordinate}</td>
                         <td>${item.balance}</td> 
                         <td>${item.rebate}</td>
-                        <td>${item.date_created}</td>
-                        <td>${status[item.state]}</td>
+                        <td>${item.created_at}</td>
+                        <td>${status[item.user_state]}</td>
                    
                           <td>
                             
@@ -48,7 +57,7 @@ $(function () {
                                         <i class="bx bx-show fs-5" ></i>Quota
                                       </a>
                                       <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);">
-                                        <i class="bxx bx-trash fs-5"></i>Delete
+                                        <i class="bx bx-trash fs-5"></i>Delete
                                       </a>
                                     </div>
                                   </div>
@@ -108,14 +117,16 @@ $(function () {
   };
 
   let currentPagelist = 1;
-  let pageLimit = 20;
+  let pageLimit = 50;
 
   async function fetchUserlist(pagelist) {
     try {
-      const response = await fetch(`../admin/userlistdata/${pagelist}/${pageLimit}`
+      const response = await fetch(
+        `../admin/userlistdata/${pagelist}/${pageLimit}`
       );
       const data = await response.json();
-      // console.log(response);
+      //  console.log(response);
+      //  return
       $("#masklist").LoadingOverlay("hide");
       renderuserlist(data.users);
 
@@ -128,7 +139,13 @@ $(function () {
     }
   }
 
-  async function filterUserlist(pagelist, username, states, startdate, enddate) {
+  async function filterUserlist(
+    pagelist,
+    username,
+    states,
+    startdate,
+    enddate
+  ) {
     try {
       const response = await fetch(
         `../admin/filteruserlist/${username}/${states}/${startdate}/${enddate}/${pagelist}/${pageLimit}`
@@ -136,7 +153,9 @@ $(function () {
       const data = await response.json();
       // console.log(response);
 
-      $(".loaderlist") .removeClass("bx bx-loader bx-spin") .addClass("bx bx-check-double");
+      $(".loaderlist")
+        .removeClass("bx bx-loader bx-spin")
+        .addClass("bx bx-check-double");
       if (data.userlists.length < 1) {
         let html = `
               <tr class="no-results" >
@@ -150,7 +169,14 @@ $(function () {
       renderuserlist(data.userlists);
 
       // Render pagination
-      renderPaginationlist( data.totalPages, pagelist,"search", username, states,startdate,enddate
+      renderPaginationlist(
+        data.totalPages,
+        pagelist,
+        "search",
+        username,
+        states,
+        startdate,
+        enddate
       );
       document.getElementById("paging_infolist").innerHTML =
         "Page " + pagelist + " of " + data.totalPages + " pages";
@@ -225,7 +251,9 @@ $(function () {
         e.preventDefault();
         const newPage = +this.getAttribute("data-page");
         if (newPage > 0 && newPage <= totalPages) {
-          pagingType === "search" ? filterUserlist(newPage, username, states, startdate, enddate) : fetchUserlist(newPage);
+          pagingType === "search"
+            ? filterUserlist(newPage, username, states, startdate, enddate)
+            : fetchUserlist(newPage);
         }
       });
     });
@@ -274,10 +302,14 @@ $(function () {
   });
 
   let timeout;
-  let userId;
+  let userIdd;
   function performSearch() {
     const querys = $("#selectuserlist").val();
+    console.log(querys)
+    // return
     $.post(`../admin/filterusername/${querys}`, function (response) {
+   
+      
       if (typeof response === "string") {
         $(".queryholderxx").hide();
       } else if (typeof response === "object") {
@@ -286,7 +318,7 @@ $(function () {
         response.sort((a, b) => a.username.localeCompare(b.username));
         // Generate HTML for the select options
         response.forEach((user) => {
-          html += `<li value="${user.uid}" class="optionlist">${user.username}</li>`;
+          html += `<li value="" class="optionlist">${user.username}</li>`;
         });
 
         // Insert the generated options into the <select> element
@@ -303,24 +335,26 @@ $(function () {
 
   $(document).on("click", ".optionlist", function () {
     $("#selectuserlist").val($(this).text());
-    userId = $(this).attr("value");
-    $(".userIds").val(userId);
+    userIdd = $(this).attr("value");
+    $(".userIds").val(userIdd);
     $(".queryholderxx").hide();
   });
 
   $(document).on("click", ".executeuserlist", function () {
     if ($("#selectuserlist").val() == "" && $(".states").val() == "") {
-      $("#danger").modal("show");
+      $("#dangerlist").modal("show");
       return;
     }
     const username =
-      $(".userId").val().trim() === "" ? $("#selectuserlist").val() : $(".userId").val().trim();
+      $(".userId").val().trim() === "" ? $("#selectuserlist").val(): $(".userId").val().trim();
     const states = $(".states").val();
     // const ordertype = $(".ordertype").val()
     const startdate = $(".startdate").val();
     const enddate = $(".enddate").val();
     console.log(username);
-    $(".loaderlist").removeClass("bx-check-double").addClass("bx-loader bx-spin");
+    $(".loaderlist")
+      .removeClass("bx-check-double")
+      .addClass("bx-loader bx-spin");
     setTimeout(() => {
       filterUserlist(currentPagelist, username, states, startdate, enddate);
     }, 100);
@@ -336,20 +370,20 @@ $(function () {
 
   // })
 
-  $(document).on("click", function () {
-    $(".queryholderxx").hide();
-  });
+  // $(document).on("click", function () {
+  //   $(".queryholderxx").hide();
+  // });
 
   $(".tclose").click(function () {
     $("#signup-modal").modal("hide");
   });
 
   $(document).on("click", ".addagents", function () {
-    $("#addagent").modal("show");
+    $("#addagentmodal").modal("show");
   });
 
   $(".listclose").click(function () {
-    $("#addagent").modal("hide");
+    $("#addagentmodal").modal("hide");
   });
 
   async function fetchRebatedata() {
@@ -358,44 +392,54 @@ $(function () {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      
       const data = await response.json(); // Parse JSON response
-      // console.log(data);
-      //    return
-      let html = `<option value="all" class="options" selected>Choose Rebate</option>`;
-      data.forEach((rebate) => {
-        html += `<option value="${rebate.rebate}" class="options">${rebate.rebate}</option>`;
-      });
-
-      $("#rebatedata").html(html);
+     // console.log(data);
+      let html ="";
+    
+      // Check if data is not empty and iterate over it to generate options
+      if (Array.isArray(data) && data.length > 0) {
+        data.forEach((rebate) => {
+          html += `<option value="${rebate.rebate}" class="">${rebate.rebate}</option>`;
+        });
+      } else {
+        html += `<option value="" disabled>No rebates found</option>`; // If no data, show a message
+      }
+  
+      // Inject the options into the #rebatedata select element
+      $("#usererebate").html(html);
+  
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   }
   fetchRebatedata();
 
-  $(document).on("click",".btnaddagent",function(){
+  $(document).on("click", ".btnaddagent", function () {
     const datas = $("#agentform").serialize();
-     addAgent(datas) 
+    addAgent(datas);
+  });
 
-  })
-
-  
   async function addAgent(datas) {
     try {
       const response = await fetch(`../admin/addAgent/${datas}`);
-       const data = await response.json();
+      const data = await response.json();
       // console.log(response);
       const errorMessages = {
-        emailexist:"Email already exists",
-        usernamePattern:"Username must  Contain only letters\n, numbers, and underscores\n Start with a letter",
-        username: "Username must contain only letters, numbers, and underscores and start with a letter",
+        emailexist: "Email already exists",
+        usernamePattern:
+          "Username must  Contain only letters\n, numbers, and underscores\n Start with a letter",
+        username:
+          "Username must contain only letters, numbers, and underscores and start with a letter",
         email: "Email address is invalid",
         passwordNumber: "Password must contain at least one number",
-        passwordCaseSensitive: "Password must contain at least one uppercase and\n lowercase letter",
-        passwordSpecialChar: "Password must contain at least one special symbol",
+        passwordCaseSensitive:
+          "Password must contain at least one uppercase and\n lowercase letter",
+        passwordSpecialChar:
+          "Password must contain at least one special symbol",
         confirmPassword: "Password does not match",
         passwordLength: "Password must be at least 8 characters",
-        passwordRequired: "Password is required"
+        passwordRequired: "Password is required",
       };
       let message = null;
       // Loop through error keys to find the first error
@@ -406,36 +450,32 @@ $(function () {
         }
       }
       if (message) {
-        $("#modal-message").text(message)
-        $("#danger-usertoast").modal("show");
-        return
-        // showDefaultToast(message, 2000, "tomato");
+        showToast("Heads up!!", message, "info");
+        return;
       } else {
-        $(".loaders").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
-         setTimeout(function () {
-          $(".loaders").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
-          $("#modal-message").text("Agent added successfully!");
+        $(".loaders")
+          .removeClass("bx-send")
+          .addClass("bx-loader-circle bx-spin loader");
+        setTimeout(function () {
+          $(".loaders")
+            .removeClass("bx-loader-circle bx-spin loader")
+            .addClass("bx-send");
           $("#addagent").modal("hide");
-          $("#danger-usertoast").modal("show");
-       
-          setTimeout(() => {
-            $("#danger-usertoast").modal("hide");
-          }, 2000);
+          showToast("Success", "agent added sucessfully", "success");
+          // fetchUserlist(currentPagelist);
         }, 500);
       }
-     
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   }
 
-
-
   async function fetchTopAgent(pagelist) {
     try {
-      const response = await fetch( `../admin/fetchTopAgent/${pagelist}/${pageLimit}`
+      const response = await fetch(
+        `../admin/fetchTopAgent/${pagelist}/${pageLimit}`
       );
-    
+
       const data = await response.json();
       // console.log(response);
       renderuserlist(data.topagent);
@@ -445,8 +485,7 @@ $(function () {
       document.getElementById("paging_infolist").innerHTML =
         "Page " + pagelist + " of " + data.totalPages + " pages";
 
-       
-  // return;
+      // return;
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -460,95 +499,105 @@ $(function () {
       size: 3,
     });
     fetchTopAgent(currentPagelist);
-
   });
-
-
-
 
   //quota
   $(document).on("click", ".viewquota", function () {
-  
     $("#viewquota").modal("show");
 
-     let uid = $(this).attr("data-uid");
-     $(".userquotaid").val(uid);
+    const uid = $(this).attr("data-uid").trim();
+    $(".userquotaid").val(uid);
+    console.log(uid)
 
-    $.post(`../admin/getuserrebate/${uid}/`,
-      function (data) {
-        const rebatelist = JSON.parse(data);
-        // console.log(rebatelist);
-         //return
-        let tableBody = document .getElementById("quotatable").getElementsByTagName("tbody")[0];
-        while (tableBody.firstChild) {
-          tableBody.removeChild(tableBody.firstChild);
-        }
+    $.post(`../admin/getuserrebate/${uid}/`, function (data) {
+       const rebatelist = JSON.parse(data);
+     
+      let tableBody = document
+        .getElementById("quotatable")
+        .getElementsByTagName("tbody")[0];
+      while (tableBody.firstChild) {
+        tableBody.removeChild(tableBody.firstChild);
+      }
 
-        rebatelist.forEach((item) => {
-          let row = tableBody.insertRow();
-          let rowData = [
-            `<b class="rebate_group"> ${item.rebate}</b>`,
-            `<b class="bonus_group">  ${item.odds_group}</b>`,
-           `<b class="count_group">${item.counts} </b> / ${item.quota}`,
-            `<input type="text" value="${item.quota}" class="quota_set form-control" />`,
-          ];
+      rebatelist.forEach((item) => {
+        let row = tableBody.insertRow();
+        let rowData = [
+          `<b class="rebate_group"> ${item.rebate}</b>`,
+          `<b class="bonus_group">  ${item.odds_group}</b>`,
+          `<b class="count_group">${item.counts} </b> / ${item.quota}`,
+          `<input type="text" value="${item.quota}" class="quota_set form-control" />`,
+        ];
 
-          rowData.forEach((datass) => {
-            let cell = row.insertCell();
-            cell.innerHTML = datass;
-          });
+        rowData.forEach((datass) => {
+          let cell = row.insertCell();
+          cell.innerHTML = datass;
         });
+      });
+    });
+  });
+
+  $(document).on("click", ".updatequotabtn", function () {
+    // const $spinner = $(this).find('.spinner-borderrr');
+    // $spinner.show(); // Show the spinner immediately
+    let uid = $(".userquotaid").val();
+    let rebate_group = [];
+    let bonus_group = [];
+    let quata_group = [];
+    let count_group = [];
+
+    $(".rebate_group").each(function () {
+      var value = $(this).text();
+      rebate_group.push(value);
+    });
+
+    $(".bonus_group").each(function () {
+      var value = $(this).text();
+      bonus_group.push(value);
+    });
+
+    $(".quota_set").each(function () {
+      var value = $(this).val();
+      quata_group.push(value);
+    });
+
+    $(".count_group").each(function () {
+      var value = $(this).text();
+      count_group.push(value);
+    });
+
+    $(".loaderquota").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
+    //
+    $.post( `../admin/updateUsedquota/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
+
+      function (result) {
+        // console.log(result);
+        setTimeout(function() {
+          $(".loaderquota").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+            if (result) {
+              $("#viewquota").modal("hide");
+                showToast("Success", "quota updated successfullly", "success");
+               
+            } else {
+                showToast("Heads up !!", "no changes made", "info");
+            }
+      
+        }, 500); // Duration before showing the toast
       }
     );
   });
 
+  function tableScrolluserList() {
+    const tableContainerUser = document.querySelector(".table-wrapperuserlist");
+        const headerRowUserList = document.querySelector(".userlistheadrow");
+
+        tableContainerUser.addEventListener("scroll", function () {
+          if (tableContainerUser.scrollTop > 0) {
+            headerRowUserList.classList.add("sticky-headersUserlist");
+          } else {
+            headerRowUserList.classList.remove("sticky-headersUserlist");
+          }
+        });
+  }
+  tableScrolluserList();
   
-
-
-    $(document).on("click", ".updatequotabtn", function () {
-      // const $spinner = $(this).find('.spinner-borderrr');
-      // $spinner.show(); // Show the spinner immediately
-      let uid = $(".userquotaid").val();
-      let rebate_group = [];
-      let bonus_group = [];
-      let quata_group = [];
-      let count_group = [];
-
-      $(".rebate_group").each(function () {
-          var value = $(this).text();
-          rebate_group.push(value);
-      });
-
-      $(".bonus_group").each(function () {
-          var value = $(this).text();
-          bonus_group.push(value);
-      });
-
-      $(".quota_set").each(function () {
-          var value = $(this).val();
-          quata_group.push(value);
-      });
-
-      $(".count_group").each(function () {
-          var value = $(this).text();
-          count_group.push(value);
-      });
-
-      // console.log(rebate_group)
-      
-      $.post(`../admin/updateUsedquota/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
-      
-      function(result) {
-        console.log(result)
-          // setTimeout(function() {
-          //     $spinner.hide(); // Hide the spinner after the operation
-          //     if (result === "success") {
-          //         showDefaultToast("success", 2000, "teal");
-          //     } else {
-          //         showDefaultToast("no changes", 2000, "tomato");
-          //     }
-          // }, 2000); // Duration before showing the toast
-      });
-    });
-
 });

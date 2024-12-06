@@ -2,8 +2,6 @@
 
 namespace ModernPHPException\Trait;
 
-use AssetException;
-
 trait HandlerAssetsTrait
 {
     /**
@@ -27,42 +25,32 @@ trait HandlerAssetsTrait
     public function useDarkTheme(): self
     {
         $this->theme = "dark";
+
         return $this;
     }
 
     /**
      * @param array $line
      * 
-     * @return string
+     * @return self
      */
-    private function loadAssets(array $info): string
+    private function loadAssets(array $info)
     {
-        if (!is_bool($this->config['enable_cdn_assets']))
-            throw new AssetException("`true` or `false` must be the options in the variable `enable_cdn_assets`");
-
         $asset = $this->loadCss($info);
         $asset .= $this->loadJs();
+
         return $asset;
     }
 
     /**
-     * @return string
+     * @return self
      */
-    private function loadJs(): string
+    private function loadJs()
     {
-        if ($this->config['enable_cdn_assets'] == false) {
-            $asset = '<script>' . file_get_contents('assets/js/highlight.min.js', FILE_USE_INCLUDE_PATH);
-            $asset .= file_get_contents('assets/js/highlightjs-line-numbers.js', FILE_USE_INCLUDE_PATH) . '</script>';
-            $asset .= '<script>hljs.highlightAll(); hljs.initLineNumbersOnLoad();</script>';
-            $asset .= '<script>' . file_get_contents('assets/js/bootstrap.bundle.min.js', FILE_USE_INCLUDE_PATH) . '</script>';
-            $asset .= '<script>' . file_get_contents('assets/js/less.js', FILE_USE_INCLUDE_PATH) . '</script>';
-        } elseif ($this->config['enable_cdn_assets'] == true) {
-            $asset = '<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>';
-            $asset .= '<script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>';
-            $asset .= '<script>hljs.highlightAll();hljs.initLineNumbersOnLoad();</script>';
-            $asset .= '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>';
-            $asset .= '<script src="https://cdn.jsdelivr.net/npm/less@4"></script>';
-        }
+        $asset = '<script>' . file_get_contents('assets/js/highlight.pack.js', FILE_USE_INCLUDE_PATH);
+        $asset .= file_get_contents('assets/js/highlightjs-line-numbers.js', FILE_USE_INCLUDE_PATH) . '</script>';
+        $asset .= '<script>hljs.highlightAll(); hljs.initLineNumbersOnLoad();</script>';
+        $asset .= '<script>' . file_get_contents('assets/js/bootstrap.bundle.min.js', FILE_USE_INCLUDE_PATH) . '</script>';
 
         return $asset;
     }
@@ -70,21 +58,19 @@ trait HandlerAssetsTrait
     /**
      * @param array $info
      * 
-     * @return string
+     * @return self
      */
-    private function loadCss(array $info): string
+    private function loadCss(array $info)
     {
-        if ($this->theme == "dark") $this->color_alert = "C60000";
-
-        if ($this->config['enable_cdn_assets'] == false) {
-            $asset = "<style>\n";
-            $asset .= file_get_contents('assets/styles/bootstrap.min.css', FILE_USE_INCLUDE_PATH);
-            $asset .= "</style>";
-        } elseif ($this->config['enable_cdn_assets'] == true) {
-            $asset = '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">';
+        if ($this->theme == "dark") {
+            $this->color_alert = "C60000";
         }
 
-        $asset .= "\n<style type='text/less'>\n";
+        $asset = "<style> \n\n";
+        $asset .= file_get_contents('assets/styles/bootstrap.min.css', FILE_USE_INCLUDE_PATH);
+        $asset .= "</style> \n\n";
+
+        $asset .= "<style type='text/less'> \n\n";
         $asset .= file_get_contents('assets/styles/style.less', FILE_USE_INCLUDE_PATH);
         $asset .= file_get_contents('assets/styles/code.less', FILE_USE_INCLUDE_PATH);
 
@@ -103,6 +89,7 @@ trait HandlerAssetsTrait
         }
 
         $asset .= '</style>';
+
         return $asset;
     }
 }

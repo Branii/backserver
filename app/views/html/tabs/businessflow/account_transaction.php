@@ -110,6 +110,7 @@
     top: 90%;
     z-index: 9999;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    display: none;
   }
 
   .option {
@@ -163,7 +164,8 @@
     background-color: #aaa;
     /* Darker blue on hover */
   }
-  .left-element {
+
+.left-element {
   position: relative;
   bottom:8px;
   height: 35px;
@@ -178,6 +180,7 @@
 
 .tbl-header {
   position: sticky;
+  background-color: red;
   top: 0;
 }
 
@@ -206,7 +209,7 @@
         <input name="username" class="queryholder form-control" id="selected" placeholder="Enter Username"
           autocomplete="off"></input>
         <input type="text" class="userId" style="display:none" />
-        <div class="acc_transaction_username"></div>
+        <ul class="queryholderx"></ul>
 
         <input type="text" class="form-control queryholder orderid" id="nametext" aria-describedby="name"
           placeholder="Enter Oder ID">
@@ -267,8 +270,8 @@
   <div class="card-body p-4">
     <div class="table-responsive mb-4 border rounded-1 table-wrapper" id="mask" style="height:530px;overflow-y:scroll;">
       <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
-        <thead class="text-dark fs-4 tbl-header">
-          <tr>
+        <thead class="text-dark fs-4 tbl-header" style="background-color: red;">
+          <tr class="accheaderrow">
             <th>
               <h6 class="fs-4 fw-semibold mb-0">ID Number</h6>
             </th>

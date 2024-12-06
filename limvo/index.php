@@ -24,5 +24,10 @@ spl_autoload_register(function ($className) use ($modules) {
         }
     }
 });
+<<<<<<< HEAD
 //(new ModernPHPException)->start();
+=======
+
+// (new ModernPHPException())->start();
+>>>>>>> 19c95e74524176efecd5f1870dc487d4e551880d
 (new App());

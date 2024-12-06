@@ -86,7 +86,7 @@ $sidebarMenu = [
   ];
 
   $sidebarMain = [
-    1 => 'Business flow',
+    1 => 'Business Flow',
     2 => 'Financial Management',
     3 => 'Report Management',
     4 => 'User Management',

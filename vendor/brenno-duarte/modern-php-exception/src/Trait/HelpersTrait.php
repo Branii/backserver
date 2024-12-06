@@ -4,17 +4,31 @@ namespace ModernPHPException\Trait;
 
 trait HelpersTrait
 {
+    /**
+     * @return bool
+     */
     private function isCli(): bool
     {
-        if (defined('STDIN')) return true;
-        if (php_sapi_name() === "cli") return true;
-        if (PHP_SAPI === 'cli') return true;
-        if (stristr(PHP_SAPI, 'cgi') and getenv('TERM')) return true;
+        if (defined('STDIN')) {
+            return true;
+        }
+
+        if (php_sapi_name() === "cli") {
+            return true;
+        }
+
+        if (PHP_SAPI === 'cli') {
+            return true;
+        }
+
+        if (stristr(PHP_SAPI, 'cgi') and getenv('TERM')) {
+            return true;
+        }
 
         if (
             empty($_SERVER['REMOTE_ADDR']) and
             !isset($_SERVER['HTTP_USER_AGENT']) and
-            count((array)$_SERVER['argv']) > 0
+            count($_SERVER['argv']) > 0
         ) {
             return true;
         }
@@ -22,38 +36,47 @@ trait HelpersTrait
         return false;
     }
 
+    /**
+     * @param string $path
+     * 
+     * @return string
+     */
     public function getPathInfo(string $path): string
     {
         return strtolower(pathinfo($path)['filename']);
     }
 
+    /**
+     * @param string $value
+     * 
+     * @return string
+     */
     private function replaceString(string $value): string
     {
         return str_replace(['#', '{', '}', '(', ')', '.'], '', $value);
     }
 
+    /**
+     * @param string $value
+     * 
+     * @return string
+     */
     private function replaceUrl(string $value): string
     {
         return str_replace(' ', '+', $value);
     }
 
-    private function getClassName(object $classname): string
+    /**
+     * @param mixed $classname
+     * 
+     * @return string
+     */
+    private function getClassMame($classname): string
     {
         $class = get_class($classname);
         $class = explode("\\", $class);
-        return end($class);
-    }
+        $class = end($class);
 
-    private static function getUri(): string
-    {
-        $http = "https://";
-        $ssl = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443;
-        if ($ssl == false) $http = "http://";
-        return $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    }
-
-    public function htmlSpecialCharsIgnoreCli(string $string): string
-    {
-        return (!$this->isCli()) ? htmlspecialchars($string) : $string;
+        return $class;
     }
 }

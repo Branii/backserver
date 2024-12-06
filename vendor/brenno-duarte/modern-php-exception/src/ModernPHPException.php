@@ -2,14 +2,20 @@
 
 namespace ModernPHPException;
 
-use Symfony\Component\Yaml\Yaml;
-use ModernPHPException\Trait\{RenderTrait, HelpersTrait, HandlerAssetsTrait};
+use ModernPHPException\Solution;
+use ModernPHPException\{
+    Trait\RenderTrait,
+    Trait\HelpersTrait,
+    Trait\HandlerAssetsTrait
+};
 
 class ModernPHPException
 {
-    use HelpersTrait, HandlerAssetsTrait, RenderTrait;
+    use HelpersTrait;
+    use HandlerAssetsTrait;
+    use RenderTrait;
 
-    public const VERSION = "3.3.6";
+    const VERSION = "2.2.2";
 
     /**
      * @var Bench
@@ -77,148 +83,68 @@ class ModernPHPException
     private string $message_production = "";
 
     /**
-     * @var bool
-     */
-    protected bool $is_occurrence_enabled = false;
-
-    /**
-     * @var string
-     */
-    protected static string $path_to_config_file = "";
-
-    /**
-     * @var array
-     */
-    private static array $config_yaml = [];
-
-    /**
-     * @var int
-     */
-    private int $error_code;
-
-    /**
-     * @var array
-     */
-    private array $ignore_errors = [];
-
-    /**
-     * @var array
-     */
-    private array $config = [
-        'title' => '',
-        'dark_mode' => false,
-        'production_mode' => false,
-        'error_message' => '',
-        'enable_cdn_assets' => true
-    ];
-
-    /**
      * Construct
      * 
-     * @param null|string $config_file
+     * @param array $config
      */
     public function __construct(
-        private ?string $config_file = ""
+        private array $config = [
+            "type" => "",
+            "title" => "",
+            "dark_mode" => "",
+            "production_mode" => ""
+        ]
     ) {
         http_response_code();
-        $this->setConfigFile($config_file);
+
+        $this->config['type'] = $config['type'] ?? "";
+        $this->config['title'] = $config['title'] ?? "";
+        $this->config['dark_mode'] = $config['dark_mode'] ?? "";
+        $this->config['production_mode'] = $config['production_mode'] ?? "";
+
         $this->bench = new Bench();
         $this->solution = new Solution();
         $this->bench->start();
     }
 
     /**
-     * @return string
-     */
-    public static function getConfigFile(): string
-    {
-        return self::$path_to_config_file;
-    }
-
-    /**
-     * Ignore some errors
-     *
-     * @param array $errors
-     * 
-     * @return ModernPHPException
-     */
-    public function ignoreErrors(array $errors): ModernPHPException
-    {
-        $this->ignore_errors = $errors;
-        return $this;
-    }
-
-    /**
-     * Start all custom erros and exceptions on PHP application
-     * 
      * @return ModernPHPException
      */
     public function start(): ModernPHPException
     {
-        set_error_handler([$this, 'errorHandler']);
         set_exception_handler([$this, 'exceptionHandler']);
-        register_shutdown_function([$this, 'shutdown']);
+        set_error_handler([$this, 'errorHandler']);
+
         return $this;
     }
 
     /**
-     * Set configuration for Modern PHP Exception
-     * 
-     * @param string $config_file
-     * 
-     * @return void
-     */
-    private function setConfigFile(string $config_file): void
-    {
-        if (file_exists($config_file)) {
-            self::$config_yaml = Yaml::parseFile($config_file);
-            self::$path_to_config_file = $config_file;
-        }
-
-        if (!empty(self::$config_yaml)) {
-            $this->message_production = self::$config_yaml["error_message"] ?? "";
-            $this->config["title"] = self::$config_yaml["title"] ?? "";
-            $this->config["dark_mode"] = filter_var(self::$config_yaml["dark_mode"], FILTER_VALIDATE_BOOLEAN);
-            $this->config["production_mode"] = filter_var(self::$config_yaml["production_mode"], FILTER_VALIDATE_BOOLEAN);
-            $this->config["enable_cdn_assets"] = filter_var(self::$config_yaml["enable_cdn_assets"], FILTER_VALIDATE_BOOLEAN);
-        }
-    }
-
-    /**
-     * Executed after script execution finishes or exit() is called
-     * 
-     * @return void
-     */
-    private function shutdown(): void
-    {
-        if (isset(self::$config_yaml)) {
-            if (isset(self::$config_yaml['enable_logs']) && self::$config_yaml['enable_logs'] == true) {
-                if (isset(self::$config_yaml['dir_logs']) && self::$config_yaml['dir_logs'] != "") {
-                    Debug::dirLogger(self::$config_yaml['dir_logs']);
-                }
-
-                if (!empty($this->info_error_exception)) {
-                    Debug::log(
-                        $this->info_error_exception['message'],
-                        'ModernPHPExceptionLogs',
-                        $this->info_error_exception['file'],
-                        $this->info_error_exception['line']
-                    );
-                }
-            }
-        }
-    }
-
-    /**
-     * Set the error value
-     * 
-     * @param int $code
-     * 
      * @return ModernPHPException
      */
-    public function setError(int $code): ModernPHPException
+    public function setFromJson(): ModernPHPException
     {
-        $this->error_code = $code;
+        $this->format = "json";
+
+        return $this;
+    }
+
+    /**
+     * @return ModernPHPException
+     */
+    public function setFromText(): ModernPHPException
+    {
+        $this->format = "text";
+
+        return $this;
+    }
+
+    /**
+     * @param int $code
+     * 
+     * @return self
+     */
+    public function setError(int $code): self
+    {
         $this->error_value = match ($code) {
             E_PARSE => 'Parse Error',
             E_ERROR => 'Fatal Error',
@@ -240,8 +166,6 @@ class ModernPHPException
     }
 
     /**
-     * Get the error value
-     * 
      * @return string
      */
     public function getError(): string
@@ -254,7 +178,7 @@ class ModernPHPException
      *
      * @return string
      */
-    protected function getFile(): string
+    public function getFile(): string
     {
         return $this->file;
     }
@@ -264,20 +188,21 @@ class ModernPHPException
      *
      * @param string  $file
      *
-     * @return ModernPHPException
+     * @return self
      */
-    protected function setFile(string $file): ModernPHPException
+    public function setFile(string $file): self
     {
         $this->file = $file;
+
         return $this;
     }
 
     /**
      * Get the value of title
      *
-     * @return string
+     * @return  string
      */
-    protected function getTitle(): string
+    public function getTitle()
     {
         return $this->title;
     }
@@ -285,19 +210,18 @@ class ModernPHPException
     /**
      * Set the value of title
      *
-     * @param string $title
+     * @param  string  $title
      *
-     * @return ModernPHPException
+     * @return  self
      */
-    protected function setTitle(string $title): ModernPHPException
+    public function setTitle(string $title)
     {
         $this->title = $title;
+
         return $this;
     }
 
     /**
-     * Add an error to Modern PHP Exception's custom handler
-     * 
      * @param int $code
      * @param string $message
      * @param string $file
@@ -307,8 +231,6 @@ class ModernPHPException
      */
     public function errorHandler(int $code, string $message, string $file, int $line): void
     {
-        $message = htmlspecialchars($message);
-
         $this->info_error_exception = [
             'message' => ($message ?? ''),
             'code' => ($code ?? ''),
@@ -316,63 +238,72 @@ class ModernPHPException
             'line' => ($line ?? '')
         ];
 
-        if ($this->getTitle() == "" || empty($this->getTitle()))
+        if ($this->getTitle() == "" || empty($this->getTitle())) {
             $this->setTitle("ModernPHPException: " . $message);
+        }
 
         $this->setError($code);
         $this->type = "error";
         $this->main_file = $file;
-        $this->bench->end();
 
-        if (!empty($this->ignore_errors)) {
-            if (!is_int(array_search($this->error_code, $this->ignore_errors, true))) $this->render();
-        } else {
-            $this->render();
-        }
+        $this->bench->end();
+        $this->render();
     }
 
     /**
-     * Add an exception to Modern PHP Exception's custom handler
-     * 
      * @param mixed $exception
      * 
      * @return self
      */
     public function exceptionHandler(mixed $exception): void
     {
-        $message = $this->htmlSpecialCharsIgnoreCli($exception->getMessage());
-
         $this->info_error_exception = [
-            'message' => $message,
+            'message' => $exception->getMessage(),
             'code' => $exception->getCode(),
             'file' => $exception->getFile(),
             'line' => $exception->getLine(),
-            'type_exception' => $this->getClassName($exception),
+            'type_exception' => $this->getClassMame($exception),
             'namespace_exception' => get_class($exception)
         ];
 
-        if ($this->getTitle() == "" || empty($this->getTitle()))
-            $this->setTitle("ModernPHPException: " . $message);
+        if ($this->getTitle() == "" || empty($this->getTitle())) {
+            $this->setTitle("ModernPHPException: " . $exception->getMessage());
+        }
 
-        $reflection_class = new \ReflectionClass($this->info_error_exception['namespace_exception']);
-        $class_name = $reflection_class->newInstanceWithoutConstructor();
-        if (method_exists($exception, "getSolution")) $class_name->getSolution();
+        $class_name = new $this->info_error_exception['namespace_exception'];
 
-        $this->trace = $this->filterTrace($exception->getTrace());
+        if (method_exists($exception, "getSolution")) {
+            $class_name->getSolution();
+        }
+
+        $this->trace = $exception->getTrace();
         $this->main_file = $exception->getFile();
         $this->type = "exception";
+
         $this->bench->end();
         $this->render();
     }
 
     /**
-     * Save in database a history of all exceptions and errors that your application displays
+     * @param string $message_production
      * 
-     * @return ModernPHPException
+     * @return void
      */
-    public function enableOccurrences(): ModernPHPException
+    public function productionModeMessage(string $message_production = ""): void
     {
-        $this->is_occurrence_enabled = true;
-        return $this;
+        $this->message_production = $message_production;
+    }
+
+    /**
+     * @return void
+     */
+    private function productionMode(): void
+    {
+        if ($this->isCli() == true) {
+            $this->renderCli();
+        }
+
+        include_once 'View/templates/error-production.php';
+        exit;
     }
 }

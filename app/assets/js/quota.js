@@ -1,18 +1,28 @@
 $(function () {
+
+  function showToast(title, message, type) {
+    $.toast({
+      position: "bottom-right",
+      title: title,
+      message: message,
+      type: type,
+      duration: 3000, // auto-dismiss after 3s
+    });
+  }
   const QuotaData = (data) => {
     let html = "";
 
     data.forEach((item) => {
       html += `
                     <tr>
-                        <td>${item.rebate}</td>
-                        <td>${item.odds_group}</td>
-                        <td class="editable">${item.quota}</td>
-                        <td>
-                        <button class="edit-btn btn btn-lights btn-sm" style="font-size:25px;cursor: pointer;"><i class='bx bxs-edit'></i></button>
-                        <button class="update-btn btn btn-lighst btn-sm d-none" rebateid="${item.rebate_id}"><i class='bx bx-check-square' style="font-size:25px;"></i></button>
-                        <button class="btn btn-sm btn-secondarys alt-btn"style="font-size:25px;cursor: pointer;"><i class='bx bx-message-square-x'></i></button> <!-- New button -->
-                        </td>                       
+                    <td>${item.odds_group}</td>
+                    <td>${item.rebate}</td>
+                    <td class="editable">${item.quota}</td>
+                    <td>
+                      <button class="edit-btn btn btn-lights btn-sm" style="font-size:25px;cursor: pointer;"><i class='bx bxs-edit'></i></button>
+                      <button class="update-btn btn btn-lighst btn-sm d-none" rebateid="${item.rebate_id}"><i class='bx bx-check-square' style="font-size:25px;"></i></button>
+                      <button class="btn btn-sm btn-secondarys alt-btn"style="font-size:25px;cursor: pointer;"><i class='bx bx-message-square-x'></i></button> <!-- New button -->
+                    </td>                       
                     </tr>
                 `;
     });
@@ -33,74 +43,17 @@ $(function () {
         `../admin/fetchquota/${pagequota}/${pageLimit}`
       );
       const data = await response.json();
-      console.log(response);
+      // console.log(response);
       // return
       $("#maskquota").LoadingOverlay("hide");
       renderquota(data.quota);
 
-      // // Render pagination
-       renderPaginationquota(data.totalPages, pagequota, 'normal');
-       document.getElementById("paging_infoquota").innerHTML = 'Page ' + pagequota + ' of ' + data.totalPages + ' pages'
+      // // // Render pagination
+      //  renderPaginationquota(data.totalPages, pagequota, 'normal');
+      //  document.getElementById("paging_infoquota").innerHTML = 'Page ' + pagequota + ' of ' + data.totalPages + ' pages'
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }
-
-
-  function renderPaginationquota(
-    totalPages,
-    currentPagequota,
-    pagingType = "",
-    username = "",
-    startdate = "",
-    enddate = ""
-  ) {
-    const createPageLink = (i, label = i, disabled = false, active = false) =>
-      `<li class='page-item ${disabled ? "disabled" : ""} ${
-        active ? "active" : ""
-      }'>
-          <a class='page-link' href='#' data-page='${i}'>${label}</a>
-        </li>`;
-    let pagLink = `<ul class='pagination justify-content-end'>`;
-
-    // Previous Button
-    pagLink += createPageLink(
-      currentPagequota - 1,
-      `<i class='bx bx-chevron-left'></i>`,
-      currentPagequota === 1
-    );
-
-    // Page numbers with ellipsis
-    for (let i = 1; i <= totalPages; i++) {
-      if (i === 1 || i === totalPages || Math.abs(i - currentPagequota) <= 2) {
-        pagLink += createPageLink(i, i, false, i === currentPagequota);
-      } else if (i === currentPagequota - 3 || i === currentPagequota + 3) {
-        pagLink += createPageLink(i, "...", true);
-      }
-    }
-
-    // Next Button
-    pagLink += createPageLink(
-      currentPagequota + 1,
-      `<i class='bx bx-chevron-right'></i>`,
-      currentPagequota === totalPages
-    );
-    pagLink += "</ul>";
-
-    document.getElementById("paginationquota").innerHTML = pagLink;
-
-    // Add click event listeners
-    document.querySelectorAll("#paginationquota .page-link").forEach((link) => {
-      link.addEventListener("click", function (e) {
-        e.preventDefault();
-        const newPage = +this.getAttribute("data-page");
-        if (newPage > 0 && newPage <= totalPages) {
-          pagingType === "search"
-            ? filterUserlinks(newPage, username, startdate, enddate)
-            : fetchUserlinks(newPage);
-        }
-      });
-    });
   }
 
   fetchquota(currentPagequota);
@@ -148,8 +101,9 @@ $(function () {
     async function EditSingleQuota(rebatid,quota) {
         try {
         const response = await fetch(`../admin/updatequota/${rebatid}/${quota}`);
-        // const data = await response.json();
-        console.log(response);
+       if(response){
+        showToast("Success","quota updated successfully","success")
+       }
         } catch (error) {
         console.error("Error fetching data:", error);
         }
@@ -166,7 +120,7 @@ $(function () {
               $.post(`../admin/UpdateAllquota/${quotaval}`,
                 function(response) {
                   if(response){
-                    alert("updated")
+                    showToast("Success","quota updated successfully","success")
                     fetchquota(currentPagequota);
                   }
                 });
@@ -180,9 +134,11 @@ $(function () {
   
 
          $(document).on("keyup", ".userrebate", function () {
-            const datarebate = $(this).val();
+            const datarebate = parseFloat($(this).val());
+            console.log(datarebate)
+            
             if (datarebate === "") {
-                console.log("Input is empty. Resetting results.");
+                // console.log("Input is empty. Resetting results.");
                 renderquota([]); // Reset or clear results
                 let html = `
                 <tr class="no-results" >
@@ -196,7 +152,7 @@ $(function () {
              try {
                   $.post(`../admin/filterRebate/${datarebate}`,
                      function(response) {
-                        console.log(response)
+                        // console.log(response)
                         const data = JSON.parse(response);
                         renderquota(data.filterquota);  
                     });
@@ -205,6 +161,6 @@ $(function () {
                   console.error("Error fetching data:", error);
                  }
           });
-        
+     
     
 });

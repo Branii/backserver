@@ -33,7 +33,7 @@ $(function () {
       try {
         const response = await fetch(`../admin/userlinkdata/${pagelinks}/${pageLimit}`);
         const data = await response.json();
-        console.log(response);   
+        // console.log(response);   
         // return
         $("#masklinks").LoadingOverlay("hide")
         renderuserlinks(data.userlinks);

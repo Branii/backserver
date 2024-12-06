@@ -25,21 +25,18 @@ class Solution
     private static string $button_name = "";
 
     /**
-     * Name of solution to fix exception
-     * 
      * @param string $title
      * 
-     * @return static
+     * @return Solution
      */
-    public static function createSolution(string $title): static
+    public static function createSolution(string $title): Solution
     {
         self::$solution_title = $title;
-        return new static();
+
+        return new static;
     }
 
     /**
-     * Detailed description of exception solution
-     * 
      * @param string $description
      * 
      * @return Solution
@@ -47,13 +44,11 @@ class Solution
     public function setDescription(string $description): Solution
     {
         self::$solution_description = $description;
+
         return $this;
     }
 
     /**
-     * If a documentation exists, this method will display a button for a documentation.
-     * By default, the name of the button will be `Read More`, but you can change the name by changing the second parameter of the method
-     * 
      * @param string $docs_link
      * @param string $button_name
      * 
@@ -63,12 +58,11 @@ class Solution
     {
         self::$solution_docs = $docs_link;
         self::$button_name = $button_name;
+
         return $this;
     }
 
     /**
-     * Get solution title
-     * 
      * @return string
      */
     public function getTitle(): string
@@ -77,8 +71,6 @@ class Solution
     }
 
     /**
-     * Get solution description
-     * 
      * @return string
      */
     public function getDescription(): string
@@ -87,8 +79,6 @@ class Solution
     }
 
     /**
-     * Get solution docs
-     * 
      * @return array
      */
     public function getDocs(): array
