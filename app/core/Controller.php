@@ -1,5 +1,5 @@
 <?php
-use Josantonius\Session\Session;
+ use Josantonius\Session\Session;
 class Controller{
     protected  $view;
     public function view($viewName,$data=[]){
