@@ -7,7 +7,7 @@ class Controller{
       return $this->view;
     }
 
-    public function isUserLoggedIn(){ 
+    public function isUserLoggedIn(){  
       return (new Session)->has("isUserLoggedIn");
     }
 
