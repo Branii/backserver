@@ -30,7 +30,7 @@ $(function () {
        const betodds = betOddsArray * item.multiplier * item.unit_stake;
        const username = item.username == '*****' ? item.email :(item.username ||item.contact);
 
-      console.log(item.username)
+      // console.log(item.username)
       htmls += `
                     <tr>
                         <td>${item.bet_code}</td>
@@ -147,7 +147,7 @@ $(function () {
       renderlottery(data.lotterybet);
 
       // Render pagination
-      renderbetPagination(data.totalPages,page,uidd,gametype,betsate,betstatus,startdates,enddates);
+      renderbetPagination(data.totalPages,page);
       document.getElementById("paging_infobet").innerHTML =
         "Page " + page + " of " + data.totalPages + " pages";
     } catch (error) {
@@ -158,7 +158,7 @@ $(function () {
   async function getexample(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit){
     $.post(`../admin/filterbetdata/${uidd}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`)
     .done(function(response) {
-        console.log(response);
+        // console.log(response);
 
         try {
             const data = JSON.parse(response); // Parse the response
@@ -337,7 +337,7 @@ $(".executebet").click(function () {
     $("#viewbetsmodal").modal("show")
     const betcode = $(this).attr("data-betcode")
     const gametype = $(this).attr("data-gametype")
-    console.log(betcode)
+    // console.log(betcode)
     $("#rowbet").html("")
     $("#rowbe1").html("")
      viewstakedBet(betcode,gametype)

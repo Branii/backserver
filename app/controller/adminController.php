@@ -360,5 +360,20 @@ class adminController extends Controller {
         $this->view->render();
     }
   
+   //NOTE -
+    //////////////lottery bounus Parameter -//////////
+    // 
+    public function fetchgames(){
+        $this->view('exec/game_manage',['flag' => 'fetchgames']);
+        $this->view->render();
+    }
+
+    public function fetchgamebyid($gameid,$tablename){
+        $this->view('exec/game_manage',['gameid' =>$gameid,'tablename'=>$tablename, 'flag' => 'fetchgamebyid']);
+        $this->view->render();
+    }
+
+    
+    
     
 }

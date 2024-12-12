@@ -1,0 +1,25 @@
+<?php
+declare(strict_types=1);
+// header('Content-Type: application/json');
+
+
+$flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+
+if ($flag == "fetchgames") {
+
+    $result = (new GameManageModel())->FetchMainGames();
+    echo json_encode($result );
+
+}
+
+if ($flag == "fetchgamebyid") {
+    $gameid = isset($this->viewData['gameid']) ? (int) $this->viewData['gameid'] : "";
+    $tablename = isset($this->viewData['tablename']) ?  $this->viewData['tablename'] : "";
+    
+    $result = (new GameManageModel())->FetchMainGamesById($gameid,$tablename);
+    echo json_encode(["maingame" => $result]);
+  
+
+}
+
+

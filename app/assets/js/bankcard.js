@@ -53,7 +53,7 @@ $(function () {
           `../admin/fetchbankcard/${pagebankcard}/${pageLimit}`
         );
          const data = await response.json();
-          console.log(response);
+          // console.log(response);
         //   return
         $("#maskbankcard").LoadingOverlay("hide");
         renderbankcard(data.bankcard);

@@ -58,4 +58,26 @@ class GameManageModel extends MEDOOHelper{
 
 
 
+
+    public static function FetchMainGames(): array
+    {
+        return  $res = parent::selectAll("lottery_type", ["lt_id", "name"], ["ORDER" => ["lt_id" => "ASC"]]);
+    }
+
+      public static function FetchMainGamesById($gameid,$tablename){
+     
+    
+        $sql = "SELECT game_group.name AS gameplay, $tablename.name, $tablename.modified_odds, $tablename.state, $tablename.group_type,
+        $tablename.modified_totalbet
+        FROM game_group
+        JOIN $tablename ON $tablename.game_group = game_group.gp_id
+        WHERE $tablename.lottery_type = $gameid";
+        return   $data = parent::query($sql);
+
+
+
+     }
+
+
+
 }
