@@ -3,7 +3,7 @@
 class GameManageModel extends MEDOOHelper{ 
 
     public static function getTables() {
-        $result = parent::selectAll('gamestable_map',columns: '*');
+        $result = parent::selectAll('gamestable_map','*');
         $gameTable = [];
         foreach ($result as $value) {
             $gameTable[$value['game_type']] = [
@@ -18,6 +18,27 @@ class GameManageModel extends MEDOOHelper{
             return parent::selectAll('game_type',['gt_id','name']);
     }
 
+    public static function getAllGamesLottery() {
+        return parent::selectAll('lottery_type', ['lt_id','name']);
+    }
+
+    public static function getLotteryGamesById(string $lotteryId, array $tables){
+        $bigData = [];
+
+        foreach($tables as $table){ 
+            $sql = "SELECT name, modified_odds, state, group_type, modified_totalbet, gameplay_name,total_bets
+            FROM {$table} WHERE lottery_type = :lotteryId";
+    
+           $data = parent::query($sql, ['lotteryId' => $lotteryId]);
+    
+          $bigData[$table] = $data;
+
+        }
+        return  $bigData;
+    }
+
+    
+
     public static function filterGameDraws($page, $limit, $gameId, $datefrom, $dateto) {
         try {
             $startpoint = ($page * $limit) - $limit;
@@ -31,6 +52,7 @@ class GameManageModel extends MEDOOHelper{
 
             $totalRecords = parent::query("SELECT * FROM " . $drawTable . " " . $where . "ORDER BY draw_id DESC"
             ,array_merge($params));
+            
             return ['data' => $data, 'total' => count($totalRecords)];
     
         } catch (PDOException $e) {
@@ -55,28 +77,6 @@ class GameManageModel extends MEDOOHelper{
         }
         return ['where'=> $where, 'params'=> $params];
     }
-
-
-
-
-    public static function FetchMainGames(): array
-    {
-        return  $res = parent::selectAll("lottery_type", ["lt_id", "name"], ["ORDER" => ["lt_id" => "ASC"]]);
-    }
-
-      public static function FetchMainGamesById($gameid,$tablename){
-     
-    
-        $sql = "SELECT game_group.name AS gameplay, $tablename.name, $tablename.modified_odds, $tablename.state, $tablename.group_type,
-        $tablename.modified_totalbet
-        FROM game_group
-        JOIN $tablename ON $tablename.game_group = game_group.gp_id
-        WHERE $tablename.lottery_type = $gameid";
-        return   $data = parent::query($sql);
-
-
-
-     }
 
 
 

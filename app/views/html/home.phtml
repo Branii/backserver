@@ -43,6 +43,14 @@ if (session_status() == PHP_SESSION_NONE) {
       padding: 20px;
       display: none;
     }
+    .chrome__tabb {
+      /* width: 400px;
+        height: auto;
+        border: solid 2px #ccc; */
+      padding: 20px;
+      display: none;
+    }
+    
 
     .chromclass {
       border-top: solid 3px orangered !important;
@@ -328,8 +336,8 @@ if (session_status() == PHP_SESSION_NONE) {
             <?php include "tabs/game_management/lottery_draw_records.php" ?>
           </div>
 
-          <div class="chrome__tab lotterybonus">
-            <?php include "tabs/game_management/lotterybonus.php" ?>
+          <div class="chrome__tab lottery_parameters">
+            <?php include "tabs/game_management/lottery_parameters.php" ?>
           </div>
 
           <!--system management-->
@@ -383,7 +391,9 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="<?php echo BASE_URL; ?>assets/js/deposit.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/withdrawal.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/bankcard.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/lotterybonus.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/lottery_parameters.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/lottery_draws.js"></script>
+    
     
 
 

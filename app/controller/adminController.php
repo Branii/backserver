@@ -368,12 +368,26 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function fetchgamebyid($gameid,$tablename){
-        $this->view('exec/game_manage',['gameid' =>$gameid,'tablename'=>$tablename, 'flag' => 'fetchgamebyid']);
+    // public function fetchgamebyid($gameid,$tablename){
+    //     $this->view('exec/game_manage',['gameid' =>$gameid,'tablename'=>$tablename, 'flag' => 'fetchgamebyid']);
+    //     $this->view->render();
+    // }
+
+    public function getAllGamesLottery(){
+        $this->view('exec/game_management',['flag' => 'getAllGamesLottery']);
         $this->view->render();
     }
 
-    
+    public function getLotteryGames(string $lotterId, string $tables){
+        $this->view('exec/game_management',[
+            'flag' => 'getLotteryGames',
+            'gameId' => $lotterId,
+            'tables' => $tables
+        ]);
+        $this->view->render();
+    }
+
+ 
     
     
 }
