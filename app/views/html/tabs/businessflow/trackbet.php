@@ -419,7 +419,7 @@
         <form>
           <div class="row">
             <div class="col-md-6">
-              <table class="table table-bordered table-striped">
+              <table class="table table-bordered table-striped"> 
                 <tbody id="rowtrack1">
                 </tbody>
               </table>

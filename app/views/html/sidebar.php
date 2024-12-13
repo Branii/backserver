@@ -65,6 +65,7 @@ $permissions = json_decode($decode,true);
 // echo "<pre>";
 // print_r($permissions);
 $sidebarMenu = [
+
     1 => ['title'=> $translator['Account Transaction Details'], 'content' => 'account_transaction'],
     2 => ['title'=> $translator['Game Betting Statistics'], 'content' => 'Game'],
     3 => ['title'=> $translator['Lottery Betting Record'], 'content' => 'Lottery'],
@@ -82,9 +83,7 @@ $sidebarMenu = [
     15 => ['title'=>  $translator['Lottery Basic Parameters'], 'content' => 'lotterybasic'],
     16 => ['title'=> $translator['Lottery Bonus Parameters'], 'content' => 'lottery_parameters'],
     17 => ['title'=> $translator['Administrator List'], 'content' => 'administrator_list'],
-    18 => ['title'=> 'Backup & Restore', 'content' => 'backup_recovery']
-  ];
-
+];
   $sidebarMain = [
     1 => $translator['Business Flow'],
     2 => $translator['financial Management'],

@@ -2,13 +2,25 @@
 
 class MEDOOHelper extends MedooOrm{
 
-    public static function query($sql, $params=[]) {
-        $req = parent::openLink()->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
-        return $req;
+
+
+    public static function query($sql, $params=[],$isObj = false) {
+        $req = parent::openLink()->query($sql, $params);
+        if($isObj) return $req->fetchAll(PDO::FETCH_OBJ);
+        return $req->fetchAll(PDO::FETCH_ASSOC);;
+    }
+    public static function queryOne($sql, $params=[],$isObj = false) {
+        $req = parent::openLink()->query($sql, $params);
+        if($isObj) return $req->fetch(PDO::FETCH_OBJ);
+        return $req->fetch(PDO::FETCH_ASSOC);;
     }
 
     public static function selectAll($table, $columns, $where = []) {
         $req = parent::openLink()->select($table, $columns, $where);
+        return $req;
+    }
+    public static function selectAllOrderBy($table, $columns, $order = []) {
+        $req = parent::openLink()->select($table, $columns, ["ORDER" => $order]);
         return $req;
     }
 
@@ -35,6 +47,10 @@ class MEDOOHelper extends MedooOrm{
     public static function count($table, $columns = "*", $where = []) {
         $count = parent::openLink()->count($table, $columns, $where);
         return $count;
+    }
+
+    public static function medooService() {
+        return  parent::getLink();
     }
     
 }

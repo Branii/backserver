@@ -1,5 +1,7 @@
 <?php
 
+
+use Medoo\Medoo;
 class GameManageModel extends MEDOOHelper{ 
 
     public static function getTables() {
@@ -78,6 +80,32 @@ class GameManageModel extends MEDOOHelper{
         return ['where'=> $where, 'params'=> $params];
     }
 
+
+    public static function fetchGameTypesForLottery($lottery_id, $current_page = 1, $recordsPerPage = 10) {
+    $offset = ($current_page - 1) * $recordsPerPage;
+    $database = parent::openLink();
+    $whereClause = trim($lottery_id) === 'all' ? "" : "WHERE game_type.lottery_type = :lottery_id";
+
+    $sql = "SELECT lottery_type.*, game_type.*, 
+            (SELECT COUNT(*) FROM game_type 
+             JOIN lottery_type ON game_type.lottery_type = lottery_type.lt_id $whereClause) AS total_count 
+            FROM game_type 
+            JOIN lottery_type ON game_type.lottery_type = lottery_type.lt_id 
+            $whereClause 
+            GROUP BY game_type.gt_id 
+            ORDER BY game_type.gt_id DESC 
+            LIMIT :offset, :recordsPerPage";
+
+    $params = [":offset" => $offset, ":recordsPerPage" => $recordsPerPage];
+    if ($whereClause) {
+        $params[":lottery_id"] = $lottery_id;
+    }
+
+    $data = $database->query($sql, $params)->fetchAll(PDO::FETCH_OBJ);
+
+    return $data;
+
+}
 
 
 }

@@ -547,4 +547,76 @@ $(function () {
       });
   }
 
+
+// let debounceTimeout =null; // To store the timeout ID
+// $(document).ready(function () {
+//     // Event listener for keyup
+//     $(document).on('keyup','#myInput', function () {
+//         const query = $(this).val().trim();
+
+//         if (query.length > 2) { // Only trigger if input is more than 2 characters
+//             clearTimeout(debounceTimeout); // Clear any existing timeout
+//             debounceTimeout = setTimeout(() => {
+//                 // Call the filterUsers logic directly here
+//                 let optionsHtml = '';
+
+//                 $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+//                     try {
+                      
+//                         if (typeof response === 'string') {
+//                             response = JSON.parse(response); // Parse string response
+//                         }
+
+//                         const formattedArray = response.flatMap(item => [
+//                           { "uid": item.uid, "username": item.username },
+//                           { "uid": item.uid, "username": item.nickname }
+//                         ]);
+//                         const filteredUsers = formattedArray.filter(user => user.username !== '*****');
+//                         filteredUsers.forEach(user => {
+//                           optionsHtml += `<option class ="optionlist"  value="${user.uid}" data-username="${user.username}">${user.username}</option>`;
+//                         })
+
+//                         //console.log(optionsHtml)
+
+//                         $('.userDropdown').html(optionsHtml).show(); 
+
+//                     } catch (error) {
+//                         console.error("Error parsing response: ", error);
+//                         $('.userDropdown').hide();
+//                     }
+//                 }).fail(function (error) {
+//                     console.error("Error fetching users: ", error);
+//                     $('.userDropdown').hide();
+//                 });
+//             }, 500); // 500ms debounce delay
+//         } else {
+//             $('.userDropdown').hide(); // Hide dropdown if input is less than 3 characters
+//         }
+//     });
+
+//     // Handle dropdown item click
+//     $(document).on('change', '.userDropdown', function () {
+//       const selectedOption = $(this).find('option:selected'); // Get the selected <option>
+//       const selectedUserId = selectedOption.val(); // Get user ID from the value attribute
+//       const selectedUsername = selectedOption.data('username'); // Get username from data-attribute
+//       if (selectedUserId) {
+//         $('#myInput').val(selectedUsername); 
+//         $('.userIdbet').val(selectedUserId); 
+//         $('.userDropdown').hide();  
+//       }
+   
+//   });
+
+//   $(document).on('input', '#myInput', function () {
+//     const inputValue = $(this).val(); // Get the current value of the input
+//     if (!inputValue) {
+//         // If input is cleared, reset the user ID as well
+//         $('.userIdbet').val('');
+//         console.log('User manually cleared the username');
+//     }
+// });
+// });
+
+
+
 });

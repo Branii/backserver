@@ -382,12 +382,16 @@ $translator = include "tabs/lang/{$lang}.php";
             <?php include "tabs/game_management/lottery_draw_records.php" ?>
           </div>
 
-          <div class="chrome__tab lottery_parameters">
-            <?php include "tabs/game_management/lottery_parameters.php" ?>
+          <div class="chrome__tab lottery_basic_params">
+            <?php include "tabs/game_management/lottery_basic_params.php" ?>
           </div>
 
-          <!--system management-->
+          <div class="chrome__tab backup_recovery">
+            <?php include "tabs/system_management/backup_recovery.php" ?>
+          </div>
 
+          <!--system managenet-->
+          
         </div>
 
       </div>
@@ -399,6 +403,7 @@ $translator = include "tabs/lang/{$lang}.php";
 
     </div>
     <div class="dark-transparent sidebartoggler"></div>
+
     <script src="<?php echo BASE_URL; ?>assets/js/vendor.min.js"></script>
     <!-- Import Js Files -->
     <script src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script>

@@ -17,10 +17,12 @@ $modules = [APP, MODEL, DATABASE, CORE, CONTROLLER,UTILS];
 // Custom Autoloader Function
 spl_autoload_register(function ($className) use ($modules) {
     foreach ($modules as $module) {
-        $filePath = $module . $className . '.php';
+         $filePath = $module . $className . '.php';
+      
         if (file_exists($filePath)) {
             require_once $filePath;
             return;
+        }else{
         }
     }
 });
