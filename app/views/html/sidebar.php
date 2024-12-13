@@ -80,7 +80,7 @@ $sidebarMenu = [
     13 => ['title'=> 'Quota Settings', 'content' => 'quota'],
     14 => ['title'=> 'Lottery Draw Records', 'content' => 'lottery_draw_records'],
     15 => ['title'=> 'Lottery Basic Parameters', 'content' => 'lotterybasic'],
-    16 => ['title'=> 'Lottery Bonus Parameters', 'content' => 'lotterybonus'],
+    16 => ['title'=> 'Lottery Bonus Parameters', 'content' => 'lotteryparameters'],
     17 => ['title'=> 'Administrator List', 'content' => 'administrator_list'],
     18 => ['title'=> 'Backup & Restore', 'content' => 'backup_recovery']
   ];

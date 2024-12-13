@@ -81,6 +81,23 @@ class adminController extends Controller {
         $this->view->render();
     }
 
+    public function getAllGamesLottery(){
+        $this->view('exec/game_management',['flag' => 'getAllGamesLottery']);
+        $this->view->render();
+    }
+
+    public function getLotteryGames(string $lotterId, string $tables){
+        $this->view('exec/game_management',[
+            'flag' => 'getLotteryGames',
+            'gameId' => $lotterId,
+            'tables' => $tables
+        ]);
+        $this->view->render();
+    }
+
+    
+    
+
     public function getSpecificDraws($gameId, $datefrom, $dateto, $pageNumber, $limit){
         $this->view('exec/game_management',[
         'page'=>$pageNumber,

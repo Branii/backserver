@@ -43,6 +43,14 @@ if (session_status() == PHP_SESSION_NONE) {
       display: none;
     }
 
+    .chrome__tabb {
+      /* width: 400px;
+        height: auto;
+        border: solid 2px #ccc; */
+      padding: 20px;
+      display: none;
+    }
+
     .chromclass {
       border-top: solid 3px orangered !important;
     }
@@ -172,7 +180,7 @@ if (session_status() == PHP_SESSION_NONE) {
           <button type="button" class="btn bg-white-subtle ">
             <i class='bx bx-history' style="font-size: 20px;"></i>
           </button>
-          <button type="button" class="btn bg-white-subtle">
+          <button type="button" class="btn bg-white-subtle peg">
             <i class='bx bx-cog' style="font-size: 20px;"></i>
           </button>
         </div>
@@ -323,6 +331,10 @@ if (session_status() == PHP_SESSION_NONE) {
             <?php include "tabs/game_management/lottery_draw_records.php" ?>
           </div>
 
+          <div class="chrome__tab lotteryparameters">
+            <?php include "tabs/game_management/lottery_parameters.php" ?>
+          </div>
+
           <div class="chrome__tab backup_recovery">
             <?php include "tabs/system_management/backup_recovery.php" ?>
           </div>
@@ -376,6 +388,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="<?php echo BASE_URL; ?>assets/js/deposit.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/withdrawal.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/bankcard.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/lottery_parameters.js"></script>
 
 
     <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>

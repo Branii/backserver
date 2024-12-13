@@ -17,6 +17,24 @@ if ($flag == "getAllgames") {
     }
 } 
 
+if ($flag == "getAllGamesLottery") {
+    $result = (new GameManageModel())->getAllGamesLottery();
+    if($result){
+        echo json_encode($result);
+    } else {
+        echo json_encode(['type'=>'error','message'=>'Some error occured']);
+    }
+} 
+
+if ($flag == "getLotteryGames") {
+    $gameId = isset($this->viewData['gameId']) ? $this->viewData['gameId'] : '';
+    $tableData = isset($this->viewData['tables']) ? $this->viewData['tables'] : '';
+    $decodedUrl = urldecode($tableData);
+    $tables = json_decode($decodedUrl);
+    $result = (new GameManageModel())->getLotteryGamesById($gameId,$tables);
+    echo json_encode($result);
+}
+
 if($flag == "getSpecificDraws") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
@@ -24,8 +42,8 @@ if($flag == "getSpecificDraws") {
     $datefrom = isset($this->viewData['datefrom']) ? $this->viewData['datefrom'] : '';
     $dateto = isset($this->viewData['dateto']) ? $this->viewData['dateto'] : '';
     $result = (new GameManageModel())->filterGameDraws($page, $limit, $gameId, $datefrom, $dateto);
-    echo json_encode( $result);
-    exit;
+    // echo json_encode( $result);
+    // exit;
     echo json_encode([
         'gameDraws' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit),

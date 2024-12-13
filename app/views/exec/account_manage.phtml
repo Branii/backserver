@@ -117,12 +117,10 @@ if ($flag == "filteruserlist") {
     ]);
 }
 
-
 if ($flag  == "fetchRebatedata") {
     $result = (new UserManageModel())->FetchRebateData() ?? [];
     echo json_encode($result);
 }
-
 
 if ($flag == "addAgent") {
 
@@ -155,7 +153,6 @@ if ($flag == "addAgent") {
 
     echo json_encode($result);
 }
-
 
 if ($flag == "fetchTopAgent") {
 
@@ -196,17 +193,18 @@ if ($flag == "fetchTopAgent") {
         'totalPages' => ceil($result['total'] / $limit)
     ]);
 }
+
 if ($flag  == "userlogsdata") {
 
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $result = (new UserManageModel())->FetchUserlogsData($page, $limit) ?? [];
-
     echo json_encode([
         'userlogs' => $result["data"],
         'totalPages' => ceil($result['total'] / $limit)
     ]);
 }
+
 if ($flag == "filterUserlogs") {
 
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
@@ -226,7 +224,6 @@ if ($flag == "filterUserlogs") {
             exit;
         }
     }
-
 
     $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
     $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
@@ -290,3 +287,5 @@ if ($flag == "updateUsedquota") {
     $result = (new AgentManageModel())->UpdateUserquotaData(json_encode($results), $uid);
     echo json_encode($result);
 }
+
+

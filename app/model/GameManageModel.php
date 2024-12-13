@@ -3,7 +3,7 @@
 class GameManageModel extends MEDOOHelper{ 
 
     public static function getTables() {
-        $result = parent::selectAll('gamestable_map',columns: '*');
+        $result = parent::selectAll('gamestable_map','*');
         $gameTable = [];
         foreach ($result as $value) {
             $gameTable[$value['game_type']] = [
@@ -17,6 +17,30 @@ class GameManageModel extends MEDOOHelper{
     public static function getAllGames() {
             return parent::selectAll('game_type',['gt_id','name']);
     }
+
+    public static function getAllGamesLottery() {
+        return parent::selectAll('lottery_type', ['lt_id','name']);
+    }
+
+    public static function getLotteryGamesById(string $lotteryId, array $tables){
+        $bigData = [];
+
+        foreach($tables as $table){ 
+            $sql = "SELECT game_group.name AS gameplay, {$table}.name, {$table}.modified_odds, {$table}.state, 
+            {$table}.group_type, {$table}.modified_totalbet 
+                FROM game_group 
+                JOIN {$table} ON {$table}.game_group = game_group.gp_id 
+                WHERE {$table}.lottery_type = $lotteryId";
+
+            $data = parent::query($sql);
+
+            $bigData[$table] = $data;
+
+        }
+        return  $bigData;
+    }
+
+    
 
     public static function filterGameDraws($page, $limit, $gameId, $datefrom, $dateto) {
         try {
