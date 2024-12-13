@@ -9,9 +9,9 @@ error_reporting(E_ALL);
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 
 if ($flag == "addNewAdmin") {
-    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
-    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
-    $data = isset($this->viewData['data']) ? $this->viewData['data'] : '';
+    $page   = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit  = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
+    $data   = isset($this->viewData['data']) ? $this->viewData['data'] : '';
     parse_str($data,$formData);
     $formData['username'] = generateUsername();
     $formData['password_hash'] = password_hash('1234', PASSWORD_BCRYPT);

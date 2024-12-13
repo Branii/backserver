@@ -17,6 +17,20 @@ class MedooOrm {
     }
 
     public static function openLink() {
+        return self::$connection ?? self::getLink();
+    }
+
+     public static function getLink() {
+        if (!self::$connection) {
+            self::$connection = new Medoo([
+                "type"     => $_ENV['DB_TYPE'],
+                "host"     => $_ENV['DB_HOST'],
+                "database" => $_ENV['DB_NAME'],
+                "username" => $_ENV['DB_USER'],
+                "password" => $_ENV['DB_PASS'],
+                "logging"  => true
+            ]);
+        }
         return self::$connection;
     }
 

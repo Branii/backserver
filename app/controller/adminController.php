@@ -157,6 +157,16 @@ class adminController extends Controller {
         $this->view->render();
     }
 
+    // --- MUNIRU ----
+    public function searchLotteryName($lottery_name){
+        $this->view('exec/win_loss',['lottery_name'=>$lottery_name,'flag' => 'filter-lotteries']);
+        $this->view->render();
+    }
+    public function searchWinLossUser($username,$lottery_id,$start_date,$end_date){
+        $this->view('exec/win_loss',['username'=>$username,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'flag' => 'search-user-win-loss']);
+        $this->view->render();
+    }
+
     public function filterbetdata($uid,$gametype,$betstate,$betstatus,$enddate,$startdate,$page,$limit){
         $this->view('exec/businessflow',[
         'uid'=>$uid,
@@ -184,6 +194,39 @@ class adminController extends Controller {
     public function userlistdata($pageNumber, $limit)
     {
         $this->view('exec/account_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
+        $this->view->render();
+    }
+
+
+    /// ----- WIN LOSS REPORT --------------------------------
+    public function win_loss($username,$lottery_id, $start_date,$end_date, $limit)
+    {
+        $this->view('exec/win_loss', ['username' => $username,'lottery' => $lottery_id,'start_date' => $start_date, 'end_date' => $end_date, 'limit' => $limit, 'flag' => 'user-win-loss']);
+        $this->view->render();
+    }
+    public function get_top_agents($lottery_id, $start_date,$end_date,$page)
+    {
+        
+        $this->view('exec/win_loss', ['lottery_id' => $lottery_id,'start_date' => $start_date, 'end_date' => $end_date,'page' => $page ,'flag' => 'get-top-agents']);
+        $this->view->render();
+    }
+    public function get_subs($user_id,$lottery_id, $start_date,$end_date,$page)
+    {
+     
+        $this->view('exec/win_loss', ['user_id' => $user_id,'lottery' => $lottery_id,'start_date' => $start_date, 'end_date' => $end_date,'page' => $page ,'flag' => 'get-subs']);
+        $this->view->render();
+    }
+    public function get_user_details($user_id,$lottery_id, $start_date,$end_date,$page)
+    {
+        $this->view('exec/win_loss', ['user_id' => $user_id,'lottery' => $lottery_id,'start_date' => $start_date, 'end_date' => $end_date,'flag' => 'get-user-details']);
+        $this->view->render();
+    }
+
+
+    // -- Lottery Draw Records ------------------------
+    public function fetch_lottery_basic_params($lottery_id,$page)
+    {
+        $this->view('exec/lottery_basic_params', ['lottery_id' => $lottery_id,'page' => $page,'flag' => 'fetch-lottery-basic-params']);
         $this->view->render();
     }
     // public function filteruserlist($username = '', $states = '', $startdate = '', $enddate = '', $pageNumber, $limit)
