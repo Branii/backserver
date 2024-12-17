@@ -270,46 +270,31 @@
               <h6 class="fs-4 fw-semibold mb-0">Lottery Alias</h6>
             </th> -->
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">ID</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Draw Id</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Lottery Icon</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Issue Number']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Sorting Weight</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Winning Numbers']; ?> </h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Lottery Name</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Amount']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Lottery Source</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win Amount']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Lottery Description</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Sales Deadline']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Lottery Code</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Actual Draw Time']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Maximum Prize Amount Per Bet</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Settlement Completion Time']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Maximum Winnings Per Person Per Issue</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Maximum Bet Amount Per Issue</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Minimum Bet Amount Per Issue</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Lock Time for Closing Bets</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Lottery Status</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Action</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
             </th>
           </tr>
         </thead> 
@@ -391,40 +376,4 @@
 </div>
 
 
-<div id="signup-modal" class="modal fade" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="text-center mt-2 mb-4">
-          <div class="d-flex justify-content-between">
-            <div>Transaction Info</div>
-            <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
-          </div>
-        </div>
-
-        <form>
-          <div class="row">
-            <div class="col-md-6">
-              <table class="table table-bordered table-striped">
-                <tbody id="row1">
-                </tbody>
-              </table>
-            </div>
-
-            <div class="col-md-6">
-              <table class="table table-bordered table-striped">
-                <tbody id="row2">
-                </tbody>
-              </table>
-            </div>
-
-          </div>
-        </form>
-
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
 
