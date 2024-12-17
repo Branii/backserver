@@ -17,10 +17,11 @@ if ($flag == "win-loss") {
      $lottery_name = isset($this->viewData['lottery_name']) ? max((int)$this->viewData['lottery_name'], 1) : ""; 
     if(!empty($lottery_name)) $results = (new DataReportModel())->FiltertLotteryNames();
 }else if($flag == 'search-user-win-loss'){
-         $username = isset($this->viewData['username']) ? max((int)$this->viewData['username'], 1) : ""; 
-         $lottery_id = isset($this->viewData['lottery_id']) ? max((int)$this->viewData['lottery_id'], 1) : ""; 
-         $start_date = isset($this->viewData['start_date']) ? max((int)$this->viewData['start_date'], 1) : ""; 
-         $end_date = isset($this->viewData['end_date']) ? max((int)$this->viewData['end_date'], 1) : ""; 
+     
+             $username   = isset($this->viewData['username']) ? max((int)$this->viewData['username'], 1) : ""; 
+             $lottery_id = $this->viewData['lottery_id'] ; 
+             $start_date = $this->viewData['start_date']; 
+             $end_date   = $this->viewData['end_date']; 
 
 
          if (empty($username)) {
@@ -31,8 +32,9 @@ if ($flag == "win-loss") {
     $user = DataReportModel::filter_fetch_users_for_win_loss_report([$username]);
     
 
-    $bet_tables = empty($lottery_id) ?  BusinessFlowModel::getAllGameIds() : BusinessFlowModel::getAllGameIdsWithCondition(['game_type' => $lottery_id]);
+    $bet_tables = $lottery_id == "all" ?  BusinessFlowModel::getAllGameIds() : BusinessFlowModel::getAllGameIdsWithCondition(['game_type' => $lottery_id]);
 
+   
    
 
 
@@ -48,17 +50,17 @@ if ($flag == "win-loss") {
          if(!empty($lottery_name)) $results = (new DataReportModel())->FiltertLotteryNames();
 }else if($flag === "get-top-agents"){
            
-         $lottery_id = isset($this->viewData['lottery_id']) ? (int)$this->viewData['lottery_id'] : ""; 
-         $start_date = isset($this->viewData['start_date']) ? $this->viewData['start_date'] : ""; 
-         $end_date   = isset($this->viewData['end_date'])     ? $this->viewData['end_date']   : ""; 
+         $lottery_id = $this->viewData['lottery_id'] ; 
+         $start_date = $this->viewData['start_date']; 
+         $end_date   = $this->viewData['end_date'];  
          $page       = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1;
          $limit      = 10;
-       $results =   $userData   = ["lottery_id" => $lottery_id, 'datecreated' => $start_date, 'enddate' => $end_date];
+         $results =   $userData   = ["lottery_id" => $lottery_id, 'datecreated' => $start_date, 'enddate' => $end_date];
 
      
      $filter_res = DataReportModel::filter_only_top_agents($userData,intval($page));
    
-     $bet_tables = empty($lottery_id) ?  BusinessFlowModel::getAllGameIds() : BusinessFlowModel::getAllGameIdsWithCondition(['game_type' => $lottery_id]);
+     $bet_tables = $lottery_id == "all" ?  BusinessFlowModel::getAllGameIds() : BusinessFlowModel::getAllGameIdsWithCondition(['game_type' => $lottery_id]);
 
     if (empty($filter_res)) {
       $results = [];

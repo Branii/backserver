@@ -117,12 +117,24 @@ let debounceTimeout = null;
     // filter user name
     $(document).on('click', '.fetch-user-win-loss', function () {
         const userName  = $("#wl-username").attr("data-user-id");
-        const lotteryID = $("#wl-lottery").attr("data-lot-id");
-        const startDate = $("#startdate").val();
-        const endDate   = $("#enddate").val();
+
+        if(userName == undefined){
+            console.log("Please No User selected.");
+            return;
+        }
+        let lotteryID = $("#wl-lottery").attr("data-lot-id");
+        let startDate = $("#startdate").val();
+        let endDate   = $("#enddate").val();
+        if(lotteryID != undefined){
+            if(lotteryID.length == 0) return;
+        }
+
+        lotteryID = lotteryID == undefined ?  "all" : lotteryID;
+        startDate = startDate.length != 0 ? startDate : "all";
+        endDate   = endDate.length != 0 ? endDate : "all";
 
         $.ajax({
-            url: `../admin/searchWinLossUser/${userName}/${lotteryID}/${startDate}/${endDate}`,
+            url: `../admin/searchWinLossUser/${userName}/${lotteryID}/${startDate}/${endDate}/`,
             type: "POST",
             beforeSend: function(){
                     $("#win-loss-loader").css('display', 'flex');
@@ -198,10 +210,17 @@ let debounceTimeout = null;
 // Get Top Agents
     $(document).on("click", ".top-agents-btn", function () {
 
-        const lotteryID = $("#wl-lottery").attr("data-lot-id");
-        const startDate = $("#startdate").val();
-        const endDate   = $("#enddate").val();
+        
+        let lotteryID = $("#wl-lottery").attr("data-lot-id");
+        let startDate = $("#startdate").val();
+        let endDate   = $("#enddate").val();
         const page      = 1;
+
+        
+        
+        lotteryID = lotteryID == undefined || lotteryID == "" ?  "all" : lotteryID;
+        startDate = startDate.length != 0 ? startDate : "all";
+        endDate   = endDate.length != 0 ? endDate : "all";
 
             $.ajax({
                 url: `../admin/get_top_agents/${lotteryID}/${startDate}/${endDate}/${page}}`,
@@ -283,7 +302,7 @@ let debounceTimeout = null;
 
 
 // refresh list
-    $(document).on("click", ".refreshlist", function () {
+    $(document).on("click", ".wl-refreshlist", function () {
         $("#wl-username").attr("data-user-id","");
         $("#wl-username").val("");
         $("#wl-lottery").attr("data-lot-id","");

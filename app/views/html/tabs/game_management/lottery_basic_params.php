@@ -193,12 +193,12 @@
 }
 
 
-.bring-forward {
+/* .fix-bring-forward {
         position:absolute;
         z-index: 10 !important;
         background: white !important;
         
-}
+} */
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -243,7 +243,7 @@
                      data-bs-title="Get Top Agent">
                     <i class='bx bxs-user-account' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle player refreshlist" value="" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle player lb-refreshlist" value="" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
                 </button>
@@ -352,17 +352,17 @@
    
       
 
-    <span class="top-right-btn"  aria-label="Page navigation example">
-    <select class="left-element form-control numrows" style="font-size:12px">
+    <span id="lb-pagination-pages-wrapper" class="top-right-btn"  aria-label="Page navigation example">
+    <!-- <select class="left-element form-control numrows" style="font-size:12px">
             <!-- <option value="5" class="fromnumrows">5</option>
             <option value="10">10</option>
-            <option value="20">20</option> -->
+            <option value="20">20</option> 
             <option value="50">50</option>
             <option value="100">100</option>
             <option value="200">200</option>
             <option value="500">500</option>
      </select>
-      <span id="paginationDraws" class="right-element"> </span>
+      <span id="paginationDraws" class="right-element"> </span> -->
     </span>
 
   </div>
