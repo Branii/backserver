@@ -74,16 +74,18 @@ $sidebarMenu = [
     6 => ['title'=> $translator['Withdrawal Records'], 'content' => 'Withdrawal'],
     7 => ['title'=> $translator['Finance Fund Changes'], 'content' => 'Finance'],
     8 => ['title'=> $translator['Win/Loss Report'], 'content' => 'Win'],
-    9 => ['title'=>  $translator['User List'], 'content' => 'Userlist'],
-    10 => ['title'=> $translator['User Logs'], 'content' => 'Userlogs'],
-    11 => ['title'=> $translator['Invitation & Referral Links'], 'content' => 'Invitation'],
-    12 => ['title'=> $translator['Bank Card List'], 'content' => 'Bank'],
-    13 => ['title'=> $translator['Quota Settings'], 'content' => 'quota'],
-    14 => ['title'=> $translator['Lottery Basic Parameters'], 'content' => 'lottery_draw_records'],
-    15 => ['title'=>  $translator['Lottery Basic Parameters'], 'content' => 'lotterybasic'],
-    16 => ['title'=> $translator['Lottery Bonus Parameters'], 'content' => 'lottery_parameters'],
-    17 => ['title'=> $translator['Administrator List'], 'content' => 'administrator_list'],
-];
+    9 => ['title'=> $translator['User List'], 'content' => 'Userlist'],
+    10 =>['title'=> $translator['User Logs'], 'content' => 'Userlogs'],
+    11 =>['title'=> $translator['Invitation & Referral Links'], 'content' => 'Invitation'],
+    12 =>['title'=> $translator['Bank Card List'], 'content' => 'Bank'],
+    13 =>['title'=> $translator['Quota Settings'], 'content' => 'quota'],
+    14 =>['title'=> $translator['Lottery Draw Records'], 'content' => 'lottery_draw_records'],
+    15 =>['title'=> $translator['Lottery Basic Parameters'], 'content' => 'lottery_basic_params'],
+    16 =>['title'=> $translator['Lottery Bonus Parameters'], 'content' => 'lottery_parameters'],
+    17 =>['title'=> $translator['Administrator List'], 'content' => 'administrator_list'],
+    18 =>['title'=> 'Backup & Restore', 'content' => 'backup_recovery']
+  ];
+
   $sidebarMain = [
     1 => $translator['Business Flow'],
     2 => $translator['financial Management'],
