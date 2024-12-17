@@ -31,7 +31,7 @@ $(function () {
     };
 
     data.forEach((item) => {
-      const username = item.username === '*****' ? item.email : (item.contact ||item.username);
+      const username = item.username === '*****' ? item.email : (item.username || item.contact);
       html += `
                     <tr>
                         <td>${username}</td>

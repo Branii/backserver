@@ -181,7 +181,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">Bank Card List</h4>
+        <h4 class="card-title mb-0"><?= $translator['Bank Card List']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
@@ -230,28 +230,28 @@
                     <tr>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Username</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
                       
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Bank Type</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bank Name']; ?></h6>
                         </th>
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Cardholder</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Cardholder']; ?></h6>
                         </th>
 						
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Bank Card Number</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bank Card Number']; ?></h6>
                         </th>
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Successful bankcardal Count</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Successful Withdrawal Count']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Binding Time</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Binding Time']; ?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Status</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
                         </th>
                         <!-- <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>

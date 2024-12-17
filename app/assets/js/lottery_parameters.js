@@ -34,16 +34,15 @@ $(function () {
                         <td> <label class="switch gameplaybtn"><input type="checkbox" value ="${item.state}" style="z-index:999"/> <span class="slider"></span></label></td>
                      
                          <td>
-                          <input type="text" data='${item.modified_totalbet}' value='${item.modified_totalbet}' min="0" max="10000" step="0.1" class="odds-input" id="oddsInput" />
-                          <span class="percentDisplay">100%</span>
+                          <input type="text" hidden data='${item.modified_totalbet}' value='${item.modified_totalbet}' min="0" max="10000" step="0.1" class="odds-input" id="oddsInput" />
+                          <span class="percentDisplay">100%</span> 
                           <br>
                           <!-- Range Slider -->
                           <input type="range" value="10" min="0" max="10" step="1" class="odds-slider" id="oddsSlider" />
-                    
                          </td>
                           
-                        <td>${item.modified_totalbet}</td>
-                          <td></td>
+                         <td>${item.modified_totalbet}</td>
+                    
                           <td><input type='text' class='form-control finalval' value='${item.modified_totalbet}' disabled></td>
                     </tr>
                 `;

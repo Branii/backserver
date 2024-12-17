@@ -194,39 +194,96 @@
   padding:5px;
   border-bottom: solid 1px rgb(110,129,146,0.1);
 }
+
+
+.useraccount {
+    width: 16%;
+    position: absolute;
+    background-color: #fff;
+    color: #aaa;
+    max-height: 300px;
+    overflow-y: scroll;
+    border-radius: 5px;
+    padding: 10px;
+    top: 90%;
+    z-index: 9999;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    display: none;
+  }
+
+  /* Style for the scrollbar */
+  .useraccount::-webkit-scrollbar {
+    width: 3px;
+    /* Width of the scrollbar */
+  }
+
+  .useraccount::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    /* Background of the scrollbar track */
+    border-radius: 5px;
+    /* Rounded corners */
+  }
+
+  .useraccount::-webkit-scrollbar-thumb {
+    background: #ccc;
+    /* Color of the scrollbar handle */
+    border-radius: 5px;
+    /* Rounded corners */
+  }
+
+  .useraccount::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+    /* Darker handle color on hover */
+  }
+
+    /* Dropdown item styling */
+    .optionlist {
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  .optionlist:hover {
+    background-color: #f0f0f0;
+  }
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0">Account Transactions</h4>
+    <h4 class="card-title mb-0"> <?= $translator['Account Transaction Details']; ?></h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pager1">
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-        <input name="username" class="queryholder form-control" id="selected" placeholder="Enter Username"
+        <!-- <input name="username" class="queryholder form-control" id="selected" placeholder="Enter Username"
           autocomplete="off"></input>
         <input type="text" class="userId" style="display:none" />
-        <ul class="queryholderx"></ul>
+        <ul class="queryholderx"></ul> -->
+        <input type="text" id="mytrans" class="form-control queryholderlist usernames" placeholder="Search usernames">
+        <input name ="usernames" type="hidden" class="userIdtrans">
+        <select  class="form-control useraccount" size="5" style="display: none;">
+          <!-- Options will be populated dynamically -->
+        </select>
 
         <input type="text" class="form-control queryholder orderid" id="nametext" aria-describedby="name"
           placeholder="Enter Transaction ID">
 
         <select name="order_type" class="form-control form-select queryholder ordertype" data-bs-placeholder="Select Type">
-          <option value="0">Transaction Type</option>
-          <option value="1">Deposit</option>
-          <option value="2">Win Bonus</option>
-          <option value="3">Bet Awarded</option>
-          <option value="4">Withdrawal</option>
-          <option value="5">Bet Cancelled</option>
-          <option value="6">Bet Deduct</option>
-          <option value="7">Rebate</option>
-          <option value="8">Self Rebate</option>
-          <option value="9">Send Red Envelope</option>
-          <option value="10">Receive Red Envelope</option>
-          <option value="11">Bet Refund</option>
+        <option value="">--<?= $translator['Transaction Type']; ?>--</option>
+        <option value="1"><?= $translator['Deposit']; ?></option>
+        <option value="2"><?= $translator['Win Bonus']; ?></option>
+        <option value="3"> <?= $translator['Bet Awarded']; ?></option>
+        <option value="4"><?= $translator['Withdrawal']; ?></option>
+        <option value="6"><?= $translator['Bet Cancelled']; ?></option>
+        <option value="5"><?= $translator['Bet Deduct']; ?></option>
+        <option value="7"><?= $translator['Rebates']; ?></option>
+        <option value="8"><?= $translator['Self Rebate']; ?></option>
+        <option value="9"><?= $translator['Sending Red Envelope']; ?></option>
+        <option value="10"><?= $translator['Red Envelope Receive']; ?></option>
+        <option value="11"><?= $translator['Bet Refund']; ?></option>
         </select>
 
         <input type="date" class="form-control queryholder startdate" id="nameext1" aria-describedby="name" placeholder="Name" />
@@ -273,28 +330,28 @@
         <thead class="text-dark fs-4 tbl-header" style="background-color: red;">
           <tr class="accheaderrow">
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">ID Number</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['ID Number']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">User Name</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Transaction Type</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Type']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0"> Amount </h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Amount']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Balance</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Date/Time</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Date/Time']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Transaction ID</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction ID']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Status</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>

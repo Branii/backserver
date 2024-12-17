@@ -220,7 +220,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">User List</h4>
+        <h4 class="card-title mb-0"><?= $translator['User List']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist1">
@@ -304,41 +304,41 @@
                 <thead class="text-dark fs-4 tbl-headersUser">
                     <tr class="userlistheadrow">
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">User Name</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Nickname</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Nickname']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Level</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Level']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Relationship</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Relationship']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Direct Agent Subordinates</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Direct Agent Subordinates']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Available Balance/Frozen Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Available Balance/Frozen Amount']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Rebate(%)</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Rebate(%)']; ?></h6>
                         </th>
                         <!-- <th>
                             <h6 class="fs-4 fw-semibold mb-0">Deposit Level</h6>
                         </th> -->
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Creation Time</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Creation Time']; ?></h6>
                         </th>
                         <!-- <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Last Login</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Login']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Login Count</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Login Count']; ?></h6>
                         </th> -->
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Status</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>

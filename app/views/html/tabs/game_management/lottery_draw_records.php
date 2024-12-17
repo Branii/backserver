@@ -196,7 +196,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0">Lottery draw records</h4>
+    <h4 class="card-title mb-0"><?= $translator['Lottery Basic Parameters']; ?></h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pager1">
@@ -257,34 +257,34 @@
               <h6 class="fs-4 fw-semibold mb-0">Lottery Alias</h6>
             </th> -->
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Draw Id</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['ID']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Issue Number</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Issue Number']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0"> Winning Numbers </h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Winning Numbers']; ?> </h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Bet Amount</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Amount']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Win Amount</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win Amount']; ?></h6>
             </th>
             <!-- <th>
               <h6 class="fs-4 fw-semibold mb-0">Draw Time</h6>
             </th> -->
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Sale Deadline</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Sales Deadline']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Actual Draw Time</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Actual Draw Time']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Settle Complete Time</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Settlement Completion Time']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Draw Status</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
             </th>
           </tr>
         </thead> 

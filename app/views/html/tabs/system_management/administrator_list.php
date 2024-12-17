@@ -220,7 +220,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0">Administrator List</h4>
+    <h4 class="card-title mb-0"><?= $translator['Administrator List']; ?></h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pager1">
@@ -274,7 +274,7 @@
               <h6 class="fs-4 fw-semibold mb-0">Avatar</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Username</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0">Full Name</h6>

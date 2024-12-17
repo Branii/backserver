@@ -170,7 +170,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">User Logs</h4>
+        <h4 class="card-title mb-0"><?= $translator['User Logs']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
@@ -221,25 +221,25 @@
                 <thead class="text-dark fs-4">
                     <tr>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">User Name</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Login Time</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Login Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">IP</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['IP']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">IP Location</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['IP Location']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Browser Information</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Browser Information']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Login Device</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Login Device']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">APP Version</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['APP Version']; ?></h6>
                         </th>
                         
                         <!-- <th>

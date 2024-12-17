@@ -41,6 +41,7 @@ class BusinessFlowModel extends MEDOOHelper
             $conditions['transaction.date_created[<=]'] = $to;
         }
 
+       
         return $conditions;
     }
 
@@ -54,8 +55,27 @@ class BusinessFlowModel extends MEDOOHelper
             "ORDER" => ["transaction.trans_id" => "DESC"],
             "LIMIT" => [$startpoint, $limit]
         ]);
+    //     $sql = "
+    //     SELECT 
+    //         temp_table.*, 
+    //         users_test.email,
+    //         users_test.username,
+    //          users_test.contact
+    //     FROM 
+    //         (
+    //             SELECT * 
+    //             FROM transaction
+    //             $whereConditions
+    //         ) AS temp_table
+    //     JOIN 
+    //         users_test ON users_test.uid = temp_table.uid
+    //     LIMIT :offset, :limit
+    // ";
+    
+    //  $data = parent::query($sql, ['offset' => $startpoint,'limit' => $limit]);
+        
         $lastQuery = MedooOrm::openLink()->log();
-        $totalRecords  = parent::selectAll('transaction', '*',     [
+        $totalRecords  = parent::selectAll('transaction', '*',[
             'AND' => $whereConditions
         ]);
         return ['data' => $data, 'total' => count($totalRecords), 'sql' => $lastQuery[0]];
@@ -69,7 +89,7 @@ class BusinessFlowModel extends MEDOOHelper
 
     public static function getUsernameById(mixed $userId)
     {
-        $data = parent::query("SELECT username,nickname,email,contact FROM users_test WHERE uid = :uid", ['uid' => $userId])[0];
+        $data = parent::query("SELECT username,email,contact FROM users_test WHERE uid = :uid", ['uid' => $userId])[0];
         return $data;
     }
 
@@ -229,11 +249,7 @@ class BusinessFlowModel extends MEDOOHelper
 
             try {
 
-                $result = parent::query($sql, [
-                    'offset' => $startpoint,
-                    'limit' => $limit
-                ]);
-
+                $result = parent::query($sql, ['offset' => $startpoint,'limit' => $limit]);
                 if (!empty($result)) {
                     $data = array_merge($data, $result);
                     $totalRecords += count($result);
@@ -297,7 +313,7 @@ class BusinessFlowModel extends MEDOOHelper
     {
         $startpoint = ($page * $limit) - $limit;
         $data = parent::query(
-            "SELECT trackbet.*, COALESCE(users_test.username, 'N/A') AS username FROM trackbet   
+            "SELECT trackbet.*,users_test.email,users_test.contact,COALESCE(users_test.username, 'N/A') AS username FROM trackbet   
             JOIN users_test ON users_test.uid = trackbet.user_id  ORDER BY track_id DESC LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
         );

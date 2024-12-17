@@ -181,7 +181,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">Quota Settings</h4>
+        <h4 class="card-title mb-0"><?= $translator['Quota Settings']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
@@ -230,13 +230,13 @@
                     <tr>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Bonus Group</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bonus Group']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Rebate(%)</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Rebate(%)']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Quota</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Quota']; ?></h6>
                         </th>
 
                         <th>
