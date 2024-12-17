@@ -40,6 +40,35 @@ if ($flag == "lotterydata") {
     ]);
 }
 
+
+if ($flag == "filtertransactions") {
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
+    $orderid = isset($this->viewData['orderid']) ? $this->viewData['orderid'] : '';
+    $ordertype = isset($this->viewData['ordertype']) ? $this->viewData['ordertype'] : '';
+    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
+    $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
+    $result = (new BusinessFlowModel())->FilterTrsansactionData($page, $limit, $username, $orderid, $ordertype, $startdate, $enddate) ?? [];
+
+    // $bigArr = [];
+    foreach ($result['data'] as $value) {
+        $username = (new BusinessFlowModel())->getUsernameById($value['uid']);
+        $email = (new BusinessFlowModel())->getUsernameById($value['uid']);
+        $contact = (new BusinessFlowModel())->getUsernameById($value['uid']);
+        $value['username'] = $username['username'];
+        $value['email'] = $email['email'];
+        $value['contact'] = $contact['contact'];
+        $bigArr[] = $value;
+    }
+
+    echo json_encode([
+        'sql' => $result['sql'],
+        'transactions' => $bigArr,
+        'totalPages' => ceil($result['total'] / $limit)
+    ]);
+
+}
 if ($flag == "viewBetstake") {
 
     $betcode  = isset($this->viewData['betcode']) ? (int) $this->viewData['betcode'] : null;
@@ -82,7 +111,7 @@ if ($flag == "searchusername") {
         $data = [
             'uid' => $value['uid'],  // 'uid' is the key
             'username' => $value['username'],  // 'username' value
-            'email' => $value['email'], 
+            'email' => $value['email'],
             'contact' => $value['contact'],  // 'nickname' value
         ];
         $results[] = $data;  // Append the formatted result to the $results array
@@ -106,13 +135,12 @@ if ($flag == "filterbetdata") {
     $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-
     $sunquery =  (new BusinessFlowModel())->filterBetData($uid, $gametype, $betstate, $betstatus, $enddate, $startdate);
-    $result = (new BusinessFlowModel())->getAllUserBetByUserId($sunquery,$page,$limit);
+    $result = (new BusinessFlowModel())->getAllUserBetByUserId($sunquery, $page, $limit);
 
     echo json_encode([
         'filterbet' => $result['data'],
-       'totalPages' => ceil($result['total'] / $limit)
+        'totalPages' => ceil($result['total'] / $limit)
     ]);
 }
 

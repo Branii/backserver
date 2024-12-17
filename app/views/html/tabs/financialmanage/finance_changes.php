@@ -243,7 +243,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
 	<div class="px-4 py-3 border-bottom">
-		<h4 class="card-title mb-0">Finance Fund Changes</h4>
+		<h4 class="card-title mb-0"><?= $translator['Finance Fund Changes']; ?></h4>
 	</div>
 
 	<div class="px-4 py-3 border-bottom pagerlist">
@@ -260,9 +260,9 @@
 
         <select name="betsate" class="form-control form-select queryholderlistt depositestate "
           data-bs-placeholder="Select Type">
-          <option value="">-State-</option>
-          <option value="1">Deposit</option>
-          <option value="4">Withdrawal</option>
+		  <option value="all">--<?= $translator['Deposit/Withdrawal Type']; ?>--</option>
+		  <option value="1"><?= $translator['Deposit']; ?></option>
+		  <option value="4"><?= $translator['Withdrawal']; ?></option>
       
         </select>
 
@@ -316,25 +316,25 @@
 					<tr>
 
 						<th>
-							<h6 class="fs-4 fw-semibold mb-0">Username</h6>
+							<h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
 						</th>
 						<th>
-							<h6 class="fs-4 fw-semibold mb-0">Level</h6>
+							<h6 class="fs-4 fw-semibold mb-0"><?= $translator['Level']; ?></h6>
 						</th>
 						<th>
-							<h6 class="fs-4 fw-semibold mb-0"> Deposit/Withdrawal Type</h6>
+							<h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit/Withdrawal Type']; ?></h6>
 						</th>
 						<th>
-							<h6 class="fs-4 fw-semibold mb-0">Transaction Amount</h6>
+							<h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Amount']; ?></h6>
 						</th>
 						<th>
-							<h6 class="fs-4 fw-semibold mb-0">Balance</h6>
+							<h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
 						</th>
 						<th>
-							<h6 class="fs-4 fw-semibold mb-0">Transaction Time</h6>
+							<h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Time']; ?></h6>
 						</th>
 						<th>
-							<h6 class="fs-4 fw-semibold mb-0">Reviews</h6>
+							<h6 class="fs-4 fw-semibold mb-0"><?= $translator['Reviews']; ?></h6>
 						</th>
 						<!-- <th>
                             <h6 class="fs-4 fw-semibold mb-0">Deposit Time</h6>
@@ -432,12 +432,12 @@
 					<!-- Rebate Field -->
 					<div class="form-floating mb-3">
 						<select name="deposit" class="form-select form-control border border-infos depositt">
-							<option value="1">Deposit</option>
-							<option value="4">Withdrawal</option>
+						<option value="1"><?= $translator['Deposit']; ?></option>
+						<option value="4"><?= $translator['Withdrawal']; ?></option>
 						</select>
 						<label>
 							<i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
-							<span class="border-start  ps-3">deposit/withrawal types</span>
+							<span class="border-start  ps-3"><?=$translator['Deposit/Withdrawal Type']; ?></span>
 						</label>
 					</div>
 
@@ -450,7 +450,7 @@
 
 						<label>
 							<i class="bx bx-user me-2 fs-4 text-infod"></i>
-							<span class="border-start  ps-3">Username</span>
+							<span class="border-start  ps-3"><?=$translator['Username']; ?></span>
 						</label>
 					</div>
 
@@ -458,7 +458,7 @@
 						<input name="agentname" type="text" class="form-control border amount" placeholder="Username" />
 						<label>
 							<i class="bx bx-money me-2 fs-4 text-infod"></i>
-							<span class="border-start  ps-3">Enter Amount</span>
+							<span class="border-start  ps-3"><?=$translator['Amount']; ?></span>
 						</label>
 					</div>
 
@@ -466,7 +466,7 @@
 						<input name="agentname" type="text" class="form-control border review" placeholder="Username" />
 						<label>
 							<i class="bx bx-message me-2 fs-4 text-infod"></i>
-							<span class="border-start  ps-3">Reviews</span>
+							<span class="border-start  ps-3"><?=$translator['Reviews']; ?></span>
 						</label>
 					</div>
 

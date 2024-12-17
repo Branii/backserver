@@ -25,11 +25,11 @@ $(function () {
       };
   
       data.forEach((item) => {
-       
+        const username = item.username == '*****' ? item.email :(item.username ||item.contact);
         htmls += `
                       <tr>
                           <td>${item.track_token}</td>
-                          <td>${item.username}</td>
+                          <td>${username}</td>
                           <td>${item.game_type}</td>
                           <td>${item.start_draw}</td>
                           <td>${item.total_bets + "/" + item.total_track}</td>
@@ -83,34 +83,34 @@ $(function () {
     };
   
    
-    const firstRowbet = {
-      'username': 'Username:',
-      'bet_code': 'Bet Order ID:',
-      'draw_period': 'Issue Number:',
-      'ip_address': 'IP:',
-      'unit_stake': 'Unit Stake:',
-      'multiplier': 'Multiplier:',
-      'bet_status': 'Bet Status:',
-      'game_label': 'Game Type::',
-      'draw_number': 'Draw Results:',
-      'num_wins': 'Number of wins:',
-      'bettype': 'Bet Type:'
-    }
+    // const firstRowbet = {
+    //   'username': 'Username:',
+    //   'bet_code': 'Bet Order ID:',
+    //   'draw_period': 'Issue Number:',
+    //   'ip_address': 'IP:',
+    //   'unit_stake': 'Unit Stake:',
+    //   'multiplier': 'Multiplier:',
+    //   'bet_status': 'Bet Status:',
+    //   'game_label': 'Game Type::',
+    //   'draw_number': 'Draw Results:',
+    //   'num_wins': 'Number of wins:',
+    //   'bettype': 'Bet Type:'
+    // }
   
-    const secondRowbet = {
-      'game_type': 'Lottery Type:',
-      'bet_time': 'Bet Time:',
-      'closing_time': 'Closing Time:',
-      'opening_time': 'Draw Time::',
-      'bet_number': 'Total Bet:',
-      'bet_amount': 'Total Bet Amount:',
-      'win_amount': 'Prize:',
-      'server_date': 'Win Amount:',
-      'server_time': 'Actual profit:',
-      'rebate_amount': 'Rebate Amount',
-      'user_selection': 'Bet Details',
+    // const secondRowbet = {
+    //   'game_type': 'Lottery Type:',
+    //   'bet_time': 'Bet Time:',
+    //   'closing_time': 'Closing Time:',
+    //   'opening_time': 'Draw Time::',
+    //   'bet_number': 'Total Bet:',
+    //   'bet_amount': 'Total Bet Amount:',
+    //   'win_amount': 'Prize:',
+    //   'server_date': 'Win Amount:',
+    //   'server_time': 'Actual profit:',
+    //   'rebate_amount': 'Rebate Amount',
+    //   'user_selection': 'Bet Details',
     
-    }
+    // }
   
     const rendertrack = (data) => {
       var htmls = Trackbetdata(data);
@@ -118,7 +118,7 @@ $(function () {
     };
   
     let currentPagetrack = 1;
-    let pageLimit = 25;
+    let pageLimit = 45;
   
     async function fetchtrackdata(page) {
       try {

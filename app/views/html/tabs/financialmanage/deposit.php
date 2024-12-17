@@ -181,7 +181,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">Deposit Records</h4>
+        <h4 class="card-title mb-0"><?= $translator['Deposit Record']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
@@ -230,33 +230,33 @@
                     <tr>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Deposit ID</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit ID']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Username</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Level</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Level']; ?></h6>
                         </th>
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Deposit Channel</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit Channel']; ?></h6>
                         </th>
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Deposit Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit Amount']; ?></h6>
                         </th>
 						
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Actual Amount Received</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Actual Amount Received']; ?></h6>
                         </th>
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Deposit Time</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Receiving Bank</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Receiving Bank']; ?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Receiving Card Number</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Receiving Card Number']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>

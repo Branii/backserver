@@ -1,7 +1,7 @@
 $(function () {
 
   const AccountTransactions = (data) => {
-
+   
     let html = "";
     const status = {
       1: { title: "Deposit", color: "#4CAF50" },          // Green
@@ -20,6 +20,10 @@ $(function () {
 
     data.forEach((item) => {
       const username = item.username == '*****' ? item.email :(item.username || item.contact);
+      // `<?php $phpVariable = "Hello, World!";?>`
+      // const jsVariable = '<?php echo $phpVariable; ?>';
+//      console.log(jsVariable); // Output
+
       html += `
                   <tr class="trow">
                     <td>${'TR' + item.order_id.substring(0, 7)}</td>
@@ -111,8 +115,8 @@ $(function () {
       const response = await fetch(`../admin/filtertransactions/${username}/${orderid}/${ordertype}/${startdate}/${enddate}/${page}/${pageLimit}`);
       const data = await response.json();
 
-      // console.log(response)
-      // return
+       console.log(response)
+      //  return
 
       $(".loader").removeClass('bx bx-loader bx-spin').addClass('bx bx-check-double');
       if (data.transactions.length < 1) {
@@ -234,81 +238,32 @@ $(function () {
     fetchTrasaction(currentPage,pageLimit);
   })
 
-  let timeout;
-  let userId;
-  function performSearch() {
-    const query = $('#selected').val();
-
-      $.post(`../admin/filterusername/${query}`, function (response) {
-
-      if (typeof response === 'string') {
-        $(".acc_transaction_username").hide();
-      } else if (typeof response === 'object') {
-        
-        let html = '';
-        // Sort users alphabetically by username
-        response.sort((a, b) => a.username.localeCompare(b.username));
-        // Generate HTML for the select options
-        response.forEach((user) => {
-          html += `<span value="${user.uid}" class="option">${user.username}</span>`;
-        });
-
-        // Insert the generated options into the <select> element
-        $(".acc_transaction_username").html(html).show();
-
-      }
-    })
-  }
+  // let timeout;
+  // let userId;
   // function performSearch() {
-  //   const query = $("#selected").val(); // Get the input value
-  
-  //   // if (!query.trim()) {
-  //   //   // If the query is empty, clear and hide the results
-  //   //   $(".queryholderx").hide().empty();
-  //   //   return;
-  //   // }
-  
-  //   // Send a POST request with the query
-  //   $.post(`../admin/filterusername/${query}`, function (response) {
-  //     if (typeof response === "string") {
-  //       // If the response is a string, hide the results
-  //       $(".queryholderx").hide().empty();
-  //     } else if (Array.isArray(response) && response.length > 0) {
-  //       // If the response is an array with data
-  //       let html = "";
-  
+  //   const query = $('#selected').val();
+
+  //     $.post(`../admin/filterusername/${query}`, function (response) {
+
+  //     if (typeof response === 'string') {
+  //       $(".acc_transaction_username").hide();
+  //     } else if (typeof response === 'object') {
+        
+  //       let html = '';
   //       // Sort users alphabetically by username
   //       response.sort((a, b) => a.username.localeCompare(b.username));
-  
-  //       // Generate HTML for the list items
+  //       // Generate HTML for the select options
   //       response.forEach((user) => {
-  //         html += `<li value="${user.uid}" class="optionlist">${user.username}</li>`;
+  //         html += `<span value="${user.uid}" class="option">${user.username}</span>`;
   //       });
-  
-  //       // Display the sorted results
-  //       $(".queryholderx").html(html).show();
-  //     } else {
-  //       // If no results, clear and hide the container
-  //       $(".queryholderx").hide().empty();
-  //     }
-  //   }).fail(function (error) {
-  //     console.error("Error during the search request:", error);
-  //     $(".queryholderx").hide().empty(); // Hide results on error
-  //   });
-  // }
-  
-  // $(document).on("input", '#selected', function () {
-  //   clearTimeout(timeout);
-  //   $(".userId").val("")
-  //   timeout = setTimeout(performSearch, 300);
-  // })
 
-  // $(document).on('click', '.option', function () {
-  //   $("#selected").val($(this).text())
-  //   userId = $(this).attr('value')
-  //   $(".userId").val(userId)
-  //   $(".acc_transaction_username").hide()
-  // })
+  //       // Insert the generated options into the <select> element
+  //       $(".acc_transaction_username").html(html).show();
+
+  //     }
+  //   })
+  // }
+
 
   $(document).on('click', '.executetrans', function () {
 
@@ -317,12 +272,12 @@ $(function () {
       return
     }
 
-    const username = $(".userId").val().trim() === "" ? $("#selected").val() : $(".userId").val().trim();
+    const username = $(".userIdtrans").val().trim();
     const orderid = $(".orderid").val()
     const ordertype = $(".ordertype").val()
     const startdate = $(".startdate").val()
     const enddate = $(".enddate").val()
-    // console.log(username)
+    console.log(username)
     $(".loader").removeClass('bx-check-double').addClass('bx-loader bx-spin');
     setTimeout(() => {
       filterTrasaction(currentPage, username, orderid, ordertype, startdate, enddate);
@@ -371,6 +326,78 @@ $(function () {
        // $(elem[0]).find(".chrome-tab-close").removeClass("chrome-tab-close")
       }
     }]
-});
+  });
+
+
+
+
+  //search the 
+
+  let debounceTimeout = null;
+
+  $(document).ready(function () {
+      // Event listener for keyup on #myInput
+      $(document).on('keyup', '#mytrans', function () {
+          const query = $(this).val().trim();
+
+          // Only trigger if input is more than 2 characters
+          if (query.length > 1) {
+              clearTimeout(debounceTimeout); // Clear any existing timeout
+              debounceTimeout = setTimeout(fetchbetUser, 500, query); // Call fetchUsers with the query after 500ms delay
+          } else {
+              $('.useraccount').hide(); // Hide dropdown if input is less than 3 characters
+          }
+      });
+
+      // Handle dropdown item selection
+      $(document).on('change', '.useraccount', function () {
+          const selectedOption = $(this).find('option:selected');
+          const selectedUserId = selectedOption.val();
+          const selectedUsername = selectedOption.data('username');
+
+          if (selectedUserId) {
+              $('#mytrans').val(selectedUsername);
+              $('.userIdtrans').val(selectedUserId);
+              $('.useraccount').hide();
+          }
+      });
+
+      // Handle manual input clearing
+      $(document).on('input', '#mytrans', function () {
+          if (!$(this).val()) {
+              $('.userIdtrans').val(''); // Reset user ID if input is cleared
+          }
+      });
+  });
+
+  // Function to fetch and display users
+  function fetchbetUser(query) {
+      let optionsHtml = '';
+
+      $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+          try {
+              response = typeof response === 'string' ? JSON.parse(response) : response;
+
+              const filteredUsers = response.flatMap(item => [
+                  { "uid": item.uid, "username": item.username },
+                  { "uid": item.uid, "username": item.email },
+                  { "uid": item.uid, "username": item.contact }
+              ]).filter(user => user.username !== '*****');
+
+              filteredUsers.forEach(user => {
+                  optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${user.username}">${user.username}</option>`;
+              });
+
+              $('.useraccount').html(optionsHtml).show();
+          } catch (error) {
+              console.error("Error parsing response: ", error);
+              $('.useraccount').hide();
+          }
+      }).fail(function () {
+          console.error("Error fetching users.");
+          $('.useraccount').hide();
+      });
+  }
+
 
 });

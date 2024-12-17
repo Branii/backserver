@@ -255,7 +255,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0">Lottery Parameters</h4>
+    <h4 class="card-title mb-0"><?= $translator['Lottery Bonus Parameters']; ?></h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pager1">
@@ -333,15 +333,14 @@
           <div class="chrome__tabb standard_content"> 
             <table class="table table-bordered"> 
                <tr>
-                 <th>Game Play Group</th>
-                 <th>Play Group</th>
-                 <th>Lottery Games</th>
-                 <th>Lottery Odds</th>
-                 <th>Play Method</th>
-                 <th>Play Method</th>
-                 <th>Play Method</th>
-                 <th>Total Bets</th>
-                 <th>Total Bets</th>
+                 <th><?= $translator['Game Type']; ?></th>
+                 <th><?= $translator['Play Group']; ?></th>
+                 <th><?= $translator['Lottery Games']; ?></th>
+                 <th><?= $translator['Lottery Odds']; ?></th>
+                 <th><?= $translator['Play Method']; ?></th>
+                 <th><?= $translator['Play Method']; ?></th>
+                 <th><?= $translator['Total Bets']; ?></th>
+                 <th><?= $translator['Current Total Bets']; ?></th>
                </tr>
                <tbody class="game_name_container">
 

@@ -45,8 +45,8 @@ $(function () {
                         <td>${item.multiplier}</td>
                         <td>${item.bet_amount}</td>
                         <td>${item.win_amount}</td>
-                       
                         <td>${betstatus[item.bet_status]}</td>
+                        <td>${states[item.state]}</td>
                         
                         <td>
                             
@@ -155,46 +155,7 @@ $(function () {
     }
   }
 
-  async function getexample(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit){
-    $.post(`../admin/filterbetdata/${uidd}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`)
-    .done(function(response) {
-        // console.log(response);
-
-        try {
-            const data = JSON.parse(response); // Parse the response
-
-            if (data.filterbet.length < 1) {
-                // If no results, show "no results" message
-                let html = `
-                    <tr class="no-results">
-                        <td colspan="9">
-                            <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-                        </td>
-                    </tr>`;
-                $("#lotterydataContainer").html(html);
-                $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-                return;
-            }
-
-            // Render filtered data and pagination
-            renderlottery(data.filterbet);
-            renderbetPagination(data.totalPages, currentPagebet, uidd,gametype,betsate,betstatus,startdates,enddates);
-
-            // Update paging info
-             document.getElementById("paging_infobet").innerHTML = `Page ${currentPagebet} of ${data.totalPages} pages`;
-
-        } catch (error) {
-            console.error("Error parsing JSON response:", error);
-            $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-        }
-
-        // Hide loader
-        $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-
-    })
-  }
-
-  function renderbetPagination(totalPages, currentPagebet,uidd,gametype,betsate,betstatus,startdates,enddates) {
+  function renderbetPagination(totalPages, currentPagebet) {
     let pagLink = `<ul class='pagination justify-content-end'>`;
   
     // Previous Button
@@ -233,11 +194,10 @@ $(function () {
         if (newPage > 0 && newPage <= totalPages && newPage !== currentPagebet) {
           // Update currentPagebet and display paging information
         
-
           document.getElementById("paging_infobet").innerHTML = `Page ${currentPagebet} of ${totalPages} pages`;
           
           // Fetch and render new page data
-          fetchLotteryBet(newPage,uidd,gametype,betsate,betstatus,startdates,enddates);
+          fetchLotteryBet(newPage,);
         }
       });
     });
@@ -246,6 +206,98 @@ $(function () {
   fetchLotteryBet(currentPagebet);
 
 
+  
+  async function getexample(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit){
+    $.post(`../admin/filterbetdata/${uidd}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`)
+    .done(function(response) {
+         console.log(response);
+        //  return
+
+        try {
+            const data = JSON.parse(response); // Parse the response
+
+            if (data.filterbet.length < 1) {
+                // If no results, show "no results" message
+                let html = `
+                    <tr class="no-results">
+                        <td colspan="9">
+                            <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                        </td>
+                    </tr>`;
+                $("#lotterydataContainer").html(html);
+                $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+                return;
+            }
+
+            // Render filtered data and pagination
+            renderlottery(data.filterbet);
+            renderbetPage(data.totalPages,currentPagebet);
+
+            // Update paging info
+             document.getElementById("paging_infobet").innerHTML = `Page ${currentPagebet} of ${data.totalPages} pages`;
+
+        } catch (error) {
+            console.error("Error parsing JSON response:", error);
+            $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+        }
+
+        // Hide loader
+        $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+
+    })
+  }
+
+
+  function renderbetPage(totalPages, currentPagebet,uidd,gametype,betsate,betstatus,startdates,enddates) {
+
+    let pagLink = `<ul class='pagination justify-content-end'>`;
+  
+    // Previous Button
+    pagLink += `
+      <li class='page-item ${currentPagebet === 1 ? "disabled" : ""}'>
+        <a class='page-link' href='#' data-page='${currentPagebet - 1}'><i class='bx bx-chevron-left'></i></a>
+      </li>
+    `;
+  
+    // Page numbers with ellipsis
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === currentPagebet) {
+        pagLink += `<li class='page-item active'><a class='page-link' href='#'>${i}</a></li>`;
+      } else if (i === 1 || i === totalPages || Math.abs(i - currentPagebet) <= 2) {
+        pagLink += `<li class='page-item'><a class='page-link' href='#' data-page='${i}'>${i}</a></li>`;
+      } else if (i === currentPagebet - 3 || i === currentPagebet + 3) {
+        pagLink += `<li class='page-item disabled'><a class='page-link'>...</a></li>`;
+      }
+    }
+  
+    // Next Button
+    pagLink += `
+      <li class='page-item ${currentPagebet === totalPages ? "disabled" : ""}'>
+        <a class='page-link' href='#' data-page='${currentPagebet + 1}'><i class='bx bx-chevron-right'></i></a>
+      </li>
+    `;
+  
+    pagLink += "</ul>";
+    document.getElementById("paginationbet").innerHTML = pagLink;
+  
+    // Add click event listeners to pagination links
+    document.querySelectorAll("#paginationbet .page-link").forEach((link) => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const newPage = parseInt(this.getAttribute("data-page"));
+        if (newPage > 0 && newPage <= totalPages && newPage !== currentPagebet) {
+          // Update currentPagebet and display paging information
+        
+          document.getElementById("paging_infobet").innerHTML = `Page ${currentPagebet} of ${totalPages} pages`;
+          
+          // Fetch and render new page data
+          getexample(uidd,gametype,betsate,betstatus,startdates,enddates,newPage,pageLimit)
+        //  getexample()
+        }
+      });
+    });
+  }
+  
   $(".playerbet").click(function () {
     let direction = $(this).val();
     const tableWrapper = $(".table-wrapperlist");
@@ -290,24 +342,24 @@ $(function () {
 
 
 
-$(".executebet").click(function () {
-  // Get form data
-  const uidd = $('.userIdbet').val();
-  const gametype = $('.typelottery').val();
-  const betsate = $('.betsate').val();
-  const betstatus = $('.betstatus').val();
-  const startdates = $('.startdates').val();
-  const enddates = $('.enddates').val();
+  $(".executebet").click(function () {
+    // Get form data
+    const uidd = $('.userIdbet').val();
+    const gametype = $('.typelottery').val();
+    const betsate = $('.betsate').val();
+    const betstatus = $('.betstatus').val();
+    const startdates = $('.startdates').val();
+    const enddates = $('.enddates').val();
 
-  getexample(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit)
+    getexample(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit)
 
-  // Show loader
-  $(".loaderbet").removeClass("bx bx-check-double").addClass("bx bx-loader bx-spin");
+    // Show loader
+    $(".loaderbet").removeClass("bx bx-check-double").addClass("bx bx-loader bx-spin");
 
-  // Make AJAX request
+    // Make AJAX request
 
-     
-});
+      
+  });
 
   async function fetchLotteryname() {
     try {
@@ -343,22 +395,159 @@ $(".executebet").click(function () {
      viewstakedBet(betcode,gametype)
   })
 
-  async function viewstakedBet(betcode,gametype) {
-    try {
-      const response = await fetch(`../admin/viewBetstake/${betcode}/${gametype}`);
-      const data = await response.json();
-      // console.log(response)
-      //  return
-      let htmlbet1 = Showbettable(firstRowbet,data)
-      let htmlbet2 = Showbettable(secondRowbet,data)
-      $("#rowbet").html(htmlbet1)
-      $("#rowbet1").html(htmlbet2)
+    async function viewstakedBet(betcode,gametype) {
+      try {
+        const response = await fetch(`../admin/viewBetstake/${betcode}/${gametype}`);
+        const data = await response.json();
+        // console.log(response)
+        //  return
+        let htmlbet1 = Showbettable(firstRowbet,data)
+        let htmlbet2 = Showbettable(secondRowbet,data)
+        $("#rowbet").html(htmlbet1)
+        $("#rowbet1").html(htmlbet2)
 
-    } catch (error) {
-      console.error("Error fetching data:", error);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
+
+
+  // let debounceTimeout =null; // To store the timeout ID
+  // $(document).ready(function () {
+  //     // Event listener for keyup
+  //     $(document).on('keyup','#myInput', function () {
+  //         const query = $(this).val().trim();
+
+  //         if (query.length > 2) { // Only trigger if input is more than 2 characters
+  //             clearTimeout(debounceTimeout); // Clear any existing timeout
+  //             debounceTimeout = setTimeout(() => {
+  //                 // Call the filterUsers logic directly here
+  //                 let optionsHtml = '';
+
+  //                 $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+  //                     try {
+                        
+  //                         if (typeof response === 'string') {
+  //                             response = JSON.parse(response); // Parse string response
+  //                         }
+
+  //                         const formattedArray = response.flatMap(item => [
+  //                           { "uid": item.uid, "username": item.username },
+  //                           { "uid": item.uid, "username": item.nickname }
+  //                         ]);
+  //                         const filteredUsers = formattedArray.filter(user => user.username !== '*****');
+  //                         filteredUsers.forEach(user => {
+  //                           optionsHtml += `<option class ="optionlist"  value="${user.uid}" data-username="${user.username}">${user.username}</option>`;
+  //                         })
+
+  //                         //console.log(optionsHtml)
+
+  //                         $('.userDropdown').html(optionsHtml).show(); 
+
+  //                     } catch (error) {
+  //                         console.error("Error parsing response: ", error);
+  //                         $('.userDropdown').hide();
+  //                     }
+  //                 }).fail(function (error) {
+  //                     console.error("Error fetching users: ", error);
+  //                     $('.userDropdown').hide();
+  //                 });
+  //             }, 500); // 500ms debounce delay
+  //         } else {
+  //             $('.userDropdown').hide(); // Hide dropdown if input is less than 3 characters
+  //         }
+  //     });
+
+  //     // Handle dropdown item click
+  //     $(document).on('change', '.userDropdown', function () {
+  //       const selectedOption = $(this).find('option:selected'); // Get the selected <option>
+  //       const selectedUserId = selectedOption.val(); // Get user ID from the value attribute
+  //       const selectedUsername = selectedOption.data('username'); // Get username from data-attribute
+  //       if (selectedUserId) {
+  //         $('#myInput').val(selectedUsername); 
+  //         $('.userIdbet').val(selectedUserId); 
+  //         $('.userDropdown').hide();  
+  //       }
+    
+  //   });
+
+  //   $(document).on('input', '#myInput', function () {
+  //     const inputValue = $(this).val(); // Get the current value of the input
+  //     if (!inputValue) {
+  //         // If input is cleared, reset the user ID as well
+  //         $('.userIdbet').val('');
+  //         console.log('User manually cleared the username');
+  //     }
+  // });
+  // });
+
+  let debounceTimeout = null;
+
+  $(document).ready(function () {
+      // Event listener for keyup on #myInput
+      $(document).on('keyup', '#myInput', function () {
+          const query = $(this).val().trim();
+
+          // Only trigger if input is more than 2 characters
+          if (query.length > 1) {
+              clearTimeout(debounceTimeout); // Clear any existing timeout
+              debounceTimeout = setTimeout(fetchbetUser, 500, query); // Call fetchUsers with the query after 500ms delay
+          } else {
+              $('.userDropdown').hide(); // Hide dropdown if input is less than 3 characters
+          }
+      });
+
+      // Handle dropdown item selection
+      $(document).on('change', '.userDropdown', function () {
+          const selectedOption = $(this).find('option:selected');
+          const selectedUserId = selectedOption.val();
+          const selectedUsername = selectedOption.data('username');
+
+          if (selectedUserId) {
+              $('#myInput').val(selectedUsername);
+              $('.userIdbet').val(selectedUserId);
+              $('.userDropdown').hide();
+          }
+      });
+
+      // Handle manual input clearing
+      $(document).on('input', '#myInput', function () {
+          if (!$(this).val()) {
+              $('.userIdbet').val(''); // Reset user ID if input is cleared
+          }
+      });
+  });
+
+  // Function to fetch and display users
+  function fetchbetUser(query) {
+      let optionsHtml = '';
+
+      $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+          try {
+              response = typeof response === 'string' ? JSON.parse(response) : response;
+
+              const filteredUsers = response.flatMap(item => [
+                  { "uid": item.uid, "username": item.username },
+                  { "uid": item.uid, "username": item.email },
+                  { "uid": item.uid, "username": item.contact }
+              ]).filter(user => user.username !== '*****');
+
+              filteredUsers.forEach(user => {
+                  optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${user.username}">${user.username}</option>`;
+              });
+
+              $('.userDropdown').html(optionsHtml).show();
+          } catch (error) {
+              console.error("Error parsing response: ", error);
+              $('.userDropdown').hide();
+          }
+      }).fail(function () {
+          console.error("Error fetching users.");
+          $('.userDropdown').hide();
+      });
   }
 
+<<<<<<< HEAD
 
 // let debounceTimeout =null; // To store the timeout ID
 // $(document).ready(function () {
@@ -498,4 +687,6 @@ function fetchbetUser(query) {
 
 
 
+=======
+>>>>>>> c355892f0887ccb029b27a67687d8599378c1662
 });

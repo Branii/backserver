@@ -181,7 +181,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">Withdrawal Records</h4>
+        <h4 class="card-title mb-0"><?= $translator['Withdrawal Records']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
@@ -230,33 +230,32 @@
                     <tr>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Withdraw ID</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Withdrawal ID']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Username</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Level</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Level']; ?></h6>
                         </th>
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Bank Type</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bank Type']; ?></h6>
                         </th>
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Cardholder</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Cardholder']; ?></h6>
                         </th>
 						
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Bank Card Number</h6>
-                        </th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bank Card Number']; ?>
 						<th>
-                            <h6 class="fs-4 fw-semibold mb-0">Withdrawal Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Withdrawal Amount']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Actual Withdrawal Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Actual Withdrawal Amount']; ?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Withdrawal Application Time</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Withdrawal Application Time']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>

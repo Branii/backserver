@@ -130,7 +130,7 @@
 </style>
 <div class="card w-100 position-relative overflow-hidden">
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0">Lottery Bonus Parameter</h4>
+    <h4 class="card-title mb-0"></h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pager1">

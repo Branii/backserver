@@ -220,7 +220,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">Track Bet Records</h4>
+        <h4 class="card-title mb-0"><?= $translator['Track Records']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist1">
@@ -235,11 +235,11 @@
                 <select name="recharge" class="form-control form-select queryholderlist recharges"
                     data-bs-placeholder="Select Type">
                     <option value="">-Track Status-</option>
-                    <option value="2">Completed</option>
-                    <option value="1">Pending</option>
-                    <option value="3">Self Stop Track</option>
-                    <option value="3">Win Stop Track</option>
-                    <option value="3">Not Stop Track</option>
+                    <option value="2"><?= $translator['Completed'];?></option>
+                    <option value="1"><?= $translator['Pending'];?></option>
+                    <option value="3"><?= $translator['Self Stop Track'];?></option>
+                    <option value="3"><?= $translator['Win Stop Track'];?></option>
+                    <option value="3"><?= $translator['Not Stop Track'];?></option>
                 </select>
 
                 <select name="order_type" class="form-control form-select queryholderlist selectlottery" data-bs-placeholder="Select Type" placeholder="slect lottery type">
@@ -300,34 +300,34 @@
                     <tr class ="trackheadrow">
                     <th>
                     <h6 class="fs-4 fw-semibold mb-0">
-                    Tracking ID</h6>
+                    <?= $translator['Tracking ID']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0">User Name</h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username'];?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0">Lottery Type</h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Type'];?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0">Start Issue</h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Start Issue']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0">Tracked/Total Issues</h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Tracked/Total Issues']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0">Bet Amount/Total Amount</h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Amount/Total Amount']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0">Track Status</h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Status']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0">Win/Loss</h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win/Loss']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0">Track Rule</h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Rule']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0">Time</h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time']; ?></h6>
                   </th>
                 
                     <th>

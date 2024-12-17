@@ -170,7 +170,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">Invitation & Referral Links</h4>
+        <h4 class="card-title mb-0"><?= $translator['Invitation & Referral Links']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
@@ -221,22 +221,22 @@
                 <thead class="text-dark fs-4">
                     <tr>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">User Name</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Link</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Link']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Rebate(%)</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Rebate%']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Number of Registrations</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Number of Registrations']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Creation Time</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Creation Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Remarks</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Reviews']; ?></h6>
                         </th>
                        
                         

@@ -274,7 +274,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0">Lottery Betting Records</h4>
+    <h4 class="card-title mb-0"><?= $translator['Lottery Betting Record']; ?></h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pagerlist1">
@@ -288,27 +288,28 @@
           <!-- Options will be populated dynamically -->
         </select>
 
-            <select name="lotteryname" class="form-control form-select queryholderlist typelottery selectlottery" 
-            data-bs-placeholder="Select Type">
-           </select>
+          <select name="lotteryname" class="form-control form-select queryholderlist typelottery selectlottery" 
+          data-bs-placeholder="Select Type">
+          </select>
 
         <select name="betsate" class="form-control form-select queryholderlist betsate"
           data-bs-placeholder="Select Type">
-          <option value="">-State-</option>
-          <option value="1">Settled</option>
-          <option value="2">Unsettled</option>
-          <option value="4">Bet Cancelled</option>
-          <option value="7">Refund</option>
+           <option value="">--<?= $translator['state']; ?> --</option>
+            <option value="1"> <?= $translator['Settled']; ?></option>
+            <option value="2"><?= $translator['UnSettled']; ?></option>
+            <option value="4"> <?= $translator['Cancelled Bet']; ?></option>
+            <option value="7"><?= $translator['Refund']; ?></option>
+            <option value="-1"><?= $translator['Deleted']; ?></option>
         </select>
 
         <select name="betstatus" class="form-control form-select queryholderlist betstatus"
           data-bs-placeholder="Select Type">
-          <option value="">-bet Status-</option>
-          <option value="2">Win</option>
-          <option value="3">Loss</option>
-          <option value="5">Pending</option>
-          <option value="6">Void</option>
-          <option value="7">Refund</option>
+          <option value="">-- <?= $translator['Bet Status']; ?>--</option>
+          <option value="2"><?= $translator['Win']; ?></option>
+          <option value="3"><?= $translator['Loss']; ?></option>
+          <option value="5"><?= $translator['Pending']; ?></option>
+          <option value="6"><?= $translator['Void']; ?></option>
+          <option value="7"><?= $translator['Refund']; ?></option>
 
         </select>
 
@@ -358,53 +359,53 @@
           <tr>
             <th>
               <h6 class="fs-4 fw-semibold mb-0">
-                Bet Order ID</h6>
+              <?= $translator['Bet Order ID']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">User Name</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Issue Number</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Issue Number']; ?></h6>
             </th>
             <th>
-                 <h6 class="fs-4 fw-semibold mb-0">Lottery Type</h6>
+                 <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Type']; ?></h6>
               </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Game Type</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Game Type']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Bet Time</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Time']; ?></h6>
             </th>
             <!-- <th>
               <h6 class="fs-4 fw-semibold mb-0">Bet Type</h6>
             </th> -->
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Prize</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Prize']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Number of Bets</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Number of Bets']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Unit Stake</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Unit Stake']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Multiplier</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Multiplier']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Bet Amount</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Amount']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Win Amount</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win Amount']; ?></h6>
             </th>
             <!-- <th>
                     <h6 class="fs-4 fw-semibold mb-0">Rebate Amount</h6>
                   </th> -->
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Win/Loss</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win/Loss']; ?></h6>
             </th>
-            <!-- <th>
-                    <h6 class="fs-4 fw-semibold mb-0">Status</h6>
-                  </th> -->
+            <th>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
+                  </th>
             <!-- <th>
                     <h6 class="fs-4 fw-semibold mb-0">IP</h6>
                   </th> -->
@@ -416,7 +417,7 @@
         <tbody id="lotterydataContainer">
 
           <tr class="no-resultslist">
-            <td colspan="9">
+            <td colspan="13">
               <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
             </td>
           </tr>

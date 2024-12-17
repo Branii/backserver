@@ -65,36 +65,37 @@ $permissions = json_decode($decode,true);
 // echo "<pre>";
 // print_r($permissions);
 $sidebarMenu = [
-    1 => ['title'=> 'Account Transaction Details', 'content' => 'account_transaction'],
-    2 => ['title'=> 'Game Betting Statistics', 'content' => 'Game'],
-    3 => ['title'=> 'Lottery Betting Record', 'content' => 'Lottery'],
-    4 => ['title'=> 'Track Records', 'content' => 'Track'],
-    5 => ['title'=> 'Deposit Record', 'content' => 'Deposit'],
-    6 => ['title'=> 'Withdrawal Records', 'content' => 'Withdrawal'],
-    7 => ['title'=> 'Finance Fund Changes', 'content' => 'Finance'],
-    8 => ['title'=> 'Win/Loss Report', 'content' => 'Win'],
-    9 => ['title'=> 'User List', 'content' => 'Userlist'],
-    10 => ['title'=> 'User Logs', 'content' => 'Userlogs'],
-    11 => ['title'=> 'Invitation & Referral Links', 'content' => 'Invitation'],
-    12 => ['title'=> 'Bank Card List', 'content' => 'Bank'],
-    13 => ['title'=> 'Quota Settings', 'content' => 'quota'],
-    14 => ['title'=> 'Lottery Draw Records', 'content' => 'lottery_draw_records'],
+
+    1 => ['title'=> $translator['Account Transaction Details'], 'content' => 'account_transaction'],
+    2 => ['title'=> $translator['Game Betting Statistics'], 'content' => 'Game'],
+    3 => ['title'=> $translator['Lottery Betting Record'], 'content' => 'Lottery'],
+    4 => ['title'=> $translator['Track Records'], 'content' => 'Track'],
+    5 => ['title'=> $translator['Deposit Record'], 'content' => 'Deposit'],
+    6 => ['title'=> $translator['Withdrawal Records'], 'content' => 'Withdrawal'],
+    7 => ['title'=> $translator['Finance Fund Changes'], 'content' => 'Finance'],
+    8 => ['title'=> $translator['Win/Loss Report'], 'content' => 'Win'],
+    9 => ['title'=>  $translator['User List'], 'content' => 'Userlist'],
+    10 => ['title'=> $translator['User Logs'], 'content' => 'Userlogs'],
+    11 => ['title'=> $translator['Invitation & Referral Links'], 'content' => 'Invitation'],
+    12 => ['title'=> $translator['Bank Card List'], 'content' => 'Bank'],
+    13 => ['title'=> $translator['Quota Settings'], 'content' => 'quota'],
+    14 => ['title'=> $translator['Lottery Basic Parameters'], 'content' => 'lottery_draw_records'],
     15 => ['title'=> 'Lottery Basic Parameters', 'content' => 'lottery_basic_params'],
-    16 => ['title'=> 'Lottery Bonus Parameters', 'content' => 'lotterybonus'],
-    17 => ['title'=> 'Administrator List', 'content' => 'administrator_list'],
+    16 => ['title'=> $translator['Lottery Bonus Parameters'], 'content' => 'lottery_parameters'],
+    17 => ['title'=> $translator['Administrator List'], 'content' => 'administrator_list'],
     18 => ['title'=> 'Backup & Restore', 'content' => 'backup_recovery']
   ];
 
   $sidebarMain = [
-    1 => 'Business Flow',
-    2 => 'Financial Management',
-    3 => 'Report Management',
-    4 => 'User Management',
-    5 => 'Promotion Management',
-    6 => 'User Bank Management',
-    7 => 'Game Management',
-    8 => 'Agent Management',
-    9 => 'System Management',
+    1 => $translator['Business Flow'],
+    2 => $translator['financial Management'],
+    3 => $translator['Report Management'],
+    4 => $translator['User Management'],
+    5 => $translator['Promotion Management'],
+    6 => $translator['User Bank Management'],
+    7 => $translator['Game Management'],
+    8 => $translator['Agent Management'],
+    9 => $translator['System Management'],
   ];
   
 //   $permission = [

@@ -1,7 +1,12 @@
 <?php
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
+  
 }
+isset($_SESSION['lang']) ? $_SESSION['lang'] : $_SESSION['lang'] = 'en';
+$lang = $_SESSION['lang'];
+$translator = include "tabs/lang/{$lang}.php";
+// print_r($translator);
 !(new Controller)->isUserLoggedIn() ? header("location:../") : "";
 // $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
 // echo $adminEmail;
@@ -43,6 +48,7 @@ if (session_status() == PHP_SESSION_NONE) {
       padding: 20px;
       display: none;
     }
+
     .chrome__tabb {
       /* width: 400px;
         height: auto;
@@ -50,7 +56,7 @@ if (session_status() == PHP_SESSION_NONE) {
       padding: 20px;
       display: none;
     }
-    
+
 
     .chromclass {
       border-top: solid 3px orangered !important;
@@ -84,6 +90,16 @@ if (session_status() == PHP_SESSION_NONE) {
     .table-wrapper::-webkit-scrollbar-thumb:hover {
       background-color: #aaa;
       /* Darker blue on hover */
+    }
+
+    /* Hide the default dropdown arrow */
+    .hover-dropdown .dropdown-toggle::after {
+      display: none;
+    }
+
+    /* Show the dropdown menu on hover */
+    .hover-dropdown:hover .dropdown-menu {
+      display: block;
     }
   </style>
 </head>
@@ -171,7 +187,7 @@ if (session_status() == PHP_SESSION_NONE) {
           </div>
         </div>
 
-        <div class="btn-group p-3 mb-2 bg-white-subtle rounded " role="group" style="width:100%;border:solid 1px #eee;color:#bbb;background-color:#F9F9F9">
+        <div class="btn-group p- mb- bg-white-subtle rounded " role="group" style="width:100%;border:solid 1px #eee;color:#bbb;background-color:#F9F9F9">
           <button type="button" class="btn bg-white-subtle">
             <i class='bx bx-bell' style="font-size: 20px;"></i>
           </button>
@@ -184,8 +200,38 @@ if (session_status() == PHP_SESSION_NONE) {
           <button type="button" class="btn bg-white-subtle">
             <i class='bx bx-cog' style="font-size: 20px;"></i>
           </button>
-        </div>
 
+          <!-- Button with Tooltip -->
+          <!-- <button type="button" class="btn bg-white-subtle" data-bs-toggle="tooltip" data-bs-placement="top" title="Languages">
+          <i class='bx bx-flag' style="font-size: 20px;"></i>
+        </button> -->
+
+          <!-- Dropdown Menu -->
+          <div class="dropdown hover-dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Languages">
+              <i class="bx bx-globe" style="font-size: 20px;"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li value="ch" class="lang">
+
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <img src="<?php echo BASE_URL; ?>assets/images/profile/china.jpg" class="rounded-circle" width="20" height="20" alt="modernize-img" />
+                  <span class="ms-2">Chinese</span>
+                </a>
+              </li>
+              <li value="en" class="lang">
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <img src="<?php echo BASE_URL; ?>assets/images/profile/uk.jpg" class="rounded-circle" width="20" height="20" alt="modernize-img" />
+                  <span class="ms-2">English</span>
+                </a>
+              </li>
+
+            </ul>
+          </div>
+
+
+        </div>
 
         <br>
         <hr>
@@ -304,6 +350,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <?php include "tabs/agentmanage/quota.php" ?>
           </div>
 
+<<<<<<< HEAD
 
           <!-- Report Management -->
            <div class="chrome__tab Win">
@@ -315,12 +362,19 @@ if (session_status() == PHP_SESSION_NONE) {
               <div class="chrome__tab  Bank">
              <?php include "tabs/userbank/bankcard.php" ?>
              </div>
+=======
+>>>>>>> c355892f0887ccb029b27a67687d8599378c1662
 
-             <div class="chrome__tab  Bank">
-             <?php include "tabs/game_management/lotterybonus.php" ?>
-             </div>
+          <!--User Bank management-->
+          <div class="chrome__tab  Bank">
+            <?php include "tabs/userbank/bankcard.php" ?>
+          </div>
 
-             <!--User Bank management-->
+          <div class="chrome__tab  Bank">
+            <?php include "tabs/game_management/lotterybonus.php" ?>
+          </div>
+
+          <!--User Bank management-->
 
 
           <!--system managenet-->
@@ -404,9 +458,16 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="<?php echo BASE_URL; ?>assets/js/deposit.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/withdrawal.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/bankcard.js"></script>
+<<<<<<< HEAD
 
     <script src="<?php echo BASE_URL; ?>assets/js/win_loss.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/lottery_basic_params.js"></script>
+=======
+    <script src="<?php echo BASE_URL; ?>assets/js/lottery_parameters.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/lottery_draws.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/lang.js"></script>
+
+>>>>>>> c355892f0887ccb029b27a67687d8599378c1662
 
 
 
@@ -414,10 +475,10 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.init.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.js"></script>
 
-<!-- Bootstrap 5 CSS (in the <head> of your HTML) -->
+    <!-- Bootstrap 5 CSS (in the <head> of your HTML) -->
 
 
-<!-- Your HTML content goes here -->
+    <!-- Your HTML content goes here -->
 
 
     <!-- solar icons -->
@@ -442,6 +503,7 @@ if (session_status() == PHP_SESSION_NONE) {
         });
 
       });
+
       // document.addEventListener('DOMContentLoaded', function () {
       //   const tableWrapper = document.querySelector('.table-wrapper');
       //   const rangeInput = document.getElementById('customRange1');
@@ -481,8 +543,9 @@ if (session_status() == PHP_SESSION_NONE) {
       //   observer.observe(tableWrapper, { childList: true, subtree: true });
       // });
 
-       // Initialize the first tab
-   
+      // Initialize the first tab
+      var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+      var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     </script>
 </body>
 
