@@ -359,12 +359,6 @@ class DataReportModel extends MedooOrm {
                     $betTable   = $bet_table_array['bet_table'];
                     $lottery_id = $bet_table_array['game_type'];
 
-
-                    // if (!empty($userData['datecreated']) && !empty($userData['enddate'])) {
-                    //     $dateConditions[] = " bet_table.server_date BETWEEN :datecreated AND :enddate ";
-                    //     $params[":datecreated"] = $userData['datecreated'];
-                    //     $params[":enddate"]     = $userData['enddate'];
-                    // }
                     if (!empty($userData['datecreated']) || !empty($userData['enddate'])) {
                         // echo "Entered here...."
                         if (empty($userData['enddate'])) {
@@ -556,6 +550,8 @@ class DataReportModel extends MedooOrm {
     public static function filterGetBetTicketsNum($user_id, $bet_tables, $userData)
     {
 
+
+       
      
         
         //$bet_tables = BusinessFlow::getAllGameIds();
@@ -566,68 +562,86 @@ class DataReportModel extends MedooOrm {
         $num_subs = self::allSubs($user_id,1,1000);
         $summed_results = [];
         $params = [];
-        $index = 0;
-
-
 foreach ($bet_tables as $betTable_array) {
     $betTable = $betTable_array['bet_table'];
     $lottery_id = $betTable_array['game_type'];
 
-    // Prepare where conditions
+    // Prepare sub_ids
     $sub_ids = array_map(fn($sub) => $sub->uid, $num_subs);
     array_unshift($sub_ids, $user_id);
+    $sub_ids_list = implode(',', array_map('intval', $sub_ids)); // Ensure integers only
 
-    $whereClause = ["uid" => $sub_ids];
+    // Initialize query conditions
+    $dateCondition = "";
+    $params = [
+        ':betTable'   => $betTable,
+        ':user_id'    => $user_id,
+        ':lottery_id' => $lottery_id,
+    ];
 
-    if (!empty($userData['datecreated']) || !empty($userData['enddate'])) {
-        if (!empty($userData['datecreated']) && empty($userData['enddate'])) {
-            $whereClause['server_date'] = $userData['datecreated'];
-        } elseif (empty($userData['datecreated']) && !empty($userData['enddate'])) {
-            $whereClause['server_date'] = $userData['enddate'];
-        } else {
-            $whereClause['server_date[<>]'] = [
-                min($userData['datecreated'], $userData['enddate']),
-                max($userData['datecreated'], $userData['enddate'])
-            ];
-        }
+    // Handle date conditions
+    $startDate = $userData['datecreated'];
+    $endDate = $userData['enddate'];
+
+    if ($startDate !== "all" && $endDate === "all") {
+        $dateCondition = "AND server_date = :start_date";
+        $params[':start_date'] = $startDate;
+    } elseif ($startDate === "all" && $endDate !== "all") {
+        $dateCondition = "AND server_date = :end_date";
+        $params[':end_date'] = $endDate;
+    } elseif ($startDate !== "all" && $endDate !== "all") {
+        $start = min($startDate, $endDate);
+        $end   = max($startDate, $endDate);
+        $dateCondition = "AND server_date BETWEEN :start_date AND :end_date";
+        $params[':start_date'] = $start;
+        $params[':end_date']   = $end;
     }
 
     $database = parent::openLink();
 
-    $results = $database->query(
-        "SELECT 
+    $query = "
+        SELECT 
             :betTable AS bet_table_name,
             COUNT(*) AS num_bet_tickets,
             SUM(bet_amount) AS total_bet_amount,
             SUM(win_amount) AS total_win_amount,
             (
-                SELECT SUM(amount) FROM user_rebate 
-                WHERE agent_id = :user_id AND game_type_id = :lottery_id 
-                AND date_created = COALESCE(:server_date, date_created)
+                SELECT SUM(amount)
+                FROM user_rebate
+                WHERE agent_id = :user_id
+                AND game_type_id = :lottery_id
+                $dateCondition
             ) AS user_rebate_amount,
             (
-                SELECT COUNT(*) FROM users_test WHERE account_type = 2
+                SELECT COUNT(*)
+                FROM users_test
+                WHERE account_type = 2
             ) AS num_top_agents,
             (
-                SELECT SUM(rebate_amount) FROM {$betTable} 
-                WHERE uid = :user_id AND server_date = COALESCE(:server_date, server_date)
+                SELECT SUM(rebate_amount)
+                FROM {$betTable}
+                WHERE uid = :user_id
+                $dateCondition
             ) AS self_rebate_amount,
             (
-                SELECT SUM(bet_amount) FROM {$betTable} 
-                WHERE bettype = 1 AND state = 1 AND uid IN (:sub_ids)
+                SELECT SUM(bet_amount)
+                FROM {$betTable}
+                WHERE bettype = 1 
+                AND state = 1 
+                AND uid IN ($sub_ids_list)
             ) AS sba
-        FROM {$betTable} WHERE uid IN (:sub_ids)",
-        [
-            ':betTable' => $betTable,
-            ':user_id' => $user_id,
-            ':lottery_id' => $lottery_id,
-            ':server_date' => $whereClause['server_date'] ?? null,
-            ':sub_ids' => implode(',', $sub_ids)
-        ]
-    )->fetch(PDO::FETCH_ASSOC);
+        FROM {$betTable}
+        WHERE uid IN ($sub_ids_list)
+        $dateCondition
+    ";
+
+    $results = $database->query($query, $params)->fetch(PDO::FETCH_ASSOC);
 
     $summed_results[] = $results;
-} 
+}
+
+
+
 
 
 // return $summed_results;
@@ -672,11 +686,11 @@ foreach ($bet_tables as $betTable_array) {
     $dateConditionSQL = "";
     $queryParams = [":sub_ids" => implode(',', $sub_ids)];
 
-    if (!empty($userData['datecreated']) || !empty($userData['enddate'])) {
-        if (empty($userData['enddate'])) {
+    if ($userData['datecreated'] != "all" || $userData['enddate'] != "all") {
+        if ($userData['enddate'] == "all") {
             $dateConditionSQL = " AND server_date = :datecreated ";
             $queryParams[':datecreated'] = $userData['datecreated'];
-        } elseif (empty($userData['datecreated'])) {
+        } elseif ($userData['datecreated'] == "all") {
             $dateConditionSQL = " AND server_date = :enddate ";
             $queryParams[':enddate'] = $userData['enddate'];
         } else {
@@ -686,7 +700,7 @@ foreach ($bet_tables as $betTable_array) {
         }
     }
 
-    $database = parent::getLink();
+    $database = parent::openLink();
 
     // Execute query using Medoo's query method
     $results = $database->query(
@@ -871,11 +885,11 @@ foreach ($bet_tables as $betTable_array) {
 
                 $sql = "SELECT DISTINCT uid FROM $betTable AS bet_table ";
                 $dateConditions = "";
-                if (!empty($userData[":datecreated_{$lottery_id}"]) || !empty($userData['enddate'])) {
-                    if (empty($userData['enddate'])) {
+                if (($userData[":datecreated_{$lottery_id}"] != "all") || ($userData['enddate'] != "all")) {
+                    if (($userData['enddate'] == "all")) {
                         $dateConditions = " bet_table.server_date = :datecreated_$lottery_id ";
                         $params[":datecreated_$lottery_id"] = $userData['datecreated'];
-                    } elseif (empty($userData['datecreated'])) {
+                    } elseif (($userData['datecreated'] == "all")) {
                         $dateConditions = " bet_table.server_date = :enddate_$lottery_id ";
                         $params[":enddate_$lottery_id"] = $userData['enddate'];
                     } else {

@@ -289,25 +289,25 @@ li.name-items:hover {
 
     <div class="px-4 py-3 border-bottom pagerlist1">
         <span class="top-left-btn">
-            <div  class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:150%;">
+            <div  class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:97%;">
 
           
                 <div>
           
- <input name="usernamelist" class="queryholderlist form-control bring-forward" id="wl-username" placeholder="Username" autocomplete="off" style="width:97%;"> <div class="usr-res-wrapper"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="user-list-wrapper"></ul> </div></div>
+ <input name="usernamelist" class="queryholderlist form-control bring-forward" id="wl-username" placeholder="Username" autocomplete="off" style="width:97%;"> <div class="usr-res-wrapper" style="width: 26.5%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="user-list-wrapper"></ul> </div></div>
 
 
 
    <div>
   <input name="lotteryList" class="queryholderlist form-control" id="wl-lottery" placeholder="Lottery"
-                    autocomplete="off" style="width:97%;" /> <div class="lot-res-wrapper"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="lot-list-wrapper"></ul> </div></div>
+                    autocomplete="off" style="width:97%;" /> <div class="lot-res-wrapper" style="width: 27%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="lot-list-wrapper"></ul> </div></div>
                   
                   <input type="date" name="startdate" class="form-control startdate"  
-                    placeholder="Name" id="startdate"/>
+                    placeholder="Name" id="startdate" style="width: 30%;"/>
 
 
                 <input type="date" name="enddate" class="form-control enddate" 
-                    placeholder="Name" id="enddate"/>
+                    placeholder="Name" id="enddate" style="width: 30%;"/>
 
 
 
@@ -332,7 +332,7 @@ li.name-items:hover {
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Get Top Agent">
                     <i class='bx bxs-user-account' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle player refreshlist" value="" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle player wl-refreshlist" value="" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
                 </button>

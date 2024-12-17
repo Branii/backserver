@@ -450,7 +450,7 @@ $(() => {
             $(".lot-drw-res-wrapper").hide();
 });
  // Handle dropdown item selection
-    $(document).on('click', '.refreshlist', function () {
+    $(document).on('click', '.lb-refreshlist', function () {
           fetchLotteryBasicParams(1,1);
           $("#ld-lottery").val("");
 });
@@ -472,7 +472,7 @@ $(() => {
                     const data = response.data;
                     const totalCount = response.totalCount;
                     console.log(data);
-                   
+                    
                   
                     if(response.length === 0){
                         $("#lot-basic-dtholder").html(`<tr class="no-results"> <td colspan="9"><img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
@@ -526,7 +526,8 @@ const fetchLotteryBasicParams = (lottery_id = 1,page) => {
                     console.log(response);
                     const data = response.data;
                     const totalCount = response.totalCount;
-
+                   
+                    renderPagination(totalCount,page,"lb-pagination");
                   
                     if(response.length === 0){
                         $("#lot-basic-dtholder").html(`<tr class="no-results"> <td colspan="9"><img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
@@ -665,8 +666,6 @@ function modalClose(modalID = "edit-params-act-btn"){
 let debounceTimeout = null;
 
   
-
-
 // Function to fetch and display users
 const fetchLotteryname = (lotteryName) => {
     let optionsHtml = '';
@@ -693,3 +692,36 @@ const fetchLotteryname = (lotteryName) => {
         $('.userDropdown').hide();
     });
 }
+
+
+
+  const renderPagination = (totalPages, currentPage, pagesWrapper = "") => {
+    const createPageLink = (i, label = i, disabled = false, active = false) =>
+      `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+        <a class='page-link' href='#' data-page='${i}'>${label}</a>
+      </li>`;
+    let pagLink = `<ul class='pagination justify-content-end'>`;
+
+    totalPages = (totalPages / 10);
+
+    // Previous Button
+    pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
+
+    // Page numbers with ellipsis
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+        pagLink += createPageLink(i, i, false, i === currentPage);
+      } else if (i === currentPage - 3 || i === currentPage + 3) {
+        pagLink += createPageLink(i, "...", true);
+      }
+    }
+
+    // Next Button
+    pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
+    pagLink += "</ul>";
+
+    document.getElementById(`${pagesWrapper}-pages-wrapper`).innerHTML = pagLink;
+    // document.getElementById("pagination").innerHTML = pagLink;
+
+  
+  }
