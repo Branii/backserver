@@ -1,186 +1,98 @@
-<aside class="left-sidebar with-vertical">
-      <div><!-- ---------------------------------- -->
-        <!-- Start Vertical Layout Sidebar -->
-        <!-- ---------------------------------- -->
-        <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="<?php echo BASE_URL; ?>main/index.html" class="text-nowrap logo-img">
-            <img src="<?php echo BASE_URL; ?>assets/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
-            <img src="<?php echo BASE_URL; ?>assets/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
-          </a>
-          <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
-            <i class="ti ti-x"></i>
-          </a>
-        </div>
-
-        <nav class="sidebar-nav scroll-sidebar" data-simplebar>
-          <ul id="sidebarnav">
-     
-
-          </ul>
-        </nav>
-
-        <div class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3">
-          <div class="hstack gap-3">
-            <div class="john-img">
-              <img src="../assets/images/profile/user-1.jpg" class="rounded-circle" width="40" height="40" alt="modernize-img" />
-            </div>
-            <div class="john-title">
-              <h6 class="mb-0 fs-4 fw-semibold">Mathew</h6>
-              <span class="fs-2">Designer</span>
-            </div>
-            <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
-              <i class="ti ti-power fs-6"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- ---------------------------------- -->
-        <!-- Start Vertical Layout Sidebar -->
-        <!-- ---------------------------------- -->
-      </div>
-    </aside>
+<?php
 
 
+// $dsn = 'mysql:host=192.168.1.51;dbname=lottery_test'; // Fixed variable name and removed extra space
+// $pass = "enzerhub";
+// $user = "enzerhub";
+// try {
+//     $pdo = new PDO($dsn, $user, $pass);
+//     //  echo "Connected";
+// } catch (\Throwable $th) {
+//     echo $th->getMessage();
+// }
+?>
 
-    console.log(typeof(response))
-       if(users){
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Range Slider with Percentage and Computed Value</title>
+  <!-- jQuery from Google CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <table>
+    <tr>
+      <td>
+        <!-- Number Input -->
+        <input type="number" value="7000" min="0" max="10000" step="0.1" class="odds-input" id="oddsInput" />
+        <span id="percentDisplay">100%</span>
+        <br>
 
-        let html = "";
-       users.forEach((user) => { 
-         html += `<option value="${user.username}">${user.username}</option>`; 
-       }); 
-       console.log("html  " + html)
-       //$("#userDropdown").html(html)
-       dropdown.style.display = searchkey && users.length ? "block" : "none"; 
+        <!-- Range Slider -->
+        <input type="range" value="10" min="0" max="10" step="0.1" class="odds-slider" id="oddsSlider" />
+      
+        <span id="computedValue">Computed Value: 7000</span>
+      </td>
+    </tr>
+  </table>
 
-       }else{
-        $("#userDropdown").html("<option>no data</option>");
-       }
+  <script>
+    $(document).ready(function() {
+      const maxValue = 7000;
 
+      // Function to update the percentage and computed value
+      function updateValue() {
+        // Get the value from the slider or input
+        let value = parseFloat($('.odds-slider').val());
+        if ($('.odds-input').val()) {
+          value = parseFloat($('.odds-input').val());
+        }
 
-       <div class="accordion">
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i><span> Business Flow</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab1" class="tab-button item" value="account_transaction">Account Transactions</li>
-                <li id="tab2" class="tab-button item" value="game_getting_statistics">Game Betting Statistics</li>
-                <li id="tab3" class="tab-button item" value="lottery_betting_record">Lottery Betting Record</li>
-                <!-- <li id="tab4" class="item">Tab 4</li>
-                    <li id="tab5" class="item">Tab 5</li> -->
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i><span> Financial Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab6" class="item tab-button" value="tab6">Tab 6</li>
-                <li id="tab7" class="item tab-button" value="tab7">Tab 7</li>
-                <li id="tab8" class="item tab-button" value="tab8">Tab 8</li>
-                <li id="tab9" class="item tab-button" value="tab9">Tab 9</li>
-                <li id="tab10" class="item tab-button" value="tab10">Tab 10</li>
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i><span> Report Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab11" class="item tab-button" value="account_transaction">Tab 11</li>
-                <li id="tab12" class="item tab-button" value="account_transaction">Tab 12</li>
-                <li id="tab13" class="item tab-button" value="account_transaction">Tab 13</li>
-                <li id="tab14" class="item tab-button" value="account_transaction">Tab 14</li>
-                <li id="tab15" class="item  tab-button  showPopUP">Tab 15</li>
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i> <span> User Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-            <li id="tab1" class="tab-button item" value="userlist">Userlist</li>
-            <li id="tab2" class="tab-button item" value="userlogs">User Logs</li>
-               
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i> <span> Promotion Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab16"  class="tab-button item" value="invitation">Invitation & Referal Links</li>
-                <li id="tab17" class="item">Tab 12</li>
-                <li id="tab18" class="item">Tab 13</li>
-                <li id="tab19" class="item">Tab 14</li>
-                <li id="tab20" class="item showPopUP">Tab 15</li>
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i><span> User Bank Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab16" class="item">Tab 11</li>
-                <li id="tab17" class="item">Tab 12</li>
-                <li id="tab18" class="item">Tab 13</li>
-                <li id="tab19" class="item">Tab 14</li>
-                <li id="tab20" class="item showPopUP">Tab 15</li>
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i><span> Agent Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab16"class="tab-button item" value="quota">Quota Settings</li>
-                <li id="tab17" class="item">Tab 12</li>
-                <li id="tab18" class="item">Tab 13</li>
-                <li id="tab19" class="item">Tab 14</li>
-                <li id="tab20" class="item showPopUP">Tab 15</li>
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i>  <span> Game Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab16" class="item">Tab 11</li>
-                <li id="tab17" class="item">Tab 12</li>
-                <li id="tab18" class="item">Tab 13</li>
-                <li id="tab19" class="item">Tab 14</li>
-                <li id="tab20" class="item showPopUP">Tab 15</li>
-            </ul>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-        <i class='bx bx-menu bx-flip-horizontal' ></i><span> System Management</span>
-        </div>
-        <div class="accordion-content">
-            <ul class="custom-list">
-                <li id="tab11" class="item tab-button" value="administrator_list">Administrator List</li> 
-                <li id="tab17" class="item tab-button" value="backup_recovery">Backup & Recovery</li>
-                <li id="tab18" class="item">Tab 13</li>
-                <li id="tab19" class="item">Tab 14</li>
-                <li id="tab20" class="item showPopUP">Tab 15</li>
-            </ul>
-        </div>
-    </div>
-</div>
+        // Calculate the percentage
+        const percentage = (value / maxValue) * 100;
+
+        // Update the percentage display
+        $('#percentDisplay').text(`${Math.round(percentage)}%`);
+
+        // Calculate the computed value based on the percentage of maxValue
+        const calculatedValue = (percentage / 100) * maxValue;
+
+        // Update the computed value display
+        $('#computedValue').text(`Computed Value: ${Math.round(calculatedValue)}`);
+
+        // Update the input value when the slider changes
+        $('.odds-inputt').val(Math.round(calculatedValue));
+      }
+
+      // When the input field changes, update the slider
+      $('.odds-input').on('input', function() {
+        let inputValue = parseFloat($(this).val());
+        if (inputValue > maxValue) {
+        $(this).val(maxValue);  // Set the input value to maxValue if exceeded
+    }
+        // Update the slider position based on the input value
+        let percentage = (inputValue / maxValue) * 100;
+        let sliderValue = (percentage / 100) * 10; // Map percentage to slider range (0 to 10)
+        $('.odds-slider').val(sliderValue);
+        updateValue();
+      });
+
+      // When the slider changes, update the input field
+      $('.odds-slider').on('input', function() {
+        let sliderValue = parseFloat($(this).val());
+        // Update the input value based on the slider value
+        let percentage = (sliderValue / 10) * 100; // Map slider value to percentage
+        let inputValue = (percentage / 100) * maxValue; // Calculate the value based on the max value
+        $('.odds-input').val(Math.round(inputValue));
+        updateValue();
+      });
+
+      // Initialize values on page load
+      updateValue();
+    });
+  </script>
+</body>
+</html>
+

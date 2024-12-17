@@ -92,7 +92,7 @@ $(function () {
     try {
       const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
       const data = await response.json();
-      console.log(response)
+      // console.log(response)
       // return
  
       $("#mask").LoadingOverlay("hide")
@@ -322,7 +322,7 @@ $(function () {
     const ordertype = $(".ordertype").val()
     const startdate = $(".startdate").val()
     const enddate = $(".enddate").val()
-    console.log(username)
+    // console.log(username)
     $(".loader").removeClass('bx-check-double').addClass('bx-loader bx-spin');
     setTimeout(() => {
       filterTrasaction(currentPage, username, orderid, ordertype, startdate, enddate);
@@ -332,7 +332,7 @@ $(function () {
   $(document).on('click', '.tinfo', function () {
     $("#signup-modal").modal("show");
     const transactionId = $(this).attr('value')
-    console.log(transactionId)
+    // console.log(transactionId)
     $("#row1").html("")
     $("#row2").html("")
     fetchTrasactionBet(transactionId);

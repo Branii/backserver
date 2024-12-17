@@ -31,6 +31,7 @@ if (session_status() == PHP_SESSION_NONE) {
   <link rel="stylesheet"
     href="<?php echo BASE_URL; ?>assets/css/daterangepicker.css" />
 
+
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
   <title>Limvo Admin</title>
@@ -42,6 +43,14 @@ if (session_status() == PHP_SESSION_NONE) {
       padding: 20px;
       display: none;
     }
+    .chrome__tabb {
+      /* width: 400px;
+        height: auto;
+        border: solid 2px #ccc; */
+      padding: 20px;
+      display: none;
+    }
+    
 
     .chromclass {
       border-top: solid 3px orangered !important;
@@ -304,8 +313,12 @@ if (session_status() == PHP_SESSION_NONE) {
          
               <!--User Bank management-->
               <div class="chrome__tab  Bank">
-            <?php include "tabs/userbank/bankcard.php" ?>
-          </div>
+             <?php include "tabs/userbank/bankcard.php" ?>
+             </div>
+
+             <div class="chrome__tab  Bank">
+             <?php include "tabs/game_management/lotterybonus.php" ?>
+             </div>
 
              <!--User Bank management-->
 
@@ -323,11 +336,12 @@ if (session_status() == PHP_SESSION_NONE) {
           <!--system managenet-->
 
 
-          <!--game managenet-->
+          <!--game management-->
 
           <div class="chrome__tab lottery_draw_records">
             <?php include "tabs/game_management/lottery_draw_records.php" ?>
           </div>
+
 
           <div class="chrome__tab lottery_basic_params">
             <?php include "tabs/game_management/lottery_basic_params.php" ?>
@@ -339,6 +353,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
           <!--system managenet-->
           
+
         </div>
 
       </div>
@@ -354,9 +369,11 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="<?php echo BASE_URL; ?>assets/js/vendor.min.js"></script>
     <!-- Import Js Files -->
     <script src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/draggabilly.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/libs/simplebar/dist/simplebar.min.js"></script>
+
     <script src="<?php echo BASE_URL; ?>assets/js/app.init.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/theme.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/app.min.js"></script>
@@ -387,13 +404,20 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="<?php echo BASE_URL; ?>assets/js/deposit.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/withdrawal.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/bankcard.js"></script>
+
     <script src="<?php echo BASE_URL; ?>assets/js/win_loss.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/lottery_basic_params.js"></script>
+
 
 
     <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.init.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.js"></script>
+
+<!-- Bootstrap 5 CSS (in the <head> of your HTML) -->
+
+
+<!-- Your HTML content goes here -->
 
 
     <!-- solar icons -->
@@ -456,6 +480,9 @@ if (session_status() == PHP_SESSION_NONE) {
       //   const observer = new MutationObserver(updateRangeMax);
       //   observer.observe(tableWrapper, { childList: true, subtree: true });
       // });
+
+       // Initialize the first tab
+   
     </script>
 </body>
 

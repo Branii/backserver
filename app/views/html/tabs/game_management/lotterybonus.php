@@ -113,46 +113,38 @@
     overflow-y: scroll;
     overflow-x: hidden;
   }
+
+  .tab-btn {
+    padding: 5px 10px;
+    margin: 3px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+  }
+
+  .tab-btn:hover {
+    background-color: #e1e1e1;
+  }
 </style>
 <div class="card w-100 position-relative overflow-hidden">
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0">LOTTERY BETTING RECORDS</h4>
+    <h4 class="card-title mb-0">Lottery Bonus Parameter</h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pager1">
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-      
-        <input type="text" class="form-control queryholders usernames" id="nametexlllt" aria-describedby="name" placeholder="Enter Name" />
-        <div id="userDropdowns" class="form-control" size="5" style="background-color:#fff; position: absolute; top: 90%; width: 19%; display: none; z-index: 1000;">
-        </div>
+        <select name="order_type" class="form-control form-select queryholders selectmain" data-bs-placeholder="Select Type" placeholder="slect lottery type">
 
-
-        <select name="order_type" class="form-control form-select queryholders selectlottery" data-bs-placeholder="Select Type" placeholder="slect lottery type">
-          
         </select>
 
-        <select name="order_type" class="form-control form-select queryholders ordertype" data-bs-placeholder="Select Type">
-          <option value="all">all</option>
-          <option value="1">Win</option>
-          <option value="2">Loss</option>
-          <option value="3">Pending</option>
-          <option value="4">Refund</option>
-        </select>
 
-        <select name="order_type" class="form-control form-select queryholders ordertype" data-bs-placeholder="Select Type">
-          <option value="all">all</option>
-          <option value="1">Settled</option>
-          <option value="2">Unsettled</option>
-          <option value="6">Cancelled Bet</option>
-          <option value="4">Refund</option>
-          <option value="4">Deleted</option>
-        </select>
+        <input type="date" class="form-control queryholders startdate" id="naetextlll" aria-describedby="name" placeholder="Name" />
 
-        <input type="date" class="form-control queryholders startdate" id="nametextlll" aria-describedby="name" placeholder="Name" />
-
-        <input type="date" class="form-control queryholders enddate" id="nametextlll" aria-describedby="name" placeholder="Name" />
+        <input type="date" class="form-control queryholders enddate" id="nmetextlll" aria-describedby="name" placeholder="Name" />
 
       </div>
     </span>
@@ -177,77 +169,111 @@
 
   </div>
 
-  <div class="card-body p-4">
-    <div class="table-responsive mb-4 border rounded-1 table-wrappers" id="masks" style="height:530px;overflow-y:scroll;">
-      <table class="table text-nowrap mb-0 align-middle table-bordered">
-        <thead class="text-dark fs-4">
-          <tr>
+
+  <div class="showtabss"></div>
+  <hr>
+
+
+  <div class="tab-contentss standard-tab-content" id="standard-tab" style="display:none;">
+    <div class="table-responsive mb-4 border rounded-1 table-wrapper table-wrapperDraws" id="maskkk" style="height:530px;overflow-y:scroll;">
+      <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
+        <thead class="text-dark fs-4 tbl-header">
+          <tr class="headrowDraws">
+
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">
-                Bet Order ID</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Game PLay Group</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">User Name</h6>
+              <h6 class="fs-4 fw-semibold mb-0">PLay Group</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Issue Number</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Lottery Game</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Lottery Type</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Standard Odds</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Game Type</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Bet Time</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Bet Type</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Prize</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Number of Bets</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Unit Stake</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Multiplier</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Bet Amount</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Win Amount</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Rebate Amount</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Win/Loss</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Status</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">IP</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Play Method</h6>
             </th>
 
             <th>
-              <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
+              <h6 class="fs-4 fw-semibold mb-0">Total Bets</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Actual Draw Time</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Settle Complete Time</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Draw Status</h6>
             </th>
           </tr>
         </thead>
-        <tbody id="lotterydataContainer">
+        <tbody id="" class="tbl-content maingameContainer">
 
-          <!--Dynamic content here-->
+          <tr class="no-results">
+            <td colspan="9">
+              <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
+            </td>
+          </tr>
 
         </tbody>
       </table>
     </div>
   </div>
+
+  <!-- Twosides tab content -->
+  <div class="tab-contentss  twosides-tab-content" id="twosides-tab" style="display:none;">
+    <div class="table-responsive mb-4 border rounded-1 table-wrapper table-wrapperDraws" id="maskkk" style="height:530px;overflow-y:scroll;">
+      <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
+        <thead class="text-dark fs-4 tbl-header">
+          <tr class="headrowDraws">
+
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Game PLay Group</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">PLay Group</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Lottery Game</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Play Method</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Win Amount</h6>
+            </th>
+
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Sale Deadline</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Actual Draw Time</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Settle Complete Time</h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Draw Status</h6>
+            </th>
+          </tr>
+        </thead>
+        <tbody id="" class="tbl-content maingameContainer">
+
+          <tr class="no-results">
+            <td colspan="9">
+              <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
   <div class="px-4 py-3 border-top pager">
     <span class="tops-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
