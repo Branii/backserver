@@ -327,6 +327,7 @@
                 </tbody>
             </table>
         </div>
+        
     </div>
     <div class="px-4 py-3 border-top pager">
         <span class="top-left-btn">
