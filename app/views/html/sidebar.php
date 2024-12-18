@@ -79,7 +79,7 @@ $sidebarMenu = [
     11 =>['title'=> $translator['Invitation & Referral Links'], 'content' => 'Invitation'],
     12 =>['title'=> $translator['Bank Card List'], 'content' => 'Bank'],
     13 =>['title'=> $translator['Quota Settings'], 'content' => 'quota'],
-    14 =>['title'=> $translator['Lottery Draw Records'], 'content' => 'lottery_draw_records'],
+    14 =>['title'=> $translator['Lottery Draw Records'], 'content' => 'lottery_draw'],
     15 =>['title'=> $translator['Lottery Basic Parameters'], 'content' => 'lottery_basic_params'],
     16 =>['title'=> $translator['Lottery Bonus Parameters'], 'content' => 'lottery_parameters'],
     17 =>['title'=> $translator['Administrator List'], 'content' => 'administrator_list'],
@@ -88,7 +88,7 @@ $sidebarMenu = [
 
   $sidebarMain = [
     1 => $translator['Business Flow'],
-    2 => $translator['financial Management'],
+    2 => $translator['Financial Management'],
     3 => $translator['Report Management'],
     4 => $translator['User Management'],
     5 => $translator['Promotion Management'],

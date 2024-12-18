@@ -18,7 +18,7 @@ $(function () {
           html += `
                       <tr>
                           <td>${item.payment_reference}</td>
-                          <td>${item.user_name}</td>
+                          <td>${item.user_email}</td>
                           <td>VIP</td>
                           <td>${item.momo_provider}</td>
                           <td>${item.amount_paid}</td>
@@ -118,6 +118,38 @@ $(function () {
         size: 3,
       });
       fetchDeposit(currentPageDeposit)
+    });
+  
+
+    $(".playerdeposit").click(function () {
+      let direction = $(this).val();
+      const tableWrapper = $(".table-wrapperdeposit");
+      const tableWrappers = document.querySelector(".table-wrapperdeposit");
+      const scrollAmount = 1000; // Adjust as needed
+      const scrollOptions = {
+        behavior: "smooth",
+      };
+      if (tableWrapper.length) {
+        switch (direction) {
+          case "leftd":
+            tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
+            break;
+          case "rightd":
+            tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
+            break;
+          case "startd":
+            // Scroll to the absolute start (leftmost position)
+            tableWrapper.animate({ scrollLeft: 0 }, "slow");
+            break;
+          case "endd":
+            const maxScrollLeft =
+              tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
+            tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
+            break;
+          default:
+            break;
+        }
+      }
     });
   
    

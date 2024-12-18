@@ -63,7 +63,7 @@ $(function () {
     try {
       const response = await fetch(`../admin/getAllGamesLottery`);
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       let html = "";
       html += `<option>Select Game</option>`;
       data.forEach((item) => {
@@ -327,7 +327,7 @@ $(function () {
     const jsonString = JSON.stringify(gameTables);
     getLotteryGames(lotteryId,JSON.stringify(gameTables))
     $(".chrome__tabb").hide();
-    console.log(chromeTabsParams);
+    //console.log(chromeTabsParams);
 
     //console.log(chromeTabsParams);
 
@@ -359,9 +359,8 @@ $(function () {
     chromeTabsParams.setCurrentTab(TabMap.get("standard_content"));
     $(".standard_content").show();
 
-    console.log(TabMap)
+    //console.log(TabMap)
    
-
     //console.log(gameModelMap[lotterId]['tabs']);
   });
 

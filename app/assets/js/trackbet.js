@@ -35,8 +35,8 @@ $(function () {
                           <td>${item.total_bets + "/" + item.total_track}</td>
                           <td>${item.total_amount + "/" + item.done_amount}</td>                  
                           <td>${trackstatus[item.track_status]}</td>
+                          <td>${item.total_prize}</td>
                          <td>${item.track_rule}</td>
-                         <td></td>
                          <td>${item.server_date + "/" + item.server_time}</td>
                      
                          

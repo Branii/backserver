@@ -29,7 +29,7 @@ $(function () {
                     <td>${'TR' + item.order_id.substring(0, 7)}</td>
                       <td>${username}</td>
                       <td><i class='bx bxs-circle' style='color:${status[item.order_type].color};font-size:8px;margin-right:5px;'></i>${status[item.order_type].title}</td>
-                      <td>${Number(item.account_change).toFixed(4)}</td>
+                      <td>${Number(item.account_change) < 0 ? Number(item.account_change).toFixed(4) : `+ ${Number(item.account_change).toFixed(4)}`}</td>
                       <td>${Number(item.balance).toFixed(4)}</td>
                       <td>${item.dateTime}</td>
                       <td>${item.order_id}</td>

@@ -150,6 +150,14 @@ if ($flag == "trackdata") {
     $page  = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $result = (new BusinessFlowModel())->fetchTrackRecords($page, $limit) ?? [];
+ 
+    // $finaldata = [];
+    // foreach($result['data'] as $data){
+    //   $prize =  (new BusinessFlowModel())->GetTrackWins($data['track_token']);
+    //   $data['total_prize'] = $prize;
+    //   $finaldata[]  = $data ;
+    // };
+
 
     echo json_encode([
         'trackbet' => $result['data'],

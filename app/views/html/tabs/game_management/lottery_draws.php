@@ -191,72 +191,59 @@
   padding:5px;
   border-bottom: solid 1px rgb(110,129,146,0.1);
 }
-
-
-/* .fix-bring-forward {
-        position:absolute;
-        z-index: 10 !important;
-        background: white !important;
-        
-} */
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0">Lottery Basic Records</h4>
+    <h4 class="card-title mb-0">Lottery draw records</h4>
   </div>
 
-    <div class="px-4 py-3 border-bottom pagerlist1">
-        <span class="top-left-btn">
-            <div  class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:150%;">
+  <div class="px-4 py-3 border-bottom pager1">
+    <span class="top-left-btn">
+      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-    
-<select name="betsate" class="form-control form-select queryholderlistt depositestate " data-bs-placeholder="Select Type" id="lottery" style="width: 70%;">
-         <option value="all">--Select Lottery--</option>
-        <option value="1" id="lt_1" name="lottery_type">5D</option>
-        <option value="2" id="lt_2" name="lottery_type">PK10</option>
-        <option value="3" id="lt_3" name="lottery_type">FAST3</option>
-        <option value="5" id="lt_5" name="lottery_type">3D</option>
-        <option value="6" id="lt_6" name="lottery_type">11x5</option>
-        <option value="8" id="lt_8" name="lottery_type">Mark6</option>
-        <option value="9" id="lt_9" name="lottery_type">PC28</option>
-        <option value="10" id="lt_10" name="lottery_type">Happy</option>
-      
+        <select name="order_type" id="allGameNames" class="form-control form-select queryholder ordertype" data-bs-placeholder="Select Type">
+
         </select>
-        </div>
-        </span>
-        <span class="toplist-center" aria-label=" navigation example">
-            <!--enter is free-->
-        </span>
-        <span class="topplist-right" id="paginations" aria-label="Page navigation example">
 
-            <div class="btn-group mb-2" role="group" aria-label="Basic example"
-                style="border:solid 1px #eee;color:#bbb;background-color:#fff">
+        <input type="date" class="form-control queryholder startdate" id="drawfrom"/>
 
-              
-                <button type="button" class="btn bg-white-subtle btn-disabled" value="" aria-label="Back" 
-                     data-bs-placement="top" data-bs-title="Get User Details">
-                    <i class='bx bxs-user' style="font-size:20px"></i>
-                </button>
-                <button type="button" class="btn bg-white-subtle btn-disabled" value="" aria-label="Get Top Agent"
-                     data-bs-title="Get Top Agent">
-                    <i class='bx bxs-user-account' style="font-size:20px"></i>
-                </button>
-                <button type="button" class="btn bg-white-subtle player lb-refreshlist" value="" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
-                    <i class='bx bx-refresh' style="font-size:20px"></i>
-                </button>
-                <button type="button" class="btn bg-white-subtle fetch-lotter-basic-records" value="" aria-label="Search"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Search">
-                    <i class='bx bx-check-double loaderlist' style="font-size:20px"></i>
-                </button>
+        <input type="date" class="form-control queryholder enddate" id="drawto"/>
 
-            </div>
+      </div>
+    </span>
+    <span class="top-center" aria-label=" navigation example">
+      <!--enter is free-->
+    </span>
+    <span class="topp-right" id="paginations" aria-label="Page navigation example">
 
-        </span>
+      <div class="btn-group mb-2" role="group" aria-label="Basic example"
+        style="border:solid 1px #eee;color:#bbb;background-color:#fff">
+        <button type="button" class="btn bg-white-subtle " value="right" aria-label="Refresh"
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PDF">
+          <i class='bx bx-file' style="font-size:20px"></i>
+        </button>
+        <button type="button" class="btn bg-white-subtle " value="right" aria-label="Refresh"
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="XLS">
+          <i class='bx bx-file-blank' style="font-size:20px"></i>
+        </button>
+        <button type="button" class="btn bg-white-subtle" value="right">
+         ::
+        </button>
+        <button type="button" class="btn bg-white-subtle  refreshdraws" value="right" aria-label="Refresh"
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+          <i class='bx bx-refresh' style="font-size:20px"></i>
+        </button>
+        <button type="button" class="btn bg-white-subtle executegetdrawsb" value="end" aria-label="Execute"
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+          <i class='bx bx-check-double loader' style="font-size:20px"></i>
+        </button>
+      </div>
 
-    </div>
+    </span>
+
+  </div>
 
   <div class="card-body p-4">
     <div class="table-responsive mb-4 border rounded-1 table-wrapper table-wrapperDraws" id="maskkk" style="height:530px;overflow-y:scroll;">
@@ -284,6 +271,9 @@
             <th>
               <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win Amount']; ?></h6>
             </th>
+            <!-- <th>
+              <h6 class="fs-4 fw-semibold mb-0">Draw Time</h6>
+            </th> -->
             <th>
               <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Sales Deadline']; ?></h6>
             </th>
@@ -298,7 +288,7 @@
             </th>
           </tr>
         </thead> 
-        <tbody id="lot-basic-dtholder" class="tbl-content">
+        <tbody id="dataContainerDrawsss" class="tbl-content">
 
           <tr class="no-results">
             <td colspan="9">
@@ -337,43 +327,21 @@
    
       
 
-    <span id="lb-pagination-pages-wrapper" class="top-right-btn"  aria-label="Page navigation example">
-    <!-- <select class="left-element form-control numrows" style="font-size:12px">
+    <span class="top-right-btn"  aria-label="Page navigation example">
+    <select class="left-element form-control numrows" style="font-size:12px">
             <!-- <option value="5" class="fromnumrows">5</option>
             <option value="10">10</option>
-            <option value="20">20</option> 
+            <option value="20">20</option> -->
             <option value="50">50</option>
             <option value="100">100</option>
             <option value="200">200</option>
             <option value="500">500</option>
      </select>
-      <span id="paginationDraws" class="right-element"> </span> -->
+      <span id="paginationDraws" class="right-element"> </span>
     </span>
 
   </div>
 
 </div>
-
-<div class="modal fade" id="al-danger-alert" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content modal-filled " style="background-color:#F9F9F9">
-      <div class="modal-body p-4">
-        <div class="text-center text-danger">
-          <i class="ti ti-hexagon-letter-x fs-7"></i>
-          <h4 class="mt-2">Oh snap!</h4>
-          <p class="mt-3" style="color:#aaa">
-            All fields are required!
-            Select one or more data fields to filter.
-          </p>
-          <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color:#ddd">
-            Okay
-          </button>
-        </div>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-</div>
-
 
 

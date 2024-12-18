@@ -196,7 +196,7 @@ return [
 
 
     //financial Management
-    'financial Management' => '财务管理',
+    'Financial Management' => '财务管理',
     'Deposit Record' => '充值统计',
     'Deposit ID' => '充值ID',
     'Username' => '用户名',

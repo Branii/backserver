@@ -330,6 +330,42 @@ class BusinessFlowModel extends MEDOOHelper
             ['offset' => $startpoint, 'limit' => $limit]
         );
         $totalRecords  = parent::count('trackbet');
+        foreach ($data as &$record) {
+            $record['total_prize'] = self::GetTrackWins($record['track_token']);
+        }
+    
         return ['data' => $data, 'total' => $totalRecords];
     }
+
+
+    public static function GetTrackWins($token)
+    {
+     
+        $bettable = self::getAllGameIds();
+        $totalPrize = 0;
+
+        foreach ($bettable as $tables) {
+            $tableName = $tables['bet_table'];
+       
+            $sql = "SELECT SUM(win_bonus) AS total_prize FROM {$tableName} 
+                    WHERE token = :token AND bet_status = 2 AND state = 1";
+            
+            try {
+                // Execute the query and fetch the data
+                $data = parent::query($sql, ['token' => $token]);
+                
+                // If data is returned and total_prize exists, add it to the accumulator
+                if ($data && isset($data[0]['total_prize'])) {
+                    $totalPrize += $data[0]['total_prize'];
+                }
+            } catch (Exception $e) {
+                // Log any exceptions or errors that occur during the query
+                error_log("Error executing query for table {$tableName}: " . $e->getMessage());
+            }
+        }
+    
+        // Return the total prize accumulated from all tables
+        return $totalPrize;
+    }
+    
 }

@@ -10,7 +10,7 @@ $(function(){
       });
     }
 
-  const drawTable = (data) => {
+  const drawTables = (data) => {
       let html = "";
       data.forEach((item) => {
         html += `
@@ -31,12 +31,12 @@ $(function(){
   };
 
   const renderDrawTable = (data) => {
-      var html = drawTable(data);
-      $("#dataContainerDraws").html(html);
+      var html = drawTables(data);
+      $("#dataContainerDrawsss").html(html);
   };
 
   let currentPage = 1;
-  let pageLimit = 50;
+  let pageLimit = 20;
   let sibling = ''
 
   async function getAllGames() {
@@ -59,7 +59,7 @@ $(function(){
       try {
         const response = await fetch(`../admin/getSpecificDraws/${gameId}/${datefrom}/${dateto}/${currentPage}/${pageLimit}`);
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         renderDrawTable(data.gameDraws);
         $("#maskkk").LoadingOverlay("hide")
         renderPaginationForDraws(data.totalPages, currentPage,gameId, datefrom, dateto);
@@ -120,10 +120,10 @@ $(function(){
     }
 
 
-  $(".executegetdraws").on("click",function(){
+  $(".executegetdrawsb").on("click",function(){
     let params = [$("#drawfrom").val(),$("#drawto").val()]
     let gameId = $("#allGameNames").val()
-    console.log(gameId)
+    // console.log(gameId)
     //const isEmpty = params.some(param => param === "")
     if(gameId == "Select Game"){
       showToast("Information", "Please select game", "info") 
@@ -135,7 +135,7 @@ $(function(){
   $(".refreshdraws").on("click",function(){
     let params = [$("#drawfrom").val(),$("#drawto").val()]
     let gameId = $("#allGameNames").val()
-    console.log(gameId)
+    // console.log(gameId)
     //const isEmpty = params.some(param => param === "")
     if(gameId == "Select Game"){
       showToast("Information", "Please select game", "info") 

@@ -350,13 +350,6 @@ $translator = include "tabs/lang/{$lang}.php";
             <?php include "tabs/agentmanage/quota.php" ?>
           </div>
 
-
-          <!-- Report Management -->
-           <div class="chrome__tab Win">
-            <?php include "tabs/report_management/win_loss_report.php" ?>
-          </div>
-
-         
               <!--User Bank management-->
               <div class="chrome__tab  Bank">
              <?php include "tabs/userbank/bankcard.php" ?>
@@ -367,7 +360,6 @@ $translator = include "tabs/lang/{$lang}.php";
             <?php include "tabs/report_management/win_loss_report.php" ?>
            </div>
 
-         
               <!--User Bank management-->
               <div class="chrome__tab  Bank">
              <?php include "tabs/userbank/bankcard.php" ?>
@@ -386,21 +378,19 @@ $translator = include "tabs/lang/{$lang}.php";
             <?php include "tabs/system_management/backup_recovery.php" ?>
           </div>
 
-          <!--system managenet-->
-
-
+        
           <!--game management-->
           <div class="chrome__tab  lottery_parameters">
             <?php include "tabs/game_management/lottery_parameters.php" ?>
           </div>
 
-
-          <div class="chrome__tab lottery_draw_records">
-            <?php include "tabs/game_management/lottery_draw_records.php" ?>
+          <div class="chrome__tab  lottery_draw">
+            <?php include "tabs/game_management/lottery_draws.php" ?>
           </div>
 
-          <div class="chrome__tab lottery_basic_params">
-            <?php include "tabs/game_management/lottery_basic_params.php" ?>
+          
+          <div class="chrome__tab  lottery_basic_params">
+            <?php include "tabs/game_management/lottery_basic_param.php"?>
           </div>
 
         </div>
@@ -453,14 +443,11 @@ $translator = include "tabs/lang/{$lang}.php";
     <script src="<?php echo BASE_URL; ?>assets/js/deposit.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/withdrawal.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/bankcard.js"></script>
-
-
     <script src="<?php echo BASE_URL; ?>assets/js/win_loss.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/lottery_basic_params.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/lottery_parameters.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/lottery_draws.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/lang.js"></script>
-
 
 
 

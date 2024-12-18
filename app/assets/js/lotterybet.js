@@ -300,15 +300,15 @@ $(function () {
   
   $(".playerbet").click(function () {
     let direction = $(this).val();
-    const tableWrapper = $(".table-wrapperlist");
-    const tableWrappers = document.querySelector(".table-wrapperlist");
+    const tableWrapper = $(".table-wrapperlottery");
+    const tableWrappers = document.querySelector(".table-wrapperlottery");
     const scrollAmount = 1000; // Adjust as needed
     const scrollOptions = {
       behavior: "smooth",
     };
     if (tableWrapper.length) {
       switch (direction) {
-        case "beteft":
+        case "betleft":
           tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
           break;
         case "betright":

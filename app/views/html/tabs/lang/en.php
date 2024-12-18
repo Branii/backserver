@@ -193,7 +193,7 @@ return [
 
 
 //financial flows
-'financial Management' => 'financial Management',
+'Financial Management' => 'Financial Management',
 'Salary Records' => 'Salary Records',
 'Contract Salary' => 'Contract Salary',
 
