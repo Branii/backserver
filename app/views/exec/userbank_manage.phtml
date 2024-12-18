@@ -1,0 +1,18 @@
+<?php
+declare(strict_types=1);
+// header('Content-Type: application/json');
+
+
+$flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+
+if ($flag == "fetchbankcard") {
+
+        $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+        $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+        $result = (new UserBankManageModel())->FetchBankcardlistData($page, $limit) ?? [];
+        echo json_encode([
+            'bankcard' => $result["data"],
+            'totalPages' => ceil($result['total'] / $limit)
+        ]);
+    
+}

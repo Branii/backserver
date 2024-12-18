@@ -1,0 +1,152 @@
+<?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
+
+$flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+
+if ($flag == "addNewAdmin") {
+    $page   = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit  = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
+    $data   = isset($this->viewData['data']) ? $this->viewData['data'] : '';
+    parse_str($data,$formData);
+    $formData['username'] = generateUsername();
+    $formData['password_hash'] = password_hash('1234', PASSWORD_BCRYPT);
+    $result = (new AdminModel())->addNewAdmin($formData);
+    if($result){
+        $result = (new AdminModel())->viewAllAdmin($page, $limit);
+        echo json_encode(['type'=>'success','message'=>'User added successfully','admins' => $result['data'],'totalPages' => ceil($result['total'] / $limit)]);
+    } else {
+        echo json_encode(['type'=>'error','message'=>'Some error occured']);
+    }
+
+} 
+
+if($flag == "viewAdmins") {
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $result = (new AdminModel())->viewAllAdmin($page, $limit);
+    //echo json_encode( $result);
+    echo json_encode([
+        'admins' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
+    
+}
+
+if($flag == "permissions") {
+    $encodedString = isset($this->viewData['permissionsData']) ? $this->viewData['permissionsData'] : '';
+    $userId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
+    $permissionsData = urldecode($encodedString);
+    $result = (new AdminModel())->updatePermissions($permissionsData, $userId);
+    echo $result >= 1 ? json_encode(['Updated successfully']) : json_encode(['Nothing updated']);
+}
+
+if($flag == "adminlogs") {
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
+    $userId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
+    $result = (new AdminModel())->getAdminLogs($page, $limit, $userId);
+    echo json_encode([
+        'adminLogs' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
+
+if($flag == "filterAdminLogs") {
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
+    $adminId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
+    $datefrom = isset($this->viewData['datefrom']) ? $this->viewData['datefrom'] : '';
+    $dateto = isset($this->viewData['dateto']) ? $this->viewData['dateto'] : '';
+    $result = (new AdminModel())->filterAdminLogs($page, $limit, $adminId, $datefrom, $dateto);
+    // echo json_encode($result);
+    // exit;
+    echo json_encode([
+        'adminLogs' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
+
+if($flag == "searchlogs") {
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
+    $adminId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
+    $query = isset($this->viewData['query']) ? $this->viewData['query'] : '';
+    $result = (new AdminModel())->searchAdminLogs($page, $limit, $adminId, $query);
+    // echo json_encode($result);
+    // exit;
+    echo json_encode([
+        'adminLogs' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
+
+if($flag == "backup") {
+
+    $host = "localhost"; 
+    $username = "enzerhub";
+    $password = "enzerhub";
+    $database = "lottery_test";
+    $backupDir = '/var/www/html/admin/app/backups/';
+    $backupFile = $backupDir . 'backup_' . date('Y-m-d_H-i-s') . '.sql';
+
+    try {
+        $command = "mysqldump --host=$host --user=$username --password=$password $database > $backupFile";
+        exec($command, $output, $returnVar);
+        if ($returnVar !== 0) {
+            echo json_encode("Error occurred during backup. Command: $command");
+            exit;
+        }
+        $inserted = (new AdminModel())->createNewBackup($backupFile, getFileSize($backupFile));
+        $result = (new AdminModel())->getAllBackups(1,50);
+        echo json_encode([
+            'backups' => $result['data'],
+            'totalPages' => ceil($result['total'] / 50),
+        ]);
+    } catch (Exception $e) {
+        echo "Backup failed: " . $e->getMessage();
+    }
+
+}
+
+if($flag == "getAllBackups") {
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
+    $result = (new AdminModel())->getAllBackups($page, $limit);
+    echo json_encode([
+        'backups' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
+
+function generateUsername()
+{
+    $adjectives = ['Swift', 'Mighty', 'Brave', 'Silent', 'Clever', 'Witty', 'Bold', 'Sharp','Logos','Botafogo','Royal','Senior','Speed','Fast','Steel'];
+    $nouns = ['Tiger', 'Eagle', 'Wolf', 'Lion', 'Hawk', 'Bear', 'Shark', 'Panther','Purple','Hagar','Bull','Pecker','Deer','Wulder','Bender','Weaver'];
+    $adjective = $adjectives[array_rand($adjectives)];
+    $noun = $nouns[array_rand($nouns)];
+    $randomNumber = rand(10, 10000);
+    return $adjective . $noun . $randomNumber;
+}
+
+function getFileSize($backupFile){
+        // Get the size of the backup file
+    $backupSize = filesize($backupFile);
+
+    // Convert size to human-readable format
+    $sizeUnits = ['B', 'KB', 'MB', 'GB', 'TB'];
+    $unitIndex = 0;
+    while ($backupSize >= 1024 && $unitIndex < count($sizeUnits) - 1) {
+        $backupSize /= 1024;
+        $unitIndex++;
+    }
+    return $humanReadableSize = round($backupSize, 2) . ' ' . $sizeUnits[$unitIndex];
+}
+
+
+
+

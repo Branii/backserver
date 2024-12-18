@@ -1,0 +1,28 @@
+{
+    "name": "brenno-duarte/modern-php-exception",
+    "description": "PHP errors in a modern way",
+    "license": "MIT",
+    "keywords": [
+        "exception",
+        "throwable",
+        "exception-handler",
+        "error-handler",
+        "whoops",
+        "handler",
+        "php-exception"
+    ],
+    "require": {
+        "php": "^8.2",
+        "codedungeon/php-cli-colors": "1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ModernPHPException\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "tests/"
+        }
+    }
+}
