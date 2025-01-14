@@ -129,7 +129,7 @@ $(function () {
       });
     }
   
-    $(".refreshwithdraw").click(function () {
+    $(".refreshwithdrawa").click(function () {
      // $(".query").val("");
       $("#maskwithdraw").LoadingOverlay("show", {
         background: "rgb(90,106,133,0.1)",

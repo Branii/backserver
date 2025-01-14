@@ -88,41 +88,59 @@
         z-index: 10;
     }
 
-    .queryholderlist {
-        width: 19%;
-        margin-right: 5px;
-        background-color: #FFF;
-    }
 
-    .queryholderxx {
-        width: 19%;
-        position: absolute;
-        background-color: #fff;
-        color: #aaa;
-        max-height: 300px;
-        overflow-y: scroll;
-        border-radius: 5px;
-        padding: 10px;
-        top: 90%;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-        display: none;
-    }
+	.queryholderuserlist {
+    width: 23%;
+    position: absolute;
+    background-color: #fff;
+    color: #aaa;
+    max-height: 300px;
+    overflow-y: scroll;
+    border-radius: 5px;
+    padding: 10px;
+    top: 90%;
+    z-index: 9999;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    display: none;
+  }
 
-    .queryholderxx .optionlist {
-        text-align: left;
-        border-bottom: solid 1px #eee;
-        padding: 5px;
-    }
+  .queryholderlistt {
+    width: 23%;
+    margin-right: 5px;
+    background-color: #FFF;
+  }
 
-    .optionlist:hover {
-        background-color: #eee;
-    }
+  /* Style for the scrollbar */
+  .queryholderuserlist::-webkit-scrollbar {
+    width: 3px;
+    /* Width of the scrollbar */
+  }
 
-    #userDropdownlist {
+  .queryholderuserlist::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    /* Background of the scrollbar track */
+    border-radius: 5px;
+    /* Rounded corners */
+  }
+
+  .queryholderuserlist::-webkit-scrollbar-thumb {
+    background: #ccc;
+    /* Color of the scrollbar handle */
+    border-radius: 5px;
+    /* Rounded corners */
+  }
+
+  .queryholderuserlist::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+    /* Darker handle color on hover */
+  }
+
+    /* .queryholderuserlist {
         max-height: 300px;
         overflow-y: scroll;
         overflow-x: hidden;
-    }
+    } */
+
 
     .no-resultslist {
         text-align: center;
@@ -141,27 +159,27 @@
     }
 
     /* Custom Scrollbar for Webkit Browsers */
-    .table-wrapperuserlist::-webkit-scrollbar {
+    .table-wrapperlists::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
         /* Slimmer scrollbar height for horizontal scrolling */
     }
 
-    .table-wrapperuserlist::-webkit-scrollbar-track {
+    .table-wrapperlists::-webkit-scrollbar-track {
         background: #f1f1f1;
         /* Lighter background for track */
         border-radius: 5px;
     }
 
-    .table-wrapperuserlist::-webkit-scrollbar-thumb {
+    .table-wrapperlists::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .table-wrapperuserlist::-webkit-scrollbar-thumb:hover {
+    .table-wrapperlists::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
         /* Darker blue on hover */
     }
@@ -227,10 +245,17 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-                <input name="usernamelist" class="queryholderlist form-control" id="selectuserlist" placeholder="Username"
+                <!-- <input name="usernamelist" class="queryholderlist form-control" id="selectuserlist" placeholder="Username"
                     autocomplete="off"></input>
                 <input type="text" class="userIds" style="display:none" />
-                <ul class="queryholderuserlist"></ul>
+                <ul class="queryholderuserlist"></ul> -->
+
+                   
+            <input type="text" id="selectuserlist" class="form-control queryholderlistt usernames" placeholder="Search usernames">
+            <input name ="usernames" type="hidden" class="userIds">
+            <select  class="form-control queryholderuserlist" size="5" style="display: none;">
+                <!-- Options will be populated dynamically -->
+            </select>
 
                 <select name="recharge" class="form-control form-select queryholder recharges"
                     data-bs-placeholder="Select Type">
@@ -299,7 +324,7 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperuserlist" id="masklist" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperlists" id="masklist" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
                 <thead class="text-dark fs-4 tbl-headersUser">
                     <tr class="userlistheadrow">
@@ -361,16 +386,16 @@
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playerlist" value="startlist">
+                <button type="button" class="btn bg-white-subtle playerlists" value="startlists">
                     <i class='bx bx-chevrons-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerlist" value="leftlist">
+                <button type="button" class="btn bg-white-subtle playerlists" value="leftlists">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerlist" value="rightlist">
+                <button type="button" class="btn bg-white-subtle playerlists" value="rightlists">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerlist" value="endlist">
+                <button type="button" class="btn bg-white-subtle playerlists" value="endlists">
                     <i class='bx bx-chevrons-right' style="font-size:20px"></i>
                 </button>
             </div>

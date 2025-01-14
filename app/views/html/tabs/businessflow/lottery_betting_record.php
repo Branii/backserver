@@ -216,7 +216,7 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   }
 
-  .userDropdown {
+  .userDropdownb {
     width: 16%;
     position: absolute;
     background-color: #fff;
@@ -232,26 +232,26 @@
   }
 
   /* Style for the scrollbar */
-  .userDropdown::-webkit-scrollbar {
+  .userDropdownb::-webkit-scrollbar {
     width: 3px;
     /* Width of the scrollbar */
   }
 
-  .userDropdown::-webkit-scrollbar-track {
+  .userDropdownb::-webkit-scrollbar-track {
     background: #f0f0f0;
     /* Background of the scrollbar track */
     border-radius: 5px;
     /* Rounded corners */
   }
 
-  .userDropdown::-webkit-scrollbar-thumb {
+  .userDropdownb::-webkit-scrollbar-thumb {
     background: #ccc;
     /* Color of the scrollbar handle */
     border-radius: 5px;
     /* Rounded corners */
   }
 
-  .userDropdown::-webkit-scrollbar-thumb:hover {
+  .userDropdownb::-webkit-scrollbar-thumb:hover {
     background: #aaa;
     /* Darker handle color on hover */
   }
@@ -284,7 +284,7 @@
 
         <input type="text" id="myInput" class="form-control queryholderlist usernames" placeholder="Search usernames">
         <input name ="usernames" type="hidden" class="userIdbet">
-        <select  class="form-control userDropdown" size="5" style="display: none;">
+        <select  class="form-control userDropdownb" size="5" style="display: none;">
           <!-- Options will be populated dynamically -->
         </select>
 

@@ -25,7 +25,7 @@ $(function(){
         evt.preventDefault()
         let params = {email: $(".email").val().trim(),password: $(".password").val().trim()};
         let isEmpty = Object.values(params).some(param => param === "");
-        !isEmpty ? request('../limvo/admin/signin',params) : showToast("Heads up!!","All fields are mandatory","info");
+        !isEmpty ? request('admin/signin',params) : showToast("Heads up!!","All fields are mandatory","info");
     })
 
 })

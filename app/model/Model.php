@@ -73,6 +73,16 @@ class Model extends MEDOOHelper{
         }
     }
 
+    public static function getUsername(string $fullname){
+
+        try {
+            return parent::selectOne('system_administrators',['full_name','role'], ['email' => $fullname]);
+        } catch (\Throwable $th) {
+           var_dump($th);
+        }
+    }
+
+
     //admin_id	action_performed	created_date	created_time	ip_address	affected_entity	old_value	new_value	action_status
     public static function addAdminLogs(string $adminId, string $actionPerformed, string $oldVal, string $newVal, string $affectedEntity, string $status){
         $log_data = [

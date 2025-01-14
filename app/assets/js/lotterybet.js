@@ -28,7 +28,7 @@ $(function () {
        const betOddsObject = JSON.parse(item.bet_odds);
        const betOddsArray = Object.values(betOddsObject);
        const betodds = betOddsArray * item.multiplier * item.unit_stake;
-       const username = item.username == '*****' ? item.email :(item.username ||item.contact);
+       let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
 
       // console.log(item.username)
       htmls += `
@@ -96,7 +96,7 @@ $(function () {
 
  
   const firstRowbet = {
-    'username': 'Username:',
+    'reg_type': 'Username:',
     'bet_code': 'Bet Order ID:',
     'draw_period': 'Issue Number:',
     'ip_address': 'IP:',
@@ -389,8 +389,9 @@ $(function () {
     $("#viewbetsmodal").modal("show")
     const betcode = $(this).attr("data-betcode")
     const gametype = $(this).attr("data-gametype")
-    // console.log(betcode)
-    $("#rowbet").html("")
+    console.log(betcode)
+    console.log(gametype)
+    $("#rowbet").empty()
     $("#rowbe1").html("")
      viewstakedBet(betcode,gametype)
   })
@@ -412,74 +413,6 @@ $(function () {
     }
 
 
-  // let debounceTimeout =null; // To store the timeout ID
-  // $(document).ready(function () {
-  //     // Event listener for keyup
-  //     $(document).on('keyup','#myInput', function () {
-  //         const query = $(this).val().trim();
-
-  //         if (query.length > 2) { // Only trigger if input is more than 2 characters
-  //             clearTimeout(debounceTimeout); // Clear any existing timeout
-  //             debounceTimeout = setTimeout(() => {
-  //                 // Call the filterUsers logic directly here
-  //                 let optionsHtml = '';
-
-  //                 $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
-  //                     try {
-                        
-  //                         if (typeof response === 'string') {
-  //                             response = JSON.parse(response); // Parse string response
-  //                         }
-
-  //                         const formattedArray = response.flatMap(item => [
-  //                           { "uid": item.uid, "username": item.username },
-  //                           { "uid": item.uid, "username": item.nickname }
-  //                         ]);
-  //                         const filteredUsers = formattedArray.filter(user => user.username !== '*****');
-  //                         filteredUsers.forEach(user => {
-  //                           optionsHtml += `<option class ="optionlist"  value="${user.uid}" data-username="${user.username}">${user.username}</option>`;
-  //                         })
-
-  //                         //console.log(optionsHtml)
-
-  //                         $('.userDropdown').html(optionsHtml).show(); 
-
-  //                     } catch (error) {
-  //                         console.error("Error parsing response: ", error);
-  //                         $('.userDropdown').hide();
-  //                     }
-  //                 }).fail(function (error) {
-  //                     console.error("Error fetching users: ", error);
-  //                     $('.userDropdown').hide();
-  //                 });
-  //             }, 500); // 500ms debounce delay
-  //         } else {
-  //             $('.userDropdown').hide(); // Hide dropdown if input is less than 3 characters
-  //         }
-  //     });
-
-  //     // Handle dropdown item click
-  //     $(document).on('change', '.userDropdown', function () {
-  //       const selectedOption = $(this).find('option:selected'); // Get the selected <option>
-  //       const selectedUserId = selectedOption.val(); // Get user ID from the value attribute
-  //       const selectedUsername = selectedOption.data('username'); // Get username from data-attribute
-  //       if (selectedUserId) {
-  //         $('#myInput').val(selectedUsername); 
-  //         $('.userIdbet').val(selectedUserId); 
-  //         $('.userDropdown').hide();  
-  //       }
-    
-  //   });
-
-  //   $(document).on('input', '#myInput', function () {
-  //     const inputValue = $(this).val(); // Get the current value of the input
-  //     if (!inputValue) {
-  //         // If input is cleared, reset the user ID as well
-  //         $('.userIdbet').val('');
-  //         console.log('User manually cleared the username');
-  //     }
-  // });
-  // });
 
   let debounceTimeout = null;
 
@@ -493,12 +426,12 @@ $(function () {
               clearTimeout(debounceTimeout); // Clear any existing timeout
               debounceTimeout = setTimeout(fetchbetUser, 500, query); // Call fetchUsers with the query after 500ms delay
           } else {
-              $('.userDropdown').hide(); // Hide dropdown if input is less than 3 characters
+              $('.userDropdownb').hide(); // Hide dropdown if input is less than 3 characters
           }
       });
 
       // Handle dropdown item selection
-      $(document).on('change', '.userDropdown', function () {
+      $(document).on('change', '.userDropdownb', function () {
           const selectedOption = $(this).find('option:selected');
           const selectedUserId = selectedOption.val();
           const selectedUsername = selectedOption.data('username');
@@ -506,7 +439,7 @@ $(function () {
           if (selectedUserId) {
               $('#myInput').val(selectedUsername);
               $('.userIdbet').val(selectedUserId);
-              $('.userDropdown').hide();
+              $('.userDropdownb').hide();
           }
       });
 
@@ -520,30 +453,41 @@ $(function () {
 
   // Function to fetch and display users
   function fetchbetUser(query) {
-      let optionsHtml = '';
+  
 
       $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
           try {
               response = typeof response === 'string' ? JSON.parse(response) : response;
 
-              const filteredUsers = response.flatMap(item => [
-                  { "uid": item.uid, "username": item.username },
-                  { "uid": item.uid, "username": item.email },
-                  { "uid": item.uid, "username": item.contact }
-              ]).filter(user => user.username !== '*****');
+              let optionsHtml = '';
 
-              filteredUsers.forEach(user => {
-                  optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${user.username}">${user.username}</option>`;
+              response.forEach(user => {
+                let   displayValuebet;
+                let regnamebet;
+                 // Display based on regtype
+                 if (user.regtype === "email") {
+                  displayValuebet = user.email;
+                  regnamebet = user.email;  // Show email
+                 } else if (user.regtype === "username") {
+                  displayValuebet = user.username;
+                  regnamebet = user.username;  // Show username
+                 } else if (user.regtype === "contact") {
+                  displayValuebet = user.contact;
+                  regnamebet  = user.contact;  // Show contact
+                 }
+                      optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regnamebet}">${displayValuebet}</option>`;
+           
               });
 
-              $('.userDropdown').html(optionsHtml).show();
+
+              $('.userDropdownb').html(optionsHtml).show();
           } catch (error) {
               console.error("Error parsing response: ", error);
-              $('.userDropdown').hide();
+              $('.userDropdownb').hide();
           }
       }).fail(function () {
           console.error("Error fetching users.");
-          $('.userDropdown').hide();
+          $('.userDropdownb').hide();
       });
   }
 

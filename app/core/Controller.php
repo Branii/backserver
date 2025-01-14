@@ -1,5 +1,6 @@
 <?php
- use Josantonius\Session\Session;
+use Josantonius\Session\Session;
+
 class Controller{
     protected  $view;
     public function view($viewName,$data=[]){
@@ -14,6 +15,11 @@ class Controller{
     public function getSeesion(string $name){
       return (new Session)->get($name);
     }
+
+    public function getUsername(string $fullname){
+      return (new Model())->getUsername($fullname);
+    }
+
 
     public function getUserPermissionSidebars(string $email){
       return (new Model())->getUserPermissionSidebar($email);

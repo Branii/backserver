@@ -5,7 +5,7 @@ $(function () {
       let html = "";
      
     data.forEach((item) => {
-    
+      const username = item.username == '*****' ? item.email :(item.username ||item.contact);
         html += `
                     <tr>
                         <td>${item.agent_name}</td>
@@ -149,8 +149,8 @@ $(function () {
     })
   
     $(".refreshlinks").click(function () {
-      $(".queryholderlogs").val("")
-      $("#masklogs").LoadingOverlay("show", {
+      // $(".queryholderlogs").val("")
+      $("#masklinks").LoadingOverlay("show", {
         background: "rgb(90,106,133,0.1)",
         size: 3
       });

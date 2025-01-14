@@ -10,7 +10,7 @@ $(function () {
 
         // // Extract city from IP information or use a fallback
         // const city = ipInfo?.geoplugin_city || 'Unknown';
-        const username = item.username == '*****' ? item.nickname : item.username;
+        let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
         html += `
                     <tr>
                         <td>${username}</td>

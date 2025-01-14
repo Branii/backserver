@@ -7,7 +7,7 @@ class BusinessFlowModel extends MEDOOHelper
     public static function getAllGameIdsWithCondition($condition = ""): array
     {
 
-       return parent::selectAll("gamestable_map",["bet_table","game_type"],$condition);
+        return parent::selectAll("gamestable_map", ["bet_table", "game_type"], $condition);
         // $sql = "SELECT bet_table,game_type FROM gamestable_map {$condition} ";
         // $stmt = self::openConnection("lottery")->prepare($sql);
         // $stmt->execute();
@@ -20,7 +20,7 @@ class BusinessFlowModel extends MEDOOHelper
     {
         $startpoint = ($page * $limit) - $limit;
         $data = parent::query(
-            "SELECT transaction.*,users_test.email,users_test.contact,COALESCE(users_test.username, 'N/A') AS username FROM transaction   
+            "SELECT transaction.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.username, 'N/A') AS username FROM transaction   
             JOIN users_test ON users_test.uid = transaction.uid  ORDER BY trans_id DESC LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
         );
@@ -29,68 +29,84 @@ class BusinessFlowModel extends MEDOOHelper
         return ['data' => $data, 'total' => $totalRecords, 'transactionIds' => $trasationIds];
     }
 
-    public static function FilterTrsansactionDataSubQuery($username = '', $orderid = '', $ordertype = '', $from = '', $to = '')
+    public static function FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate)
     {
-        $conditions = [];
 
-        if (!empty($username) && $username != 'all') {
-            $conditions['transaction.uid'] = $username;
+        $filterConditions = [];
+
+        // Build filter conditions
+        if (!empty($username)) {
+            $filterConditions[] = "uid = '$username'";
         }
 
-        if (!empty($orderid) && $orderid != 'all') {
-            $conditions['transaction.order_id'] = $orderid;
+        if (!empty($orderid)) {
+            $filterConditions[] = "order_id ='$orderid'";
         }
 
-        if (!empty($ordertype) && $ordertype != 'all') {
-            $conditions['transaction.order_type'] = $ordertype;
+        if (!empty($ordertype)) {
+            $filterConditions[] = "order_type = '$ordertype'";
         }
 
-        if ($from != '' && $to != '') {
-            $conditions['transaction.date_created[<>]'] = [$from, $to];
-        } elseif ($from != '') {
-            $conditions['transaction.date_created[>=]'] = $from;
-        } elseif ($to != '') {
-            $conditions['transaction.date_created[<=]'] = $to;
+
+        if (!empty($startdate) && !empty($enddate)) {
+            $filterConditions[] = "date_created BETWEEN '$startdate' AND '$enddate'";
+        } elseif (!empty($startdate)) {
+            $filterConditions[] = "date_created = '$startdate'";
+        } elseif (!empty($enddate)) {
+            $filterConditions[] = "date_created = '$enddate'";
         }
 
-       
-        return $conditions;
+        // Combine conditions into the final query
+        if (!empty($filterConditions)) {
+            $subQuery = implode(' AND ', $filterConditions);
+        }
+
+        // Add ordering and limit to the query (you can also parameterize order if needed)
+        $subQuery .= " ORDER BY date_created DESC";
+
+        // Return the final subquery
+        return $subQuery;
     }
 
-    public static function FilterTrsansactionData($page, $limit, $username, $orderid, $ordertype, $startdate, $enddate)
+
+    public static function FilterTrsansactionData($subQuery, $page, $limit)
     {
 
-        $whereConditions = self::FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
+
         $startpoint = ($page * $limit) - $limit;
-        $data = parent::selectAll("transaction", '*', [
-            "AND" => $whereConditions,
-            "ORDER" => ["transaction.trans_id" => "DESC"],
-            "LIMIT" => [$startpoint, $limit]
-        ]);
-    //     $sql = "
-    //     SELECT 
-    //         temp_table.*, 
-    //         users_test.email,
-    //         users_test.username,
-    //          users_test.contact
-    //     FROM 
-    //         (
-    //             SELECT * 
-    //             FROM transaction
-    //             $whereConditions
-    //         ) AS temp_table
-    //     JOIN 
-    //         users_test ON users_test.uid = temp_table.uid
-    //     LIMIT :offset, :limit
-    // ";
-    
-    //  $data = parent::query($sql, ['offset' => $startpoint,'limit' => $limit]);
-        
+        $sql = "
+        SELECT 
+            temp_table.*, 
+            users_test.email AS email,
+            users_test.username AS username,
+            users_test.contact AS contact,users_test.reg_type AS  reg_type
+           
+        FROM 
+            (
+                SELECT * 
+                FROM transaction
+                WHERE $subQuery
+            ) AS temp_table
+        JOIN 
+            users_test ON users_test.uid = temp_table.uid
+         LIMIT :offset, :limit
+       
+        ";
+
+             $countSql = "
+                SELECT 
+                    COUNT(*) AS total_count
+                FROM 
+                    transaction
+            WHERE
+                $subQuery
+                ";
+
+        $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
+        $totalRecords = parent::query($countSql);
         $lastQuery = MedooOrm::openLink()->log();
-        $totalRecords  = parent::selectAll('transaction', '*',[
-            'AND' => $whereConditions
-        ]);
-        return ['data' => $data, 'total' => count($totalRecords), 'sql' => $lastQuery[0]];
+        $totalRecords  = $totalRecords[0]['total_count'];
+        return ['data' => $data,  'total' => $totalRecords, 'sql' => $lastQuery[0]];
     }
 
     public static function filterusername(string $username)
@@ -101,7 +117,7 @@ class BusinessFlowModel extends MEDOOHelper
 
     public static function getUsernameById(mixed $userId)
     {
-        $data = parent::query("SELECT username,email,contact FROM users_test WHERE uid = :uid", ['uid' => $userId])[0];
+        $data = parent::query("SELECT username,email,contact,reg_type FROM users_test WHERE uid = :uid", ['uid' => $userId])[0];
         return $data;
     }
 
@@ -166,7 +182,7 @@ class BusinessFlowModel extends MEDOOHelper
         foreach ($res as $tables) {
             $gameTable = $tables['bet_table'];
             $records = parent::query(
-                "SELECT $gameTable.*,users_test.email,users_test.contact,users_test.username,game_type.name As game_type ,game_type.gt_id AS gt_id FROM $gameTable 
+                "SELECT $gameTable.*,users_test.email,users_test.contact,users_test.username,users_test.reg_type,game_type.name As game_type ,game_type.gt_id AS gt_id FROM $gameTable 
              JOIN users_test ON users_test.uid = $gameTable.uid 
              JOIN game_type ON game_type.gt_id = $gameTable.game_type 
              ORDER BY $gameTable.bid DESC 
@@ -207,7 +223,7 @@ class BusinessFlowModel extends MEDOOHelper
         $query = trim($username);  // Clean the input
 
         $data = parent::query(
-            "SELECT uid, username, email,contact
+            "SELECT uid, username, email,contact,reg_type
             FROM users_test
             WHERE (username LIKE :search OR contact LIKE :search OR email LIKE :search)
             ORDER BY 
@@ -242,7 +258,8 @@ class BusinessFlowModel extends MEDOOHelper
             SELECT 
                 temp_table.*, 
                 users_test.email AS email,
-                users_test.username AS username,
+                users_test.username AS username,users_test.contact AS contact,
+                users_test.reg_type AS reg_type,
                 game_type.name AS game_type,
                 game_type.gt_id AS gt_id
             FROM 
@@ -257,11 +274,11 @@ class BusinessFlowModel extends MEDOOHelper
                 game_type ON game_type.gt_id = temp_table.game_type
             LIMIT :offset, :limit
         ";
-        
+
 
             try {
 
-                $result = parent::query($sql, ['offset' => $startpoint,'limit' => $limit]);
+                $result = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
                 if (!empty($result)) {
                     $data = array_merge($data, $result);
                     $totalRecords += count($result);
@@ -310,7 +327,7 @@ class BusinessFlowModel extends MEDOOHelper
             $subQuery = implode(' AND ', $filterConditions);
         }
         // Add ordering and limit to the query
-         $subQuery .= " ORDER BY server_date DESC";
+        $subQuery .= " ORDER BY server_date DESC";
 
         return $subQuery;
     }
@@ -333,27 +350,27 @@ class BusinessFlowModel extends MEDOOHelper
         foreach ($data as &$record) {
             $record['total_prize'] = self::GetTrackWins($record['track_token']);
         }
-    
+
         return ['data' => $data, 'total' => $totalRecords];
     }
 
 
     public static function GetTrackWins($token)
     {
-     
+
         $bettable = self::getAllGameIds();
         $totalPrize = 0;
 
         foreach ($bettable as $tables) {
             $tableName = $tables['bet_table'];
-       
+
             $sql = "SELECT SUM(win_bonus) AS total_prize FROM {$tableName} 
                     WHERE token = :token AND bet_status = 2 AND state = 1";
-            
+
             try {
                 // Execute the query and fetch the data
                 $data = parent::query($sql, ['token' => $token]);
-                
+
                 // If data is returned and total_prize exists, add it to the accumulator
                 if ($data && isset($data[0]['total_prize'])) {
                     $totalPrize += $data[0]['total_prize'];
@@ -363,9 +380,8 @@ class BusinessFlowModel extends MEDOOHelper
                 error_log("Error executing query for table {$tableName}: " . $e->getMessage());
             }
         }
-    
+
         // Return the total prize accumulated from all tables
         return $totalPrize;
     }
-    
 }

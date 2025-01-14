@@ -168,28 +168,17 @@ if ($flag == "fetchTopAgent") {
     $usersLists = [];
     foreach ($result['data'] as $data) {
         $userlogins = (new UserManageModel())->countUserLogs($data['uid']);
-        $referals = (new UserManageModel())->getDirectReferrals($data['agent_id']);
-        $subor = (new UserManageModel())->getSubordinate($data['agent_id']);
         $totalsubordinate = (new UserManageModel())->Fetchsubordinates($data['uid']);
-
         $relationship = '';
-        $subordinates = '';
-
-        if (!empty($data['agent_name']  != "*****") && !empty($subor != "*****") && is_array($subor = !"*****")) {
-            $relationship = $data['agent_name'] . ' ' . $referals . ' ' . $data['username'];
-            $subordinates = (count($subor) > 1) ? '...' : '';
-        } elseif ($data['account_type'] == 2) {
+        if ($data['account_type'] == 2) {
             $relationship = "Top Agent";
         }
 
         // Add data to the user list
         $usersLists[] = array_merge($data, [
             'userlogins' => $userlogins,
-            'referals' => $referals,
-            'subor' => $subor,
             'totalsubordinate' => $totalsubordinate,
             'relationship' => $relationship,
-            'subordinates' => $subordinates
         ]);
     }
 

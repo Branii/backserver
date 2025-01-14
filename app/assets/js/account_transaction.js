@@ -19,7 +19,7 @@ $(function () {
     };
 
     data.forEach((item) => {
-      const username = item.username == '*****' ? item.email :(item.username || item.contact);
+      let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
       // `<?php $phpVariable = "Hello, World!";?>`
       // const jsVariable = '<?php echo $phpVariable; ?>';
 //      console.log(jsVariable); // Output
@@ -34,7 +34,7 @@ $(function () {
                       <td>${item.dateTime}</td>
                       <td>${item.order_id}</td>
                       <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> Complete</td>
-                      <td><i value='${item.order_id}_${item.game_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
+                      <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
                   </tr>
               `;
     });
@@ -56,7 +56,7 @@ $(function () {
   };
 
   const firstRow = {
-    'username': 'Username:',
+    'reg_type': 'Username:',
     'bet_code': 'Bet Order ID:',
     'draw_period': 'Issue Number:',
     'ip_address': 'IP:',
@@ -110,13 +110,13 @@ $(function () {
     }
   }
 
-  async function filterTrasaction(page, pageLimit, username, orderid, ordertype, startdate, enddate) {
+  async function filterTrasaction(username, orderid, ordertype, startdatet, enddatet,currentPage,pageLimit) {
     try {
-      const response = await fetch(`../admin/filtertransactions/${username}/${orderid}/${ordertype}/${startdate}/${enddate}/${page}/${pageLimit}`);
+      const response = await fetch(`../admin/filtertransactions/${username}/${orderid}/${ordertype}/${startdatet}/${enddatet}/${currentPage}/${pageLimit}`);
       const data = await response.json();
 
        console.log(response)
-      //  return
+    //   return
 
       $(".loader").removeClass('bx bx-loader bx-spin').addClass('bx bx-check-double');
       if (data.transactions.length < 1) {
@@ -132,8 +132,8 @@ $(function () {
       render(data.transactions);
 
       // Render pagination
-      renderPagination(data.totalPages, page, pageLimit, 'search', username, orderid, ordertype, startdate, enddate);
-      document.getElementById("paging_info").innerHTML = 'Page ' + page + ' of ' + data.totalPages + ' pages'
+      renderPagination(data.totalPages, currentPage);
+      document.getElementById("paging_info").innerHTML = 'Page ' + currentPage + ' of ' + data.totalPages + ' pages'
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -143,7 +143,8 @@ $(function () {
     try {
       const response = await fetch(`../admin/getTransactionBet/${transactionId}`);
       const data = await response.json();
-
+      console.log(response)
+//  return
       $("#row1").html("")
       $("#row2").html("")
       let html1 = FromTable(firstRow,data)
@@ -156,7 +157,7 @@ $(function () {
     }
   }
 
-  function renderPagination(totalPages, currentPage, pagingType = '', username = '', orderid = '', ordertype = '', startdate = '', enddate = '') {
+  function renderPagination(totalPages, currentPage) {
     const createPageLink = (i, label = i, disabled = false, active = false) =>
       `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
         <a class='page-link' href='#' data-page='${i}'>${label}</a>
@@ -187,7 +188,7 @@ $(function () {
         e.preventDefault();
         const newPage = +this.getAttribute("data-page");
         if (newPage > 0 && newPage <= totalPages) {
-          pagingType === 'search' ? filterTrasaction(newPage, pageLimit, username, orderid, ordertype, startdate, enddate) : fetchTrasaction(newPage,pageLimit);
+         fetchTrasaction(newPage,pageLimit);
         }
       });
     });
@@ -267,29 +268,30 @@ $(function () {
 
   $(document).on('click', '.executetrans', function () {
 
-    if ($("#selected").val() == "" && $(".ordertype").val() == "") {
-      $("#al-danger-alert").modal("show");
-      return
-    }
+    // if ($("#selected").val() == "" && $(".ordertype").val() == "") {
+    //   $("#al-danger-alert").modal("show");
+    //   return
+    // }
 
-    const username = $(".userIdtrans").val().trim();
+    const username = $(".userIdtrans").val()
     const orderid = $(".orderid").val()
     const ordertype = $(".ordertype").val()
-    const startdate = $(".startdate").val()
-    const enddate = $(".enddate").val()
-    console.log(username)
+    const startdatet = $(".startdatet").val()
+    const enddatet = $(".enddatet").val()
+    console.log(enddate)
     $(".loader").removeClass('bx-check-double').addClass('bx-loader bx-spin');
     setTimeout(() => {
-      filterTrasaction(currentPage, username, orderid, ordertype, startdate, enddate);
+    filterTrasaction(username, orderid, ordertype, startdatet, enddatet,currentPage,pageLimit)
     }, 100);
   })
 
   $(document).on('click', '.tinfo', function () {
     $("#signup-modal").modal("show");
     const transactionId = $(this).attr('value')
-    // console.log(transactionId)
-    $("#row1").html("")
-    $("#row2").html("")
+     console.log(transactionId)
+
+    $("#row1").empty()
+    $("#row2").empty()
     fetchTrasactionBet(transactionId);
 
   })
@@ -378,14 +380,21 @@ $(function () {
           try {
               response = typeof response === 'string' ? JSON.parse(response) : response;
 
-              const filteredUsers = response.flatMap(item => [
-                  { "uid": item.uid, "username": item.username },
-                  { "uid": item.uid, "username": item.email },
-                  { "uid": item.uid, "username": item.contact }
-              ]).filter(user => user.username !== '*****');
-
-              filteredUsers.forEach(user => {
-                  optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${user.username}">${user.username}</option>`;
+              response.forEach(user => {
+                let   displayusername;
+                let regusername;
+                 // Display based on regtype
+                 if (user.regtype === "email") {
+                  displayusername = user.email;
+                  regusername = user.email;  // Show email
+                 } else if (user.regtype === "username") {
+                  displayusername = user.username;
+                  regusername = user.username;  // Show username
+                 } else if (user.regtype === "contact") {
+                  displayusername = user.contact;
+                  regusername  = user.contact;  // Show contact
+                 }
+                  optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regusername}">${displayusername}</option>`;
               });
 
               $('.useraccount').html(optionsHtml).show();

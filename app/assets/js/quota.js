@@ -61,7 +61,7 @@ $(function () {
 
   $(".refreshquota").click(function () {
     $(".queryholderlogs").val("");
-    $("#masklogs").LoadingOverlay("show", {
+    $("#maskquota").LoadingOverlay("show", {
       background: "rgb(90,106,133,0.1)",
       size: 3,
     });

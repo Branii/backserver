@@ -286,9 +286,9 @@
         <option value="11"><?= $translator['Bet Refund']; ?></option>
         </select>
 
-        <input type="date" class="form-control queryholder startdate" id="nameext1" aria-describedby="name" placeholder="Name" />
+        <input type="date" class="form-control queryholder startdatet" id="namekext1" aria-describedby="name" placeholder="Name" />
 
-        <input type="date" class="form-control queryholder enddate" id="nametex" aria-describedby="name" placeholder="Name" />
+        <input type="date" class="form-control queryholder enddatet" id="namehtex" aria-describedby="name" placeholder="Name" />
 
       </div>
     </span>

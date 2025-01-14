@@ -8,8 +8,9 @@ $lang = $_SESSION['lang'];
 $translator = include "tabs/lang/{$lang}.php";
 // print_r($translator);
 !(new Controller)->isUserLoggedIn() ? header("location:../") : "";
-// $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
-// echo $adminEmail;
+ $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
+ $fullname = (new Controller)->getUsername($adminEmail);
+// echo $fullname['full_name'];
 ?>
 <!DOCTYPE html>
 <html oncontextmenu="return falsex" lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme"
@@ -157,8 +158,8 @@ $translator = include "tabs/lang/{$lang}.php";
                 class="rounded-circle" width="40" height="40" alt="modernize-img" />
             </div>
             <div class="john-title">
-              <h6 class="mb-0 fs-4 fw-semibold">Kofi Benson</h6>
-              <span class="fs-2">Designer</span>
+              <h6 class="mb-0 fs-4 fw-semibold"><?php echo $fullname['full_name']; ?></h6>
+              <span class="fs-2"><?php echo $fullname['role']; ?></span>
             </div>
             <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
               <div class="dropdown" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top"

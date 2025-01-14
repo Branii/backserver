@@ -17,8 +17,8 @@ class App extends Controller
 
         if (!empty($request)) {
             $url = explode("/", $request);
-            //  print_r($url);
-            //  exit;
+         //    print_r($url);
+              //exit;
 
             $this->AdminController = isset($url[2]) ? $url[2] . "Controller" : "adminController";
             $this->action = isset($url[3]) ? $url[3] : "index";
@@ -33,8 +33,8 @@ class App extends Controller
 
                     call_user_func_array([$this->AdminController, $this->action], $this->params);
                 } else {
-                   // (new adminController)->notfound();
-                    //echo "Method '{$this->action}' not found in '{$this->AdminController}'";
+                  //  (new adminController)->notfound();
+                  //  echo "Method '{$this->action}' not found in '{$this->AdminController}'";
                 }
 
             } else {
