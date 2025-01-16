@@ -215,13 +215,6 @@ session_start();;
     clip-path: inset(0 0 0 100%);
   }
 }
-
-#background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -100;
-}
  
   </style>
 </head>
@@ -231,7 +224,6 @@ session_start();;
   <!-- <div class="preloader">
     <img src="<?php echo BASE_URL; ?>assets/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
   </div> -->
-  <canvas id="background"></canvas>
   <div id="main-wrapper" class="auth-customizer-none">
     <div class="position-relative overflow-hidden min-vh-100 w-100 d-flex align-items-center justify-content-center">
       <div class="d-flex align-items-center justify-content-center w-100">
@@ -240,7 +232,7 @@ session_start();;
               <!-- start Sample Form with the Icons -->
      
 
-              <div class="card col-md-8 col-lg-6 col-xxl-4" style="border-width: 1px 1px 50px 1px;  border-color:#ccc; box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;">
+              <div class="card col-md-8 col-lg-6 col-xxl-3" style="border-width: 1px 1px 50px 1px;  border-color:#ccc; box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;">
               
               <div id="wifi-loader">
     <svg class="circle-outer" viewBox="0 0 86 86">
@@ -257,7 +249,7 @@ session_start();;
         <circle class="front" cx="17" cy="17" r="14"></circle>
     </svg>
     <div class="text" data-text="">o</div>
-              </div>
+</div>
               
               
               <div class="card-body" >
@@ -328,7 +320,6 @@ session_start();;
   <script src="<?php echo BASE_URL; ?>assets/js/theme.js"></script>
   <script src="<?php echo BASE_URL; ?>assets/js/admin.js"></script>
   <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
-  <script src="<?php echo BASE_URL; ?>assets/js/background.js"></script>
   <!-- solar icons -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
 </body>

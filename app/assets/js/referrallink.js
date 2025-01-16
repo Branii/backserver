@@ -5,7 +5,7 @@ $(function () {
       let html = "";
      
     data.forEach((item) => {
-    
+      const username = item.username == '*****' ? item.email :(item.username ||item.contact);
         html += `
                     <tr>
                         <td>${item.agent_name}</td>
@@ -35,7 +35,7 @@ $(function () {
         const data = await response.json();
         // console.log(response);   
         // return
-        $("#masklinkss").LoadingOverlay("hide")
+        $("#masklinks").LoadingOverlay("hide")
         renderuserlinks(data.userlinks);
   
         // Render pagination
@@ -150,7 +150,7 @@ $(function () {
   
     $(".refreshlinks").click(function () {
       // $(".queryholderlogs").val("")
-      $("#masklinkss").LoadingOverlay("show", {
+      $("#masklinks").LoadingOverlay("show", {
         background: "rgb(90,106,133,0.1)",
         size: 3
       });

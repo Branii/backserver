@@ -170,17 +170,27 @@ $(function () {
         $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
             try {
                 response = typeof response === 'string' ? JSON.parse(response) : response;
-    
-                const filteredUsers = response.flatMap(item => [
-                    { "uid": item.uid, "username": item.username },
-                    { "uid": item.uid, "username": item.email},
-                    { "uid": item.uid, "username": item.contact}
-                ]).filter(user => user.username !== '*****');
-    
-                filteredUsers.forEach(user => {
-                    optionsHtml += `<option class="optionlist" value="${user.uid}" data-usernames="${user.username}">${user.username}</option>`;
-                });
-    
+
+                console.log(response);
+              
+          response.forEach(user => {
+           let   displayValue;
+           let regname;
+            // Display based on regtype
+            if (user.regtype === "email") {
+               displayValue = user.email;
+               regname = user.email;  // Show email
+            } else if (user.regtype === "username") {
+              displayValue = user.username;
+              regname = user.username;  // Show username
+            } else if (user.regtype === "contact") {
+              displayValue = user.contact;
+              regname  = user.contact;  // Show contact
+            }
+          
+              // Append the option to the optionsHtml string
+              optionsHtml += `<option class="optioknlist" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
+          });
                 $('.financeDropdowns').html(optionsHtml).show();
             } catch (error) {
                 console.error("Error parsing response: ", error);
@@ -219,6 +229,7 @@ $(function () {
       );
     });
     
+
 
     let debounceTimeouts = null;
 
@@ -264,15 +275,21 @@ $(function () {
         $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
             try {
                 response = typeof response === 'string' ? JSON.parse(response) : response;
-    
-                const filteredUsers = response.flatMap(item => [
-                    { "uid": item.uid, "username": item.username },
-                    { "uid": item.uid, "username": item.email },
-                    { "uid": item.uid, "username": item.contact}
-                ]).filter(user => user.username !== '*****');
-    
-                filteredUsers.forEach(user => {
-                    optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${user.username}">${user.username}</option>`;
+                response.forEach(user => {
+                  let   displayValues;
+                  let regnames;
+                   // Display based on regtype
+                   if (user.regtype === "email") {
+                      displayValues = user.email;
+                      regnames = user.email;  // Show email
+                   } else if (user.regtype === "username") {
+                     displayValues = user.username;
+                     regnames = user.username;  // Show username
+                   } else if (user.regtype === "contact") {
+                     displayValues = user.contact;
+                     regnames  = user.contact;  // Show contact
+                   }
+                    optionsHtml += `<option class="optlpionlist" value="${user.uid}" data-username="${regnames}">${displayValues}</option>`;
                 });
     
                 $('.financeDropdown').html(optionsHtml).show();

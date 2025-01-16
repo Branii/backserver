@@ -118,16 +118,13 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function filtertransactions($username ='',$orderid ='',$ordertype ='',$startdate ='',$enddate ='',$pageNumber,$limit){
+    public function filtertransactions($username,$orderid,$ordertype,$startdate,$enddate,$pageNumber,$limit){
         $this->view('exec/businessflow',[
-            'username' => $username,
-            'orderid' => $orderid,
-            'ordertype' => $ordertype,
-            'startdate' => $startdate,
-            'enddate' => $enddate, 
-            'flag' => 'filtertransactions',
-            'page'=>$pageNumber,
-            'limit'=>$limit,
+            'username' => $username,'orderid' => $orderid,
+            'ordertype' => $ordertype,'startdate' => $startdate,
+            'enddate' => $enddate, 'flag' => 'filtertransactions',
+            'page'=>$pageNumber,'limit'=>$limit,
+
         ]);
         $this->view->render();
     }

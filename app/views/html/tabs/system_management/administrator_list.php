@@ -289,7 +289,7 @@
               <h6 class="fs-4 fw-semibold mb-0">Mobile Number</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">2FA Enabled</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Two Factor Enabled</h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0">Activity Role</h6>
@@ -396,43 +396,43 @@
 
                 <div class="d-flex align-items-center">
                   <a href="javascript:void(0)">
-                    <img src="<?php echo BASE_URL; ?>assets/images/profile/user-1.jpg" value="user-1.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-1.jpg" value="user-1.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
                     <i class='bx bxs-check-circle ava' style="font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
                   </a>
                   <a href="javascript:void(0)">
-                    <img src="<?php echo BASE_URL; ?>assets/images/profile/user-2.jpg" value="user-2.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-2.jpg" value="user-2.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
                     <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
                   </a>
                   <a href="javascript:void(0)">
-                    <img src="<?php echo BASE_URL; ?>assets/images/profile/user-3.jpg" value="user-3.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-3.jpg" value="user-3.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
                     <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
                   </a>
                   <a href="javascript:void(0)">
-                    <img src="<?php echo BASE_URL; ?>assets/images/profile/user-4.jpg" value="user-4.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-4.jpg" value="user-4.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
                     <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
                   </a>
                   <a href="javascript:void(0)">
-                    <img src="<?php echo BASE_URL; ?>assets/images/profile/user-5.jpg" value="user-5.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-5.jpg" value="user-5.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
                     <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
                   </a>
                   <a href="javascript:void(0)">
-                    <img src="<?php echo BASE_URL; ?>assets/images/profile/user-6.jpg" value="user-6.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-6.jpg" value="user-6.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
                     <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
                   </a>
                   <a href="javascript:void(0)">
-                    <img src="<?php echo BASE_URL; ?>assets/images/profile/user-7.jpg" value="user-7.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-7.jpg" value="user-7.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
                     <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
                   </a>
                   <a href="javascript:void(0)">
-                    <img src="<?php echo BASE_URL; ?>assets/images/profile/user-8.jpg" value="user-8.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-8.jpg" value="user-8.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
                     <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
                   </a>
                   <a href="javascript:void(0)">
-                    <img src="<?php echo BASE_URL; ?>assets/images/profile/user-9.jpg" value="user-9.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-9.jpg" value="user-9.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
                     <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
                   </a>
                   <a href="javascript:void(0)">
-                    <img src="<?php echo BASE_URL; ?>assets/images/profile/user-10.jpg" value="user-10.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-10.jpg" value="user-10.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
                     <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
                   </a>
                 </div>

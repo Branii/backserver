@@ -25,7 +25,7 @@ $(function () {
       };
   
       data.forEach((item) => {
-        let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
+        const username = item.username == '*****' ? item.email :(item.username ||item.contact);
         htmls += `
                       <tr>
                           <td>${item.track_token}</td>
@@ -128,7 +128,7 @@ $(function () {
     //    console.log(response);
     //    return;
   
-        $("#masktracks").LoadingOverlay("hide");
+        $("#masktrack").LoadingOverlay("hide");
   
         // Render table data
         rendertrack(data.trackbet);
@@ -192,7 +192,7 @@ $(function () {
     fetchtrackdata(currentPagetrack);
   
   
-    $(".playertrack").click(function () {
+    $(".playerbet").click(function () {
       let direction = $(this).val();
       const tableWrapper = $(".table-wrappertrack");
       const tableWrappers = document.querySelector(".table-wrappertrack");
@@ -202,17 +202,17 @@ $(function () {
       };
       if (tableWrapper.length) {
         switch (direction) {
-          case "beteftt":
+          case "beteft":
             tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
             break;
-          case "betrightt":
+          case "betright":
             tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
             break;
-          case "betstartt":
+          case "betstart":
             // Scroll to the absolute start (leftmost position)
             tableWrapper.animate({ scrollLeft: 0 }, "slow");
             break;
-          case "betendt":
+          case "betend":
             const maxScrollLeft =
               tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
             tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
@@ -225,13 +225,12 @@ $(function () {
   
     
     $(".trackrefresh").click(function () {
-      // $('.queryholderlist').val('');
-      $("#masktracks").LoadingOverlay("show", {
+      $('.queryholderlist').val('');
+      $("#masktrack").LoadingOverlay("show", {
         background: "rgb(90,106,133,0.1)",
         size: 3,
       });
-      fetchtrackdata(currentPagetrack);
-  
+      fetchLotteryBet(currentPagetrack);
     });
   
     $(".executetrack").click(function () {

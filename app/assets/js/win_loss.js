@@ -118,17 +118,18 @@ let debounceTimeout = null;
     $(document).on('click', '.fetch-user-win-loss', function () {
         const userName  = $("#wl-username").attr("data-user-id");
 
-        if(userName == undefined || $("#wl-username").val() === ""){
+        if(userName == undefined){
             console.log("Please No User selected.");
             return;
         }
-       
         let lotteryID = $("#wl-lottery").attr("data-lot-id");
         let startDate = $("#startdate").val();
         let endDate   = $("#enddate").val();
-        
+        if(lotteryID != undefined){
+            if(lotteryID.length == 0) return;
+        }
 
-        lotteryID = lotteryID == undefined || $("#wl-lottery").val() == "" ?  "all" : lotteryID;
+        lotteryID = lotteryID == undefined ?  "all" : lotteryID;
         startDate = startDate.length != 0 ? startDate : "all";
         endDate   = endDate.length != 0 ? endDate : "all";
 
@@ -136,7 +137,7 @@ let debounceTimeout = null;
             url: `../admin/searchWinLossUser/${userName}/${lotteryID}/${startDate}/${endDate}/`,
             type: "POST",
             beforeSend: function(){
-                   $(".fetch-user-win-loss").find("i").removeClass("bx bx-check-double").addClass("bx bx-loader bx-spin");
+                    $("#win-loss-loader").css('display', 'flex');
             },
             success: function(response){
                 $("#subs-back-btn").hide();
@@ -158,7 +159,7 @@ let debounceTimeout = null;
                     htmlMarkup += getUserRowMarkup(data);
                 }); 
                 $("#winLossDtholder").html(htmlMarkup);
-                 historyStack.push(htmlMarkup); // store the dtholder html in the history stack
+                // historyStack = [htmlMarkup];
                 // pagesStack = [];
                 
                 },
@@ -166,7 +167,7 @@ let debounceTimeout = null;
                 console.log("An error occured: " );
             },
             complete: function(){
-                   $(".fetch-user-win-loss").find("i").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+                    $("#win-loss-loader").css('display', 'none');
             }
         });
 
@@ -217,7 +218,7 @@ let debounceTimeout = null;
 
         
         
-        lotteryID = lotteryID == undefined || $("#wl-lottery").val() == "" ?  "all" : lotteryID;
+        lotteryID = lotteryID == undefined || lotteryID == "" ?  "all" : lotteryID;
         startDate = startDate.length != 0 ? startDate : "all";
         endDate   = endDate.length != 0 ? endDate : "all";
 
@@ -225,7 +226,7 @@ let debounceTimeout = null;
                 url: `../admin/get_top_agents/${lotteryID}/${startDate}/${endDate}/${page}}`,
                 type: "POST",
                 beforeSend: function(){
-                      $(".top-agents-btn").find("i").removeClass("bxs-user-account bx bx-check-double").addClass("bx bx-loader bx-spin");
+                      $("#win-loss-loader").css('display', 'flex');
                 },
                 success: function(response){
                      $("#subs-back-btn").hide();
@@ -248,14 +249,14 @@ let debounceTimeout = null;
                     htmlMarkup += getUserRowMarkup(data);
                 }); 
                 $("#winLossDtholder").html(htmlMarkup);
-                 historyStack.push(htmlMarkup); // store the dtholder html in the history stack
+                // historyStack = [htmlMarkup];
                 // pagesStack = [];
                 },
                 error: function(xhr,status,error){
                     console.log("An error occured: " );
                 },
                 complete: function(){
-                    $(".top-agents-btn").find("i").removeClass("bx bx-loader bx-spin").addClass("bxs-user-account bx bx-check-double");
+                     $("#win-loss-loader").css('display', 'none');
                 }
         });
 });
@@ -264,21 +265,16 @@ let debounceTimeout = null;
  // handle the back button action
     $(document).on("click",".get-user-details-btn",function(){
 
-            let lotteryID   = $("#wl-lottery").attr("data-lot-id");
-            let startDate   = $("#startdate").val();
-            let endDate     = $("#enddate").val();
+            const lotteryID = $("#wl-lottery").attr("data-lot-id");
+            const startDate = $("#startdate").val();
+            const endDate   = $("#enddate").val();
             const agentID   = $("#winLossDtholder").find('tr:first-child').attr("id").split("-")[2];
-
-       
-            lotteryID = lotteryID == undefined || $("#wl-lottery").val() == "" ?  "all" : lotteryID;
-            startDate = startDate.length != 0 ? startDate : "all";
-            endDate   = endDate.length != 0 ? endDate : "all";
 
                 $.ajax({
                     url: `../admin/get_user_details/${agentID}/${lotteryID}/${startDate}/${endDate}//}`,
                     type: "POST",
                     beforeSend: function(){
-                        $(".get-user-details-btn").find("i").removeClass("bx bxs-user").addClass("bx bx-loader bx-spin");
+                        $("#win-loss-loader").css('display', 'flex');
                     },
                     success: function(response){
                     console.log(response);
@@ -293,13 +289,13 @@ let debounceTimeout = null;
 
                     // add the the tbody html with the new accumulated html markup
                     $("#winLossDtholder").html(getUserRowMarkup(response));
-                     historyStack.push($("#winLossDtholder").html()); // store the dtholder html in the history stack
+                    
                     },
                     error: function(xhr,status,error){
                         console.log("An error occured: " );
                     },
                     complete: function(){
-                        $(".get-user-details-btn").find("i").removeClass("bx bx-loader bx-spin").addClass("bx bxs-user");
+                        $("#win-loss-loader").css('display', 'none');
                     }
             });
 });
@@ -311,9 +307,8 @@ let debounceTimeout = null;
         $("#wl-username").val("");
         $("#wl-lottery").attr("data-lot-id","");
         $("#wl-lottery").val("");
-        $("#startdate").val("");
-        $("#enddate").val("");
-        $(".get-user-details-btn").addClass("btn-disabled");
+        $("#startdate").val();
+        $("#enddate").val();
         $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
 
 });
@@ -324,61 +319,52 @@ let debounceTimeout = null;
     // Get Subs
     $(document).on("click", ".get-subs-btn", function () {
 
-            let lotteryID   = $("#wl-lottery").attr("data-lot-id");
-            let startDate   = $("#startdate").val();
-            let endDate     = $("#enddate").val();
+            const lotteryID = $("#wl-lottery").attr("data-lot-id");
+            const startDate = $("#startdate").val();
+            const endDate   = $("#enddate").val();
             const agentID   = $(this).closest('tr').attr("id").split("-")[2];
             const page      = 1;
-            const element   = $(this).closest('tr');
-
-
-            lotteryID = lotteryID == undefined || $("#wl-lottery").val() == "" ?  "all" : lotteryID;
-            startDate = startDate.length != 0 ? startDate : "all";
-            endDate   = endDate.length != 0 ? endDate : "all";
 
                 $.ajax({
                     url: `../admin/get_subs/${agentID}/${lotteryID}/${startDate}/${endDate}/${page}}`,
                     type: "POST",
                     beforeSend: function(){
-                       $(element).find("i").removeClass("bx bxs-user-account").addClass("bx bx-loader bx-spin");
+                        $("#win-loss-loader").css('display', 'flex');
                     },
                     success: function(response){
-                        console.log(response);
-                   response  = JSON.parse(response); // parse the response server
-                    const data = response.response;
-                    const totalCount = response.numSubs;
-                        
+                    response  = JSON.parse(response); // parse the response server
+                
                     
-                   
+                    historyStack =  [$("#winLossDtholder").html()]; // store the dtholder html in the history stack
                     if($(".back-btn").hasClass("btn-disabled")) $(".back-btn").removeClass("btn-disabled"); // enable the back button to traverse through the history stack
                     
 
                     if(!$(".get-user-details-btn").hasClass("btn-disabled")) $(".get-user-details-btn").addClass("btn-disabled"); // disable the get user details button
 
-                    if(data.length == 0){
+                    if(response.length == 0){
                         // show the empty response placeholder
                         $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
-                   
+                    
+                    
+                    
                         return; 
                     }
 
                     // accumulate the subs html 
                     let htmlMarkup = "";
-                    data.forEach((data) => {
+                    response.forEach((data) => {
                         htmlMarkup += getUserRowMarkup(data);
                     }); 
 
                     // add the the tbody html with the new accumulated html markup
                     $("#winLossDtholder").html(htmlMarkup);
-                    historyStack.push($("#winLossDtholder").html()); // store the dtholder html in the history stack
-                        console.log(historyStack.length);
                     // pagesStack = [];
                     },
                     error: function(xhr,status,error){
                         console.log("An error occured: " );
                     },
                     complete: function(){
-                        $(element).find("i").removeClass("bx bx-loader bx-spin").addClass("bx bxs-user-account");
+                        $("#win-loss-loader").css('display', 'none');
                     }
             });
     });
@@ -391,7 +377,7 @@ let debounceTimeout = null;
             
             $("#winLossDtholder").html(lastHistory); // re-add the previous history html to the win loss dtHolder
             $("#win-loss-pages-wrapper").html(latestPage); // re-add the previous pages html to the pages wrapper
-            console.log(historyStack.length);
+            
             if(historyStack.length === 0){
                 $(".back-btn").addClass("btn-disabled"); // if the history stack is empty, disable the back button
                 if($($("#winLossDtholder").find("tr:first-child")[0]).attr('data-acc-type') == "agent" && $("#winLossDtholder").children().length === 1){
@@ -412,22 +398,12 @@ const  fetchbetUser = (query) =>{
     $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
         try {
              const getDisplayName = (user) => {
-                //  if(user.username !== "" && user.username != undefined && user.username !== "*****") return user.username;
-                //  if(user.email !== undefined && user.email != "") return user.email;
-                //  if(user.contact != undefined && user.contact != "") return user.contact;
-
-                if(user.username.includes(query.trim())) return user.username;
-                if(user.email.includes(query.trim())) return user.email;
-                if(user.contact.includes(query.trim())) return user.contact;
+                 if(user.username !== "" && user.username != undefined && user.username !== "*****") return user.username;
+                 if(user.email !== undefined && user.email != "") return user.email;
+                 if(user.contact != undefined && user.contact != "") return user.contact;
             };
             response = typeof response === 'string' ? JSON.parse(response) : response;
             console.log(response);
-            if(response.length === 1 && Object.keys(response).length == 1 && response[0].username.length === 0){
-                $('#user-list-wrapper').html(`<li class="name-items">No users found.</li>`);
-                $(".usr-res-wrapper").show();
-                $("#wl-username").attr("data-user-id",'');
-                return;
-            }
             for (let index = 0; index < response.length; index++) {
                 const user = response[index];
                 const username = getDisplayName(user);
@@ -460,12 +436,7 @@ const fetchLotteryname = (lotteryName) => {
             };
             response = typeof response === 'string' ? JSON.parse(response) : response;
             console.log(response);
-           if(response.length === 0){
-                $('#lot-list-wrapper').html(`<li class="name-items">No users found.</li>`);
-                $(".lot-res-wrapper").show();
-                $("#wl-lottery").attr("data-lot-id",'');
-                return;
-            }
+           
             for (let index = 0; index < response.length; index++) {
                 const lot = response[index];
                 optionsHtml += `<li class="name-items" data-lot-id="${lot.gt_id}" data-lot-name="${lot.name}">${lot.name}</li>`;

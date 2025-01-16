@@ -1,11 +1,6 @@
 <?php
 // declare(strict_types=1);
 // header('Content-Type: application/json');
-// ini_set("display_errors",1);
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
@@ -34,35 +29,78 @@ if ($flag == "transactiondata") {
 }
 
 
+if ($flag == "transactionBet"){
+
+    $transactionId = isset($this->viewData['transactionId']) ? $this->viewData['transactionId'] : null;
+ 
+    $data = explode("_",$transactionId);
+    
+    $betTable = (new BusinessFlowModel())->getTables()[$data[1]]['bet_table'];
+    $drawTable = (new BusinessFlowModel())->getTables()[$data[1]]['draw_table'];
+    $result = (new BusinessFlowModel())->getBetDataByTransactionBet($betTable,$data[0])[0] ?? [];
+    $close_and_opentimes = (new BusinessFlowModel())->getOpenAndCloseTimesByPeriod($result['bet_period'], $drawTable)[0] ?? [];
+    $userData = (new BusinessFlowModel())->getUsernameById($result['uid']);
+
+    if ($userData['reg_type'] == 'username') {
+        $username = $userData['username'];
+    } elseif ($userData['reg_type'] == 'contact') {
+        $username = $userData['contact'];
+    } else {
+        $username = $userData['email'];
+    }
+    // Assign the determined value to the reg_type field
+    $result['reg_type'] = $username;
+
+    $result['opening_time'] = $close_and_opentimes['opening_time'] ?? '';
+    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? '';
+    $result['draw_number'] = $close_and_opentimes['draw_number'] ?? '';
+    
+    echo  json_encode($result);
+
+}
+
+
 if ($flag == "lotterydata") {
 
     $page  = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $result = (new BusinessFlowModel())->fetchBetRecordsFast($page, $limit) ?? [];
+    $result = (new BusinessFlowModel())->fetchBetRecords($page, $limit) ?? [];
     echo json_encode([
         'lotterybet' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit)
     ]);
 }
 
+
 if ($flag == "filtertransactions") {
-    $page = (int) isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
-    $limit = (int) isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
     $orderid = isset($this->viewData['orderid']) ? $this->viewData['orderid'] : '';
     $ordertype = isset($this->viewData['ordertype']) ? $this->viewData['ordertype'] : '';
     $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
     $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
+    $sunquery =  (new BusinessFlowModel())->FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
+    $result = (new BusinessFlowModel())->FilterTrsansactionData($sunquery,$page,$limit) ?? [];
 
-    $result =  (new BusinessFlowModel())->filterAccountTransaction($page, $limit, $username, $orderid, $ordertype, $startdate, $enddate);
-    //echo json_encode($result);
+    // $bigArr = [];
+    // foreach ($result['data'] as $value) {
+    //     $username = (new BusinessFlowModel())->getUsernameById($value['uid']);
+    //     $email = (new BusinessFlowModel())->getUsernameById($value['uid']);
+    //     $contact = (new BusinessFlowModel())->getUsernameById($value['uid']);
+    //     $value['username'] = $username['username'];
+    //     $value['email'] = $email['email'];
+    //     $value['contact'] = $contact['contact'];
+    //     $bigArr[] = $value;
+    // }
+
     echo json_encode([
+        'sql' => $result['sql'],
         'transactions' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit)
     ]);
 
 }
-
 if ($flag == "viewBetstake") {
 
     $betcode  = isset($this->viewData['betcode']) ? (int) $this->viewData['betcode'] : null;
@@ -71,14 +109,22 @@ if ($flag == "viewBetstake") {
     $drawTable = (new BusinessFlowModel())->getTables()[$gametype]['draw_table'];
     $result = (new BusinessFlowModel())->getBetDataByTransactionBet($betTable, $betcode)[0] ?? [];
     $close_and_opentimes = (new BusinessFlowModel())->getOpenAndCloseTimesByPeriod($result['bet_period'], $drawTable)[0] ?? [];
-    $username = (new BusinessFlowModel())->getUsernameById($result['uid'])['username'];
-    $nickname = (new BusinessFlowModel())->getUsernameById($result['uid'])['nickname'];
-    $usernames = ($username == "*****") ? $nickname : $username;
+    $userData = (new BusinessFlowModel())->getUsernameById($result['uid']);
+    if ($userData['reg_type'] == 'username') {
+        $username = $userData['username'];
+    } elseif ($userData['reg_type'] == 'contact') {
+        $username = $userData['contact'];
+    } else {
+        $username = $userData['email'];
+    }
+    // Assign the determined value to the reg_type field
+    $result['reg_type'] = $username;
+
     $lotteryname = (new BusinessFlowModel())->getLottery($result['game_type'])['name'];
     $betStatusMap = [2 => 'Win', 3 => 'Lost', 5 => 'Pending', 6 => 'Bet Cancelled', 7 => 'Refund'];
     $datta = json_decode($result['bet_odds'], true);  // Decode JSON
     $betodds = reset($datta) * $result['multiplier']  * $result['unit_stake'];
-    $result['username'] = $usernames;
+    // $result['username'] = $usernames;
     $result['opening_time'] = $close_and_opentimes['opening_time'] ?? '';
     $result['closing_time'] = $close_and_opentimes['closing_time'] ?? '';
     $result['draw_number'] = $close_and_opentimes['draw_number'] ?? '';
@@ -107,6 +153,7 @@ if ($flag == "searchusername") {
             'username' => $value['username'],  // 'username' value
             'email' => $value['email'],
             'contact' => $value['contact'],  // 'nickname' value
+            'regtype' => $value['reg_type'],  // 'nickname' value
         ];
         $results[] = $data;  // Append the formatted result to the $results array
     }

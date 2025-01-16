@@ -39,7 +39,7 @@ $(function () {
                         <td>VIP</td>
                         <td>${item.relationship}</td>
                         <td>${item.totalsubordinate}</td>
-                        <td>${Number(item.balance).toFixed(4)}</td> 
+                        <td>${item.balance}</td> 
                         <td>${item.rebate}</td>
                         <td>${item.created_at}</td>
                         <td>${status[item.user_state]}</td>
@@ -186,23 +186,6 @@ $(function () {
     }
   }
 
-  // async function fetchTrasactionBet(transactionId) {
-  //   try {
-  //     const response = await fetch(`../admin/getTransactionBet/${transactionId}`);
-  //     const data = await response.json();
-
-  //     $("#row1").html("")
-  //     $("#row2").html("")
-  //     let html1 = FromTable(firstRow,data)
-  //     let html2 = FromTable(secondRow,data)
-  //     $("#row1").html(html1)
-  //     $("#row2").html(html2)
-
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // }
-
   function renderPaginationlist(
     totalPages,
     currentPagelist,
@@ -302,44 +285,122 @@ $(function () {
     fetchUserlist(currentPagelist);
   });
 
-  let timeout;
-  let userIdd;
-  function performSearch() {
-    const querys = $("#selectuserlist").val();
-    console.log(querys)
-    // return
-    $.post(`../admin/filterusername/${querys}`, function (response) {
+  // let timeout;
+  // let userIdd;
+  // function performSearch() {
+  //   const querys = $("#selectuserlist").val();
+  //   console.log(querys)
+  //   // return
+  //   $.post(`../admin/filterusername/${querys}`, function (response) {
    
       
-      if (typeof response === "string") {
-        $(".queryholderxx").hide();
-      } else if (typeof response === "object") {
-        let html = "";
-        // Sort users alphabetically by username
-        response.sort((a, b) => a.username.localeCompare(b.username));
-        // Generate HTML for the select options
-        response.forEach((user) => {
-          html += `<li value="" class="optionlist">${user.username}</li>`;
+  //     if (typeof response === "string") {
+  //       $(".queryholderxx").hide();
+  //     } else if (typeof response === "object") {
+  //       let html = "";
+  //       // Sort users alphabetically by username
+  //       response.sort((a, b) => a.username.localeCompare(b.username));
+  //       // Generate HTML for the select options
+  //       response.forEach((user) => {
+  //         html += `<li value="" class="optionlist">${user.username}</li>`;
+  //       });
+
+  //       // Insert the generated options into the <select> element
+  //       $(".queryholderxx").html(html).show();
+  //     }
+  //   });
+  // }
+
+  // $(document).on("input", "#selectuserlist", function () {
+  //   clearTimeout(timeout);
+  //   $(".userIds").val("");
+  //   timeout = setTimeout(performSearch, 300);
+  // });
+
+  // $(document).on("click", ".optionlist", function () {
+  //   $("#selectuserlist").val($(this).text());
+  //   userIdd = $(this).attr("value");
+  //   $(".userIds").val(userIdd);
+  //   $(".queryholderxx").hide();
+  // });
+
+  let debounceTimeouts = null;
+
+    $(document).ready(function () {
+        // Event listener for keyup on #myInput
+        $(document).on('keyup', '#selectuserlist', function () {
+            const query = $(this).val().trim();
+    
+            // Only trigger if input is more than 2 characters
+            if (query.length > 1) {
+                clearTimeout(debounceTimeouts); // Clear any existing timeout
+                debounceTimeout = setTimeout(fetchUsers, 500, query); // Call fetchUsers with the query after 500ms delay
+            } else {
+                $('.queryholderuserlist').hide(); // Hide dropdown if input is less than 3 characters
+            }
         });
-
-        // Insert the generated options into the <select> element
-        $(".queryholderxx").html(html).show();
-      }
+    
+        // Handle dropdown item selection
+        $(document).on('change', '.queryholderuserlist', function () {
+            const selectedOption = $(this).find('option:selected');
+            const selectedUserId = selectedOption.val();
+            const selectedUsername = selectedOption.data('username');
+            console.log(selectedUserId)
+    
+            if (selectedUserId) {
+                $('#selectuserlist').val(selectedUsername);
+                $('.userIds').val(selectedUserId);
+                $('.queryholderuserlist').hide();
+            }
+        });
+    
+        // Handle manual input clearing
+        $(document).on('input', '#selectuserlist', function () {
+            if (!$(this).val()) {
+                $('.userIds').val(''); // Reset user ID if input is cleared
+            }
+        });
     });
-  }
+    
+    // Function to fetch and display users
+    function fetchUsers(query) {
+        let optionsHtml = '';
+    
+        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+            try {
+                response = typeof response === 'string' ? JSON.parse(response) : response;
+                response.forEach(user => {
+                  let   displayValues;
+                  let regnames;
+                   // Display based on regtype
+                   if (user.regtype === "email") {
+                      displayValues = user.email;
+                      regnames = user.email;  // Show email
+                   } else if (user.regtype === "username") {
+                     displayValues = user.username;
+                     regnames = user.username;  // Show username
+                   } else if (user.regtype === "contact") {
+                     displayValues = user.contact;
+                     regnames  = user.contact;  // Show contact
+                   }else{
+                    displayValues = "no data found.."
+                   }
+                    optionsHtml += `<option class="optlpionlist" value="${user.uid}" data-username="${regnames}">${displayValues}</option>`;
+                });
+    
+                $('.queryholderuserlist').html(optionsHtml).show();
+            } catch (error) {
+                console.error("Error parsing response: ", error);
+                $('.queryholderuserlist').hide();
+            }
+        }).fail(function () {
+            console.error("Error fetching users.");
+            $('.queryholderuserlist').hide();
+        });
+    }
 
-  $(document).on("input", "#selectuserlist", function () {
-    clearTimeout(timeout);
-    $(".userIds").val("");
-    timeout = setTimeout(performSearch, 300);
-  });
 
-  $(document).on("click", ".optionlist", function () {
-    $("#selectuserlist").val($(this).text());
-    userIdd = $(this).attr("value");
-    $(".userIds").val(userIdd);
-    $(".queryholderxx").hide();
-  });
+
 
   $(document).on("click", ".executeuserlist", function () {
     if ($("#selectuserlist").val() == "" && $(".states").val() == "") {

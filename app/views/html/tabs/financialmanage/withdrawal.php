@@ -209,7 +209,7 @@
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Set all withdraw">
                     <i class='bx bx-plus' style="font-size:20px"></i>
                 </button> -->
-                <button type="button" class="btn bg-white-subtle player refreshwithdraw" value="right" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle player refreshwithdrawa" value="right" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
                 </button>
@@ -330,7 +330,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="addContactMbodavo" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
+<div class="modal fade" id="addContactMbodavoc" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header d-flex align-items-center">

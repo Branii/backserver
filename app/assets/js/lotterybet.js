@@ -2,13 +2,6 @@ $(function () {
   //NOTE -
   ////////////// LOTTERY BETTING-//////////
 
-  function formatBalance(balance) {
-    if (balance % 1 !== 0 && balance.toString().split(".")[1].length > 3) {
-        return Number(balance).toFixed(4);
-    }
-    return Number(balance).toFixed(4);
-  }
-
   const Lottery = (data) => {
     let htmls = "";
     const bettype = {
@@ -35,13 +28,14 @@ $(function () {
        const betOddsObject = JSON.parse(item.bet_odds);
        const betOddsArray = Object.values(betOddsObject);
        const betodds = betOddsArray * item.multiplier * item.unit_stake;
-       const username = item.username == '*****' ? item.email :(item.username ||item.contact);
-       const statusColor = item.bet_status == "5" ? "bg-warning-subtle text-warning" : (item.bet_status === "2" ? "bg-success-subtle text-success" :  "bg-danger-subtle text-danger");
+       let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
+
+      // console.log(item.username)
       htmls += `
                     <tr>
                         <td>${item.bet_code}</td>
                         <td>${username}</td>
-                        <td>${formatBalance(item.draw_period)}</td>
+                        <td>${item.draw_period}</td>
                         <td>${item.game_type}</td>
                         <td>${item.game_label}</td>
                         <td>${item.bet_date + " " + item.bet_time}</td>
@@ -49,9 +43,9 @@ $(function () {
                         <td>${item.bet_number}</td>
                          <td>${item.unit_stake}</td>
                         <td>${item.multiplier}</td>
-                        <td>${formatBalance(item.bet_amount)}</td>
-                        <td>${formatBalance(item.win_amount)}</td>
-                        <td><span class="badge fw-semibold py-1 w-85 ${statusColor}">${betstatus[item.bet_status]}</span></td>
+                        <td>${item.bet_amount}</td>
+                        <td>${item.win_amount}</td>
+                        <td>${betstatus[item.bet_status]}</td>
                         <td>${states[item.state]}</td>
                         
                         <td>
@@ -79,11 +73,16 @@ $(function () {
     return htmls;
   };
 
+
   const Showbettable = (data,obj) => {
     let htmlbet = "";
     Object.entries(data).forEach(([key, value]) => {
     //  console.log(`${key}: ${value}`);
-
+ //   let displayValue = ;
+  //  if (key === 'user_selection') {
+      // Create a textarea for user selection
+    //  displayValue = `<td><textarea rows="4">${key}</textarea></td>`;
+  //} 
   
       htmlbet += `
             <tr>
@@ -95,8 +94,9 @@ $(function () {
     return htmlbet;
   };
 
+ 
   const firstRowbet = {
-    'username': 'Username:',
+    'reg_type': 'Username:',
     'bet_code': 'Bet Order ID:',
     'draw_period': 'Issue Number:',
     'ip_address': 'IP:',
@@ -121,6 +121,7 @@ $(function () {
     'server_time': 'Actual profit:',
     'rebate_amount': 'Rebate Amount',
     'user_selection': 'Bet Details',
+
   
   }
 
@@ -130,14 +131,14 @@ $(function () {
   };
 
   let currentPagebet = 1;
-  let pageLimit = 50;
+  let pageLimit = 30;
 
   async function fetchLotteryBet(page) {
     try {
       const response = await fetch(`../admin/lotterydata/${page}/${pageLimit}`);
       const data = await response.json();
 
-      console.log(response);
+     // console.log(response);
      //  return;
 
       $("#maskbet").LoadingOverlay("hide");
@@ -154,48 +155,57 @@ $(function () {
     }
   }
 
-  function renderbetPagination(totalPages, currentPage) {
-    const createPageLink = (i, label = i, disabled = false, active = false) =>
-      `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
-        <a class='page-link' href='#' data-page='${i}'>${label}</a>
-      </li>`;
+  function renderbetPagination(totalPages, currentPagebet) {
     let pagLink = `<ul class='pagination justify-content-end'>`;
-
+  
     // Previous Button
-    pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
-
+    pagLink += `
+      <li class='page-item ${currentPagebet === 1 ? "disabled" : ""}'>
+        <a class='page-link' href='#' data-page='${currentPagebet - 1}'><i class='bx bx-chevron-left'></i></a>
+      </li>
+    `;
+  
     // Page numbers with ellipsis
     for (let i = 1; i <= totalPages; i++) {
-      if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
-        pagLink += createPageLink(i, i, false, i === currentPage);
-      } else if (i === currentPage - 3 || i === currentPage + 3) {
-        pagLink += createPageLink(i, "...", true);
+      if (i === currentPagebet) {
+        pagLink += `<li class='page-item active'><a class='page-link' href='#'>${i}</a></li>`;
+      } else if (i === 1 || i === totalPages || Math.abs(i - currentPagebet) <= 2) {
+        pagLink += `<li class='page-item'><a class='page-link' href='#' data-page='${i}'>${i}</a></li>`;
+      } else if (i === currentPagebet - 3 || i === currentPagebet + 3) {
+        pagLink += `<li class='page-item disabled'><a class='page-link'>...</a></li>`;
       }
     }
-
+  
     // Next Button
-    pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
+    pagLink += `
+      <li class='page-item ${currentPagebet === totalPages ? "disabled" : ""}'>
+        <a class='page-link' href='#' data-page='${currentPagebet + 1}'><i class='bx bx-chevron-right'></i></a>
+      </li>
+    `;
+  
     pagLink += "</ul>";
-
     document.getElementById("paginationbet").innerHTML = pagLink;
-
-    // Add click event listeners
-    document.querySelectorAll("#paginationbet .page-link").forEach(link => {
+  
+    // Add click event listeners to pagination links
+    document.querySelectorAll("#paginationbet .page-link").forEach((link) => {
       link.addEventListener("click", function (e) {
         e.preventDefault();
-        const newPage = +this.getAttribute("data-page");
-        if (newPage > 0 && newPage <= totalPages) {
-          $("#maskbet").LoadingOverlay("show", {
-            background: "rgb(90,106,133,0.1)",
-            size: 3,
-          });
-          fetchLotteryBet(newPage);
+        const newPage = parseInt(this.getAttribute("data-page"));
+        if (newPage > 0 && newPage <= totalPages && newPage !== currentPagebet) {
+          // Update currentPagebet and display paging information
+        
+          document.getElementById("paging_infobet").innerHTML = `Page ${currentPagebet} of ${totalPages} pages`;
+          
+          // Fetch and render new page data
+          fetchLotteryBet(newPage,);
         }
       });
     });
   }
   
   fetchLotteryBet(currentPagebet);
+
+
   
   async function getexample(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit){
     $.post(`../admin/filterbetdata/${uidd}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`)
@@ -236,6 +246,7 @@ $(function () {
 
     })
   }
+
 
   function renderbetPage(totalPages, currentPagebet,uidd,gametype,betsate,betstatus,startdates,enddates) {
 
@@ -318,6 +329,7 @@ $(function () {
     }
   });
 
+  
   $(".betrefresh").click(function () {
     $('.queryholderlist').val('');
     $("#maskbet").LoadingOverlay("show", {
@@ -326,6 +338,9 @@ $(function () {
     });
     fetchLotteryBet(currentPagebet);
   });
+
+
+
 
   $(".executebet").click(function () {
     // Get form data
@@ -368,18 +383,20 @@ $(function () {
   }
   fetchLotteryname()
   
+
   // viewbets
   $(document).on("click",".viewbets",function(){
     $("#viewbetsmodal").modal("show")
     const betcode = $(this).attr("data-betcode")
     const gametype = $(this).attr("data-gametype")
-    // console.log(betcode)
-    $("#rowbet").html("")
+    console.log(betcode)
+    console.log(gametype)
+    $("#rowbet").empty()
     $("#rowbe1").html("")
      viewstakedBet(betcode,gametype)
   })
 
-  async function viewstakedBet(betcode,gametype) {
+    async function viewstakedBet(betcode,gametype) {
       try {
         const response = await fetch(`../admin/viewBetstake/${betcode}/${gametype}`);
         const data = await response.json();
@@ -444,29 +461,22 @@ $(function () {
 
               let optionsHtml = '';
 
-              // Iterate through each item in the response array
-              response.forEach(item => {
-                  // Create an array of possible username types (email, username, contact) for each user
-                  const userOptions = [
-                      { "uid": item.uid, "username": item.username, "reg_type": "username" },
-                      { "uid": item.uid, "username": item.email, "reg_type": "email" },
-                      { "uid": item.uid, "username": item.contact, "reg_type": "contact" }
-                  ];
-              
-                  // Filter to select the correct username based on the `reg_type`
-                  const validUser = userOptions.find(user => {
-                      // Check for the correct username based on the reg_type
-                      return (user.reg_type === "email" && user.username === item.email) ||
-                             (user.reg_type === "username" && user.username === item.username) ||
-                             (user.reg_type === "contact" && user.username === item.contact);
-                  });
-              
-                  // If a valid user option is found, append it to the options HTML
-                  if (validUser) {
-                      optionsHtml += `<option class="optionlist" value="${validUser.uid}" data-username="${validUser.username}">${validUser.username}</option>`;
-                
-                  }
-                 
+              response.forEach(user => {
+                let   displayValuebet;
+                let regnamebet;
+                 // Display based on regtype
+                 if (user.regtype === "email") {
+                  displayValuebet = user.email;
+                  regnamebet = user.email;  // Show email
+                 } else if (user.regtype === "username") {
+                  displayValuebet = user.username;
+                  regnamebet = user.username;  // Show username
+                 } else if (user.regtype === "contact") {
+                  displayValuebet = user.contact;
+                  regnamebet  = user.contact;  // Show contact
+                 }
+                      optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regnamebet}">${displayValuebet}</option>`;
+           
               });
 
 
@@ -481,19 +491,7 @@ $(function () {
       });
   }
 
-  function tableScroll() {
-    const tableContainerBetting = document.querySelector(".table-wrapperlottery");
-    const headerRowBetting = document.querySelector(".lottery_betting");
 
-    tableContainerBetting.addEventListener("scroll", function () {
-      if (tableContainerBetting.scrollTop > 0) {
-        headerRowBetting.classList.add("sticky-headerRow");
-      } else {
-        headerRowBetting.classList.remove("sticky-headerRow");
-      }
-    });
-  }
-  tableScroll();
 
 
 });

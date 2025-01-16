@@ -278,7 +278,7 @@
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Get Top Agent">
                     <i class='bx bxs-user-account' style="font-size:20px"></i>
                 </button> -->
-                <button type="button" class="btn bg-white-subtle player trackrefresh" value="right" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle player refreshtrack" value="right" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
                 </button>
@@ -294,7 +294,7 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrappertrack" id="masktracks" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrappertrack" id="maskbet" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
                 <thead class="text-dark fs-4 tbl-trackhead">
                     <tr class ="trackheadrow">

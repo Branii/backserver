@@ -11,7 +11,7 @@ class UserManageModel extends MEDOOHelper
 
         $startpoint = ($page - 1) * $limit;
         $data = parent::query(
-            "SELECT uid, username,email,contact,nickname, agent_name, balance, recharge_level, user_state,
+            "SELECT uid, username,email,contact,nickname, agent_name, balance, recharge_level, user_state,reg_type,
                     last_login, rebate, created_at, agent_id, account_type,reg_type
              FROM users_test
              ORDER BY uid DESC
@@ -106,7 +106,7 @@ class UserManageModel extends MEDOOHelper
         $sql = "
         SELECT 
             uid, username,email,contact, agent_name, balance, recharge_level, user_state, 
-            last_login, rebate, created_at, agent_id,account_type,reg_type,nickname
+            last_login, rebate, created_at, agent_id,account_type,reg_type,nickname  
         FROM users_test
         WHERE account_type = 2
         ORDER BY uid DESC

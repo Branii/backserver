@@ -176,18 +176,6 @@
         background-color: #fff;
         /* Optional: Make it stand out */
     }
-
-    .tbl-headerQuota {
-  position: sticky;
-  top: 0;
-}
-
-    .sticky-headerQuota{
-  position: relative;
-  bottom:1px;
-  background-color: red;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-}
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -236,10 +224,10 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperlist table-wrappereQuota" id="maskquota" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperlist" id="maskquota" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
-                <thead class="text-dark fs-4 tbl-headerQuota">
-                    <tr class="headrowQuota">
+                <thead class="text-dark fs-4">
+                    <tr>
 
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bonus Group']; ?></h6>

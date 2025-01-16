@@ -13,7 +13,6 @@ define("VIEWS", APP . 'views' . DIRECTORY_SEPARATOR);
 define("CONTROLLER", APP . 'controller' . DIRECTORY_SEPARATOR);
 define("UTILS", APP . 'utils' . DIRECTORY_SEPARATOR);
 define('BASE_URL','/admin/app/'); 
-
 $modules = [APP, MODEL, DATABASE, CORE, CONTROLLER,UTILS];
 // Custom Autoloader Function
 spl_autoload_register(function ($className) use ($modules) {

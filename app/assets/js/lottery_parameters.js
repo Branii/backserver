@@ -35,10 +35,11 @@ $(function () {
                      
                          <td>
                           <input type="text" hidden data='${item.modified_totalbet}' value='${item.modified_totalbet}' min="0" max="10000" step="0.1" class="odds-input" id="oddsInput" />
-                          <span class="percentDisplay">100%</span> 
-                          <br>
+                      
+                            <br>
                           <!-- Range Slider -->
                           <input type="range" value="10" min="0" max="10" step="1" class="odds-slider" id="oddsSlider" />
+                            <span class="percentDisplay">100%</span> 
                          </td>
                           
                          <td>${item.modified_totalbet}</td>

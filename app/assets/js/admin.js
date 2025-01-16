@@ -12,14 +12,12 @@ $(function(){
 
     const request = (url,params) => {
         $.post(url,params,function(result){
-
-           let data = JSON.parse(result)
             if(JSON.parse(result).type == 'success'){
                 window.location.href = JSON.parse(result).url
-            }else{
-                showToast("Heads up!!","Wrong email or password.","error")
             }
-        
+            showToast("Heads up!!","Wrong email or password.","error")
+            console.log(JSON.parse(result))
+            //console.log(result);
         })
     }
 
