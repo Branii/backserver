@@ -24,7 +24,9 @@ class BusinessFlowModel extends MEDOOHelper
             JOIN users_test ON users_test.uid = transaction.uid  ORDER BY trans_id DESC LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
         );
-        $totalRecords  = parent::count('transaction');
+         $totalRecords  = parent::count('transaction');
+        // $totalCount = parent::query( "SELECT COUNT(trans_id) AS total FROM transaction")[0];
+        // $totalRecords =$totalCount['total'];
         $trasationIds = array_column($data, 'order_id');
         return ['data' => $data, 'total' => $totalRecords, 'transactionIds' => $trasationIds];
     }
@@ -79,7 +81,7 @@ class BusinessFlowModel extends MEDOOHelper
             temp_table.*, 
             users_test.email AS email,
             users_test.username AS username,
-            users_test.contact AS contact,users_test.reg_type AS  reg_type
+            users_test.contact AS contact,users_test.reg_type AS reg_type
            
         FROM 
             (
@@ -104,8 +106,8 @@ class BusinessFlowModel extends MEDOOHelper
 
         $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
         $totalRecords = parent::query($countSql);
-        $lastQuery = MedooOrm::openLink()->log();
         $totalRecords  = $totalRecords[0]['total_count'];
+        $lastQuery = MedooOrm::openLink()->log();
         return ['data' => $data,  'total' => $totalRecords, 'sql' => $lastQuery[0]];
     }
 
@@ -161,6 +163,17 @@ class BusinessFlowModel extends MEDOOHelper
     }
 
 
+    public static function  ViewDeposite($orderID)
+    {
+        return parent::selectAll('deposits_and_withdrawals', '*', ['deposit_order' => $orderID]);
+    }
+
+    public static function  ViewRedEvenlopes($orderID)
+    {
+        return parent::selectAll('transaction', '*', ['order_id' => $orderID]);
+       
+    }
+    
 
     //NOTE -
     ////////////// LOTTERY BETTING-//////////
@@ -174,20 +187,29 @@ class BusinessFlowModel extends MEDOOHelper
     public static function fetchBetRecords($page, $limit): array
     {
         $startpoint = ($page * $limit) - $limit;
-        $res = self::getAllGameIds();
+       //   $res = self::getAllGameIds();
 
         $data = [];
         $totalRecords = 0;
+        $tableQuery = "
+            SELECT table_name 
+            FROM information_schema.tables
+            WHERE table_schema = 'lottery_test'
+            AND table_name LIKE 'bt_%'
+        ";
+        $tables = parent::query($tableQuery);
 
-        foreach ($res as $tables) {
-            $gameTable = $tables['bet_table'];
+        foreach ($tables as $table) {
+            $gameTable = $table['table_name'];
+    
             $records = parent::query(
-                "SELECT $gameTable.*,users_test.email,users_test.contact,users_test.username,users_test.reg_type,game_type.name As game_type ,game_type.gt_id AS gt_id FROM $gameTable 
-             JOIN users_test ON users_test.uid = $gameTable.uid 
-             JOIN game_type ON game_type.gt_id = $gameTable.game_type 
-             ORDER BY $gameTable.bid DESC 
-             LIMIT :offset, :limit",
-                ['offset' => $startpoint, 'limit' => $limit]
+                "SELECT $gameTable.*,users_test.email,users_test.contact,users_test.username,
+                users_test.reg_type, game_type.name As game_type ,game_type.gt_id AS gt_id 
+                FROM $gameTable 
+                JOIN users_test ON users_test.uid = $gameTable.uid 
+                JOIN game_type ON game_type.gt_id = $gameTable.game_type 
+                ORDER BY $gameTable.bid DESC 
+                LIMIT :offset, :limit", ['offset' => $startpoint, 'limit' => $limit]
             );
 
             if (!empty($records)) {
@@ -195,14 +217,12 @@ class BusinessFlowModel extends MEDOOHelper
                 $totalRecords += parent::count($gameTable); // Count only if there are records
             }
         }
+
         usort($data, function ($a, $b) {
             return strtotime($b["server_date"] . " " . $b["server_time"]) <=> strtotime($a["server_date"] . " " . $a["server_time"]);
         });
-
-        return [
-            'data' => $data,
-            'total' => $totalRecords
-        ];
+        
+        return [ 'data' => $data,'total' => $totalRecords];
     }
 
 

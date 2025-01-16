@@ -130,7 +130,7 @@ class adminController extends Controller {
     }
 
     public function getTransactionBet($transactionId){
-        $this->view('exec/businessflow',['transactionId'=>$transactionId, 'flag' => 'transactionBet']);
+        $this->view('exec/businessflow',['transactionId'=>$transactionId, 'flag' => 'getTransactionBet']);
         $this->view->render();
     }
 
@@ -151,21 +151,6 @@ class adminController extends Controller {
         $this->view('exec/businessflow',['flag' => 'fetchLotteryname']);
         $this->view->render();
     }
-    
-    public function searchusername($username){
-        $this->view('exec/businessflow',['username'=>$username,'flag' => 'searchusername']);
-        $this->view->render();
-    }
-
-    // --- MUNIRU ----
-    public function searchLotteryName($lottery_name){
-        $this->view('exec/win_loss',['lottery_name'=>$lottery_name,'flag' => 'filter-lotteries']);
-        $this->view->render();
-    }
-    public function searchWinLossUser($username,$lottery_id,$start_date,$end_date){
-        $this->view('exec/win_loss',['username'=>$username,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'flag' => 'search-user-win-loss']);
-        $this->view->render();
-    }
 
     public function filterbetdata($uid,$gametype,$betstate,$betstatus,$enddate,$startdate,$page,$limit){
         $this->view('exec/businessflow',[
@@ -180,6 +165,24 @@ class adminController extends Controller {
         'flag' => 'filterbetdata']);
         $this->view->render();
     }
+    
+    public function searchusername($username){
+        $this->view('exec/businessflow',['username'=>$username,'flag' => 'searchusername']);
+        $this->view->render();
+    }
+
+
+    // --- MUNIRU ----
+    public function searchLotteryName($lottery_name){
+        $this->view('exec/win_loss',['lottery_name'=>$lottery_name,'flag' => 'filter-lotteries']);
+        $this->view->render();
+    }
+    public function searchWinLossUser($username,$lottery_id,$start_date,$end_date){
+        $this->view('exec/win_loss',['username'=>$username,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'flag' => 'search-user-win-loss']);
+        $this->view->render();
+    }
+
+
 
      //NOTE -
     //////////////TRACK BET DATA -//////////

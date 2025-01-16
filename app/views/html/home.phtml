@@ -485,48 +485,7 @@ $translator = include "tabs/lang/{$lang}.php";
 
       });
 
-      // document.addEventListener('DOMContentLoaded', function () {
-      //   const tableWrapper = document.querySelector('.table-wrapper');
-      //   const rangeInput = document.getElementById('customRange1');
-
-      //   if (!tableWrapper || !rangeInput) {
-      //     console.error("Table wrapper or range input not found!");
-      //     return;
-      //   }
-
-      //   // Function to update the max value of the range input based on scrollable width
-      //   const updateRangeMax = () => {
-      //     const maxScrollLeft = tableWrapper.scrollWidth - tableWrapper.clientWidth;
-      //     rangeInput.max = maxScrollLeft > 0 ? maxScrollLeft : 0;
-      //   };
-
-      //   // Initial setup to set the range max value
-      //   updateRangeMax();
-
-      //   // Smooth scrolling based on range input
-      //   rangeInput.addEventListener('input', function () {
-      //     tableWrapper.scrollTo({
-      //       left: this.value,
-      //       behavior: 'smooth'
-      //     });
-      //   });
-
-      //   // Update the range slider based on the table's scroll position
-      //   tableWrapper.addEventListener('scroll', function () {
-      //     rangeInput.value = tableWrapper.scrollLeft;
-      //   });
-
-      //   // Adjust range max value on window resize
-      //   window.addEventListener('resize', updateRangeMax);
-
-      //   // Listen for table content load (if dynamic content is added)
-      //   const observer = new MutationObserver(updateRangeMax);
-      //   observer.observe(tableWrapper, { childList: true, subtree: true });
-      // });
-
-      // Initialize the first tab
-      var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-      var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+     
     </script>
 </body>
 

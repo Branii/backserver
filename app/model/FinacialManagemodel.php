@@ -92,6 +92,9 @@ class FinacialManageModel extends MEDOOHelper
 
     public static function insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
     {
+        if ($desposittype == 4) {
+            $amount = -$amount; // Negate the value of $amount
+        }
         $params = [
             'uid' =>  $uid,
             'partner_uid' => 1,

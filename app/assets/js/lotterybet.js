@@ -1,6 +1,12 @@
 $(function () {
   //NOTE -
   ////////////// LOTTERY BETTING-//////////
+  function formatBalance(balance) {
+    if (balance % 1 !== 0 && balance.toString().split(".")[1].length > 3) {
+        return Number(balance).toFixed(4);
+    }
+    return Number(balance).toFixed(4);
+  }
 
   const Lottery = (data) => {
     let htmls = "";
@@ -39,12 +45,11 @@ $(function () {
                         <td>${item.game_type}</td>
                         <td>${item.game_label}</td>
                         <td>${item.bet_date + " " + item.bet_time}</td>
-                        <td>${betodds}</td>
                         <td>${item.bet_number}</td>
-                         <td>${item.unit_stake}</td>
+                        <td>${item.unit_stake}</td>
                         <td>${item.multiplier}</td>
-                        <td>${item.bet_amount}</td>
-                        <td>${item.win_amount}</td>
+                        <td>${formatBalance(item.bet_amount)}</td>
+                        <td>${formatBalance(item.win_amount)}</td>
                         <td>${betstatus[item.bet_status]}</td>
                         <td>${states[item.state]}</td>
                         
@@ -86,8 +91,11 @@ $(function () {
   
       htmlbet += `
             <tr>
-                <td>${value}</td>
-                <td>${obj[key]}</td>
+              <td>${value}</td>
+              <td class="${key === "user_selection" ? "bet_userSelection" : ""}" 
+                ${key === "user_selection" ? `title="${obj[key]}"` : ""}>
+                ${obj[key]}
+              </td>
             </tr>
             `;
     });
@@ -106,19 +114,20 @@ $(function () {
     'game_label': 'Game Type::',
     'draw_number': 'Draw Results:',
     'num_wins': 'Number of wins:',
-    'bettype': 'Bet Type:'
+  
   }
 
   const secondRowbet = {
+    'bettype': 'Bet Type:',
     'game_type': 'Lottery Type:',
     'bet_time': 'Bet Time:',
     'closing_time': 'Closing Time:',
     'opening_time': 'Draw Time::',
     'bet_number': 'Total Bet:',
     'bet_amount': 'Total Bet Amount:',
-    'win_amount': 'Prize:',
-    'server_date': 'Win Amount:',
-    'server_time': 'Actual profit:',
+    // 'win_amount': 'Prize:',
+    'win_amount': 'Win Amount:',
+    // 'server_time': 'Actual profit:',
     'rebate_amount': 'Rebate Amount',
     'user_selection': 'Bet Details',
 
@@ -130,38 +139,43 @@ $(function () {
     $("#lotterydataContainer").html(htmls);
   };
 
+
   let currentPagebet = 1;
   let pageLimit = 30;
-
-  async function fetchLotteryBet(page) {
+  
+  // Fetch lottery bet data
+  async function fetchLotteryBet(currentPagebet) {
     try {
-      const response = await fetch(`../admin/lotterydata/${page}/${pageLimit}`);
+      const response = await fetch(`../admin/lotterydata/${currentPagebet}/${pageLimit}`);
       const data = await response.json();
-
-     // console.log(response);
-     //  return;
-
+      const totalPages = data.totalPages;
+  
       $("#maskbet").LoadingOverlay("hide");
-
-      // Render table data
+  
       renderlottery(data.lotterybet);
-
-      // Render pagination
-      renderbetPagination(data.totalPages,page);
-      document.getElementById("paging_infobet").innerHTML =
-        "Page " + page + " of " + data.totalPages + " pages";
+      renderbetPagination(totalPages, currentPagebet, (page) => fetchLotteryBet(page,pageLimit)); // Pass callback
+      document.getElementById("paging_infobet").innerHTML = 
+        `Page ${currentPagebet} of ${totalPages} pages`;
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   }
-
-  function renderbetPagination(totalPages, currentPagebet) {
+  
+  // Render pagination dynamically
+  function renderbetPagination(totalPages, currentPagebet, callback) {
+    if (totalPages === 0) {
+      // Handle the case where there are no pages (no records)
+      document.getElementById("pagination").innerHTML = "No records available.";
+      return;
+  }
     let pagLink = `<ul class='pagination justify-content-end'>`;
   
     // Previous Button
     pagLink += `
       <li class='page-item ${currentPagebet === 1 ? "disabled" : ""}'>
-        <a class='page-link' href='#' data-page='${currentPagebet - 1}'><i class='bx bx-chevron-left'></i></a>
+        <a class='page-link' href='#' data-page='${currentPagebet - 1}'>
+          <i class='bx bx-chevron-left'></i>
+        </a>
       </li>
     `;
   
@@ -179,124 +193,72 @@ $(function () {
     // Next Button
     pagLink += `
       <li class='page-item ${currentPagebet === totalPages ? "disabled" : ""}'>
-        <a class='page-link' href='#' data-page='${currentPagebet + 1}'><i class='bx bx-chevron-right'></i></a>
+        <a class='page-link' href='#' data-page='${currentPagebet + 1}'>
+          <i class='bx bx-chevron-right'></i>
+        </a>
       </li>
     `;
   
     pagLink += "</ul>";
     document.getElementById("paginationbet").innerHTML = pagLink;
   
-    // Add click event listeners to pagination links
+    // Add click event listeners to the pagination links
     document.querySelectorAll("#paginationbet .page-link").forEach((link) => {
       link.addEventListener("click", function (e) {
         e.preventDefault();
         const newPage = parseInt(this.getAttribute("data-page"));
+  
+        // Ensure the new page is within bounds
         if (newPage > 0 && newPage <= totalPages && newPage !== currentPagebet) {
-          // Update currentPagebet and display paging information
-        
-          document.getElementById("paging_infobet").innerHTML = `Page ${currentPagebet} of ${totalPages} pages`;
-          
-          // Fetch and render new page data
-          fetchLotteryBet(newPage,);
+          $("#maskbet").LoadingOverlay("show", {
+            background: "rgb(90,106,133,0.1)",
+            size: 3,
+          });
+          callback(newPage); // Dynamically call the provided function
         }
       });
     });
   }
   
-  fetchLotteryBet(currentPagebet);
-
-
-  
-  async function getexample(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit){
+  // Filter and fetch lottery bet data
+  async function filterbetdatas(uidd, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit) {
     $.post(`../admin/filterbetdata/${uidd}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`)
-    .done(function(response) {
-         console.log(response);
-        //  return
-
+      .done(function (response) {
         try {
-            const data = JSON.parse(response); // Parse the response
-
-            if (data.filterbet.length < 1) {
-                // If no results, show "no results" message
-                let html = `
-                    <tr class="no-results">
-                        <td colspan="9">
-                            <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-                        </td>
-                    </tr>`;
-                $("#lotterydataContainer").html(html);
-                $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-                return;
-            }
-
-            // Render filtered data and pagination
-            renderlottery(data.filterbet);
-            renderbetPage(data.totalPages,currentPagebet);
-
-            // Update paging info
-             document.getElementById("paging_infobet").innerHTML = `Page ${currentPagebet} of ${data.totalPages} pages`;
-
-        } catch (error) {
-            console.error("Error parsing JSON response:", error);
+          const data = JSON.parse(response);
+  
+          if (data.filterbet.length < 1) {
+            // If no results, show "no results" message
+            let html = `
+              <tr class="no-results">
+                <td colspan="9">
+                  <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                </td>
+              </tr>`;
+            $("#lotterydataContainer").html(html);
             $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+            return;
+          }
+  
+          renderlottery(data.filterbet);
+          renderbetPagination(data.totalPages, currentPagebet, (page) => {
+            filterbetdatas(uidd, gametype, betsate, betstatus, startdates, enddates, page, pageLimit);
+          }); // Pass callback
+  
+          document.getElementById("paging_infobet").innerHTML = 
+            `Page ${currentPagebet} of ${data.totalPages} pages`;
+        } catch (error) {
+          console.error("Error parsing JSON response:", error);
+          $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
         }
-
-        // Hide loader
+  
         $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-
-    })
-  }
-
-
-  function renderbetPage(totalPages, currentPagebet,uidd,gametype,betsate,betstatus,startdates,enddates) {
-
-    let pagLink = `<ul class='pagination justify-content-end'>`;
-  
-    // Previous Button
-    pagLink += `
-      <li class='page-item ${currentPagebet === 1 ? "disabled" : ""}'>
-        <a class='page-link' href='#' data-page='${currentPagebet - 1}'><i class='bx bx-chevron-left'></i></a>
-      </li>
-    `;
-  
-    // Page numbers with ellipsis
-    for (let i = 1; i <= totalPages; i++) {
-      if (i === currentPagebet) {
-        pagLink += `<li class='page-item active'><a class='page-link' href='#'>${i}</a></li>`;
-      } else if (i === 1 || i === totalPages || Math.abs(i - currentPagebet) <= 2) {
-        pagLink += `<li class='page-item'><a class='page-link' href='#' data-page='${i}'>${i}</a></li>`;
-      } else if (i === currentPagebet - 3 || i === currentPagebet + 3) {
-        pagLink += `<li class='page-item disabled'><a class='page-link'>...</a></li>`;
-      }
-    }
-  
-    // Next Button
-    pagLink += `
-      <li class='page-item ${currentPagebet === totalPages ? "disabled" : ""}'>
-        <a class='page-link' href='#' data-page='${currentPagebet + 1}'><i class='bx bx-chevron-right'></i></a>
-      </li>
-    `;
-  
-    pagLink += "</ul>";
-    document.getElementById("paginationbet").innerHTML = pagLink;
-  
-    // Add click event listeners to pagination links
-    document.querySelectorAll("#paginationbet .page-link").forEach((link) => {
-      link.addEventListener("click", function (e) {
-        e.preventDefault();
-        const newPage = parseInt(this.getAttribute("data-page"));
-        if (newPage > 0 && newPage <= totalPages && newPage !== currentPagebet) {
-          // Update currentPagebet and display paging information
-        
-          document.getElementById("paging_infobet").innerHTML = `Page ${currentPagebet} of ${totalPages} pages`;
-          
-          // Fetch and render new page data
-          getexample(uidd,gametype,betsate,betstatus,startdates,enddates,newPage,pageLimit)
-        //  getexample()
-        }
       });
-    });
   }
+  
+  // Initialize
+  fetchLotteryBet(currentPagebet,pageLimit);
+  
   
   $(".playerbet").click(function () {
     let direction = $(this).val();
@@ -332,11 +294,14 @@ $(function () {
   
   $(".betrefresh").click(function () {
     $('.queryholderlist').val('');
+    $('.userIdbet').val('')
     $("#maskbet").LoadingOverlay("show", {
       background: "rgb(90,106,133,0.1)",
       size: 3,
     });
-    fetchLotteryBet(currentPagebet);
+    currentPagebet = 1;
+    pageLimit = 30;
+    fetchLotteryBet(currentPagebet, pageLimit);
   });
 
 
@@ -351,7 +316,7 @@ $(function () {
     const startdates = $('.startdates').val();
     const enddates = $('.enddates').val();
 
-    getexample(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit)
+    filterbetdatas(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit)
 
     // Show loader
     $(".loaderbet").removeClass("bx bx-check-double").addClass("bx bx-loader bx-spin");
@@ -370,9 +335,9 @@ $(function () {
 
       const data = await response.json(); // Parse JSON response
       // console.log(data);
-      let html = `<option value="" class="" selected>-lottery Type-</option>`;
+      let html = `<option value=""selected>-lottery Type-</option>`;
       data.forEach((lottery) => {
-          html += `<option value="${lottery.gt_id}" class="">${lottery.name}</option>`;
+          html += `<option value="${lottery.gt_id}">${lottery.name}</option>`;
       });
 
       $(".selectlottery").html(html);
@@ -392,7 +357,7 @@ $(function () {
     console.log(betcode)
     console.log(gametype)
     $("#rowbet").empty()
-    $("#rowbe1").html("")
+    $("#rowbe1").empty()
      viewstakedBet(betcode,gametype)
   })
 
@@ -400,7 +365,7 @@ $(function () {
       try {
         const response = await fetch(`../admin/viewBetstake/${betcode}/${gametype}`);
         const data = await response.json();
-        // console.log(response)
+        //  console.log(response)
         //  return
         let htmlbet1 = Showbettable(firstRowbet,data)
         let htmlbet2 = Showbettable(secondRowbet,data)
@@ -474,6 +439,8 @@ $(function () {
                  } else if (user.regtype === "contact") {
                   displayValuebet = user.contact;
                   regnamebet  = user.contact;  // Show contact
+                 }else{
+                  displayValuebet = 'no data found...'
                  }
                       optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regnamebet}">${displayValuebet}</option>`;
            
@@ -492,6 +459,29 @@ $(function () {
   }
 
 
+    $(".numrowsbet").change(function () {
+      $("#maskbet").LoadingOverlay("show", {
+          background: "rgb(90,106,133,0.1)",
+          size: 3,
+        });
+        const numrowbet = $(this).val(); // Get the selected number of rows
+        pageLimit = parseInt(numrowbet, 10); // Update the global pageLimit
+        currentPagebet = 1; // Reset to the first page when rows per page changes
+        fetchLotteryBet(currentPagebet, pageLimit);
+  });
+  function tableScroll() {
+    const tableContainerBetting = document.querySelector(".table-wrapperlottery");
+    const headerRowBetting = document.querySelector(".headrowbet");
+
+    tableContainerBetting.addEventListener("scroll", function () {
+      if (tableContainerBetting.scrollTop > 0) {
+        headerRowBetting.classList.add("sticky-headerbet");
+      } else {
+        headerRowBetting.classList.remove("sticky-headerbet");
+      }
+    });
+  }
+  tableScroll();
 
 
 });
