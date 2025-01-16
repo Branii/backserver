@@ -7,10 +7,9 @@ $(function () {
       1: { title: "Deposit", color: "#4CAF50" },          // Green
       2: { title: "Win Bonus", color: "#FF9800" },         // Orange
       3: { title: "Bet Awarded", color: "#03A9F4" },       // Light Blue
-      4: { title: "Withdrawal", color: "#F44336" },  
+      4: { title: "Withdrawal", color: "#F44336" },        //pink
       5: { title: "Bet Deduct", color: "#E91E63" },       // Red
       6: { title: "Bet Cancelled", color: "#9E9E9E" },     // Grey
-           // Pink
       7: { title: "Rebates", color: "#8BC34A" },           // Light Green
       8: { title: "Self Rebate", color: "#00BCD4" },       // Cyan
       9: { title: "Send Red Envelope", color: "#FF5722" }, // Deep Orange
@@ -19,15 +18,12 @@ $(function () {
     };
 
     data.forEach((item) => {
-      const username = item.username == '*****' ? item.email :(item.username || item.contact);
-      // `<?php $phpVariable = "Hello, World!";?>`
-      // const jsVariable = '<?php echo $phpVariable; ?>';
-//      console.log(jsVariable); // Output
+      //let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
 
       html += `
                   <tr class="trow">
                     <td>${'TR' + item.order_id.substring(0, 7)}</td>
-                      <td>${username}</td>
+                      <td>${item.username}</td>
                       <td><i class='bx bxs-circle' style='color:${status[item.order_type].color};font-size:8px;margin-right:5px;'></i>${status[item.order_type].title}</td>
                       <td>${Number(item.account_change) < 0 ? Number(item.account_change).toFixed(4) : `+ ${Number(item.account_change).toFixed(4)}`}</td>
                       <td>${Number(item.balance).toFixed(4)}</td>
@@ -89,7 +85,7 @@ $(function () {
   };
 
   let currentPage = 1;
-  let pageLimit = 21;
+  let pageLimit = 50;
 
 
   async function fetchTrasaction(page,pageLimit) {
@@ -110,13 +106,13 @@ $(function () {
     }
   }
 
-  async function filterTrasaction(page, pageLimit, username, orderid, ordertype, startdate, enddate) {
+  async function filterTrasaction(username, orderid, ordertype, startdate, enddate,currentPage,pageLimit) {
     try {
-      const response = await fetch(`../admin/filtertransactions/${username}/${orderid}/${ordertype}/${startdate}/${enddate}/${page}/${pageLimit}`);
+      const response = await fetch(`../admin/filtertransactions/${username}/${orderid}/${ordertype}/${startdate}/${enddate}/${currentPage}/${pageLimit}`);
       const data = await response.json();
 
-       console.log(response)
-      //  return
+      //  console.log(response)
+      // return
 
       $(".loader").removeClass('bx bx-loader bx-spin').addClass('bx bx-check-double');
       if (data.transactions.length < 1) {
@@ -129,11 +125,12 @@ $(function () {
         $("#dataContainer").html(html);
         return
       }
+      $("#mask").LoadingOverlay("hide")
       render(data.transactions);
 
       // Render pagination
-      renderPagination(data.totalPages, page, pageLimit, 'search', username, orderid, ordertype, startdate, enddate);
-      document.getElementById("paging_info").innerHTML = 'Page ' + page + ' of ' + data.totalPages + ' pages'
+      renderPaginationFilter(data.totalPages, currentPage, username, orderid, ordertype, startdate, enddate);
+      document.getElementById("paging_info").innerHTML = 'Page ' + currentPage + ' of ' + data.totalPages + ' pages'
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -156,7 +153,7 @@ $(function () {
     }
   }
 
-  function renderPagination(totalPages, currentPage, pagingType = '', username = '', orderid = '', ordertype = '', startdate = '', enddate = '') {
+  function renderPagination(totalPages, currentPage) {
     const createPageLink = (i, label = i, disabled = false, active = false) =>
       `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
         <a class='page-link' href='#' data-page='${i}'>${label}</a>
@@ -187,7 +184,48 @@ $(function () {
         e.preventDefault();
         const newPage = +this.getAttribute("data-page");
         if (newPage > 0 && newPage <= totalPages) {
-          pagingType === 'search' ? filterTrasaction(newPage, pageLimit, username, orderid, ordertype, startdate, enddate) : fetchTrasaction(newPage,pageLimit);
+         fetchTrasaction(newPage,pageLimit);
+        }
+      });
+    });
+  }
+
+  function renderPaginationFilter(totalPages, currentPage, username, orderid, ordertype, startdate, enddate) {
+    const createPageLink = (i, label = i, disabled = false, active = false) =>
+      `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+        <a class='page-link' href='#' data-page='${i}'>${label}</a>
+      </li>`;
+    let pagLink = `<ul class='pagination justify-content-end'>`;
+
+    // Previous Button
+    pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
+
+    // Page numbers with ellipsis
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+        pagLink += createPageLink(i, i, false, i === currentPage);
+      } else if (i === currentPage - 3 || i === currentPage + 3) {
+        pagLink += createPageLink(i, "...", true);
+      }
+    }
+
+    // Next Button
+    pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
+    pagLink += "</ul>";
+
+    document.getElementById("pagination").innerHTML = pagLink;
+
+    // Add click event listeners
+    document.querySelectorAll("#pagination .page-link").forEach(link => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const newPage = +this.getAttribute("data-page");
+        if (newPage > 0 && newPage <= totalPages) {
+          $("#mask").LoadingOverlay("show", {
+            background: "rgb(90,106,133,0.1)",
+            size: 3
+          });
+          filterTrasaction(username, orderid, ordertype, startdate, enddate,newPage, pageLimit, );
         }
       });
     });
@@ -267,20 +305,19 @@ $(function () {
 
   $(document).on('click', '.executetrans', function () {
 
-    if ($("#selected").val() == "" && $(".ordertype").val() == "") {
-      $("#al-danger-alert").modal("show");
-      return
-    }
-
-    const username = $(".userIdtrans").val().trim();
+    const username = $(".userIdtrans").val()
     const orderid = $(".orderid").val()
     const ordertype = $(".ordertype").val()
-    const startdate = $(".startdate").val()
-    const enddate = $(".enddate").val()
-    console.log(username)
+    const startdatet = $(".startdatet").val()
+    const enddatet = $(".enddatet").val()
+    console.log(enddate)
     $(".loader").removeClass('bx-check-double').addClass('bx-loader bx-spin');
+    $("#mask").LoadingOverlay("show", {
+      background: "rgb(90,106,133,0.1)",
+      size: 3
+    });
     setTimeout(() => {
-      filterTrasaction(currentPage, username, orderid, ordertype, startdate, enddate);
+    filterTrasaction(username, orderid, ordertype, startdatet, enddatet,currentPage,pageLimit)
     }, 100);
   })
 
@@ -300,7 +337,16 @@ $(function () {
 
   $(".numrows").change(function(){
     const numrow = $(this).val();
-    fetchTrasaction(currentPage,numrow);
+    const username = $(".userIdtrans").val()
+    const orderid = $(".orderid").val()
+    const ordertype = $(".ordertype").val()
+    const startdatet = $(".startdatet").val()
+    const enddatet = $(".enddatet").val()
+    $("#mask").LoadingOverlay("show", {
+      background: "rgb(90,106,133,0.1)",
+      size: 3
+    });
+    filterTrasaction(username, orderid, ordertype, startdatet, enddatet,currentPage,numrow)
   })
 
   let elem = '';
@@ -327,9 +373,6 @@ $(function () {
       }
     }]
   });
-
-
-
 
   //search the 
 

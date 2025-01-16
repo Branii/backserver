@@ -10,7 +10,7 @@ class FinacialManageModel extends MEDOOHelper
     {
         $startpoint = ($page * $limit) - $limit;
         $data = parent::query(
-            "SELECT deposits_and_withdrawals.*,users_test.email,COALESCE(users_test.username, 'N/A') AS username 
+            "SELECT deposits_and_withdrawals.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.username, 'N/A') AS username 
              FROM deposits_and_withdrawals
              LEFT JOIN users_test ON users_test.uid = deposits_and_withdrawals.user_id
              ORDER BY deposits_and_withdrawals.uid DESC 

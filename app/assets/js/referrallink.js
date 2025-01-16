@@ -35,7 +35,7 @@ $(function () {
         const data = await response.json();
         // console.log(response);   
         // return
-        $("#masklinks").LoadingOverlay("hide")
+        $("#masklinkss").LoadingOverlay("hide")
         renderuserlinks(data.userlinks);
   
         // Render pagination
@@ -149,8 +149,8 @@ $(function () {
     })
   
     $(".refreshlinks").click(function () {
-      $(".queryholderlogs").val("")
-      $("#masklogs").LoadingOverlay("show", {
+      // $(".queryholderlogs").val("")
+      $("#masklinkss").LoadingOverlay("show", {
         background: "rgb(90,106,133,0.1)",
         size: 3
       });

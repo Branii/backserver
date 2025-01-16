@@ -13,12 +13,13 @@ define("VIEWS", APP . 'views' . DIRECTORY_SEPARATOR);
 define("CONTROLLER", APP . 'controller' . DIRECTORY_SEPARATOR);
 define("UTILS", APP . 'utils' . DIRECTORY_SEPARATOR);
 define('BASE_URL','/admin/app/'); 
+
 $modules = [APP, MODEL, DATABASE, CORE, CONTROLLER,UTILS];
 // Custom Autoloader Function
 spl_autoload_register(function ($className) use ($modules) {
     foreach ($modules as $module) {
          $filePath = $module . $className . '.php';
-      
+    
         if (file_exists($filePath)) {
             require_once $filePath;
             return;
@@ -27,5 +28,5 @@ spl_autoload_register(function ($className) use ($modules) {
     }
 });
 
-// (new ModernPHPException())->start();
+///(new ModernPHPException())->start();
 (new App());

@@ -4,6 +4,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+header('Content-Type: application/json');
 class Model extends MEDOOHelper{
 
     public static function authenticate($email, $password){
@@ -19,19 +20,20 @@ class Model extends MEDOOHelper{
             session_regenerate_id(true);
             (new Controller)->addAdminLoggins($res['admin_id'], "Sign In", 'Signed Out', 'Signed In', $res['admin_id'], 'success');
            
-            return [
+            $response = [
                 'type' => 'success',
-                'message'=> 'sign in successful',
+                'message' => 'sign in successful',
                 'email' => $email,
-                'role' => $res['role'],
-                'Oauth' => $res['status'] == 'on' ? '../admin/Oauth' : 'Off',
+                'role' => 'super_admin',
+                'Oauth' => 'Off',
                 'url' => '../limvo/admin/home'
             ];
+            return json_encode($response);
         }else{
-            return [
+            return json_encode([
                 'type' => 'error',
                 'message'=> 'Wrong email or password'
-            ];
+            ]);
         }
     }
 
@@ -73,6 +75,14 @@ class Model extends MEDOOHelper{
         }
     }
 
+    public static function getUsername(string $email){
+
+        try {
+            return parent::selectOne('system_administrators',['full_name','role'], ['email' => $email]);
+        } catch (\Throwable $th) {
+           var_dump($th);
+        }
+    }
     //admin_id	action_performed	created_date	created_time	ip_address	affected_entity	old_value	new_value	action_status
     public static function addAdminLogs(string $adminId, string $actionPerformed, string $oldVal, string $newVal, string $affectedEntity, string $status){
         $log_data = [

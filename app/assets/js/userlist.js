@@ -31,7 +31,7 @@ $(function () {
     };
 
     data.forEach((item) => {
-      const username = item.username === '*****' ? item.email : (item.username || item.contact);
+      let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
       html += `
                     <tr>
                         <td>${username}</td>
@@ -39,7 +39,7 @@ $(function () {
                         <td>VIP</td>
                         <td>${item.relationship}</td>
                         <td>${item.totalsubordinate}</td>
-                        <td>${item.balance}</td> 
+                        <td>${Number(item.balance).toFixed(4)}</td> 
                         <td>${item.rebate}</td>
                         <td>${item.created_at}</td>
                         <td>${status[item.user_state]}</td>
@@ -262,27 +262,27 @@ $(function () {
 
   fetchUserlist(currentPagelist);
 
-  $(".playerlist").click(function () {
+  $(".playerlists").click(function () {
     let direction = $(this).val();
-    const tableWrapper = $(".table-wrapperlist");
-    const tableWrappers = document.querySelector(".table-wrapperlist");
+    const tableWrapper = $(".table-wrapperlists");
+    const tableWrappers = document.querySelector(".table-wrapperlists");
     const scrollAmount = 1000; // Adjust as needed
     const scrollOptions = {
       behavior: "smooth",
     };
     if (tableWrapper.length) {
       switch (direction) {
-        case "leftlist":
+        case "leftlists":
           tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
           break;
-        case "rightlist":
+        case "rightlists":
           tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
           break;
-        case "startlist":
+        case "startlists":
           // Scroll to the absolute start (leftmost position)
           tableWrapper.animate({ scrollLeft: 0 }, "slow");
           break;
-        case "endlist":
+        case "endlists":
           const maxScrollLeft =
             tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
           tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");

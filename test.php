@@ -1,6 +1,9 @@
 <?php
 
-
+session_start();
+session_destroy();
+echo "session destroyed successfullyy";
+exit;
 // $dsn = 'mysql:host=192.168.1.51;dbname=lottery_test'; // Fixed variable name and removed extra space
 // $pass = "enzerhub";
 // $user = "enzerhub";

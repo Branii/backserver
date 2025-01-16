@@ -2,6 +2,13 @@ $(function () {
   //NOTE -
   ////////////// LOTTERY BETTING-//////////
 
+  function formatBalance(balance) {
+    if (balance % 1 !== 0 && balance.toString().split(".")[1].length > 3) {
+        return Number(balance).toFixed(4);
+    }
+    return Number(balance).toFixed(4);
+  }
+
   const Lottery = (data) => {
     let htmls = "";
     const bettype = {
@@ -29,13 +36,12 @@ $(function () {
        const betOddsArray = Object.values(betOddsObject);
        const betodds = betOddsArray * item.multiplier * item.unit_stake;
        const username = item.username == '*****' ? item.email :(item.username ||item.contact);
-
-      // console.log(item.username)
+       const statusColor = item.bet_status == "5" ? "bg-warning-subtle text-warning" : (item.bet_status === "2" ? "bg-success-subtle text-success" :  "bg-danger-subtle text-danger");
       htmls += `
                     <tr>
                         <td>${item.bet_code}</td>
                         <td>${username}</td>
-                        <td>${item.draw_period}</td>
+                        <td>${formatBalance(item.draw_period)}</td>
                         <td>${item.game_type}</td>
                         <td>${item.game_label}</td>
                         <td>${item.bet_date + " " + item.bet_time}</td>
@@ -43,9 +49,9 @@ $(function () {
                         <td>${item.bet_number}</td>
                          <td>${item.unit_stake}</td>
                         <td>${item.multiplier}</td>
-                        <td>${item.bet_amount}</td>
-                        <td>${item.win_amount}</td>
-                        <td>${betstatus[item.bet_status]}</td>
+                        <td>${formatBalance(item.bet_amount)}</td>
+                        <td>${formatBalance(item.win_amount)}</td>
+                        <td><span class="badge fw-semibold py-1 w-85 ${statusColor}">${betstatus[item.bet_status]}</span></td>
                         <td>${states[item.state]}</td>
                         
                         <td>
@@ -73,16 +79,11 @@ $(function () {
     return htmls;
   };
 
-
   const Showbettable = (data,obj) => {
     let htmlbet = "";
     Object.entries(data).forEach(([key, value]) => {
     //  console.log(`${key}: ${value}`);
- //   let displayValue = ;
-  //  if (key === 'user_selection') {
-      // Create a textarea for user selection
-    //  displayValue = `<td><textarea rows="4">${key}</textarea></td>`;
-  //} 
+
   
       htmlbet += `
             <tr>
@@ -94,7 +95,6 @@ $(function () {
     return htmlbet;
   };
 
- 
   const firstRowbet = {
     'username': 'Username:',
     'bet_code': 'Bet Order ID:',
@@ -121,7 +121,6 @@ $(function () {
     'server_time': 'Actual profit:',
     'rebate_amount': 'Rebate Amount',
     'user_selection': 'Bet Details',
-
   
   }
 
@@ -131,14 +130,14 @@ $(function () {
   };
 
   let currentPagebet = 1;
-  let pageLimit = 30;
+  let pageLimit = 50;
 
   async function fetchLotteryBet(page) {
     try {
       const response = await fetch(`../admin/lotterydata/${page}/${pageLimit}`);
       const data = await response.json();
 
-     // console.log(response);
+      console.log(response);
      //  return;
 
       $("#maskbet").LoadingOverlay("hide");
@@ -155,57 +154,48 @@ $(function () {
     }
   }
 
-  function renderbetPagination(totalPages, currentPagebet) {
+  function renderbetPagination(totalPages, currentPage) {
+    const createPageLink = (i, label = i, disabled = false, active = false) =>
+      `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+        <a class='page-link' href='#' data-page='${i}'>${label}</a>
+      </li>`;
     let pagLink = `<ul class='pagination justify-content-end'>`;
-  
+
     // Previous Button
-    pagLink += `
-      <li class='page-item ${currentPagebet === 1 ? "disabled" : ""}'>
-        <a class='page-link' href='#' data-page='${currentPagebet - 1}'><i class='bx bx-chevron-left'></i></a>
-      </li>
-    `;
-  
+    pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
+
     // Page numbers with ellipsis
     for (let i = 1; i <= totalPages; i++) {
-      if (i === currentPagebet) {
-        pagLink += `<li class='page-item active'><a class='page-link' href='#'>${i}</a></li>`;
-      } else if (i === 1 || i === totalPages || Math.abs(i - currentPagebet) <= 2) {
-        pagLink += `<li class='page-item'><a class='page-link' href='#' data-page='${i}'>${i}</a></li>`;
-      } else if (i === currentPagebet - 3 || i === currentPagebet + 3) {
-        pagLink += `<li class='page-item disabled'><a class='page-link'>...</a></li>`;
+      if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+        pagLink += createPageLink(i, i, false, i === currentPage);
+      } else if (i === currentPage - 3 || i === currentPage + 3) {
+        pagLink += createPageLink(i, "...", true);
       }
     }
-  
+
     // Next Button
-    pagLink += `
-      <li class='page-item ${currentPagebet === totalPages ? "disabled" : ""}'>
-        <a class='page-link' href='#' data-page='${currentPagebet + 1}'><i class='bx bx-chevron-right'></i></a>
-      </li>
-    `;
-  
+    pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
     pagLink += "</ul>";
+
     document.getElementById("paginationbet").innerHTML = pagLink;
-  
-    // Add click event listeners to pagination links
-    document.querySelectorAll("#paginationbet .page-link").forEach((link) => {
+
+    // Add click event listeners
+    document.querySelectorAll("#paginationbet .page-link").forEach(link => {
       link.addEventListener("click", function (e) {
         e.preventDefault();
-        const newPage = parseInt(this.getAttribute("data-page"));
-        if (newPage > 0 && newPage <= totalPages && newPage !== currentPagebet) {
-          // Update currentPagebet and display paging information
-        
-          document.getElementById("paging_infobet").innerHTML = `Page ${currentPagebet} of ${totalPages} pages`;
-          
-          // Fetch and render new page data
-          fetchLotteryBet(newPage,);
+        const newPage = +this.getAttribute("data-page");
+        if (newPage > 0 && newPage <= totalPages) {
+          $("#maskbet").LoadingOverlay("show", {
+            background: "rgb(90,106,133,0.1)",
+            size: 3,
+          });
+          fetchLotteryBet(newPage);
         }
       });
     });
   }
   
   fetchLotteryBet(currentPagebet);
-
-
   
   async function getexample(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit){
     $.post(`../admin/filterbetdata/${uidd}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`)
@@ -246,7 +236,6 @@ $(function () {
 
     })
   }
-
 
   function renderbetPage(totalPages, currentPagebet,uidd,gametype,betsate,betstatus,startdates,enddates) {
 
@@ -329,7 +318,6 @@ $(function () {
     }
   });
 
-  
   $(".betrefresh").click(function () {
     $('.queryholderlist').val('');
     $("#maskbet").LoadingOverlay("show", {
@@ -338,9 +326,6 @@ $(function () {
     });
     fetchLotteryBet(currentPagebet);
   });
-
-
-
 
   $(".executebet").click(function () {
     // Get form data
@@ -383,7 +368,6 @@ $(function () {
   }
   fetchLotteryname()
   
-
   // viewbets
   $(document).on("click",".viewbets",function(){
     $("#viewbetsmodal").modal("show")
@@ -395,7 +379,7 @@ $(function () {
      viewstakedBet(betcode,gametype)
   })
 
-    async function viewstakedBet(betcode,gametype) {
+  async function viewstakedBet(betcode,gametype) {
       try {
         const response = await fetch(`../admin/viewBetstake/${betcode}/${gametype}`);
         const data = await response.json();
@@ -412,74 +396,6 @@ $(function () {
     }
 
 
-  // let debounceTimeout =null; // To store the timeout ID
-  // $(document).ready(function () {
-  //     // Event listener for keyup
-  //     $(document).on('keyup','#myInput', function () {
-  //         const query = $(this).val().trim();
-
-  //         if (query.length > 2) { // Only trigger if input is more than 2 characters
-  //             clearTimeout(debounceTimeout); // Clear any existing timeout
-  //             debounceTimeout = setTimeout(() => {
-  //                 // Call the filterUsers logic directly here
-  //                 let optionsHtml = '';
-
-  //                 $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
-  //                     try {
-                        
-  //                         if (typeof response === 'string') {
-  //                             response = JSON.parse(response); // Parse string response
-  //                         }
-
-  //                         const formattedArray = response.flatMap(item => [
-  //                           { "uid": item.uid, "username": item.username },
-  //                           { "uid": item.uid, "username": item.nickname }
-  //                         ]);
-  //                         const filteredUsers = formattedArray.filter(user => user.username !== '*****');
-  //                         filteredUsers.forEach(user => {
-  //                           optionsHtml += `<option class ="optionlist"  value="${user.uid}" data-username="${user.username}">${user.username}</option>`;
-  //                         })
-
-  //                         //console.log(optionsHtml)
-
-  //                         $('.userDropdown').html(optionsHtml).show(); 
-
-  //                     } catch (error) {
-  //                         console.error("Error parsing response: ", error);
-  //                         $('.userDropdown').hide();
-  //                     }
-  //                 }).fail(function (error) {
-  //                     console.error("Error fetching users: ", error);
-  //                     $('.userDropdown').hide();
-  //                 });
-  //             }, 500); // 500ms debounce delay
-  //         } else {
-  //             $('.userDropdown').hide(); // Hide dropdown if input is less than 3 characters
-  //         }
-  //     });
-
-  //     // Handle dropdown item click
-  //     $(document).on('change', '.userDropdown', function () {
-  //       const selectedOption = $(this).find('option:selected'); // Get the selected <option>
-  //       const selectedUserId = selectedOption.val(); // Get user ID from the value attribute
-  //       const selectedUsername = selectedOption.data('username'); // Get username from data-attribute
-  //       if (selectedUserId) {
-  //         $('#myInput').val(selectedUsername); 
-  //         $('.userIdbet').val(selectedUserId); 
-  //         $('.userDropdown').hide();  
-  //       }
-    
-  //   });
-
-  //   $(document).on('input', '#myInput', function () {
-  //     const inputValue = $(this).val(); // Get the current value of the input
-  //     if (!inputValue) {
-  //         // If input is cleared, reset the user ID as well
-  //         $('.userIdbet').val('');
-  //         console.log('User manually cleared the username');
-  //     }
-  // });
-  // });
 
   let debounceTimeout = null;
 
@@ -493,12 +409,12 @@ $(function () {
               clearTimeout(debounceTimeout); // Clear any existing timeout
               debounceTimeout = setTimeout(fetchbetUser, 500, query); // Call fetchUsers with the query after 500ms delay
           } else {
-              $('.userDropdown').hide(); // Hide dropdown if input is less than 3 characters
+              $('.userDropdownb').hide(); // Hide dropdown if input is less than 3 characters
           }
       });
 
       // Handle dropdown item selection
-      $(document).on('change', '.userDropdown', function () {
+      $(document).on('change', '.userDropdownb', function () {
           const selectedOption = $(this).find('option:selected');
           const selectedUserId = selectedOption.val();
           const selectedUsername = selectedOption.data('username');
@@ -506,7 +422,7 @@ $(function () {
           if (selectedUserId) {
               $('#myInput').val(selectedUsername);
               $('.userIdbet').val(selectedUserId);
-              $('.userDropdown').hide();
+              $('.userDropdownb').hide();
           }
       });
 
@@ -520,34 +436,64 @@ $(function () {
 
   // Function to fetch and display users
   function fetchbetUser(query) {
-      let optionsHtml = '';
+  
 
       $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
           try {
               response = typeof response === 'string' ? JSON.parse(response) : response;
 
-              const filteredUsers = response.flatMap(item => [
-                  { "uid": item.uid, "username": item.username },
-                  { "uid": item.uid, "username": item.email },
-                  { "uid": item.uid, "username": item.contact }
-              ]).filter(user => user.username !== '*****');
+              let optionsHtml = '';
 
-              filteredUsers.forEach(user => {
-                  optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${user.username}">${user.username}</option>`;
+              // Iterate through each item in the response array
+              response.forEach(item => {
+                  // Create an array of possible username types (email, username, contact) for each user
+                  const userOptions = [
+                      { "uid": item.uid, "username": item.username, "reg_type": "username" },
+                      { "uid": item.uid, "username": item.email, "reg_type": "email" },
+                      { "uid": item.uid, "username": item.contact, "reg_type": "contact" }
+                  ];
+              
+                  // Filter to select the correct username based on the `reg_type`
+                  const validUser = userOptions.find(user => {
+                      // Check for the correct username based on the reg_type
+                      return (user.reg_type === "email" && user.username === item.email) ||
+                             (user.reg_type === "username" && user.username === item.username) ||
+                             (user.reg_type === "contact" && user.username === item.contact);
+                  });
+              
+                  // If a valid user option is found, append it to the options HTML
+                  if (validUser) {
+                      optionsHtml += `<option class="optionlist" value="${validUser.uid}" data-username="${validUser.username}">${validUser.username}</option>`;
+                
+                  }
+                 
               });
 
-              $('.userDropdown').html(optionsHtml).show();
+
+              $('.userDropdownb').html(optionsHtml).show();
           } catch (error) {
               console.error("Error parsing response: ", error);
-              $('.userDropdown').hide();
+              $('.userDropdownb').hide();
           }
       }).fail(function () {
           console.error("Error fetching users.");
-          $('.userDropdown').hide();
+          $('.userDropdownb').hide();
       });
   }
 
+  function tableScroll() {
+    const tableContainerBetting = document.querySelector(".table-wrapperlottery");
+    const headerRowBetting = document.querySelector(".lottery_betting");
 
+    tableContainerBetting.addEventListener("scroll", function () {
+      if (tableContainerBetting.scrollTop > 0) {
+        headerRowBetting.classList.add("sticky-headerRow");
+      } else {
+        headerRowBetting.classList.remove("sticky-headerRow");
+      }
+    });
+  }
+  tableScroll();
 
 
 });

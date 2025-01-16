@@ -19,7 +19,7 @@ $(function () {
 
           let types = item.deposit_withdrawal_type == 1 ? 'Deposit' :
           item.deposit_withdrawal_type == 4 ? 'Withdrawal' : '';
-          const username = item.username === '*****' ? item.email : (item.contact ||item.username);
+          let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
 
         html += `
                       <tr>

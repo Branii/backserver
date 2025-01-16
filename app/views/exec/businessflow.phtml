@@ -1,6 +1,11 @@
 <?php
 // declare(strict_types=1);
 // header('Content-Type: application/json');
+// ini_set("display_errors",1);
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
@@ -33,42 +38,31 @@ if ($flag == "lotterydata") {
 
     $page  = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $result = (new BusinessFlowModel())->fetchBetRecords($page, $limit) ?? [];
+    $result = (new BusinessFlowModel())->fetchBetRecordsFast($page, $limit) ?? [];
     echo json_encode([
         'lotterybet' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit)
     ]);
 }
 
-
 if ($flag == "filtertransactions") {
-    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
-    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $page = (int) isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = (int) isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
     $orderid = isset($this->viewData['orderid']) ? $this->viewData['orderid'] : '';
     $ordertype = isset($this->viewData['ordertype']) ? $this->viewData['ordertype'] : '';
     $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
     $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
-    $result = (new BusinessFlowModel())->FilterTrsansactionData($page, $limit, $username, $orderid, $ordertype, $startdate, $enddate) ?? [];
 
-    // $bigArr = [];
-    foreach ($result['data'] as $value) {
-        $username = (new BusinessFlowModel())->getUsernameById($value['uid']);
-        $email = (new BusinessFlowModel())->getUsernameById($value['uid']);
-        $contact = (new BusinessFlowModel())->getUsernameById($value['uid']);
-        $value['username'] = $username['username'];
-        $value['email'] = $email['email'];
-        $value['contact'] = $contact['contact'];
-        $bigArr[] = $value;
-    }
-
+    $result =  (new BusinessFlowModel())->filterAccountTransaction($page, $limit, $username, $orderid, $ordertype, $startdate, $enddate);
+    //echo json_encode($result);
     echo json_encode([
-        'sql' => $result['sql'],
-        'transactions' => $bigArr,
+        'transactions' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit)
     ]);
 
 }
+
 if ($flag == "viewBetstake") {
 
     $betcode  = isset($this->viewData['betcode']) ? (int) $this->viewData['betcode'] : null;

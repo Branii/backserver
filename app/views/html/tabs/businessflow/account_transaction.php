@@ -94,7 +94,7 @@
   }
 
   .queryholder {
-    width: 19%;
+    width: 12%;
     margin-right: 5px;
     background-color: #FFF;
   }
@@ -246,6 +246,10 @@
     background-color: #f0f0f0;
   }
 
+  .ddd{
+    width:10%;
+  }
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -286,9 +290,9 @@
         <option value="11"><?= $translator['Bet Refund']; ?></option>
         </select>
 
-        <input type="date" class="form-control queryholder startdate" id="nameext1" aria-describedby="name" placeholder="Name" />
+        <input type="date" class="form-control ddd queryholder startdatet" id="nameext1" aria-describedby="name" placeholder="Name" />
 
-        <input type="date" class="form-control queryholder enddate" id="nametex" aria-describedby="name" placeholder="Name" />
+        <input type="date" class="form-control  ddd queryholder enddatet" id="nametex" aria-describedby="name" placeholder="Name" />
 
       </div>
     </span>
@@ -299,7 +303,7 @@
 
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
         style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-        <button type="button" class="btn bg-white-subtle " value="right" aria-label="Refresh"
+        <!-- <button type="button" class="btn bg-white-subtle " value="right" aria-label="Refresh"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PDF">
           <i class='bx bx-file' style="font-size:20px"></i>
         </button>
@@ -308,8 +312,8 @@
           <i class='bx bx-file-blank' style="font-size:20px"></i>
         </button>
         <button type="button" class="btn bg-white-subtle" value="right">
-         ::
-        </button>
+        
+        </button> -->
         <button type="button" class="btn bg-white-subtle  refresh" value="right" aria-label="Refresh"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
           <i class='bx bx-refresh' style="font-size:20px"></i>
@@ -377,12 +381,12 @@
         <button type="button" class="btn bg-white-subtle player" value="start">
           <i class='bx bx-chevrons-left' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle player" value="left">
+        <!-- <button type="button" class="btn bg-white-subtle player" value="left">
           <i class='bx bx-chevron-left' style="font-size:20px"></i>
         </button>
         <button type="button" class="btn bg-white-subtle player" value="right">
           <i class='bx bx-chevron-right' style="font-size:20px"></i>
-        </button>
+        </button> -->
         <button type="button" class="btn bg-white-subtle player" value="end">
           <i class='bx bx-chevrons-right' style="font-size:20px"></i>
         </button>
@@ -393,9 +397,6 @@
       <span id="paging_info" style="color:#aaa">---</span>
 
     </span>
-
-   
-      
 
     <span class="top-right-btn"  aria-label="Page navigation example">
     <select class="left-element form-control numrows" style="font-size:12px">
@@ -434,7 +435,6 @@
     <!-- /.modal-content -->
   </div>
 </div>
-
 
 <div id="signup-modal" class="modal fade" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg">

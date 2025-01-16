@@ -205,18 +205,18 @@
     /* Rounded corners for the track */
   }
 
-  .tbl-header {
+  .tbl-headerRow {
     position: sticky;
     top: 0;
   }
 
-  .sticky-header {
+  .sticky-headerRow {
     position: relative;
     bottom: 1px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   }
 
-  .userDropdown {
+  .userDropdownb {
     width: 16%;
     position: absolute;
     background-color: #fff;
@@ -232,26 +232,26 @@
   }
 
   /* Style for the scrollbar */
-  .userDropdown::-webkit-scrollbar {
+  .userDropdownb::-webkit-scrollbar {
     width: 3px;
     /* Width of the scrollbar */
   }
 
-  .userDropdown::-webkit-scrollbar-track {
+  .userDropdownb::-webkit-scrollbar-track {
     background: #f0f0f0;
     /* Background of the scrollbar track */
     border-radius: 5px;
     /* Rounded corners */
   }
 
-  .userDropdown::-webkit-scrollbar-thumb {
+  .userDropdownb::-webkit-scrollbar-thumb {
     background: #ccc;
     /* Color of the scrollbar handle */
     border-radius: 5px;
     /* Rounded corners */
   }
 
-  .userDropdown::-webkit-scrollbar-thumb:hover {
+  .userDropdownb::-webkit-scrollbar-thumb:hover {
     background: #aaa;
     /* Darker handle color on hover */
   }
@@ -264,6 +264,10 @@
 
   .optionlist:hover {
     background-color: #f0f0f0;
+  }
+
+  .table-wrapperlottery{
+    overflow-x:scroll;
   }
 
   /* Reduce the height of the select box */
@@ -284,7 +288,7 @@
 
         <input type="text" id="myInput" class="form-control queryholderlist usernames" placeholder="Search usernames">
         <input name ="usernames" type="hidden" class="userIdbet">
-        <select  class="form-control userDropdown" size="5" style="display: none;">
+        <select  class="form-control userDropdownb" size="5" style="display: none;">
           <!-- Options will be populated dynamically -->
         </select>
 
@@ -355,8 +359,8 @@
   <div class="card-body p-4">
     <div class="table-responsive mb-4 border rounded-1 table-wrapperlottery" id="maskbet" style="height:530px;overflow-y:scroll;">
       <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
-        <thead class="text-dark fs-4 tbl-header">
-          <tr>
+        <thead class="text-dark fs-4 tbl-header tbl-headerRow">
+          <tr class="lottery_betting">
             <th>
               <h6 class="fs-4 fw-semibold mb-0">
               <?= $translator['Bet Order ID']; ?></h6>
@@ -426,19 +430,19 @@
       </table>
     </div>
   </div>
-  <div class="px-4 py-3 border-top pagerlist">
+  <div class="px-4 py-3 border-top pager">
     <span class="toplist-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
         style="border:solid 1px #eee;color:#bbb;background-color:#fff">
         <button type="button" class="btn bg-white-subtle playerbet" value="betstart">
           <i class='bx bx-chevrons-left' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle playerbet" value="betleft">
+        <!-- <button type="button" class="btn bg-white-subtle playerbet" value="betleft">
           <i class='bx bx-chevron-left' style="font-size:20px"></i>
         </button>
         <button type="button" class="btn bg-white-subtle playerbet" value="betright">
           <i class='bx bx-chevron-right' style="font-size:20px"></i>
-        </button>
+        </button> -->
         <button type="button" class="btn bg-white-subtle playerbet" value="betend">
           <i class='bx bx-chevrons-right' style="font-size:20px"></i>
         </button>
@@ -449,12 +453,18 @@
       <span id="paging_infobet" style="color:#aaa">---</span>
 
     </span>
-    <span class="toplist-right" id="paginationbet" aria-label="Page navigation example">
-
-      <!--Dynamic pagination-->
-
+    <span class="top-right-btn"  aria-label="Page navigation example">
+    <select class="left-element form-control numrows" style="font-size:12px">
+            <!-- <option value="5" class="fromnumrows">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option> -->
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="500">500</option>
+     </select>
+      <span id="paginationbet" class="right-element"> </span>
     </span>
-
   </div>
 
 </div>

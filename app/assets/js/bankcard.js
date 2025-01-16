@@ -55,7 +55,7 @@ $(function () {
          const data = await response.json();
           // console.log(response);
         //   return
-        $("#maskbankcard").LoadingOverlay("hide");
+        $("#maskbanks").LoadingOverlay("hide");
         renderbankcard(data.bankcard);
   
         // // Render pagination
@@ -119,7 +119,7 @@ $(function () {
   
     $(".refreshbankcard").click(function () {
      // $(".query").val("");
-      $("#maskbankcard").LoadingOverlay("show", {
+      $("#maskbanks").LoadingOverlay("show", {
         background: "rgb(90,106,133,0.1)",
         size: 3,
       });

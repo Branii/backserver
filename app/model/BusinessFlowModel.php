@@ -1,12 +1,9 @@
 <?php
 
-class BusinessFlowModel extends MEDOOHelper
-{
-
+class BusinessFlowModel extends MEDOOHelper {
 
     public static function getAllGameIdsWithCondition($condition = ""): array
     {
-
        return parent::selectAll("gamestable_map",["bet_table","game_type"],$condition);
         // $sql = "SELECT bet_table,game_type FROM gamestable_map {$condition} ";
         // $stmt = self::openConnection("lottery")->prepare($sql);
@@ -20,7 +17,11 @@ class BusinessFlowModel extends MEDOOHelper
     {
         $startpoint = ($page * $limit) - $limit;
         $data = parent::query(
-            "SELECT transaction.*,users_test.email,users_test.contact,COALESCE(users_test.username, 'N/A') AS username FROM transaction   
+            "SELECT transaction.*,users_test.email,users_test.contact,users_test.reg_type,
+            CASE 
+                WHEN users_test.username LIKE '%*****%' THEN users_test.nickname
+                ELSE COALESCE(users_test.username, 'N/A')
+            END AS username FROM transaction   
             JOIN users_test ON users_test.uid = transaction.uid  ORDER BY trans_id DESC LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
         );
@@ -29,68 +30,116 @@ class BusinessFlowModel extends MEDOOHelper
         return ['data' => $data, 'total' => $totalRecords, 'transactionIds' => $trasationIds];
     }
 
-    public static function FilterTrsansactionDataSubQuery($username = '', $orderid = '', $ordertype = '', $from = '', $to = '')
-    {
-        $conditions = [];
-
-        if (!empty($username) && $username != 'all') {
-            $conditions['transaction.uid'] = $username;
-        }
-
-        if (!empty($orderid) && $orderid != 'all') {
-            $conditions['transaction.order_id'] = $orderid;
-        }
-
-        if (!empty($ordertype) && $ordertype != 'all') {
-            $conditions['transaction.order_type'] = $ordertype;
-        }
-
-        if ($from != '' && $to != '') {
-            $conditions['transaction.date_created[<>]'] = [$from, $to];
-        } elseif ($from != '') {
-            $conditions['transaction.date_created[>=]'] = $from;
-        } elseif ($to != '') {
-            $conditions['transaction.date_created[<=]'] = $to;
-        }
-
-       
-        return $conditions;
-    }
-
-    public static function FilterTrsansactionData($page, $limit, $username, $orderid, $ordertype, $startdate, $enddate)
-    {
-
-        $whereConditions = self::FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
-        $startpoint = ($page * $limit) - $limit;
-        $data = parent::selectAll("transaction", '*', [
-            "AND" => $whereConditions,
-            "ORDER" => ["transaction.trans_id" => "DESC"],
-            "LIMIT" => [$startpoint, $limit]
-        ]);
-    //     $sql = "
-    //     SELECT 
-    //         temp_table.*, 
-    //         users_test.email,
-    //         users_test.username,
-    //          users_test.contact
-    //     FROM 
-    //         (
-    //             SELECT * 
-    //             FROM transaction
-    //             $whereConditions
-    //         ) AS temp_table
-    //     JOIN 
-    //         users_test ON users_test.uid = temp_table.uid
-    //     LIMIT :offset, :limit
-    // ";
+    #####-----some modifications------#####
+    public static function filterAccountTransaction($page, $limit, $username, $orderid, $ordertype, $startdate, $enddate) {
+        try {
+            $startpoint = ($page - 1) * $limit;
+            $conditions = self::FilterTransactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
+            $whereClause = $conditions['query'];
     
-    //  $data = parent::query($sql, ['offset' => $startpoint,'limit' => $limit]);
-        
+            // Main query with joined tables and pagination
+            $query = "SELECT transaction.*, users_test.email, users_test.contact, users_test.reg_type, 
+            CASE 
+                WHEN users_test.username LIKE '%*****%' THEN users_test.nickname
+                ELSE COALESCE(users_test.username, 'N/A')
+            END AS username
+            FROM transaction JOIN users_test ON users_test.uid = transaction.uid $whereClause ORDER BY transaction.date_created DESC 
+            LIMIT $limit OFFSET $startpoint";
+            $stmt = (new Database)::openLink()->prepare($query);
+            $stmt->execute($conditions['params']);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            // Query to count total records
+            $countQuery = "SELECT COUNT(*) AS total FROM transaction JOIN users_test ON users_test.uid = transaction.uid $whereClause";
+            $countStmt = (new Database)::openLink()->prepare($countQuery);
+            $countStmt->execute($conditions['params']);
+            $totalRecords = $countStmt->fetchColumn();
+    
+            return ['data' => $data, 'total' => (int) $totalRecords];
+        } catch (PDOException $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+    
+
+      #####-----some mods------#####
+
+      public static function FilterTransactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate)
+      {
+          $filterConditions = [];
+          $params = [];
+      
+          if (!empty($username)) {
+              $filterConditions[] = "uid = :username";
+              $params['username'] = $username;
+          }
+      
+          if (!empty($orderid)) {
+              $filterConditions[] = "order_id = :orderid";
+              $params['orderid'] = $orderid;
+          }
+      
+          if (!empty($ordertype)) {
+              $filterConditions[] = "order_type = :ordertype";
+              $params['ordertype'] = $ordertype;
+          }
+      
+          if (!empty($startdate) && !empty($enddate)) {
+              $filterConditions[] = "date_created BETWEEN :startdate AND :enddate";
+              $params['startdate'] = $startdate;
+              $params['enddate'] = $enddate;
+          } elseif (!empty($startdate)) {
+              $filterConditions[] = "date_created = :startdate";
+              $params['startdate'] = $startdate;
+          } elseif (!empty($enddate)) {
+              $filterConditions[] = "date_created = :enddate";
+              $params['enddate'] = $enddate;
+          }
+
+          $whereClause = !empty($filterConditions) ? 'WHERE ' . implode(' AND ', $filterConditions) : '';
+      
+          return [
+              'query' => $whereClause,
+              'params' => $params
+          ];
+      }
+      
+
+    public static function FilterTrsansactionData($subQuery, $page, $limit)
+    {
+        $startpoint = ($page * $limit) - $limit;
+        $sql = "
+        SELECT 
+            temp_table.*, 
+            users_test.email AS email,users_test.reg_type,
+            users_test.username AS username
+           
+        FROM 
+            (
+                SELECT * 
+                FROM transaction
+                WHERE $subQuery
+            ) AS temp_table
+        JOIN 
+            users_test ON users_test.uid = temp_table.uid
+         LIMIT :offset, :limit
+       
+        ";
+
+                    $countSql = "
+                SELECT 
+                    COUNT(*) AS total_count
+                FROM 
+                    transaction
+            WHERE
+                $subQuery
+                ";
+
+        $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
+        $totalRecords = parent::query($countSql);
         $lastQuery = MedooOrm::openLink()->log();
-        $totalRecords  = parent::selectAll('transaction', '*',[
-            'AND' => $whereConditions
-        ]);
-        return ['data' => $data, 'total' => count($totalRecords), 'sql' => $lastQuery[0]];
+        $totalRecords  = $totalRecords[0]['total_count'];
+        return ['data' => $data,  'total' => $totalRecords, 'sql' => $lastQuery[0]];
     }
 
     public static function filterusername(string $username)
@@ -135,7 +184,7 @@ class BusinessFlowModel extends MEDOOHelper
 
         $res = parent::query("SELECT draw_table FROM gamestable_map WHERE bet_table = :bet_table", ["bet_table" => $gametype]);
         return  $res;
-        return $res['draw_table'];
+       // return $res['draw_table'];
     }
 
 
@@ -155,6 +204,32 @@ class BusinessFlowModel extends MEDOOHelper
         return $res;
     }
 
+    public static function fetchBetRecordsFast($page, $limit): array{
+        $offset = ($page - 1) * $limit; 
+        $sql = "
+        SELECT GROUP_CONCAT(
+            CONCAT(
+                'SELECT bt.bet_odds,bt.draw_period,bt.bet_code,bt.game_label,bt.game_type,bt.uid,bt.bet_number,bt.unit_stake,bt.multiplier,bt.bet_amount,bt.win_amount,bt.bet_status,bt.state,bt.bet_time,bt.bet_date, 
+                u.username, gt.name As game_type,gt.gt_id AS gt_id FROM ', table_name, ' bt JOIN users_test u ON bt.uid = u.uid
+                     JOIN game_type gt ON gt.gt_id = bt.game_type ') SEPARATOR ' UNION ALL '
+        ) AS query FROM information_schema.tables WHERE table_schema = 'lottery_test' AND table_name LIKE 'bt_%'";
+        
+        $pdo = (new Database)->openLink();
+        $pdo->exec("SET SESSION group_concat_max_len = 1000000");
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $mergedQuery = $stmt->fetchColumn();
+        $paginatedQuery = "$mergedQuery LIMIT $limit OFFSET $offset";
+        $finalStmt = $pdo->prepare($paginatedQuery);
+        $finalStmt->execute();
+        $data = $finalStmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $stmtt = $pdo->prepare($mergedQuery);
+        $stmtt->execute();
+        $totalcount = $stmtt->fetchAll(PDO::FETCH_ASSOC);
+        return ['data' => $data, 'total' => count($totalcount)];
+    }
+
     public static function fetchBetRecords($page, $limit): array
     {
         $startpoint = ($page * $limit) - $limit;
@@ -166,7 +241,7 @@ class BusinessFlowModel extends MEDOOHelper
         foreach ($res as $tables) {
             $gameTable = $tables['bet_table'];
             $records = parent::query(
-                "SELECT $gameTable.*,users_test.email,users_test.contact,users_test.username,game_type.name As game_type ,game_type.gt_id AS gt_id FROM $gameTable 
+                "SELECT $gameTable.*,users_test.email,users_test.contact,users_test.username,users_test.reg_type,game_type.name As game_type ,game_type.gt_id AS gt_id FROM $gameTable 
              JOIN users_test ON users_test.uid = $gameTable.uid 
              JOIN game_type ON game_type.gt_id = $gameTable.game_type 
              ORDER BY $gameTable.bid DESC 
@@ -241,7 +316,7 @@ class BusinessFlowModel extends MEDOOHelper
             $sql = "
             SELECT 
                 temp_table.*, 
-                users_test.email AS email,
+                users_test.email AS email,users_test.reg_type,
                 users_test.username AS username,
                 game_type.name AS game_type,
                 game_type.gt_id AS gt_id
@@ -325,7 +400,7 @@ class BusinessFlowModel extends MEDOOHelper
     {
         $startpoint = ($page * $limit) - $limit;
         $data = parent::query(
-            "SELECT trackbet.*,users_test.email,users_test.contact,COALESCE(users_test.username, 'N/A') AS username FROM trackbet   
+            "SELECT trackbet.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.username, 'N/A') AS username FROM trackbet   
             JOIN users_test ON users_test.uid = trackbet.user_id  ORDER BY track_id DESC LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
         );

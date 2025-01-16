@@ -20,9 +20,9 @@
         <div class="card-body">
           <h5 class="card-title"></h5>
           <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center"><i class='bx bx-dice-6' style="font-size:50px;"></i></h6>
-          <p class="card-text pt-2">
+          <!-- <p class="card-text pt-2">
             List of all availble games
-          </p>
+          </p> -->
           <a href="#" class="card-link">All Games</a>
         </div>
       </div>
@@ -32,9 +32,9 @@
         <div class="card-body">
           <h5 class="card-title"></h5>
           <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center"><i class='bx bx-pie-chart-alt-2' style="font-size:50px;"></i></h6>
-          <p class="card-text pt-2">
+          <!-- <p class="card-text pt-2">
             View revenue graph and statistics
-          </p>
+          </p> -->
           <a href="#" class="card-link">Revenue</a>
         </div>
       </div>
@@ -44,9 +44,9 @@
         <div class="card-body">
           <h5 class="card-title"></h5>
           <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center"><i class='bx bx-history' style="font-size:50px;"></i></h6>
-          <p class="card-text pt-2">
+          <!-- <p class="card-text pt-2">
             Track activities and system loggings
-          </p>
+          </p> -->
           <a href="#" class="card-link">Activity Logs</a>
         </div>
       </div>
@@ -56,9 +56,9 @@
         <div class="card-body">
           <h5 class="card-title"></h5>
           <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center"><i class='bx bx-cog' style="font-size:50px;"></i></h6>
-          <p class="card-text pt-2">
-            System configuration and platform settings
-          </p>
+          <!-- <p class="card-text pt-2">
+            System configuration and settings
+          </p> -->
           <a href="#" class="card-link">System Settings</a>
         </div>
       </div>
@@ -69,9 +69,9 @@
         <div class="card-body">
           <h5 class="card-title"></h5>
           <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center"><i class='bx bx-bell' style="font-size:50px;"></i></h6>
-          <p class="card-text pt-2">
-            View general system alert and notifications
-          </p>
+          <!-- <p class="card-text pt-2">
+            View system alert and notifications
+          </p> -->
           <a href="#" class="card-link">Notifications</a>
         </div>
       </div>
@@ -81,9 +81,9 @@
         <div class="card-body">
           <h5 class="card-title"></h5>
           <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center"><i class='bx bx-user' style="font-size:50px;"></i></h6>
-          <p class="card-text pt-2">
+          <!-- <p class="card-text pt-2">
             List of registered platform users
-          </p>
+          </p> -->
           <a href="#" class="card-link">Total Users</a>
         </div>
       </div>
@@ -93,9 +93,9 @@
         <div class="card-body">
           <h5 class="card-title"></h5>
           <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center"><i class='bx bx-data' style="font-size:50px;"></i></h6>
-          <p class="card-text pt-2">
+          <!-- <p class="card-text pt-2">
             System backups and restore management
-          </p>
+          </p> -->
           <a href="#" class="card-link">Backup and Restore</a>
         </div>
       </div>
@@ -105,9 +105,9 @@
         <div class="card-body">
           <h5 class="card-title"></h5>
           <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center"><i class='bx bx-bowling-ball' style="font-size:50px;"></i></h6>
-          <p class="card-text pt-2">
+          <!-- <p class="card-text pt-2">
             View list of available game draw history
-          </p>
+          </p> -->
           <a href="#" class="card-link">Draw History</a>
         </div>
       </div>
@@ -117,9 +117,9 @@
         <div class="card-body">
           <h5 class="card-title"></h5>
           <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center"><i class='bx bx-shield-x' style="font-size:50px;"></i></h6>
-          <p class="card-text pt-2">
+          <!-- <p class="card-text pt-2">
             System security and upate
-          </p>
+          </p> -->
           <a href="#" class="card-link">Security breaches</a>
         </div>
       </div>
@@ -130,9 +130,9 @@
         <div class="card-body">
           <h5 class="card-title"></h5>
           <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center"><i class='bx bx-receipt' style="font-size:50px;"></i></h6>
-          <p class="card-text pt-2">
+          <!-- <p class="card-text pt-2">
             System policies and legal documentations
-          </p>
+          </p> -->
           <a href="#" class="card-link">Privacies And Policies</a>
         </div>
       </div>
@@ -142,9 +142,9 @@
         <div class="card-body">
           <h5 class="card-title"></h5>
           <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center"><i class='bx bx-user-check' style="font-size:50px;"></i></h6>
-          <p class="card-text pt-2">
+          <!-- <p class="card-text pt-2">
             System administrators and permission.
-          </p>
+          </p> -->
           <a href="#" class="card-link">Administrators</a>
         </div>
       </div>
@@ -154,9 +154,9 @@
         <div class="card-body">
           <h5 class="card-title"></h5>
           <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center"><i class='bx bx-info-circle' style="font-size:50px;"></i></h6>
-          <p class="card-text pt-2">
+          <!-- <p class="card-text pt-2">
              System information and app versions
-          </p>
+          </p> -->
           <a href="#" class="card-link">App Version</a>
         </div>
       </div>

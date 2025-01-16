@@ -1,15 +1,17 @@
 <?php
+ini_set("display_errors",0);
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
-  
 }
 isset($_SESSION['lang']) ? $_SESSION['lang'] : $_SESSION['lang'] = 'en';
 $lang = $_SESSION['lang'];
 $translator = include "tabs/lang/{$lang}.php";
 // print_r($translator);
 !(new Controller)->isUserLoggedIn() ? header("location:../") : "";
-// $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
-// echo $adminEmail;
+// $email =  $_SESSION['isUserLoggedIn'];
+// $res = (new Controller)->getUsername($email);
+//$adminName = $res['full_name'];
+// $adminrole = $res['role'];
 ?>
 <!DOCTYPE html>
 <html oncontextmenu="return falsex" lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme"
@@ -101,30 +103,58 @@ $translator = include "tabs/lang/{$lang}.php";
     .hover-dropdown:hover .dropdown-menu {
       display: block;
     }
+
+    .mainer.shifted {
+      margin-left: 250px;
+    }
+
+    .marquee-container {
+  width: 100%;
+  max-width: 300px; /* Set your desired visible width */
+  overflow: hidden;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 10px 0;
+  position: relative;
+}
+
+.marquee {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.marquee span {
+  display: inline-block;
+  font-size: 1.2em;
+  color: #333;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.marquee.animate span {
+  animation: marquee 10s linear infinite;
+}
+
   </style>
 </head>
 
 <body>
-  <div class="toast toast-onload align-items-center text-bg-primary border-0" role="alert" aria-live="assertive"
-    aria-atomic="true">
-    <div class="toast-body hstack align-items-start gap-6">
-      <i class="ti ti-alert-circle fs-6"></i>
-      <div>
-        <h5 class="text-white fs-3 mb-1">Welcome to Modernize</h5>
-        <h6 class="text-white fs-2 mb-0">Easy to costomize the Template!!!</h6>
-      </div>
-      <button type="button" class="btn-close btn-close-white fs-2 m-0 ms-auto shadow-none" data-bs-dismiss="toast"
-        aria-label="Close"></button>
-    </div>
-  </div>
+
   <!-- Preloader -->
-  <!-- <div class="preloader">
+  <div class="preloader">
     <img src="<?php echo BASE_URL; ?>assets/images/logos/favicon.png"
   alt="loader" class="lds-ripple img-fluid" />
-  </div> -->
-  <div id="main-wrapper">
+  </div>
+  <div id="">
     <!-- Sidebar Start -->
-    <aside class="left-sidebar with-vertical" style="background:#F9F9F9">
+    <aside class="left-sidebar with-vertical" id="mainside" style="background:#F9F9F9">
       <div><!-- ---------------------------------- -->
         <!-- Start Vertical Layout Sidebar -->
         <!-- ---------------------------------- -->
@@ -134,12 +164,17 @@ $translator = include "tabs/lang/{$lang}.php";
             <img
               src="<?php echo BASE_URL; ?>assets/images/logos/dark-logo.svg"
               class="dark-logo" alt="Logo-Dark" />
-
           </a>
+          <div class="toggle text-align-center" style="cursor:pointer;border-top:solid 1px #ddd;border-bottom:solid 1px #ddd;border-right:solid 1px #ddd;width:30px;height:30px;background-color:#F9F9F9;position:absolute;right:-30px;border-top-right-radius:0px;border-bottom-right-radius:0px;">
+            <center>
+          <i class='bx bx-menu' style="font-size:20px;cursor:pointer"></i>
+          </center>
+          </div>
           <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
             <i class="ti ti-x"></i>
           </a>
         </div>
+        <hr>
 
         <nav class="" data-simplebar>
           <ul id="sidebarnav">
@@ -157,8 +192,8 @@ $translator = include "tabs/lang/{$lang}.php";
                 class="rounded-circle" width="40" height="40" alt="modernize-img" />
             </div>
             <div class="john-title">
-              <h6 class="mb-0 fs-4 fw-semibold">Kofi Benson</h6>
-              <span class="fs-2">Designer</span>
+              <h6 class="mb-0 fs-4 fw-semibold"><?php //echo $fullname['full_name'];?></h6>
+              <span class="fs-2"><?php //echo $fullname['role'];?></span>
             </div>
             <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
               <div class="dropdown" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top"
@@ -242,18 +277,27 @@ $translator = include "tabs/lang/{$lang}.php";
       </div>
     </aside>
     <!--  Sidebar End -->
-    <div class="page-wrapper">
+    <div class="row mainer">
 
-
-
-
-
-      <div class="containe-fluid">
+      <div class="">
 
         <div class="surface">
           <div class="mock-browser">
+
+      
+            
             <div class="chrome-tabs" style="--tab-content-margin: 9px">
               <div class="chrome-tabs-content">
+
+              <!-- sidebar drawer button -->
+              <!-- <div class="chrome-tab" style="width:50px;">
+                  <div class="chrome-tab-content" style="width:50px;">
+                    <div class="chrome-tab-title toggle" style="cursor:pointer"><i class='bx bx-menu' style="font-size:20px;cursor:pointer"></i></div>
+                    <div class="chrome-tab-close" hidden></div>
+                  </div>
+              </div> -->
+                <!-- sidebar drawer button -->
+
                 <div class="chrome-tab" id="tabhead" active>
                   <div class="chrome-tab-dividers"></div>
                   <div class="chrome-tab-background">
@@ -318,9 +362,6 @@ $translator = include "tabs/lang/{$lang}.php";
             <?php include "tabs/businessflow/lottery_betting_record.php" ?>
           </div>
 
-          <div class="chrome__tab Track">
-            <?php include "tabs/businessflow/trackbet.php" ?>
-          </div>
 
           <div class="chrome__tab Deposit">
             <?php include "tabs/financialmanage/deposit.php" ?>
@@ -391,6 +432,11 @@ $translator = include "tabs/lang/{$lang}.php";
           
           <div class="chrome__tab  lottery_basic_params">
             <?php include "tabs/game_management/lottery_basic_param.php"?>
+          </div>
+
+          
+          <div class="chrome__tab Track">
+            <?php include "tabs/businessflow/trackbet.php" ?>
           </div>
 
         </div>
@@ -470,6 +516,27 @@ $translator = include "tabs/lang/{$lang}.php";
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
     </script>
     <script>
+
+      $(function(){
+        $(".mainer").addClass("shifted")
+
+        $(".toggle").click(function () {
+          const sidebar = $("#mainside");
+          const content = $(".mainer");
+
+          if (sidebar.css("left") === "-270px") {
+            // Open sidebar
+            sidebar.css("left", "0");
+            content.addClass("shifted");
+          } else {
+            // Close sidebar
+            sidebar.css("left", "-270px");
+            content.removeClass("shifted");
+          }
+        });
+
+      })
+
       document.addEventListener('DOMContentLoaded', function() {
         const tableContainer = document.querySelector('.table-wrapper');
         const headerRow = document.querySelector('thead tr');

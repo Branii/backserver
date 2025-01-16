@@ -141,27 +141,27 @@
     }
 
     /* Custom Scrollbar for Webkit Browsers */
-    .table-wrapperuserlist::-webkit-scrollbar {
+    .table-wrapperlists::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
         /* Slimmer scrollbar height for horizontal scrolling */
     }
 
-    .table-wrapperuserlist::-webkit-scrollbar-track {
+    .table-wrapperlists::-webkit-scrollbar-track {
         background: #f1f1f1;
         /* Lighter background for track */
         border-radius: 5px;
     }
 
-    .table-wrapperuserlist::-webkit-scrollbar-thumb {
+    .table-wrapperlists::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .table-wrapperuserlist::-webkit-scrollbar-thumb:hover {
+    .table-wrapperlists::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
         /* Darker blue on hover */
     }
@@ -299,7 +299,7 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperuserlist" id="masklist" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperlists" id="masklist" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
                 <thead class="text-dark fs-4 tbl-headersUser">
                     <tr class="userlistheadrow">
@@ -361,16 +361,16 @@
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playerlist" value="startlist">
+                <button type="button" class="btn bg-white-subtle playerlists" value="startlists">
                     <i class='bx bx-chevrons-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerlist" value="leftlist">
+                <button type="button" class="btn bg-white-subtle playerlists" value="leftlists">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerlist" value="rightlist">
+                <button type="button" class="btn bg-white-subtle playerlist" value="rightlists">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerlist" value="endlist">
+                <button type="button" class="btn bg-white-subtle playerlists" value="endlists">
                     <i class='bx bx-chevrons-right' style="font-size:20px"></i>
                 </button>
             </div>

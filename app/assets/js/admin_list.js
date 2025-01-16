@@ -33,7 +33,7 @@ $(function () {
                 <tr class="trow">
                     <td> 
                        <div class="d-flex align-items-center">
-                          <img src="http://localhost/admin/app/assets/images/profile/${
+                          <img src="https://winsstarts.com/admin/app/assets/images/profile/${
                             item.profile_picture
                           }" class=" rounded-circle" width="40" height="40" />    
                         </div>

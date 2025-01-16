@@ -186,4 +186,18 @@ $(function(){
       getAllBackups(currentPage,numrow);
     })
 
+    function tableScrollBuckup() {
+      const tableContainerBackup= document.querySelector(".table-wrappereBackup");
+      const headerRowBackup = document.querySelector(".headrowBackup");
+  
+      tableContainerBackup.addEventListener("scroll", function () {
+        if (tableContainerBackup.scrollTop > 0) {
+          headerRowBackup.classList.add("sticky-headerBackup");
+        } else {
+          headerRowBackup.classList.remove("sticky-headerBackup");
+        }
+      });
+    }
+    tableScrollBuckup();
+
 })
