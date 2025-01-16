@@ -141,7 +141,7 @@ $(function () {
 
 
   let currentPagebet = 1;
-  let pageLimit = 30;
+  let pageLimit = 50;
   
   // Fetch lottery bet data
   async function fetchLotteryBet(currentPagebet) {
@@ -239,7 +239,7 @@ $(function () {
             $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             return;
           }
-  
+          $("#maskbet").LoadingOverlay("hide");
           renderlottery(data.filterbet);
           renderbetPagination(data.totalPages, currentPagebet, (page) => {
             filterbetdatas(uidd, gametype, betsate, betstatus, startdates, enddates, page, pageLimit);
@@ -300,7 +300,7 @@ $(function () {
       size: 3,
     });
     currentPagebet = 1;
-    pageLimit = 30;
+    pageLimit = 50;
     fetchLotteryBet(currentPagebet, pageLimit);
   });
 

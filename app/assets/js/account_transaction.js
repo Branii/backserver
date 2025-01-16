@@ -127,6 +127,7 @@ $(function () {
                 $("#dataContainer").html(html);
                 return;
             }
+            $("#mask").LoadingOverlay("hide");
             render(data.transactions);
 
             // Render pagination
@@ -386,8 +387,12 @@ $(function () {
         }
     }
 
+    
     $(document).on("click", ".tinfo", function () {
-        $("#loadingIndicator").hide()
+        setTimeout(() => {
+            $("#loadingIndicator").hide();
+            
+        }, 100); 
         $("#signup-modal").modal("show");
         const transactionId = $(this).attr("value");
         console.log(transactionId);
