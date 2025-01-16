@@ -92,6 +92,9 @@ class FinacialManageModel extends MEDOOHelper
 
     public static function insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
     {
+        if ($desposittype == 4) {
+            $amount = -$amount; // Negate the value of $amount
+        }
         $params = [
             'uid' =>  $uid,
             'partner_uid' => 1,
@@ -207,7 +210,7 @@ class FinacialManageModel extends MEDOOHelper
             $startpoint = ($page * $limit) - $limit;
     
             // Define the SQL query to fetch the data with pagination
-            $sql = "SELECT deposits_and_withdrawals.*, users_test.username, users_test.email 
+            $sql = "SELECT deposits_and_withdrawals.*, users_test.username, users_test.email ,users_test.contact,users_test.reg_type 
                     FROM deposits_and_withdrawals 
                     JOIN users_test ON users_test.uid = deposits_and_withdrawals.user_id
                     WHERE $subQuery
