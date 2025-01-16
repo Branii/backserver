@@ -213,62 +213,56 @@
     .optionlist:hover {
         background-color: #f0f0f0;
     }
-    
-/* Base styling for the table cell */
-.bet_userSelection {
-    position: relative; /* Necessary for positioning the tooltip */
-    max-width: 200px; /* Limit width for ellipsis */
-    white-space: nowrap; /* Prevent text wrapping */
-    overflow: hidden; /* Hide overflow text */
-    text-overflow: ellipsis; /* Show ellipsis for truncated text */
-    cursor: pointer;
-}
 
-/* Tooltip text */
-.tooltip-text {
-    visibility: hidden; /* Hidden by default */
-    opacity: 0; /* Fully transparent by default */
-    position: absolute;
-    bottom: 125%; /* Position above the cell */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8); /* Dark background */
-    color: #fff; /* White text */
-    padding: 8px 12px; /* Add padding for readability */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 12px; /* Smaller font size */
-    line-height: 1.5;
-    white-space: pre-wrap; /* Allow line breaks for long content */
-    z-index: 1000; /* Make sure it appears on top */
-    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out; /* Smooth transition */
-    width: max-content; /* Fit content */
-    max-width: 300px; /* Prevent tooltip from being too wide */
-    text-align: left;
-}
+    /* Base styling for the table cell */
+    .bet_userSelection {
+        position: relative; /* Necessary for positioning the tooltip */
+        max-width: 200px; /* Limit width for ellipsis */
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide overflow text */
+        text-overflow: ellipsis; /* Show ellipsis for truncated text */
+        cursor: pointer;
+    }
 
-/* Tooltip arrow */
-.tooltip-text::after {
-    content: '';
-    position: absolute;
-    top: 100%; /* Position at the bottom of the tooltip */
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 6px;
-    border-style: solid;
-    border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent; /* Arrow pointing down */
-}
+    /* Tooltip text */
+    .tooltip-text {
+        visibility: hidden; /* Hidden by default */
+        opacity: 0; /* Fully transparent by default */
+        position: absolute;
+        bottom: 125%; /* Position above the cell */
+        left: 50%; /* Center horizontally */
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.8); /* Dark background */
+        color: #fff; /* White text */
+        padding: 8px 12px; /* Add padding for readability */
+        border-radius: 4px; /* Rounded corners */
+        font-size: 12px; /* Smaller font size */
+        line-height: 1.5;
+        white-space: pre-wrap; /* Allow line breaks for long content */
+        z-index: 1000; /* Make sure it appears on top */
+        transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out; /* Smooth transition */
+        width: max-content; /* Fit content */
+        max-width: 300px; /* Prevent tooltip from being too wide */
+        text-align: left;
+    }
 
-/* Show tooltip on hover */
-.bet_userSelection:hover .tooltip-text {
-    visibility: visible; /* Show tooltip */
-    opacity: 1; /* Make it fully visible */
-}
+    /* Tooltip arrow */
+    .tooltip-text::after {
+        content: "";
+        position: absolute;
+        top: 100%; /* Position at the bottom of the tooltip */
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 6px;
+        border-style: solid;
+        border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent; /* Arrow pointing down */
+    }
 
-
-
-
-
-   
+    /* Show tooltip on hover */
+    .bet_userSelection:hover .tooltip-text {
+        visibility: visible; /* Show tooltip */
+        opacity: 1; /* Make it fully visible */
+    }
 </style>
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
@@ -277,7 +271,6 @@
     <div class="px-4 py-3 border-bottom pager1">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-               
                 <input type="text" id="mytrans" class="form-control queryholdertrans usernames" placeholder="Search usernames" />
                 <input name="usernames" type="hidden" class="userIdtrans queryholdertrans" />
                 <select class="form-control useraccount" size="5" style="display: none;">
@@ -430,7 +423,7 @@
                     </div>
                 </div>
                 <form>
-                    <div class="row" id ="viewbetdatahide">
+                    <div class="row" id="viewbetdatahide">
                         <div class="col-md-6">
                             <table class="table table-bordered table-striped">
                                 <tbody id="row1"></tbody>
@@ -444,11 +437,11 @@
                     </div>
                 </form>
 
-                <div id="loadingIndicator" class="spinner-border text-primary" role="status" style="display:none;position:relative;left:40%;">
-				<span class="sr-only">Loading...</span>
-				</div>
+                <div id="loadingIndicator" class="spinner-border text-primary" role="status" style="display: none; position: relative; left: 40%;">
+                    <span class="sr-only">Loading...</span>
+                </div>
 
-                <div id = "transacttbl">
+                <div id="transacttbl">
                     <table class="table table-hover table-bordered text-nowrap mb-0 table-responsive" id="transtbl">
                         <thead>
                             <tr>
@@ -456,57 +449,51 @@
                                 <th class="font-weight-normal"><?= $translator['Username']; ?></th>
                                 <th class="font-weight-normal"><?= $translator['Level']; ?></th>
                                 <th class="font-weight-normal"><?= $translator['Deposit/Withdrawal Type']; ?></th>
-                                <th class="font-weight-normal"><?= $translator['Transaction Amount']; ?> </th>
+                                <th class="font-weight-normal"><?= $translator['Transaction Amount']; ?></th>
                                 <th class="font-weight-normal"><?= $translator['Balance']; ?></th>
-                                <th class="font-weight-normal"> <?= $translator['Transaction Time']; ?></th>
+                                <th class="font-weight-normal"><?= $translator['Transaction Time']; ?></th>
                                 <!-- <th class="font-weight-normal"><?= $translator['Turnover Requirement']; ?></th> -->
                                 <!-- <th class="font-weight-normal">Bet Slip</th> -->
                                 <th class="font-weight-normal"><?= $translator['Reviews']; ?></th>
-
                             </tr>
                         </thead>
-                        <tbody class=''>
+                        <tbody class="">
                             <?php
 
                             ?>
-				    </table>
-				</div>
-                <div id="loadingIndicator" class="spinner-border text-primary" role="status" style="display:none;position:relative;left:40%;">
-				<span class="sr-only">Loading...</span>
-				</div>
-                <div id = "transredenvelop">
+                        </tbody>
+                    </table>
+                </div>
+                <div id="loadingIndicator" class="spinner-border text-primary" role="status" style="display: none; position: relative; left: 40%;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div id="transredenvelop">
                     <table class="table table-hover table-bordered text-nowrap mb-0 table-responsive" id="transtbls">
                         <thead>
                             <tr>
-                                
-                            <th class="font-weight-normal"><?= $translator['ID Number']; ?></th>
-                            <th class="font-weight-normal"><?= $translator['Username']; ?></th>
-                            <th class="font-weight-normal"><?= $translator['Transaction Type']; ?></th>
-                            <th class="font-weight-normal"><?= $translator['Amount']; ?></th>
-                            <!-- <th class="font-weight-normal"><?= $translator['Credit Amount']; ?></th> -->
-                            <th class="font-weight-normal"><?= $translator['Balance']; ?></th>
-                            <th class="font-weight-normal"><?= $translator['Date/Time']; ?></th>
-                            <!-- <th class="font-weight-normal"><?= $translator['Game']; ?></th> -->
-                            <th class="font-weight-normal"><?= $translator['Transaction ID']; ?></th>
-                            <th class="font-weight-normal"><?= $translator['Status']; ?></th>
-                            <!-- <th class="font-weight-normal"><?= $translator['Reviews']; ?></th> -->
-
+                                <th class="font-weight-normal"><?= $translator['ID Number']; ?></th>
+                                <th class="font-weight-normal"><?= $translator['Username']; ?></th>
+                                <th class="font-weight-normal"><?= $translator['Transaction Type']; ?></th>
+                                <th class="font-weight-normal"><?= $translator['Amount']; ?></th>
+                                <!-- <th class="font-weight-normal"><?= $translator['Credit Amount']; ?></th> -->
+                                <th class="font-weight-normal"><?= $translator['Balance']; ?></th>
+                                <th class="font-weight-normal"><?= $translator['Date/Time']; ?></th>
+                                <!-- <th class="font-weight-normal"><?= $translator['Game']; ?></th> -->
+                                <th class="font-weight-normal"><?= $translator['Transaction ID']; ?></th>
+                                <th class="font-weight-normal"><?= $translator['Status']; ?></th>
+                                <!-- <th class="font-weight-normal"><?= $translator['Reviews']; ?></th> -->
                             </tr>
                         </thead>
-                        <tbody class=''>
+                        <tbody class="">
                             <?php
 
                             ?>
+                        </tbody>
                     </table>
-				</div>
+                </div>
             </div>
-           
         </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
 </div>
-
-
-
-

@@ -30,6 +30,15 @@ $(function () {
       8: "Delete",
     };
 
+    const status = {
+      2: { title: "Win", color: "#4CAF50" }, // Green
+      3: { title: "Loss", color: "#E91E63" }, // Red
+      5: { title: "Pending", color: "#9E9E9E" }, // Grey
+      6: { title: "Void", color: "#F44336" },
+      7: { title: "Refund", color: "#03A9F4" }, // Light Blue
+    
+  };
+
     data.forEach((item) => {
        const betOddsObject = JSON.parse(item.bet_odds);
        const betOddsArray = Object.values(betOddsObject);
@@ -50,7 +59,8 @@ $(function () {
                         <td>${item.multiplier}</td>
                         <td>${formatBalance(item.bet_amount)}</td>
                         <td>${formatBalance(item.win_amount)}</td>
-                        <td>${betstatus[item.bet_status]}</td>
+                         <td><i class='bx bxs-circle' style='color:${status[item.bet_status].color};font-size:8px;margin-right:5px;'></i>${status[item.bet_status].title}</td>
+                 
                         <td>${states[item.state]}</td>
                         
                         <td>
@@ -82,13 +92,7 @@ $(function () {
   const Showbettable = (data,obj) => {
     let htmlbet = "";
     Object.entries(data).forEach(([key, value]) => {
-    //  console.log(`${key}: ${value}`);
- //   let displayValue = ;
-  //  if (key === 'user_selection') {
-      // Create a textarea for user selection
-    //  displayValue = `<td><textarea rows="4">${key}</textarea></td>`;
-  //} 
-  
+   
       htmlbet += `
             <tr>
               <td>${value}</td>
@@ -141,26 +145,27 @@ $(function () {
 
 
   let currentPagebet = 1;
-  let pageLimit = 50;
+  let pageLimit = 40;
   
   // Fetch lottery bet data
   async function fetchLotteryBet(currentPagebet) {
     try {
       const response = await fetch(`../admin/lotterydata/${currentPagebet}/${pageLimit}`);
       const data = await response.json();
-      const totalPages = data.totalPages;
-  
+      console.log(response)
+    
       $("#maskbet").LoadingOverlay("hide");
-  
+      const totalPages = data.totalPages;
       renderlottery(data.lotterybet);
       renderbetPagination(totalPages, currentPagebet, (page) => fetchLotteryBet(page,pageLimit)); // Pass callback
       document.getElementById("paging_infobet").innerHTML = 
         `Page ${currentPagebet} of ${totalPages} pages`;
     } catch (error) {
-      console.error("Error fetching data:", error);
+   //   console.error("Error fetching data:", error);
     }
   }
   
+  fetchLotteryBet(currentPagebet,pageLimit);
   // Render pagination dynamically
   function renderbetPagination(totalPages, currentPagebet, callback) {
     if (totalPages === 0) {
@@ -221,7 +226,7 @@ $(function () {
   }
   
   // Filter and fetch lottery bet data
-  async function filterbetdatas(uidd, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit) {
+  async function filterbetdatas(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit) {
     $.post(`../admin/filterbetdata/${uidd}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`)
       .done(function (response) {
         try {
@@ -236,6 +241,7 @@ $(function () {
                 </td>
               </tr>`;
             $("#lotterydataContainer").html(html);
+            $("#maskbet").LoadingOverlay("hide");
             $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             return;
           }
@@ -257,7 +263,7 @@ $(function () {
   }
   
   // Initialize
-  fetchLotteryBet(currentPagebet,pageLimit);
+
   
   
   $(".playerbet").click(function () {
@@ -293,7 +299,7 @@ $(function () {
 
   
   $(".betrefresh").click(function () {
-    $('.queryholderlist').val('');
+    $('.queryholderbet').val('');
     $('.userIdbet').val('')
     $("#maskbet").LoadingOverlay("show", {
       background: "rgb(90,106,133,0.1)",
@@ -315,6 +321,8 @@ $(function () {
     const betstatus = $('.betstatus').val();
     const startdates = $('.startdates').val();
     const enddates = $('.enddates').val();
+    console.log(startdates)
+    console.log(enddates)
 
     filterbetdatas(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit)
 

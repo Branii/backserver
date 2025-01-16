@@ -152,14 +152,14 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function filterbetdata($uid,$gametype,$betstate,$betstatus,$enddate,$startdate,$page,$limit){
+    public function filterbetdata($uid,$gametype,$betstate,$betstatus,$startdate,$enddate,$page,$limit){
         $this->view('exec/businessflow',[
         'uid'=>$uid,
         'gametype'=>$gametype,
         'betstate'=>$betstate,
         'betstatus'=>$betstatus,
-        'enddate'=>$enddate,
         'startdate'=>$startdate,
+        'enddate'=>$enddate,
         'page'=>$page,
         'limit'=>$limit,
         'flag' => 'filterbetdata']);

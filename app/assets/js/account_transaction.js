@@ -124,6 +124,7 @@ $(function () {
                       <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
                   </td>
               </tr>`;
+              $("#mask").LoadingOverlay("hide");
                 $("#dataContainer").html(html);
                 return;
             }
