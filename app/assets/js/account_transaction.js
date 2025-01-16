@@ -387,7 +387,7 @@ $(function () {
     }
 
     $(document).on("click", ".tinfo", function () {
-        $("#loadingIndicator").hide();
+        $("#loadingIndicator").hide()
         $("#signup-modal").modal("show");
         const transactionId = $(this).attr("value");
         console.log(transactionId);
