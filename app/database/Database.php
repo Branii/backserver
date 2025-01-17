@@ -14,5 +14,6 @@ class Database {
 
     public static function closeLink() {
         self::$connection = null; 
-    }
+    } 
+    
 }
