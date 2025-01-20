@@ -205,16 +205,103 @@
         /* Rounded corners for the track */
     }
 
+
     .tbl-trackhead {
-        position: sticky;
-        top: 0;
+    position: sticky;
+    top: 0;
+  }
+
+  .sticky-trackhead {
+    position: relative;
+    bottom: 1px;
+    background-color: red;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  }
+
+  .trackdown {
+        width: 19%;
+        position: absolute;
+        background-color: #fff;
+        color: #aaa;
+        max-height: 300px;
+        overflow-y: scroll;
+        border-radius: 5px;
+        padding: 10px;
+        top: 90%;
+        z-index: 9999;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        display: none;
     }
 
-    .sticky-trackhead {
-        position: relative;
-        bottom: 1px;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    /* Style for the scrollbar */
+    .trackdown::-webkit-scrollbar {
+        width: 3px;
+        /* Width of the scrollbar */
     }
+
+    .trackdown::-webkit-scrollbar-track {
+        background: #f0f0f0;
+        /* Background of the scrollbar track */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
+
+    .trackdown::-webkit-scrollbar-thumb {
+        background: #ccc;
+        /* Color of the scrollbar handle */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
+
+    .trackdown::-webkit-scrollbar-thumb:hover {
+        background: #aaa;
+        /* Darker handle color on hover */
+    }
+
+    .custom-dropdown {
+        position: relative;
+        /* width: 20%; */
+        /* max-width: 300px; */
+        /* margin: 0 auto; */
+    }
+
+    .custom-dropdown select {
+        width: 100%;
+    }
+
+    .custom-dropdown::after {
+        position: absolute;
+        /* right: 10px; */
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none; /* Prevent interaction with the arrow */
+        font-size: 14px;
+        color: #777;
+    }
+
+    .custom-dropdown select::-webkit-scrollbar {
+        width: 3px; /* Width of the scrollbar */
+    }
+
+    .custom-dropdown select::-webkit-scrollbar-thumb {
+        background: #ccc;
+        /* Color of the scrollbar handle */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
+
+    .custom-dropdown select::-webkit-scrollbar-thumb:hover {
+        background: #aaa;
+    }
+
+    .custom-dropdown select::-webkit-scrollbar-track {
+        background: #f0f0f0;
+        /* Background of the scrollbar track */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
+
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -227,10 +314,11 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-                <input name="username" class="queryholderlist form-control" id="selectuserlistt" placeholder="Username"
-                    autocomplete="off"></input>
-                <input type="text" class="userIds" style="display:none" />
-                <ul class="queryholderxxt"></ul>
+                <input type="text" id="trackinput" class="form-control queryholderbet usernames" placeholder="Search usernames" />
+                    <input name="usernames" type="hidden" class="userIdbet" />
+                    <select class="form-control trackdown" size="5" style="display: none;">
+                        <!-- Options will be populated dynamically -->
+                    </select>
 
                 <select name="recharge" class="form-control form-select queryholderlist recharges"
                     data-bs-placeholder="Select Type">
@@ -242,15 +330,15 @@
                     <option value="3"><?= $translator['Not Stop Track'];?></option>
                 </select>
 
-                <select name="order_type" class="form-control form-select queryholderlist selectlottery" data-bs-placeholder="Select Type" placeholder="slect lottery type">
-          
-               </select>
+                <div class="custom-dropdown">
+                        <select name="lotteryname" class="form-control form-select queryholderlist typelottery selectlottery" data-bs-placeholder="Select Type"> </select>
+                 </div>
 
-                <input type="date" class="form-control queryholderlist startdate"  aria-describedby="name"
+                <input type="date" class="form-control queryholderlist startdatetrack"  aria-describedby="name"
                     placeholder="Name" />
 
 
-                <input type="date" class="form-control queryholderlist enddate"  aria-describedby="name"
+                <input type="date" class="form-control queryholderlist enddatetrack"  aria-describedby="name"
                     placeholder="Name" />
 
                 <!-- <button type="button" class="btn btn-outline-light text-dark queryholderlist addagents">
@@ -294,7 +382,7 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrappertrack" id="maskbet" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrappertrack" id="masktrack" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
                 <thead class="text-dark fs-4 tbl-trackhead">
                     <tr class ="trackheadrow">

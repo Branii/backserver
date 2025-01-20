@@ -92,7 +92,9 @@ $(function () {
         bet_number: "Total Bet:",
         bet_amount: "Total Bet Amount:",
         win_amount: "Win Amount:",
+        rebate_amount: 'Rebate Amount',
         user_selection: "Bet Details",
+        // description: "des",
     };
 
     const render = (data) => {
@@ -119,18 +121,17 @@ $(function () {
         }
     }
 
-    async function filterTrasaction(usernamee, orderid, ordertype, startdatet, enddatet, currentPage, pageLimit) {
+    async function filterTrasaction(username, orderid, ordertype, startdatet, enddatet, currentPage, pageLimit) {
         try {
-            const response = await fetch(`../admin/filtertransactions/${usernamee}/${orderid}/${ordertype}/${startdatet}/${enddatet}/${currentPage}/${pageLimit}`);
+            const response = await fetch(`../admin/filtertransactions/${username}/${orderid}/${ordertype}/${startdatet}/${enddatet}/${currentPage}/${pageLimit}`);
             const data = await response.json();
             if(data.response == "error"){
                  showToast("Alert","User does not exist","info")
-                console.log("Alert","User does not exist","info")
                 $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
                 return
             }
 
-            console.log(response);
+            ///console.log(response);
       
             $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             if (data.transactions.length < 1) {
@@ -241,22 +242,22 @@ $(function () {
     });
 
     $(document).on("click", ".executetrans", function () {
-        if ($("#mytrans").val() == "" && $(".ordertype").val() == "" && $(".startdatet").val() == "" 
+        if ($("#mytrans").val() == "" && $("#mytrans").val() == null && $(".ordertype").val() == "" && $(".startdatet").val() == "" 
         && $(".userIdtrans").val() == "") {
             $("#al-danger-alert").modal("show");
             return;
         }
-        const usernamee = $("#mytrans").val();
-        const username = $(".userIdtrans").val();
+        const username = $("#mytrans").val();
+        // const username = $(".userIdtrans").val();
         const orderid = $(".orderid").val();
         const ordertype = $(".ordertype").val();
         const startdatet = $(".startdatet").val();
         const enddatet = $(".enddatet").val();
-          console.log(usernamee);
+          console.log(username);
         //  return
         $(".loader").removeClass("bx-check-double").addClass("bx-loader bx-spin");
         setTimeout(() => {
-            filterTrasaction(usernamee, orderid, ordertype, startdatet, enddatet, currentPage, pageLimit);
+            filterTrasaction(username, orderid, ordertype, startdatet, enddatet, currentPage, pageLimit);
         }, 100);
     });
 
@@ -542,4 +543,6 @@ $(function () {
             $(".useraccount").hide();
         });
     }
+
+   
 });
