@@ -151,7 +151,7 @@ class adminController extends Controller {
         $this->view('exec/businessflow',['flag' => 'fetchLotteryname']);
         $this->view->render();
     }
-
+ 
     public function filterbetdata($uid,$gametype,$betstate,$betstatus,$startdate,$enddate,$page,$limit){
         $this->view('exec/businessflow',[
         'uid'=>$uid,
@@ -366,7 +366,7 @@ class adminController extends Controller {
         'enddate' => $enddate,
          'page' => $page,
          'limit' => $pageLimit,
-        'flag' => 'filterDeposit'
+        'flag' => 'filterdeposit'
     ]);
         $this->view->render();
 

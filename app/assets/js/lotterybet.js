@@ -1,6 +1,14 @@
 $(function () {
-  //NOTE -
-  ////////////// LOTTERY BETTING-//////////
+
+  function showToast(title, message, type) {
+    $.toast({
+      position: "bottom-right",
+      title: title,
+      message: message,
+      type: type,
+      duration: 3000, // auto-dismiss after 3s
+    });
+  }
   function formatBalance(balance) {
     if (balance % 1 !== 0 && balance.toString().split(".")[1].length > 3) {
         return Number(balance).toFixed(4);
@@ -145,14 +153,13 @@ $(function () {
 
 
   let currentPagebet = 1;
-  let pageLimit = 40;
+  let pageLimit = 50;
   
   // Fetch lottery bet data
   async function fetchLotteryBet(currentPagebet) {
     try {
       const response = await fetch(`../admin/lotterydata/${currentPagebet}/${pageLimit}`);
       const data = await response.json();
-      console.log(response)
     
       $("#maskbet").LoadingOverlay("hide");
       const totalPages = data.totalPages;
@@ -168,11 +175,7 @@ $(function () {
   fetchLotteryBet(currentPagebet,pageLimit);
   // Render pagination dynamically
   function renderbetPagination(totalPages, currentPagebet, callback) {
-    if (totalPages === 0) {
-      // Handle the case where there are no pages (no records)
-      document.getElementById("pagination").innerHTML = "No records available.";
-      return;
-  }
+   
     let pagLink = `<ul class='pagination justify-content-end'>`;
   
     // Previous Button
@@ -231,19 +234,24 @@ $(function () {
       .done(function (response) {
         try {
           const data = JSON.parse(response);
-  
-          if (data.filterbet.length < 1) {
-            // If no results, show "no results" message
-            let html = `
-              <tr class="no-results">
-                <td colspan="9">
-                  <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-                </td>
-              </tr>`;
-            $("#lotterydataContainer").html(html);
-            $("#maskbet").LoadingOverlay("hide");
+          if(data.response == "error"){
+            showToast("Alert","User does not exist","info")
             $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-            return;
+           return
+         }
+          console.log(response)
+          $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+          if (data.filterbet.length < 1) {
+            let html = `
+            <tr class="no-results">
+                <td colspan="9">
+                    <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                </td>
+            </tr>`;
+            $("#maskbet").LoadingOverlay("hide");
+            $("#lotterydataContainer").html(html);
+              return;
+          
           }
           $("#maskbet").LoadingOverlay("hide");
           renderlottery(data.filterbet);
@@ -261,10 +269,9 @@ $(function () {
         $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
       });
   }
-  
-  // Initialize
 
-  
+
+
   
   $(".playerbet").click(function () {
     let direction = $(this).val();
@@ -314,14 +321,18 @@ $(function () {
 
 
   $(".executebet").click(function () {
-    // Get form data
-    const uidd = $('.userIdbet').val();
+    if ($("#myInput").val() == "" && $(".typelottery").val() == "" && $(".startdates").val() == ""
+    && $(".betsate").val() == "" && $(".betstatus").val() == "") {
+      $("#dangerbet").modal("show");
+      return;
+  }
+    const uidd = $('#myInput').val();
     const gametype = $('.typelottery').val();
     const betsate = $('.betsate').val();
     const betstatus = $('.betstatus').val();
     const startdates = $('.startdates').val();
     const enddates = $('.enddates').val();
-    console.log(startdates)
+    console.log(uidd)
     console.log(enddates)
 
     filterbetdatas(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit)
@@ -448,7 +459,8 @@ $(function () {
                   displayValuebet = user.contact;
                   regnamebet  = user.contact;  // Show contact
                  }else{
-                  displayValuebet = 'no data found...'
+                  displayValuebet = "no data found...";
+                  regnamebet = "no data found..."// Show contact
                  }
                       optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regnamebet}">${displayValuebet}</option>`;
            

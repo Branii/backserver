@@ -25,7 +25,7 @@ $(function () {
       };
   
       data.forEach((item) => {
-        const username = item.username == '*****' ? item.email :(item.username ||item.contact);
+        let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
         htmls += `
                       <tr>
                           <td>${item.track_token}</td>
@@ -224,13 +224,13 @@ $(function () {
     });
   
     
-    $(".trackrefresh").click(function () {
+    $(".refreshtrack").click(function () {
       $('.queryholderlist').val('');
       $("#masktrack").LoadingOverlay("show", {
         background: "rgb(90,106,133,0.1)",
         size: 3,
       });
-      fetchLotteryBet(currentPagetrack);
+      fetchtrackdata(currentPagetrack);
     });
   
     $(".executetrack").click(function () {
@@ -293,97 +293,86 @@ $(function () {
     fetchLotteryname()
     
   
-    // viewbets
-    // $(document).on("click",".viewbets",function(){
-    //   $("#viewbetsmodal").modal("show")
-    //   const betcode = $(this).attr("data-betcode")
-    //   const gametype = $(this).attr("data-gametype")
-    //   $("#rowbet").html("")
-    //   $("#rowbe1").html("")
-    //   viewstakedBet(betcode,gametype)
-    // })
   
-    // async function viewstakedBet(betcode,gametype) {
-    //   try {
-    //     const response = await fetch(`../admin/viewBetstake/${betcode}/${gametype}/`);
-    //     const data = await response.json();
-    //     console.log(response)
-    //     // return
-    //     let htmlbet1 = Showbettable(firstRowbet,data)
-    //     let htmlbet2 = Showbettable(secondRowbet,data)
-    //     $("#rowbet").html(htmlbet1)
-    //     $("#rowbet1").html(htmlbet2)
+    let debounceTimeout = null;
+
+    $(document).ready(function () {
+        // Event listener for keyup on #myInput
+        $(document).on('keyup', '#trackinput', function () {
+            const query = $(this).val().trim();
   
-    //   } catch (error) {
-    //     console.error("Error fetching data:", error);
-    //   }
-    // }
+            // Only trigger if input is more than 2 characters
+            if (query.length > 1) {
+                clearTimeout(debounceTimeout); // Clear any existing timeout
+                debounceTimeout = setTimeout(fetchbetUser, 500, query); // Call fetchUsers with the query after 500ms delay
+            } else {
+                $('.trackdown').hide(); // Hide dropdown if input is less than 3 characters
+            }
+        });
   
+        // Handle dropdown item selection
+        $(document).on('change', '.trackdown', function () {
+            const selectedOption = $(this).find('option:selected');
+            const selectedUserId = selectedOption.val();
+            const selectedUsername = selectedOption.data('username');
   
-  let debounceTimeout =null; // To store the timeout ID
-  $(document).ready(function () {
-      // Event listener for keyup
-      $('#myInput').on('keyup', function () {
-          const query = $(this).val().trim();
+            if (selectedUserId) {
+                $('#trackinput').val(selectedUsername);
+                $('.userIdbet').val(selectedUserId);
+                $('.trackdown').hide();
+            }
+        });
   
-          if (query.length > 2) { // Only trigger if input is more than 2 characters
-              clearTimeout(debounceTimeout); // Clear any existing timeout
-              debounceTimeout = setTimeout(() => {
-                  // Call the filterUsers logic directly here
-                  let optionsHtml = '';
-  
-                  $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
-                      try {
-                        console.log(response)
-                          if (typeof response === 'string') {
-                              response = JSON.parse(response); // Parse string response
-                          }
-  
-                          if (Array.isArray(response)) {
-                              const filteredUsers = response.filter(user =>
-                                  user.username.toLowerCase().includes(query.toLowerCase())
-                              );
-                          
-                              if (filteredUsers.length > 0) {
-                                  filteredUsers.forEach(user => {
-                                    optionsHtml += `<option class ="optionlist"  value="${user.uid}" data-username="${user.username}">${user.username}</option>`;
-                                      // optionsHtml += `<li class="optionlist" data-username="${user.username}">${user.username}</li>`;
-                                  });
-  
-                                  $('.userDropdown').html(optionsHtml).show(); // Display dropdown with options
-                              } else {
-                                  $('.userDropdown').hide(); // Hide dropdown if no users found
-                              }
-                          } else {
-                              console.error("Invalid response format: ", response);
-                              $('.userDropdown').hide();
-                          }
-                      } catch (error) {
-                          console.error("Error parsing response: ", error);
-                          $('.userDropdown').hide();
-                      }
-                  }).fail(function (error) {
-                      console.error("Error fetching users: ", error);
-                      $('.userDropdown').hide();
-                  });
-              }, 500); // 500ms debounce delay
-          } else {
-              $('.userDropdown').hide(); // Hide dropdown if input is less than 3 characters
-          }
-      });
-  
-      // Handle dropdown item click
-      $(document).on('change', '.userDropdown', function () {
-        const selectedOption = $(this).find('option:selected'); // Get the selected <option>
-        const selectedUserId = selectedOption.val(); // Get user ID from the value attribute
-        const selectedUsername = selectedOption.data('username'); // Get username from data-attribute
-    
-       $('#myInput').val(selectedUsername); // Set input field to selected username
-        $('.userDropdown').hide(); // Hide dropdown after selection
-        console.log(selectedUserId);
-         console.log(`Selected Username: ${selectedUsername}`);
+        // Handle manual input clearing
+        $(document).on('input', '#trackinput', function () {
+            if (!$(this).val()) {
+                $('.userIdbet').val(''); // Reset user ID if input is cleared
+            }
+        });
     });
-  });
+  
+    // Function to fetch and display users
+    function fetchbetUser(query) {
+    
+  
+        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+            try {
+                response = typeof response === 'string' ? JSON.parse(response) : response;
+  
+                let optionsHtml = '';
+  
+                response.forEach(user => {
+                  let   displayValuebet;
+                  let regnamebet;
+                   // Display based on regtype
+                   if (user.regtype === "email") {
+                    displayValuebet = user.email;
+                    regnamebet = user.email;  // Show email
+                   } else if (user.regtype === "username") {
+                    displayValuebet = user.username;
+                    regnamebet = user.username;  // Show username
+                   } else if (user.regtype === "contact") {
+                    displayValuebet = user.contact;
+                    regnamebet  = user.contact;  // Show contact
+                   }else{
+                    displayValuebet = "no data found...";
+                    regnamebet = "no data found..."// Show contact
+                   }
+                        optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regnamebet}">${displayValuebet}</option>`;
+             
+                });
+  
+  
+                $('.trackdown').html(optionsHtml).show();
+            } catch (error) {
+                console.error("Error parsing response: ", error);
+                $('.trackdown').hide();
+            }
+        }).fail(function () {
+            console.error("Error fetching users.");
+            $('.trackdown').hide();
+        });
+    }
   
   
   function tableScrolltrack() {
@@ -392,13 +381,15 @@ $(function () {
 
         tableContainerTrack.addEventListener("scroll", function () {
           if (tableContainerTrack.scrollTop > 0) {
-            headerRowTrack.classList.add("sticky-headerstrack");
+            headerRowTrack.classList.add("sticky-trackhead");
           } else {
-            headerRowTrack.classList.remove("sticky-headerstrack");
+            headerRowTrack.classList.remove("sticky-trackhead");
           }
         });
   }
   tableScrolltrack();
+
+ 
   
   });
   

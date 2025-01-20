@@ -96,6 +96,7 @@ if ($flag == "getTransactionBet") {
    $betStatusMap = [2 => 'Win', 3 => 'Lost', 5 => 'Pending', 6 => 'Bet Cancelled', 7 => 'Refund'];
    $result['bettype'] = $result['bettype'] == 2 ? 'track' : ($result['bettype'] == 1 ? 'bet' : '');
    $result['bet_status'] = isset($betStatusMap[$result['bet_status']]) ? $betStatusMap[$result['bet_status']] : 'unknown';
+   $result['rebate_amount'] = empty($result['rebate_amount']) ? "0.0000" : formatBalance($result['rebate_amount']);
    $result['game_type'] = $lotteryname;
    $result['reg_type'] = $username;
    $result['opening_time'] = $close_and_opentimes['opening_time'] ?? '';
@@ -109,29 +110,32 @@ if ($flag == "filtertransactions") {
    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
    $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
+   $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($username);
    $orderid = isset($this->viewData['orderid']) ? $this->viewData['orderid'] : '';
    $ordertype = isset($this->viewData['ordertype']) ? $this->viewData['ordertype'] : '';
    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
    $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
-   $sunquery = (new BusinessFlowModel())->FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
-   $result = (new BusinessFlowModel())->FilterTrsansactionData($sunquery, $page, $limit) ?? [];
-
-   // $bigArr = [];
-   // foreach ($result['data'] as $value) {
-   //     $username = (new BusinessFlowModel())->getUsernameById($value['uid']);
-   //     $email = (new BusinessFlowModel())->getUsernameById($value['uid']);
-   //     $contact = (new BusinessFlowModel())->getUsernameById($value['uid']);
-   //     $value['username'] = $username['username'];
-   //     $value['email'] = $email['email'];
-   //     $value['contact'] = $contact['contact'];
-   //     $bigArr[] = $value;
-   // }
-
-   echo json_encode([
-      'sql' => $result['sql'],
-      'transactions' => $result['data'],
-      'totalPages' => ceil($result['total'] / $limit),
-   ]);
+   
+    if(!empty($usernameCheck) && $usernameCheck != null){
+       $username = $usernameCheck[0]['uid'];
+       $sunquery = (new BusinessFlowModel())->FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
+       $result = (new BusinessFlowModel())->FilterTrsansactionData($sunquery, $page, $limit) ?? [];
+       echo json_encode([
+          'response' =>  "success",
+          'transactions' => $result['data'],
+          'totalPages' => ceil($result['total'] / $limit),
+       ]);
+    }else{
+     $sunquery = (new BusinessFlowModel())->FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
+      $result = (new BusinessFlowModel())->FilterTrsansactionData($sunquery, $page, $limit) ?? [];
+      echo json_encode([
+         'response' =>  "success",
+         'transactions' => $result['data'],
+         'totalPages' => ceil($result['total'] / $limit),
+      ]);
+   }
+   
+ 
 }
 
 if ($flag == "lotterydata") {
@@ -187,6 +191,7 @@ if ($flag == "fetchLotteryname") {
 
 if ($flag == "filterbetdata") {
    $uid = isset($this->viewData['uid']) ? $this->viewData['uid'] : '';
+   $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
    $gametype = isset($this->viewData['gametype']) ? $this->viewData['gametype'] : '';
    $betstate = isset($this->viewData['betstate']) ? $this->viewData['betstate'] : '';
    $betstatus = isset($this->viewData['betstatus']) ? $this->viewData['betstatus'] : '';
@@ -194,13 +199,44 @@ if ($flag == "filterbetdata") {
    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-   $sunquery = (new BusinessFlowModel())->filterBetData($uid, $gametype, $betstate, $betstatus, $enddate, $startdate);
-   $result = (new BusinessFlowModel())->getAllUserBetByUserId($sunquery, $page, $limit);
 
-   echo json_encode([
-      'filterbet' => $result['data'],
-      'totalPages' => ceil($result['total'] / $limit),
-   ]);
+   if(!empty($usernameCheck) && $usernameCheck != null){
+      $usernames = $usernameCheck[0]['uid'];
+      $sunquery = (new BusinessFlowModel())->filterBetData($usernames, $gametype, $betstate, $betstatus, $enddate, $startdate);
+      $result = (new BusinessFlowModel())->getAllUserBetByUserId($sunquery, $page, $limit);
+
+      echo json_encode([
+      //    'response' =>  "success",
+          'filterbet' =>  $result['data'],
+         'totalPages' => ceil($result['total'] / $limit),
+       ]);
+   }else{
+
+      $sunquery = (new BusinessFlowModel())->filterBetData($uid, $gametype, $betstate, $betstatus, $enddate, $startdate);
+      $result = (new BusinessFlowModel())->getAllUserBetByUserId($sunquery, $page, $limit);
+
+      echo json_encode([
+      //    'response' =>  "success",
+          'filterbet' =>  $result['data'],
+         'totalPages' => ceil($result['total'] / $limit),
+       ]);
+   }
+   // if(!empty($usernameCheck) && $usernameCheck != null){
+   //    $username = $usernameCheck[0]['uid'];
+   //    $sunquery = (new BusinessFlowModel())->filterBetData($username, $gametype, $betstate, $betstatus, $enddate, $startdate);
+   //    $result = (new BusinessFlowModel())->getAllUserBetByUserId($sunquery, $page, $limit);
+   //    echo json_encode([
+   //       'response' =>  "success",
+   //       'filterbet' =>  $result['data'],
+   //    //   'totalPages' => ceil($result['total'] / $limit),
+      
+   //    ]);
+   // }else{
+   //    echo json_encode([
+   //       'response' =>  "error",
+   //    ]);
+   // }
+ 
 }
 
 if ($flag == "trackdata") {
@@ -208,12 +244,12 @@ if ($flag == "trackdata") {
    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
    $result = (new BusinessFlowModel())->fetchTrackRecords($page, $limit) ?? [];
 
-   // $finaldata = [];
-   // foreach($result['data'] as $data){
-   //   $prize =  (new BusinessFlowModel())->GetTrackWins($data['track_token']);
-   //   $data['total_prize'] = $prize;
-   //   $finaldata[]  = $data ;
-   // };
+    //    $finaldata = [];
+    //    foreach($result['data'] as $data){
+    //      $prize =  (new BusinessFlowModel())->GetTrackWins($data['track_token']);
+    //      $data['total_prize'] = $prize;
+    //      $finaldata[]  = $data ;
+    //    };
 
    echo json_encode([
       'trackbet' => $result['data'],

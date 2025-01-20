@@ -1,4 +1,14 @@
 $(function () {
+
+    function showToast(title, message, type) {
+        $.toast({
+          position: "bottom-right",
+          title: title,
+          message: message,
+          type: type,
+          duration: 3000, // auto-dismiss after 3s
+        });
+      }
     function formatBalance(balance) {
         if (balance % 1 !== 0 && balance.toString().split(".")[1].length > 3) {
             return Number(balance).toFixed(4);
@@ -82,7 +92,9 @@ $(function () {
         bet_number: "Total Bet:",
         bet_amount: "Total Bet Amount:",
         win_amount: "Win Amount:",
+        rebate_amount: 'Rebate Amount',
         user_selection: "Bet Details",
+        // description: "des",
     };
 
     const render = (data) => {
@@ -113,9 +125,14 @@ $(function () {
         try {
             const response = await fetch(`../admin/filtertransactions/${username}/${orderid}/${ordertype}/${startdatet}/${enddatet}/${currentPage}/${pageLimit}`);
             const data = await response.json();
+            if(data.response == "error"){
+                 showToast("Alert","User does not exist","info")
+                $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+                return
+            }
 
-            console.log(response);
-
+            ///console.log(response);
+      
             $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             if (data.transactions.length < 1) {
                 let html = `
@@ -225,17 +242,19 @@ $(function () {
     });
 
     $(document).on("click", ".executetrans", function () {
-        if ($("#mytrans").val() == "" && $(".ordertype").val() == "" && $(".startdatet").val() == "") {
+        if ($("#mytrans").val() == "" && $("#mytrans").val() == null && $(".ordertype").val() == "" && $(".startdatet").val() == "" 
+        && $(".userIdtrans").val() == "") {
             $("#al-danger-alert").modal("show");
             return;
         }
-
-        const username = $(".userIdtrans").val();
+        const username = $("#mytrans").val();
+        // const username = $(".userIdtrans").val();
         const orderid = $(".orderid").val();
         const ordertype = $(".ordertype").val();
         const startdatet = $(".startdatet").val();
         const enddatet = $(".enddatet").val();
-        console.log(enddate);
+          console.log(username);
+        //  return
         $(".loader").removeClass("bx-check-double").addClass("bx-loader bx-spin");
         setTimeout(() => {
             filterTrasaction(username, orderid, ordertype, startdatet, enddatet, currentPage, pageLimit);
@@ -474,6 +493,8 @@ $(function () {
                 $(".userIdtrans").val(selectedUserId);
                 $(".useraccount").hide();
             }
+
+            console.log(selectedUsername)
         });
 
         // Handle manual input clearing
@@ -506,8 +527,8 @@ $(function () {
                         displayusername = user.contact;
                         regusername = user.contact; // Show contact
                     } else {
-                        displayusername = "no data found...";
-                        $(".useraccount").hide();
+                         displayusername = "no data found...";
+                         regusername = "no data found..."// Show contact
                     }
                     optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regusername}">${displayusername}</option>`;
                 });
@@ -522,4 +543,6 @@ $(function () {
             $(".useraccount").hide();
         });
     }
+
+   
 });
