@@ -1,6 +1,6 @@
 <?php
 
-class FinacialManageModel extends MEDOOHelper
+class FinancialManageModel extends MEDOOHelper
 {
 
     //NOTE -
@@ -19,7 +19,6 @@ class FinacialManageModel extends MEDOOHelper
         );
 
         $totalRecords  = parent::count('deposits_and_withdrawals');
-        // $trasationIds = array_column($data, 'order_id');
         return ['data' => $data, 'total' => $totalRecords];
     }
 
@@ -211,29 +210,28 @@ class FinacialManageModel extends MEDOOHelper
             $startpoint = ($page * $limit) - $limit;
     
             // Define the SQL query to fetch the data with pagination
-            $sql = "SELECT deposits_and_withdrawals.*, users_test.username, users_test.email 
+            $sql = "SELECT deposits_and_withdrawals.*, users_test.username, users_test.email, users_test.reg_type,
+                    users_test.contact
                     FROM deposits_and_withdrawals 
                     JOIN users_test ON users_test.uid = deposits_and_withdrawals.user_id
                     WHERE $subQuery
-                    LIMIT $startpoint, $limit";  // Apply pagination
+                    LIMIT $startpoint, $limit"; 
             
-            // Log the generated query for debugging
-            error_log("Executing query: " . $sql);
+           
             
-            // Fetch the result
-            $result = parent::query($sql);
-            
-            // Count the total records (with JOIN) for pagination purposes
-            $totalRecords = parent::count(
-                'deposits_and_withdrawals', // Table name
-                [
-                    '[>]users_test' => ['user_id' => 'uid'] // Join condition
-                ],
-                'user_id', // Field to count on (could use any field like 'user_id')
-                [
-                    'WHERE' => $subQuery // WHERE condition
-                ]
-            );
+                    $countSql = "
+                    SELECT 
+                        COUNT(*) AS total_count
+                    FROM 
+                        deposits_and_withdrawals
+                WHERE
+                    $subQuery
+                    ";
+
+                 $result = parent::query($sql);
+                $totalRecords = parent::query($countSql);
+                $totalRecords = $totalRecords[0]['total_count'];
+           
     
             // Return the data and total records for pagination
             return ['data' => $result, 'total' => $totalRecords];

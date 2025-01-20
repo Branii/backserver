@@ -43,22 +43,23 @@ $(function () {
     };
   
     let currentPagefinance = 1;
-    let pageLimit = 25;
+    let pageLimit = 20;
   
     async function fetchfinance(pagefinance) {
       try {
         const response = await fetch(
           `../admin/fetchfinance/${pagefinance}/${pageLimit}`
         );
-         const data = await response.json();
-        //  console.log(response);
-        //  return
+        const data = await response.json();
+    
         $("#maskfinance").LoadingOverlay("hide");
         renderfinace(data.finance);
-  
-        // // Render pagination
-        renderfinacePagination(data.totalPages, pagefinance, 'normal');
-         document.getElementById("paging_infofinance").innerHTML = 'Page ' + pagefinance + ' of ' + data.totalPages + ' pages'
+    
+        // Render pagination
+        renderfinacePagination(data.totalPages, pagefinance, fetchfinance);
+    
+        document.getElementById("paging_infofinance").innerHTML =
+          "Page " + pagefinance + " of " + data.totalPages + " pages";
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -66,32 +67,31 @@ $(function () {
   
     fetchfinance(currentPagefinance);
   
-
-    function renderfinacePagination(totalPages, currentPagefinace,username, depositestate,startfinance,endfinance) {
+    function renderfinacePagination(totalPages, currentPagefinance, fetchCallback) {
       let pagLink = `<ul class='pagination justify-content-end'>`;
     
       // Previous Button
       pagLink += `
-        <li class='page-item ${currentPagefinace === 1 ? "disabled" : ""}'>
-          <a class='page-link' href='#' data-page='${currentPagefinace - 1}'><i class='bx bx-chevron-left'></i></a>
+        <li class='page-item ${currentPagefinance === 1 ? "disabled" : ""}'>
+          <a class='page-link' href='#' data-page='${currentPagefinance - 1}'><i class='bx bx-chevron-left'></i></a>
         </li>
       `;
     
       // Page numbers with ellipsis
       for (let i = 1; i <= totalPages; i++) {
-        if (i === currentPagefinace) {
+        if (i === currentPagefinance) {
           pagLink += `<li class='page-item active'><a class='page-link' href='#'>${i}</a></li>`;
-        } else if (i === 1 || i === totalPages || Math.abs(i - currentPagefinace) <= 2) {
+        } else if (i === 1 || i === totalPages || Math.abs(i - currentPagefinance) <= 2) {
           pagLink += `<li class='page-item'><a class='page-link' href='#' data-page='${i}'>${i}</a></li>`;
-        } else if (i === currentPagefinace - 3 || i === currentPagefinace + 3) {
+        } else if (i === currentPagefinance - 3 || i === currentPagefinance + 3) {
           pagLink += `<li class='page-item disabled'><a class='page-link'>...</a></li>`;
         }
       }
     
       // Next Button
       pagLink += `
-        <li class='page-item ${currentPagefinace === totalPages ? "disabled" : ""}'>
-          <a class='page-link' href='#' data-page='${currentPagefinace + 1}'><i class='bx bx-chevron-right'></i></a>
+        <li class='page-item ${currentPagefinance === totalPages ? "disabled" : ""}'>
+          <a class='page-link' href='#' data-page='${currentPagefinance + 1}'><i class='bx bx-chevron-right'></i></a>
         </li>
       `;
     
@@ -103,20 +103,15 @@ $(function () {
         link.addEventListener("click", function (e) {
           e.preventDefault();
           const newPage = parseInt(this.getAttribute("data-page"));
-          if (newPage > 0 && newPage <= totalPages && newPage !== currentPagefinace) {
-            // Update currentPagefinace and display paging information
-            // currentPagefinace = newPage;
-            document.getElementById("paging_infofinance").innerHTML = `Page ${currentPagefinace} of ${totalPages} pages`;
-            
-            // Fetch and render new page data
-            fetchfinance(newPage,username, depositestate,startfinance,endfinance);
+          if (newPage > 0 && newPage <= totalPages && newPage !== currentPagefinance) {
+            fetchCallback(newPage); // Call the provided fetch function with the new page number
           }
         });
       });
     }
-  
+    
     $(".refreshfiance").click(function () {
-     // $(".query").val("");
+      $(".queryholderlistt").val("");
       $("#maskfinance").LoadingOverlay("show", {
         background: "rgb(90,106,133,0.1)",
         size: 3,
@@ -125,9 +120,71 @@ $(function () {
     });
   
   
-    
-    let debounceTimeout = null;
+  
+    //search function
 
+    function filterfinance(username, depositestate, startfinance, endfinance, currentPagefinance, pageLimit) {
+      $.post(
+        `../admin/filterdeposit/${username}/${depositestate}/${startfinance}/${endfinance}/${currentPagefinance}/${pageLimit}`,
+        function (response) {
+          try {
+            const data = JSON.parse(response);
+    
+            if (data.deposit.length < 1) {
+              $("#financeContainer").html(`
+                <tr class="no-results">
+                  <td colspan="9">
+                    <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                  </td>
+                </tr>
+              `);
+              return;
+            }
+    
+            renderfinace(data.deposit);
+    
+            // Render pagination
+            renderfinacePagination(data.totalPages, currentPagefinance, (page) => {
+              filterfinance(username, depositestate, startfinance, endfinance, page, pageLimit);
+            });
+    
+            document.getElementById("paging_infofinance").innerHTML =
+              `Page ${currentPagefinance} of ${data.totalPages} pages`;
+          } catch (error) {
+            console.error("Error parsing JSON response:", error);
+          } finally {
+            $(".loaderfinance").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+          }
+        }
+      ).fail(function (error) {
+        console.error("Error fetching data:", error);
+        $(".loaderfinance").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+      });
+    }
+
+    $(document).on('click', '.executefinance', function () {
+    
+      if ($("#financeDropdown").val() == "" && $(".depositestate").val() == "" && $(".startfinance").val() == "" ) {
+        $("#danger-finance").modal("show");
+        return;
+    }
+      
+      // // const financeDropdown = $("#financeDropdown").val();
+      const depositestate = $(".depositestate").val();
+      const username = $(".userIdfinance").val();
+      const startfinance = $(".startfinance").val();
+      const endfinance = $(".endfinance").val();
+  
+      // Request data from server
+     filterfinance(username,depositestate,startfinance,endfinance,currentPagefinance,pageLimit)
+      // Show loader
+      $(".loaderfinance").removeClass('bx-check-double').addClass('bx-loader bx-spin');
+  
+    });
+  
+
+      
+    let debounceTimeout = null;
     $(document).ready(function () {
         // Event listener for keyup on #myInput
         $(document).on('keyup', '#financeinput', function () {
@@ -232,7 +289,6 @@ $(function () {
 
 
     let debounceTimeouts = null;
-
     $(document).ready(function () {
         // Event listener for keyup on #myInput
         $(document).on('keyup', '#financeDropdown', function () {
@@ -303,66 +359,6 @@ $(function () {
         });
     }
 
-    //search function
-
-
-    $(document).on('click', '.executefinance', function () {
-
-      const financeDropdown = $("#financeDropdown").val();
-      const depositestate = $(".depositestate").val();
-      
-      // Show modal if required fields are empty
-      if (!financeDropdown && !depositestate) {
-          $("#danger-finance").modal("show");
-          return;
-      }
-  
-      const username = $(".userIdfinance").val();
-      const startfinance = $(".startfinance").val();
-      const endfinance = $(".endfinance").val();
-  
-      // Show loader
-      $(".loaderfinance").removeClass('bx-check-double').addClass('bx-loader bx-spin');
-  
-      // Request data from server
-      $.post(`../admin/filterdeposit/${username}/${depositestate}/${startfinance}/${endfinance}/${currentPagefinance}/${pageLimit}`, 
-        function(response) {
-          console.log(response)
-  
-          try {
-              const data = JSON.parse(response); // Parse the response
-  
-              // If no deposits, show a 'no results' message
-              if (data.deposit.length < 1) {
-                  $("#financeContainer").html(`
-                      <tr class="no-results">
-                          <td colspan="9">
-                              <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-                          </td>
-                      </tr>
-                  `);
-                  return;
-              }
-  
-              // Render results and pagination
-              renderfinace(data.deposit);
-              renderfinacePagination(data.totalPages,currentPagefinance,username, depositestate,startfinance,endfinance);
-              document.getElementById("paging_infobet").innerHTML = `Page ${currentPagefinance} of ${data.totalPages} pages`;
-  
-          } catch (error) {
-              console.error("Error parsing JSON response:", error);
-          } finally {
-              // Hide loader after completion
-              $(".loaderfinance").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-          }
-  
-      }).fail(function (error) {
-          console.error("Error fetching data:", error);
-          $(".loaderfinance").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-      });
-    });
-  
-    
     
   });
   

@@ -145,14 +145,13 @@ $(function () {
 
 
   let currentPagebet = 1;
-  let pageLimit = 40;
+  let pageLimit = 50;
   
   // Fetch lottery bet data
   async function fetchLotteryBet(currentPagebet) {
     try {
       const response = await fetch(`../admin/lotterydata/${currentPagebet}/${pageLimit}`);
       const data = await response.json();
-      console.log(response)
     
       $("#maskbet").LoadingOverlay("hide");
       const totalPages = data.totalPages;
@@ -168,11 +167,7 @@ $(function () {
   fetchLotteryBet(currentPagebet,pageLimit);
   // Render pagination dynamically
   function renderbetPagination(totalPages, currentPagebet, callback) {
-    if (totalPages === 0) {
-      // Handle the case where there are no pages (no records)
-      document.getElementById("pagination").innerHTML = "No records available.";
-      return;
-  }
+   
     let pagLink = `<ul class='pagination justify-content-end'>`;
   
     // Previous Button
@@ -231,6 +226,7 @@ $(function () {
       .done(function (response) {
         try {
           const data = JSON.parse(response);
+          console.log(response)
   
           if (data.filterbet.length < 1) {
             // If no results, show "no results" message
@@ -261,10 +257,9 @@ $(function () {
         $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
       });
   }
-  
-  // Initialize
 
-  
+
+
   
   $(".playerbet").click(function () {
     let direction = $(this).val();
@@ -314,7 +309,11 @@ $(function () {
 
 
   $(".executebet").click(function () {
-    // Get form data
+    if ($("#myInput").val() == "" && $(".typelottery").val() == "" && $(".startdates").val() == ""
+    && $(".betsate").val() == "" && $(".betstatus").val() == "") {
+      $("#dangerbet").modal("show");
+      return;
+  }
     const uidd = $('.userIdbet').val();
     const gametype = $('.typelottery').val();
     const betsate = $('.betsate').val();

@@ -1,98 +1,104 @@
 <?php
 
 
-// $dsn = 'mysql:host=192.168.1.51;dbname=lottery_test'; // Fixed variable name and removed extra space
-// $pass = "enzerhub";
-// $user = "enzerhub";
-// try {
-//     $pdo = new PDO($dsn, $user, $pass);
-//     //  echo "Connected";
-// } catch (\Throwable $th) {
-//     echo $th->getMessage();
-// }
-?>
+$dsn = 'mysql:host=192.168.1.51;dbname=lottery_test'; // Fixed variable name and removed extra space
+$pass = "enzerhub";
+$user = "enzerhub";
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Range Slider with Percentage and Computed Value</title>
-  <!-- jQuery from Google CDN -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-  <table>
-    <tr>
-      <td>
-        <!-- Number Input -->
-        <input type="number" value="7000" min="0" max="10000" step="0.1" class="odds-input" id="oddsInput" />
-        <span id="percentDisplay">100%</span>
-        <br>
+try {
+    $pdo = new PDO($dsn, $user, $pass);
+    // echo "Connected";
+} catch (\Throwable $th) {
+    echo $th->getMessage();
+}
+$limit = 50;
+$offset = 1;
+$uid = 
+$sql = "
+        SELECT GROUP_CONCAT(
+            CONCAT(
+                'SELECT bt.bet_odds,bt.draw_period,bt.bet_code,bt.game_label,bt.game_type,bt.uid,bt.bet_number,bt.unit_stake,bt.multiplier,bt.bet_amount,bt.win_amount,
+                bt.bet_status,bt.state,bt.bet_time,bt.bet_date,bt.server_date,bt.server_time,
+                u.username,u.email,u.contact,
+                u.reg_type, gt.name As game_type,gt.gt_id AS gt_id FROM ', table_name, ' bt JOIN users_test u ON bt.uid = u.uid
+                     JOIN game_type gt ON gt.gt_id = bt.game_type ') SEPARATOR ' UNION ALL '
+        ) AS query FROM information_schema.tables WHERE table_schema = 'lottery_test' AND table_name LIKE 'bt_%'";
 
-        <!-- Range Slider -->
-        <input type="range" value="10" min="0" max="10" step="0.1" class="odds-slider" id="oddsSlider" />
-      
-        <span id="computedValue">Computed Value: 7000</span>
-      </td>
-    </tr>
-  </table>
 
-  <script>
-    $(document).ready(function() {
-      const maxValue = 7000;
+        $sqll = "
+        SELECT GROUP_CONCAT(
+            CONCAT(
+                'SELECT bt.bet_odds,bt.draw_period,bt.bet_code,bt.game_label,bt.game_type,bt.uid,bt.bet_number,bt.unit_stake,bt.multiplier,bt.bet_amount,bt.win_amount,
+                bt.bet_status,bt.state,bt.bet_time,bt.bet_date,bt.server_date,bt.server_time,
+                u.username,u.email,u.contact,
+                u.reg_type, gt.name As game_type,gt.gt_id AS gt_id FROM ', table_name, ' bt JOIN users_test u ON bt.uid = u.uid
+                     JOIN game_type gt ON gt.gt_id = bt.game_type ') SEPARATOR ' UNION ALL '
+        ) AS query FROM information_schema.tables WHERE table_schema = 'lottery_test' AND table_name LIKE 'bt_%'";
 
-      // Function to update the percentage and computed value
-      function updateValue() {
-        // Get the value from the slider or input
-        let value = parseFloat($('.odds-slider').val());
-        if ($('.odds-input').val()) {
-          value = parseFloat($('.odds-input').val());
-        }
 
-        // Calculate the percentage
-        const percentage = (value / maxValue) * 100;
+      //$pdo = (new Database())->openLink();
+      // $pdo->exec("SET SESSION group_concat_max_len = 1000000");
+      // $stmt = $pdo->prepare($sql);
+      // $stmt->execute();
+      // $mergedQuery = $stmt->fetchColumn();
+      // $paginatedQuery = "$mergedQuery WHERE bt.state = '3' LIMIT $limit OFFSET $offset";
+      // $finalStmt = $pdo->prepare($paginatedQuery);
+      // $finalStmt->execute();
+      // $data = $finalStmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Update the percentage display
-        $('#percentDisplay').text(`${Math.round(percentage)}%`);
+      // echo json_encode(count($data));
+      // echo json_encode($data);exit;
 
-        // Calculate the computed value based on the percentage of maxValue
-        const calculatedValue = (percentage / 100) * maxValue;
+      $bbb = $pdo->prepare($sqll);
+      $bbb->execute();
+      $mergedQuery1 = $bbb->fetchColumn();
+      $countQ = "$mergedQuery1 WHERE bt.uid = '3'";
+      $ccc = $pdo->prepare($countQ);
+      $ccc->execute();
+      $datac = $ccc->fetchAll(PDO::FETCH_ASSOC);
+      $result = [
+        'data' => $countQ,
+        'count'  =>  count($datac)
+      ];
+      echo json_encode($result);
+      $sqll = "
+      SELECT GROUP_CONCAT(CONCAT('SELECT COUNT(*) AS total FROM ', table_name, ' WHERE uid = :uid') SEPARATOR ' UNION ALL ') AS query
+      FROM information_schema.tables
+      WHERE table_schema = 'lottery'
+      AND table_name LIKE 'bt_%'
+  ";
+  //$pdo->exec("SET SESSION group_concat_max_len = 1000000");
+  $stmt = $pdo->prepare($sqll);
+  $stmt->execute();
+  $mergedQuery = $stmt->fetchColumn();
+  $stmt = $pdo->prepare($mergedQuery);
+  $stmt->execute(['uid' => 197]);
+  $count = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $totalcount = array_sum(array_column($count,'total'));
+  echo json_encode([
+      'data' => $rows,
+      'total' => ceil($totalcount / $limit)
+  ]);
+  
+  $sql = "
+    SELECT GROUP_CONCAT(CONCAT('SELECT uid FROM ', table_name, ' WHERE uid = :uid') SEPARATOR ' UNION ALL ') AS query
+    FROM information_schema.tables
+    WHERE table_schema = 'lottery'
+    AND table_name LIKE 'bt_%'
+";
 
-        // Update the computed value display
-        $('#computedValue').text(`Computed Value: ${Math.round(calculatedValue)}`);
+ //$pdo = (new Database)->connect();
+$pdo->exec("SET SESSION group_concat_max_len = 1000000");
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$mergedQuery = $stmt->fetchColumn();
 
-        // Update the input value when the slider changes
-        $('.odds-inputt').val(Math.round(calculatedValue));
-      }
+// Update the merged query to include pagination
+$paginatedQuery = "$mergedQuery";
 
-      // When the input field changes, update the slider
-      $('.odds-input').on('input', function() {
-        let inputValue = parseFloat($(this).val());
-        if (inputValue > maxValue) {
-        $(this).val(maxValue);  // Set the input value to maxValue if exceeded
-    }
-        // Update the slider position based on the input value
-        let percentage = (inputValue / maxValue) * 100;
-        let sliderValue = (percentage / 100) * 10; // Map percentage to slider range (0 to 10)
-        $('.odds-slider').val(sliderValue);
-        updateValue();
-      });
+$stmt = $pdo->prepare($paginatedQuery);
+$stmt->execute(['uid' => 197]);
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-      // When the slider changes, update the input field
-      $('.odds-slider').on('input', function() {
-        let sliderValue = parseFloat($(this).val());
-        // Update the input value based on the slider value
-        let percentage = (sliderValue / 10) * 100; // Map slider value to percentage
-        let inputValue = (percentage / 100) * maxValue; // Calculate the value based on the max value
-        $('.odds-input').val(Math.round(inputValue));
-        updateValue();
-      });
-
-      // Initialize values on page load
-      updateValue();
-    });
-  </script>
-</body>
-</html>
-
+echo "<pre>";
+print_r(value: count($rows));
