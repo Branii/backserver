@@ -334,7 +334,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header d-flex align-items-center">
-                <div>  <h5>withdraw</h5></div>
+                <div>  <h5><?= $translator['withdraw']; ?></h5></div>
                 <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' ></i></div>
             </div>
             <div class="modal-body">

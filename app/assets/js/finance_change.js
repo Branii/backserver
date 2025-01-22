@@ -43,9 +43,9 @@ $(function () {
     };
   
     let currentPagefinance = 1;
-    let pageLimit = 20;
+    let pageLimit = 50;
   
-    async function fetchfinance(pagefinance) {
+    async function fetchfinance(pagefinance,pageLimit) {
       try {
         const response = await fetch(
           `../admin/fetchfinance/${pagefinance}/${pageLimit}`
@@ -65,7 +65,7 @@ $(function () {
       }
     }
   
-    fetchfinance(currentPagefinance);
+    fetchfinance(currentPagefinance,pageLimit);
   
     function renderfinacePagination(totalPages, currentPagefinance, fetchCallback) {
       let pagLink = `<ul class='pagination justify-content-end'>`;
@@ -116,7 +116,7 @@ $(function () {
         background: "rgb(90,106,133,0.1)",
         size: 3,
       });
-      fetchfinance(currentPagefinance)
+      fetchfinance(currentPagefinance,pageLimit)
     });
   
   
@@ -129,7 +129,8 @@ $(function () {
         function (response) {
           try {
             const data = JSON.parse(response);
-    
+           //  console.log(response)
+             //return
             if (data.deposit.length < 1) {
               $("#financeContainer").html(`
                 <tr class="no-results">
@@ -141,9 +142,7 @@ $(function () {
               return;
             }
     
-            renderfinace(data.deposit);
-    
-            // Render pagination
+             renderfinace(data.deposit);
             renderfinacePagination(data.totalPages, currentPagefinance, (page) => {
               filterfinance(username, depositestate, startfinance, endfinance, page, pageLimit);
             });
@@ -168,14 +167,13 @@ $(function () {
         $("#danger-finance").modal("show");
         return;
     }
-      
-      // // const financeDropdown = $("#financeDropdown").val();
+  
       const depositestate = $(".depositestate").val();
-      const username = $(".userIdfinance").val();
+      const username = $("#financeDropdown").val();
       const startfinance = $(".startfinance").val();
       const endfinance = $(".endfinance").val();
-  
-      // Request data from server
+    console.log(username)
+   
      filterfinance(username,depositestate,startfinance,endfinance,currentPagefinance,pageLimit)
       // Show loader
       $(".loaderfinance").removeClass('bx-check-double').addClass('bx-loader bx-spin');
@@ -288,6 +286,11 @@ $(function () {
     
 
 
+    //modal 
+    
+    $(document).on('click','.showmodal',function(){
+      $("#addfinancemodal").modal("show");   
+    })
     let debounceTimeouts = null;
     $(document).ready(function () {
         // Event listener for keyup on #myInput
@@ -344,6 +347,9 @@ $(function () {
                    } else if (user.regtype === "contact") {
                      displayValues = user.contact;
                      regnames  = user.contact;  // Show contact
+                   }else{
+                    displayValues = 'no data found ...';
+                    regnames  = 'no data found ...';  // Show contact
                    }
                     optionsHtml += `<option class="optlpionlist" value="${user.uid}" data-username="${regnames}">${displayValues}</option>`;
                 });
@@ -359,6 +365,28 @@ $(function () {
         });
     }
 
-    
+    $(".numrowsfinance").change(function () {
+      $("#maskfinance").LoadingOverlay("show", {
+          background: "rgb(90,106,133,0.1)",
+          size: 3,
+        });
+      const numrows = $(this).val();
+      fetchfinance(currentPagefinance,numrows)
+     });
+
+
+    function tableScrollFinance() {
+      const tableContainerFinance= document.querySelector(".table-wrapperfinance");
+      const headerRowFinance= document.querySelector(".financeheadrow");
+
+      tableContainerFinance.addEventListener("scroll", function () {
+          if (tableContainerFinance.scrollTop > 0) {
+              headerRowFinance.classList.add("sticky-financehead");
+          } else {
+              headerRowFinance.classList.remove("sticky-financehead");
+          }
+      });
+   }
+   tableScrollFinance();
   });
   

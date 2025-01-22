@@ -15,6 +15,12 @@ $(function () {
         }
         return Number(balance).toFixed(4);
     }
+
+    function formatMoney(money) { 
+        return String(money).includes(".") && String(money).split(".")[1].length > 2 
+          ? String(Number(money).toFixed(4)) 
+          : money; 
+      }
     const AccountTransactions = (data) => {
         let html = "";
         const status = {
@@ -40,8 +46,8 @@ $(function () {
                   <td>${"TR" + item.order_id.substring(0, 7)}</td>
                     <td>${username}</td>
                     <td><i class='bx bxs-circle' style='color:${status[item.order_type].color};font-size:8px;margin-right:5px;'></i>${status[item.order_type].title}</td>
-                    <td>${formatBalance(item.account_change) < 0 ? formatBalance(item.account_change) : `+ ${formatBalance(item.account_change)}`}</td>
-                    <td>${formatBalance(item.balance)}</td>
+                    <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
+                    <td>${formatMoney(item.balance)}</td>
                     <td>${item.dateTime}</td>
                     <td>${item.order_id}</td>
                     <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> Complete</td>
@@ -409,9 +415,7 @@ $(function () {
 
     
     $(document).on("click", ".tinfo", function () {
-        setTimeout(() => {
-            $("#loadingIndicator").hide();
-            
+        setTimeout(() => { $("#loadingIndicator").hide();   
         }, 100); 
         $("#signup-modal").modal("show");
         const transactionId = $(this).attr("value");

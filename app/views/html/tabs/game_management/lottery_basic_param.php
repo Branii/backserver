@@ -216,7 +216,7 @@
 
 
                 <select name="betsate" class="form-control form-select queryholderlistt depositestate " data-bs-placeholder="Select Type" id="lottery" style="width: 70%;">
-                    <option value="all">--Select Lottery--</option>
+                    <option value="all">--<?= $translator['Select Lottery']; ?>--</option>
                     <option value="1" id="lt_1" name="lottery_type">5D</option>
                     <option value="2" id="lt_2" name="lottery_type">PK10</option>
                     <option value="3" id="lt_3" name="lottery_type">FAST3</option>
@@ -358,7 +358,7 @@
 
         <span id="lb-pagination-pages-wrapper" class="top-right-btn" aria-label="Page navigation example">
             <!-- <select class="left-element form-control numrows" style="font-size:12px">
-            <!-- <option value="5" class="fromnumrows">5</option>
+            <option value="5" class="fromnumrows">5</option>
             <option value="10">10</option>
             <option value="20">20</option> 
             <option value="50">50</option>
@@ -401,7 +401,7 @@
             <div class="modal-body">
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between">
-                        <div>Transaction Info</div>
+                        <div><?= $translator['Transaction Info']; ?></div>
                         <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
                     </div>
                 </div>

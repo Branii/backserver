@@ -187,10 +187,35 @@ class adminController extends Controller {
      //NOTE -
     //////////////TRACK BET DATA -//////////
     public function trackdata($pageNumber,$limit){
-        $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'trackdata']);
+        $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'trackdatas']);
+        $this->view->render();
+    }
+    
+    public function filterTrackdata($username,$trackstatus,$tracklotery,$startdate,$enddate,$page,$limit){
+        $this->view('exec/businessflow',[
+        'username'=>$username,
+        'trackstatus'=>$trackstatus,
+        'tracklotery'=>$tracklotery,
+        'startdate'=>$startdate,
+        'enddate'=>$enddate,
+        'page'=>$page,
+        'limit'=>$limit,
+        'flag' => 'filterTrack']);
+        $this->view->render();
+    }
+    public function  getTrackbet($tracktoken){
+        $this->view('exec/businessflow',['token'=>$tracktoken, 'flag' => 'getTrackbet']);
+        $this->view->render();
+    }
+    public function  getAllTokenbet($tracktoken){
+        $this->view('exec/businessflow',['token'=>$tracktoken, 'flag' => 'getTracktokenbet']);
         $this->view->render();
     }
 
+
+    
+
+   //
 
     //NOTE -
     ////////////// USERLIST LIST -//////////

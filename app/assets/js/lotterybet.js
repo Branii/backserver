@@ -10,10 +10,15 @@ $(function () {
     });
   }
   function formatBalance(balance) {
-    if (balance % 1 !== 0 && balance.toString().split(".")[1].length > 3) {
+    if (balance % 1 !== 0 && balance.toString().split(".")[1].length > 2) {
         return Number(balance).toFixed(4);
     }
     return Number(balance).toFixed(4);
+  }
+  function formatMoney(money) { 
+    return String(money).includes(".") && String(money).split(".")[1].length > 2 
+      ? String(Number(money).toFixed(4)) 
+      : money; 
   }
 
   const Lottery = (data) => {
@@ -65,12 +70,12 @@ $(function () {
                         <td>${item.bet_number}</td>
                         <td>${item.unit_stake}</td>
                         <td>${item.multiplier}</td>
-                        <td>${formatBalance(item.bet_amount)}</td>
-                        <td>${formatBalance(item.win_amount)}</td>
+                        <td>${formatMoney(item.bet_amount)}</td>
+                        <td>${formatMoney(item.win_amount)}</td>
                          <td><i class='bx bxs-circle' style='color:${status[item.bet_status].color};font-size:8px;margin-right:5px;'></i>${status[item.bet_status].title}</td>
                  
                         <td>${states[item.state]}</td>
-                        
+                       
                         <td>
                             
                              <div class="dropdown">
@@ -80,12 +85,6 @@ $(function () {
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
                                       <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewbets" href="javascript:void(0);"data-betcode="${item.bet_code}"data-gametype="${item.gt_id}">
                                         <i class="bx bx-show fs-5"></i>View Bet
-                                      </a>
-                                      <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);">
-                                        <i class="bx bx-x fs-5" ></i>Cancel Bet
-                                      </a>
-                                      <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);">
-                                        <i class="bx bx-trash fs-5"></i>Delete
                                       </a>
                                     </div>
                                   </div>
@@ -337,12 +336,8 @@ $(function () {
 
     filterbetdatas(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit)
 
-    // Show loader
     $(".loaderbet").removeClass("bx bx-check-double").addClass("bx bx-loader bx-spin");
-
-    // Make AJAX request
-
-      
+  
   });
 
   async function fetchLotteryname() {

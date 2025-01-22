@@ -829,7 +829,30 @@ return [
 
 
 
-
+    'List of all available games' => '所有可用游戏列表',
+    'All Games' => '所有游戏',
+    'View revenue graph and statistics' => '查看收入图表和统计数据',
+    'Revenue' =>'收入',
+    'Track activities and system loggings' => '跟踪活动和系统日志',
+    'Activity Logs'=>'活动日志',
+    'System configuration and platform settings'=>'系统配置和平台设置',
+    'System Settings'=>'系统设置',
+    'View general system alert and notifications'=>'查看一般系统警报和通知',
+    'Notifications'=>'通知',
+    'List of registered platform users'=>'平台注册用户名单',
+    'Total Users'=>'用户总数',
+    'System backups and restore management'=>'系统备份和恢复管理',
+    'Backup and Restore'=>'备份和恢复',
+    'View list of available game draw history'=>'查看可用游戏抽奖历史记录列表',
+    'Draw History'=>'抽签历史',
+    'System security and update'=>'系统安全与更新',
+    'Security Breaches'=>'安全漏洞',
+    'System policies and legal documentations'=>'系统政策和法律文件',
+    'Privacy and Policies'=>'隐私和政策',
+    'System administrators and permission'=>'系统管理员和权限',
+    'Administrators'=>'管理员',
+    'System information and app versions'=>'系统信息和应用版本',
+    'App Version'=>'应用版本',  
     //<--------------- Muniru ---------------------->
     'Agent Data Analysis' => '代理数据分析',
     'Agent Id' => '代理编号',
@@ -844,6 +867,20 @@ return [
     'Total Withdrawal' => '总提款金额',
     'Agent Score' => '代理评分',
     'Agent Status' => '代理状态',
+    'All fields are required! Select one or more data fields to filter'=>'所有字段第一项必填项！选择一个或多个数据字段进行过滤。',
+    'Okay'=>'好的',
+    'oh snap'=>'惊人的',
+    'Bet Info'=>'投注信息',
+    'Track Bet Info'=>'跟踪投注信息',
+    'Transaction Info'=>'交易信息',
+    'deposit'=>'订金',
+    'transaction type'=>'交易类型',
+    'Deposit/Withrawal'=>'存款/取款',
+    'Verify before submit'=>'查看个人资料',
+    'Submit'=>'提交',
+    'withdraw'=>'提款',
+    'Select Lottery'=>'选择彩票',
+    'Transaction Info'=>'交易信息',
 
 
 
