@@ -317,6 +317,7 @@ async function fetchAllToken(tracktoken) {
     try {
         const response = await fetch(`../admin/getTrackbet/${tracktoken}`);
          const data = await response.json();
+        //  const dataArray = Object.values(data);
          console.log(data)
         //   const tableBody = document.getElementById("trackbetTableBody");
         //      tableBody.innerHTML = ""; // Clear existing rows
@@ -344,17 +345,6 @@ async function fetchAllToken(tracktoken) {
         try {
             const response = await fetch(`../admin/getTrackbet/${tracktoken}`);
             const data = await response.json();
-            console.log(typeof data)
-            
-        
-            // if (transactiondata.deposit) {
-            //     populatedepositeTable(transactiondata);
-            // } else if (transactiondata.redEnvelope) {
-            //     populateRedEnvelopeTable(transactiondata);
-            // } else {
-                // $("#transredenvelop").hide();
-                // $("#transacttbl").hide();
-                // $("#viewbetdatahide").show();
                 $("#row1").empty();
                 $("#row2").empty();
                 let html1 = Showtrackbet(firstRowtrack, data);

@@ -323,6 +323,9 @@ if($flag == 'getTrackbet'){
          $data = explode("_", $token);
          $betTable = (new BusinessFlowModel())->getTables()[$data[1]]['bet_table'];
          $drawTable = (new BusinessFlowModel())->getTables()[$data[1]]['draw_table'];
-         $result = (new BusinessFlowModel())->getTrackData($betTable,$data[0] )[0] ?? [];
-         echo json_encode([$result]);
+         $result = (new BusinessFlowModel())->getTrackData($betTable,$data[0]) ?? [];
+         $resultArray = is_array($result) ? $result : (array)$result;
+
+    // Return the result as a JSON-encoded array
+       echo json_encode($resultArray);
       }
