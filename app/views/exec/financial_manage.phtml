@@ -55,16 +55,18 @@ if ($flag == "filterdeposit") {
         $username = $usernameCheck[0]['uid'];
         $subquery = (new FinancialManageModel())->Depositsubquery($username,$states,$startdate,$enddate) ?? [];
         $result = (new FinancialManageModel())->FilterDepositData($subquery,$page,$Limit) ?? [];
+
         echo json_encode([
-            'deposit' => $result['data'],
+            'deposits' =>  $result['data'],
            'totalPages' => ceil($result['total'] / $Limit),
         ]);
        }else{
 
         $subquery = (new FinancialManageModel())->Depositsubquery($uid,$states,$startdate,$enddate) ?? [];
         $result = (new FinancialManageModel())->FilterDepositData($subquery,$page,$Limit) ?? [];
+
         echo json_encode([
-            'deposit' => $result['data'],
+            'deposits' => $result['data'],
             'totalPages' => ceil($result['total'] / $Limit),
         ]);
        }

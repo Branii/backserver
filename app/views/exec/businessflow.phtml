@@ -4,19 +4,19 @@
    ini_set('display_errors', 1);
 
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
-function formatBalance($balance){
-   if (fmod($balance, 1) != 0 && strlen(explode('.', (string) $balance)[1]) > 3) {
-      return number_format($balance, 4, '.', '');
-   }
-
-   return number_format($balance, 4, '.', '');
-}
-// function formatBalance($money) {
-//    if (strpos((string)$money, '.') !== false && strlen(explode('.', (string)$money)[1]) > 2) {
-//        return number_format((float)$money, 4, '.', '');
+// function formatBalance($balance){
+//    if (fmod($balance, 1) != 0 && strlen(explode('.', (string) $balance)[1]) > 3) {
+//       return number_format($balance, 4, '.', '');
 //    }
-//    return $money;
+
+//    return number_format($balance, 4, '.', '');
 // }
+function formatBalance($money) {
+   if (strpos((string)$money, '.') !== false && strlen(explode('.', (string)$money)[1]) > 2) {
+       return number_format((float)$money, 4, '.', '');
+   }
+   return $money;
+}
 
 if ($flag == "searchusername") {
    $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
@@ -286,7 +286,6 @@ if($flag == 'getTrackbet'){
    $betTable = (new BusinessFlowModel())->getTables()[$data[1]]['bet_table'];
    $drawTable = (new BusinessFlowModel())->getTables()[$data[1]]['draw_table'];
    $result = (new BusinessFlowModel())->getTrackData($betTable,$data[0] )[0] ?? [];
-   $result1 = (new BusinessFlowModel())->getTrackData($betTable,$data[0] )[0] ?? [];
    $close_and_opentimes = (new BusinessFlowModel())->getOpenAndCloseTimesByPeriod($result['bet_period'], $drawTable)[0] ?? [];
     $userData = (new BusinessFlowModel())->getUsernameById($result['uid']);
    if ($userData['reg_type'] == 'username') {
@@ -301,8 +300,8 @@ if($flag == 'getTrackbet'){
     $result['bet_amount'] = formatBalance($result['bet_amount']);
     $result['rebate_amount'] = empty($result['rebate_amount']) ? "0.0000" : formatBalance($result['rebate_amount']);
 
-   // $lotteryname = (new BusinessFlowModel())->getLottery($result['game_type'])['name'];
-   // $betStatusMap = [2 => 'Win', 3 => 'Lost', 5 => 'Pending', 6 => 'Bet Cancelled', 7 => 'Refund'];
+    $lotteryname = (new BusinessFlowModel())->getLottery($result['game_type'])['name'];
+    $betStatusMap = [2 => 'Win', 3 => 'Lost', 5 => 'Pending', 6 => 'Bet Cancelled', 7 => 'Refund'];
    // $datta = json_decode($result['bet_odds'], true); // Decode JSON
    // $betodds = reset($datta) * $result['multiplier'] * $result['unit_stake'];
    // // $result['username'] = $usernames;
@@ -310,8 +309,8 @@ if($flag == 'getTrackbet'){
     $result['closing_time'] = $close_and_opentimes['closing_time'] ?? '';
    //  $result['draw_number'] = $close_and_opentimes['draw_number'] ?? '';
     $result['bettype'] = $result['bettype'] == 2 ? 'track' : ($result['bettype'] == 1 ? 'bet' : '');
-   // $result['bet_status'] = isset($betStatusMap[$result['bet_status']]) ? $betStatusMap[$result['bet_status']] : 'unknown';
-   // $result['game_type'] = $lotteryname;
+    $result['bet_status'] = isset($betStatusMap[$result['bet_status']]) ? $betStatusMap[$result['bet_status']] : 'unknown';
+    $result['game_type'] = $lotteryname;
    // $result['bet_odds'] = $betodds;
 
      echo json_encode($result);
@@ -321,11 +320,17 @@ if($flag == 'getTrackbet'){
       if($flag == 'getTracktokenbet'){
          $token = isset($this->viewData['token']) ? $this->viewData['token'] : null;
          $data = explode("_", $token);
-         $betTable = (new BusinessFlowModel())->getTables()[$data[1]]['bet_table'];
-         $drawTable = (new BusinessFlowModel())->getTables()[$data[1]]['draw_table'];
-         $result = (new BusinessFlowModel())->getTrackData($betTable,$data[0]) ?? [];
-         $resultArray = is_array($result) ? $result : (array)$result;
-
-    // Return the result as a JSON-encoded array
-       echo json_encode($resultArray);
+          $betTable = (new BusinessFlowModel())->getTables()[$data[1]]['bet_table'];
+          $drawTable = (new BusinessFlowModel())->getTables()[$data[1]]['draw_table'];
+          $result = (new BusinessFlowModel())->getTrackData($betTable,$data[0]) ?? [];
+          foreach ($result as &$item) {
+            $trackData = (new BusinessFlowModel())->getTrackStatus($item['token']); // Fetch status and rule
+            // $item['trackstatus'] = $trackData['track_status']; // Add status to the result
+            $item['trackrule'] = $trackData[0]['track_rule'];    // Add rule to the result
+        }
+    
+      
+         echo json_encode($result);
       }
+
+     

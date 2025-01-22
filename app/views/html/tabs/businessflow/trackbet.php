@@ -301,6 +301,44 @@
         /* Rounded corners */
     }
 
+    .scrollable-container {
+        max-height: 600px;
+        /* Limit the container's height */
+        overflow-y: auto;
+        /* Enable vertical scrolling */
+        overflow-x: hidden;
+        /* Disable horizontal scrolling */
+        padding: 10px;
+        /* Optional padding for readability */
+        /* border: 1px solid #ddd; */
+        /* Optional: Add a border */
+        background-color: #fff;
+    }
+
+    /* Customize the scrollbar */
+    .scrollable-container::-webkit-scrollbar {
+        width: 5px;
+        /* Set scrollbar width */
+    }
+
+    .scrollable-container::-webkit-scrollbar-thumb {
+        background-color: #888;
+        /* Set thumb color */
+        border-radius: 10px;
+        /* Rounded corners for the thumb */
+    }
+
+    .scrollable-container::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+        /* Darker color on hover */
+    }
+
+    .scrollable-container::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+        /* Track background color */
+        border-radius: 10px;
+        /* Rounded corners for the track */
+    }
 
 </style>
 
@@ -495,13 +533,15 @@
   <div class="modal-dialog modal-dialog-scrollable modal-xl">
     <div class="modal-content">
       <div class="modal-body">
+     
+
         <div class="text-center mt-2 mb-4">
           <div class="d-flex justify-content-between">
             <div><?= $translator['Track Bet Info']; ?></div>
             <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
           </div>
         </div>
-
+        <div class="scrollable-container">
         <form>
           <div class="row">
             <div class="col-md-6">
@@ -536,7 +576,6 @@
 					</thead>
 					<tbody id='trackbetTableBody'>
 
-
 					</tbody>
 
 					<!-- <td></td>
@@ -548,6 +587,7 @@
 					</tr> -->
 				</table>
 
+      </div>
       </div>
     </div>
     <!-- /.modal-content -->

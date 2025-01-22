@@ -547,6 +547,13 @@ class BusinessFlowModel extends MEDOOHelper
     public static function getTrackData($betTable, $tracktoken)
     {
         return parent::selectAll($betTable, '*', ['token' => $tracktoken]);
+        
     }
+
+    public static function getTrackStatus($tracktoken)
+    {
+        return parent::selectAll('trackbet', '*', ['track_token' => $tracktoken]);
+    }
+ 
  
 }

@@ -177,46 +177,49 @@ class FinancialManageModel extends MEDOOHelper
     public static function FilterDepositData($subQuery, $page, $limit)
     {
         try {
-      
-            $startpoint = ($page * $limit) - $limit;
-           
-             $sql = "
-           SELECT 
-               temp_table.*, 
-               users_test.email AS email,users_test.reg_type,
-               users_test.username AS username
-              
-           FROM 
-               (
-                   SELECT * 
-                   FROM deposits_and_withdrawals
-                   WHERE $subQuery
-               ) AS temp_table
-           JOIN 
-               users_test ON users_test.uid = temp_table.user_id
-            LIMIT :offset, :limit
-          
-           ";
-           
-                    $countSql = "
-                    SELECT 
-                        COUNT(*) AS total_count
-                    FROM 
-                        deposits_and_withdrawals
-                    WHERE
-                    $subQuery
-                    ";
-
-                $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
-                $totalRecords = parent::query($countSql);
-                $totalRecords = $totalRecords[0]['total_count'];
+            // Calculate the starting point for pagination
+            $startpoint = ($page - 1) * $limit;
         
-                return ['data' => $data, 'total' => $totalRecords];
-            
+            // SQL query for fetching paginated data
+            $sql = "
+                SELECT 
+                    temp_table.*, 
+                    users_test.email AS email,
+                    users_test.reg_type,
+                    users_test.username AS username,
+                    users_test.contact AS contact
+                FROM 
+                    (
+                        SELECT * 
+                        FROM deposits_and_withdrawals
+                        WHERE $subQuery
+                    ) AS temp_table
+                JOIN 
+                    users_test ON users_test.uid = temp_table.user_id
+                LIMIT :offset, :limit
+            ";
+        
+            // SQL query for counting total records
+            $countSql = "
+                SELECT 
+                    COUNT(*) AS total_count
+                FROM 
+                    deposits_and_withdrawals
+                WHERE
+                    $subQuery
+            ";
+        
+            // Execute the main query with parameterized inputs
+            $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
+        
+            $totalRecords = parent::query($countSql);
+            $totalRecords =  $totalRecords[0]['total_count'] ;
+        
+            // Return the data and total record count
+            return ['data' => $data, 'total' => $totalRecords];
         } catch (Exception $e) {
-            // Handle the exception and log it
+            // Log the error message for debugging purposes
             error_log("Error executing query: " . $e->getMessage());
-            return ['data' => [], 'total' => 0]; // Return empty data and total 0 on error
         }
     }
     
