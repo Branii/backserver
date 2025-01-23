@@ -259,7 +259,7 @@ $(function () {
 
     $(document).on("click", ".executetrans", function () {
         if ($("#mytrans").val() == ""  && $(".ordertype").val() == "" && $(".startdatet").val() == "" 
-        && $(".userIdtrans").val() == "") {
+        && $(".orderid").val() == "") {
             //  $("#al-danger-alert").modal("show");
             showToast("Heads up!!","Select one or more data fields to filter","info")
             return;
@@ -572,6 +572,9 @@ $(function () {
         });
     }
 
-   
+    
+      $('#nametext').on('dblclick', function () {
+        $(this).val(''); // Clears the input field
+      });
    
 });
