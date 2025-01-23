@@ -261,81 +261,170 @@ class BusinessFlowModel extends MEDOOHelper
 
     public static function getAllUserBetByUserId($subquery, $page, $limit)
     {
-        $startpoint = ($page - 1) * $limit;
-        $data = [];
-        $totalRecords = 0;
-
-        // Query to fetch all table names that match the condition
         $tableQuery = "
-          SELECT table_name 
-          FROM information_schema.tables
-          WHERE table_schema = 'lottery_test'
-              AND table_name LIKE 'bt_%'
-      ";
-        $tables = parent::query($tableQuery);
+    SELECT table_name 
+    FROM information_schema.tables
+    WHERE table_schema = 'lottery_test'
+        AND table_name LIKE 'bt_%'
+";
 
-        foreach ($tables as $table) {
-            $tableName = $table['table_name'];
+try {
+    // Fetch all tables matching the query
+    $tables = parent::query($tableQuery);
 
-            // Count total records for pagination
-            $countSql = "
-             SELECT 
-                 COUNT(*) AS total_count
-             FROM 
-                 $tableName
-             WHERE 
-                 $subquery
-         ";
+    // Initialize total records and data array
+    $totalRecords = 0;
+    $data = [];
 
-            try {
-                // Get the total count of records for this table
-                $totalResult = parent::query($countSql);
-                if ($totalResult && isset($totalResult[0]['total_count'])) {
-                    $totalRecords += $totalResult[0]['total_count'];
-                }
+    foreach ($tables as $table) {
+        $tableName = $table['table_name'];
 
-                // Main query to fetch paginated data
-                $sql = "
-                 SELECT 
-                     temp_table.*, 
-                     users_test.email AS email,
-                     users_test.username AS username,
-                     users_test.contact AS contact,
-                     users_test.reg_type AS reg_type,
-                     game_type.name AS game_type,
-                     game_type.gt_id AS gt_id
-                 FROM 
-                     (
-                         SELECT * 
-                         FROM $tableName
-                         WHERE $subquery
-                     ) AS temp_table
-                 JOIN 
-                     users_test ON users_test.uid = temp_table.uid
-                 JOIN 
-                     game_type ON game_type.gt_id = temp_table.game_type
-                 LIMIT :offset, :limit
-             ";
+        // Count total records for pagination
+        $countSql = "
+            SELECT 
+                COUNT(*) AS total_count
+            FROM 
+                $tableName
+            WHERE 
+                $subquery
+        ";
 
-                // Calculate offset for pagination
-                $startpoint = ($page - 1) * $limit;
+        try {
+            // Get the total count of records for this table
+            $totalResult = parent::query($countSql);
 
-                // Execute the main query
-                $result = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
-                if (!empty($result)) {
-                    $data = array_merge($data, $result);
-                }
-            } catch (Exception $e) {
-                // Log any errors for debugging
-                error_log("Error executing query on table $tableName: " . $e->getMessage());
+            if ($totalResult && isset($totalResult[0]['total_count'])) {
+                $totalRecords += $totalResult[0]['total_count'];
             }
-        }
 
-        // Return the result with total records and data
-        return [
-            'data' => $data,
-            'total' => $totalRecords,
-        ];
+            // Main query to fetch paginated data
+            $sql = "
+                SELECT 
+                    temp_table.*, 
+                    users_test.email AS email,
+                    users_test.username AS username,
+                    users_test.contact AS contact,
+                    users_test.reg_type AS reg_type,
+                    game_type.name AS game_type,
+                    game_type.gt_id AS gt_id
+                FROM 
+                    (
+                        SELECT * 
+                        FROM $tableName
+                        WHERE $subquery
+                    ) AS temp_table
+                JOIN 
+                    users_test ON users_test.uid = temp_table.uid
+                JOIN 
+                    game_type ON game_type.gt_id = temp_table.game_type
+                LIMIT :offset, :limit
+            ";
+
+            // Calculate offset for pagination
+            $startpoint = ($page - 1) * $limit;
+
+            // Execute the main query
+            $result = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
+
+            if (!empty($result)) {
+                $data = array_merge($data, $result);
+            }
+        } catch (Exception $e) {
+            // Log any errors for debugging specific to this table
+            error_log("Error executing query on table $tableName: " . $e->getMessage());
+        }
+    }
+
+    // Return the result with total records and data
+    return [
+        'data' => $data,
+        'total' => $totalRecords,
+    ];
+} catch (Exception $e) {
+    // Log any errors during table fetching
+    error_log("Error fetching tables: " . $e->getMessage());
+
+    // Return empty result in case of error
+    return [
+        'data' => [],
+        'total' => 0,
+    ];
+}
+    //     $startpoint = ($page - 1) * $limit;
+    //     $data = [];
+    //     $totalRecords = 0;
+
+    //     // Query to fetch all table names that match the condition
+    //     $tableQuery = "
+    //       SELECT table_name 
+    //       FROM information_schema.tables
+    //       WHERE table_schema = 'lottery_test'
+    //           AND table_name LIKE 'bt_%'
+    //   ";
+    //     $tables = parent::query($tableQuery);
+
+    //     foreach ($tables as $table) {
+    //         $tableName = $table['table_name'];
+
+    //         // Count total records for pagination
+    //         $countSql = "
+    //          SELECT 
+    //              COUNT(*) AS total_count
+    //          FROM 
+    //              $tableName
+    //          WHERE 
+    //              $subquery
+    //      ";
+
+    //         try {
+    //             // Get the total count of records for this table
+    //             $totalResult = parent::query($countSql);
+    //             if ($totalResult && isset($totalResult[0]['total_count'])) {
+    //                 $totalRecords += $totalResult[0]['total_count'];
+    //             }
+
+    //             // Main query to fetch paginated data
+    //             $sql = "
+    //              SELECT 
+    //                  temp_table.*, 
+    //                  users_test.email AS email,
+    //                  users_test.username AS username,
+    //                  users_test.contact AS contact,
+    //                  users_test.reg_type AS reg_type,
+    //                  game_type.name AS game_type,
+    //                  game_type.gt_id AS gt_id
+    //              FROM 
+    //                  (
+    //                      SELECT * 
+    //                      FROM $tableName
+    //                      WHERE $subquery
+    //                  ) AS temp_table
+    //              JOIN 
+    //                  users_test ON users_test.uid = temp_table.uid
+    //              JOIN 
+    //                  game_type ON game_type.gt_id = temp_table.game_type
+    //              LIMIT :offset, :limit
+    //          ";
+
+    //             // Calculate offset for pagination
+    //             $startpoint = ($page - 1) * $limit;
+
+    //             // Execute the main query
+    //             $result = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
+    //             if (!empty($result)) {
+    //                 $data = array_merge($data, $result);
+    //             }
+    //         } catch (Exception $e) {
+    //             // Log any errors for debugging
+    //             error_log("Error executing query on table $tableName: " . $e->getMessage());
+    //         }
+    //     }
+
+    //     // Return the result with total records and data
+    //     return [
+    //         'data' => $data,
+    //         'total' => $totalRecords,
+    //     ];
     }
 
     public static function filterBetData($uid, $gametype, $betstate, $betstatus, $enddate, $startdate)
