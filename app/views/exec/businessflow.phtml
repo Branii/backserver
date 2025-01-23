@@ -4,19 +4,26 @@
    ini_set('display_errors', 1);
 
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+
 // function formatBalance($balance){
-//    if (fmod($balance, 1) != 0 && strlen(explode('.', (string) $balance)[1]) > 3) {
+//    if (fmod($balance, 1) != 0 && strlen(explode('.', (string) $balance)[1]) > 2) {
 //       return number_format($balance, 4, '.', '');
 //    }
 
 //    return number_format($balance, 4, '.', '');
 // }
-function formatBalance($money) {
-   if (strpos((string)$money, '.') !== false && strlen(explode('.', (string)$money)[1]) > 2) {
-       return number_format((float)$money, 4, '.', '');
-   }
-   return $money;
-}
+// function formatBalance($money) {
+//    if (strpos((string)$money, '.') !== false && strlen(explode('.', (string)$money)[1]) > 2) {
+//        return number_format((float)$money, 4, '.', '');
+//    }
+//    return $money;
+// }
+
+// function $money) {
+   // Format the number to a maximum of 4 decimal places
+//    $formatted = rtrim(rtrim(number_format($money, 4, '.', ''), '0'), '.');
+//    return $formatted;
+// }
 
 if ($flag == "searchusername") {
    $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
@@ -56,6 +63,8 @@ if ($flag == "transactiondata") {
    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
    $result = (new BusinessFlowModel())->FetchTransactionData($page, $limit) ?? [];
+
+
    echo json_encode([
       'transaction' => $result['data'],
       'totalPages' => ceil($result['total'] / $limit),
@@ -93,22 +102,22 @@ if ($flag == "getTransactionBet") {
    $userData = (new BusinessFlowModel())->getUsernameById($result['uid']);
    $lotteryname = (new BusinessFlowModel())->getLottery($result['game_type'])['name'];
    if ($userData['reg_type'] == 'username') {
-      $username = $userData['username'];
+      $username = ucfirst(trim($userData['username']));
    } elseif ($userData['reg_type'] == 'contact') {
       $username = $userData['contact'];
    } else {
-      $username = $userData['email'];
+      $username = ucfirst(trim($userData['email']));
    }
-   $result['bet_amount'] = formatBalance($result['bet_amount']);
+   $result['bet_amount'] = $result['bet_amount'];
    $betStatusMap = [2 => 'Win', 3 => 'Lost', 5 => 'Pending', 6 => 'Bet Cancelled', 7 => 'Refund'];
-   $result['bettype'] = $result['bettype'] == 2 ? 'track' : ($result['bettype'] == 1 ? 'bet' : '');
+   $result['bettype'] = $result['bettype'] == 2 ? 'Track' : ($result['bettype'] == 1 ? 'Bet' : '');
    $result['bet_status'] = isset($betStatusMap[$result['bet_status']]) ? $betStatusMap[$result['bet_status']] : 'unknown';
-   $result['rebate_amount'] = empty($result['rebate_amount']) ? "0.0000" : formatBalance($result['rebate_amount']);
+   $result['rebate_amount'] = empty($result['rebate_amount']) ? "0" : $result['rebate_amount'];
    $result['game_type'] = $lotteryname;
    $result['reg_type'] = $username;
    $result['opening_time'] = $close_and_opentimes['opening_time'] ?? '';
    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? '';
-   $result['draw_number'] = $close_and_opentimes['draw_number'] ?? '';
+  // $result['draw_number'] = $close_and_opentimes['draw_number'] ?? '';
 
    echo json_encode($result);
 }
@@ -132,6 +141,7 @@ if ($flag == "filtertransactions") {
           'transactions' => $result['data'],
           'totalPages' => ceil($result['total'] / $limit),
        ]);
+
     }else{
      $sunquery = (new BusinessFlowModel())->FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
       $result = (new BusinessFlowModel())->FilterTrsansactionData($sunquery, $page, $limit) ?? [];
@@ -157,33 +167,30 @@ if ($flag == "lotterydata") {
 
 if ($flag == "viewBetstake") {
    $betcode = isset($this->viewData['betcode']) ? $this->viewData['betcode'] : null;
-   $gametype = isset($this->viewData['gametype']) ? (int) $this->viewData['gametype'] : null;
-   $betTable = (new BusinessFlowModel())->getTables()[$gametype]['bet_table'];
-   $drawTable = (new BusinessFlowModel())->getTables()[$gametype]['draw_table'];
-   $result = (new BusinessFlowModel())->getBetDataByTransactionBet($betTable, $betcode)[0] ?? [];
+   $data = explode("_", $betcode);
+   $betTable = (new BusinessFlowModel())->getTables()[$data[1]]['bet_table'];
+   $drawTable = (new BusinessFlowModel())->getTables()[$data[1]]['draw_table'];
+   $result = (new BusinessFlowModel())->getBetDataByTransactionBet($betTable, $data[0])[0] ?? [];
    $close_and_opentimes = (new BusinessFlowModel())->getOpenAndCloseTimesByPeriod($result['bet_period'], $drawTable)[0] ?? [];
    $userData = (new BusinessFlowModel())->getUsernameById($result['uid']);
    if ($userData['reg_type'] == 'username') {
-      $username = $userData['username'];
+      $username = ucfirst(trim($userData['username']));
    } elseif ($userData['reg_type'] == 'contact') {
       $username = $userData['contact'];
    } else {
-      $username = $userData['email'];
+      $username = ucfirst(trim($userData['email']));
    }
    // Assign the determined value to the reg_type field
-   $result['reg_type'] = $username;
-   $result['bet_amount'] = formatBalance($result['bet_amount']);
-   $result['rebate_amount'] = empty($result['rebate_amount']) ? "0.0000" : formatBalance($result['rebate_amount']);
-
    $lotteryname = (new BusinessFlowModel())->getLottery($result['game_type'])['name'];
    $betStatusMap = [2 => 'Win', 3 => 'Lost', 5 => 'Pending', 6 => 'Bet Cancelled', 7 => 'Refund'];
    $datta = json_decode($result['bet_odds'], true); // Decode JSON
    $betodds = reset($datta) * $result['multiplier'] * $result['unit_stake'];
-   // $result['username'] = $usernames;
+   $result['reg_type'] = $username;
+   $result['bet_amount'] = $result['bet_amount'];
+   $result['rebate_amount'] = empty($result['rebate_amount']) ? "0" : $result['rebate_amount'];
    $result['opening_time'] = $close_and_opentimes['opening_time'] ?? '';
    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? '';
-   // $result['draw_number'] = $close_and_opentimes['draw_number'] ?? '';
-   $result['bettype'] = $result['bettype'] == 2 ? 'track' : ($result['bettype'] == 1 ? 'bet' : '');
+   $result['bettype'] = $result['bettype'] == 2 ? 'Track' : ($result['bettype'] == 1 ? 'Bet' : '');
    $result['bet_status'] = isset($betStatusMap[$result['bet_status']]) ? $betStatusMap[$result['bet_status']] : 'unknown';
    $result['game_type'] = $lotteryname;
    $result['bet_odds'] = $betodds;
@@ -213,7 +220,6 @@ if ($flag == "filterbetdata") {
       $result = (new BusinessFlowModel())->getAllUserBetByUserId($sunquery, $page, $limit);
 
       echo json_encode([
-      //    'response' =>  "success",
           'filterbet' =>  $result['data'],
          'totalPages' => ceil($result['total'] / $limit),
        ]);
@@ -223,7 +229,6 @@ if ($flag == "filterbetdata") {
       $result = (new BusinessFlowModel())->getAllUserBetByUserId($sunquery, $page, $limit);
 
       echo json_encode([
-      //    'response' =>  "success",
           'filterbet' =>  $result['data'],
          'totalPages' => ceil($result['total'] / $limit),
        ]);
@@ -296,19 +301,18 @@ if($flag == 'getTrackbet'){
       $username = $userData['email'];
    }
    // // Assign the determined value to the reg_type field
-     $result['reg_type'] = $username;
-    $result['bet_amount'] = formatBalance($result['bet_amount']);
-    $result['rebate_amount'] = empty($result['rebate_amount']) ? "0.0000" : formatBalance($result['rebate_amount']);
+   
 
     $lotteryname = (new BusinessFlowModel())->getLottery($result['game_type'])['name'];
     $betStatusMap = [2 => 'Win', 3 => 'Lost', 5 => 'Pending', 6 => 'Bet Cancelled', 7 => 'Refund'];
    // $datta = json_decode($result['bet_odds'], true); // Decode JSON
    // $betodds = reset($datta) * $result['multiplier'] * $result['unit_stake'];
-   // // $result['username'] = $usernames;
     $result['opening_time'] = $close_and_opentimes['opening_time'] ?? '';
     $result['closing_time'] = $close_and_opentimes['closing_time'] ?? '';
-   //  $result['draw_number'] = $close_and_opentimes['draw_number'] ?? '';
-    $result['bettype'] = $result['bettype'] == 2 ? 'track' : ($result['bettype'] == 1 ? 'bet' : '');
+    $result['reg_type'] = ucfirst(trim($username));
+    $result['bet_amount'] = $result['bet_amount'];
+    $result['rebate_amount'] = empty($result['rebate_amount']) ? "0" : $result['rebate_amount'];
+    $result['bettype'] = $result['bettype'] == 2 ? 'Track' : ($result['bettype'] == 1 ? 'Bet' : '');
     $result['bet_status'] = isset($betStatusMap[$result['bet_status']]) ? $betStatusMap[$result['bet_status']] : 'unknown';
     $result['game_type'] = $lotteryname;
    // $result['bet_odds'] = $betodds;

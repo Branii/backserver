@@ -23,7 +23,7 @@ $(function () {
 
         html += `
                       <tr>
-                      <td>${username}</td>
+                     <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
                       <td>VIP</td>
                       <td class="editables">${types}</td>
                       <td class="editables">${total_income}</td>
@@ -180,7 +180,7 @@ $(function () {
               `);
               return;
             }
-    
+            $("#maskfinance").LoadingOverlay("hide");
              renderfinace(data.deposits);
           // Render pagination
           renderfinacePagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterfinance(username, depositestate, startfinance, endfinance, newPage, pageLimit));
@@ -201,7 +201,8 @@ $(function () {
     $(document).on('click', '.executefinance', function () {
     
       if ($("#financeDropdown").val() == "" && $(".depositestate").val() == "" && $(".startfinance").val() == "" ) {
-        $("#danger-finance").modal("show");
+        // $("#danger-finance").modal("show");
+        showToast("Heads up!!","Select one or more data fields to filter","info")
         return;
     }
   

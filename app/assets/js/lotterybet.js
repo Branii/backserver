@@ -62,33 +62,20 @@ $(function () {
       htmls += `
                     <tr>
                         <td>${item.bet_code}</td>
-                        <td>${username}</td>
+                       <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
                         <td>${item.draw_period}</td>
                         <td>${item.game_type}</td>
                         <td>${item.game_label}</td>
-                        <td>${item.bet_date + " " + item.bet_time}</td>
+                        <td>${item.bet_date + " / " + item.bet_time}</td>
                         <td>${item.bet_number}</td>
                         <td>${item.unit_stake}</td>
                         <td>${item.multiplier}</td>
                         <td>${formatMoney(item.bet_amount)}</td>
                         <td>${formatMoney(item.win_amount)}</td>
                          <td><i class='bx bxs-circle' style='color:${status[item.bet_status].color};font-size:8px;margin-right:5px;'></i>${status[item.bet_status].title}</td>
-                 
                         <td>${states[item.state]}</td>
+                        <td><i value='${item.bet_code}_${item.gt_id}' class='bx bx-info-circle viewbets' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
                        
-                        <td>
-                            
-                             <div class="dropdown">
-                                    <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                     <i class='bx bx-dots-vertical-rounded'></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
-                                      <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewbets" href="javascript:void(0);"data-betcode="${item.bet_code}"data-gametype="${item.gt_id}">
-                                        <i class="bx bx-show fs-5"></i>View Bet
-                                      </a>
-                                    </div>
-                                  </div>
-                        </td>
                     </tr>
                 `;
     });
@@ -105,8 +92,9 @@ $(function () {
               <td>${value}</td>
               <td class="${key === "user_selection" ? "bet_userSelection" : ""}" 
                 ${key === "user_selection" ? `title="${obj[key]}"` : ""}>
-                ${obj[key]}
-              </td>
+                ${key === "win_amount" || key === "bet_amount" ||key ==="rebate_amount" ? `${formatMoney(obj[key])}` : `${obj[key]}`}
+              
+            </td>
             </tr>
             `;
     });
@@ -140,7 +128,7 @@ $(function () {
     'win_amount': 'Win Amount:',
     // 'server_time': 'Actual profit:',
     'rebate_amount': 'Rebate Amount',
-    'user_selection': 'Bet Details',
+    'user_selection': 'Bet Selection',
 
   
   }
@@ -152,7 +140,7 @@ $(function () {
 
 
   let currentPagebet = 1;
-  let pageLimit = 50;
+  let pageLimit = 20;
   
   // Fetch lottery bet data
   async function fetchLotteryBet(currentPagebet) {
@@ -312,7 +300,7 @@ $(function () {
       size: 3,
     });
     currentPagebet = 1;
-    pageLimit = 50;
+    pageLimit = 20;
     fetchLotteryBet(currentPagebet, pageLimit);
   });
 
@@ -322,7 +310,8 @@ $(function () {
   $(".executebet").click(function () {
     if ($("#myInput").val() == "" && $(".typelottery").val() == "" && $(".startdates").val() == ""
     && $(".betsate").val() == "" && $(".betstatus").val() == "") {
-      $("#dangerbet").modal("show");
+      // $("#dangerbet").modal("show");
+      showToast("Heads up!!","Select one or more data fields to filter","info")
       return;
   }
     const uidd = $('#myInput').val();
@@ -366,18 +355,18 @@ $(function () {
   // viewbets
   $(document).on("click",".viewbets",function(){
     $("#viewbetsmodal").modal("show")
-    const betcode = $(this).attr("data-betcode")
-    const gametype = $(this).attr("data-gametype")
+    const betcode = $(this).attr("value");
     console.log(betcode)
-    console.log(gametype)
+   
+    // console.log(gametype)
     $("#rowbet").empty()
     $("#rowbe1").empty()
-     viewstakedBet(betcode,gametype)
+     viewstakedBet(betcode)
   })
 
-    async function viewstakedBet(betcode,gametype) {
+    async function viewstakedBet(betcode) {
       try {
-        const response = await fetch(`../admin/viewBetstake/${betcode}/${gametype}`);
+        const response = await fetch(`../admin/viewBetstake/${betcode}`);
         const data = await response.json();
         //  console.log(response)
         //  return
@@ -421,7 +410,12 @@ $(function () {
               $('.userDropdownb').hide();
           }
       });
-
+      $(document).on("click", function (e) {
+        const $dropdownbet = $("#userlotteryDropdown");
+        if (!$(e.target).closest("#myInput, #userlotteryDropdown").length) {
+            $dropdownbet.hide();
+        }
+    });
       // Handle manual input clearing
       $(document).on('input', '#myInput', function () {
           if (!$(this).val()) {

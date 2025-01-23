@@ -354,7 +354,7 @@
 
                 <input type="text" id="trackinput" class="form-control queryholderlist usernames" placeholder="Search usernames" />
                     <input name="usernames" type="hidden" class="userIdbet" />
-                    <select class="form-control trackdown" size="5" style="display: none;">
+                    <select class="form-control trackdown" size="5" style="display: none;" id="usertrackDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>
 

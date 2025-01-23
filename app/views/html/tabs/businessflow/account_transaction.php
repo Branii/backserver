@@ -273,7 +273,7 @@
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
                 <input type="text" id="mytrans" class="form-control queryholdertrans usernames" placeholder="Search usernames" />
                 <input name="usernames" type="hidden" class="userIdtrans queryholdertrans" />
-                <select class="form-control useraccount" size="5" style="display: none;">
+                <select class="form-control useraccount" size="5" style="display: none;" id="userAccountDropdown">
                     <!-- Options will be populated dynamically -->
                 </select>
                 <input type="text" class="form-control queryholdertrans orderid" id="nametext" aria-describedby="name" placeholder="Enter Transaction ID" />
@@ -352,6 +352,7 @@
                         </th>
                     </tr>
                 </thead>
+
                 <tbody id="dataContainer" class="tbl-content">
                     <tr class="no-results">
                         <td colspan="9">
@@ -384,6 +385,7 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowstrans" style="font-size: 12px;">
+             
                 <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
@@ -498,3 +500,7 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+<script id="translations" type="application/json">
+    <?= json_encode($translator); ?>
+</script>

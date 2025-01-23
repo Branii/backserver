@@ -142,8 +142,8 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function viewBetstake($becode,$gametype){
-        $this->view('exec/businessflow',['betcode'=>$becode, 'gametype'=>$gametype,'flag' => 'viewBetstake']);
+    public function viewBetstake($becode){
+        $this->view('exec/businessflow',['betcode'=>$becode,'flag' => 'viewBetstake']);
         $this->view->render();
     }
 

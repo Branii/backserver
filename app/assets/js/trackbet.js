@@ -1,6 +1,15 @@
 $(function () {
     //NOTE -
     ////////////// LOTTERY BETTING-//////////
+    function showToast(title, message, type) {
+        $.toast({
+          position: "bottom-right",
+          title: title,
+          message: message,
+          type: type,
+          duration: 3000, // auto-dismiss after 3s
+        });
+      }
     function formatBalance(balance) {
         if (balance % 1 !== 0 && balance.toString().split(".")[1].length > 3) {
             return Number(balance).toFixed(4);
@@ -37,15 +46,15 @@ $(function () {
             htmls += `
                     <tr>
                         <td>${item.track_token}</td>
-                        <td>${username}</td>
+                       <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
                         <td>${item.game_type}</td>
                         <td>${item.start_draw}</td>
                         <td>${item.total_bets + "/" + item.tracked}</td>
-                        <td>${formatMoney(item.total_amount) + "/" + formatMoney(item.done_amount)}</td>                  
+                        <td>${formatMoney(item.total_amount) + " / " + formatMoney(item.done_amount)}</td>                  
                         <td>${trackstatus[item.track_status]}</td>
                         <td>${item.win_amount}</td>
                        <td>${item.track_rule}</td>
-                       <td>${item.server_date + "/" + item.server_time}</td>
+                       <td>${item.server_date + " / " + item.server_time}</td>
                       <td><i value='${item.track_token}_${item.game_type_id}' class='bx bx-info-circle trackinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
                        
                         
@@ -108,7 +117,7 @@ $(function () {
     //   let pageLimit = 10;
 
     let currentPagetrack = 1;
-    let pageLimit = 10;
+    let pageLimit = 20;
 
     async function fetchtrackdata(page, pageLimit) {
         try {
@@ -255,7 +264,8 @@ $(function () {
 
     $(".executetrack").click(function () {
         if ($("#trackinput").val() == "" && $(".trackstatus").val() == "" && $(".tracklotery").val() == "" && $(".startdatetrack").val() == "") {
-            $("#dangertrack").modal("show");
+            //$("#dangertrack").modal("show");
+            showToast("Heads up!!","Select one or more data fields to filter","info")
             return;
         }
         const usernames = $("#trackinput").val();
@@ -374,6 +384,12 @@ $(function () {
                 $("#trackinput").val(selectedUsername);
                 $(".userIdbet").val(selectedUserId);
                 $(".trackdown").hide();
+            }
+        });
+        $(document).on("click", function (e) {
+            const $dropdownbet = $("#usertrackDropdown");
+            if (!$(e.target).closest("#trackinput, #usertrackDropdown").length) {
+                $dropdownbet.hide();
             }
         });
 

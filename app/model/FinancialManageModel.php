@@ -104,7 +104,7 @@ class FinancialManageModel extends MEDOOHelper
             'total_income' =>  0,
             'account_change' => $amount,
             'date_created' =>  date("Y-m-d"),
-            'dateTime' => date("Y-m-d"),
+            'dateTime' => date("Y-m-d H:i:s"),
             'description' => $review,
             'remarks' => $review,
             'transaction_type' => $desposittype,
