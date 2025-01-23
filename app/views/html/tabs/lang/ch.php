@@ -108,6 +108,9 @@ return [
     'Cancelled Bet' => '取消的投注',
     'Delete' => '删除',
     'Cancelled' => '取消',
+    'Number of Wins' =>'获胜次数',
+    'Bet Selection' =>'投注选择',
+    'Draw Results' => '奖结果',
 
     //Tracking management 
     "Track Records" => '追号管理',
@@ -115,17 +118,21 @@ return [
     'Username'    => '用户名',
     'Lottery Type'    => '彩种',
     'Start Issue' => '开始期数',
-    'Tracked/Total Issues' => '已追/总期数',
-    'Bet Amount/Total Amount' => '已投/总金额',
+    'Total Issues/Tracked' => '总问题/跟踪',
+    'Total Bet Amount/Bet Amount' => '总金额/已投',
     'Track Status' => '追号状态',
     'Win/Loss' => '输赢',
     'Track Rule' => '规则',
     'Time' => '创建时间',
     'Details' => '详情',
     'Self Stop Track' =>'自停轨道',
-    'Win Stop Track'=>'赢停止轨道',
-    'Not Stop Track'=>'不停轨道',
-    'Completed' => '完成',
+    // 'Win Stop Track'=>'赢停止轨道',
+    // 'Not Stop Track'=>'不停轨道',
+     'Completed' => '完成',
+    // 'Self Stop Track' =>'Self Stop Track',
+    'Stop If Win'=>'如果赢了就停止',
+    'Stop If Not Win'=>'未中奖则停止',
+    'Running' =>'运行',
 
 
 

@@ -277,6 +277,7 @@
                     <!-- Options will be populated dynamically -->
                 </select>
                 <input type="text" class="form-control queryholdertrans orderid" id="nametext" aria-describedby="name" placeholder="Enter Transaction ID" />
+                
                 <select name="order_type" class="form-control form-select queryholdertrans ordertype" data-bs-placeholder="Select Type">
                     <option value="">--<?= $translator['Transaction Type']; ?>--</option>
                     <option value="1"><?= $translator['Deposit']; ?></option>

@@ -87,7 +87,6 @@ return [
 'Unit Stake' =>'Unit Stake',
 'Bet Amounts' => 'Bet Amounts',
 'Win Amount' => 'Win Amount',
-'Win Amount' => 'Win Amount',
 'Unit Stake' => 'Unit Stake',
 'Rebate Amount' => 'Rebate Amount',
 'Win/Loss' => 'Win/Loss',
@@ -106,6 +105,9 @@ return [
 'Cancelled Bet' => 'Cancelled Bet',
 'Delete' => 'Delete',
 'Cancelled' => 'Cancelled',
+'Number of Wins' =>'Number of Wins',
+'Bet Selection' =>'Bet Selection',
+'Draw Results' =>'Draw Results',
 
  //track 
 'Track Records' => 'Track Records',
