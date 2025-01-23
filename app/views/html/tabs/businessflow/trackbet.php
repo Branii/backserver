@@ -301,6 +301,44 @@
         /* Rounded corners */
     }
 
+    .scrollable-container {
+        max-height: 600px;
+        /* Limit the container's height */
+        overflow-y: auto;
+        /* Enable vertical scrolling */
+        overflow-x: hidden;
+        /* Disable horizontal scrolling */
+        padding: 10px;
+        /* Optional padding for readability */
+        /* border: 1px solid #ddd; */
+        /* Optional: Add a border */
+        background-color: #fff;
+    }
+
+    /* Customize the scrollbar */
+    .scrollable-container::-webkit-scrollbar {
+        width: 5px;
+        /* Set scrollbar width */
+    }
+
+    .scrollable-container::-webkit-scrollbar-thumb {
+        background-color: #888;
+        /* Set thumb color */
+        border-radius: 10px;
+        /* Rounded corners for the thumb */
+    }
+
+    .scrollable-container::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+        /* Darker color on hover */
+    }
+
+    .scrollable-container::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+        /* Track background color */
+        border-radius: 10px;
+        /* Rounded corners for the track */
+    }
 
 </style>
 
@@ -314,24 +352,24 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-                <input type="text" id="trackinput" class="form-control queryholderbet usernames" placeholder="Search usernames" />
+                <input type="text" id="trackinput" class="form-control queryholderlist usernames" placeholder="Search usernames" />
                     <input name="usernames" type="hidden" class="userIdbet" />
-                    <select class="form-control trackdown" size="5" style="display: none;">
+                    <select class="form-control trackdown" size="5" style="display: none;" id="usertrackDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>
 
-                <select name="recharge" class="form-control form-select queryholderlist recharges"
+                <select name="recharge" class="form-control form-select queryholderlist trackstatus"
                     data-bs-placeholder="Select Type">
                     <option value="">-Track Status-</option>
-                    <option value="2"><?= $translator['Completed'];?></option>
-                    <option value="1"><?= $translator['Pending'];?></option>
-                    <option value="3"><?= $translator['Self Stop Track'];?></option>
-                    <option value="3"><?= $translator['Win Stop Track'];?></option>
-                    <option value="3"><?= $translator['Not Stop Track'];?></option>
+                    <option value="1"><?= $translator['Running'];?></option>
+                    <option value="2"><?= $translator['Self Stop Track'];?></option>
+                    <option value="3"><?= $translator['Completed'];?></option>
+                    <option value="4"><?= $translator['Stop If Win'];?></option>
+                    <option value="5"><?= $translator['Stop If Not Win'];?></option>
                 </select>
 
                 <div class="custom-dropdown">
-                        <select name="lotteryname" class="form-control form-select queryholderlist typelottery selectlottery" data-bs-placeholder="Select Type"> </select>
+                        <select name="lotteryname" class="form-control form-select queryholderlist tracklotery selectlottery" data-bs-placeholder="Select Type"> </select>
                  </div>
 
                 <input type="date" class="form-control queryholderlist startdatetrack"  aria-describedby="name"
@@ -340,13 +378,6 @@
 
                 <input type="date" class="form-control queryholderlist enddatetrack"  aria-describedby="name"
                     placeholder="Name" />
-
-                <!-- <button type="button" class="btn btn-outline-light text-dark queryholderlist addagents">
-                    <i class='bx bx-user-plus'></i> Add Agent</button>
-                <button type="button" class="btn btn-outline-light text-dark queryholderlist ">
-                    <i class='bx bx-user-plus'></i> Get Top Agent</button> -->
-
-
 
             </div>
         </span>
@@ -370,7 +401,7 @@
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle executeusertrack" value="end" aria-label="Execute"
+                <button type="button" class="btn bg-white-subtle executetrack" value="end" aria-label="Execute"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                     <i class='bx bx-check-double loadertrack' style="font-size:20px"></i>
                 </button>
@@ -400,10 +431,10 @@
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Start Issue']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Tracked/Total Issues']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Issues/Tracked']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Amount/Total Amount']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bet Amount/Bet Amount']; ?></h6>
                   </th>
                   <th>
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Status']; ?></h6>
@@ -454,15 +485,21 @@
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
-
             <span id="paging_infotrack" style="color:#aaa">---</span>
-
         </span>
-        <span class="toplist-right" id="paginationtrack" aria-label="Page navigation example">
-
+        <span class="top-right-btn" aria-label="Page navigation example">
+            <select class="left-element form-control numrowstrack" style="font-size: 12px;">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="500">500</option>
+            </select>
+            <span class="toplist-right" id="paginationtrack" aria-label="Page navigation example">
             <!--Dynamic pagination-->
-
+            </span>
+           
         </span>
+       
 
     </div>
 
@@ -476,11 +513,10 @@
                     <i class="ti ti-hexagon-letter-x fs-7"></i>
                     <h4 class="mt-2">Oh snap!</h4>
                     <p class="mt-3" style="color:#aaa">
-                        All fields are required!
-                        Select one or more data fields to filter.
+                    All fields are required! Select one or more data fields to filter.
                     </p>
                     <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color:#ddd">
-                        Okay
+                      Okay
                     </button>
                 </div>
             </div>
@@ -494,28 +530,30 @@
 <!--manage user Quota -->
 
 <div id="viewtrackmodal" class="modal fade" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
     <div class="modal-content">
       <div class="modal-body">
+     
+
         <div class="text-center mt-2 mb-4">
           <div class="d-flex justify-content-between">
-            <div>Track Bet Info</div>
+            <div><?= $translator['Track Bet Info']; ?></div>
             <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
           </div>
         </div>
-
+        <div class="scrollable-container">
         <form>
           <div class="row">
             <div class="col-md-6">
               <table class="table table-bordered table-striped"> 
-                <tbody id="rowtrack1">
+                <tbody id="rowtrack">
                 </tbody>
               </table>
             </div>
 
             <div class="col-md-6">
               <table class="table table-bordered table-striped">
-                <tbody id="rowtrack">
+                <tbody id="rowtrack1">
                 </tbody>
               </table>
             </div>
@@ -523,6 +561,33 @@
           </div>
         </form>
 
+        <table class="table table-hover table-bordered text-nowrap mb-0" id="track">
+					<thead>
+						<tr>
+							<!-- <th class="font-weight-normal">#</th> -->
+							<th class="font-weight-normal">Draw Result</th>
+							<th class="font-weight-normal">Issue Number</th>
+							<th class="font-weight-normal">Multiplier</th>
+							<th class="font-weight-normal">Bet Amount</th>
+							<th class="font-weight-normal">Progress</th>
+							<th class="font-weight-normal">Track status</th>
+
+						</tr>
+					</thead>
+					<tbody id='trackbetTableBody'>
+
+					</tbody>
+
+					<!-- <td></td>
+					<tr>
+						<td colspan="3"></td>
+						<td colspan="2"></td>
+						<td colspan="">Total: <span class="totalBetAmountDisplay" style='margin-left:10px'></span></td>
+						<td colspan="2"></td>
+					</tr> -->
+				</table>
+
+      </div>
       </div>
     </div>
     <!-- /.modal-content -->

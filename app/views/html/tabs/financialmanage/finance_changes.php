@@ -236,6 +236,19 @@
         background: #aaa;
         /* Darker handle color on hover */
     }
+
+    
+    .tbl-financehead {
+    position: sticky;
+    top: 0;
+  }
+
+  .sticky-financehead {
+    position: relative;
+    bottom: 1px;
+    background-color: red;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -253,7 +266,7 @@
                 </select>
 
                 <select name="betsate" class="form-control form-select queryholderlistt depositestate"  data-bs-placeholder="Select Type">
-                    <option value="">--transaction type--</option>
+                    <option value="">--<?= $translator['transaction type']; ?>--</option>
                     <option value="1"><?= $translator['Deposit']; ?></option>
                     <option value="4"><?= $translator['Withdrawal']; ?></option>
                 </select>
@@ -273,7 +286,7 @@
         <span class="topplist-right" id="paginations" aria-label="Page navigation example">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
                 <!-- <i ' ></i> -->
-                <button type="button" class="btn bg-white-subtle player" value="right" aria-label="Refresh" data-bs-toggle="modal" data-bs-target="#addfinancemodal" data-bs-placement="top" data-bs-title="deposite/withdrawal">
+                <button type="button" class="btn bg-white-subtle showmodal" value="right" aria-label="Refresh" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Deposit/Withdrawal">
                     <i class="bx bx-plus" style="font-size: 20px;"></i>
                 </button>
 
@@ -290,8 +303,8 @@
     <div class="card-body p-4">
         <div class="table-responsive mb-4 border rounded-1 table-wrapperfinance" id="maskfinance" style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
-                <thead class="text-dark fs-4">
-                    <tr>
+                <thead class="text-dark fs-4 tbl-financehead">
+                <tr class ="financeheadrow">
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
@@ -334,16 +347,16 @@
     <div class="px-4 py-3 border-top pagerlist">
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-                <button type="button" class="btn bg-white-subtle playerlinks" value="startlinks">
+                <button type="button" class="btn bg-white-subtle playerfinance" value="startli">
                     <i class="bx bx-chevrons-left" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerquota" value="leftlinks">
+                <button type="button" class="btn bg-white-subtle playerfinance" value="leftlin">
                     <i class="bx bx-chevron-left" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerquota" value="rightlinks">
+                <button type="button" class="btn bg-white-subtle playerfinance" value="rightlin">
                     <i class="bx bx-chevron-right" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerquota" value="endlinks">
+                <button type="button" class="btn bg-white-subtle playerfinance" value="endlin">
                     <i class="bx bx-chevrons-right" style="font-size: 20px;"></i>
                 </button>
             </div>
@@ -351,9 +364,19 @@
         <span class="toplist-center" aria-label=" navigation example">
             <span id="paging_infofinance" style="color: #aaa;">---</span>
         </span>
-        <span class="toplist-right" id="paginationfiance" aria-label="Page navigation example">
+        <span class="top-right-btn" aria-label="Page navigation example">
+            <select class="left-element form-control numrowsfinance" style="font-size: 12px;">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="500">500</option>
+            </select>
+            <span class="toplist-right" id="paginationfiance" aria-label="Page navigation example">
             <!--Dynamic pagination-->
+           </span>
+           
         </span>
+      
     </div>
 </div>
 
@@ -385,8 +408,8 @@
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div>Deposit/Withrawal</div>
-                        <i class="bx bx-message-square-x listclose" style="color: #868c87; font-size: 25px; cursor: pointer;"></i>
+                        <div><?= $translator['Deposit/Withrawal']; ?></div>
+                        <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
                     </div>
                 </div>
 
@@ -438,12 +461,12 @@
                     <div class="d-md-flex align-items-center">
                         <div class="form-check">
                             <!-- <input type="checkbox" class="form-check-input" id="sf2" value="check" /> -->
-                            <label class="form-check-label" for="sf2">Verify before submit</label>
+                            <label class="form-check-label" for="sf2"><?=$translator['Verify before submit']; ?></label>
                         </div>
                         <div class="mt-3 mt-md-0 ms-auto">
                             <button type="button" class="btn hstack gap-6 addmoneybtn" style="border: solid 1px #ccc;">
                                 <i class="bx bx-send loaderfinance"></i>
-                                Submit
+                               <?=$translator['Submit']; ?>
                             </button>
                         </div>
                     </div>

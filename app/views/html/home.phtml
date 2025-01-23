@@ -6,11 +6,12 @@ if (session_status() == PHP_SESSION_NONE) {
 isset($_SESSION['lang']) ? $_SESSION['lang'] : $_SESSION['lang'] = 'en';
 $lang = $_SESSION['lang'];
 $translator = include "tabs/lang/{$lang}.php";
-// print_r($translator);
+ print_r($lang);
 !(new Controller)->isUserLoggedIn() ? header("location:../") : "";
  $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
  $fullname = (new Controller)->getUsername($adminEmail);
 // echo $fullname['full_name'];
+
 ?>
 <!DOCTYPE html>
 <html oncontextmenu="return falsex" lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme"
@@ -231,7 +232,7 @@ $translator = include "tabs/lang/{$lang}.php";
             </ul>
           </div>
 
-
+          <div id="translation-container" data-translations='<?= json_encode($translator); ?>'></div>
         </div>
 
         <br>
@@ -286,7 +287,7 @@ $translator = include "tabs/lang/{$lang}.php";
                     <div class="chrome-tab-favicon" style="
                     background-image: url('demo/images/google-favicon.ico');
                   "></div>
-                    <div class="chrome-tab-title">Dashboard</div>
+                    <div class="chrome-tab-title"><?= $translator['DASHBOARD']; ?></div>
                     <div class="chrome-tab-holder" hidden>home</div>
                     <div class="chrome-tab-drag-handle chromclass"></div>
                     <div class="chrome-tab-close" hidden></div>
@@ -484,7 +485,6 @@ $translator = include "tabs/lang/{$lang}.php";
         });
 
       });
-
      
     </script>
 </body>

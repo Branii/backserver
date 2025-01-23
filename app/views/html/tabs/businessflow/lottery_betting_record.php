@@ -332,7 +332,7 @@
                 <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
                     <input type="text" id="myInput" class="form-control queryholderbet usernames" placeholder="Search usernames" />
                     <input name="usernames" type="hidden" class="userIdbet" />
-                    <select class="form-control userDropdownb" size="5" style="display: none;">
+                    <select class="form-control userDropdownb" size="5" style="display: none;" id="userlotteryDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>
                     <div class="custom-dropdown">
@@ -495,9 +495,7 @@
            
         </span>
      
-        
-       
-        
+      
     </div>
 </div>
 
@@ -509,10 +507,11 @@
                     <i class="ti ti-hexagon-letter-x fs-7"></i>
                     <h4 class="mt-2">Oh snap!</h4>
                     <p class="mt-3" style="color: #aaa;">
+                       
                         All fields are required! Select one or more data fields to filter.
                     </p>
                     <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color: #ddd;">
-                        Okay
+                     Okay
                     </button>
                 </div>
             </div>
@@ -529,7 +528,7 @@
             <div class="modal-body">
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between">
-                        <div>Bet Info</div>
+                        <div><?= $translator['Bet Info']; ?></div>
                         <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
                     </div>
                 </div>

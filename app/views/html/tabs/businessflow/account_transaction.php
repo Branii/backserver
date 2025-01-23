@@ -273,7 +273,7 @@
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
                 <input type="text" id="mytrans" class="form-control queryholdertrans usernames" placeholder="Search usernames" />
                 <input name="usernames" type="hidden" class="userIdtrans queryholdertrans" />
-                <select class="form-control useraccount" size="5" style="display: none;">
+                <select class="form-control useraccount" size="5" style="display: none;" id="userAccountDropdown">
                     <!-- Options will be populated dynamically -->
                 </select>
                 <input type="text" class="form-control queryholdertrans orderid" id="nametext" aria-describedby="name" placeholder="Enter Transaction ID" />
@@ -352,6 +352,7 @@
                         </th>
                     </tr>
                 </thead>
+
                 <tbody id="dataContainer" class="tbl-content">
                     <tr class="no-results">
                         <td colspan="9">
@@ -384,6 +385,7 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowstrans" style="font-size: 12px;">
+             
                 <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
@@ -401,10 +403,11 @@
                     <i class="ti ti-hexagon-letter-x fs-7"></i>
                     <h4 class="mt-2">Oh snap!</h4>
                     <p class="mt-3" style="color: #aaa;">
-                        All fields are required! Select one or more data fields to filter.
+                 All fields are required! Select one or more data fields to filter.
+                       
                     </p>
                     <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color: #ddd;">
-                        Okay
+                       Okay
                     </button>
                 </div>
             </div>
@@ -418,7 +421,7 @@
             <div class="modal-body">
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between">
-                        <div>Transaction Info</div>
+                        <div><?= $translator['Transaction Info']; ?></div>
                         <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
                     </div>
                 </div>
@@ -497,3 +500,7 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+<script id="translations" type="application/json">
+    <?= json_encode($translator); ?>
+</script>
