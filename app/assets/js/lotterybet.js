@@ -92,17 +92,28 @@ $(function () {
   const Showbettable = (data,obj) => {
     let htmlbet = "";
     Object.entries(data).forEach(([key, value]) => {
-   
-      htmlbet += `
+
+     
+      if(value === "Bet Selection"){
+           htmlbet += `
+            <td>${value}</td>
+             <td class="${key === "user_selection" ? "bet_userSelection" : ""}">
+              <textarea class="form-control"   readonly style="height: 75px;">${obj[key]}</textarea>
+              </td>`
+      }else{
+        htmlbet += `
             <tr>
               <td>${value}</td>
               <td class="${key === "user_selection" ? "bet_userSelection" : ""}" 
                 ${key === "user_selection" ? `title="${obj[key]}"` : ""}>
                 ${key === "win_bonus" || key === "bet_amount" ||key ==="rebate_amount" ? `${formatMoney(obj[key])}` : `${obj[key]}`}
-              
-            </td>
+               </td>
             </tr>
             `;
+
+      }
+   
+      
     });
     return htmlbet;
   };
@@ -133,8 +144,7 @@ $(function () {
     'opening_time': 'Draw Time:', 
     'bet_status': 'Bet Status:',
     'user_selection': 'Bet Selection',
-    'state':'Bet State'
-    
+   
   }
 
   const renderlottery = (data) => {
