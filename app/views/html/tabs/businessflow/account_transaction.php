@@ -271,7 +271,7 @@
     <div class="px-4 py-3 border-bottom pager1">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                <input type="text" id="mytrans" class="form-control queryholdertrans usernames" placeholder="Search usernames" />
+                <input type="text" id="mytrans" class="form-control queryholdertrans usernames mytrans" placeholder="Search usernames" />
                 <input name="usernames" type="hidden" class="userIdtrans queryholdertrans" />
                 <select class="form-control useraccount" size="5" style="display: none;" id="userAccountDropdown">
                     <!-- Options will be populated dynamically -->
@@ -367,18 +367,18 @@
     <div class="px-4 py-3 border-top pager">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-                <button type="button" class="btn bg-white-subtle player" value="start">
+                <!-- <button type="button" class="btn bg-white-subtle player" value="start">
                     <i class="bx bx-chevrons-left" style="font-size: 20px;"></i>
-                </button>
+                </button> -->
                 <button type="button" class="btn bg-white-subtle player" value="left">
                     <i class="bx bx-chevron-left" style="font-size: 20px;"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle player" value="right">
                     <i class="bx bx-chevron-right" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle player" value="end">
+                <!-- <button type="button" class="btn bg-white-subtle player" value="end">
                     <i class="bx bx-chevrons-right" style="font-size: 20px;"></i>
-                </button>
+                </button> -->
             </div>
         </span>
         <span class="top-center" aria-label=" navigation example">
@@ -392,7 +392,7 @@
                 <option value="200">200</option>
                 <option value="500">500</option>
             </select>
-            <span id="pagination" class="right-element"> </span>
+            <span id="pagination" class="right-element">--pagination--- </span>
         </span>
     </div>
 </div>

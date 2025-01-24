@@ -16,10 +16,16 @@ $(function () {
     return Number(balance).toFixed(4);
   }
   function formatMoney(money) { 
-    return String(money).includes(".") && String(money).split(".")[1].length > 2 
-      ? String(Number(money).toFixed(4)) 
-      : money; 
-  }
+    let moneyStr = String(money); 
+    if (moneyStr.includes(".")) { 
+        let parts = moneyStr.split("."); 
+        if (parts[1].length > 2) { 
+            parts[1] = parts[1].substring(0, 4); 
+        } 
+        moneyStr = parts.join(".").replace(/\.?0+$/, ""); 
+    } 
+    return moneyStr; 
+}
 
   const Lottery = (data) => {
     let htmls = "";
@@ -58,7 +64,7 @@ $(function () {
        const betodds = betOddsArray * item.multiplier * item.unit_stake;
        let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
 
-      // console.log(item.username)
+      // console.log("dgfdegfdfgdgfggftg",item.server_date, item.server_time, data)
       htmls += `
                     <tr>
                         <td>${item.bet_code}</td>
@@ -71,7 +77,7 @@ $(function () {
                         <td>${item.unit_stake}</td>
                         <td>${item.multiplier}</td>
                         <td>${formatMoney(item.bet_amount)}</td>
-                        <td>${formatMoney(item.win_amount)}</td>
+                        <td>${formatMoney(item.win_bonus)}</td>
                          <td><i class='bx bxs-circle' style='color:${status[item.bet_status].color};font-size:8px;margin-right:5px;'></i>${status[item.bet_status].title}</td>
                         <td>${states[item.state]}</td>
                         <td><i value='${item.bet_code}_${item.gt_id}' class='bx bx-info-circle viewbets' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
@@ -92,7 +98,7 @@ $(function () {
               <td>${value}</td>
               <td class="${key === "user_selection" ? "bet_userSelection" : ""}" 
                 ${key === "user_selection" ? `title="${obj[key]}"` : ""}>
-                ${key === "win_amount" || key === "bet_amount" ||key ==="rebate_amount" ? `${formatMoney(obj[key])}` : `${obj[key]}`}
+                ${key === "win_bonus" || key === "bet_amount" ||key ==="rebate_amount" ? `${formatMoney(obj[key])}` : `${obj[key]}`}
               
             </td>
             </tr>
@@ -103,34 +109,32 @@ $(function () {
 
  
   const firstRowbet = {
-    'reg_type': 'Username:',
     'bet_code': 'Bet Order ID:',
     'draw_period': 'Issue Number:',
-    'ip_address': 'IP:',
-    'unit_stake': 'Unit Stake:',
-    'multiplier': 'Multiplier:',
-    'bet_status': 'Bet Status:',
-    'game_label': 'Game Type::',
-    'draw_number': 'Draw Results:',
-    'num_wins': 'Number of wins:',
-  
+    'bet_time': 'Bet Time:',
+    'bet_number': 'Total Bet:',
+     'unit_stake': 'Unit Stake:',
+     'multiplier': 'Multiplier:',
+     'bet_amount': 'Total Bet Amount:',
+     'win_bonus': 'Win Amount:',
+     'rebate_amount': 'Rebate Amount',
+     'num_wins': 'Number of wins:',
+     'draw_number': 'Draw Results:',
   }
 
   const secondRowbet = {
-    'bettype': 'Bet Type:',
+    'reg_type': 'Username:',
+    'ip_address': 'IP:',
     'game_type': 'Lottery Type:',
-    'bet_time': 'Bet Time:',
+    'game_label': 'Game Label:',
+    'bettype': 'Bet Type:',
+    'game_model': 'Game Model',
     'closing_time': 'Closing Time:',
-    'opening_time': 'Draw Time::',
-    'bet_number': 'Total Bet:',
-    'bet_amount': 'Total Bet Amount:',
-    // 'win_amount': 'Prize:',
-    'win_amount': 'Win Amount:',
-    // 'server_time': 'Actual profit:',
-    'rebate_amount': 'Rebate Amount',
+    'opening_time': 'Draw Time:', 
+    'bet_status': 'Bet Status:',
     'user_selection': 'Bet Selection',
-
-  
+    'state':'Bet State'
+    
   }
 
   const renderlottery = (data) => {
@@ -410,6 +414,7 @@ $(function () {
               $('.userDropdownb').hide();
           }
       });
+
       $(document).on("click", function (e) {
         const $dropdownbet = $("#userlotteryDropdown");
         if (!$(e.target).closest("#myInput, #userlotteryDropdown").length) {
@@ -450,11 +455,11 @@ $(function () {
                  }else{
                   displayValuebet = "no data found...";
                   regnamebet = "no data found..."// Show contact
+                 
                  }
                       optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regnamebet}">${displayValuebet}</option>`;
            
               });
-
 
               $('.userDropdownb').html(optionsHtml).show();
           } catch (error) {
@@ -492,5 +497,12 @@ $(function () {
   }
   tableScroll();
 
+  $("#myInput").on("input paste", function () {
+    const self = this;
+    setTimeout(() => {
+      // Trim leading spaces
+      $(self).val($(self).val().replace(/^\s+/, ""));
+    }, 0);
+  });
 
 });

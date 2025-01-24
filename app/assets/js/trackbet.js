@@ -16,9 +16,11 @@ $(function () {
         }
         return Number(balance).toFixed(4);
     }
-    function formatMoney(money) {
-        return String(money).includes(".") && String(money).split(".")[1].length > 2 ? String(Number(money).toFixed(4)) : money;
-    }
+    function formatMoney(money) { 
+        return String(money).includes(".") && String(money).split(".")[1].length > 2 
+          ? String(Number(money).toFixed(4)) 
+          : money; 
+      }
     const Trackbetdata = (data) => {
         let htmls = "";
         const bettype = {
@@ -52,7 +54,7 @@ $(function () {
                         <td>${item.total_bets + "/" + item.tracked}</td>
                         <td>${formatMoney(item.total_amount) + " / " + formatMoney(item.done_amount)}</td>                  
                         <td>${trackstatus[item.track_status]}</td>
-                        <td>${item.win_amount}</td>
+                        <td>${formatMoney(item.win_amount)}</td>
                        <td>${item.track_rule}</td>
                        <td>${item.server_date + " / " + item.server_time}</td>
                       <td><i value='${item.track_token}_${item.game_type_id}' class='bx bx-info-circle trackinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
@@ -81,31 +83,31 @@ $(function () {
     };
 
     const firstRowtrack = {
-        reg_type: "Username:",
-        bet_code: "Bet Order ID:",
-        draw_period: "Issue Number:",
-        ip_address: "IP:",
-        unit_stake: "Unit Stake:",
-        multiplier: "Multiplier:",
-        bet_status: "Bet Status:",
-        game_label: "Game Type::",
-        draw_number: "Draw Results:",
-        num_wins: "Number of wins:",
+    'bet_code': 'Bet Order ID:',
+    'draw_period': 'Issue Number:',
+    'bet_time': 'Bet Time:',
+    'bet_number': 'Total Bet:',
+     'unit_stake': 'Unit Stake:',
+     'multiplier': 'Multiplier:',
+     'bet_amount': 'Total Bet Amount:',
+     'win_bonus': 'Win Amount:',
+     'rebate_amount': 'Rebate Amount',
+     'num_wins': 'Number of wins:',
+     'draw_number': 'Draw Results:',
     };
 
     const secondRowtrack = {
-        bettype: "Bet Type:",
-        game_type: "Lottery Type:",
-        bet_time: "Bet Time:",
-        closing_time: "Closing Time:",
-        opening_time: "Draw Time::",
-        bet_number: "Total Bet:",
-        bet_amount: "Total Bet Amount:",
-        // 'win_amount': 'Prize:',
-        win_amount: "Win Amount:",
-        // 'server_time': 'Actual profit:',
-        rebate_amount: "Rebate Amount",
-        user_selection: "Bet Selection",
+    'reg_type': 'Username:',
+    'ip_address': 'IP:',
+    'game_type': 'Lottery Type:',
+    'game_label': 'Game Label:',
+    'bettype': 'Bet Type:',
+    'game_model': 'Game Model',
+    'closing_time': 'Closing Time:',
+    'opening_time': 'Draw Time:', 
+    'bet_status': 'Bet Status:',
+    'user_selection': 'Bet Selection',
+    'state':'Bet State'
     };
 
     const rendertrack = (data) => {

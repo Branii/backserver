@@ -23,7 +23,9 @@ $(function () {
 
         html += `
                       <tr>
-                     <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
+                  <td>${typeof username === "string" && username.length > 0 
+    ? username.charAt(0).toUpperCase() + username.slice(1) 
+    : "N/A"}</td>
                       <td>VIP</td>
                       <td class="editables">${types}</td>
                       <td class="editables">${total_income}</td>
