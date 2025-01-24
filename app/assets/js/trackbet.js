@@ -10,17 +10,27 @@ $(function () {
           duration: 3000, // auto-dismiss after 3s
         });
       }
-    function formatBalance(balance) {
-        if (balance % 1 !== 0 && balance.toString().split(".")[1].length > 3) {
-            return Number(balance).toFixed(4);
-        }
-        return Number(balance).toFixed(4);
+      function formatMoney(money) { 
+        let moneyStr = String(money); 
+        if (moneyStr.includes(".")) { 
+            let parts = moneyStr.split("."); 
+            if (parts[1].length > 2) { 
+                parts[1] = parts[1].substring(0, 4); 
+            } 
+            moneyStr = parts.join(".").replace(/\.?0+$/, ""); 
+        } 
+        return moneyStr; 
     }
-    function formatMoney(money) { 
-        return String(money).includes(".") && String(money).split(".")[1].length > 2 
-          ? String(Number(money).toFixed(4)) 
-          : money; 
-      }
+
+    const formatText = (text) => {
+        return text
+          .split('_') // Split the string into parts based on underscores
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+          .join(' '); // Join the parts back with spaces
+      };
+      
+    //   const result = formatText('stop_if_not_win');
+    //   console.log(result); // Output: Stop If Win
     const Trackbetdata = (data) => {
         let htmls = "";
         const bettype = {
@@ -39,7 +49,6 @@ $(function () {
             1: "Settled",
             2: "Unsettled",
             4: "Cancelled",
-            7: "Refund",
             8: "Delete",
         };
 
@@ -51,11 +60,11 @@ $(function () {
                        <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
                         <td>${item.game_type}</td>
                         <td>${item.start_draw}</td>
-                        <td>${item.total_bets + "/" + item.tracked}</td>
-                        <td>${formatMoney(item.total_amount) + " / " + formatMoney(item.done_amount)}</td>                  
+                        <td>${item.tracked + "/" + item.total_bets}</td>
+                        <td>${formatMoney(item.done_amount) + "/" + formatMoney(item.total_amount)}</td>                  
                         <td>${trackstatus[item.track_status]}</td>
                         <td>${formatMoney(item.win_amount)}</td>
-                       <td>${item.track_rule}</td>
+                       <td>${formatText(item.track_rule)}</td>
                        <td>${item.server_date + " / " + item.server_time}</td>
                       <td><i value='${item.track_token}_${item.game_type_id}' class='bx bx-info-circle trackinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
                        
@@ -302,7 +311,7 @@ $(function () {
 
             const data = await response.json(); // Parse JSON response
             // console.log(data);
-            let html = `<option value="" class="" selected>-lottery Type-</option>`;
+            let html = `<option value="" class="" selected>-Lottery Type-</option>`;
             data.forEach((lottery) => {
                 html += `<option value="${lottery.gt_id}" class="">${lottery.name}</option>`;
             });

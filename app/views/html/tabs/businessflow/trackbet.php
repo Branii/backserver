@@ -431,10 +431,10 @@
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Start Issue']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Issues/Tracked']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Tracked/Total Issues']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bet Amount/Bet Amount']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Amount/Total Bet Amount']; ?></h6>
                   </th>
                   <th>
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Status']; ?></h6>
@@ -470,18 +470,18 @@
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playertrack" value="trackstart">
+                <!-- <button type="button" class="btn bg-white-subtle playertrack" value="trackstart">
                     <i class='bx bx-chevrons-left' style="font-size:20px"></i>
-                </button>
+                </button> -->
                 <button type="button" class="btn bg-white-subtle playertrack" value="trackleft">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle playertrack" value="trackright">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playertrack" value="trackend">
+                <!-- <button type="button" class="btn bg-white-subtle playertrack" value="trackend">
                     <i class='bx bx-chevrons-right' style="font-size:20px"></i>
-                </button>
+                </button> -->
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">

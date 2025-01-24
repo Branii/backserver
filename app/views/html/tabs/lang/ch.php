@@ -103,7 +103,7 @@ return [
     'Void' => '无效',
     'Bet Status' => '投注状态',
     'Settled' => '结算',
-    'UnSettled' => '未结算',
+    'Unsettled' => '未结算',
     'Deleted' => '已删除',
     'Cancelled Bet' => '取消的投注',
     'Delete' => '删除',
@@ -111,6 +111,7 @@ return [
     'Number of Wins' =>'获胜次数',
     'Bet Selection' =>'投注选择',
     'Draw Results' => '奖结果',
+    'Game Model' =>'游戏模型',
 
     //Tracking management 
     "Track Records" => '追号管理',
@@ -118,8 +119,8 @@ return [
     'Username'    => '用户名',
     'Lottery Type'    => '彩种',
     'Start Issue' => '开始期数',
-    'Total Issues/Tracked' => '总问题/跟踪',
-    'Total Bet Amount/Bet Amount' => '总金额/已投',
+    'Tracked/Total Issues' => '跟踪/总问题',
+    'Bet Amount/Total Bet Amount' => '已投/总金额',
     'Track Status' => '追号状态',
     'Win/Loss' => '输赢',
     'Track Rule' => '规则',

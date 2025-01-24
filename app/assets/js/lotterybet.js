@@ -29,9 +29,14 @@ $(function () {
 
   const Lottery = (data) => {
     let htmls = "";
-    const bettype = {
-      1: "Bet",
-      2: "Track",
+    const gamemodel = {
+      1: "Standard",
+      2: "Two Sides",
+      3: "Long Dragon",
+      4: "Many Tables ",
+      5: "Board Games",
+      6: "Road Bets",
+      7: "Fantan"
     };
 
     const betstatus = {
@@ -68,14 +73,15 @@ $(function () {
       htmls += `
                     <tr>
                         <td>${item.bet_code}</td>
-                                 <td>${typeof username === "string" || typeof username === "number" 
-    ? String(username).charAt(0).toUpperCase() + String(username).slice(1) 
-    : "N/A"}</td>
+                        <td>${typeof username === "string" || typeof username === "number" 
+                        ? String(username).charAt(0).toUpperCase() + String(username).slice(1) 
+                        : "N/A"}</td>
                         <td>${item.draw_period}</td>
                         <td>${item.game_type}</td>
+                          <td>${gamemodel[item.game_model]}</td>
                         <td>${item.game_label}</td>
                         <td>${item.bet_date + " / " + item.bet_time}</td>
-                        <td>${item.bet_number}</td>
+                      
                         <td>${item.unit_stake}</td>
                         <td>${item.multiplier}</td>
                         <td>${formatMoney(item.bet_amount)}</td>
@@ -354,7 +360,7 @@ $(function () {
 
       const data = await response.json(); // Parse JSON response
       // console.log(data);
-      let html = `<option value=""selected>-lottery Type-</option>`;
+      let html = `<option value=""selected></option>`;
       data.forEach((lottery) => {
           html += `<option value="${lottery.gt_id}">${lottery.name}</option>`;
       });
