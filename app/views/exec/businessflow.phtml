@@ -117,10 +117,10 @@ if ($flag == "getTransactionBet") {
     $result['rebate_amount'] = empty($result['rebate_amount']) ? "0" : $result['rebate_amount'];
     $result['game_type'] = $lotteryname;
     $result['reg_type'] = $username;
-    $result['opening_time'] = str_replace(" ", " / ", $close_and_opentimes['opening_time']) ?? '';
-    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? '';
+    $result['opening_time'] = str_replace(" ", " / ", $close_and_opentimes['opening_time'] ?? 'Pending') ;
+    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? 'Pending';
     $result['game_model'] = isset($gamemodel[$result['game_model']]) ? $gamemodel[$result['game_model']] : 'unknown';
-    // $result['draw_number'] = $close_and_opentimes['draw_number'] ?? '';
+    $result['draw_number'] = $result['draw_number'] ?? 'Pending';
 
     echo json_encode($result);
 }
@@ -190,14 +190,15 @@ if ($flag == "viewBetstake") {
     $result['reg_type'] = $username;
     $result['bet_amount'] = $result['bet_amount'];
     $result['rebate_amount'] = empty($result['rebate_amount']) ? "0" : $result['rebate_amount'];
-    $result['opening_time'] = str_replace(" ", " / ", $close_and_opentimes['opening_time']) ?? '';
-    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? '';
+    $result['opening_time'] = str_replace(" ", " / ", $close_and_opentimes['opening_time'] ?? 'Pending') ;
+    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? 'Pending';
     $result['bettype'] = $result['bettype'] == 2 ? 'Track' : ($result['bettype'] == 1 ? 'Bet' : '');
     $result['bet_status'] = isset($betStatusMap[$result['bet_status']]) ? $betStatusMap[$result['bet_status']] : 'unknown';
     $result['game_model'] = isset($gamemodel[$result['game_model']]) ? $gamemodel[$result['game_model']] : 'unknown';
     $result['state'] = isset($betState[$result['state']]) ? $betState[$result['state']] : 'unknown';
     $result['game_type'] = $lotteryname;
     $result['bet_odds'] = $betodds;
+    $result['draw_number'] = $result['draw_number'] ?? 'Pending';
 
     echo json_encode($result);
 }
@@ -302,8 +303,8 @@ if ($flag == 'getTrackbet') {
     $gamemodel = [1 => 'Standard', 3 => 'TwoSides', 3 => 'Long Dragon', 4 => '.Many Tables', 5 => 'Borad Games', 6 => 'Road Bets', 7 => 'Fantan'];
     // $datta = json_decode($result['bet_odds'], true); // Decode JSON
     // $betodds = reset($datta) * $result['multiplier'] * $result['unit_stake'];
-    $result['opening_time'] = str_replace(" ", " / ", $close_and_opentimes['opening_time']) ?? '';
-    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? '';
+    $result['opening_time'] = str_replace(" ", " / ", $close_and_opentimes['opening_time'] ?? 'Pending') ;
+    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? 'Pending';
     $result['reg_type'] = ucfirst(trim($username));
     $result['bet_amount'] = $result['bet_amount'];
     $result['rebate_amount'] = empty($result['rebate_amount']) ? "0" : $result['rebate_amount'];
@@ -312,6 +313,7 @@ if ($flag == 'getTrackbet') {
     $result['state'] = isset($betState[$result['state']]) ? $betState[$result['state']] : 'unknown';
     $result['game_type'] = $lotteryname;
     $result['game_model'] = isset($gamemodel[$result['game_model']]) ? $gamemodel[$result['game_model']] : 'unknown';
+    $result['draw_number'] = $result['draw_number'] ?? 'Pending';
     // $result['bet_odds'] = $betodds;
 
     echo json_encode($result);
