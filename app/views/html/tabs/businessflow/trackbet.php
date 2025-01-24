@@ -560,7 +560,7 @@
 
           </div>
         </form>
-
+    <hr>
         <table class="table table-hover table-bordered text-nowrap mb-0" id="track">
 					<thead>
 						<tr>

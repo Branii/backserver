@@ -15,12 +15,23 @@ $(function () {
     //     }
     //     return Number(balance).toFixed(4);
     // }
-   
     function formatMoney(money) { 
-        return String(money).includes(".") && String(money).split(".")[1].length > 2 
-          ? String(Number(money).toFixed(4)) 
-          : money; 
-      }
+        let moneyStr = String(money); 
+        if (moneyStr.includes(".")) { 
+            let parts = moneyStr.split("."); 
+            if (parts[1].length > 2) { 
+                parts[1] = parts[1].substring(0, 4); 
+            } 
+            moneyStr = parts.join(".").replace(/\.?0+$/, ""); 
+        } 
+        return moneyStr; 
+    }
+   
+    // function formatMoney(money) { 
+    //     return String(money).includes(".") && String(money).split(".")[1].length > 2 
+    //       ? String(Number(money).toFixed(4)) 
+    //       : money; 
+    //   }
       const translator = JSON.parse(
         document.getElementById("translation-container").getAttribute("data-translations")
     );
@@ -76,7 +87,7 @@ $(function () {
             <td>${value}</td>
             <td class="${key === "user_selection" ? "bet_userSelection" : ""}" 
                 ${key === "user_selection" ? `title="${obj[key]}"` : ""}>
-                ${key === "win_amount" || key === "bet_amount" ||key ==="rebate_amount" ? `${formatMoney(obj[key])}` : `${obj[key]}`}
+                ${key === "win_bonus" || key === "bet_amount" ||key ==="rebate_amount" ? `${obj[key]} - ${formatMoney(obj[key])}` : `${obj[key]}`}
               
             </td>
           </tr>
@@ -87,30 +98,53 @@ $(function () {
     };
 
     const firstRow = {
-        reg_type: `${translator["Username"]}:`,
-        bet_code: `${translator["Bet Order ID"]}:`,
-        draw_period: `${translator["Issue Number"]}:`,
-        ip_address: `${translator["IP"]}:`,
-        unit_stake: `${translator["Unit Stake"]}:`,
-        multiplier: `${translator["Multiplier"]}:`,
-        bet_status: `${translator["Bet Status"]}:`,
-        game_label: `${translator["Game Type"]}:`,
-        draw_number: `${translator["Draw Results"]}:`,
-        num_wins: `${translator["Number of Wins"]}:`,
+    'bet_code': 'Bet Order ID:',
+    'draw_period': 'Issue Number:',
+    'bet_time': 'Bet Time:',
+    'bet_number': 'Total Bet:',
+     'unit_stake': 'Unit Stake:',
+     'multiplier': 'Multiplier:',
+     'bet_amount': 'Total Bet Amount:',
+     'win_bonus': 'Win Amount:',
+     'rebate_amount': 'Rebate Amount',
+     'num_wins': 'Number of wins:',
+     'draw_number': 'Draw Results:',
+        // reg_type: `${translator["Username"]}:`,
+        // bet_code: `${translator["Bet Order ID"]}:`,
+        // draw_period: `${translator["Issue Number"]}:`,
+        // ip_address: `${translator["IP"]}:`,
+        // unit_stake: `${translator["Unit Stake"]}:`,
+        // multiplier: `${translator["Multiplier"]}:`,
+        // bet_status: `${translator["Bet Status"]}:`,
+        // game_label: `${translator["Game Type"]}:`,
+        // draw_number: `${translator["Draw Results"]}:`,
+        // num_wins: `${translator["Number of Wins"]}:`,
     };
 
     const secondRow = {
-        bettype : `${translator["Bet Type"]}:`,
-        game_type: `${translator["Lottery Type"]}:`,
-        bet_time: `${translator["Bet Time"]}:`,
-        closing_time: `${translator["Closing Time"]}:`,
-        opening_time: `${translator["Draw Time"]}:`,
-        bet_number: `${translator["Total Bets"]}:`,
-        bet_amount: `${translator["Total Bet Amount"]}:`,
-        win_amount: `${translator["Win Amount"]}:`,
-        rebate_amount: `${translator["Rebate Amount"]}:`,
-        user_selection: `${translator["Bet Selection"]}:`,
-        // description: "des",
+    'reg_type': 'Username:',
+    'ip_address': 'IP:',
+    'game_type': 'Lottery Type:',
+    'game_label': 'Game Label:',
+    'bettype': 'Bet Type:',
+    'game_model': 'Game Model',
+    'closing_time': 'Closing Time:',
+    'opening_time': 'Draw Time:', 
+    'bet_status': 'Bet Status:',
+    'user_selection': 'Bet Selection',
+    'state':'Bet State'
+    
+        // bettype : `${translator["Bet Type"]}:`,
+        // game_type: `${translator["Lottery Type"]}:`,
+        // bet_time: `${translator["Bet Time"]}:`,
+        // closing_time: `${translator["Closing Time"]}:`,
+        // opening_time: `${translator["Draw Time"]}:`,
+        // bet_number: `${translator["Total Bets"]}:`,
+        // bet_amount: `${translator["Total Bet Amount"]}:`,
+        // win_amount: `${translator["Win Amount"]}:`,
+        // rebate_amount: `${translator["Rebate Amount"]}:`,
+        // user_selection: `${translator["Bet Selection"]}:`,
+        // // description: "des",
     };
 
     const render = (data) => {
@@ -575,6 +609,14 @@ $(function () {
     
       $('#nametext').on('dblclick', function () {
         $(this).val(''); // Clears the input field
+      });
+
+      $(".mytrans").on("input paste", function () {
+        const self = this;
+        setTimeout(() => {
+          // Trim leading spaces
+          $(self).val($(self).val().replace(/^\s+/, ""));
+        }, 0);
       });
    
 });
