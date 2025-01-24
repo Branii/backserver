@@ -23,8 +23,8 @@ $(function () {
 
         html += `
                       <tr>
-                  <td>${typeof username === "string" && username.length > 0 
-    ? username.charAt(0).toUpperCase() + username.slice(1) 
+                 <td>${typeof username === "string" || typeof username === "number" 
+    ? String(username).charAt(0).toUpperCase() + String(username).slice(1) 
     : "N/A"}</td>
                       <td>VIP</td>
                       <td class="editables">${types}</td>
