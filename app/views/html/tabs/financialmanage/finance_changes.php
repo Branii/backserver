@@ -261,12 +261,12 @@
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
                 <input type="text" id="financeDropdown" class="form-control queryholderlistt usernames" placeholder="Search usernames" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
-                <select class="form-control financeDropdown" size="5" style="display: none;">
+                <select class="form-control financeDropdown" size="5" style="display: none;" id="userfinaceDropdowns">
                     <!-- Options will be populated dynamically -->
                 </select>
 
                 <select name="betsate" class="form-control form-select queryholderlistt depositestate"  data-bs-placeholder="Select Type">
-                    <option value="">--<?= $translator['transaction type']; ?>--</option>
+                    <option value="">-<?= $translator['Transaction Type']; ?>-</option>
                     <option value="1"><?= $translator['Deposit']; ?></option>
                     <option value="4"><?= $translator['Withdrawal']; ?></option>
                 </select>
@@ -431,7 +431,7 @@
                     <div class="form-floating mb-3">
                         <input type="text" id="financeinput" class="form-control" placeholder="Search usernames" />
                         <input type="hidden" class="userIdFields" />
-                        <select name="usernames" class="form-control financeDropdowns" size="5" style="display: none;">
+                        <select name="usernames" class="form-control financeDropdowns" size="5" style="display: none;" id="userfinaceDropdown">
                             <!-- Options will be populated dynamically -->
                         </select>
 

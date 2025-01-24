@@ -45,7 +45,7 @@ $(function () {
     };
   
     let currentPage = 1;
-    let pageLimit = 50;
+    let pageLimit = 20;
   
     async function fetchfinance(page,pageLimit) {
       try {
@@ -66,48 +66,6 @@ $(function () {
   
     fetchfinance(currentPage,pageLimit);
   
-    // function renderfinacePagination(totalPages, currentPagefinance, fetchCallback) {
-    //   let pagLink = `<ul class='pagination justify-content-end'>`;
-    
-    //   // Previous Button
-    //   pagLink += `
-    //     <li class='page-item ${currentPagefinance === 1 ? "disabled" : ""}'>
-    //       <a class='page-link' href='#' data-page='${currentPagefinance - 1}'><i class='bx bx-chevron-left'></i></a>
-    //     </li>
-    //   `;
-    
-    //   // Page numbers with ellipsis
-    //   for (let i = 1; i <= totalPages; i++) {
-    //     if (i === currentPagefinance) {
-    //       pagLink += `<li class='page-item active'><a class='page-link' href='#'>${i}</a></li>`;
-    //     } else if (i === 1 || i === totalPages || Math.abs(i - currentPagefinance) <= 2) {
-    //       pagLink += `<li class='page-item'><a class='page-link' href='#' data-page='${i}'>${i}</a></li>`;
-    //     } else if (i === currentPagefinance - 3 || i === currentPagefinance + 3) {
-    //       pagLink += `<li class='page-item disabled'><a class='page-link'>...</a></li>`;
-    //     }
-    //   }
-    
-    //   // Next Button
-    //   pagLink += `
-    //     <li class='page-item ${currentPagefinance === totalPages ? "disabled" : ""}'>
-    //       <a class='page-link' href='#' data-page='${currentPagefinance + 1}'><i class='bx bx-chevron-right'></i></a>
-    //     </li>
-    //   `;
-    
-    //   pagLink += "</ul>";
-    //   document.getElementById("paginationfiance").innerHTML = pagLink;
-    
-    //   // Add click event listeners to pagination links
-    //   document.querySelectorAll("#paginationfiance .page-link").forEach((link) => {
-    //     link.addEventListener("click", function (e) {
-    //       e.preventDefault();
-    //       const newPage = parseInt(this.getAttribute("data-page"));
-    //       if (newPage > 0 && newPage <= totalPages && newPage !== currentPagefinance) {
-    //         fetchCallback(newPage); // Call the provided fetch function with the new page number
-    //       }
-    //     });
-    //   });
-    // }
 
     function renderfinacePagination(totalPages, currentPage, pageLimit, callback) {
       const createPageLink = (i, label = i, disabled = false, active = false) =>
@@ -250,6 +208,12 @@ $(function () {
             }
         });
     
+        $(document).on("click", function (e) {
+          const $dropdownbet = $("#userfinaceDropdown");
+          if (!$(e.target).closest("#financeinput, #userfinaceDropdown").length) {
+              $dropdownbet.hide();
+          }
+      });
         // Handle manual input clearing
         $(document).on('input', '#financeDropdowns', function () {
             if (!$(this).val()) {
@@ -331,6 +295,7 @@ $(function () {
     $(document).on('click','.showmodal',function(){
       $("#addfinancemodal").modal("show");   
     })
+
     let debounceTimeouts = null;
     $(document).ready(function () {
         // Event listener for keyup on #myInput
@@ -358,7 +323,13 @@ $(function () {
                 $('.financeDropdown').hide();
             }
         });
-    
+
+       $(document).on("click", function (e) {
+          const $dropdownbet = $("#userfinaceDropdowns");
+          if (!$(e.target).closest("#financeDropdown, #userfinaceDropdowns").length) {
+              $dropdownbet.hide();
+          }
+      });
         // Handle manual input clearing
         $(document).on('input', '#financeDropdown', function () {
             if (!$(this).val()) {
@@ -428,5 +399,7 @@ $(function () {
       });
    }
    tableScrollFinance();
+
+   
   });
   
