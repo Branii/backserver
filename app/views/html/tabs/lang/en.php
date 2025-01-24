@@ -100,7 +100,7 @@ return [
 'Void' => 'Void',
 'Bet Status' => 'Bet Status',
 'Settled' => 'Settled',
-'UnSettled' => 'UnSettled',
+'Unsettled' => 'Unsettled',
 'Deleted' => 'Deleted',
 'Cancelled Bet' => 'Cancelled Bet',
 'Delete' => 'Delete',
@@ -108,6 +108,7 @@ return [
 'Number of Wins' =>'Number of Wins',
 'Bet Selection' =>'Bet Selection',
 'Draw Results' =>'Draw Results',
+'Game Model' =>'Game Model',
 
  //track 
 'Track Records' => 'Track Records',
@@ -115,8 +116,8 @@ return [
 'Username'	=>'Username',
 'Lottery Type'	=>'Lottery Type',
 'Start Issue' =>'Start Issue',
-'Total Issues/Tracked' =>'Total Issues/Tracked',
-'Total Bet Amount/Bet Amount' =>'Total Bet Amount/Bet Amount',
+'Tracked/Total Issues' =>'Tracked/Total Issues',
+'Bet Amount/Total Bet Amount' =>'Bet Amount/Total Bet Amount',
 'Track Status' => 'Track Status',
 'Win/Loss' =>'Win/Loss',
 'Track Rule' => 'Track Rule',

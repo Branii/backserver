@@ -110,7 +110,7 @@ if ($flag == "getTransactionBet") {
     $result['bet_amount'] = $result['bet_amount'];
     $betStatusMap = [2 => 'Win', 3 => 'Lost', 5 => 'Pending', 6 => 'Bet Cancelled', 7 => 'Refund'];
     $betState = [1=> 'Settled ', 2 => 'Unsettled ', 4 => 'Bet Cancelled', 7 => 'Refund'];
-    $gamemodel = [1 => 'Standard', 3 => 'TwoSides', 3 => 'Long Dragon', 4 => '.Many Tables', 5 => 'Borad Games', 6 => 'Road Bets', 7 => 'Fantan'];
+    $gamemodel = [1 => 'Standard', 3 => 'Two Sides', 3 => 'Long Dragon', 4 => '.Many Tables', 5 => 'Board Games', 6 => 'Road Bets', 7 => 'Fantan'];
     $result['bettype'] = $result['bettype'] == 2 ? 'Track' : ($result['bettype'] == 1 ? 'Bet' : '');
     $result['bet_status'] = isset($betStatusMap[$result['bet_status']]) ? $betStatusMap[$result['bet_status']] : 'unknown';
     $result['state'] = isset($betState[$result['state']]) ? $betState[$result['state']] : 'unknown';
@@ -184,7 +184,7 @@ if ($flag == "viewBetstake") {
     $lotteryname = (new BusinessFlowModel())->getLottery($result['game_type'])['name'];
     $betStatusMap = [2 => 'Win', 3 => 'Lost', 5 => 'Pending', 6 => 'Bet Cancelled', 7 => 'Refund'];
     $betState = [1=> 'Settled ', 2 => 'Unsettled ', 4 => 'Bet Cancelled', 7 => 'Refund'];
-    $gamemodel = [1 => 'Standard', 3 => 'TwoSides', 3 => 'Long Dragon', 4 => '.Many Tables', 5 => 'Borad Games', 6 => 'Road Bets', 7 => 'Fantan'];
+    $gamemodel = [1 => 'Standard', 3 => 'Two Sides', 3 => 'Long Dragon', 4 => '.Many Tables', 5 => 'Board Games', 6 => 'Road Bets', 7 => 'Fantan'];
     $datta = json_decode($result['bet_odds'], true); // Decode JSON
     $betodds = reset($datta) * $result['multiplier'] * $result['unit_stake'];
     $result['reg_type'] = $username;
@@ -300,7 +300,7 @@ if ($flag == 'getTrackbet') {
     $lotteryname = (new BusinessFlowModel())->getLottery($result['game_type'])['name'];
     $betStatusMap = [2 => 'Win', 3 => 'Lost', 5 => 'Pending', 6 => 'Bet Cancelled', 7 => 'Refund'];
     $betState = [1=> 'Settled ', 2 => 'Unsettled ', 4 => 'Bet Cancelled', 7 => 'Refund'];
-    $gamemodel = [1 => 'Standard', 3 => 'TwoSides', 3 => 'Long Dragon', 4 => '.Many Tables', 5 => 'Borad Games', 6 => 'Road Bets', 7 => 'Fantan'];
+    $gamemodel = [1 => 'Standard', 3 => 'Two Sides', 3 => 'Long Dragon', 4 => '.Many Tables', 5 => 'Board Games', 6 => 'Road Bets', 7 => 'Fantan'];
     // $datta = json_decode($result['bet_odds'], true); // Decode JSON
     // $betodds = reset($datta) * $result['multiplier'] * $result['unit_stake'];
     $result['opening_time'] = str_replace(" ", " / ", $close_and_opentimes['opening_time'] ?? 'Pending') ;

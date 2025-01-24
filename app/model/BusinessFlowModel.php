@@ -229,7 +229,7 @@ class BusinessFlowModel extends MEDOOHelper
         SELECT GROUP_CONCAT(
             CONCAT(
                 'SELECT bt.bet_odds,bt.draw_period,bt.bet_code,bt.game_label,bt.game_type,bt.uid,bt.bet_number,bt.unit_stake,bt.multiplier,bt.bet_amount,bt.win_amount,
-                bt.win_bonus,bt.bet_status,bt.state,bt.bet_time,bt.bet_date,bt.server_date,bt.server_time,
+                bt.win_bonus,bt.bet_status,bt.state,bt.bet_time,bt.bet_date,bt.game_model,bt.server_date,bt.server_time,
                 u.username,u.email,u.contact,
                 u.reg_type, gt.name As game_type,gt.gt_id AS gt_id FROM ', table_name, ' bt JOIN users_test u ON bt.uid = u.uid
                      JOIN game_type gt ON gt.gt_id = bt.game_type') SEPARATOR ' UNION ALL '
