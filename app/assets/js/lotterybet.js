@@ -68,7 +68,9 @@ $(function () {
       htmls += `
                     <tr>
                         <td>${item.bet_code}</td>
-                       <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
+                                   <td>${typeof username === "string" && username.length > 0 
+    ? username.charAt(0).toUpperCase() + username.slice(1) 
+    : "N/A"}</td>
                         <td>${item.draw_period}</td>
                         <td>${item.game_type}</td>
                         <td>${item.game_label}</td>
