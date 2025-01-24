@@ -82,16 +82,26 @@ $(function () {
         let html = ""; // Initialize the HTML string
 
         Object.entries(transactiondata).forEach(([key, value]) => {
-            html += `
-          <tr>
-            <td>${value}</td>
-            <td class="${key === "user_selection" ? "bet_userSelection" : ""}" 
-                ${key === "user_selection" ? `title="${obj[key]}"` : ""}>
-                ${key === "win_bonus" || key === "bet_amount" ||key ==="rebate_amount" ? `${obj[key]} - ${formatMoney(obj[key])}` : `${obj[key]}`}
-              
+          
+      if(value === "Bet Selection"){
+        html += `
+         <td>${value}</td>
+          <td class="${key === "user_selection" ? "bet_userSelection" : ""}">
+            <textarea class="form-control"   readonly style="height: 75px;">${obj[key]}</textarea>
+           </td>`
+   }else{
+     html += `
+         <tr>
+           <td>${value}</td>
+           <td class="${key === "user_selection" ? "bet_userSelectiond" : ""}" 
+             ${key === "user_selection" ? `title="${obj[key]}"` : ""}>
+             ${key === "win_bonus" || key === "bet_amount" ||key ==="rebate_amount" ? `${formatMoney(obj[key])}` : `${obj[key]}`}
             </td>
-          </tr>
-      `;
+         </tr>
+         `;
+
+   }
+
         });
 
         return html; // Return the generated HTML
@@ -109,6 +119,7 @@ $(function () {
      'rebate_amount': 'Rebate Amount',
      'num_wins': 'Number of wins:',
      'draw_number': 'Draw Results:',
+ 
         // reg_type: `${translator["Username"]}:`,
         // bet_code: `${translator["Bet Order ID"]}:`,
         // draw_period: `${translator["Issue Number"]}:`,
@@ -132,7 +143,6 @@ $(function () {
     'opening_time': 'Draw Time:', 
     'bet_status': 'Bet Status:',
     'user_selection': 'Bet Selection',
-    'state':'Bet State'
     
         // bettype : `${translator["Bet Type"]}:`,
         // game_type: `${translator["Lottery Type"]}:`,
