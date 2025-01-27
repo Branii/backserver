@@ -322,7 +322,7 @@
     <div class="card-body p-4">
         <div class="table-responsive mb-4 border rounded-1 table-wrapper" id="mask" style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
-                <thead class="text-dark fs-4 tbl-header" style="background-color: red;">
+                <thead class="text-dark fs-4 tbl-header">
                     <tr class="accheaderrow">
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['ID Number']; ?></h6>
@@ -340,7 +340,10 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Date/Time']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Stake Time']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Server Time']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction ID']; ?></h6>

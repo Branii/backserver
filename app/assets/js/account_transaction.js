@@ -69,6 +69,7 @@ $(function () {
                     <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
                     <td>${formatMoney(item.balance)}</td>
                     <td>${formatTimestamp(item.dateTime)}</td>
+                    <td>${formatTimestamp(item.date_created)}</td>
                     <td>${item.order_id}</td>
                     <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> ${completes}</td>
                     <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
