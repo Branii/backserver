@@ -224,6 +224,11 @@ return [
 'Action' => 'Action',
 'state'=>'state',
 'Deposit Channel' => 'Deposit Channel',
+'Momo'=>'Momo',
+'Crypto'=>'Crypto',
+'Bank Transfere'=>'Bank Transfere',
+'Manual Deposit'=>'Manual Deposit',
+'Approved By' =>'Approved By',
 
 
 //'Withdrawal Management'=> '出款管理',

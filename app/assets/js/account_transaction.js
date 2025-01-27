@@ -527,6 +527,7 @@ $(function () {
     //search the for username
 
     let debounceTimeout = null;
+    let isPastings = false; 
 
     $(document).ready(function () {
         // Event listener for keyup on #myInput
@@ -534,7 +535,7 @@ $(function () {
             const query = $(this).val().trim();
 
             // Only trigger if input is more than 2 characters
-            if (query.length > 1) {
+            if (query.length > 1 && !isPastings)  {
                 clearTimeout(debounceTimeout); // Clear any existing timeout
                 debounceTimeout = setTimeout(fetchbetUser, 500, query); // Call fetchUsers with the query after 500ms delay
             } else {
@@ -542,6 +543,15 @@ $(function () {
             }
         });
 
+        $(document).on('paste', '#mytrans', function () {
+            isPastings = true; // Set the flag to true when paste happens
+            $('.useraccount').hide()
+            setTimeout(function () {
+                isPastings = false; // Reset the flag after a short delay (allow paste to finish)
+            }, 100);  // Delay of 100ms is usually enough for paste operations to finish
+        
+            });
+        
         // Handle dropdown item selection
         $(document).on("change", ".useraccount", function () {
             const selectedOption = $(this).find("option:selected");

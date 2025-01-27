@@ -27,7 +27,7 @@ class FinancialManageModel extends MEDOOHelper
         return  $userInfo = parent::query("SELECT balance FROM users_test WHERE uid = :uid", ["uid" => $uid]);
     }
 
-    public static function addMoneyData($desposittype, $uid, $amount, $review)
+    public static function addMoneyData($desposittype, $uid, $amount,$username,$review)
     {
 
 
@@ -58,6 +58,7 @@ class FinancialManageModel extends MEDOOHelper
 
         // Insert into Deposits and Withdrawals
         if (self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance)) {
+            if(self:: insertIntoDepositsNew($desposittype, $uid, $amount, $depositid,$username))
             // Insert into Transaction table
             if (self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)) {
                 // Update user balance
@@ -89,6 +90,30 @@ class FinancialManageModel extends MEDOOHelper
         return  $inserdata = parent::insert("deposits_and_withdrawals", $params);
     }
 
+    public static function insertIntoDepositsNew($desposittype, $uid, $amount, $depositid,$username)
+    {
+         $manualusername = "manual deposit";
+         $manualemail    = "manualdeposit@gmail.com";
+         $params = [
+            'user_id' =>  $uid,
+            'user_name' => $manualusername,
+            'user_email' =>$manualemail,
+            'user_mobile' => "Company Number",
+            'amount_paid' =>$amount,
+            'amount_recieved' =>$amount,
+            'date_created' =>  date("H:i:s"),
+            'time_created' =>  date("Y-m-d"),
+            'payment_reference' =>  $depositid,
+            'momo_provider' =>'Company Number',      
+            'momo_status' =>'Success',
+            'approved_by' => $username,
+            'desposit_channel' => $desposittype,
+        
+     
+        ];
+        return  $inserdata = parent::insert("deposit_new", $params);
+    
+    }
     public static function insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
     {
         if ($desposittype == 4) {
@@ -131,9 +156,14 @@ class FinancialManageModel extends MEDOOHelper
     {
         $startpoint = ($page * $limit) - $limit;
         $data = parent::query(
-            "SELECT * FROM deposit_new ORDER BY deposit_id DESC LIMIT :offset, :limit",
+            "SELECT deposit_new.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.username, 'N/A') AS username 
+             FROM deposit_new
+             LEFT JOIN users_test ON users_test.uid = deposit_new.user_id
+             ORDER BY deposit_new.deposit_id DESC 
+             LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
         );
+
 
         $totalRecords  = parent::count('deposit_new');
         // $trasationIds = array_column($data, 'order_id');
@@ -142,17 +172,20 @@ class FinancialManageModel extends MEDOOHelper
 
 
 
-    public static function Depositsubquery($uid, $states, $startdate, $enddate)
+    public static function Depositsubquery($username,$states,$depositid,$startdate,$enddate)
     {
 
         $filterConditions = [];
 
-        if (!empty($uid)) {
-            $filterConditions[] = "user_id = '$uid'";
+        if (!empty($username)) {
+            $filterConditions[] = "user_id = '$username'";
         }
 
         if (!empty($states)) {
-            $filterConditions[] = "deposit_withdrawal_type = '$states'";
+            $filterConditions[] = "desposit_channel = '$states'";
+        }
+        if (!empty($depositid)) {
+            $filterConditions[] = "payment_reference = '$depositid'";
         }
 
         if (!empty($startdate) && !empty($enddate)) {
@@ -174,7 +207,7 @@ class FinancialManageModel extends MEDOOHelper
 
 
    
-    public static function FilterDepositData($subQuery, $page, $limit)
+    public static function FilterDepositData($subquery, $page, $limit)
     {
         try {
             // Calculate the starting point for pagination
@@ -191,8 +224,8 @@ class FinancialManageModel extends MEDOOHelper
                 FROM 
                     (
                         SELECT * 
-                        FROM deposits_and_withdrawals
-                        WHERE $subQuery
+                        FROM deposit_new
+                        WHERE $subquery
                     ) AS temp_table
                 JOIN 
                     users_test ON users_test.uid = temp_table.user_id
@@ -204,9 +237,9 @@ class FinancialManageModel extends MEDOOHelper
                 SELECT 
                     COUNT(*) AS total_count
                 FROM 
-                    deposits_and_withdrawals
+                    deposit_new
                 WHERE
-                    $subQuery
+                    $subquery
             ";
         
             // Execute the main query with parameterized inputs
