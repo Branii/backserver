@@ -25,6 +25,8 @@ return [
     'Red Envelope Receive' => '收到红包',
     'Bet Refund' =>'投注退款',
     'Rebates' => '返点',
+    'Bet Stake Time' =>'投注金额时间',
+    'Server Time' =>'服务器时间',
 
 
 

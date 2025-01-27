@@ -1,5 +1,6 @@
 <?php
 
+
 class adminController extends Controller {
 
     public function notfound() {
@@ -227,9 +228,9 @@ class adminController extends Controller {
 
 
     /// ----- WIN LOSS REPORT --------------------------------
-    public function win_loss($username,$lottery_id, $start_date,$end_date, $limit)
+    public function users_win_loss($lottery_id, $start_date,$end_date, $page,$limit)
     {
-        $this->view('exec/win_loss', ['username' => $username,'lottery' => $lottery_id,'start_date' => $start_date, 'end_date' => $end_date, 'limit' => $limit, 'flag' => 'user-win-loss']);
+        $this->view('exec/win_loss', ['lottery_id' => $lottery_id,'start_date' => $start_date, 'end_date' => $end_date, 'page' => $page,"limit"=> $limit, 'flag' => 'users-win-loss']);
         $this->view->render();
     }
     public function get_top_agents($lottery_id, $start_date,$end_date,$page)

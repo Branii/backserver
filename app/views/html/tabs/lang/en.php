@@ -12,7 +12,7 @@ return [
 'Debit Amount' => 'Debit Amount',
 'Credit Amount' => 'Credit Amount',
 'Balance' => 'Balance',
-'Date/Time' => 'Date/Time',
+'Bet Stake Time' => 'Bet Stake Time',
 'Game' => 'Game',
 'Bet Order ID' => 'Bet Order ID',
 'Reviews' => 'Reviews',
@@ -25,6 +25,7 @@ return [
 'Red Envelope Receive' => 'Red Envelope Receive',
 'Bet Refund' =>'Bet Refund',
 'Rebates' => 'Rebates',
+"Server Time"  => "Server Time",
 // 'Transaction ID'=> 'Transaction ID',
 
 //'Withdrawal Review' => 'Withdrawal Review',
@@ -222,6 +223,7 @@ return [
 'Reviews' => 'Reviews',
 'Action' => 'Action',
 'state'=>'state',
+'Deposit Channel' => 'Deposit Channel',
 
 
 //'Withdrawal Management'=> '出款管理',

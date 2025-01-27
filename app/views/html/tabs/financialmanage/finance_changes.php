@@ -271,9 +271,9 @@
                     <option value="4"><?= $translator['Withdrawal']; ?></option>
                 </select>
 
-                <input name="startdate" type="date" class="form-control queryholderlistt startfinance" aria-describedby="name" placeholder="Name" />
+                <input name="startdate" type="date" class="form-control queryholderlistt startfinances"  placeholder="Name" />
 
-                <input name="enddate" type="date" class="form-control queryholderlistt endfinance" aria-describedby="name" placeholder="Name" />
+                <input name="enddate" type="date" class="form-control queryholderlistt endfinances"  placeholder="Name" />
             </div>
             <!-- <div class="input-group mb-3">
 				<span class="input-group-text" id="basic-addon12" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
@@ -347,18 +347,18 @@
     <div class="px-4 py-3 border-top pagerlist">
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-                <button type="button" class="btn bg-white-subtle playerfinance" value="startli">
+                <!-- <button type="button" class="btn bg-white-subtle playerfinance" value="startli">
                     <i class="bx bx-chevrons-left" style="font-size: 20px;"></i>
-                </button>
+                </button> -->
                 <button type="button" class="btn bg-white-subtle playerfinance" value="leftlin">
                     <i class="bx bx-chevron-left" style="font-size: 20px;"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle playerfinance" value="rightlin">
                     <i class="bx bx-chevron-right" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerfinance" value="endlin">
+                <!-- <button type="button" class="btn bg-white-subtle playerfinance" value="endlin">
                     <i class="bx bx-chevrons-right" style="font-size: 20px;"></i>
-                </button>
+                </button> -->
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
