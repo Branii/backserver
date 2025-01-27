@@ -16,16 +16,27 @@ $(function () {
     return Number(balance).toFixed(4);
   }
   function formatMoney(money) { 
-    return String(money).includes(".") && String(money).split(".")[1].length > 2 
-      ? String(Number(money).toFixed(4)) 
-      : money; 
-  }
+    let moneyStr = String(money); 
+    if (moneyStr.includes(".")) { 
+        let parts = moneyStr.split("."); 
+        if (parts[1].length > 2) { 
+            parts[1] = parts[1].substring(0, 4); 
+        } 
+        moneyStr = parts.join(".").replace(/\.?0+$/, ""); 
+    } 
+    return moneyStr; 
+}
 
   const Lottery = (data) => {
     let htmls = "";
-    const bettype = {
-      1: "Bet",
-      2: "Track",
+    const gamemodel = {
+      1: "Standard",
+      2: "Two Sides",
+      3: "Long Dragon",
+      4: "Many Tables ",
+      5: "Board Games",
+      6: "Road Bets",
+      7: "Fantan"
     };
 
     const betstatus = {
@@ -58,37 +69,27 @@ $(function () {
        const betodds = betOddsArray * item.multiplier * item.unit_stake;
        let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
 
-      // console.log(item.username)
+      // console.log("dgfdegfdfgdgfggftg",item.server_date, item.server_time, data)
       htmls += `
                     <tr>
                         <td>${item.bet_code}</td>
-                        <td>${username}</td>
+                        <td>${typeof username === "string" || typeof username === "number" 
+                        ? String(username).charAt(0).toUpperCase() + String(username).slice(1) 
+                        : "N/A"}</td>
                         <td>${item.draw_period}</td>
                         <td>${item.game_type}</td>
+                          <td>${gamemodel[item.game_model]}</td>
                         <td>${item.game_label}</td>
-                        <td>${item.bet_date + " " + item.bet_time}</td>
-                        <td>${item.bet_number}</td>
+                        <td>${item.bet_date + " / " + item.bet_time}</td>
+                      
                         <td>${item.unit_stake}</td>
                         <td>${item.multiplier}</td>
                         <td>${formatMoney(item.bet_amount)}</td>
-                        <td>${formatMoney(item.win_amount)}</td>
+                        <td>${formatMoney(item.win_bonus)}</td>
                          <td><i class='bx bxs-circle' style='color:${status[item.bet_status].color};font-size:8px;margin-right:5px;'></i>${status[item.bet_status].title}</td>
-                 
                         <td>${states[item.state]}</td>
+                        <td><i value='${item.bet_code}_${item.gt_id}' class='bx bx-info-circle viewbets' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
                        
-                        <td>
-                            
-                             <div class="dropdown">
-                                    <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                     <i class='bx bx-dots-vertical-rounded'></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
-                                      <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewbets" href="javascript:void(0);"data-betcode="${item.bet_code}"data-gametype="${item.gt_id}">
-                                        <i class="bx bx-show fs-5"></i>View Bet
-                                      </a>
-                                    </div>
-                                  </div>
-                        </td>
                     </tr>
                 `;
     });
@@ -99,50 +100,59 @@ $(function () {
   const Showbettable = (data,obj) => {
     let htmlbet = "";
     Object.entries(data).forEach(([key, value]) => {
-   
-      htmlbet += `
+
+     
+      if(value === "Bet Selection"){
+           htmlbet += `
+            <td>${value}</td>
+             <td class="${key === "user_selection" ? "bet_userSelection" : ""}">
+              <textarea class="form-control"   readonly style="height: 75px;">${obj[key]}</textarea>
+              </td>`
+      }else{
+        htmlbet += `
             <tr>
               <td>${value}</td>
               <td class="${key === "user_selection" ? "bet_userSelection" : ""}" 
                 ${key === "user_selection" ? `title="${obj[key]}"` : ""}>
-                ${obj[key]}
-              </td>
+                ${key === "win_bonus" || key === "bet_amount" ||key ==="rebate_amount" ? `${formatMoney(obj[key])}` : `${obj[key]}`}
+               </td>
             </tr>
             `;
+
+      }
+   
+      
     });
     return htmlbet;
   };
 
  
   const firstRowbet = {
-    'reg_type': 'Username:',
     'bet_code': 'Bet Order ID:',
     'draw_period': 'Issue Number:',
-    'ip_address': 'IP:',
-    'unit_stake': 'Unit Stake:',
-    'multiplier': 'Multiplier:',
-    'bet_status': 'Bet Status:',
-    'game_label': 'Game Type::',
-    'draw_number': 'Draw Results:',
-    'num_wins': 'Number of wins:',
-  
+    'bet_time': 'Bet Time:',
+    'bet_number': 'Total Bet:',
+     'unit_stake': 'Unit Stake:',
+     'multiplier': 'Multiplier:',
+     'bet_amount': 'Total Bet Amount:',
+     'win_bonus': 'Win Amount:',
+     'rebate_amount': 'Rebate Amount',
+     'num_wins': 'Number of wins:',
+     'draw_number': 'Draw Results:',
   }
 
   const secondRowbet = {
-    'bettype': 'Bet Type:',
+    'reg_type': 'Username:',
+    'ip_address': 'IP:',
     'game_type': 'Lottery Type:',
-    'bet_time': 'Bet Time:',
+    'game_label': 'Game Label:',
+    'bettype': 'Bet Type:',
+    'game_model': 'Game Model',
     'closing_time': 'Closing Time:',
-    'opening_time': 'Draw Time::',
-    'bet_number': 'Total Bet:',
-    'bet_amount': 'Total Bet Amount:',
-    // 'win_amount': 'Prize:',
-    'win_amount': 'Win Amount:',
-    // 'server_time': 'Actual profit:',
-    'rebate_amount': 'Rebate Amount',
-    'user_selection': 'Bet Details',
-
-  
+    'opening_time': 'Draw Time:', 
+    'bet_status': 'Bet Status:',
+    'user_selection': 'Bet Selection',
+   
   }
 
   const renderlottery = (data) => {
@@ -152,7 +162,7 @@ $(function () {
 
 
   let currentPagebet = 1;
-  let pageLimit = 50;
+  let pageLimit = 20;
   
   // Fetch lottery bet data
   async function fetchLotteryBet(currentPagebet) {
@@ -312,7 +322,7 @@ $(function () {
       size: 3,
     });
     currentPagebet = 1;
-    pageLimit = 50;
+    pageLimit = 20;
     fetchLotteryBet(currentPagebet, pageLimit);
   });
 
@@ -322,7 +332,8 @@ $(function () {
   $(".executebet").click(function () {
     if ($("#myInput").val() == "" && $(".typelottery").val() == "" && $(".startdates").val() == ""
     && $(".betsate").val() == "" && $(".betstatus").val() == "") {
-      $("#dangerbet").modal("show");
+      // $("#dangerbet").modal("show");
+      showToast("Heads up!!","Select one or more data fields to filter","info")
       return;
   }
     const uidd = $('#myInput').val();
@@ -349,7 +360,7 @@ $(function () {
 
       const data = await response.json(); // Parse JSON response
       // console.log(data);
-      let html = `<option value=""selected>-lottery Type-</option>`;
+      let html = `<option value=""selected></option>`;
       data.forEach((lottery) => {
           html += `<option value="${lottery.gt_id}">${lottery.name}</option>`;
       });
@@ -366,18 +377,18 @@ $(function () {
   // viewbets
   $(document).on("click",".viewbets",function(){
     $("#viewbetsmodal").modal("show")
-    const betcode = $(this).attr("data-betcode")
-    const gametype = $(this).attr("data-gametype")
+    const betcode = $(this).attr("value");
     console.log(betcode)
-    console.log(gametype)
+   
+    // console.log(gametype)
     $("#rowbet").empty()
     $("#rowbe1").empty()
-     viewstakedBet(betcode,gametype)
+     viewstakedBet(betcode)
   })
 
-    async function viewstakedBet(betcode,gametype) {
+    async function viewstakedBet(betcode) {
       try {
-        const response = await fetch(`../admin/viewBetstake/${betcode}/${gametype}`);
+        const response = await fetch(`../admin/viewBetstake/${betcode}`);
         const data = await response.json();
         //  console.log(response)
         //  return
@@ -422,6 +433,12 @@ $(function () {
           }
       });
 
+      $(document).on("click", function (e) {
+        const $dropdownbet = $("#userlotteryDropdown");
+        if (!$(e.target).closest("#myInput, #userlotteryDropdown").length) {
+            $dropdownbet.hide();
+        }
+    });
       // Handle manual input clearing
       $(document).on('input', '#myInput', function () {
           if (!$(this).val()) {
@@ -456,11 +473,11 @@ $(function () {
                  }else{
                   displayValuebet = "no data found...";
                   regnamebet = "no data found..."// Show contact
+                 
                  }
                       optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regnamebet}">${displayValuebet}</option>`;
            
               });
-
 
               $('.userDropdownb').html(optionsHtml).show();
           } catch (error) {
@@ -498,5 +515,12 @@ $(function () {
   }
   tableScroll();
 
+  $("#myInput").on("input paste", function () {
+    const self = this;
+    setTimeout(() => {
+      // Trim leading spaces
+      $(self).val($(self).val().replace(/^\s+/, ""));
+    }, 0);
+  });
 
 });

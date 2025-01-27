@@ -301,6 +301,44 @@
         /* Rounded corners */
     }
 
+    .scrollable-container {
+        max-height: 600px;
+        /* Limit the container's height */
+        overflow-y: auto;
+        /* Enable vertical scrolling */
+        overflow-x: hidden;
+        /* Disable horizontal scrolling */
+        padding: 10px;
+        /* Optional padding for readability */
+        /* border: 1px solid #ddd; */
+        /* Optional: Add a border */
+        background-color: #fff;
+    }
+
+    /* Customize the scrollbar */
+    .scrollable-container::-webkit-scrollbar {
+        width: 5px;
+        /* Set scrollbar width */
+    }
+
+    .scrollable-container::-webkit-scrollbar-thumb {
+        background-color: #888;
+        /* Set thumb color */
+        border-radius: 10px;
+        /* Rounded corners for the thumb */
+    }
+
+    .scrollable-container::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+        /* Darker color on hover */
+    }
+
+    .scrollable-container::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+        /* Track background color */
+        border-radius: 10px;
+        /* Rounded corners for the track */
+    }
 
 </style>
 
@@ -316,7 +354,7 @@
 
                 <input type="text" id="trackinput" class="form-control queryholderlist usernames" placeholder="Search usernames" />
                     <input name="usernames" type="hidden" class="userIdbet" />
-                    <select class="form-control trackdown" size="5" style="display: none;">
+                    <select class="form-control trackdown" size="5" style="display: none;" id="usertrackDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>
 
@@ -393,10 +431,10 @@
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Start Issue']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Issues/Tracked']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Tracked/Total Issues']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bet Amount/Bet Amount']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Amount/Total Bet Amount']; ?></h6>
                   </th>
                   <th>
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Status']; ?></h6>
@@ -432,18 +470,18 @@
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playertrack" value="trackstart">
+                <!-- <button type="button" class="btn bg-white-subtle playertrack" value="trackstart">
                     <i class='bx bx-chevrons-left' style="font-size:20px"></i>
-                </button>
+                </button> -->
                 <button type="button" class="btn bg-white-subtle playertrack" value="trackleft">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle playertrack" value="trackright">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playertrack" value="trackend">
+                <!-- <button type="button" class="btn bg-white-subtle playertrack" value="trackend">
                     <i class='bx bx-chevrons-right' style="font-size:20px"></i>
-                </button>
+                </button> -->
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
@@ -495,13 +533,15 @@
   <div class="modal-dialog modal-dialog-scrollable modal-xl">
     <div class="modal-content">
       <div class="modal-body">
+     
+
         <div class="text-center mt-2 mb-4">
           <div class="d-flex justify-content-between">
             <div><?= $translator['Track Bet Info']; ?></div>
             <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
           </div>
         </div>
-
+        <div class="scrollable-container">
         <form>
           <div class="row">
             <div class="col-md-6">
@@ -520,7 +560,7 @@
 
           </div>
         </form>
-
+    <hr>
         <table class="table table-hover table-bordered text-nowrap mb-0" id="track">
 					<thead>
 						<tr>
@@ -536,7 +576,6 @@
 					</thead>
 					<tbody id='trackbetTableBody'>
 
-
 					</tbody>
 
 					<!-- <td></td>
@@ -548,6 +587,7 @@
 					</tr> -->
 				</table>
 
+      </div>
       </div>
     </div>
     <!-- /.modal-content -->

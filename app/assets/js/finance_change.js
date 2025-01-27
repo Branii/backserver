@@ -23,7 +23,9 @@ $(function () {
 
         html += `
                       <tr>
-                      <td>${username}</td>
+                 <td>${typeof username === "string" || typeof username === "number" 
+    ? String(username).charAt(0).toUpperCase() + String(username).slice(1) 
+    : "N/A"}</td>
                       <td>VIP</td>
                       <td class="editables">${types}</td>
                       <td class="editables">${total_income}</td>
@@ -42,73 +44,70 @@ $(function () {
       $("#financeContainer").html(html);
     };
   
-    let currentPagefinance = 1;
-    let pageLimit = 50;
+    let currentPage = 1;
+    let pageLimit = 20;
   
-    async function fetchfinance(pagefinance,pageLimit) {
+    async function fetchfinance(page,pageLimit) {
       try {
         const response = await fetch(
-          `../admin/fetchfinance/${pagefinance}/${pageLimit}`
+          `../admin/fetchfinance/${page}/${pageLimit}`
         );
         const data = await response.json();
     
         $("#maskfinance").LoadingOverlay("hide");
         renderfinace(data.finance);
+        renderfinacePagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchfinance(newPage, pageLimit));
+        document.getElementById("paging_infofinance").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
     
-        // Render pagination
-        renderfinacePagination(data.totalPages, pagefinance, fetchfinance);
-    
-        document.getElementById("paging_infofinance").innerHTML =
-          "Page " + pagefinance + " of " + data.totalPages + " pages";
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
   
-    fetchfinance(currentPagefinance,pageLimit);
+    fetchfinance(currentPage,pageLimit);
   
-    function renderfinacePagination(totalPages, currentPagefinance, fetchCallback) {
+
+    function renderfinacePagination(totalPages, currentPage, pageLimit, callback) {
+      const createPageLink = (i, label = i, disabled = false, active = false) =>
+          `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+        <a class='page-link' href='#' data-page='${i}'>${label}</a>
+    </li>`;
       let pagLink = `<ul class='pagination justify-content-end'>`;
-    
+
       // Previous Button
-      pagLink += `
-        <li class='page-item ${currentPagefinance === 1 ? "disabled" : ""}'>
-          <a class='page-link' href='#' data-page='${currentPagefinance - 1}'><i class='bx bx-chevron-left'></i></a>
-        </li>
-      `;
-    
+      pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
+
       // Page numbers with ellipsis
       for (let i = 1; i <= totalPages; i++) {
-        if (i === currentPagefinance) {
-          pagLink += `<li class='page-item active'><a class='page-link' href='#'>${i}</a></li>`;
-        } else if (i === 1 || i === totalPages || Math.abs(i - currentPagefinance) <= 2) {
-          pagLink += `<li class='page-item'><a class='page-link' href='#' data-page='${i}'>${i}</a></li>`;
-        } else if (i === currentPagefinance - 3 || i === currentPagefinance + 3) {
-          pagLink += `<li class='page-item disabled'><a class='page-link'>...</a></li>`;
-        }
-      }
-    
-      // Next Button
-      pagLink += `
-        <li class='page-item ${currentPagefinance === totalPages ? "disabled" : ""}'>
-          <a class='page-link' href='#' data-page='${currentPagefinance + 1}'><i class='bx bx-chevron-right'></i></a>
-        </li>
-      `;
-    
-      pagLink += "</ul>";
-      document.getElementById("paginationfiance").innerHTML = pagLink;
-    
-      // Add click event listeners to pagination links
-      document.querySelectorAll("#paginationfiance .page-link").forEach((link) => {
-        link.addEventListener("click", function (e) {
-          e.preventDefault();
-          const newPage = parseInt(this.getAttribute("data-page"));
-          if (newPage > 0 && newPage <= totalPages && newPage !== currentPagefinance) {
-            fetchCallback(newPage); // Call the provided fetch function with the new page number
+          if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+              pagLink += createPageLink(i, i, false, i === currentPage);
+          } else if (i === currentPage - 3 || i === currentPage + 3) {
+              pagLink += createPageLink(i, "...", true);
           }
-        });
+      }
+
+      // Next Button
+      pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
+      pagLink += "</ul>";
+
+      document.getElementById("paginationfiance").innerHTML = pagLink;
+
+      // Add click event listeners
+      document.querySelectorAll("#paginationfiance .page-link").forEach((link) => {
+          link.addEventListener("click", function (e) {
+              e.preventDefault();
+              const newPage = +this.getAttribute("data-page");
+              if (newPage > 0 && newPage <= totalPages) {
+                  $("#maskfinance").LoadingOverlay("show", {
+                      background: "rgb(90,106,133,0.1)",
+                      size: 3,
+                  });
+                  callback(newPage, pageLimit); // Call the provided callback with new page and pageLimit
+              }
+          });
       });
-    }
+  }
+
     
     $(".refreshfiance").click(function () {
       $(".queryholderlistt").val("");
@@ -116,22 +115,22 @@ $(function () {
         background: "rgb(90,106,133,0.1)",
         size: 3,
       });
-      fetchfinance(currentPagefinance,pageLimit)
+      fetchfinance(currentPage,pageLimit)
     });
   
   
   
     //search function
 
-    function filterfinance(username, depositestate, startfinance, endfinance, currentPagefinance, pageLimit) {
+    function filterfinance(username, depositestate, startfinance, endfinance, currentPage, pageLimit) {
       $.post(
-        `../admin/filterdeposit/${username}/${depositestate}/${startfinance}/${endfinance}/${currentPagefinance}/${pageLimit}`,
+        `../admin/filterdeposit/${username}/${depositestate}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
         function (response) {
           try {
             const data = JSON.parse(response);
-           //  console.log(response)
-             //return
-            if (data.deposit.length < 1) {
+            //  console.log(data)
+            //  return
+            if (data.deposits.length < 1) {
               $("#financeContainer").html(`
                 <tr class="no-results">
                   <td colspan="9">
@@ -141,14 +140,12 @@ $(function () {
               `);
               return;
             }
+            $("#maskfinance").LoadingOverlay("hide");
+             renderfinace(data.deposits);
+          // Render pagination
+          renderfinacePagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterfinance(username, depositestate, startfinance, endfinance, newPage, pageLimit));
+          document.getElementById("paging_infofinance").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
     
-             renderfinace(data.deposit);
-            renderfinacePagination(data.totalPages, currentPagefinance, (page) => {
-              filterfinance(username, depositestate, startfinance, endfinance, page, pageLimit);
-            });
-    
-            document.getElementById("paging_infofinance").innerHTML =
-              `Page ${currentPagefinance} of ${data.totalPages} pages`;
           } catch (error) {
             console.error("Error parsing JSON response:", error);
           } finally {
@@ -164,7 +161,8 @@ $(function () {
     $(document).on('click', '.executefinance', function () {
     
       if ($("#financeDropdown").val() == "" && $(".depositestate").val() == "" && $(".startfinance").val() == "" ) {
-        $("#danger-finance").modal("show");
+        // $("#danger-finance").modal("show");
+        showToast("Heads up!!","Select one or more data fields to filter","info")
         return;
     }
   
@@ -172,9 +170,9 @@ $(function () {
       const username = $("#financeDropdown").val();
       const startfinance = $(".startfinance").val();
       const endfinance = $(".endfinance").val();
-    console.log(username)
+      console.log(username)
    
-     filterfinance(username,depositestate,startfinance,endfinance,currentPagefinance,pageLimit)
+     filterfinance(username,depositestate,startfinance,endfinance,currentPage,pageLimit)
       // Show loader
       $(".loaderfinance").removeClass('bx-check-double').addClass('bx-loader bx-spin');
   
@@ -210,6 +208,12 @@ $(function () {
             }
         });
     
+        $(document).on("click", function (e) {
+          const $dropdownbet = $("#userfinaceDropdown");
+          if (!$(e.target).closest("#financeinput, #userfinaceDropdown").length) {
+              $dropdownbet.hide();
+          }
+      });
         // Handle manual input clearing
         $(document).on('input', '#financeDropdowns', function () {
             if (!$(this).val()) {
@@ -291,6 +295,7 @@ $(function () {
     $(document).on('click','.showmodal',function(){
       $("#addfinancemodal").modal("show");   
     })
+
     let debounceTimeouts = null;
     $(document).ready(function () {
         // Event listener for keyup on #myInput
@@ -318,7 +323,13 @@ $(function () {
                 $('.financeDropdown').hide();
             }
         });
-    
+
+       $(document).on("click", function (e) {
+          const $dropdownbet = $("#userfinaceDropdowns");
+          if (!$(e.target).closest("#financeDropdown, #userfinaceDropdowns").length) {
+              $dropdownbet.hide();
+          }
+      });
         // Handle manual input clearing
         $(document).on('input', '#financeDropdown', function () {
             if (!$(this).val()) {
@@ -371,7 +382,7 @@ $(function () {
           size: 3,
         });
       const numrows = $(this).val();
-      fetchfinance(currentPagefinance,numrows)
+      fetchfinance(currentPage,numrows)
      });
 
 
@@ -388,5 +399,7 @@ $(function () {
       });
    }
    tableScrollFinance();
+
+   
   });
   

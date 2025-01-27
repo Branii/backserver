@@ -8,35 +8,55 @@ $(function () {
           type: type,
           duration: 3000, // auto-dismiss after 3s
         });
-      }
-    function formatBalance(balance) {
-        if (balance % 1 !== 0 && balance.toString().split(".")[1].length > 3) {
-            return Number(balance).toFixed(4);
-        }
-        return Number(balance).toFixed(4);
-    }
-
+       }
+    // function formatBalance(balance) {
+    //     if (balance % 1 !== 0 && balance.toString().split(".")[1].length > 3) {
+    //         return Number(balance).toFixed(4);
+    //     }
+    //     return Number(balance).toFixed(4);
+    // }
     function formatMoney(money) { 
-        return String(money).includes(".") && String(money).split(".")[1].length > 2 
-          ? String(Number(money).toFixed(4)) 
-          : money; 
-      }
+        let moneyStr = String(money); 
+        if (moneyStr.includes(".")) { 
+            let parts = moneyStr.split("."); 
+            if (parts[1].length > 2) { 
+                parts[1] = parts[1].substring(0, 4); 
+            } 
+            moneyStr = parts.join(".").replace(/\.?0+$/, ""); 
+        } 
+        return moneyStr; 
+    }
+   
+    // function formatMoney(money) { 
+    //     return String(money).includes(".") && String(money).split(".")[1].length > 2 
+    //       ? String(Number(money).toFixed(4)) 
+    //       : money; 
+    //   }
+      const translator = JSON.parse(
+        document.getElementById("translation-container").getAttribute("data-translations")
+    );
+     // console.log(translations)
+  
     const AccountTransactions = (data) => {
         let html = "";
+       
         const status = {
-            1: { title: "Deposit", color: "#4CAF50" }, // Green
-            2: { title: "Win Bonus", color: "#FF9800" }, // Orange
-            3: { title: "Bet Awarded", color: "#03A9F4" }, // Light Blue
-            4: { title: "Withdrawal", color: "#F44336" },
-            5: { title: "Bet Deduct", color: "#E91E63" }, // Red
-            6: { title: "Bet Cancelled", color: "#9E9E9E" }, // Grey
+            1: { title: translator["Deposit"] || "Deposit", color: "#4CAF50" }, // Green
+            2: { title: translator["Win Bonus"], color: "#FF9800" }, // Orange
+            3: { title: translator['Bet Awarded'], color: "#03A9F4" }, // Light Blue
+            4: { title: translator['Withdrawal'], color: "#F44336" },
+            5: { title: translator['Bet Deduct'], color: "#E91E63" }, // Red
+            6: { title: translator['Bet Cancelled'], color: "#9E9E9E" }, // Grey
             // Pink
-            7: { title: "Rebates", color: "#8BC34A" }, // Light Green
-            8: { title: "Self Rebate", color: "#00BCD4" }, // Cyan
-            9: { title: "Send Red Envelope", color: "#FF5722" }, // Deep Orange
-            10: { title: "Receive Red Envelope", color: "#795548" }, // Brown
-            11: { title: "Bet Refund", color: "#FFC107" }, // Amber
+            7: { title: translator['Rebates'], color: "#8BC34A" }, // Light Green
+            8: { title: translator['Self Rebate'], color: "#00BCD4" }, // Cyan
+            9: { title: translator['Sending Red Envelope'], color: "#FF5722" }, // Deep Orange
+            10: { title: translator['Red Envelope Receive'], color: "#795548" }, // Brown
+            11: { title: translator['Bet Refund'], color: "#FFC107" }, // Amber
+            0: { title: translator['Complete'], color: "#ccc" }, // Amber
         };
+          let completes = translator['Completed']
+        const formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
 
         data.forEach((item) => {
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
@@ -44,13 +64,13 @@ $(function () {
             html += `
                 <tr class="trow">
                   <td>${"TR" + item.order_id.substring(0, 7)}</td>
-                    <td>${username}</td>
+                  <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
                     <td><i class='bx bxs-circle' style='color:${status[item.order_type].color};font-size:8px;margin-right:5px;'></i>${status[item.order_type].title}</td>
                     <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
                     <td>${formatMoney(item.balance)}</td>
-                    <td>${item.dateTime}</td>
+                    <td>${formatTimestamp(item.dateTime)}</td>
                     <td>${item.order_id}</td>
-                    <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> Complete</td>
+                    <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> ${completes}</td>
                     <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
                 </tr>
             `;
@@ -62,45 +82,79 @@ $(function () {
         let html = ""; // Initialize the HTML string
 
         Object.entries(transactiondata).forEach(([key, value]) => {
-            html += `
-          <tr>
-            <td>${value}</td>
-            <td class="${key === "user_selection" ? "bet_userSelection" : ""}" 
-                ${key === "user_selection" ? `title="${obj[key]}"` : ""}>
-                ${obj[key]}
+          
+      if(value === "Bet Selection"){
+        html += `
+         <td>${value}</td>
+          <td class="${key === "user_selection" ? "bet_userSelection" : ""}">
+            <textarea class="form-control"   readonly style="height: 75px;">${obj[key]}</textarea>
+           </td>`
+   }else{
+     html += `
+         <tr>
+           <td>${value}</td>
+           <td class="${key === "user_selection" ? "bet_userSelectiond" : ""}" 
+             ${key === "user_selection" ? `title="${obj[key]}"` : ""}>
+             ${key === "win_bonus" || key === "bet_amount" ||key ==="rebate_amount" ? `${formatMoney(obj[key])}` : `${obj[key]}`}
             </td>
-          </tr>
-      `;
+         </tr>
+         `;
+
+   }
+
         });
 
         return html; // Return the generated HTML
     };
 
     const firstRow = {
-        reg_type: "Username:",
-        bet_code: "Bet Order ID:",
-        draw_period: "Issue Number:",
-        ip_address: "IP:",
-        unit_stake: "Unit Stake:",
-        multiplier: "Multiplier:",
-        bet_status: "Bet Status:",
-        game_label: "Game Type::",
-        draw_number: "Draw Results:",
-        num_wins: "Number of wins:",
+    'bet_code': 'Bet Order ID:',
+    'draw_period': 'Issue Number:',
+    'bet_time': 'Bet Time:',
+    'bet_number': 'Total Bet:',
+     'unit_stake': 'Unit Stake:',
+     'multiplier': 'Multiplier:',
+     'bet_amount': 'Total Bet Amount:',
+     'win_bonus': 'Win Amount:',
+     'rebate_amount': 'Rebate Amount',
+     'num_wins': 'Number of wins:',
+     'draw_number': 'Draw Results:',
+ 
+        // reg_type: `${translator["Username"]}:`,
+        // bet_code: `${translator["Bet Order ID"]}:`,
+        // draw_period: `${translator["Issue Number"]}:`,
+        // ip_address: `${translator["IP"]}:`,
+        // unit_stake: `${translator["Unit Stake"]}:`,
+        // multiplier: `${translator["Multiplier"]}:`,
+        // bet_status: `${translator["Bet Status"]}:`,
+        // game_label: `${translator["Game Type"]}:`,
+        // draw_number: `${translator["Draw Results"]}:`,
+        // num_wins: `${translator["Number of Wins"]}:`,
     };
 
     const secondRow = {
-        bettype: "Bet Type:",
-        game_type: "Lottery Type::",
-        bet_time: "Bet Time:",
-        closing_time: "Closing Time:",
-        opening_time: "Draw Time::",
-        bet_number: "Total Bet:",
-        bet_amount: "Total Bet Amount:",
-        win_amount: "Win Amount:",
-        rebate_amount: 'Rebate Amount',
-        user_selection: "Bet Details",
-        // description: "des",
+    'reg_type': 'Username:',
+    'ip_address': 'IP:',
+    'game_type': 'Lottery Type:',
+    'game_label': 'Game Label:',
+    'bettype': 'Bet Type:',
+    'game_model': 'Game Model',
+    'closing_time': 'Closing Time:',
+    'opening_time': 'Draw Time:', 
+    'bet_status': 'Bet Status:',
+    'user_selection': 'Bet Selection',
+    
+        // bettype : `${translator["Bet Type"]}:`,
+        // game_type: `${translator["Lottery Type"]}:`,
+        // bet_time: `${translator["Bet Time"]}:`,
+        // closing_time: `${translator["Closing Time"]}:`,
+        // opening_time: `${translator["Draw Time"]}:`,
+        // bet_number: `${translator["Total Bets"]}:`,
+        // bet_amount: `${translator["Total Bet Amount"]}:`,
+        // win_amount: `${translator["Win Amount"]}:`,
+        // rebate_amount: `${translator["Rebate Amount"]}:`,
+        // user_selection: `${translator["Bet Selection"]}:`,
+        // // description: "des",
     };
 
     const render = (data) => {
@@ -109,7 +163,7 @@ $(function () {
     };
 
     let currentPage = 1;
-    let pageLimit = 50;
+    let pageLimit = 20;
 
     async function fetchTrasaction(page, pageLimit) {
         try {
@@ -248,9 +302,10 @@ $(function () {
     });
 
     $(document).on("click", ".executetrans", function () {
-        if ($("#mytrans").val() == "" && $("#mytrans").val() == null && $(".ordertype").val() == "" && $(".startdatet").val() == "" 
-        && $(".userIdtrans").val() == "") {
-            $("#al-danger-alert").modal("show");
+        if ($("#mytrans").val() == ""  && $(".ordertype").val() == "" && $(".startdatet").val() == "" 
+        && $(".orderid").val() == "") {
+            //  $("#al-danger-alert").modal("show");
+            showToast("Heads up!!","Select one or more data fields to filter","info")
             return;
         }
         const username = $("#mytrans").val();
@@ -290,8 +345,8 @@ $(function () {
             usernames: transactiondata.usernames || "N/A",
             vip: "vip", // Static value
             deposit_withdrawal_types,
-            deposit_amount: formatBalance(transactiondata.deposit.deposit_and_withdrawal_amount),
-            recharge_balance: formatBalance(transactiondata.deposit.recharge_balance_in_advance),
+            deposit_amount: formatMoney(transactiondata.deposit.deposit_and_withdrawal_amount),
+            recharge_balance: formatMoney(transactiondata.deposit.recharge_balance_in_advance),
             deposit_time: transactiondata.deposit.date_created + " " + transactiondata.deposit.deposit_and_withdrawal_time,
             // required_coding_amount: transactiondata.deposit.required_coding_amount || "N/A",
             remark: transactiondata.deposit.remark || "N/A",
@@ -501,12 +556,25 @@ $(function () {
             console.log(selectedUsername)
         });
 
+        $(document).on("click", function (e) {
+            const $dropdown = $("#userAccountDropdown");
+            if (!$(e.target).closest("#mytrans, #userAccountDropdown").length) {
+                $dropdown.hide();
+            }
+        });
         // Handle manual input clearing
         $(document).on("input", "#mytrans", function () {
             if (!$(this).val()) {
                 $(".userIdtrans").val(""); // Reset user ID if input is cleared
             }
         });
+
+         // Hide the dropdown when an option is selected
+        //  $dropdown.on("click", ".optionlist", function () {
+        //     const selectedValue = $(this).text();
+        //     $input.val(selectedValue); // Optionally set the input value to the selected option
+        //     $dropdown.hide();
+        // });
     });
 
     // Function to fetch and display users
@@ -548,5 +616,17 @@ $(function () {
         });
     }
 
+    
+      $('#nametext').on('dblclick', function () {
+        $(this).val(''); // Clears the input field
+      });
+
+      $(".mytrans").on("input paste", function () {
+        const self = this;
+        setTimeout(() => {
+          // Trim leading spaces
+          $(self).val($(self).val().replace(/^\s+/, ""));
+        }, 0);
+      });
    
 });

@@ -186,41 +186,46 @@
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
-            <!-- <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
-            <input type="text" class="form-control product-search ps-5 userrebate" id="input-rsearch" placeholder="Search Rebate..." />
-            <i class="bx bx-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
-            
-            </div> -->
-            <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon12" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
-                    <input type="text" class="form-control queryholder userrebate" placeholder="Enter Rebate (%)" aria-label="Username" aria-describedby="basic-addon1" />
-          </div>
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
+                <input type="text" id="financeDropdownz" class="form-control queryholderlistt usernames" placeholder="Search usernames" />
+                <input name="usernames" type="hidden" class="userIdfinance" />
+                <select class="form-control financeDropdownz" size="5" style="display: none;" id="userfinaceDropdownsz">
+              
+                </select>
 
+                <!-- <select name="betsate" class="form-control form-select queryholderlistt depositestate"  data-bs-placeholder="Select Type">
+                    <option value="">--<?= $translator['transaction type']; ?>--</option>
+                    <option value="1"><?= $translator['Deposit']; ?></option>
+                    <option value="4"><?= $translator['Withdrawal']; ?></option>
+                </select> -->
+
+                <input name="startdate" type="date" class="form-control queryholderlistt startfinance" aria-describedby="name" placeholder="Name" />
+
+                <input name="enddate" type="date" class="form-control queryholderlistt endfinance" aria-describedby="name" placeholder="Name" />
+            </div>
+            <!-- <div class="input-group mb-3">
+				<span class="input-group-text" id="basic-addon12" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
+				<input type="text" class="form-control queryholder userrebate" placeholder="Enter Rebate (%)" aria-label="Username" aria-describedby="basic-addon1" />
+			</div> -->
         </span>
         <span class="toplist-center" aria-label=" navigation example">
             <!--enter is free-->
         </span>
         <span class="topplist-right" id="paginations" aria-label="Page navigation example">
-
-            <div class="btn-group mb-2" role="group" aria-label="Basic example"
-                style="border:solid 1px #eee;color:#bbb;background-color:#fff">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
                 <!-- <i ' ></i> -->
-                <!-- <button type="button" class="btn bg-white-subtle player setalldeposit" value="right" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Set all deposit">
-                    <i class='bx bx-plus' style="font-size:20px"></i>
-                </button> -->
-                <button type="button" class="btn bg-white-subtle player refreshdeposit" value="right" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
-                    <i class='bx bx-refresh' style="font-size:20px"></i>
+                <button type="button" class="btn bg-white-subtle showmodal" value="right" aria-label="Refresh" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Deposit/Withdrawal">
+                    <i class="bx bx-plus" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle executeuserlinks" value="end" aria-label="Execute"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                    <i class='bx bx-check-double loaderlinks' style="font-size:20px"></i>
+
+                <button type="button" class="btn bg-white-subtle player refreshfiance" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                    <i class="bx bx-refresh" style="font-size: 20px;"></i>
+                </button>
+                <button type="button" class="btn bg-white-subtle executefinance" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                    <i class="bx bx-check-double loaderfinance" style="font-size: 20px;"></i>
                 </button>
             </div>
-
         </span>
-
     </div>
 
     <div class="card-body p-4">
@@ -259,6 +264,9 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Receiving Card Number']; ?></h6>
                         </th>
                         <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
+                        </th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
                         </th>
                     </tr>
@@ -279,18 +287,18 @@
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playerdeposit" value="startd">
+                <!-- <button type="button" class="btn bg-white-subtle playerdeposit" value="startd">
                     <i class='bx bx-chevrons-left' style="font-size:20px"></i>
-                </button>
+                </button> -->
                 <button type="button" class="btn bg-white-subtle playerdeposit" value="leftd">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle playerdeposit" value="rightd">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerdeposit" value="endd">
+                <!-- <button type="button" class="btn bg-white-subtle playerdeposit" value="endd">
                     <i class='bx bx-chevrons-right' style="font-size:20px"></i>
-                </button>
+                </button> -->
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">

@@ -332,29 +332,31 @@
                 <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
                     <input type="text" id="myInput" class="form-control queryholderbet usernames" placeholder="Search usernames" />
                     <input name="usernames" type="hidden" class="userIdbet" />
-                    <select class="form-control userDropdownb" size="5" style="display: none;">
+                    <select class="form-control userDropdownb" size="5" style="display: none;" id="userlotteryDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>
                     <div class="custom-dropdown">
-                        <select name="lotteryname" class="form-control form-select queryholderbet typelottery selectlottery" data-bs-placeholder="Select Type"> </select>
+                        <select name="lotteryname" class="form-control form-select queryholderbet typelottery selectlottery" data-bs-placeholder="Select Type"> 
+
+                        </select>
                     </div>
 
                     <select name="betsate" class="form-control form-select queryholderbet betsate" data-bs-placeholder="Select Type">
                         <option value="">
-                            --<?= $translator['state']; ?>
-                            --
+                            -<?= $translator['State']; ?>
+                            -
                         </option>
                         <option value="1"> <?= $translator['Settled']; ?></option>
-                        <option value="2"><?= $translator['UnSettled']; ?></option>
+                        <option value="2"><?= $translator['Unsettled']; ?></option>
                         <option value="4"> <?= $translator['Cancelled Bet']; ?></option>
-                        <option value="7"><?= $translator['Refund']; ?></option>
-                        <option value="-1"><?= $translator['Deleted']; ?></option>
+                       
+                       
                     </select>
 
                     <select name="betstatus" class="form-control form-select queryholderbet betstatus" data-bs-placeholder="Select Type">
                         <option value="">
-                            --
-                            <?= $translator['Bet Status']; ?>--
+                            -
+                            <?= $translator['Bet Status']; ?>-
                         </option>
                         <option value="2"><?= $translator['Win']; ?></option>
                         <option value="3"><?= $translator['Loss']; ?></option>
@@ -409,6 +411,9 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Type']; ?></h6>
                         </th>
                         <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Game Model']; ?></h6>
+                        </th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Game Type']; ?></h6>
                         </th>
                         <th>
@@ -420,9 +425,7 @@
                                   <!-- <th>
                         <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Prize']; ?></h6>
                       </th> -->
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets']; ?></h6>
-                        </th>
+                       
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Unit Stake']; ?></h6>
                         </th>
@@ -465,18 +468,18 @@
     <div class="px-4 py-3 border-top pagerlist">
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-                <button type="button" class="btn bg-white-subtle playerbet" value="betstart">
+                <!-- <button type="button" class="btn bg-white-subtle playerbet" value="betstart">
                     <i class="bx bx-chevrons-left" style="font-size: 20px;"></i>
-                </button>
+                </button> -->
                 <button type="button" class="btn bg-white-subtle playerbet" value="betleft">
                     <i class="bx bx-chevron-left" style="font-size: 20px;"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle playerbet" value="betright">
                     <i class="bx bx-chevron-right" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerbet" value="betend">
+                <!-- <button type="button" class="btn bg-white-subtle playerbet" value="betend">
                     <i class="bx bx-chevrons-right" style="font-size: 20px;"></i>
-                </button>
+                </button> -->
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
