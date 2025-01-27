@@ -303,11 +303,11 @@ li.name-items:hover {
                     autocomplete="off" style="width:97%;" /> <div class="lot-res-wrapper" style="width: 27%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="lot-list-wrapper"></ul> </div></div>
                   
                   <input type="date" name="startdate" class="form-control startdate"  
-                    placeholder="Name" id="startdate" style="width: 30%;"/>
+                    placeholder="Name" id="wl-startdate" style="width: 30%;"/>
 
 
                 <input type="date" name="enddate" class="form-control enddate" 
-                    placeholder="Name" id="enddate" style="width: 30%;"/>
+                    placeholder="Name" id="wl-enddate" style="width: 30%;"/>
 
 
 
@@ -320,18 +320,6 @@ li.name-items:hover {
 
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-
-                <button type="button" class="btn bg-white-subtle btn-disabled back-btn" value="" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Back" data-bs-title="Back">
-                    <i class="bx bxs-bx bx-chevron-left" style="font-size:20px"></i>
-                </button>
-                <button type="button" class="btn bg-white-subtle btn-disabled get-user-details-btn" value="" aria-label="Back" 
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Get User Details">
-                    <i class='bx bxs-user' style="font-size:20px"></i>
-                </button>
-                <button type="button" class="btn bg-white-subtle top-agents-btn" value="" aria-label="Get Top Agent"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Get Top Agent">
-                    <i class='bx bxs-user-account' style="font-size:20px"></i>
-                </button>
                 <button type="button" class="btn bg-white-subtle player wl-refreshlist" value="" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
@@ -349,17 +337,11 @@ li.name-items:hover {
 
     <div class="card-body p-4">
         <div class="table-responsive mb-4 border rounded-1 table-wrapperuserlist" id="masklist" style="height:530px;overflow-y:scroll;">
-            <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
+            <table id="wl-tbl" class="table text-nowrap mb-0 align-middle table-bordered table-hover">
                 <thead class="text-dark fs-4 tbl-headersUser">
                     <tr class="userlistheadrow">
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Username</h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Relationship</h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Number of Bettors</h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Number of Bet Tickets</h6>
@@ -381,9 +363,6 @@ li.name-items:hover {
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Win/Loss</h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Subs</h6>
                         </th>
                     </tr>
                 </thead>
@@ -422,11 +401,20 @@ li.name-items:hover {
             <span id="paging_infolist" style="color:#aaa">---</span>
 
         </span>
-        <span class="toplist-right" id="paginationlist" aria-label="Page navigation example">
-
-            <!--Dynamic pagination-->
-
+        <span class="top-right-btn" aria-label="Page navigation example">
+            <select class="left-element form-control numrowstrans" id="wl-numrowstans" style="font-size: 12px;">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+            <span id="wl-pagination" class="right-element"> </span>
         </span>
+        <!-- <span class="toplist-right" id="paginationlist" aria-label="Page navigation example">
+
+            <!--Dynamic pagination
+
+        </span> -->
 
     </div>
 
