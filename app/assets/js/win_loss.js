@@ -5,27 +5,52 @@ $(() =>{
     let pagesStack    = [];
    
     
-    const win_loss = () => {
-        const flag = "win-loss";
-        const page = 1;
-        const limit = 10;
+    const fetchUsersWinLoss = (lottery_id = "all",startDate = "all", endDate ="all",page = 1, limit = 10, generatePages = true) => {
+
+        lottery_id = lottery_id ?? "all";
+        startDate  = startDate.length === 0  ? "all" : startDate;
+        endDate    = endDate.length   === 0  ? "all" : endDate;
+        page       = parseInt(page)
         $.ajax({
-            url: BASE_URL + `/win_loss/${page}/${limit}/${flag}`, // full url with page number ,limit and flag
+            url: BASE_URL + `/users_win_loss/${lottery_id}/${startDate}/${endDate}/${page}/${limit}`, // full url with page number ,limit and flag
             type: "POST",
             beforeSend: function(){
-                console.log("sending the request for the win loss");
+                $("#wl-tbl").LoadingOverlay("show", {
+                    background: "rgb(90,106,133,0.1)",
+                    size: 3,
+                  });
+//    $($(".wl-refreshlist").find("i")[0]).removeClass("bx bx-refresh").addClass("bx-loader bx-spin");
             },
             success: function(response){
                 console.log(response);
-                data  = JSON.parse(response);
+                response  = JSON.parse(response);
+                data      = response.data;
                 console.log(response);
-                $("#winLossDtholder").html(response.data);
+                if(data.status === "error") {
+                    // $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">${data.data}</td></tr>`); 
+                }
+                if(data.length == 0){
+                    $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
+                    return; 
+                }
+                let htmlMarkup = "";
+                const num_users = Math.ceil(data[0].num_users / 10);
+               if(generatePages) renderPagination("wl-pagination",num_users, page);
+                data.forEach(data => {
+                    htmlMarkup += getUserRowMarkup(data);
+                });
+                
+                $("#winLossDtholder").html(htmlMarkup);
             },
             error: function(xhr,status,err){
                   console.error("response from server, received" + err);
             },
             complete: function(){
-                console.log("response from server, received");
+                $("#wl-tbl").LoadingOverlay("hide", {
+                    background: "rgb(90,106,133,0.1)",
+                    size: 3,
+                  });
+// $($(".wl-refreshlist").find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx bx-refresh");
             },
         });
     };
@@ -78,7 +103,7 @@ $(() =>{
 
 
 
-         // Handle dropdown item selection
+    // Handle dropdown item selection
     $(document).on('change', '.userDropdown', function () {
         const selectedOption = $(this).find('option:selected');
         const selectedUserId = selectedOption.val();
@@ -90,9 +115,6 @@ $(() =>{
             $('.userDropdown').hide();
         }
     });
-
-
-
         
 let debounceTimeout = null;
 
@@ -123,8 +145,9 @@ let debounceTimeout = null;
             return;
         }
         let lotteryID = $("#wl-lottery").attr("data-lot-id");
-        let startDate = $("#startdate").val();
-        let endDate   = $("#enddate").val();
+        let startDate = $("#wl-startdate").val();
+        let endDate   = $("#wl-enddate").val();
+        const element = this;
         if(lotteryID != undefined){
             if(lotteryID.length == 0) return;
         }
@@ -137,37 +160,35 @@ let debounceTimeout = null;
             url: `../admin/searchWinLossUser/${userName}/${lotteryID}/${startDate}/${endDate}/`,
             type: "POST",
             beforeSend: function(){
-                    $("#win-loss-loader").css('display', 'flex');
+               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
             },
             success: function(response){
+                console.log(response);
                 $("#subs-back-btn").hide();
                 response  = JSON.parse(response);
-                console.log(response);
-                const num_res = response.length;
-                
-                if(response.length == 0){
-                    historyStack = [];
+                if(response.status === "error"){
+                    $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 
+                    return
+                }
+               
+                if(response.data.length == 0){
                     $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
                     return; 
                 }
-                if(response[0].account_type > 1){
+                userObj      = response.data[0];
+                if(userObj.account_type > 1){
                     if(!$(".get-user-details-btn").hasClass("btn-disabled")) $(".get-user-details-btn").addClass("btn-disabled"); 
                 }
-                
-                let htmlMarkup = "";
-                response.forEach((data,index) => {
-                    htmlMarkup += getUserRowMarkup(data);
-                }); 
+                htmlMarkup = getUserRowMarkup(userObj);
                 $("#winLossDtholder").html(htmlMarkup);
-                // historyStack = [htmlMarkup];
-                // pagesStack = [];
                 
                 },
             error: function(xhr,status,error){
                 console.log("An error occured: " );
             },
             complete: function(){
-                    $("#win-loss-loader").css('display', 'none');
+                $($(element).find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx-check-double");
+                $("#wl-pagination").html("")
             }
         });
 
@@ -193,7 +214,7 @@ let debounceTimeout = null;
 
 });
 
- // Handle dropdown item selection
+    // Handle dropdown item selection
     $(document).on('click', '.name-items', function () {
         if($(this).attr("data-username") != undefined){
             $("#wl-username").val($(this).attr('data-username'));
@@ -207,7 +228,7 @@ let debounceTimeout = null;
 });
 
 
-// Get Top Agents
+    // Get Top Agents
     $(document).on("click", ".top-agents-btn", function () {
 
         
@@ -262,7 +283,7 @@ let debounceTimeout = null;
 });
 
 
- // handle the back button action
+    // handle the back button action
     $(document).on("click",".get-user-details-btn",function(){
 
             const lotteryID = $("#wl-lottery").attr("data-lot-id");
@@ -301,19 +322,17 @@ let debounceTimeout = null;
 });
 
 
-// refresh list
-    $(document).on("click", ".wl-refreshlist", function () {
-        $("#wl-username").attr("data-user-id","");
-        $("#wl-username").val("");
-        $("#wl-lottery").attr("data-lot-id","");
-        $("#wl-lottery").val("");
-        $("#startdate").val();
-        $("#enddate").val();
-        $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
-
-});
-
-
+    // refresh list
+    $(document).on("click", ".wl-refreshlist", function () { 
+        $("#wl-username").attr("data-user-id",""); 
+        $("#wl-username").val(""); 
+        $("#wl-lottery").attr("data-lot-id",""); 
+        $("#wl-lottery").val(""); 
+        $("#wl-startdate").val(""); 
+        $("#wl-enddate").val(""); 
+        
+        fetchUsersWinLoss();
+     });
 
 
     // Get Subs
@@ -384,11 +403,10 @@ let debounceTimeout = null;
                     if($(".get-user-details-btn").hasClass("btn-disabled")) $(".get-user-details-btn").removeClass("btn-disabled"); // remove disabled btn class from the get-user-details-btn 
                 }
             }
-});
 
 
-   
 
+        });
 
 
 // Function to fetch and display users
@@ -455,15 +473,79 @@ const fetchLotteryname = (lotteryName) => {
 }
 
 
+// fetch the latest users win loss
+fetchUsersWinLoss();
+
+
+
+
+$(document).on('click', '.wl-pagination', function () {
+    if($(this).parent().hasClass("active")) return;
+    const page       = $(this).attr("data-page").trim();
+    const lottery_id = $("#wl-lottery").attr("data-lot-id"); 
+    const startDate  = $("#wl-startdate").val().trim(); 
+    const endDate    = $("#wl-enddate").val().trim(); 
+    fetchUsersWinLoss(lottery_id,startDate,endDate,page);
 });
 
+$(document).on('change', '#wl-numrowstans', function () {
+    const page       = $($("#wl-pagination").find(".page-item.active page-link")[0]).attr("data-page").trim();
+    const lottery_id = $("#wl-lottery").attr("data-lot-id"); 
+    const startDate  = $("#wl-startdate").val().trim(); 
+    const endDate    = $("#wl-enddate").val().trim(); 
+    const pageLimit  = $(this).val();
+    fetchUsersWinLoss(lottery_id,startDate,endDate,page,pageLimit , false);
+
+});
+
+});
+
+
+const renderPagination = (elementID,totalPages, currentPage, ) => {
+    const createPageLink = (i, label = i, disabled = false, active = false) =>
+        `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+        <a class='page-link wl-pagination' href='#' data-page='${i}'>${label}</a>
+    </li>`;
+    let pagLink = `<ul class='pagination justify-content-end'>`;
+
+    // Previous Button
+    pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
+
+    // Page numbers with ellipsis
+    for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+            pagLink += createPageLink(i, i, false, i === currentPage);
+        } else if (i === currentPage - 3 || i === currentPage + 3) {
+            pagLink += createPageLink(i, "...", true);
+        }
+    }
+
+    // Next Button
+    pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
+    pagLink += "</ul>";
+
+    document.getElementById(elementID).innerHTML = pagLink;
+
+    // Add click event listeners
+    document.querySelectorAll(`#${elementID} .page-link`).forEach((link) => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const newPage = +this.getAttribute("data-page");
+            if (newPage > 0 && newPage <= totalPages) {
+                $("#mask").LoadingOverlay("show", {
+                    background: "rgb(90,106,133,0.1)",
+                    size: 3,
+                  });
+                // callback(newPage, pageLimit); // Call the provided callback with new page and pageLimit
+            }
+        });
+    });
+}
 
 
 const getUserRowMarkup = (userData) => {
     return `<tr id='user-id-${userData.uid}' id='${userData.account_type > 1 ? 'agent' : ''}' data-acc-type='${userData.account_type > 1 ? 'agent' : ''}'>
         <td> ${userData.username} </td>
-        <td> ${userData.rel} </td>
-        <td> ${userData.num_bettors} </td>
         <td> ${userData.num_bet_tickets} </td>
         <td> ${userData.user_rebate} </td>
         <td> ${userData.total_bet_amount} </td>
@@ -471,7 +553,6 @@ const getUserRowMarkup = (userData) => {
         <td> ${userData.total_valid_amount} </td>
         <td> ${userData.total_win_amount} </td>
         <td> ${userData.win_loss} </td>
-        <td class="get-subs-btn"> ${userData.view_btn} </td>
             </tr>`
 
 };
