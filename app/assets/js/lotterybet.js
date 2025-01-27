@@ -81,7 +81,7 @@ $(function () {
                           <td>${gamemodel[item.game_model]}</td>
                         <td>${item.game_label}</td>
                         <td>${item.bet_date + " / " + item.bet_time}</td>
-                      
+                         <td>${item.server_date + " / " + item.server_time}</td>
                         <td>${item.unit_stake}</td>
                         <td>${item.multiplier}</td>
                         <td>${formatMoney(item.bet_amount)}</td>
