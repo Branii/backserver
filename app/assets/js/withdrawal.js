@@ -226,8 +226,39 @@ $(function () {
         
     });
     
+    
 
 
+
+    $(".playerwithdraw").click(function () {
+      let direction = $(this).val();
+      const tableWrapper = $(".table-wrapperwithdraw");
+      const tableWrappers = document.querySelector(".table-wrapperwithdraw");
+      const scrollAmount = 1000; // Adjust as needed
+      const scrollOptions = {
+          behavior: "smooth",
+      };
+      if (tableWrapper.length) {
+          switch (direction) {
+              case "widrl-leftlinks":
+                  tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
+                  break;
+              case "widrl-rightlinks":
+                  tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
+                  break;
+              case "wdrl-starttrans":
+                  // Scroll to the absolute start (leftmost position)
+                  tableWrapper.animate({ scrollLeft: 0 }, "slow");
+                  break;
+              case "widrl-endlinks":
+                  const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
+                  tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
+                  break;
+              default:
+                  break;
+          }
+      }
+  });
 
     
   });

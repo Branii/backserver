@@ -186,15 +186,30 @@
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
+                <input type="text" id="mytrans" class="form-control queryholdertrans usernames mytrans" placeholder="Search usernames">
+                <input name="usernames" type="hidden" class="userIdtrans queryholdertrans">
+                <input type="text" class="form-control queryholdertrans orderid" id="withdrawalID" aria-describedby="name" placeholder="Search Withdrawal ID">
+                <select class="form-control useraccount" size="5" style="display: none;" id="userAccountDropdown">
+                        <option value="0">Channels</option>
+                        <option value="1">Momo</option>
+                        <option value="2">Bank</option>
+                        <option value="3">Crypto</option>
+                        <option value="4">Manual</option>
+                </select>
+                <input type="date" class="form-control queryholdertrans wdrl-startdate" id="wdrl-startDate" aria-describedby="name" placeholder="Start Date">
+                <input type="date" class="form-control queryholdertrans wdrl-enddate"   id="wdrl-endDate" aria-describedby="name" placeholder="End Date">
+            </div>
+       
             <!-- <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
             <input type="text" class="form-control product-search ps-5 userrebate" id="input-rsearch" placeholder="Search Rebate..." />
             <i class="bx bx-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
             
             </div> -->
-            <div class="input-group mb-3">
+            <!-- <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon12" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
                     <input type="text" class="form-control queryholder userrebate" placeholder="Enter Rebate (%)" aria-label="Username" aria-describedby="basic-addon1" />
-          </div>
+          </div> -->
 
         </span>
         <span class="toplist-center" aria-label=" navigation example">
@@ -248,14 +263,22 @@
 						<th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bank Card Number']; ?>
 						<th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Fee']; ?></h6>
+                        </th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Withdrawal Amount']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Actual Withdrawal Amount']; ?></h6>
                         </th>
-
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Withdrawal Application Time']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Approved By']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
@@ -278,16 +301,16 @@
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playerlinks" value="startlinks">
+                <button type="button" class="btn bg-white-subtle playerlinks" value="widrl-startlinks">
                     <i class='bx bx-chevrons-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerwithdraw" value="leftlinks">
+                <button type="button" class="btn bg-white-subtle playerwithdraw" value="widrl-leftlinks">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerwithdraw" value="rightlinks">
+                <button type="button" class="btn bg-white-subtle playerwithdraw" value="widrl-rightlinks">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerwithdraw" value="endlinks">
+                <button type="button" class="btn bg-white-subtle playerwithdraw" value="widrl-endlinks">
                     <i class='bx bx-chevrons-right' style="font-size:20px"></i>
                 </button>
             </div>

@@ -799,6 +799,14 @@ return [
 'Total Rebate Amount'        => 'Total Rebate Amount',
 'Total Valid Amount'         => 'Total Valid Amount',
 'Total Win Amount'           => 'Total Win Amount',
+
+
+
+
+// Withdrawal Records: Muniru
+'Fee'  => "Fee",
+'Status'  => "Status",
+'Approved By'  => "Approved By"
 ];
 
 
