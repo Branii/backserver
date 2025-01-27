@@ -804,8 +804,7 @@ return [
 
 
 // Withdrawal Records: Muniru
-'Fee'  => "Fee",
-'Status'  => "Status",
+
 'Approved By'  => "Approved By"
 ];
 
