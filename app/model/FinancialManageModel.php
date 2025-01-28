@@ -107,7 +107,7 @@ class FinancialManageModel extends MEDOOHelper
             'date_created' =>  date("H:i:s"),
             'time_created' =>  date("Y-m-d"),
             'payment_reference' =>  $depositid,
-            'provider' =>'Company Number',      
+            'provider' =>'MTN',      
             'status' =>'Success',
             'approved_by' => $username,
             'desposit_channel' => $desposittype,
