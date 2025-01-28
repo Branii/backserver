@@ -1,61 +1,49 @@
 $(function () {
-
     function showToast(title, message, type) {
         $.toast({
-          position: "bottom-right",
-          title: title,
-          message: message,
-          type: type,
-          duration: 3000, // auto-dismiss after 3s
+            position: "bottom-right",
+            title: title,
+            message: message,
+            type: type,
+            duration: 3000, // auto-dismiss after 3s
         });
-       }
-    // function formatBalance(balance) {
-    //     if (balance % 1 !== 0 && balance.toString().split(".")[1].length > 3) {
-    //         return Number(balance).toFixed(4);
-    //     }
-    //     return Number(balance).toFixed(4);
-    // }
-    function formatMoney(money) { 
-        let moneyStr = String(money); 
-        if (moneyStr.includes(".")) { 
-            let parts = moneyStr.split("."); 
-            if (parts[1].length > 2) { 
-                parts[1] = parts[1].substring(0, 4); 
-            } 
-            moneyStr = parts.join(".").replace(/\.?0+$/, ""); 
-        } 
-        return moneyStr; 
     }
-   
-    // function formatMoney(money) { 
-    //     return String(money).includes(".") && String(money).split(".")[1].length > 2 
-    //       ? String(Number(money).toFixed(4)) 
-    //       : money; 
-    //   }
-      const translator = JSON.parse(
-        document.getElementById("translation-container").getAttribute("data-translations")
-    );
-     // console.log(translations)
+ 
+    function formatMoney(money) {
+        let moneyStr = String(money);
+        if (moneyStr.includes(".")) {
+            let parts = moneyStr.split(".");
+            if (parts[1].length > 2) {
+                parts[1] = parts[1].substring(0, 4);
+            }
+            moneyStr = parts.join(".").replace(/\.?0+$/, "");
+        }
+        return moneyStr;
+    }
+
   
+    const translator = JSON.parse(document.getElementById("translation-container").getAttribute("data-translations"));
+    // console.log(translations)
+
     const AccountTransactions = (data) => {
         let html = "";
-       
+
         const status = {
             1: { title: translator["Deposit"] || "Deposit", color: "#4CAF50" }, // Green
             2: { title: translator["Win Bonus"], color: "#FF9800" }, // Orange
-            3: { title: translator['Bet Awarded'], color: "#03A9F4" }, // Light Blue
-            4: { title: translator['Withdrawal'], color: "#F44336" },
-            5: { title: translator['Bet Deduct'], color: "#E91E63" }, // Red
-            6: { title: translator['Bet Cancelled'], color: "#9E9E9E" }, // Grey
+            3: { title: translator["Bet Awarded"], color: "#03A9F4" }, // Light Blue
+            4: { title: translator["Withdrawal"], color: "#F44336" },
+            5: { title: translator["Bet Deduct"], color: "#E91E63" }, // Red
+            6: { title: translator["Bet Cancelled"], color: "#9E9E9E" }, // Grey
             // Pink
-            7: { title: translator['Rebates'], color: "#8BC34A" }, // Light Green
-            8: { title: translator['Self Rebate'], color: "#00BCD4" }, // Cyan
-            9: { title: translator['Sending Red Envelope'], color: "#FF5722" }, // Deep Orange
-            10: { title: translator['Red Envelope Receive'], color: "#795548" }, // Brown
-            11: { title: translator['Bet Refund'], color: "#FFC107" }, // Amber
-            0: { title: translator['Complete'], color: "#ccc" }, // Amber
+            7: { title: translator["Rebates"], color: "#8BC34A" }, // Light Green
+            8: { title: translator["Self Rebate"], color: "#00BCD4" }, // Cyan
+            9: { title: translator["Sending Red Envelope"], color: "#FF5722" }, // Deep Orange
+            10: { title: translator["Red Envelope Receive"], color: "#795548" }, // Brown
+            11: { title: translator["Bet Refund"], color: "#FFC107" }, // Amber
+            0: { title: translator["Complete"], color: "#ccc" }, // Amber
         };
-          let completes = translator['Completed']
+        let completes = translator["Completed"];
         const formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
 
         data.forEach((item) => {
@@ -83,79 +71,53 @@ $(function () {
         let html = ""; // Initialize the HTML string
 
         Object.entries(transactiondata).forEach(([key, value]) => {
-          
-      if(value === "Bet Selection"){
-        html += `
-         <td>${value}</td>
-          <td class="${key === "user_selection" ? "bet_userSelection" : ""}">
-            <textarea class="form-control"   readonly style="height: 75px;">${obj[key]}</textarea>
-           </td>`
-   }else{
-     html += `
-         <tr>
-           <td>${value}</td>
-           <td class="${key === "user_selection" ? "bet_userSelectiond" : ""}" 
-             ${key === "user_selection" ? `title="${obj[key]}"` : ""}>
-             ${key === "win_bonus" || key === "bet_amount" ||key ==="rebate_amount" ? `${formatMoney(obj[key])}` : `${obj[key]}`}
-            </td>
-         </tr>
-         `;
-
-   }
-
+            if (value === "Bet Selection") {
+                html += `
+                 <td>${value}</td>
+                <td class="${key === "user_selection" ? "bet_userSelection" : ""}">
+                    <textarea class="form-control" readonly style="height:75px;">${obj[key]}</textarea>
+                </td>`;
+            } else {
+                html += `
+                 <tr>
+                   <td>${value}</td>
+                   <td class="${key === "user_selection" ? "bet_userSelection" : ""}" 
+                     ${key === "user_selection" ? `title="${obj[key]}"` : ""}>
+                     ${key === "win_bonus" || key === "bet_amount" || key === "rebate_amount" ? `${formatMoney(obj[key])}` : `${obj[key]}`}
+                    </td>
+                 </tr>
+                 `;
+            }
         });
 
         return html; // Return the generated HTML
     };
 
     const firstRow = {
-    'bet_code': 'Bet Order ID:',
-    'draw_period': 'Issue Number:',
-    'bet_time': 'Bet Time:',
-    'bet_number': 'Total Bet:',
-     'unit_stake': 'Unit Stake:',
-     'multiplier': 'Multiplier:',
-     'bet_amount': 'Total Bet Amount:',
-     'win_bonus': 'Win Amount:',
-     'rebate_amount': 'Rebate Amount',
-     'num_wins': 'Number of wins:',
-     'draw_number': 'Draw Results:',
- 
-        // reg_type: `${translator["Username"]}:`,
-        // bet_code: `${translator["Bet Order ID"]}:`,
-        // draw_period: `${translator["Issue Number"]}:`,
-        // ip_address: `${translator["IP"]}:`,
-        // unit_stake: `${translator["Unit Stake"]}:`,
-        // multiplier: `${translator["Multiplier"]}:`,
-        // bet_status: `${translator["Bet Status"]}:`,
-        // game_label: `${translator["Game Type"]}:`,
-        // draw_number: `${translator["Draw Results"]}:`,
-        // num_wins: `${translator["Number of Wins"]}:`,
+        bet_code: `${translator["Bet Order ID"]}:`,
+        draw_period: `${translator["Issue Number"]}:`,
+        bet_time: `${translator["Bet Time"]}:`,
+        bet_number: `${translator["Total Bets"]}:`,
+        unit_stake: `${translator["Unit Stake"]}:`,
+        multiplier: `${translator["Multiplier"]}:`,
+        bet_amount: `${translator["Total Bet Amount"]}:`,
+        win_bonus: `  ${translator["Win Amount"]}:`,
+        rebate_amount: `${translator["Rebate Amount"]}:`,
+        num_wins: `${translator["Number of Wins"]}:`,
+        draw_number: `${translator["Draw Results"]}:`,
     };
 
     const secondRow = {
-    'reg_type': 'Username:',
-    'ip_address': 'IP:',
-    'game_type': 'Lottery Type:',
-    'game_label': 'Game Label:',
-    'bettype': 'Bet Type:',
-    'game_model': 'Game Model',
-    'closing_time': 'Closing Time:',
-    'opening_time': 'Draw Time:', 
-    'bet_status': 'Bet Status:',
-    'user_selection': 'Bet Selection',
-    
-        // bettype : `${translator["Bet Type"]}:`,
-        // game_type: `${translator["Lottery Type"]}:`,
-        // bet_time: `${translator["Bet Time"]}:`,
-        // closing_time: `${translator["Closing Time"]}:`,
-        // opening_time: `${translator["Draw Time"]}:`,
-        // bet_number: `${translator["Total Bets"]}:`,
-        // bet_amount: `${translator["Total Bet Amount"]}:`,
-        // win_amount: `${translator["Win Amount"]}:`,
-        // rebate_amount: `${translator["Rebate Amount"]}:`,
-        // user_selection: `${translator["Bet Selection"]}:`,
-        // // description: "des",
+        reg_type: `${translator["Username"]}:`,
+        ip_address: `${translator["IP"]}:`,
+        game_type: `${translator["Lottery Type"]}:`,
+        game_label: `${translator["Game Label"]}:`,
+        bettype: `${translator["Bet Type"]}:`,
+        game_model: `${translator["Game Model"]}:`,
+        closing_time: `${translator["Closing Time"]}:`,
+        opening_time: `${translator["Draw Time"]}:`,
+        bet_status: `${translator["Bet Status"]}:`,
+        user_selection: `${translator["Bet Selection"]}:`,
     };
 
     const render = (data) => {
@@ -176,7 +138,7 @@ $(function () {
 
             // Render pagination
             renderPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchTrasaction(newPage, pageLimit));
-            document.getElementById("paging_info").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+            document.getElementById("paging_info").innerHTML = `${translator["Page"]} ${page} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -186,14 +148,14 @@ $(function () {
         try {
             const response = await fetch(`../admin/filtertransactions/${username}/${orderid}/${ordertype}/${startdatet}/${enddatet}/${currentPage}/${pageLimit}`);
             const data = await response.json();
-            if(data.response == "error"){
-                 showToast("Alert","User does not exist","info")
+            if (data.response == "error") {
+                showToast("Alert", "User does not exist", "info");
                 $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-                return
+                return;
             }
 
             ///console.log(response);
-      
+
             $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             if (data.transactions.length < 1) {
                 let html = `
@@ -202,7 +164,7 @@ $(function () {
                       <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
                   </td>
               </tr>`;
-              $("#mask").LoadingOverlay("hide");
+                $("#mask").LoadingOverlay("hide");
                 $("#dataContainer").html(html);
                 return;
             }
@@ -251,13 +213,12 @@ $(function () {
                     $("#mask").LoadingOverlay("show", {
                         background: "rgb(90,106,133,0.1)",
                         size: 3,
-                      });
+                    });
                     callback(newPage, pageLimit); // Call the provided callback with new page and pageLimit
                 }
             });
         });
     }
-
 
     fetchTrasaction(currentPage, pageLimit);
 
@@ -303,10 +264,9 @@ $(function () {
     });
 
     $(document).on("click", ".executetrans", function () {
-        if ($("#mytrans").val() == ""  && $(".ordertype").val() == "" && $(".startdatet").val() == "" 
-        && $(".orderid").val() == "") {
+        if ($("#mytrans").val() == "" && $(".ordertype").val() == "" && $(".startdatet").val() == "" && $(".orderid").val() == "") {
             //  $("#al-danger-alert").modal("show");
-            showToast("Heads up!!","Select one or more data fields to filter","info")
+            showToast("Heads up!!", "Select one or more data fields to filter", "info");
             return;
         }
         const username = $("#mytrans").val();
@@ -315,7 +275,7 @@ $(function () {
         const ordertype = $(".ordertype").val();
         const startdatet = $(".startdatet").val();
         const enddatet = $(".enddatet").val();
-          console.log(username);
+        console.log(username);
         //  return
         $(".loader").removeClass("bx-check-double").addClass("bx-loader bx-spin");
         setTimeout(() => {
@@ -411,7 +371,7 @@ $(function () {
         return {
             usernames: transactiondata.usernames || "N/A",
             status,
-            amount :transactiondata.redEnvelope.account_change,
+            amount: transactiondata.redEnvelope.account_change,
             balance: transactiondata.redEnvelope.balance || "N/A",
             dateTime: transactiondata.redEnvelope.dateTime || "N/A",
             orderId: transactiondata.redEnvelope.order_id || "N/A",
@@ -445,7 +405,6 @@ $(function () {
     }
 
     async function fetchTrasactionBet(transactionId) {
-      
         try {
             const response = await fetch(`../admin/getTransactionBet/${transactionId}`);
             const transactiondata = await response.json();
@@ -469,10 +428,10 @@ $(function () {
         }
     }
 
-    
     $(document).on("click", ".tinfo", function () {
-        setTimeout(() => { $("#loadingIndicator").hide();   
-        }, 100); 
+        setTimeout(() => {
+            $("#loadingIndicator").hide();
+        }, 100);
         $("#signup-modal").modal("show");
         const transactionId = $(this).attr("value");
         console.log(transactionId);
@@ -490,7 +449,7 @@ $(function () {
         $("#mask").LoadingOverlay("show", {
             background: "rgb(90,106,133,0.1)",
             size: 3,
-          });
+        });
         const numrow = $(this).val();
         fetchTrasaction(currentPage, numrow);
     });
@@ -527,7 +486,7 @@ $(function () {
     //search the for username
 
     let debounceTimeout = null;
-    let isPastings = false; 
+    let isPastings = false;
 
     $(document).ready(function () {
         // Event listener for keyup on #myInput
@@ -535,7 +494,7 @@ $(function () {
             const query = $(this).val().trim();
 
             // Only trigger if input is more than 2 characters
-            if (query.length > 1 && !isPastings)  {
+            if (query.length > 1 && !isPastings) {
                 clearTimeout(debounceTimeout); // Clear any existing timeout
                 debounceTimeout = setTimeout(fetchbetUser, 500, query); // Call fetchUsers with the query after 500ms delay
             } else {
@@ -543,15 +502,14 @@ $(function () {
             }
         });
 
-        $(document).on('paste', '#mytrans', function () {
+        $(document).on("paste", "#mytrans", function () {
             isPastings = true; // Set the flag to true when paste happens
-            $('.useraccount').hide()
+            $(".useraccount").hide();
             setTimeout(function () {
                 isPastings = false; // Reset the flag after a short delay (allow paste to finish)
-            }, 100);  // Delay of 100ms is usually enough for paste operations to finish
-        
-            });
-        
+            }, 100); // Delay of 100ms is usually enough for paste operations to finish
+        });
+
         // Handle dropdown item selection
         $(document).on("change", ".useraccount", function () {
             const selectedOption = $(this).find("option:selected");
@@ -564,7 +522,7 @@ $(function () {
                 $(".useraccount").hide();
             }
 
-            console.log(selectedUsername)
+            console.log(selectedUsername);
         });
 
         $(document).on("click", function (e) {
@@ -580,7 +538,7 @@ $(function () {
             }
         });
 
-         // Hide the dropdown when an option is selected
+        // Hide the dropdown when an option is selected
         //  $dropdown.on("click", ".optionlist", function () {
         //     const selectedValue = $(this).text();
         //     $input.val(selectedValue); // Optionally set the input value to the selected option
@@ -610,8 +568,8 @@ $(function () {
                         displayusername = user.contact;
                         regusername = user.contact; // Show contact
                     } else {
-                         displayusername = "no data found...";
-                         regusername = "no data found..."// Show contact
+                        displayusername = "no data found...";
+                        regusername = "no data found..."; // Show contact
                     }
                     optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regusername}">${displayusername}</option>`;
                 });
@@ -627,17 +585,15 @@ $(function () {
         });
     }
 
-    
-      $('#nametext').on('dblclick', function () {
-        $(this).val(''); // Clears the input field
-      });
+    $("#nametext").on("dblclick", function () {
+        $(this).val(""); // Clears the input field
+    });
 
-      $(".mytrans").on("input paste", function () {
+    $(".mytrans").on("input paste", function () {
         const self = this;
         setTimeout(() => {
-          // Trim leading spaces
-          $(self).val($(self).val().replace(/^\s+/, ""));
+            // Trim leading spaces
+            $(self).val($(self).val().replace(/^\s+/, ""));
         }, 0);
-      });
-   
+    });
 });

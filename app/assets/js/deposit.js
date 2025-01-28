@@ -49,7 +49,7 @@ $(function () {
                           <td>${item.date_created + ' / ' + item.time_created}</td>
                           <td>${item.momo_provider ? item.momo_provider: "N/A"}</td>
                           <td>${item.user_mobile}</td>
-                          <td>${item.momo_status.charAt(0).toUpperCase() + item.momo_status.slice(1)}</td>
+                          <td>${item.status.charAt(0).toUpperCase() + item.status.slice(1)}</td>
                           <td>${item.approved_by}</td>
                           
                       </tr>

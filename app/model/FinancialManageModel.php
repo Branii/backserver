@@ -57,21 +57,18 @@ class FinancialManageModel extends MEDOOHelper
         }
 
         // Insert into Deposits and Withdrawals
-        if (self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance)) {
-            if(self:: insertIntoDepositsNew($desposittype, $uid, $amount, $depositid,$username))
-            // Insert into Transaction table
-            if (self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)) {
-                // Update user balance
-                self::updateBalance($uid, $recharge_balance);
-                $success = true; // Set the flag to true if any iteration is successful
-            }
+        if (
+            self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance) &&
+             self::insertIntoDepositsNew($desposittype, $uid, $amount, $depositid, $username) &&
+             self::insertIntoWithrawManage($desposittype, $uid, $amount, $depositid, $username) &&
+            self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
+        ) {
+            // Update user balance if all operations succeed
+            self::updateBalance($uid, $recharge_balance);
+            $success = true;
         }
-        //  }
-        if ($success) {
-            return "success";
-        } else {
-            return  "no changes made";
-        }
+        
+        return $success ? "success" : "no changes made";
     }
 
     public static function insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance)
@@ -104,14 +101,49 @@ class FinancialManageModel extends MEDOOHelper
             'date_created' =>  date("H:i:s"),
             'time_created' =>  date("Y-m-d"),
             'payment_reference' =>  $depositid,
-            'momo_provider' =>'Company Number',      
-            'momo_status' =>'Success',
+            'provider' =>'Company Number',      
+            'status' =>'Success',
             'approved_by' => $username,
             'desposit_channel' => $desposittype,
         
      
         ];
         return  $inserdata = parent::insert("deposit_new", $params);
+    
+    }
+
+
+    public static function insertIntoWithrawManage($desposittype, $uid, $amount, $depositid,$username)
+    {
+            $manualusername = "manual deposit";
+            $manualemail = "manualdeposit@gmail.com";
+            $currentDateTime = date('Y-m-d H:i:s');
+            $currentTime = date('H:i:s');
+            $currentDate = date('Y-m-d');
+
+            $params = [
+                'uid' => $uid,
+                'withdrawal_id' => $depositid,
+                'username' => $manualusername,
+                'user_email' => $manualemail,
+                'contact' => "MTN",
+                'user_level' => 'Vip',
+                'bank_type' => 'Company Number',
+                'withdrawal_channel' => $desposittype,
+                'card_holder' => 'Enzerhub',
+                'bank_card_number' => 'Company Number',
+                'withdrawal_amount' => $amount,
+                'actual_withdrawal_amount' => $amount,
+                'withdrawal_application_time' => $currentDateTime,
+                'review_completion_time' => $currentDateTime,
+                'withdrawal_time' => $currentTime,
+                'withdrawal_date' => $currentDate,
+                'withdrawal_state' => '2',
+                'review' => 'Done',
+                'approved_by' => $username,
+            ];
+
+            return parent::insert("withdrawal_manage", $params);
     
     }
     public static function insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)

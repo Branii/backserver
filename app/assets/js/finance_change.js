@@ -291,7 +291,7 @@ $(function () {
           if (response) {
             $(".loaderfinance").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send")
             showToast("Success", "transaction perform success", "success");
-            fetchfinance(currentPagefinance);
+            fetchfinance(currentPage,pageLimit);
           } else {
             showToast("Heads up!!","transaction failed", "info");
           }
