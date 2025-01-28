@@ -25,7 +25,12 @@ return [
     'Red Envelope Receive' => '收到红包',
     'Bet Refund' =>'投注退款',
     'Rebates' => '返点',
-
+    'Bet Stake Time' =>'投注金额时间',
+    'Server Time' =>'服务器时间',
+    'label'     =>'标签',
+    'Page' =>'标签',
+    'Pages' => '页数',
+    'Of' => '之',
 
 
     //'Withdrawal Review' => '提款审核',
@@ -112,6 +117,8 @@ return [
     'Bet Selection' =>'投注选择',
     'Draw Results' => '奖结果',
     'Game Model' =>'游戏模型',
+    'Game Label' =>'游戏标签',
+    'Closing Time' => '结束时间',
 
     //Tracking management 
     "Track Records" => '追号管理',

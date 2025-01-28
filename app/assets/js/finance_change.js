@@ -9,10 +9,21 @@ $(function () {
         duration: 3000, // auto-dismiss after 3s
       });
     }
+
+    function formatMoney(money) { 
+      let moneyStr = String(money); 
+      if (moneyStr.includes(".")) { 
+          let parts = moneyStr.split("."); 
+          if (parts[1].length > 2) { 
+              parts[1] = parts[1].substring(0, 4); 
+          } 
+          moneyStr = parts.join(".").replace(/\.?0+$/, ""); 
+      } 
+      return moneyStr; 
+  }
     const FinanceData = (data) => {
       let html = "";
 
-  
       data.forEach((item) => {
         let total_income = item.deposit_withdrawal_type == 1 ? `+${item.deposit_and_withdrawal_amount}` :
         item.deposit_withdrawal_type == 4 ? `-${item.deposit_and_withdrawal_amount}` : 0;
@@ -28,10 +39,10 @@ $(function () {
     : "N/A"}</td>
                       <td>VIP</td>
                       <td class="editables">${types}</td>
-                      <td class="editables">${total_income}</td>
-                      <td class="editables">${item.recharge_balance_in_advance}</td>
-                      <td class="editables">${item.date_created +' '+item.deposit_and_withdrawal_time}</td>
-                      <td class="editables">${item.remark}</td>
+                      <td class="editables">${formatMoney(total_income)}</td>
+                      <td class="editables">${formatMoney(item.recharge_balance_in_advance)}</td>
+                      <td class="editables">${item.date_created +' / '+item.deposit_and_withdrawal_time}</td>
+                      <td class="editables">${item.remark.charAt(0).toUpperCase() + item.remark.slice(1)}</td>
                                           
                       </tr>
                   `;
@@ -160,17 +171,18 @@ $(function () {
 
     $(document).on('click', '.executefinance', function () {
     
-      if ($("#financeDropdown").val() == "" && $(".depositestate").val() == "" && $(".startfinance").val() == "" ) {
+      if ($("#financeDropdown").val() == "" && $(".depositestate").val() == "" && $(".startfinances").val() == "" ) {
         // $("#danger-finance").modal("show");
         showToast("Heads up!!","Select one or more data fields to filter","info")
-        return;
+      //  return;
     }
   
       const depositestate = $(".depositestate").val();
       const username = $("#financeDropdown").val();
-      const startfinance = $(".startfinance").val();
-      const endfinance = $(".endfinance").val();
-      console.log(username)
+      const startfinance = $(".startfinances").val();
+      const endfinance = $(".endfinances").val();
+      // console.log(startfinance)
+      // return
    
      filterfinance(username,depositestate,startfinance,endfinance,currentPage,pageLimit)
       // Show loader
@@ -268,19 +280,18 @@ $(function () {
       const usernames = $(".userIdFields").val();
       const amount = $(".amount").val();
       const review = $(".review").val();
-
-  
-      if (amount === "" || review === "" || usernames === "") {
+      const approvedby = $(".approved").val()
+      if (amount === "" || review === "" || usernames === "" || approvedby === "") {
         showToast("Heads up!!", "All field are required", "info");
         return false;
       }
       $(".loaderfinance").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
-      $.post(`../admin/addmoney/${depositype}/${usernames}/${amount}/${review}`,
+      $.post(`../admin/addmoney/${depositype}/${usernames}/${amount}/${approvedby}/${review}`,
         function (response) {
           if (response) {
             $(".loaderfinance").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send")
             showToast("Success", "transaction perform success", "success");
-            fetchfinance(currentPagefinance);
+            fetchfinance(currentPage,pageLimit);
           } else {
             showToast("Heads up!!","transaction failed", "info");
           }

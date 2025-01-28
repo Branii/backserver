@@ -5,6 +5,5 @@ if (session_status() == PHP_SESSION_NONE) {
   }
 
 $text = isset($this->viewData['lang']) ? $this->viewData['lang'] : null;
-
 $_SESSION['lang'] = $text ?? "en";
 echo trim($_SESSION['lang']) ;

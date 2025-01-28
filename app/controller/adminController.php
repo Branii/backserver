@@ -384,20 +384,21 @@ class adminController extends Controller {
         $this->view('exec/financial_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchfinance']);
         $this->view->render();
     }
-    public function addmoney($depositetype,$uid,$amount,$review)
+    public function addmoney($depositetype,$uid,$amount,$approvedby,$review)
     {
         $this->view('exec/financial_manage', ['depositetype' => $depositetype,'uid'=>$uid,
-        'amount' => $amount,'review'=>$review, 'flag' => 'addmoney']);
+        'amount' => $amount, 'approvedby' => $approvedby,'review'=>$review,'flag' => 'addmoney']);
         $this->view->render();
     }
 
-    public function filterdeposit($uid,$depsosit,$startdate,$enddate,$page,$pageLimit)
+    public function filterdeposits($uid,$depositchanel,$depositid,$startdepo,$enddepo,$page,$pageLimit)
     {
         $this->view('exec/financial_manage', [
         'uid' => $uid,
-        'states' => $depsosit,
-        'startdate' => $startdate,
-        'enddate' => $enddate,
+        'states' => $depositchanel,
+        'depositid' => $depositid,
+        'startdate' => $startdepo,
+        'enddate' => $enddepo,
          'page' => $page,
          'limit' => $pageLimit,
         'flag' => 'filterdeposit'
@@ -405,6 +406,7 @@ class adminController extends Controller {
         $this->view->render();
 
     }
+   
 
     // public function filterRebate($rebate)
     // {

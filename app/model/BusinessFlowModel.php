@@ -2,16 +2,7 @@
 
 class BusinessFlowModel extends MEDOOHelper
 {
-    public static function getAllGameIdsWithCondition($condition = ""): array
-    {
-        return parent::selectAll("gamestable_map", ["bet_table", "game_type"], $condition);
-        // $sql = "SELECT bet_table,game_type FROM gamestable_map {$condition} ";
-        // $stmt = self::openConnection("lottery")->prepare($sql);
-        // $stmt->execute();
-        // $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // return $data;
-    }
-
+    
     public static function FetchTransactionData($page, $limit): array
     {
         $startpoint = $page * $limit - $limit;
@@ -234,7 +225,6 @@ class BusinessFlowModel extends MEDOOHelper
                 u.reg_type, gt.name As game_type,gt.gt_id AS gt_id FROM ', table_name, ' bt JOIN users_test u ON bt.uid = u.uid
                      JOIN game_type gt ON gt.gt_id = bt.game_type') SEPARATOR ' UNION ALL '
         ) AS query FROM information_schema.tables WHERE table_schema = 'lottery_test' AND table_name LIKE 'bt_%'";
-        
 
         $pdo = (new Database())->openLink();
         $pdo->exec("SET SESSION group_concat_max_len = 1000000");
@@ -253,168 +243,99 @@ class BusinessFlowModel extends MEDOOHelper
         return ['data' => $data, 'total' => count($totalcount)];
     }
 
-    public static function getAllUserBetByUserId($subquery, $page, $limit)
+    public static function getAllUserBetByUserId($uid, $gametype, $betstate, $betstatus, $enddate, $startdate, $page, $limit)
     {
-        // $startpoint = ($page * $limit) - $limit;
-        // $bettable = self::getAllGameIds();
-        // $data = [];
-        // $totalRecords = 0;
+        $offset = ($page - 1) * $limit;
 
-        // foreach ($bettable as $tables) {
-        //     $tableName = $tables['bet_table'];
-        //     $sql = "
-        //     SELECT 
-        //         temp_table.*, 
-        //         users_test.email AS email,users_test.reg_type,
-        //         users_test.username AS username,
-        //         game_type.name AS game_type,
-        //         game_type.gt_id AS gt_id
-        //     FROM 
-        //         (
-        //             SELECT * 
-        //             FROM $tableName
-        //             WHERE $subquery
-        //         ) AS temp_table
-        //     JOIN 
-        //         users_test ON users_test.uid = temp_table.uid
-        //     JOIN 
-        //         game_type ON game_type.gt_id = temp_table.game_type
-        //     LIMIT :offset, :limit
-        // ";
-        
-        //             $countSql = "
-        //             SELECT 
-        //                 COUNT(*) AS total_count
-        //             FROM 
-        //                 $tableName
-        //         WHERE
-        //             $subquery
-        //             ";
+        $pdo = (new Database())->openLink();
+        $pdo->exec("SET SESSION group_concat_max_len = 1000000");
 
+        // Generate the filter query using the filterBetData method
+        $subquery = self::filterBetData($uid, $gametype, $betstate, $betstatus, $enddate, $startdate);
+        $whereClause = $subquery['query'];
+        // Build the main SQL query
+        $sql = "
+        SELECT GROUP_CONCAT(
+            CONCAT(
+                'SELECT bt.bet_odds, bt.draw_period, bt.bet_code, bt.game_label, bt.uid, bt.bet_number, 
+                 bt.unit_stake, bt.multiplier, bt.bet_amount, bt.win_amount, bt.win_bonus, bt.bet_status, bt.state, 
+                 bt.bet_time, bt.bet_date, bt.game_model, bt.server_date, bt.server_time, 
+                 u.username, u.email, u.contact, u.reg_type, 
+                 gt.name AS game_type, gt.gt_id AS gt_id 
+                 FROM ', table_name, ' bt 
+                 JOIN users_test u ON bt.uid = u.uid
+                 JOIN game_type gt ON gt.gt_id = bt.game_type
+                 $whereClause'
+            ) SEPARATOR ' UNION ALL '
+        ) AS query 
+        FROM information_schema.tables 
+        WHERE table_schema = 'lottery_test' 
+        AND table_name LIKE 'bt_%'
+    ";
 
-        //     try {
+    
+        $mergedQuery = $pdo->query($sql)->fetchColumn();
 
-        //         $result = parent::query($sql, ['offset' => $startpoint,'limit' => $limit]);
-        //         if (!empty($result)) {
-        //             $data = array_merge($data, $result);
-        //             $totalRecords += count($result);
-        //         }
-        //          $totalRecords = parent::query($countSql);
-        //          $totalRecords = $totalRecords[0]['total_count'];
-        //         return ['data' => $data, 'total' => $totalRecords];
-                
-        //     } catch (Exception $e) {
-        //         // Log any exceptions or errors that occur during the query
-        //         error_log("Error executing query: " . $e->getMessage());
-        //     }
-        // }
- // Calculate the starting point for pagination
- $startpoint = ($page - 1) * $limit;
+        // Prepare to count the total number of records (without pagination)
+        $countStmt = $pdo->prepare("SELECT COUNT(*) AS total FROM ($mergedQuery) AS subquery");
+        $countStmt->execute($subquery['params']);
+        $totalRecords = $countStmt->fetchColumn();
 
- // Get all bet table names
- $bettable = self::getAllGameIds();
+        // Prepare to fetch paginated data
+        $dataStmt = $pdo->prepare("$mergedQuery LIMIT $limit OFFSET $offset");
+        // $dataStmt->execute();
+        $dataStmt->execute($subquery['params']);
 
- // Initialize result variables
- $data = [];
- $totalRecords = 0;
-
- foreach ($bettable as $tables) {
-     $tableName = $tables['bet_table'];
-
-     // SQL query to fetch paginated data
-     $sql = "
-         SELECT 
-             temp_table.*, 
-             users_test.email AS email, 
-             users_test.reg_type,users_test.contact,
-             users_test.username AS username,
-             game_type.name AS game_type,
-             game_type.gt_id AS gt_id
-         FROM 
-             (
-                 SELECT * 
-                 FROM $tableName
-                 WHERE $subquery
-             ) AS temp_table
-         JOIN 
-             users_test ON users_test.uid = temp_table.uid
-         JOIN 
-             game_type ON game_type.gt_id = temp_table.game_type
-         LIMIT :offset, :limit
-     ";
-
-     // SQL query to count total records
-     $countSql = "
-         SELECT 
-             COUNT(*) AS total_count
-         FROM 
-             $tableName
-         WHERE
-             $subquery
-     ";
-
-     try {
-         // Fetch the paginated data
-         $result = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
-         if (!empty($result)) {
-             $data = array_merge($data, $result);
-         }
-
-         // Fetch the total record count
-         $countResult = parent::query($countSql);
-         if (!empty($countResult)) {
-             $totalRecords += $countResult[0]['total_count'];
-         }
-     } catch (Exception $e) {
-         // Log any exceptions or errors that occur during the query
-         error_log("Error executing query for table $tableName: " . $e->getMessage());
-     }
- }
-
- // Return the aggregated data and total record count
- return [
-     'data' => $data,
-     'total' => $totalRecords,
- ];
+        // Return the response as a JSON
+        return [
+            'data' => $dataStmt->fetchAll(PDO::FETCH_ASSOC),
+            'total' => $totalRecords,
+        ];
     }
 
     public static function filterBetData($uid, $gametype, $betstate, $betstatus, $enddate, $startdate)
     {
         $filterConditions = [];
+        $params = [];
 
-        // Build filter conditions
         if (!empty($uid)) {
-            $filterConditions[] = "uid = '$uid'";
+            $filterConditions[] = "bt.uid = :username";
+            $params['username'] = $uid;
         }
 
         if (!empty($gametype)) {
-            $filterConditions[] = "game_type = '$gametype'";
-        }
-
-        if (!empty($betstatus)) {
-            $filterConditions[] = "bet_status = '$betstatus'";
+            $filterConditions[] = "bt.game_type = :game_type";
+            $params['game_type'] = $gametype;
         }
 
         if (!empty($betstate)) {
-            $filterConditions[] = "state = '$betstate'";
+            $filterConditions[] = "bt.state = :state";
+            $params['state'] = $betstate;
+        }
+
+        if (!empty($betstatus)) {
+            $filterConditions[] = "bt.bet_status = :bet_status";
+            $params['bet_status'] = $betstatus;
         }
 
         if (!empty($startdate) && !empty($enddate)) {
-            $filterConditions[] = "bet_date BETWEEN '$startdate' AND '$enddate'";
+            $filterConditions[] = "bt.bet_date BETWEEN :startdate AND :enddate";
+            $params['startdate'] = $startdate;
+            $params['enddate'] = $enddate;
         } elseif (!empty($startdate)) {
-            $filterConditions[] = "bet_date = '$startdate'";
+            $filterConditions[] = "bt.bet_date = :startdate";
+            $params['startdate'] = $startdate;
         } elseif (!empty($enddate)) {
-            $filterConditions[] = "bet_date = '$enddate'";
+            $filterConditions[] = "bt.bet_date = :enddate";
+            $params['enddate'] = $enddate;
         }
 
-        // Add conditions to subquery (handle WHERE and AND appropriately)
-        if (!empty($filterConditions)) {
-            $subQuery = implode(' AND ', $filterConditions);
-        }
-        // Add ordering and limit to the query
-        // $subQuery .= " ORDER BY bt.server_date DESC";
+        $whereClause = !empty($filterConditions) ? 'WHERE ' . implode(' AND ', $filterConditions) : '';
 
-        return $subQuery;
+        return [
+            'query' => $whereClause,
+            'params' => $params,
+        ];
     }
 
     public static function fetchLotteryname(): array
@@ -537,7 +458,7 @@ class BusinessFlowModel extends MEDOOHelper
     {
         $startpoint = ($page - 1) * $limit;
 
-            $sql = "
+        $sql = "
                 SELECT 
                     temp_tables.*, 
                     users_test.email AS email, 
@@ -555,8 +476,8 @@ class BusinessFlowModel extends MEDOOHelper
                 LIMIT :offset, :limit
             ";
 
-            // Define the query to count total records
-            $countSqls = "
+        // Define the query to count total records
+        $countSqls = "
                 SELECT 
                     COUNT(*) AS total_counts
                 FROM 
@@ -565,35 +486,31 @@ class BusinessFlowModel extends MEDOOHelper
                     $subQuery
             ";
 
-            // Execute the main SQL query
-            $data = parent::query($sql, [ 'offset' => $startpoint, 'limit' => $limit]);
+        // Execute the main SQL query
+        $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
 
-            // Execute the count query
-            $totalRecordsResult = parent::query($countSqls);
-            $totalRecords = $totalRecordsResult[0]['total_counts'];
+        // Execute the count query
+        $totalRecordsResult = parent::query($countSqls);
+        $totalRecords = $totalRecordsResult[0]['total_counts'];
 
-            // Log the last executed query (for debugging purposes)
-            $lastQuery = MedooOrm::openLink()->log();
+        // Log the last executed query (for debugging purposes)
+        $lastQuery = MedooOrm::openLink()->log();
 
-            // Return the results
-            return [
-                'data' => $data, 
-                'total' => $totalRecords, 
-                'sql' => $lastQuery[0]
-            ];
-
+        // Return the results
+        return [
+            'data' => $data,
+            'total' => $totalRecords,
+            'sql' => $lastQuery[0],
+        ];
     }
 
     public static function getTrackData($betTable, $tracktoken)
     {
         return parent::selectAll($betTable, '*', ['token' => $tracktoken]);
-        
     }
 
     public static function getTrackStatus($tracktoken)
     {
         return parent::selectAll('trackbet', '*', ['track_token' => $tracktoken]);
     }
- 
- 
 }

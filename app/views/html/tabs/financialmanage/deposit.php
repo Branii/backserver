@@ -89,12 +89,12 @@
     }
 
     .queryholderdeposit {
-        width: 33%;
+        width: 30%;
         margin-right: 5px;
         background-color: #FFF;
     }
 
-    .queryholderlinks {
+    /* .queryholderlinks {
         width: 33%;
         position: absolute;
         background-color: #fff;
@@ -106,7 +106,7 @@
         top: 90%;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         display: none;
-    }
+    } */
 
     .optionlink {
         text-align: left;
@@ -176,6 +176,59 @@
         background-color: #fff;
         /* Optional: Make it stand out */
     }
+
+    .tbl-depositheader {
+    position: sticky;
+    top: 0;
+  }
+
+  .sticky-depositheader {
+    position: relative;
+    bottom: 1px;
+    background-color: red;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  }
+
+  .DepositDropdown {
+        width: 19%;
+        position: absolute;
+        background-color: #fff;
+        color: #aaa;
+        max-height: 300px;
+        overflow-y: scroll;
+        border-radius: 5px;
+        padding: 10px;
+        top: 90%;
+        z-index: 9999;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        display: none;
+    }
+
+    /* Style for the scrollbar */
+    .DepositDropdown::-webkit-scrollbar {
+        width: 3px;
+        /* Width of the scrollbar */
+    }
+
+    .DepositDropdown::-webkit-scrollbar-track {
+        background: #f0f0f0;
+        /* Background of the scrollbar track */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
+
+    .DepositDropdown::-webkit-scrollbar-thumb {
+        background: #ccc;
+        /* Color of the scrollbar handle */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
+
+    .DepositDropdown::-webkit-scrollbar-thumb:hover {
+        background: #aaa;
+        /* Darker handle color on hover */
+    }
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -187,21 +240,24 @@
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                <input type="text" id="financeDropdownz" class="form-control queryholderlistt usernames" placeholder="Search usernames" />
+                <input type="text" id="Depositinput" class="form-control queryholderdeposit userdeposit" placeholder="Search usernames" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
-                <select class="form-control financeDropdownz" size="5" style="display: none;" id="userfinaceDropdownsz">
+                <select class="form-control DepositDropdown" size="5" style="display: none;" id="userfinaceDepo">
               
                 </select>
+                <input type="text" class="form-control queryholderdeposit depositids" id="nametextss" aria-describedby="name" placeholder="Enter Deposit ID" />
 
-                <!-- <select name="betsate" class="form-control form-select queryholderlistt depositestate"  data-bs-placeholder="Select Type">
-                    <option value="">--<?= $translator['transaction type']; ?>--</option>
-                    <option value="1"><?= $translator['Deposit']; ?></option>
-                    <option value="4"><?= $translator['Withdrawal']; ?></option>
-                </select> -->
+                <select name="betsate" class="form-control form-select queryholderdeposit depositchanel"  data-bs-placeholder="Select Type">
+                    <option value="">--<?= $translator['Deposit Channel']; ?>--</option>
+                    <option value="3"><?= $translator['Momo']; ?></option>
+                    <option value="5"><?= $translator['Crypto']; ?></option>
+                    <option value="2"><?= $translator['Bank Transfere']; ?></option>
+                    <option value="1"><?= $translator['Manual Deposit']; ?></option>
+                </select>
 
-                <input name="startdate" type="date" class="form-control queryholderlistt startfinance" aria-describedby="name" placeholder="Name" />
+                <input name="startdate" type="date" class="form-control queryholderdeposit startdepo" aria-describedby="name" placeholder="Name" />
 
-                <input name="enddate" type="date" class="form-control queryholderlistt endfinance" aria-describedby="name" placeholder="Name" />
+                <input name="enddate" type="date" class="form-control queryholderdeposit enddepo" aria-describedby="name" placeholder="Name" />
             </div>
             <!-- <div class="input-group mb-3">
 				<span class="input-group-text" id="basic-addon12" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
@@ -214,15 +270,15 @@
         <span class="topplist-right" id="paginations" aria-label="Page navigation example">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
                 <!-- <i ' ></i> -->
-                <button type="button" class="btn bg-white-subtle showmodal" value="right" aria-label="Refresh" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Deposit/Withdrawal">
+                <!-- <button type="button" class="btn bg-white-subtle showmodal" value="right" aria-label="Refresh" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Deposit/Withdrawal">
                     <i class="bx bx-plus" style="font-size: 20px;"></i>
-                </button>
+                </button> -->
 
-                <button type="button" class="btn bg-white-subtle player refreshfiance" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                <button type="button" class="btn bg-white-subtle player refreshdeposit" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle executefinance" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                    <i class="bx bx-check-double loaderfinance" style="font-size: 20px;"></i>
+                <button type="button" class="btn bg-white-subtle executedeposit" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                    <i class="bx bx-check-double loaderdeposit" style="font-size: 20px;"></i>
                 </button>
             </div>
         </span>
@@ -231,8 +287,8 @@
     <div class="card-body p-4">
         <div class="table-responsive mb-4 border rounded-1 table-wrapperdeposit" id="maskDeposit" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
-                <thead class="text-dark fs-4">
-                    <tr>
+                <thead class="text-dark fs-4 tbl-depositheader">
+                    <tr class ="depositheaderrow">
 
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit ID']; ?></h6>
@@ -249,7 +305,9 @@
 						<th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit Amount']; ?></h6>
                         </th>
-						
+						<th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Fee']; ?></h6>
+                        </th>
 						<th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Actual Amount Received']; ?></h6>
                         </th>
@@ -266,9 +324,13 @@
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
                         </th>
+
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Approved By']; ?></h6>
                         </th>
+                        <!-- <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
+                        </th> -->
                     </tr>
                 </thead>
                 <tbody id="DepositContainer">
@@ -306,11 +368,19 @@
             <span id="paging_infodeposit" style="color:#aaa">---</span>
 
         </span>
-        <span class="toplist-right" id="paginationdeposit" aria-label="Page navigation example">
-
+        <span class="top-right-btn" aria-label="Page navigation example">
+            <select class="left-element form-control numrowsdeposit" style="font-size: 12px;">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="500">500</option>
+            </select>
+            <span class="toplist-right" id="paginationdeposit" aria-label="Page navigation example">
             <!--Dynamic pagination-->
-
+           </span>
+           
         </span>
+      
 
     </div>
 

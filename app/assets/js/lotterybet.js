@@ -81,7 +81,7 @@ $(function () {
                           <td>${gamemodel[item.game_model]}</td>
                         <td>${item.game_label}</td>
                         <td>${item.bet_date + " / " + item.bet_time}</td>
-                      
+                         <td>${item.server_date + " / " + item.server_time}</td>
                         <td>${item.unit_stake}</td>
                         <td>${item.multiplier}</td>
                         <td>${formatMoney(item.bet_amount)}</td>
@@ -405,6 +405,7 @@ $(function () {
 
 
   let debounceTimeout = null;
+  let isPastingss = false;
 
   $(document).ready(function () {
       // Event listener for keyup on #myInput
@@ -412,13 +413,22 @@ $(function () {
           const query = $(this).val().trim();
 
           // Only trigger if input is more than 2 characters
-          if (query.length > 1) {
+          if (query.length > 1 && !isPastingss) {
               clearTimeout(debounceTimeout); // Clear any existing timeout
               debounceTimeout = setTimeout(fetchbetUser, 500, query); // Call fetchUsers with the query after 500ms delay
           } else {
               $('.userDropdownb').hide(); // Hide dropdown if input is less than 3 characters
           }
       });
+
+      $(document).on('paste', '#myInput', function () {
+        isPastingss = true; // Set the flag to true when paste happens
+        $('.userDropdownb').hide()
+        setTimeout(function () {
+            isPastingss = false; // Reset the flag after a short delay (allow paste to finish)
+        }, 100);  // Delay of 100ms is usually enough for paste operations to finish
+    
+        });
 
       // Handle dropdown item selection
       $(document).on('change', '.userDropdownb', function () {

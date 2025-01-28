@@ -33,7 +33,7 @@ class FinancialManageModel extends MEDOOHelper
         return  $userInfo = parent::query("SELECT balance FROM users_test WHERE uid = :uid", ["uid" => $uid]);
     }
 
-    public static function addMoneyData($desposittype, $uid, $amount, $review)
+    public static function addMoneyData($desposittype, $uid, $amount,$username,$review)
     {
 
 
@@ -63,20 +63,18 @@ class FinancialManageModel extends MEDOOHelper
         }
 
         // Insert into Deposits and Withdrawals
-        if (self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance)) {
-            // Insert into Transaction table
-            if (self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)) {
-                // Update user balance
-                self::updateBalance($uid, $recharge_balance);
-                $success = true; // Set the flag to true if any iteration is successful
-            }
+        if (
+            self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance) &&
+             self::insertIntoDepositsNew($desposittype, $uid, $amount, $depositid, $username) &&
+             self::insertIntoWithrawManage($desposittype, $uid, $amount, $depositid, $username) &&
+            self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
+        ) {
+            // Update user balance if all operations succeed
+            self::updateBalance($uid, $recharge_balance);
+            $success = true;
         }
-        //  }
-        if ($success) {
-            return "success";
-        } else {
-            return  "no changes made";
-        }
+        
+        return $success ? "success" : "no changes made";
     }
 
     public static function insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance)
@@ -95,6 +93,65 @@ class FinancialManageModel extends MEDOOHelper
         return  $inserdata = parent::insert("deposits_and_withdrawals", $params);
     }
 
+    public static function insertIntoDepositsNew($desposittype, $uid, $amount, $depositid,$username)
+    {
+         $manualusername = "manual deposit";
+         $manualemail    = "manualdeposit@gmail.com";
+         $params = [
+            'user_id' =>  $uid,
+            'user_name' => $manualusername,
+            'user_email' =>$manualemail,
+            'user_mobile' => "Company Number",
+            'amount_paid' =>$amount,
+            'amount_recieved' =>$amount,
+            'date_created' =>  date("H:i:s"),
+            'time_created' =>  date("Y-m-d"),
+            'payment_reference' =>  $depositid,
+            'provider' =>'Company Number',      
+            'status' =>'Success',
+            'approved_by' => $username,
+            'desposit_channel' => $desposittype,
+        
+     
+        ];
+        return  $inserdata = parent::insert("deposit_new", $params);
+    
+    }
+
+
+    public static function insertIntoWithrawManage($desposittype, $uid, $amount, $depositid,$username)
+    {
+            $manualusername = "manual deposit";
+            $manualemail = "manualdeposit@gmail.com";
+            $currentDateTime = date('Y-m-d H:i:s');
+            $currentTime = date('H:i:s');
+            $currentDate = date('Y-m-d');
+
+            $params = [
+                'uid' => $uid,
+                'withdrawal_id' => $depositid,
+                'username' => $manualusername,
+                'user_email' => $manualemail,
+                'contact' => "MTN",
+                'user_level' => 'Vip',
+                'bank_type' => 'Company Number',
+                'withdrawal_channel' => $desposittype,
+                'card_holder' => 'Enzerhub',
+                'bank_card_number' => 'Company Number',
+                'withdrawal_amount' => $amount,
+                'actual_withdrawal_amount' => $amount,
+                'withdrawal_application_time' => $currentDateTime,
+                'review_completion_time' => $currentDateTime,
+                'withdrawal_time' => $currentTime,
+                'withdrawal_date' => $currentDate,
+                'withdrawal_state' => '2',
+                'review' => 'Done',
+                'approved_by' => $username,
+            ];
+
+            return parent::insert("withdrawal_manage", $params);
+    
+    }
     public static function insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
     {
         if ($desposittype == 4) {
@@ -137,9 +194,14 @@ class FinancialManageModel extends MEDOOHelper
     {
         $startpoint = ($page * $limit) - $limit;
         $data = parent::query(
-            "SELECT * FROM deposit_new ORDER BY deposit_id DESC LIMIT :offset, :limit",
+            "SELECT deposit_new.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.username, 'N/A') AS username 
+             FROM deposit_new
+             LEFT JOIN users_test ON users_test.uid = deposit_new.user_id
+             ORDER BY deposit_new.deposit_id DESC 
+             LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
         );
+
 
         $totalRecords  = parent::count('deposit_new');
         // $trasationIds = array_column($data, 'order_id');
@@ -148,17 +210,20 @@ class FinancialManageModel extends MEDOOHelper
 
 
 
-    public static function Depositsubquery($uid, $states, $startdate, $enddate)
+    public static function Depositsubquery($username,$states,$depositid,$startdate,$enddate)
     {
 
         $filterConditions = [];
 
-        if (!empty($uid)) {
-            $filterConditions[] = "user_id = '$uid'";
+        if (!empty($username)) {
+            $filterConditions[] = "user_id = '$username'";
         }
 
         if (!empty($states)) {
-            $filterConditions[] = "deposit_withdrawal_type = '$states'";
+            $filterConditions[] = "desposit_channel = '$states'";
+        }
+        if (!empty($depositid)) {
+            $filterConditions[] = "payment_reference = '$depositid'";
         }
 
         if (!empty($startdate) && !empty($enddate)) {
@@ -180,7 +245,7 @@ class FinancialManageModel extends MEDOOHelper
 
 
    
-    public static function FilterDepositData($subQuery, $page, $limit)
+    public static function FilterDepositData($subquery, $page, $limit)
     {
         try {
             // Calculate the starting point for pagination
@@ -197,8 +262,8 @@ class FinancialManageModel extends MEDOOHelper
                 FROM 
                     (
                         SELECT * 
-                        FROM deposits_and_withdrawals
-                        WHERE $subQuery
+                        FROM deposit_new
+                        WHERE $subquery
                     ) AS temp_table
                 JOIN 
                     users_test ON users_test.uid = temp_table.user_id
@@ -210,9 +275,9 @@ class FinancialManageModel extends MEDOOHelper
                 SELECT 
                     COUNT(*) AS total_count
                 FROM 
-                    deposits_and_withdrawals
+                    deposit_new
                 WHERE
-                    $subQuery
+                    $subquery
             ";
         
             // Execute the main query with parameterized inputs
