@@ -176,6 +176,26 @@
         background-color: #fff;
         /* Optional: Make it stand out */
     }
+
+    .queryholdertrans {   
+        width: 11%;
+        margin-right: 5px;
+        background-color: #fff;
+    }
+    td{
+        text-align: center;
+    }
+    .table-head-widrl {
+    position: sticky;
+    top: 0;
+  }
+
+  .sticky-table-head-widrl {
+    position: relative;
+    bottom: 1px;
+    background-color: red;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -186,19 +206,30 @@
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                <input type="text" id="mytrans" class="form-control queryholdertrans usernames mytrans" placeholder="Search usernames">
-                <input name="usernames" type="hidden" class="userIdtrans queryholdertrans">
-                <input type="text" class="form-control queryholdertrans orderid" id="withdrawalID" aria-describedby="name" placeholder="Search Withdrawal ID">
-                <select class="form-control useraccount" size="5" style="display: none;" id="userAccountDropdown">
-                        <option value="0">Channels</option>
-                        <option value="1">Momo</option>
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 165%;">
+                <input type="text" id="mytrans" class="form-control queryholdertrans widrl-username mytrans" placeholder="Search usernames">
+                <input name="usernames" type="hidden"  id="widrl-userID" class="userIdtrans queryholdertrans">
+                <select class="form-control trackdown" size="5" style="display: none; width: 11%;background:#fff;" id="users-options-wrapper" ></select>
+                <input type="text" class="form-control queryholdertrans orderid" id="widrl-ID" aria-describedby="name" placeholder="Search Withdrawal ID">
+                <div class="custom-dropdown" style="width: 12%; margin-right: 5px;">
+                    <select name="lotteryname" id="widrl-channels" class="form-control form-select queryholderlist tracklotery " data-bs-placeholder="Select Type">
+                        <option value="0">Withdrawal Channels</option>
+                        <option value="3">Momo</option>
                         <option value="2">Bank</option>
-                        <option value="3">Crypto</option>
+                        <option value="5">Crypto</option>
                         <option value="4">Manual</option>
-                </select>
-                <input type="date" class="form-control queryholdertrans wdrl-startdate" id="wdrl-startDate" aria-describedby="name" placeholder="Start Date">
-                <input type="date" class="form-control queryholdertrans wdrl-enddate"   id="wdrl-endDate" aria-describedby="name" placeholder="End Date">
+                    </select>
+                 </div>
+                <div class="custom-dropdown" style="width: 11%; margin-right: 5px;">
+                    <select name="lotteryname" id="widrl-status" class="form-control form-select queryholderlist tracklotery " data-bs-placeholder="Select Type">
+                        <option value="0">Status</option>
+                        <option value="1">Pending</option>
+                        <option value="2">Successful</option>
+                        <option value="3">Failed</option>
+                    </select>
+                 </div>
+                <input type="date"  class="form-control queryholdertrans wdrl-startdate" id="widrl-startDate" aria-describedby="name" placeholder="Start Date">
+                <input type="date"  class="form-control queryholdertrans wdrl-enddate"   id="widrl-endDate" aria-describedby="name" placeholder="End Date">
             </div>
        
             <!-- <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
@@ -228,7 +259,7 @@
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle executeuserlinks" value="end" aria-label="Execute"
+                <button type="button" class="btn bg-white-subtle widrl-search" value="end" aria-label="Execute"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                     <i class='bx bx-check-double loaderlinks' style="font-size:20px"></i>
                 </button>
@@ -241,8 +272,8 @@
     <div class="card-body p-4">
         <div class="table-responsive mb-4 border rounded-1 table-wrapperwithdraw" id="maskwithdraw" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
-                <thead class="text-dark fs-4">
-                    <tr>
+                <thead class="text-dark fs-4 table-head-widrl">
+                    <tr class="tbl-row-widrl">
 
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Withdrawal ID']; ?></h6>
@@ -262,11 +293,12 @@
 						
 						<th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bank Card Number']; ?>
-						<th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Fee']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Withdrawal Amount']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Fee']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Actual Withdrawal Amount']; ?></h6>
@@ -280,9 +312,7 @@
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Approved By']; ?></h6>
                         </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
-                        </th>
+                        
                     </tr>
                 </thead>
                 <tbody id="withdrawContainer">

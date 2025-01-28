@@ -1,0 +1,36 @@
+<?php
+
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+    // Throw an Exception with the error message and details
+    throw new \Exception("$errstr in $errfile on line $errline", $errno);
+});
+
+
+
+$flag  = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+$page  = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
+
+
+$results = [];
+
+if ($flag == "filter_records") {
+ 
+    try {
+       
+    
+    $userID     = $this->viewData['user_id'];
+    $widrlID    = $this->viewData['widrl_id'];
+    $channels   = $this->viewData['widrl_channels'];
+    $status     = $this->viewData['widrl_status'];
+    $start_date = $this->viewData['widrl_start_date'];
+    $end_date   = $this->viewData['widrl_end_date'];
+
+
+    $results = FinancialManageModel::filterWidrlRecords(['uid' => $userID,'withdrawal_id'=> $widrlID, 'withdrawal_channel' => $channels,'withdrawal_state'=> $status, 'start_date' => $start_date,'end_date' => $end_date,],intval($page)) ;
+ }catch (\Exception $th) {
+        $results = ["status" => "error","data" => "Internal Server Error."];
+    }
+}
+
+
+echo json_encode($results);
