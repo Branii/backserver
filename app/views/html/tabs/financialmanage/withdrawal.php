@@ -182,7 +182,7 @@
         margin-right: 5px;
         background-color: #fff;
     }
-    td{
+    #maskwithdraw td{
         text-align: center;
     }
     .table-head-widrl {
