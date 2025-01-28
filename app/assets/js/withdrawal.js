@@ -27,6 +27,7 @@ $(function () {
     
         let html = "";
         const status = {1: "Pending", 2:"Successful" , 3: "Failed"};
+        const withdrawal_channel = {3: "Momo", 5:"Crypto" , 2: "Bank" , 4: "Manual"}; // 3:momo 5:crypto 2:bank 4:manual
          data.forEach(item => {
           html += `
           <tr>
@@ -34,6 +35,7 @@ $(function () {
               <td>${item.username}</td>
               <td>VIP</td>
               <td>${item.bank_type}</td>
+              <td>${withdrawal_channel[item.withdrawal_channel]}</td>
               <td>${item.card_holder}</td>
               <td>${item.bank_card_number}</td>
               <td>${formatNumber(item.withdrawal_amount)}</td>

@@ -288,6 +288,9 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bank Type']; ?></h6>
                         </th>
 						<th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Withdrawal Channel']; ?></h6>
+                        </th>
+						<th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Cardholder']; ?></h6>
                         </th>
 						

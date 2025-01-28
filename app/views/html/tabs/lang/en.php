@@ -818,7 +818,8 @@ return [
 
 // Withdrawal Records: Muniru
 
-'Approved By'  => "Approved By"
+'Approved By'  => "Approved By",
+'Withdrawal Channel' => 'Withdrawal Channel'
 ];
 
 
