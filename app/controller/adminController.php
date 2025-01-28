@@ -179,7 +179,15 @@ class adminController extends Controller {
         $this->view->render();
     }
     public function searchWinLossUser($username,$lottery_id,$start_date,$end_date){
+      
         $this->view('exec/win_loss',['username'=>$username,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'flag' => 'search-user-win-loss']);
+        $this->view->render();
+    }
+
+    # withdrawl Records
+    public function searchWidrlRecords($userID,$widrlID, $widrlChannels,$widrlStatus,$widrlStartDate,$widrlEndDate,$page){
+        
+        $this->view('exec/withdrawal_records',['user_id'=> $userID, 'widrl_id' => $widrlID, 'widrl_channels' => $widrlChannels, 'widrl_status' => $widrlStatus, 'widrl_start_date' => $widrlStartDate, 'widrl_end_date' => $widrlEndDate, 'page' => $page, 'flag' => 'filter_records' ]);
         $this->view->render();
     }
 

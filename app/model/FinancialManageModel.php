@@ -1,9 +1,15 @@
 <?php
 
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+    // Throw an Exception with the error message and details
+    throw new \Exception("$errstr in $errfile on line $errline", $errno);
+});
+
 class FinancialManageModel extends MEDOOHelper
 {
 
-    //NOTE -
+  
+  //NOTE -
     //////////////Financial Records -//////////
     // 
     public static function FinancialDataRecords($page, $limit): array
@@ -289,19 +295,93 @@ class FinancialManageModel extends MEDOOHelper
     }
     
 
+    public static function me($userData): array {
+        echo "ksldfa";
+        return [];
+    }
+
     //NOTE -
     //////////////Withdrawal Records -//////////
     // 
-    public static function WithrawalDataRecords($page, $limit): array
+    public static function WithrawalDataRecords($page = 1, $limit = 10): array
     {
-        $startpoint = ($page * $limit) - $limit;
+        
+        try{
+
+      
+        $startpoint = ($page - 1) * $limit;
+        $table_name = "withdrawal_manage"; 
         $data = parent::query(
-            "SELECT * FROM withdrawal_manage ORDER BY withdrawalid DESC LIMIT :offset, :limit",
+            "SELECT *,(SELECT COUNT(*) FROM {$table_name}) AS total_records FROM withdrawal_manage ORDER BY withdrawalid DESC LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
         );
+            return ["status" => "success", 'data' => $data];
+        }catch(Exception $e){
+            return ["status" => "error",'data' => "Internal Server Error."];
+       }
+        // $totalRecords  = parent::count('withdrawal_manage');
+        // // $trasationIds = array_column($data, 'order_id');
+        // return ['data' => $data, 'total' => $totalRecords];
+    }
 
-        $totalRecords  = parent::count('withdrawal_manage');
-        // $trasationIds = array_column($data, 'order_id');
-        return ['data' => $data, 'total' => $totalRecords];
+
+
+    // Muniru
+
+    public static function filterWidrlRecords($userData,$page = 1, $limit = 10): array
+    {
+
+
+        try{
+            $offset = ($page - 1) * $limit;
+            $table_name = "withdrawal_manage";
+            $db = parent::getLink();
+            
+            $where_clause = "";
+            $params = ['offset' => (int) $offset, 'limit' => (int) $limit];
+         
+            foreach($userData as $key => $value){
+               
+                if($value === "all" || in_array($key,["start_date","end_date",]) || in_array($key,["start_date","end_date",])) continue;
+                $key =  $key == "username" && filter_var($value, FILTER_VALIDATE_EMAIL) ? "user_email" : $key;
+                $params[":{$key}"] = $value;
+                $where_clause .= empty($where_clause) ? " WHERE {$key}=:{$key}" : " AND {$key}=:{$key}";
+            }
+    
+            
+           
+            // Handle date conditions
+            $startDate = $userData['start_date'];
+            $endDate   = $userData['end_date'];
+    
+            if ($startDate !== "all" && $endDate === "all") {
+                $where_clause .= empty($where_clause) ? " WHERE withdrawal_date = :start_date" : " AND withdrawal_date = :start_date " ;
+                $params[':start_date'] = $startDate;
+            } elseif ($startDate === "all" && $endDate !== "all") {
+                $where_clause .= empty($where_clause) ? " WHERE withdrawal_date = :end_date" : " AND withdrawal_date = :end_date " ;
+                $params[':end_date'] = $endDate;
+            } elseif ($startDate !== "all" && $endDate !== "all") {
+             
+                $start = min($startDate, $endDate);
+                $end   = max($startDate, $endDate);
+                $where_clause .= empty($where_clause) ? " WHERE withdrawal_date BETWEEN :start_date AND :end_date " : " AND withdrawal_date BETWEEN :start_date AND :end_date " ;
+                $params[':start_date'] = $start;
+                $params[':end_date']   = $end;
+            }
+    
+    
+    
+            
+            $sql = "SELECT *, (SELECT COUNT(*) FROM {$table_name} {$where_clause}) AS total_records FROM {$table_name} $where_clause ORDER BY withdrawalid DESC LIMIT :offset, :limit";
+            $stmt = $db->query($sql, $params);
+    
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+            // $trasationIds = array_column($data, 'order_id');
+           return ["status" => true, 'data' => $data];
+    
+        }catch(\Exception $e){
+            return ['status' => false, 'data' => "Interval Server Error. ". $e->getMessage()];
+        }
+      
     }
 }

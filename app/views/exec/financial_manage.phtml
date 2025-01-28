@@ -81,12 +81,9 @@ if ($flag == "filterdeposit") {
 if ($flag == "fetchwithdraw") {
 
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
-    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $result = (new FinancialManageModel())->WithrawalDataRecords($page, $limit) ?? [];
-    echo json_encode([
-        'withdraw' => $result['data'],
-        'totalPages' => ceil($result['total'] / $limit),
-    ]);
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 10;
+    $result = (new FinancialManageModel())->WithrawalDataRecords($page) ?? [];
+    echo json_encode($result);
 }
 
 

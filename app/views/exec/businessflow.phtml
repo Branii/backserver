@@ -41,7 +41,7 @@ if ($flag == "searchusername") {
     if ($result) {
         echo json_encode($results);
     } else {
-        echo json_encode([['username' => '']]);
+        echo json_encode([['username' => '','empty' => true]]);
     }
 }
 
