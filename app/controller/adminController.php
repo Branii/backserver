@@ -391,12 +391,13 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function filterdeposits($uid,$depositchanel,$depositid,$startdepo,$enddepo,$page,$pageLimit)
+    public function filterdeposits($uid,$depositchanel,$depositid,$stautsdeposit,$startdepo,$enddepo,$page,$pageLimit)
     {
         $this->view('exec/financial_manage', [
         'uid' => $uid,
         'states' => $depositchanel,
         'depositid' => $depositid,
+        'depostatus' => $stautsdeposit,
         'startdate' => $startdepo,
         'enddate' => $enddepo,
          'page' => $page,

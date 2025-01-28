@@ -49,14 +49,16 @@ if ($flag == "filterdeposit") {
      $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
     $states = isset($this->viewData['states']) ? (int) $this->viewData['states'] : "";
     $depositid = isset($this->viewData['depositid']) ?  $this->viewData['depositid'] : "";
+    $depostatus = isset($this->viewData['depostatus']) ?  $this->viewData['depostatus'] : "";
     $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
+    
     $enddate = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $Limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
 
      if(!empty($usernameCheck) && $usernameCheck != null){
         $username = $usernameCheck[0]['uid'];
-        $subquery = (new FinancialManageModel())->Depositsubquery($username,$states,$depositid,$startdate,$enddate) ?? [];
+        $subquery = (new FinancialManageModel())->Depositsubquery($username,$states,$depositid,$depostatus,$startdate,$enddate) ?? [];
         $result = (new FinancialManageModel())->FilterDepositData($subquery,$page,$Limit) ?? [];
 
         echo json_encode([
@@ -65,7 +67,7 @@ if ($flag == "filterdeposit") {
         ]);
        }else{
 
-        $subquery = (new FinancialManageModel())->Depositsubquery($uid,$states,$depositid,$startdate,$enddate) ?? [];
+        $subquery = (new FinancialManageModel())->Depositsubquery($uid,$states,$depositid,$depostatus,$startdate,$enddate) ?? [];
         $result = (new FinancialManageModel())->FilterDepositData($subquery,$page,$Limit) ?? [];
 
         echo json_encode([

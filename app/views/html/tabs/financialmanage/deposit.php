@@ -255,6 +255,14 @@
                     <option value="1"><?= $translator['Manual Deposit']; ?></option>
                 </select>
 
+                <select name="betsate" class="form-control form-select queryholderdeposit depositstatus"  data-bs-placeholder="Select Type">
+                    <option value="">--<?= $translator['Status']; ?>--</option>
+                    <option value="pending"><?= $translator['Pending']; ?></option>
+                    <option value="success"><?= $translator['Sucessful']; ?></option>
+                    <option value="failed"><?= $translator['Failed']; ?></option>
+                    
+                </select>
+
                 <input name="startdate" type="date" class="form-control queryholderdeposit startdepo" aria-describedby="name" placeholder="Name" />
 
                 <input name="enddate" type="date" class="form-control queryholderdeposit enddepo" aria-describedby="name" placeholder="Name" />

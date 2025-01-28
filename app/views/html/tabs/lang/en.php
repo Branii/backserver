@@ -235,6 +235,8 @@ return [
 'Bank Transfere'=>'Bank Transfere',
 'Manual Deposit'=>'Manual Deposit',
 'Approved By' =>'Approved By',
+'Sucessful' =>'Sucessful',
+'Failed' =>'Failed',
 
 
 //'Withdrawal Management'=> '出款管理',

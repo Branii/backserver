@@ -108,7 +108,7 @@ class FinancialManageModel extends MEDOOHelper
             'time_created' =>  date("Y-m-d"),
             'payment_reference' =>  $depositid,
             'provider' =>'MTN',      
-            'status' =>'Success',
+            'status' =>'success',
             'approved_by' => $username,
             'desposit_channel' => $desposittype,
         
@@ -210,7 +210,7 @@ class FinancialManageModel extends MEDOOHelper
 
 
 
-    public static function Depositsubquery($username,$states,$depositid,$startdate,$enddate)
+    public static function Depositsubquery($username,$states,$depositid,$depostatus,$startdate,$enddate)
     {
 
         $filterConditions = [];
@@ -224,6 +224,10 @@ class FinancialManageModel extends MEDOOHelper
         }
         if (!empty($depositid)) {
             $filterConditions[] = "payment_reference = '$depositid'";
+        }
+
+        if (!empty($depostatus)) {
+            $filterConditions[] = "status = '$depostatus'";
         }
 
         if (!empty($startdate) && !empty($enddate)) {

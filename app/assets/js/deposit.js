@@ -172,9 +172,9 @@ $(function () {
    
  
     
-    function  filterdeposit(username,depositchanel,depositid,startdepo,enddepo,currentPage,pageLimit) {
+    function  filterdeposit(username,depositchanel,depositid,stautsdeposit,startdepo,enddepo,currentPage,pageLimit) {
       $.post(
-        `../admin/filterdeposits/${username}/${depositchanel}/${depositid}/${startdepo}/${enddepo}/${currentPage}/${pageLimit}`,
+        `../admin/filterdeposits/${username}/${depositchanel}/${depositid}/${stautsdeposit}/${startdepo}/${enddepo}/${currentPage}/${pageLimit}`,
         function (response) {
           try {
             const data = JSON.parse(response);
@@ -194,7 +194,7 @@ $(function () {
             $("#maskDeposit").LoadingOverlay("hide");
             renderdeposit(data.deposits);
           // Render pagination
-          renderdepositPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterdeposit(username,startdepo,enddepo,newPage,pageLimit) );
+          renderdepositPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterdeposit(username,startdepo,stautsdeposit,enddepo,newPage,pageLimit) );
           document.getElementById("paging_infodeposit").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
     
           } catch (error) {
@@ -213,7 +213,7 @@ $(function () {
     $(document).on('click', '.executedeposit', function () {
     
       if ($("#Depositinput").val() == "" && $(".startdepo").val() == "" && $(".depositchanel").val() ==""
-      && $(".depositids").val() == "") {
+      && $(".depositids").val() == "" && $(".depositstatus").val() == "") {
         // $("#danger-finance").modal("show");
         showToast("Heads up!!","Select one or more data fields to filter","info")
       //  return;
@@ -221,13 +221,14 @@ $(function () {
   
       const username = $("#Depositinput").val();
       const depositchanel  = $(".depositchanel").val()
+      const stautsdeposit = $(".depositstatus").val()
       const depositid = $(".depositids").val();
       const startdepo = $(".startdepo").val();
       const enddepo = $(".enddepo").val();
        console.log(depositid)
       //  return
    
-      filterdeposit(username,depositchanel,depositid,startdepo,enddepo,currentPage,pageLimit)
+      filterdeposit(username,depositchanel,depositid,stautsdeposit,startdepo,enddepo,currentPage,pageLimit)
     //   // Show loader
        $(".loaderdeposit").removeClass('bx-check-double').addClass('bx-loader bx-spin');
   
