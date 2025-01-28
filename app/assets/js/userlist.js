@@ -217,7 +217,7 @@ $(function () {
           $("#maskfinance").LoadingOverlay("hide");
            renderfinace(data.deposits);
         // Render pagination
-        renderfinacePagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterUserlist(username, states, startdate, enddate,currentPage,pageLimit));
+        renderfinacePagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterUserlist(username, states, startdate, enddate,newPage,pageLimit));
         document.getElementById("paging_infofinance").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
   
         } catch (error) {
@@ -518,7 +518,8 @@ $(function () {
           // Render pagination
           // renderPaginationlist(data.totalPages, pagelist, "normal");
           // document.getElementById("paging_infolist").innerHTML = "Page " + pagelist + " of " + data.totalPages + " pages";
-
+          renderPaginationlist(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchTopAgent(newPage, pageLimit));
+          document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
           // return;
       } catch (error) {
           console.error("Error fetching data:", error);
@@ -527,7 +528,7 @@ $(function () {
 
   //get top agent
   $(".gettopagent").click(function () {
-      fetchTopAgent(currentPage);
+      fetchTopAgent(currentPage,pageLimit);
   });
 
   //quota
