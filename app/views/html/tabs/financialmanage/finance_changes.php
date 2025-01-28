@@ -418,12 +418,12 @@
                     <!-- Username Field -->
                     <!-- Rebate Field -->
                     <div class="form-floating mb-3">
-                        <select name="deposit" class="form-select form-control border border-infos depositt">
+                        <select name="deposit" class="form-select form-control borders border-infos depositt">
                             <option value="1"><?= $translator['Deposit']; ?></option>
                             <option value="4"><?= $translator['Withdrawal']; ?></option>
                         </select>
                         <label>
-                            <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
+                            <!-- <i class="bx bx-list-ul me-2 fs-4 text-infos"></i> -->
                             <span class="border-start ps-3"><?=$translator['Deposit/Withdrawal Type']; ?></span>
                         </label>
                     </div>
@@ -450,10 +450,18 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input name="agentname" type="text" class="form-control border review" placeholder="Username" />
+                        <input name="agentname" type="text" class="form-control border review" placeholder="Username"  />
                         <label>
                             <i class="bx bx-message me-2 fs-4 text-infod"></i>
                             <span class="border-start ps-3"><?=$translator['Reviews']; ?></span>
+                        </label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input name="agentname" type="text" class="form-control border approved" placeholder="Approved by"  value="<?php echo $fullname['full_name']; ?>"/>
+                        <label>
+                            <!-- <i class="bx bx-message me-2 fs-4 text-infod"></i> -->
+                            <span class="border-start ps-3"><?=$translator['Approved By']; ?></span>
                         </label>
                     </div>
 

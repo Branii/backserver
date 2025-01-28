@@ -89,12 +89,12 @@
     }
 
     .queryholderdeposit {
-        width: 33%;
+        width: 30%;
         margin-right: 5px;
         background-color: #FFF;
     }
 
-    .queryholderlinks {
+    /* .queryholderlinks {
         width: 33%;
         position: absolute;
         background-color: #fff;
@@ -106,7 +106,7 @@
         top: 90%;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         display: none;
-    }
+    } */
 
     .optionlink {
         text-align: left;
@@ -190,7 +190,7 @@
   }
 
   .DepositDropdown {
-        width: 32%;
+        width: 19%;
         position: absolute;
         background-color: #fff;
         color: #aaa;
@@ -240,17 +240,19 @@
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                <input type="text" id="Depositinput" class="form-control queryholderdeposit usernames" placeholder="Search usernames" />
+                <input type="text" id="Depositinput" class="form-control queryholderdeposit userdeposit" placeholder="Search usernames" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
                 <select class="form-control DepositDropdown" size="5" style="display: none;" id="userfinaceDepo">
               
                 </select>
-                <input type="text" class="form-control queryholderdeposit orderid" id="nametextss" aria-describedby="name" placeholder="Enter Deposit ID" />
+                <input type="text" class="form-control queryholderdeposit depositids" id="nametextss" aria-describedby="name" placeholder="Enter Deposit ID" />
 
-                <select name="betsate" class="form-control form-select queryholderdeposit depositestate"  data-bs-placeholder="Select Type">
+                <select name="betsate" class="form-control form-select queryholderdeposit depositchanel"  data-bs-placeholder="Select Type">
                     <option value="">--<?= $translator['Deposit Channel']; ?>--</option>
-                    <option value="1"><?= $translator['Deposit']; ?></option>
-                    <option value="4"><?= $translator['Withdrawal']; ?></option>
+                    <option value="3"><?= $translator['Momo']; ?></option>
+                    <option value="5"><?= $translator['Crypto']; ?></option>
+                    <option value="2"><?= $translator['Bank Transfere']; ?></option>
+                    <option value="1"><?= $translator['Manual Deposit']; ?></option>
                 </select>
 
                 <input name="startdate" type="date" class="form-control queryholderdeposit startdepo" aria-describedby="name" placeholder="Name" />
@@ -303,7 +305,9 @@
 						<th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit Amount']; ?></h6>
                         </th>
-						
+						<th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Fee']; ?></h6>
+                        </th>
 						<th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Actual Amount Received']; ?></h6>
                         </th>
@@ -320,9 +324,13 @@
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
                         </th>
+
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Approved By']; ?></h6>
                         </th>
+                        <!-- <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
+                        </th> -->
                     </tr>
                 </thead>
                 <tbody id="DepositContainer">
@@ -360,11 +368,19 @@
             <span id="paging_infodeposit" style="color:#aaa">---</span>
 
         </span>
-        <span class="toplist-right" id="paginationdeposit" aria-label="Page navigation example">
-
+        <span class="top-right-btn" aria-label="Page navigation example">
+            <select class="left-element form-control numrowsdeposit" style="font-size: 12px;">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="500">500</option>
+            </select>
+            <span class="toplist-right" id="paginationdeposit" aria-label="Page navigation example">
             <!--Dynamic pagination-->
-
+           </span>
+           
         </span>
+      
 
     </div>
 

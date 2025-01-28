@@ -17,7 +17,7 @@ if ($flag == "userlistdata") {
     // Iterate over each user and fetch additional data
     foreach ($result['data'] as $data) {
         // Fetch additional user-specific data
-        $userlogins = (new UserManageModel())->countUserLogs($data['uid']);
+      //  $userlogins = (new UserManageModel())->countUserLogs($data['uid']);
         $referals = (new UserManageModel())->getDirectReferrals($data['agent_id']);
         $subor = (new UserManageModel())->getSubordinate($data['agent_id']);
         $totalsubordinate = (new UserManageModel())->Fetchsubordinates($data['uid']);
@@ -26,8 +26,8 @@ if ($flag == "userlistdata") {
         $relationship = '';
         $subordinates = '';
 
-        if (!empty($data['agent_name']  != "*****") && !empty($subor != "*****") && is_array($subor = !"*****")) {
-            $relationship = $data['agent_name'] . ' ' . $referals . ' ' . $data['username'];
+        if (!empty($data['agent_name']) && $data['agent_name'] !== "*****" && !empty($subor)) {
+            $relationship = $data['agent_name'] . ' ' . $referals . ' ' . $data['nickname'];
             $subordinates = (count($subor) > 1) ? '...' : '';
         } elseif ($data['account_type'] == 2) {
             $relationship = "Top Agent";
@@ -35,7 +35,7 @@ if ($flag == "userlistdata") {
 
         // Add data to the user list
         $usersList[] = array_merge($data, [
-            'userlogins' => $userlogins,
+           // 'userlogins' => $userlogins,
             'referals' => $referals,
             'subor' => $subor,
             'totalsubordinate' => $totalsubordinate,
@@ -71,10 +71,10 @@ if ($flag == "filteruserlist") {
     }
 
     $states = isset($this->viewData['states']) ? $this->viewData['states'] : '';
-    // $ordertype = isset($this->viewData['ordertype']) ? $this->viewData['ordertype'] : '';
+    $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid)[0]['uid'];
     $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
     $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
-    $result = (new UserManageModel())->FilterUserlist($page, $limit, $realUsername, $states, $startdate, $enddate) ?? [];
+    $result = (new UserManageModel())->FilterUserlist($page, $limit, $usernameCheck, $states, $startdate, $enddate) ?? [];
 
     $bigArr = [];
     foreach ($result['data'] as $data) {

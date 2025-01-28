@@ -280,19 +280,18 @@ $(function () {
       const usernames = $(".userIdFields").val();
       const amount = $(".amount").val();
       const review = $(".review").val();
-
-  
-      if (amount === "" || review === "" || usernames === "") {
+      const approvedby = $(".approved").val()
+      if (amount === "" || review === "" || usernames === "" || approvedby === "") {
         showToast("Heads up!!", "All field are required", "info");
         return false;
       }
       $(".loaderfinance").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
-      $.post(`../admin/addmoney/${depositype}/${usernames}/${amount}/${review}`,
+      $.post(`../admin/addmoney/${depositype}/${usernames}/${amount}/${approvedby}/${review}`,
         function (response) {
           if (response) {
             $(".loaderfinance").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send")
             showToast("Success", "transaction perform success", "success");
-            fetchfinance(currentPagefinance);
+            fetchfinance(currentPage,pageLimit);
           } else {
             showToast("Heads up!!","transaction failed", "info");
           }

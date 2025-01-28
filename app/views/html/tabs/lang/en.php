@@ -26,6 +26,10 @@ return [
 'Bet Refund' =>'Bet Refund',
 'Rebates' => 'Rebates',
 "Server Time"  => "Server Time",
+'Page'=> 'Page',
+'Pages' =>'Page',
+'Of' => 'Of',
+// 'Search usernames' => 'Search usernames',
 // 'Transaction ID'=> 'Transaction ID',
 
 //'Withdrawal Review' => 'Withdrawal Review',
@@ -110,6 +114,8 @@ return [
 'Bet Selection' =>'Bet Selection',
 'Draw Results' =>'Draw Results',
 'Game Model' =>'Game Model',
+'Game Label'=>'Game Label',
+'Closing Time'=>'Closing Time',
 
  //track 
 'Track Records' => 'Track Records',
@@ -224,6 +230,11 @@ return [
 'Action' => 'Action',
 'state'=>'state',
 'Deposit Channel' => 'Deposit Channel',
+'Momo'=>'Momo',
+'Crypto'=>'Crypto',
+'Bank Transfere'=>'Bank Transfere',
+'Manual Deposit'=>'Manual Deposit',
+'Approved By' =>'Approved By',
 
 
 //'Withdrawal Management'=> '出款管理',

@@ -12,7 +12,7 @@ class UserManageModel extends MEDOOHelper
         $startpoint = ($page - 1) * $limit;
         $data = parent::query(
             "SELECT uid, username,email,contact,nickname, agent_name, balance, recharge_level, user_state,reg_type,
-                    last_login, rebate, created_at, agent_id, account_type,reg_type
+                  rebate, created_at, agent_id, account_type,reg_type
              FROM users_test
              ORDER BY uid DESC
              LIMIT :startpoint, :limit",
@@ -40,7 +40,7 @@ class UserManageModel extends MEDOOHelper
     public static function getSubordinate($agent_id)
     {
 
-        return  $data = parent::query("SELECT username FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
+        return  $data = parent::query("SELECT nickname FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
     }
 
     public static function Fetchsubordinates($uid)
