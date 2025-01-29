@@ -177,13 +177,10 @@
         /* Optional: Make it stand out */
     }
 
-    .queryholdertrans {   
+    .widrl-queryholdertrans {   
         width: 11%;
         margin-right: 5px;
         background-color: #fff;
-    }
-    #maskwithdraw td{
-        text-align: center;
     }
     .table-head-widrl {
     position: sticky;
@@ -207,10 +204,10 @@
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 165%;">
-                <input type="text" id="mytrans" class="form-control queryholdertrans widrl-username mytrans" placeholder="Search usernames">
-                <input name="usernames" type="hidden"  id="widrl-userID" class="userIdtrans queryholdertrans">
+                <input type="text" id="mytrans" class="form-control widrl-queryholdertrans widrl-username mytrans" placeholder="Search usernames">
+                <input name="usernames" type="hidden"  id="widrl-userID" class="userIdtrans widrl-queryholdertrans">
                 <select class="form-control trackdown" size="5" style="display: none; width: 11%;background:#fff;" id="users-options-wrapper" ></select>
-                <input type="text" class="form-control queryholdertrans orderid" id="widrl-ID" aria-describedby="name" placeholder="Search Withdrawal ID">
+                <input type="text" class="form-control widrl-queryholdertrans orderid" id="widrl-ID" aria-describedby="name" placeholder="Search Withdrawal ID">
                 <div class="custom-dropdown" style="width: 12%; margin-right: 5px;">
                     <select name="lotteryname" id="widrl-channels" class="form-control form-select queryholderlist tracklotery " data-bs-placeholder="Select Type">
                         <option value="0">Withdrawal Channels</option>
@@ -224,23 +221,14 @@
                     <select name="lotteryname" id="widrl-status" class="form-control form-select queryholderlist tracklotery " data-bs-placeholder="Select Type">
                         <option value="0">Status</option>
                         <option value="1">Pending</option>
-                        <option value="2">Successful</option>
+                        <option value="2">Success</option>
                         <option value="3">Failed</option>
                     </select>
                  </div>
-                <input type="date"  class="form-control queryholdertrans wdrl-startdate" id="widrl-startDate" aria-describedby="name" placeholder="Start Date">
-                <input type="date"  class="form-control queryholdertrans wdrl-enddate"   id="widrl-endDate" aria-describedby="name" placeholder="End Date">
+                <input type="date"  class="form-control widrl-queryholdertrans wdrl-startdate" id="widrl-startDate" aria-describedby="name" placeholder="Start Date">
+                <input type="date"  class="form-control widrl-queryholdertrans wdrl-enddate"   id="widrl-endDate" aria-describedby="name" placeholder="End Date">
             </div>
        
-            <!-- <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
-            <input type="text" class="form-control product-search ps-5 userrebate" id="input-rsearch" placeholder="Search Rebate..." />
-            <i class="bx bx-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
-            
-            </div> -->
-            <!-- <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon12" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
-                    <input type="text" class="form-control queryholder userrebate" placeholder="Enter Rebate (%)" aria-label="Username" aria-describedby="basic-addon1" />
-          </div> -->
 
         </span>
         <span class="toplist-center" aria-label=" navigation example">
@@ -250,11 +238,7 @@
 
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <!-- <i ' ></i> -->
-                <!-- <button type="button" class="btn bg-white-subtle player setallwithdraw" value="right" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Set all withdraw">
-                    <i class='bx bx-plus' style="font-size:20px"></i>
-                </button> -->
+                
                 <button type="button" class="btn bg-white-subtle player refreshwithdrawa" value="right" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
@@ -334,18 +318,13 @@
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playerlinks" value="widrl-startlinks">
-                    <i class='bx bx-chevrons-left' style="font-size:20px"></i>
-                </button>
-                <button type="button" class="btn bg-white-subtle playerwithdraw" value="widrl-leftlinks">
+                <button type="button" class="btn bg-white-subtle playerwithdraw" data-page="widrl-leftlinks">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerwithdraw" value="widrl-rightlinks">
+                <button type="button" class="btn bg-white-subtle playerwithdraw" data-page="widrl-rightlinks">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerwithdraw" value="widrl-endlinks">
-                    <i class='bx bx-chevrons-right' style="font-size:20px"></i>
-                </button>
+                
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">

@@ -307,7 +307,6 @@ class FinancialManageModel extends MEDOOHelper
     {
         
         try{
-
       
         $startpoint = ($page - 1) * $limit;
         $table_name = "withdrawal_manage"; 

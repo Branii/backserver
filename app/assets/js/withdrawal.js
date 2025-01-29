@@ -26,7 +26,7 @@ $(function () {
     const withdrawdata = (data) => { 
     
         let html = "";
-        const status = {1: "Pending", 2:"Successful" , 3: "Failed"};
+        const status = {1: "Pending", 2:"Success" , 3: "Failed"};
         const withdrawal_channel = {3: "Momo", 5:"Crypto" , 2: "Bank" , 4: "Manual"}; // 3:momo 5:crypto 2:bank 4:manual
          data.forEach(item => {
           html += `
@@ -255,8 +255,8 @@ $(function () {
        } else if(widrlEndDate.length == 0){
            widrlEndDate = "all";
        }
-       if(userID.length == 0 && widrlID == undefined && widrlChannels == 0 && widrlStatus == 0 && widrlStartDate == "all" && widrlEndDate == "all"){
-           console.log("Please select atleast one field to search by.");
+       if(userID.length == 0 && widrlID.length == 0 && widrlChannels == 0 && widrlStatus == 0 && widrlStartDate == "all" && widrlEndDate == "all"){
+        showToast("No filters selected.", "Please select atleast one filter.", "info") ;
            return;
        }
 
@@ -284,6 +284,8 @@ $(function () {
               
                if(response.data.length == 0){
                    $("#withdrawContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
+                   $("#paging_infowithdraw").text(`Page 0 of 0 Pages`);
+                   $("#paginationwithdraw").html("");
                    return; 
                }
                withdrawalRecords      = response.data;
@@ -291,6 +293,7 @@ $(function () {
                const html = withdrawdata(withdrawalRecords);
                $("#withdrawContainer").html(html);  
                renderwithdrawPagination(totalPages, currentPage,);
+              
                
                },
            error: function(xhr,status,error){
@@ -388,15 +391,13 @@ const  fetchbetUser = (query) =>{
   });
 }
 
-    $(document).on("click",".playerwithdraw", function(){
-      let direction = $(this).val();
-      console.log("Receiving hits");
+    $(".playerwithdraw").click(function(e){
+    
+      let direction = $(this).attr("data-page");
       const tableWrapper = $(".table-wrapperwithdraw");
-      const tableWrappers = document.querySelector(".table-wrapperwithdraw");
+      const tableWrappers = $(".table-wrapperwithdraw")[0];
       const scrollAmount = 1000; // Adjust as needed
-      const scrollOptions = {
-          behavior: "smooth",
-      };
+      const scrollOptions = { behavior: "smooth" };
       if (tableWrapper.length) {
           switch (direction) {
               case "widrl-leftlinks":
@@ -405,18 +406,11 @@ const  fetchbetUser = (query) =>{
               case "widrl-rightlinks":
                   tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
                   break;
-              case "wdrl-starttrans":
-                  // Scroll to the absolute start (leftmost position)
-                  tableWrapper.animate({ scrollLeft: 0 }, "slow");
-                  break;
-              case "widrl-endlinks":
-                  const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
-                  tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
-                  break;
               default:
                   break;
           }
       }
+      e.stopPropagation(); // Prevent event bubbling
     });
    
     
