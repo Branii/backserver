@@ -20,13 +20,14 @@ if ($flag == "filter_records") {
     
     $userID     = $this->viewData['user_id'];
     $widrlID    = $this->viewData['widrl_id'];
+    $limit      = $this->viewData['limit'];
     $channels   = $this->viewData['widrl_channels'];
     $status     = $this->viewData['widrl_status'];
     $start_date = $this->viewData['widrl_start_date'];
     $end_date   = $this->viewData['widrl_end_date'];
 
 
-    $results = FinancialManageModel::filterWidrlRecords(['uid' => $userID,'withdrawal_id'=> $widrlID, 'withdrawal_channel' => $channels,'withdrawal_state'=> $status, 'start_date' => $start_date,'end_date' => $end_date,],intval($page)) ;
+    $results = FinancialManageModel::filterWidrlRecords(['uid' => $userID,'withdrawal_id'=> $widrlID, 'withdrawal_channel' => $channels,'withdrawal_state'=> $status, 'start_date' => $start_date,'end_date' => $end_date,],intval($page),$limit) ;
  }catch (\Exception $th) {
         $results = ["status" => "error","data" => "Internal Server Error."];
     }
