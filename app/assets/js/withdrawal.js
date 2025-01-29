@@ -235,14 +235,13 @@ $(function () {
         //     }
         // });
 
-    const filterWidrlRecords = (currentPage) => {
+    const filterWidrlRecords = (currentPage,element,limit = 10, isPaging = false) => {
       let userID         = $("#widrl-userID").val();
       let widrlID        = $("#widrl-ID").val();
       let widrlChannels  = $("#widrl-channels").val();
       let widrlStatus    = $("#widrl-status").val();
       let widrlStartDate = $("#widrl-startDate").val();
       let widrlEndDate   = $("#widrl-endDate").val();
-      const element = this;
 
       if(widrlStartDate === undefined){
        widrlStartDate = "all";
@@ -255,7 +254,7 @@ $(function () {
        } else if(widrlEndDate.length == 0){
            widrlEndDate = "all";
        }
-       if(userID.length == 0 && widrlID.length == 0 && widrlChannels == 0 && widrlStatus == 0 && widrlStartDate == "all" && widrlEndDate == "all"){
+       if(userID.length == 0 && widrlID.length == 0 && widrlChannels == 0 && widrlStatus == 0 && widrlStartDate == "all" && widrlEndDate == "all" && !isPaging){
         showToast("No filters selected.", "Please select atleast one filter.", "info") ;
            return;
        }
@@ -267,7 +266,7 @@ $(function () {
 
 
        $.ajax({
-           url: `../admin/searchWidrlRecords/${userID}/${widrlID}/${widrlChannels}/${widrlStatus}/${widrlStartDate}/${widrlEndDate}/${currentPage}`,
+           url: `../admin/searchWidrlRecords/${userID}/${widrlID}/${widrlChannels}/${widrlStatus}/${widrlStartDate}/${widrlEndDate}/${currentPage}/${limit}`,
            type: "POST",
            beforeSend: function(){
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -289,7 +288,7 @@ $(function () {
                    return; 
                }
                withdrawalRecords      = response.data;
-               const totalPages = Math.ceil((withdrawalRecords[0].total_records) / 10);
+               const totalPages = Math.ceil((withdrawalRecords[0].total_records) / limit);
                const html = withdrawdata(withdrawalRecords);
                $("#withdrawContainer").html(html);  
                renderwithdrawPagination(totalPages, currentPage,);
@@ -305,9 +304,18 @@ $(function () {
            }
        });
     };
+
+
+    $(document).on("change","#widrl-numrowstans", function(){
+        const element = $("#paginationwithdraw .active .page-link")[0];
+        const page    = $(element).text();
+        console.log($("#paginationwithdraw .active .page-link")[0]);
+        const limit   = $(this).val();
+        filterWidrlRecords(parseInt(page),this,parseInt(limit),true);
+    });
     
     $(document).on("click",".widrl-search", function () {
-      filterWidrlRecords(1);
+      filterWidrlRecords(1,this);
     });    
 
     /// search usernames
@@ -315,8 +323,7 @@ $(function () {
          e.preventDefault();
          const element = e.target;
          const page = $(this).attr("data-page");
-         console.log(page);
-         filterWidrlRecords(parseInt(page));
+         filterWidrlRecords(parseInt(page),this,10, true);
 
     });
 

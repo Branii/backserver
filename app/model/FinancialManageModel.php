@@ -19,7 +19,7 @@ class FinancialManageModel extends MEDOOHelper
             "SELECT deposits_and_withdrawals.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.username, 'N/A') AS username 
              FROM deposits_and_withdrawals
              LEFT JOIN users_test ON users_test.uid = deposits_and_withdrawals.user_id
-             ORDER BY deposits_and_withdrawals.user_id DESC 
+             ORDER BY deposits_and_withdrawals.uid DESC 
              LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
         );
@@ -82,15 +82,15 @@ class FinancialManageModel extends MEDOOHelper
                         FROM deposits_and_withdrawals
                         WHERE $subquery
                     ) AS temp_table
-                JOIN 
+                 LEFT JOIN 
                     users_test ON users_test.uid = temp_table.user_id
                 LIMIT :offset, :limit
             ";
         
             // SQL query for counting total records
-            $countSql = "
+            $countSql1 = "
                 SELECT 
-                    COUNT(*) AS total_counts
+                    COUNT(*) AS total_results
                 FROM 
                     deposits_and_withdrawals
                 WHERE $subquery
@@ -100,8 +100,8 @@ class FinancialManageModel extends MEDOOHelper
             $data = parent::query($sql, [ 'offset' => $startpoint, 'limit' => $limit ]);
         
             // Execute the count query
-            $totalRecords = parent::query($countSql);
-            $totalRecords = $totalRecords[0]['total_counts'];
+            $totalRecords = parent::query($countSql1);
+            $totalRecords = $totalRecords[0]['total_results'];
         
             // Return the data and total record count
             return [
@@ -217,7 +217,7 @@ class FinancialManageModel extends MEDOOHelper
 
     public static function insertIntoWithrawManage($desposittype, $uid, $amount, $depositid,$username)
     {
-            $manualusername = "manual deposit";
+            $manualusername = "Enzerhub";
             $manualemail = "manualdeposit@gmail.com";
             $currentDateTime = date('Y-m-d H:i:s');
             $currentTime = date('H:i:s');
@@ -228,9 +228,9 @@ class FinancialManageModel extends MEDOOHelper
                 'withdrawal_id' => $depositid,
                 'username' => $manualusername,
                 'user_email' => $manualemail,
-                'contact' => "MTN",
+                'contact' => "Company Number",
                 'user_level' => 'Vip',
-                'bank_type' => 'Company Number',
+                'bank_type' => 'MTN',
                 'withdrawal_channel' => $desposittype,
                 'card_holder' => 'Enzerhub',
                 'bank_card_number' => 'Company Number',
@@ -362,7 +362,7 @@ class FinancialManageModel extends MEDOOHelper
                         FROM deposit_new
                         WHERE $subQuerys
                     ) AS temp_tables
-                JOIN 
+                 LEFT JOIN 
                     users_test ON users_test.uid = temp_tables.user_id
                 LIMIT :offset, :limit
             ";
@@ -370,7 +370,7 @@ class FinancialManageModel extends MEDOOHelper
         // Define the query to count total records
                     $countSqlss = "
                 SELECT 
-                    COUNT(*) AS totalcounts
+                    COUNT(*) AS totals_count
                 FROM 
                     deposit_new
                 WHERE 
@@ -381,7 +381,7 @@ class FinancialManageModel extends MEDOOHelper
         // Execute the main SQL query
         $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
         $totalRecordsResults = parent::query($countSqlss);
-        $totalRecords = $totalRecordsResults[0]['totalcounts'];
+        $totalRecords = $totalRecordsResults[0]['totals_count'];
     
         return ['data' => $data, 'total' => $totalRecords];
     }
