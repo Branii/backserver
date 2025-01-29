@@ -178,6 +178,7 @@
     }
 
     .widrl-queryholdertrans {   
+
         width: 11%;
         margin-right: 5px;
         background-color: #fff;
@@ -208,6 +209,7 @@
                 <input name="usernames" type="hidden"  id="widrl-userID" class="userIdtrans widrl-queryholdertrans">
                 <select class="form-control trackdown" size="5" style="display: none; width: 11%;background:#fff;" id="users-options-wrapper" ></select>
                 <input type="text" class="form-control widrl-queryholdertrans orderid" id="widrl-ID" aria-describedby="name" placeholder="Search Withdrawal ID">
+
                 <div class="custom-dropdown" style="width: 12%; margin-right: 5px;">
                     <select name="lotteryname" id="widrl-channels" class="form-control form-select queryholderlist tracklotery " data-bs-placeholder="Select Type">
                         <option value="0">Withdrawal Channels</option>
@@ -225,8 +227,10 @@
                         <option value="3">Failed</option>
                     </select>
                  </div>
+
                 <input type="date"  class="form-control widrl-queryholdertrans wdrl-startdate" id="widrl-startDate" aria-describedby="name" placeholder="Start Date">
                 <input type="date"  class="form-control widrl-queryholdertrans wdrl-enddate"   id="widrl-endDate" aria-describedby="name" placeholder="End Date">
+
             </div>
        
 

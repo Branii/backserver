@@ -232,6 +232,8 @@ return [
     'Reviews' => '备注',
     'Action' => '操作',
     'state' => '状态',
+    'Success' =>'成功',
+    'Failed' =>'失败',
 
     //'Withdrawal Management'=> '出款管理',
     'Withdrawal Records' => '提款记录',

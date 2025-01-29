@@ -391,29 +391,21 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function filterdeposits($uid,$depositchanel,$depositid,$startdepo,$enddepo,$page,$pageLimit)
+    public function filterfinance($uid,$depositestate,$startfinance,$endfinance,$page,$pageLimit)
     {
         $this->view('exec/financial_manage', [
         'uid' => $uid,
-        'states' => $depositchanel,
-        'depositid' => $depositid,
-        'startdate' => $startdepo,
-        'enddate' => $enddepo,
-         'page' => $page,
-         'limit' => $pageLimit,
-        'flag' => 'filterdeposit'
+        'status' => $depositestate,
+        'startdate' => $startfinance,
+        'enddate' => $endfinance,
+        'page' => $page,
+        'limit' => $pageLimit,
+        'flag' => 'filterfinance'
     ]);
         $this->view->render();
 
     }
    
-
-    // public function filterRebate($rebate)
-    // {
-    //     $this->view('exec/agentmanage', ['rebate' => $rebate, 'flag' => 'filterRebate']);
-    //     $this->view->render();
-    // }
-
         //NOTE -
     //////////////Deposit Records -//////////
     // 
@@ -422,6 +414,24 @@ class adminController extends Controller {
         $this->view('exec/financial_manage', ['page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchDeposit']);
         $this->view->render();
     }
+
+    public function filterdeposits($uid,$depositchanel,$depositid,$stautsdeposit,$startdepo,$enddepo,$page,$pageLimit)
+    {
+        $this->view('exec/financial_manage', [
+        'uid' => $uid,
+        'states' => $depositchanel,
+        'depositid' => $depositid,
+        'depostatus' => $stautsdeposit,
+        'startdate' => $startdepo,
+        'enddate' => $enddepo,
+        'page' => $page,
+        'limit' => $pageLimit,
+        'flag' => 'filterdeposit'
+    ]);
+        $this->view->render();
+
+    }
+   
     
      //NOTE -
     //////////////Withdrawal Records -//////////
