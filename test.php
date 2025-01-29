@@ -237,14 +237,13 @@ $dataStmt->execute();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Slider with Array Value</title>
+  <title>Dynamic Slider Value Control</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
       margin-top: 50px;
     }
-
     .loader-bar {
       width: 80%;
       height: 25px;
@@ -253,19 +252,16 @@ $dataStmt->execute();
       margin: 20px auto;
       position: relative;
     }
-
     .progress {
       height: 100%;
       background-color: #76c7c0;
       border-radius: 8px;
       transition: width 0.3s ease;
     }
-
     #slider-container {
       margin: 30px auto;
       width: 80%;
     }
-
     #value-display {
       font-size: 1.5rem;
       margin-top: 20px;
@@ -274,7 +270,7 @@ $dataStmt->execute();
 </head>
 <body>
 
-<h1>Interactive Value Control with Progress Bar</h1>
+<h1>Dynamic Value with Slider Control</h1>
 
 <div class="loader-bar">
   <div class="progress" id="progress-bar"></div>
@@ -282,37 +278,42 @@ $dataStmt->execute();
 
 <!-- Slider Control -->
 <div id="slider-container">
-  <input type="range" id="range-slider" min="1" max="100" value="10" />
+  <input type="range" id="range-slider" min="0" max="100" value="100" />
 </div>
 
 <p id="value-display">Value: 10</p>
 
 <script>
-  const values = [10, 20, 30]; // Array of initial values
-  let currentIndex = 0;
-
+  const baseValue = 10; // Base value when at 100%
   const progressBar = document.getElementById('progress-bar');
   const slider = document.getElementById('range-slider');
   const valueDisplay = document.getElementById('value-display');
 
-  // Set the current value and adjust the bar
-  function updateValue(newValue) {
-    progressBar.style.width = `${newValue}%`;
-    values[currentIndex] = Math.floor((newValue / 100) * 100); // Scale value from 0 to 100
-    valueDisplay.textContent = `Value: ${values[currentIndex]}`;
+  // Update value and progress bar based on slider
+  function updateValue(percentage) {
+    const computedValue = Math.round((percentage / 100) * baseValue); // Compute proportional value
+    valueDisplay.textContent = `Value: ${computedValue}`;
+    progressBar.style.width = `${percentage}%`;
+
+    // Show or hide the progress bar based on the percentage
+    if (percentage > 0) {
+      progressBar.style.display = "block";
+    } else {
+      progressBar.style.display = "none";
+    }
   }
 
-  // Update when moving the slider
+  // Update value on slider input
   slider.addEventListener('input', (event) => {
-    const sliderValue = event.target.value;
-    updateValue(sliderValue);
+    updateValue(event.target.value);
   });
 
-  // Initialize the display
+  // Initialize display
   updateValue(slider.value);
 </script>
 
 </body>
 </html>
+
 
 

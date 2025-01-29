@@ -89,7 +89,7 @@
         margin-right: 5px;
         background-color: #fff;
     }
-    .acc_transaction_username {
+    /* .acc_transaction_username {
         width: 19%;
         position: absolute;
         color: #aaa;
@@ -101,7 +101,7 @@
         z-index: 9999;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         display: none;
-    }
+    } */
     .option {
         text-align: left;
         border-bottom: solid 1px #eee;
@@ -272,7 +272,7 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
                 <input type="text" id="mytrans" class="form-control queryholdertrans usernames mytrans" placeholder="Search usernames" />
-                <input name="usernames" type="hidden" class="userIdtrans queryholdertrans" />
+                <input name="usernames" type="hidden" class="userIdtrans" />
                 <select class="form-control useraccount" size="5" style="display: none;" id="userAccountDropdown">
                     <!-- Options will be populated dynamically -->
                 </select>

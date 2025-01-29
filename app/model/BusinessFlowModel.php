@@ -253,7 +253,7 @@ class BusinessFlowModel extends MEDOOHelper
         // Generate the filter query using the filterBetData method
         $subquery = self::filterBetData($uid, $gametype, $betstate, $betstatus, $enddate, $startdate);
         $whereClause = $subquery['query'];
-        // Build the main SQL query
+      
         $sql = "
         SELECT GROUP_CONCAT(
             CONCAT(
