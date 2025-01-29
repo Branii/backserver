@@ -220,7 +220,7 @@ $(function () {
       const depositid = $(".depositids").val();
       const startdepo = $(".startdepo").val();
       const enddepo = $(".enddepo").val();
-       console.log(depositid)
+       console.log(username)
       //  return
    
       filterdeposit(username,depositchanel,depositid,stautsdeposit,startdepo,enddepo,currentPage,pageLimit)
