@@ -235,14 +235,13 @@ $(function () {
         //     }
         // });
 
-    const filterWidrlRecords = (currentPage, isPaging = false) => {
+    const filterWidrlRecords = (currentPage,element, isPaging = false) => {
       let userID         = $("#widrl-userID").val();
       let widrlID        = $("#widrl-ID").val();
       let widrlChannels  = $("#widrl-channels").val();
       let widrlStatus    = $("#widrl-status").val();
       let widrlStartDate = $("#widrl-startDate").val();
       let widrlEndDate   = $("#widrl-endDate").val();
-      const element = this;
 
       if(widrlStartDate === undefined){
        widrlStartDate = "all";
@@ -307,7 +306,7 @@ $(function () {
     };
     
     $(document).on("click",".widrl-search", function () {
-      filterWidrlRecords(1);
+      filterWidrlRecords(1,this);
     });    
 
     /// search usernames
@@ -316,7 +315,7 @@ $(function () {
          const element = e.target;
          const page = $(this).attr("data-page");
          
-         filterWidrlRecords(parseInt(page), true);
+         filterWidrlRecords(parseInt(page),this, true);
 
     });
 
