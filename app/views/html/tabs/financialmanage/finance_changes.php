@@ -296,6 +296,9 @@
                 <button type="button" class="btn bg-white-subtle executefinance" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                     <i class="bx bx-check-double loaderfinance" style="font-size: 20px;"></i>
                 </button>
+                <!-- <button type="button" class="btn bg-white-subtle executedeposit" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                    <i class="bx bx-check-double loaderdeposit" style="font-size: 20px;"></i>
+                </button> -->
             </div>
         </span>
     </div>
