@@ -228,8 +228,8 @@
                         <option value="3">Failed</option>
                     </select>
                  </div>
-                <input type="date"  class="form-control queryholdertrans wdrl-startdate" id="widrl-startDate" aria-describedby="name" placeholder="Start Date">
-                <input type="date"  class="form-control queryholdertrans wdrl-enddate"   id="widrl-endDate" aria-describedby="name" placeholder="End Date">
+                <input type="date"  class="form-control queryholdertranss wdrl-startdate" id="widrl-startDate" aria-describedby="name" placeholder="Start Date">
+                <input type="date"  class="form-control queryholdertranss wdrl-enddate"   id="widrl-endDate" aria-describedby="name" placeholder="End Date">
             </div>
        
             <!-- <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
