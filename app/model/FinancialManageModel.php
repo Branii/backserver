@@ -82,7 +82,7 @@ class FinancialManageModel extends MEDOOHelper
                         FROM deposits_and_withdrawals
                         WHERE $subquery
                     ) AS temp_table
-                JOIN 
+                 LEFT JOIN 
                     users_test ON users_test.uid = temp_table.user_id
                 LIMIT :offset, :limit
             ";
@@ -362,7 +362,7 @@ class FinancialManageModel extends MEDOOHelper
                         FROM deposit_new
                         WHERE $subQuerys
                     ) AS temp_tables
-                JOIN 
+                 LEFT JOIN 
                     users_test ON users_test.uid = temp_tables.user_id
                 LIMIT :offset, :limit
             ";
