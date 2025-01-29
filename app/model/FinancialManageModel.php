@@ -156,13 +156,11 @@ class FinancialManageModel extends MEDOOHelper
             $recharge_balance = (float) $Data['balance'] - (float)$amount;
         }
 
-        // Insert into Deposits and Withdrawals
-            if($depositid == 4){
-            self::insertIntoWithrawManage($desposittype, $uid, $amount, $depositid, $username) ;
-            }
+        
         if (
             self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance) &&
              self::insertIntoDepositsNew($desposittype, $uid, $amount, $depositid, $username) &&
+             self::insertIntoWithrawManage($uid, $amount, $depositid, $username)&&
             self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
         ) {
             // Update user balance if all operations succeed
@@ -215,7 +213,7 @@ class FinancialManageModel extends MEDOOHelper
     }
 
 
-    public static function insertIntoWithrawManage($desposittype, $uid, $amount, $depositid,$username)
+    public static function insertIntoWithrawManage($uid, $amount, $depositid,$username)
     {
             $manualusername = "Enzerhub";
             $manualemail = "manualdeposit@gmail.com";
@@ -231,7 +229,7 @@ class FinancialManageModel extends MEDOOHelper
                 'contact' => "Company Number",
                 'user_level' => 'Vip',
                 'bank_type' => 'MTN',
-                'withdrawal_channel' => $desposittype,
+                'withdrawal_channel' => '4',
                 'card_holder' => 'Enzerhub',
                 'bank_card_number' => 'Company Number',
                 'withdrawal_amount' => $amount,
