@@ -97,7 +97,7 @@ if ($flag == "filterdeposit") {
         ]);
        }else{
 
-        $subquery = (new FinancialManageModel())->Depositsubquery($uid,$states,$depositid,$depostatus,$startdate,$enddate) ?? [];
+        $subquery = (new FinancialManageModel())->Depositsubquery($uid,$states,$depositids,$depostatus,$startdate,$enddate) ?? [];
         $result = (new FinancialManageModel())->FilterDepositData($subquery,$page,$limit) ?? [];
 
         echo json_encode([
