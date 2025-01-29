@@ -63,8 +63,7 @@ class BusinessFlowModel extends MEDOOHelper
             temp_table.*, 
             users_test.email AS email,
             users_test.username AS username,
-            users_test.contact AS contact,users_test.reg_type AS reg_type
-           
+            users_test.contact AS contact,users_test.reg_type AS reg_type    
         FROM 
             (
                 SELECT * 

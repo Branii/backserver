@@ -153,8 +153,6 @@ $(function () {
         }
         $("#maskDeposit").LoadingOverlay("hide");
         renderdeposit(data.deposits);
-
-        // Render pagination
         renderdepositPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterdeposit(username,depositchanel,depositid,stautsdeposit,startdepo,enddepo,newPage,pageLimit));
         document.getElementById("paging_infodeposit").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
     } catch (error) {
