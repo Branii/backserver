@@ -217,7 +217,7 @@ class FinancialManageModel extends MEDOOHelper
 
     public static function insertIntoWithrawManage($desposittype, $uid, $amount, $depositid,$username)
     {
-            $manualusername = "manual deposit";
+            $manualusername = "Enzerhub";
             $manualemail = "manualdeposit@gmail.com";
             $currentDateTime = date('Y-m-d H:i:s');
             $currentTime = date('H:i:s');
@@ -228,9 +228,9 @@ class FinancialManageModel extends MEDOOHelper
                 'withdrawal_id' => $depositid,
                 'username' => $manualusername,
                 'user_email' => $manualemail,
-                'contact' => "MTN",
+                'contact' => "Company Number",
                 'user_level' => 'Vip',
-                'bank_type' => 'Company Number',
+                'bank_type' => 'MTN',
                 'withdrawal_channel' => $desposittype,
                 'card_holder' => 'Enzerhub',
                 'bank_card_number' => 'Company Number',
