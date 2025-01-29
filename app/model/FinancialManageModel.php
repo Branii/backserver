@@ -370,7 +370,7 @@ class FinancialManageModel extends MEDOOHelper
         // Define the query to count total records
                     $countSqlss = "
                 SELECT 
-                    COUNT(*) AS totalcounts
+                    COUNT(*) AS totals_count
                 FROM 
                     deposit_new
                 WHERE 
@@ -381,7 +381,7 @@ class FinancialManageModel extends MEDOOHelper
         // Execute the main SQL query
         $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
         $totalRecordsResults = parent::query($countSqlss);
-        $totalRecords = $totalRecordsResults[0]['totalcounts'];
+        $totalRecords = $totalRecordsResults[0]['totals_count'];
     
         return ['data' => $data, 'total' => $totalRecords];
     }
