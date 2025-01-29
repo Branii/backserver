@@ -172,11 +172,11 @@ $(function () {
 
     $(document).on('click', '.executefinance', function () {
     
-    //   if ($("#financeDropdown").val() == "" && $(".depositestate").val() == "" && $(".startfinances").val() == "" ) {
-    //     // $("#danger-finance").modal("show");
-    //     showToast("Heads up!!","Select one or more data fields to filter","info")
-    //   //  return;
-    // }
+      if ($("#financeDropdown").val() == "" && $(".depositestate").val() == "" && $(".startfinances").val() == "" ) {
+        // $("#danger-finance").modal("show");
+        showToast("Heads up!!","Select one or more data fields to filter","info")
+        return;
+    }
   
       const depositestate = $(".depositestate").val();
       const username = $("#financeDropdown").val();

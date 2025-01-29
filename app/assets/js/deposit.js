@@ -211,7 +211,7 @@ $(function () {
       && $(".depositids").val() == "" && $(".depositstatus").val() == "") {
         // $("#danger-finance").modal("show");
         showToast("Heads up!!","Select one or more data fields to filter","info")
-      //  return;
+        return;
     }
   
       const username = $("#Depositinput").val();
