@@ -235,7 +235,7 @@ $(function () {
         //     }
         // });
 
-    const filterWidrlRecords = (currentPage) => {
+    const filterWidrlRecords = (currentPage, isPaging = false) => {
       let userID         = $("#widrl-userID").val();
       let widrlID        = $("#widrl-ID").val();
       let widrlChannels  = $("#widrl-channels").val();
@@ -255,7 +255,7 @@ $(function () {
        } else if(widrlEndDate.length == 0){
            widrlEndDate = "all";
        }
-       if(userID.length == 0 && widrlID.length == 0 && widrlChannels == 0 && widrlStatus == 0 && widrlStartDate == "all" && widrlEndDate == "all"){
+       if(userID.length == 0 && widrlID.length == 0 && widrlChannels == 0 && widrlStatus == 0 && widrlStartDate == "all" && widrlEndDate == "all" && !isPaging){
         showToast("No filters selected.", "Please select atleast one filter.", "info") ;
            return;
        }
@@ -315,8 +315,8 @@ $(function () {
          e.preventDefault();
          const element = e.target;
          const page = $(this).attr("data-page");
-         console.log(page);
-         filterWidrlRecords(parseInt(page));
+         
+         filterWidrlRecords(parseInt(page), true);
 
     });
 
