@@ -336,9 +336,16 @@
             <span id="paging_infowithdraw" style="color:#aaa">---</span>
 
         </span>
-        <span class="toplist-right" id="paginationwithdraw" aria-label="Page navigation example">
-
+        <span class="top-right-btn"  aria-label="Page navigation example">
+        <select class="left-element form-control numrowstrans" id="widrl-numrowstans" style="font-size: 12px;">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+        <span class="right-element" id="paginationwithdraw">
             <!--Dynamic pagination-->
+        </span>
 
         </span>
 
