@@ -56,7 +56,7 @@ class FinancialManageModel extends MEDOOHelper
             $subQuery = implode(' AND ', $filterConditions);
         }
         // Add ordering and limit to the query
-        //$subQuery .= "ORDER BY deposits_and_withdrawals.date_created DESC";
+        $subQuery .= "ORDER BY deposits_and_withdrawals.date_created DESC";
 
         return $subQuery;
     }
@@ -93,8 +93,7 @@ class FinancialManageModel extends MEDOOHelper
                     COUNT(*) AS total_counts
                 FROM 
                     deposits_and_withdrawals
-                WHERE
-                    $subquery
+                WHERE $subquery
             ";
         
             // Prepare and execute the main query with parameterized inputs
@@ -339,7 +338,7 @@ class FinancialManageModel extends MEDOOHelper
             $subQuery = implode(' AND ', $filterConditions);
         }
         // Add ordering and limit to the query
-        //$subQuery .= "ORDER BY deposits_and_withdrawals.date_created DESC";
+        $subQuery .= "ORDER BY deposit_new.date_created DESC";
 
         return $subQuery;
     }
@@ -369,7 +368,7 @@ class FinancialManageModel extends MEDOOHelper
             ";
 
         // Define the query to count total records
-        $countSqls = "
+                    $countSqlss = "
                 SELECT 
                     COUNT(*) AS totalcounts
                 FROM 
@@ -378,12 +377,13 @@ class FinancialManageModel extends MEDOOHelper
                     $subQuerys
             ";
 
+
         // Execute the main SQL query
         $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
-        $totalRecordsResult = parent::query($countSqls);
-        $totalRecords = $totalRecordsResult[0]['totalcounts'];
+        $totalRecordsResults = parent::query($countSqlss);
+        $totalRecords = $totalRecordsResults[0]['totalcounts'];
     
-        return [ 'data' => $data, 'total' => $totalRecords];
+        return ['data' => $data, 'total' => $totalRecords];
     }
     
 
