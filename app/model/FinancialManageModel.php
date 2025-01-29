@@ -88,9 +88,9 @@ class FinancialManageModel extends MEDOOHelper
             ";
         
             // SQL query for counting total records
-            $countSql = "
+            $countSql1 = "
                 SELECT 
-                    COUNT(*) AS total_counts
+                    COUNT(*) AS total_results
                 FROM 
                     deposits_and_withdrawals
                 WHERE $subquery
@@ -100,8 +100,8 @@ class FinancialManageModel extends MEDOOHelper
             $data = parent::query($sql, [ 'offset' => $startpoint, 'limit' => $limit ]);
         
             // Execute the count query
-            $totalRecords = parent::query($countSql);
-            $totalRecords = $totalRecords[0]['total_counts'];
+            $totalRecords = parent::query($countSql1);
+            $totalRecords = $totalRecords[0]['total_results'];
         
             // Return the data and total record count
             return [
