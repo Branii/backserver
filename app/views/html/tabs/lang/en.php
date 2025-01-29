@@ -235,7 +235,7 @@ return [
 'Bank Transfere'=>'Bank Transfere',
 'Manual Deposit'=>'Manual Deposit',
 'Approved By' =>'Approved By',
-'Sucessful' =>'Sucessful',
+'Success' =>'Success',
 'Failed' =>'Failed',
 
 

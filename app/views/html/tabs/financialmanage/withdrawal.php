@@ -177,7 +177,7 @@
         /* Optional: Make it stand out */
     }
 
-    .queryholdertrans {   
+    .queryholdertranss {   
         width: 11%;
         margin-right: 5px;
         background-color: #fff;
@@ -207,10 +207,10 @@
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 165%;">
-                <input type="text" id="mytrans" class="form-control queryholdertrans widrl-username mytrans" placeholder="Search usernames">
-                <input name="usernames" type="hidden"  id="widrl-userID" class="userIdtrans queryholdertrans">
+                <input type="text" id="mytrans" class="form-control queryholdertranss widrl-username mytrans" placeholder="Search usernames">
+                <input name="usernames" type="hidden"  id="widrl-userID" class="userIdtrans queryholdertranss">
                 <select class="form-control trackdown" size="5" style="display: none; width: 11%;background:#fff;" id="users-options-wrapper" ></select>
-                <input type="text" class="form-control queryholdertrans orderid" id="widrl-ID" aria-describedby="name" placeholder="Search Withdrawal ID">
+                <input type="text" class="form-control queryholdertranss orderid" id="widrl-ID" aria-describedby="name" placeholder="Search Withdrawal ID">
                 <div class="custom-dropdown" style="width: 12%; margin-right: 5px;">
                     <select name="lotteryname" id="widrl-channels" class="form-control form-select queryholderlist tracklotery " data-bs-placeholder="Select Type">
                         <option value="0">Withdrawal Channels</option>

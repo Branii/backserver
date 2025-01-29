@@ -28,6 +28,101 @@ class FinancialManageModel extends MEDOOHelper
         return ['data' => $data, 'total' => $totalRecords];
     }
 
+
+    
+    public static function Financialsubquery($username,$states,$startdate,$enddate)
+    {
+
+        $filterConditions = [];
+
+        if (!empty($username)) {
+            $filterConditions[] = "user_id = '$username'";
+        }
+
+        if (!empty($states)) {
+            $filterConditions[] = "deposit_withdrawal_type = '$states'";
+        }
+     
+
+        if (!empty($startdate) && !empty($enddate)) {
+            $filterConditions[] = "date_created BETWEEN '$startdate' AND '$enddate'";
+        } elseif (!empty($startdate)) {
+            $filterConditions[] = "date_created = '$startdate'";
+        } elseif (!empty($enddate)) {
+            $filterConditions[] = "date_created = '$enddate'";
+        }
+
+        if (!empty($filterConditions)) {
+            $subQuery = implode(' AND ', $filterConditions);
+        }
+        // Add ordering and limit to the query
+        //$subQuery .= "ORDER BY deposits_and_withdrawals.date_created DESC";
+
+        return $subQuery;
+    }
+
+
+   
+    public static function FilterFinancialData($subquery, $page, $limit)
+    {
+        try {
+            // Calculate the starting point for pagination
+            $startpoint = ($page - 1) * $limit;
+       
+            $sql = "
+                SELECT 
+                    temp_table.*, 
+                    users_test.email AS email,
+                    users_test.reg_type,
+                    users_test.username AS username,
+                    users_test.contact AS contact
+                FROM 
+                    (
+                        SELECT * 
+                        FROM deposits_and_withdrawals
+                        WHERE $subquery
+                    ) AS temp_table
+                JOIN 
+                    users_test ON users_test.uid = temp_table.user_id
+                LIMIT :offset, :limit
+            ";
+        
+            // SQL query for counting total records
+            $countSql = "
+                SELECT 
+                    COUNT(*) AS total_counts
+                FROM 
+                    deposits_and_withdrawals
+                WHERE
+                    $subquery
+            ";
+        
+            // Prepare and execute the main query with parameterized inputs
+            $data = parent::query($sql, [ 'offset' => $startpoint, 'limit' => $limit ]);
+        
+            // Execute the count query
+            $totalRecords = parent::query($countSql);
+            $totalRecords = $totalRecords[0]['total_counts'];
+        
+            // Return the data and total record count
+            return [
+                'data' => $data,
+                'total' => $totalRecords
+            ];
+        
+        } catch (Exception $e) {
+            // Log the error message for debugging purposes
+            error_log("Error executing query: " . $e->getMessage());
+        
+            // Optionally, return an empty set or error response
+            return [
+                'data' => [],
+                'total' => 0,
+                'error' => "Error executing query: " . $e->getMessage()
+            ];
+        }
+    }
+    
     public static function getUserDataByUsername($uid)
     {
         return  $userInfo = parent::query("SELECT balance FROM users_test WHERE uid = :uid", ["uid" => $uid]);
@@ -63,10 +158,12 @@ class FinancialManageModel extends MEDOOHelper
         }
 
         // Insert into Deposits and Withdrawals
+            if($depositid == 4){
+            self::insertIntoWithrawManage($desposittype, $uid, $amount, $depositid, $username) ;
+            }
         if (
             self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance) &&
              self::insertIntoDepositsNew($desposittype, $uid, $amount, $depositid, $username) &&
-             self::insertIntoWithrawManage($desposittype, $uid, $amount, $depositid, $username) &&
             self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
         ) {
             // Update user balance if all operations succeed
@@ -249,53 +346,44 @@ class FinancialManageModel extends MEDOOHelper
 
 
    
-    public static function FilterDepositData($subquery, $page, $limit)
+    public static function FilterDepositData($subQuerys, $page, $limit)
     {
-        try {
-            // Calculate the starting point for pagination
-            $startpoint = ($page - 1) * $limit;
-        
-            // SQL query for fetching paginated data
-            $sql = "
+        $startpoint = ($page - 1) * $limit;
+
+        $sql = "
                 SELECT 
-                    temp_table.*, 
-                    users_test.email AS email,
+                    temp_tables.*, 
+                    users_test.email AS email, 
                     users_test.reg_type,
-                    users_test.username AS username,
-                    users_test.contact AS contact
+                    users_test.username AS username, 
+                    users_test.contact
                 FROM 
                     (
                         SELECT * 
                         FROM deposit_new
-                        WHERE $subquery
-                    ) AS temp_table
+                        WHERE $subQuerys
+                    ) AS temp_tables
                 JOIN 
-                    users_test ON users_test.uid = temp_table.user_id
+                    users_test ON users_test.uid = temp_tables.user_id
                 LIMIT :offset, :limit
             ";
-        
-            // SQL query for counting total records
-            $countSql = "
+
+        // Define the query to count total records
+        $countSqls = "
                 SELECT 
-                    COUNT(*) AS total_count
+                    COUNT(*) AS totalcounts
                 FROM 
                     deposit_new
-                WHERE
-                    $subquery
+                WHERE 
+                    $subQuerys
             ";
-        
-            // Execute the main query with parameterized inputs
-            $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
-        
-            $totalRecords = parent::query($countSql);
-            $totalRecords =  $totalRecords[0]['total_count'] ;
-        
-            // Return the data and total record count
-            return ['data' => $data, 'total' => $totalRecords];
-        } catch (Exception $e) {
-            // Log the error message for debugging purposes
-            error_log("Error executing query: " . $e->getMessage());
-        }
+
+        // Execute the main SQL query
+        $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
+        $totalRecordsResult = parent::query($countSqls);
+        $totalRecords = $totalRecordsResult[0]['totalcounts'];
+    
+        return [ 'data' => $data, 'total' => $totalRecords];
     }
     
 

@@ -248,7 +248,7 @@
                 <input type="text" class="form-control queryholderdeposit depositids" id="nametextss" aria-describedby="name" placeholder="Enter Deposit ID" />
 
                 <select name="betsate" class="form-control form-select queryholderdeposit depositchanel"  data-bs-placeholder="Select Type">
-                    <option value="">--<?= $translator['Deposit Channel']; ?>--</option>
+                    <option value="">-<?= $translator['Deposit Channel']; ?>-</option>
                     <option value="3"><?= $translator['Momo']; ?></option>
                     <option value="5"><?= $translator['Crypto']; ?></option>
                     <option value="2"><?= $translator['Bank Transfere']; ?></option>
@@ -256,9 +256,9 @@
                 </select>
 
                 <select name="betsate" class="form-control form-select queryholderdeposit depositstatus"  data-bs-placeholder="Select Type">
-                    <option value="">--<?= $translator['Status']; ?>--</option>
+                    <option value="">-<?= $translator['Status']; ?>-</option>
                     <option value="pending"><?= $translator['Pending']; ?></option>
-                    <option value="success"><?= $translator['Sucessful']; ?></option>
+                    <option value="success"><?= $translator['Success']; ?></option>
                     <option value="failed"><?= $translator['Failed']; ?></option>
                     
                 </select>
@@ -267,10 +267,7 @@
 
                 <input name="enddate" type="date" class="form-control queryholderdeposit enddepo" aria-describedby="name" placeholder="Name" />
             </div>
-            <!-- <div class="input-group mb-3">
-				<span class="input-group-text" id="basic-addon12" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
-				<input type="text" class="form-control queryholder userrebate" placeholder="Enter Rebate (%)" aria-label="Username" aria-describedby="basic-addon1" />
-			</div> -->
+            
         </span>
         <span class="toplist-center" aria-label=" navigation example">
             <!--enter is free-->
@@ -383,7 +380,7 @@
                 <option value="200">200</option>
                 <option value="500">500</option>
             </select>
-            <span class="toplist-right" id="paginationdeposit" aria-label="Page navigation example">
+            <span class="toplist-right" id="paginationdeposits" aria-label="Page navigation example">
             <!--Dynamic pagination-->
            </span>
            

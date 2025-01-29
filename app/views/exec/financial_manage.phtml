@@ -18,6 +18,38 @@ if ($flag == "fetchfinance") {
 }
 
 
+if ($flag == "filterfinance") {
+
+    $uid = isset($this->viewData['uid']) ?  $this->viewData['uid'] : "";
+    $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
+    $states = isset($this->viewData['status']) ?  $this->viewData['status'] : "";
+    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
+    $enddate = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+   
+    if(!empty($usernameCheck) && $usernameCheck != null){
+       $username = $usernameCheck[0]['uid'];
+       $subquery = (new FinancialManageModel())->Financialsubquery($username,$states,$startdate,$enddate) ?? [];
+       $result = (new FinancialManageModel())->FilterFinancialData($subquery,$page,$limit) ?? [];
+
+       echo json_encode([
+           'finances' => $result['data'],
+          'totalPages' => ceil($result['total'] / $limit),
+       ]);
+      }else{
+
+       $subquery = (new FinancialManageModel())->Financialsubquery($uid,$states,$startdate,$enddate) ?? [];
+       $result = (new FinancialManageModel())->FilterFinancialData($subquery,$page,$limit) ?? [];
+
+       echo json_encode([
+           'finances' => $result['data'],
+           'totalPages' => ceil($result['total'] / $limit),
+       ]);
+      }
+    }
+
+
 if ($flag == "addmoney") {
 
     $depositetype = isset($this->viewData['depositetype']) ? (int) $this->viewData['depositetype'] : "";
@@ -29,7 +61,6 @@ if ($flag == "addmoney") {
     $result = (new FinancialManageModel())->addMoneyData($depositetype,$uid,$amount,$username,$review) ?? [];
     echo json_encode($result);
 }
-
 
 
 if ($flag == "fetchDeposit") {
@@ -47,32 +78,31 @@ if ($flag == "filterdeposit") {
 
      $uid = isset($this->viewData['uid']) ?  $this->viewData['uid'] : "";
      $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
-    $states = isset($this->viewData['states']) ? (int) $this->viewData['states'] : "";
+     $states = isset($this->viewData['states']) ?  $this->viewData['states'] : "";
     $depositid = isset($this->viewData['depositid']) ?  $this->viewData['depositid'] : "";
     $depostatus = isset($this->viewData['depostatus']) ?  $this->viewData['depostatus'] : "";
     $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
-    
     $enddate = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
-    $Limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
 
      if(!empty($usernameCheck) && $usernameCheck != null){
         $username = $usernameCheck[0]['uid'];
         $subquery = (new FinancialManageModel())->Depositsubquery($username,$states,$depositid,$depostatus,$startdate,$enddate) ?? [];
-        $result = (new FinancialManageModel())->FilterDepositData($subquery,$page,$Limit) ?? [];
+        $result = (new FinancialManageModel())->FilterDepositData($subquery,$page,$limit) ?? [];
 
         echo json_encode([
             'deposits' => $result['data'],
-           'totalPages' => ceil($result['total'] / $Limit),
+           'totalPages' => ceil($result['total'] / $limit),
         ]);
        }else{
 
         $subquery = (new FinancialManageModel())->Depositsubquery($uid,$states,$depositid,$depostatus,$startdate,$enddate) ?? [];
-        $result = (new FinancialManageModel())->FilterDepositData($subquery,$page,$Limit) ?? [];
+        $result = (new FinancialManageModel())->FilterDepositData($subquery,$page,$limit) ?? [];
 
         echo json_encode([
             'deposits' => $result['data'],
-            'totalPages' => ceil($result['total'] / $Limit),
+            'totalPages' => ceil($result['total'] / $limit),
         ]);
        }
       
