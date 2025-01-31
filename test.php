@@ -230,90 +230,154 @@ $dataStmt->execute();
 //     'data' => $dataStmt->fetchAll(PDO::FETCH_ASSOC), // The paginated data
 //     'count' => $total // Total count of records
 // ]);
+$serializedData = 'a:2:{i:1;s:4:"15.0";i:9;s:4:"10.7";}';
 
+// Unserialize the data
+$userTreeData = unserialize($serializedData);
+
+// Example function to fetch user details and build the tree
+function getUserTree($userId, $allUsers) {
+    $children = array_filter($allUsers, fn($parent) => $parent['parent_id'] === $userId);
+    $tree = [];
+
+    foreach ($children as $child) {
+        $tree[] = [
+            'user' => $child,
+            'children' => getUserTree($child['id'], $allUsers)
+        ];
+    }
+    return $tree;
+}
+
+// Mock database query result
+$allUsers = [
+    ['id' => 1, 'name' => 'Alice', 'parent_id' => 0],
+    ['id' => 2, 'name' => 'Bob', 'parent_id' => 1],
+    ['id' => 3, 'name' => 'Charlie', 'parent_id' => 1],
+    ['id' => 4, 'name' => 'David', 'parent_id' => 2],
+];
+
+// Build the tree starting from the root user (parent_id = 0)
+$tree = getUserTree(0, $allUsers);
+
+// Function to render the tree as HTML
+function renderTree($tree) {
+    if (empty($tree)) return '';
+    $html = '<ul>';
+    foreach ($tree as $node) {
+        $html .= '<li>' . $node['user']['name'];
+        $html .= renderTree($node['children']);
+        $html .= '</li>';
+    }
+    $html .= '</ul>';
+    return $html;
+}
+
+echo renderTree($tree);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Slider Value Control</title>
+  <title>Hover to Show Tree List</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
+      font-family: 'Arial', sans-serif;
+      padding: 20px;
     }
-    .loader-bar {
-      width: 80%;
-      height: 25px;
-      background-color: #e0e0e0;
+    
+    ul.tree-list {
+      list-style: none;
+      padding-left: 20px;
+    }
+
+    ul.tree-list ul {
+      margin-left: 15px;
+      border-left: 1px dashed #aaa;
+    }
+
+    .tree-node {
+      cursor: pointer;
+      padding: 5px 10px;
+      border: 1px solid #ddd;
+      display: inline-block;
+      background-color: #f9f9f9;
+      margin-top: 5px;
       border-radius: 8px;
-      margin: 20px auto;
-      position: relative;
+      transition: background-color 0.3s;
     }
-    .progress {
-      height: 100%;
-      background-color: #76c7c0;
-      border-radius: 8px;
-      transition: width 0.3s ease;
+
+    .tree-node:hover {
+      background-color: #e6f7ff;
     }
-    #slider-container {
-      margin: 30px auto;
-      width: 80%;
+
+    /* Hide child nodes by default */
+    .child-nodes {
+      display: none;
     }
-    #value-display {
-      font-size: 1.5rem;
-      margin-top: 20px;
+
+    /* Show child nodes when hovering over the parent */
+    li:hover > .child-nodes {
+      display: block;
     }
   </style>
 </head>
 <body>
 
-<h1>Dynamic Value with Slider Control</h1>
+<h2>Hover to Show Tree List</h2>
 
-<div class="loader-bar">
-  <div class="progress" id="progress-bar"></div>
-</div>
-
-<!-- Slider Control -->
-<div id="slider-container">
-  <input type="range" id="range-slider" min="0" max="100" value="100" />
-</div>
-
-<p id="value-display">Value: 10</p>
+<ul id="userTree" class="tree-list"></ul>
 
 <script>
-  const baseValue = 10; // Base value when at 100%
-  const progressBar = document.getElementById('progress-bar');
-  const slider = document.getElementById('range-slider');
-  const valueDisplay = document.getElementById('value-display');
+  const userData = [
+    { id: 1, name: 'Alice', parent_id: 0 },
+    { id: 2, name: 'Bob', parent_id: 1 },
+    { id: 3, name: 'Charlie', parent_id: 1 },
+    { id: 4, name: 'David', parent_id: 2 },
+    { id: 5, name: 'Eva', parent_id: 3 },
+  ];
 
-  // Update value and progress bar based on slider
-  function updateValue(percentage) {
-    const computedValue = Math.round((percentage / 100) * baseValue); // Compute proportional value
-    valueDisplay.textContent = `Value: ${computedValue}`;
-    progressBar.style.width = `${percentage}%`;
-
-    // Show or hide the progress bar based on the percentage
-    if (percentage > 0) {
-      progressBar.style.display = "block";
-    } else {
-      progressBar.style.display = "none";
-    }
+  // Helper to build hierarchical tree data
+  function buildTree(users, parentId = 0) {
+    return users
+      .filter(user => user.parent_id === parentId)
+      .map(user => ({
+        ...user,
+        children: buildTree(users, user.id)
+      }));
   }
 
-  // Update value on slider input
-  slider.addEventListener('input', (event) => {
-    updateValue(event.target.value);
-  });
+  // Render the tree into HTML
+  function renderTree(tree, container) {
+    if (!tree.length) return;
+    const ul = document.createElement('ul');
+    container.appendChild(ul);
 
-  // Initialize display
-  updateValue(slider.value);
+    tree.forEach(node => {
+      const li = document.createElement('li');
+      const nodeDiv = document.createElement('div');
+      nodeDiv.textContent = node.name;
+      nodeDiv.classList.add('tree-node');
+      li.appendChild(nodeDiv);
+
+      if (node.children.length) {
+        const childContainer = document.createElement('div');
+        childContainer.classList.add('child-nodes');
+        li.appendChild(childContainer);
+        renderTree(node.children, childContainer);
+      }
+      ul.appendChild(li);
+    });
+  }
+
+  const treeData = buildTree(userData);
+  const userTreeContainer = document.getElementById('userTree');
+  renderTree(treeData, userTreeContainer);
 </script>
-
 </body>
 </html>
+
 
 
 

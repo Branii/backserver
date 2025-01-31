@@ -251,7 +251,7 @@
                     <option value="">-<?= $translator['Deposit Channel']; ?>-</option>
                     <option value="3"><?= $translator['Momo']; ?></option>
                     <option value="5"><?= $translator['Crypto']; ?></option>
-                    <option value="2"><?= $translator['Bank Transfere']; ?></option>
+                    <option value="2"><?= $translator['Bank Transfer']; ?></option>
                     <option value="1"><?= $translator['Manual Deposit']; ?></option>
                 </select>
 

@@ -88,7 +88,7 @@
         z-index: 10;
     }
 
-    .queryholderbet {
+    .queryholderuserlistz {
         width: 19%;
         margin-right: 5px;
         background-color: #fff;
@@ -309,6 +309,8 @@
     background-color: red;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   }
+
+ 
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -320,20 +322,20 @@
         <form action="" class="betform">
             <span class="top-left-btn">
                 <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                    <input type="text" id="selectuserlist" class="form-control queryholderbet usernames" placeholder="Search usernames" />
+                    <input type="text" id="selectuserlist" class="form-control queryholderuserlistz usernames" placeholder="Search usernames" />
                     <input name="usernames" type="hidden" class="userIdbet" />
-                    <select class="form-control queryholderuserlist" size="5" style="display: none;" id="userlotteryDropdown">
+                    <select class="form-control queryholderuserlist" size="5" style="display: none;" id="userlists">
                         <!-- Options will be populated dynamically -->
                     </select>
                     
-                    <select name="recharge" class="form-control form-select queryholderbet recharges" data-bs-placeholder="Select Type">
+                    <select name="recharge" class="form-control form-select queryholderuserlistz recharges" data-bs-placeholder="Select Type">
                     <option value="">-Rechatge Level-</option>
                     <option value="1">Level One</option>
                     <option value="2">Level Two</option>
                     <option value="3">Level Three</option>
                     </select>
 
-                    <select name="state" class="form-control form-select queryholderbet states" data-bs-placeholder="Select Type">
+                    <select name="state" class="form-control form-select queryholderuserlistz states" data-bs-placeholder="Select Type">
                     <option value="">-State-</option>
                     <option value="1">Enable to run</option>
                     <option value="2">Suspend Betting</option>
@@ -342,9 +344,9 @@
                     </select>
 
 
-                    <input name="startdate" type="date" class="form-control queryholderbet startdates" aria-describedby="name" placeholder="Name" />
+                    <input name="startdate" type="date" class="form-control queryholderuserlistz startdates" aria-describedby="name" placeholder="Name" />
 
-                    <input name="enddate" type="date" class="form-control queryholderbet enddates" aria-describedby="name" placeholder="Name" />
+                    <input name="enddate" type="date" class="form-control queryholderuserlistz enddates" aria-describedby="name" placeholder="Name" />
 
                     <!-- <button type="button" class="btn btn-outline-light text-dark queryholderbet addagents">
                     <i class='bx bx-user-plus'></i> Add Agent</button>
@@ -559,7 +561,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Manage User Account</h5>
-                <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;"></i></div>
+                <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container">
                 <!-- User Profile Picture -->
@@ -693,7 +695,7 @@
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="text-infos">Quota</h5>
-                        <i class="bx bx-message-square-x listclose" style="color: #868c87; font-size: 25px; cursor: pointer;"></i>
+                        <i class="bx bx-message-square-x listclose" style="color: #868c87; font-size: 25px; cursor: pointer;"data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
                 </div>
 
@@ -733,4 +735,8 @@
         </div>
     </div>
     <!-- /.modal-dialog -->
+</div>
+
+<div id="relationship-container">
+  <!-- Dynamic content will be added here -->
 </div>

@@ -192,7 +192,7 @@
     }
 
     .financeDropdown {
-        width: 23%;
+        width: 24%;
         position: absolute;
         background-color: #fff;
         color: #aaa;
@@ -249,6 +249,15 @@
     background-color: red;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   }
+
+  .optionlist {
+        text-align: left;
+        border-bottom: solid 1px #eee;
+        padding: 5px;
+    }
+    .optionlist:hover {
+        background-color: #eee;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -286,7 +295,7 @@
         <span class="topplist-right" id="paginations" aria-label="Page navigation example">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
                 <!-- <i ' ></i> -->
-                <button type="button" class="btn bg-white-subtle showmodal" value="right" aria-label="Refresh" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Deposit/Withdrawal">
+                <button type="button" class="btn bg-white-subtle showmodal" value="right" aria-label="Refresh" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add Deposit/Withdrawal">
                     <i class="bx bx-plus" style="font-size: 20px;"></i>
                 </button>
 
@@ -475,8 +484,8 @@
                             <label class="form-check-label" for="sf2"><?=$translator['Verify before submit']; ?></label>
                         </div>
                         <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 addmoneybtn" style="border: solid 1px #ccc;">
-                                <i class="bx bx-send loaderfinance"></i>
+                            <button type="button" class="btn hstack gap-6 addmoneybtn" style="border: solid 1px #ccc;"  data-bs-dismiss="modal" aria-label="Close">
+                                <i class="bx bx-send loaderfinanc" ></i>
                                <?=$translator['Submit']; ?>
                             </button>
                         </div>
