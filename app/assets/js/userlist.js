@@ -44,10 +44,8 @@ $(function () {
         };
 
         data.forEach((item) => {
-            let subcount = item.totalsubordinate;
+          
             let relationship = '';
-            let subordinates = '';
-   
             if (item.agent_name && item.agent_name !== '*****' ) {
               if (item.totalsubordinate === 1) {
                 relationship = `${item.agent_name} -> ${item.nickname}`; // Example, you can change the name dynamically
