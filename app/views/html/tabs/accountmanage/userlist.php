@@ -310,6 +310,62 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   }
 
+/*Tooltip*/
+section#tooltipp p {
+  margin: 20px 0;
+}
+
+/*Tooltip text*/
+.tooltipp {
+  position: relative;
+  width: auto;
+}
+
+.tooltipp .tooltipp-text {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1em;
+  line-height: 1.5em;
+  visibility: hidden;
+  width: 400px; /* Fixed width */
+  background-color: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  color: gray;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 0%;
+  margin-left: -60px;
+  opacity: 0;
+  cursor:pointer;
+  transition: .3s;
+  transform: translate3d(0px, 20px, 0px);
+
+  /* Ensure text wraps */
+  white-space: normal; /* Allow text to wrap */
+  word-wrap: break-word; /* Break long words */
+  overflow-wrap: break-word; /* Modern alternative to word-wrap */
+}
+
+/* .tooltip .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #bbb transparent transparent transparent;
+} */
+
+.tooltipp:hover .tooltipp-text {
+  visibility: visible;
+  opacity: 1;
+  transform: translate3d(0px, 0px, 0px);
+}
+
  
 </style>
 
@@ -377,6 +433,8 @@
         </form>
     </div>
 
+  
+    <!-- <span class="tooltipp">relacionamentos verticais<span class="tooltipp-text">Entre culturas e povos brasileiros de todo o mundo</span></span> -->
     <div class="card-body p-4">
         <div class="table-responsive mb-4 border rounded-1 table-wrapperuserlist" id="maskuserlist" style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
@@ -489,8 +547,9 @@
                 <!-- Form -->
                 <form id="agentform">
                     <!-- Username Field -->
+               
                     <div class="form-floating mb-3">
-                        <input name="agentname" type="text" class="form-control border" placeholder="Username" />
+                        <input name="username" type="text" class="form-control border" placeholder="Username" />
                         <label>
                             <i class="bx bx-user me-2 fs-4 text-infod"></i>
                             <span class="border-start ps-3">Username</span>
@@ -499,7 +558,7 @@
 
                     <!-- Email Field -->
                     <div class="form-floating mb-3">
-                        <input name="agentemail" type="email" class="form-control border border-infos" placeholder="Email" />
+                        <input name="email" type="email" class="form-control border border-infos" placeholder="Email" />
                         <label>
                             <i class="bx bx-envelope me-2 fs-4 text-infod"></i>
                             <span class="border-start ps-3">Email address</span>
@@ -508,7 +567,7 @@
 
                     <!-- Password Field -->
                     <div class="form-floating mb-3">
-                        <input name="agentpassword" type="password" class="form-control border border-infs" placeholder="Password" />
+                        <input name="password" type="password" class="form-control border border-infs" placeholder="Password" />
                         <label>
                             <i class="bx bx-lock me-2 fs-4 text-infoss"></i>
                             <span class="border-start ps-3">Password</span>
@@ -516,17 +575,17 @@
                     </div>
 
                     <!-- Confirm Password Field -->
-                    <div class="form-floating mb-3">
-                        <input name="agentpassword1" type="password" class="form-control border border-infos" placeholder="Confirm Password" />
+                    <!-- <div class="form-floating mb-3">
+                        <input name="password" type="password" class="form-control border border-infos" placeholder="Confirm Password" />
                         <label>
                             <i class="bx bx-lock me-2 fs-4 text-infos"></i>
                             <span class="border-start ps-3">Confirm Password</span>
                         </label>
-                    </div>
+                    </div> -->
 
                     <!-- Rebate Field -->
                     <div class="form-floating mb-3">
-                        <select name="agentrebate" class="form-select form-control border border-infos" id="usererebate">
+                        <select name="rebate" class="form-select form-control border border-infos" id="usererebate">
                             <!-- \<option value="" disabled selected>Select Rebate</option> -->
                             <!-- Dynamically populated options -->
                         </select>
@@ -543,7 +602,7 @@
                             <label class="form-check-label" for="sf2">Verify before submit</label>
                         </div>
                         <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 btnaddagent" style="border: solid 1px #ccc;">
+                            <button type="button" class="btn hstack gap-6 btnaddagent" style="border: solid 1px #ccc;" data-bs-dismiss="modal" aria-label="Close">
                                 <i class="bx bx-send loaders"></i>
                                 Submit
                             </button>

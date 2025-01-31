@@ -29,6 +29,7 @@ return [
 'Page'=> 'Page',
 'Pages' =>'Page',
 'Of' => 'Of',
+'Bet Lost' =>'Bet Lost',
 // 'Search usernames' => 'Search usernames',
 // 'Transaction ID'=> 'Transaction ID',
 

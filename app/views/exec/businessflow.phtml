@@ -124,31 +124,34 @@ if ($flag == "getTransactionBet") {
 if ($flag == "filtertransactions") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
-    $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($username);
+    $uid  = isset($this->viewData['username']) ? $this->viewData['username'] : '';
+
     $orderid = isset($this->viewData['orderid']) ? $this->viewData['orderid'] : '';
     $ordertype = isset($this->viewData['ordertype']) ? $this->viewData['ordertype'] : '';
     $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
     $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
-
+    $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
+    
     if (!empty($usernameCheck) && $usernameCheck != null) {
         $username = $usernameCheck[0]['uid'];
         $sunquery = (new BusinessFlowModel())->FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
         $result = (new BusinessFlowModel())->FilterTrsansactionData($sunquery, $page, $limit) ?? [];
         echo json_encode([
             'response' => "success",
-            'transactions' => $result['data'],
+            'transactions' => $uid,
             'totalPages' => ceil($result['total'] / $limit),
         ]);
-    } else {
-        $sunquery = (new BusinessFlowModel())->FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
+    } 
+    else {
+ 
+        $sunquery = (new BusinessFlowModel())->FilterTrsansactionDataSubQuery($uid, $orderid, $ordertype, $startdate, $enddate);
         $result = (new BusinessFlowModel())->FilterTrsansactionData($sunquery, $page, $limit) ?? [];
         echo json_encode([
-            'response' => "success",
-            'transactions' => $result['data'],
+            // 'response' => "success",
+            'transactions' => 'successxcxcxcxcxc',
             'totalPages' => ceil($result['total'] / $limit),
         ]);
-    }
+     }
 }
 
 if ($flag == "lotterydata") {

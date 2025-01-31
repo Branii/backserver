@@ -12,31 +12,36 @@ if ($flag == "userlistdata") {
     $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
     $result = (new UserManageModel())->FetchUserlistData($page, $limit);
 
-    $usernameArray = [];
-     foreach ($result['data'] as $data) {
-        $modifiedArray = [];
-        $arr = $data['agent_level'] != "*****" ? array_keys(unserialize($data['agent_level'])) : [];
-        // file_put_contents('./log.txt',json_encode($arr),JSON_PRETTY_PRINT);
-        $modifiedArray['reg_type'] = $data['reg_type'];
-        $modifiedArray['uid'] = $data['uid'];
-        $modifiedArray['username'] = $data['username'];
-        $modifiedArray['contact'] = $data['contact'];
-        $modifiedArray['email'] = $data['email'];
-        $modifiedArray['account_type'] = $data['account_type'];
-        $modifiedArray['agent_name'] = $data['agent_name'];
-        $modifiedArray['nickname'] = $data['nickname'];
-        $modifiedArray['relationship'][] = (new UserManageModel())->getUserIdByMixedValued(array_keys($arr));
-        $modifiedArray['totalsubordinate'] = count((new UserManageModel())->getUserIdByMixedValued(array_keys($arr)));
-        $modifiedArray['balance'] = $data['balance'];
-        $modifiedArray['rebate'] = $data['rebate'];
-        $modifiedArray['created_at'] = $data['created_at'];
-        $modifiedArray['user_state'] = $data['user_state'];
-         $usernameArray[] = $modifiedArray;
-     }
+    //  $usernameArray = [];
+    //   foreach ($result['data'] as $data) {
+    //                 $relationship = '';
+    //                 // Handle Top Agent, Sub-Agent, and Customer relationships
+    //         if ($data['account_type'] == 2) {  
+    //             // Top Agent (account_type 2 always shown as Top Agent)
+    //             $relationship = "Top Agent";
+    //         } elseif ($data['account_type'] == 3  && $data['total_subordinate'] == 1) {
+    //             // Sub-Agent with exactly one subordinate
+    //             $relationship = "{$data['agent_name']} -> {$data['nickname']}";
+    //         } elseif ($data['account_type'] == 2 && $data['total_subordinate'] > 1) {
+    //             // Sub-Agent with multiple subordinates
+    //             $relationship = "{$data['agent_name']} ... {$data['nickname']}";
+    //         }  else {
+    //             // Default empty relationship if no conditions match
+    //             $relationship = '';
+    //         }
 
-    // Return the result as JSON
-    echo json_encode([
-        'users' => $usernameArray,
+    //         $data['relationship'] = $relationship;
+            
+          
+          
+    //         // Handle the relationship condition without further queries
+          
+        
+    //         $usernameArray[] = $data;
+    //   }
+
+      echo json_encode([
+        'users' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit)
     ]);
 }
@@ -58,9 +63,7 @@ if ($flag == "filteruserlist") {
         $sunquery = (new UserManageModel())->FilterUserlistDataSubQuery($uid,$states, $startdate, $enddate);
          $result = (new UserManageModel())->Filteruserlist($sunquery,$page,$limit) ?? []; 
      }
-       
-    //          FilterUserlistDataSubQuery($username, $startdate, $enddate)
-    // $result = (new UserManageModel())->FilterUserlist($page, $limit, $usernameCheck, $states, $startdate, $enddate) ?? [];
+   
      $bigArr = [];
      foreach ($result['data'] as $data) {
      
@@ -71,7 +74,7 @@ if ($flag == "filteruserlist") {
            $relationship = '';
            $subordinates = '';
            if (!empty($data['agent_name']) && $data['agent_name'] !== "*****" && !empty($subor))  {
-             $relationship = $data['agent_name'] . ' ' . $referals . ' ' . $data['username'];
+             $relationship = $data['agent_name'] . ' ' . $referals . ' ' . $data['nickname'];
              $subordinates = (count($subor) > 1) ? '...' : "";
          } elseif ($data['agent_name'] && empty($subor)) {
             $relationship = "Top Agent";

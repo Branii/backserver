@@ -8,7 +8,7 @@ class BusinessFlowModel extends MEDOOHelper
         $startpoint = $page * $limit - $limit;
         $data = parent::query(
             "SELECT transaction.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.username, 'N/A') AS username FROM transaction   
-            JOIN users_test ON users_test.uid = transaction.uid  ORDER BY trans_id DESC LIMIT :offset, :limit",
+            left JOIN users_test ON users_test.uid = transaction.uid  ORDER BY trans_id DESC LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
         );
         $totalRecords = parent::count('transaction');
@@ -118,7 +118,7 @@ class BusinessFlowModel extends MEDOOHelper
     }
     public static function getUserIdByMixedValued(string $mixedValue)
     {
-        $data = parent::query("SELECT uid,nickname FROM users_test WHERE uid = :uid OR username = :username", ['uid' => $mixedValue, 'username' => $mixedValue]);
+        $data = parent::query("SELECT uid FROM users_test WHERE uid = :uid OR username = :username", ['uid' => $mixedValue, 'username' => $mixedValue]);
         return !empty($data) ? $data[0]['uid'] : '0';
     }
 
@@ -262,34 +262,34 @@ class BusinessFlowModel extends MEDOOHelper
                  u.username, u.email, u.contact, u.reg_type, 
                  gt.name AS game_type, gt.gt_id AS gt_id 
                  FROM ', table_name, ' bt 
-                 JOIN users_test u ON bt.uid = u.uid
-                 JOIN game_type gt ON gt.gt_id = bt.game_type
+                LEFT JOIN users_test u ON bt.uid = u.uid
+                LEFT  JOIN game_type gt ON gt.gt_id = bt.game_type
                  $whereClause'
             ) SEPARATOR ' UNION ALL '
         ) AS query 
         FROM information_schema.tables 
         WHERE table_schema = 'lottery_test' 
         AND table_name LIKE 'bt_%'
-    ";
+        ";
 
-    
-        $mergedQuery = $pdo->query($sql)->fetchColumn();
+        
+            $mergedQuery = $pdo->query($sql)->fetchColumn();
 
-        // Prepare to count the total number of records (without pagination)
-        $countStmt = $pdo->prepare("SELECT COUNT(*) AS total FROM ($mergedQuery) AS subquery");
-        $countStmt->execute($subquery['params']);
-        $totalRecords = $countStmt->fetchColumn();
+            // Prepare to count the total number of records (without pagination)
+            $countStmt = $pdo->prepare("SELECT COUNT(*) AS total FROM ($mergedQuery) AS subquery");
+            $countStmt->execute($subquery['params']);
+            $totalRecords = $countStmt->fetchColumn();
 
-        // Prepare to fetch paginated data
-        $dataStmt = $pdo->prepare("$mergedQuery LIMIT $limit OFFSET $offset");
-        // $dataStmt->execute();
-        $dataStmt->execute($subquery['params']);
+            // Prepare to fetch paginated data
+            $dataStmt = $pdo->prepare("$mergedQuery LIMIT $limit OFFSET $offset");
+            // $dataStmt->execute();
+            $dataStmt->execute($subquery['params']);
 
-        // Return the response as a JSON
-        return [
-            'data' => $dataStmt->fetchAll(PDO::FETCH_ASSOC),
-            'total' => $totalRecords,
-        ];
+            // Return the response as a JSON
+            return [
+                'data' => $dataStmt->fetchAll(PDO::FETCH_ASSOC),
+                'total' => $totalRecords,
+            ];
     }
 
     public static function filterBetData($uid, $gametype, $betstate, $betstatus, $enddate, $startdate)
@@ -381,7 +381,7 @@ class BusinessFlowModel extends MEDOOHelper
         $startpoint = $page * $limit - $limit;
         $data = parent::query(
             "SELECT trackbet.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.username, 'N/A') AS username FROM trackbet   
-            JOIN users_test ON users_test.uid = trackbet.user_id  ORDER BY track_id DESC LIMIT :offset, :limit",
+           LEFT  JOIN users_test ON users_test.uid = trackbet.user_id  ORDER BY track_id DESC LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
         );
         $totalRecords = parent::count('trackbet');
@@ -470,7 +470,7 @@ class BusinessFlowModel extends MEDOOHelper
                         FROM trackbet
                         WHERE $subQuery
                     ) AS temp_tables
-                JOIN 
+               LEFT JOIN 
                     users_test ON users_test.uid = temp_tables.user_id
                 LIMIT :offset, :limit
             ";

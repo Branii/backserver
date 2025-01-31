@@ -44,34 +44,42 @@ $(function () {
         };
 
         data.forEach((item) => {
-          
-            let relationship = '';
-            if (item.agent_name && item.agent_name !== '*****' ) {
-              if (item.totalsubordinate === 1) {
-                relationship = `${item.agent_name} -> ${item.nickname}`; // Example, you can change the name dynamically
-              } else if (item.totalsubordinate > 1) {
-                relationship = `${item.agent_name} ... ${item.nickname}`; // When there are multiple subordinates
-              } else if (item.agent_name && item.totalsubordinate === 0 ) {
-                relationship = "Top Agent"; // No subordinates
-              }
-            } else {
-              relationship = '';
-            }
-       
+
+          //  console.log(item)
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-            // let relationType = item.account_type === "2" ? "Top Agent" : item.relationship
+             let subordinate;
+            if(item.account_type == 2){
+                subordinate =  "Top Agent"
+            }else if(item.account_type == 3 && item.sub_count == 0 ){
+                subordinate = "---";
+            }else if(item.account_type == 3 && item.sub_count == 1 ){
+                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates
+            }else if(item.account_type == 3 && item.sub_count == 2 ){
+                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(',')[0];
+            }else if(item.account_type == 3 && item.sub_count > 2 ){
+                subordinate = username + " <i class='bx bx-dots-horizontal-rounded' ></i>" + item.subordinates.split(',')[0];
+            }else if(item.account_type == 1 && item.sub_count == 0){
+                subordinate = "---";
+            }
             
-           
+            const formattedSubordinates = item.subordinates ? item.subordinates.split(',').join(" <i class='bx bx-right-arrow-alt'></i> ") : 'None';
+          //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+            // let relationType = item.account_type === "2" ? "Top Agent" : item.relationship
+            const [date, time] = item.created_at.split(' ');
             html += `
                   <tr>
-                      <td>${username}</td>
+                     <td>${username}</td>
                       <td>${item.nickname}</td>
                       <td>VIP</td>
-                      <td>${relationship}</td>
-                      <td>${item.totalsubordinate}</td>
+                     <td>
+                  <span class="tooltipp" style="">${subordinate}
+                      <span class="tooltipp-text">${formattedSubordinates}</span>
+                  </span>
+                </td>
+                     <td>${item.sub_count} </td>
                       <td>${formatMoney(item.balance)}</td> 
                       <td>${item.rebate}</td>
-                      <td>${item.created_at}</td>
+                      <td>${date + ' / ' + time}</td>
                       <td>${status[item.user_state]}</td>
                  
                         <td>
@@ -81,7 +89,7 @@ $(function () {
                                    <i class='bx bx-dots-vertical-rounded'></i>
                                   </a>
                                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
-                                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 " href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#signup">
+                                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#signup" data-uidd="${item.uid}>
                                       <i class="bx bx-show fs-5"></i>View
                                     </a>
                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
@@ -97,54 +105,14 @@ $(function () {
                   </tr>
               `;
         });
-        return html;
+       return  html;
     };
 
-    // const FromTable = (data,obj) => {
-    //   let html = "";
-    //   Object.entries(data).forEach(([key, value]) => {
-    //    // console.log(`${key}: ${value}`);
-    //     html += `
-    //           <tr>
-    //               <td>${value}</td>
-    //               <td>${obj[key]}</td>
-    //           </tr>
-    //           `;
-    //   });
-    //   return html;
-    // };
-
-    // const firstRow = {
-    //   'username': 'Username:',
-    //   'bet_code': 'Bet Order ID:',
-    //   'draw_period': 'Issue Number:',
-    //   'ip_address': 'IP:',
-    //   'unit_stake': 'Unit Stake:',
-    //   'multiplier': 'Multiplier:',
-    //   'bet_status': 'Bet Status:',
-    //   'game_label': 'Game Type::',
-    //   'draw_number': 'Draw Results:',
-    //   'num_wins': 'Number of wins:',
-    //   'bettype': 'Bet Type:'
-    // }
-
-    // const secondRow = {
-    //   'game_type': 'Lottery Type::',
-    //   'bet_time': 'Bet Time:',
-    //   'closing_time': 'Closing Time:',
-    //   'opening_time': 'Draw Time::',
-    //   'bet_number': 'Total Bet:',
-    //   'bet_amount': 'Total Bet Amount:',
-    //   'win_amount': 'Prize:',
-    //   'server_date': 'Win Amount:',
-    //   'server_time': 'Actual profit:',
-    //   'user_selection': 'Bet Details',
-    //   'test': ' ',
-    // }
 
     const renderuserlist = (data) => {
         var html = UserlistData(data);
         $("#userlistContainer").html(html);
+        //tippy('[data-tippy-content]');
     };
 
     let currentPage = 1;
@@ -171,7 +139,7 @@ $(function () {
         $.post(`../admin/filteruserlist/${username}/${states}/${startdate}/${enddate}/${currentPage}/${pageLimit}`, function (response) {
             try {
                 const data = JSON.parse(response);
-                console.log(data);
+               // console.log(data);
                 //  return
                 $(".loaderlist").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
                 if (data.userlists.length < 1) {
@@ -432,47 +400,76 @@ $(function () {
     fetchRebatedata();
 
     $(document).on("click", ".btnaddagent", function () {
-        const datas = $("#agentform").serialize();
+    const form = document.getElementById('agentform');
+      const formData = new FormData(form);
+      const datas = Object.fromEntries(formData.entries());
+        console.log(datas);
         addAgent(datas);
     });
-
+// `../admin/addAgent/${datas}
     async function addAgent(datas) {
         try {
-            const response = await fetch(`../admin/addAgent/${datas}`);
-            const data = await response.json();
-            // console.log(response);
-            const errorMessages = {
-                emailexist: "Email already exists",
-                usernamePattern: "Username must  Contain only letters\n, numbers, and underscores\n Start with a letter",
-                username: "Username must contain only letters, numbers, and underscores and start with a letter",
-                email: "Email address is invalid",
-                passwordNumber: "Password must contain at least one number",
-                passwordCaseSensitive: "Password must contain at least one uppercase and\n lowercase letter",
-                passwordSpecialChar: "Password must contain at least one special symbol",
-                confirmPassword: "Password does not match",
-                passwordLength: "Password must be at least 8 characters",
-                passwordRequired: "Password is required",
-            };
-            let message = null;
-            // Loop through error keys to find the first error
-            for (const [key, errorMessage] of Object.entries(errorMessages)) {
-                if (data[key]) {
-                    message = errorMessage;
-                    break;
-                }
+            ///api/v1/limvo/selfregister
+            const response = await fetch('http://192.168.1.51/chairman_test/api/v1/limvo/register_super_user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datas),
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Error: ${response.type} - ${response.statusText}`);
             }
-            if (message) {
-                showToast("Heads up!!", message, "info");
-                return;
-            } else {
+           // const data = await response.json();
+           // console.log('Registration Success:', data);
+            const result = await response.json();
+           // console.log('Registration Success:', result);
+            // Handle success or error based on response type
+            if (result.type === 'success') {
                 $(".loaders").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
-                setTimeout(function () {
-                    $(".loaders").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
-                    $("#addagent").modal("hide");
-                    showToast("Success", "agent added sucessfully", "success");
-                    // fetchUserlist(currentPagelist);
-                }, 500);
+                     setTimeout(function () {
+                        $(".loaders").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+                        showToast("Success", result.message, "success");
+                        //$("#addagent").modal("hide");
+                     }, 500);
+              
+                     fetchUserlist(currentPage,pageLimit);
+            } else if (result.type === 'error') {
+                showToast("Heads up!!", result.message, "info");
             }
+            // const errorMessages = {
+            //     emailexist: "Email already exists",
+            //     usernamePattern: "Username must  Contain only letters\n, numbers, and underscores\n Start with a letter",
+            //     username: "Username must contain only letters, numbers, and underscores and start with a letter",
+            //     email: "Email address is invalid",
+            //     passwordNumber: "Password must contain at least one number",
+            //     passwordCaseSensitive: "Password must contain at least one uppercase and\n lowercase letter",
+            //     passwordSpecialChar: "Password must contain at least one special symbol",
+            //     confirmPassword: "Password does not match",
+            //     passwordLength: "Password must be at least 8 characters",
+            //     passwordRequired: "Password is required",
+            // };
+            // let message = null;
+            // // Loop through error keys to find the first error
+            // for (const [key, errorMessage] of Object.entries(errorMessages)) {
+            //     if (data[key]) {
+            //         message = errorMessage;
+            //         break;
+            //     }
+            // }
+            // if (message) {
+            //     showToast("Heads up!!", message, "info");
+            //     return;
+            // } else {
+            //     $(".loaders").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
+            //     setTimeout(function () {
+            //         $(".loaders").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+            //         $("#addagent").modal("hide");
+            //         showToast("Success", "agent added sucessfully", "success");
+            //         // fetchUserlist(currentPagelist);
+            //     }, 500);
+          //  }
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -593,4 +590,11 @@ $(function () {
         });
     }
     tableScrolluserList();
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
 });

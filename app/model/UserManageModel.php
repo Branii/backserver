@@ -8,23 +8,45 @@ class UserManageModel extends MEDOOHelper
 
     public static function FetchUserlistData($page, $limit): array
     {
-
         $startpoint = ($page - 1) * $limit;
-        $data = parent::query(
-            "SELECT uid, username,email,contact,nickname, agent_name, balance, recharge_level, user_state,reg_type,agent_level,
-                  rebate, created_at, agent_id, account_type
-             FROM users_test
-             ORDER BY uid DESC
-             LIMIT :startpoint, :limit",
-            [
-                'startpoint' => (int)$startpoint,
-                'limit' => (int)$limit
-            ]
-        );
+        $sql = "SELECT 
+                            u.uid, 
+             u.username, 
+             u.email, 
+             u.contact, 
+             u.nickname, 
+             u.agent_name, 
+             u.balance, 
+             u.recharge_level, 
+             u.user_state, 
+             u.reg_type, 
+             u.agent_level,           
+             u.rebate, 
+             u.created_at, 
+             u.agent_id, 
+             u.account_type, 
+                            GROUP_CONCAT(a.nickname) AS subordinates, 
+                            COUNT(a.uid) AS sub_count, 
+                            u.rebate
+                        FROM 
+                            users_test u
+                        LEFT JOIN 
+                            users_test a ON u.uid = a.agent_id
+                        GROUP BY 
+                            u.uid DESC
+                        LIMIT :offset, :limit;";
+               $pdo = (new Database())->openLink();
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':offset', $startpoint, PDO::PARAM_INT);
+                $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+                $stmt->execute();
 
-        $totalRecords = parent::count('users_test');
+                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        return ['data' => $data, 'total' => $totalRecords];
+
+         $totalRecords = parent::count('users_test');
+
+         return ['data' => $data, 'total' => $totalRecords];
     }
     public static function countUserLogs($uid)
     {
