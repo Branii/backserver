@@ -1,55 +1,75 @@
 $(function () {
-  function showToast(title, message, type) {
-      $.toast({
-          position: "bottom-right",
-          title: title,
-          message: message,
-          type: type,
-          duration: 3000, // auto-dismiss after 3s
-      });
-  }
+    function showToast(title, message, type) {
+        $.toast({
+            position: "bottom-right",
+            title: title,
+            message: message,
+            type: type,
+            duration: 3000, // auto-dismiss after 3s
+        });
+    }
 
-  function formatMoney(money) { 
-    let moneyStr = String(money); 
-    if (moneyStr.includes(".")) { 
-        let parts = moneyStr.split("."); 
-        if (parts[1].length > 2) { 
-            parts[1] = parts[1].substring(0, 4); 
-        } 
-        moneyStr = parts.join(".").replace(/\.?0+$/, ""); 
-    } 
-    return moneyStr; 
-}
-  const UserlistData = (data) => {
-      let html = "";
-      const status = {
-          1: "Enable", // Green
-          2: "Suspend", // Orange
-          3: "Forbbiden", // Light Blue
-          4: "Blocked", // Red
-      };
+    function formatMoney(money) {
+        let moneyStr = String(money);
+        if (moneyStr.includes(".")) {
+            let parts = moneyStr.split(".");
+            if (parts[1].length > 2) {
+                parts[1] = parts[1].substring(0, 4);
+            }
+            moneyStr = parts.join(".").replace(/\.?0+$/, "");
+        }
+        return moneyStr;
+    }
+    
+    const UserlistData = (data) => {
+        let html = "";
+        const status = {
+            1: "Enable", // Green
+            2: "Suspend", // Orange
+            3: "Forbbiden", // Light Blue
+            4: "Blocked", // Red
+        };
 
-      //   const account_type = {
-      //     1 :"customer",
-      //     2 : "agent",
-      //     3 : "sub agent",        // Red
-      //   };
+        //   const account_type = {
+        //     1 :"customer",
+        //     2 : "agent",
+        //     3 : "sub agent",        // Red
+        //   };
 
-      const recharges = {
-          1: "momo",
-          2: "bank Transfer",
-          3: "bank card",
-          4: "crypto", // Red
-      };
+        const recharges = {
+            1: "momo",
+            2: "bank Transfer",
+            3: "bank card",
+            4: "crypto", // Red
+        };
 
-      data.forEach((item) => {
-          let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-          html += `
+        data.forEach((item) => {
+            let subcount = item.totalsubordinate;
+            let relationship = '';
+            let subordinates = '';
+   
+            if (item.agent_name && item.agent_name !== '*****' ) {
+              if (item.totalsubordinate === 1) {
+                relationship = `${item.agent_name} -> ${item.nickname}`; // Example, you can change the name dynamically
+              } else if (item.totalsubordinate > 1) {
+                relationship = `${item.agent_name} ... ${item.nickname}`; // When there are multiple subordinates
+              } else if (item.agent_name && item.totalsubordinate === 0 ) {
+                relationship = "Top Agent"; // No subordinates
+              }
+            } else {
+              relationship = '';
+            }
+       
+            let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+            // let relationType = item.account_type === "2" ? "Top Agent" : item.relationship
+            
+           
+            html += `
                   <tr>
                       <td>${username}</td>
                       <td>${item.nickname}</td>
                       <td>VIP</td>
-                      <td>${item.relationship}</td>
+                      <td>${relationship}</td>
                       <td>${item.totalsubordinate}</td>
                       <td>${formatMoney(item.balance)}</td> 
                       <td>${item.rebate}</td>
@@ -78,551 +98,501 @@ $(function () {
                      
                   </tr>
               `;
-      });
-      return html;
-  };
+        });
+        return html;
+    };
 
-  // const FromTable = (data,obj) => {
-  //   let html = "";
-  //   Object.entries(data).forEach(([key, value]) => {
-  //    // console.log(`${key}: ${value}`);
-  //     html += `
-  //           <tr>
-  //               <td>${value}</td>
-  //               <td>${obj[key]}</td>
-  //           </tr>
-  //           `;
-  //   });
-  //   return html;
-  // };
+    // const FromTable = (data,obj) => {
+    //   let html = "";
+    //   Object.entries(data).forEach(([key, value]) => {
+    //    // console.log(`${key}: ${value}`);
+    //     html += `
+    //           <tr>
+    //               <td>${value}</td>
+    //               <td>${obj[key]}</td>
+    //           </tr>
+    //           `;
+    //   });
+    //   return html;
+    // };
 
-  // const firstRow = {
-  //   'username': 'Username:',
-  //   'bet_code': 'Bet Order ID:',
-  //   'draw_period': 'Issue Number:',
-  //   'ip_address': 'IP:',
-  //   'unit_stake': 'Unit Stake:',
-  //   'multiplier': 'Multiplier:',
-  //   'bet_status': 'Bet Status:',
-  //   'game_label': 'Game Type::',
-  //   'draw_number': 'Draw Results:',
-  //   'num_wins': 'Number of wins:',
-  //   'bettype': 'Bet Type:'
-  // }
+    // const firstRow = {
+    //   'username': 'Username:',
+    //   'bet_code': 'Bet Order ID:',
+    //   'draw_period': 'Issue Number:',
+    //   'ip_address': 'IP:',
+    //   'unit_stake': 'Unit Stake:',
+    //   'multiplier': 'Multiplier:',
+    //   'bet_status': 'Bet Status:',
+    //   'game_label': 'Game Type::',
+    //   'draw_number': 'Draw Results:',
+    //   'num_wins': 'Number of wins:',
+    //   'bettype': 'Bet Type:'
+    // }
 
-  // const secondRow = {
-  //   'game_type': 'Lottery Type::',
-  //   'bet_time': 'Bet Time:',
-  //   'closing_time': 'Closing Time:',
-  //   'opening_time': 'Draw Time::',
-  //   'bet_number': 'Total Bet:',
-  //   'bet_amount': 'Total Bet Amount:',
-  //   'win_amount': 'Prize:',
-  //   'server_date': 'Win Amount:',
-  //   'server_time': 'Actual profit:',
-  //   'user_selection': 'Bet Details',
-  //   'test': ' ',
-  // }
+    // const secondRow = {
+    //   'game_type': 'Lottery Type::',
+    //   'bet_time': 'Bet Time:',
+    //   'closing_time': 'Closing Time:',
+    //   'opening_time': 'Draw Time::',
+    //   'bet_number': 'Total Bet:',
+    //   'bet_amount': 'Total Bet Amount:',
+    //   'win_amount': 'Prize:',
+    //   'server_date': 'Win Amount:',
+    //   'server_time': 'Actual profit:',
+    //   'user_selection': 'Bet Details',
+    //   'test': ' ',
+    // }
 
-  const renderuserlist = (data) => {
-      var html = UserlistData(data);
-      $("#userlistContainer").html(html);
-  };
+    const renderuserlist = (data) => {
+        var html = UserlistData(data);
+        $("#userlistContainer").html(html);
+    };
 
-  let currentPage = 1;
-  let pageLimit = 20;
+    let currentPage = 1;
+    let pageLimit = 20;
 
-  async function fetchUserlist(page) {
-      try {
-          const response = await fetch(`../admin/userlistdata/${page}/${pageLimit}`);
-          const data = await response.json();
-          //  console.log(response);
-          //  return
-          $("#maskuserlist").LoadingOverlay("hide");
-          renderuserlist(data.users);
-
-          renderPaginationlist(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlist(newPage, pageLimit));
-          document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
-      } catch (error) {
-          console.error("Error fetching data:", error);
-      }
-  }
-  fetchUserlist(currentPage, pageLimit);
-
-  // async function filterUserlist(
-  //   pagelist,
-  //   username,
-  //   states,
-  //   startdate,
-  //   enddate
-  // ) {
-  //   try {
-  //     const response = await fetch(
-  //       `../admin/filteruserlist/${username}/${states}/${startdate}/${enddate}/${pagelist}/${pageLimit}`
-  //     );
-  //     const data = await response.json();
-  //     // console.log(response);
-
-  //     $(".loaderlist")
-  //       .removeClass("bx bx-loader bx-spin")
-  //       .addClass("bx bx-check-double");
-  //     if (data.userlists.length < 1) {
-  //       let html = `
-  //             <tr class="no-results" >
-  //             <td colspan="9">
-  //                  <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-  //             </td>
-  //          </tr>`;
-  //       $("#userlistContainer").html(html);
-  //       return;
-  //     }
-  //     renderuserlist(data.userlists);
-
-  //     // Render pagination
-  //     renderPaginationlist(
-  //       data.totalPages,
-  //       pagelist,
-  //       "search",
-  //       username,
-  //       states,
-  //       startdate,
-  //       enddate
-  //     );
-  //     document.getElementById("paging_infolist").innerHTML =
-  //       "Page " + pagelist + " of " + data.totalPages + " pages";
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // }
-
-
-  function filterUserlist(username, states, startdate, enddate,currentPage,pageLimit) {
-    $.post(
-       `../admin/filteruserlist/${username}/${states}/${startdate}/${enddate}/${currentPage}/${pageLimit}`,
-      function (response) {
+    async function fetchUserlist(page, pageLimit) {
         try {
-          const data = JSON.parse(response);
-          //  console.log(data)
-          //  return
-          if (data.deposits.length < 1) {
-            $("#financeContainer").html(`
+            const response = await fetch(`../admin/userlistdata/${page}/${pageLimit}`);
+            const data = await response.json();
+              console.log(response);
+           //  return
+            $("#maskuserlist").LoadingOverlay("hide");
+            renderuserlist(data.users);
+
+            renderPaginationlist(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlist(newPage, pageLimit));
+            document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+    fetchUserlist(currentPage, pageLimit);
+
+    function filterUserlist(username, states, startdate, enddate, currentPage, pageLimit) {
+        $.post(`../admin/filteruserlist/${username}/${states}/${startdate}/${enddate}/${currentPage}/${pageLimit}`, function (response) {
+            try {
+                const data = JSON.parse(response);
+                console.log(data);
+                //  return
+                $(".loaderlist").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+                if (data.userlists.length < 1) {
+                    $("#userlistContainer").html(`
               <tr class="no-results">
                 <td colspan="9">
                   <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
                 </td>
               </tr>
             `);
-            return;
-          }
-          $("#maskfinance").LoadingOverlay("hide");
-           renderfinace(data.deposits);
-        // Render pagination
-        renderfinacePagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterUserlist(username, states, startdate, enddate,newPage,pageLimit));
-        document.getElementById("paging_infofinance").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
-  
-        } catch (error) {
-          console.error("Error parsing JSON response:", error);
-        } finally {
-          $(".loaderfinance").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-        }
-      }
-    ).fail(function (error) {
-      console.error("Error fetching data:", error);
-      $(".loaderfinance").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-    });
-  }
-
- 
-  function renderPaginationlist(totalPages, currentPage, pageLimit, callback) {
-    const createPageLink = (i, label = i, disabled = false, active = false) =>
-        `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
-      <a class='page-link' href='#' data-page='${i}'>${label}</a>
-  </li>`;
-    let pagLink = `<ul class='pagination justify-content-end'>`;
-
-    // Previous Button
-    pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
-
-    // Page numbers with ellipsis
-    for (let i = 1; i <= totalPages; i++) {
-        if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
-            pagLink += createPageLink(i, i, false, i === currentPage);
-        } else if (i === currentPage - 3 || i === currentPage + 3) {
-            pagLink += createPageLink(i, "...", true);
-        }
+                    return;
+                }
+                $("#maskuserlist").LoadingOverlay("hide");
+                renderuserlist(data.userlists);
+                // Render pagination
+                renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterUserlist(username, states, startdate, enddate, newPage, pageLimit));
+                document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            } catch (error) {
+                console.error("Error parsing JSON response:", error);
+            } finally {
+                $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+            }
+        }).fail(function (error) {
+            console.error("Error fetching data:", error);
+            $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+        });
     }
 
-    // Next Button
-    pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
-    pagLink += "</ul>";
+    function renderPaginationlist(totalPages, currentPage, pageLimit, callback) {
+        const createPageLink = (i, label = i, disabled = false, active = false) =>
+            `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+      <a class='page-link' href='#' data-page='${i}'>${label}</a>
+  </li>`;
+        let pagLink = `<ul class='pagination justify-content-end'>`;
 
-    document.getElementById("paginationuserlist").innerHTML = pagLink;
+        // Previous Button
+        pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
 
-    // Add click event listeners
-    document.querySelectorAll("#paginationuserlist .page-link").forEach((link) => {
-        link.addEventListener("click", function (e) {
-            e.preventDefault();
-            const newPage = +this.getAttribute("data-page");
-            if (newPage > 0 && newPage <= totalPages) {
-                $("#maskuserlist").LoadingOverlay("show", {
-                    background: "rgb(90,106,133,0.1)",
-                    size: 3,
-                });
-                callback(newPage, pageLimit); // Call the provided callback with new page and pageLimit
+        // Page numbers with ellipsis
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+                pagLink += createPageLink(i, i, false, i === currentPage);
+            } else if (i === currentPage - 3 || i === currentPage + 3) {
+                pagLink += createPageLink(i, "...", true);
+            }
+        }
+
+        // Next Button
+        pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
+        pagLink += "</ul>";
+
+        document.getElementById("paginationuserlist").innerHTML = pagLink;
+
+        // Add click event listeners
+        document.querySelectorAll("#paginationuserlist .page-link").forEach((link) => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const newPage = +this.getAttribute("data-page");
+                if (newPage > 0 && newPage <= totalPages) {
+                    $("#maskuserlist").LoadingOverlay("show", {
+                        background: "rgb(90,106,133,0.1)",
+                        size: 3,
+                    });
+                    callback(newPage, pageLimit); // Call the provided callback with new page and pageLimit
+                }
+            });
+        });
+    }
+
+    $(".playeruserlist").click(function () {
+        let direction = $(this).val();
+        const tableWrapper = $(".table-wrapperuserlist");
+        const tableWrappers = document.querySelector(".table-wrapperuserlist");
+        const scrollAmount = 1000; // Adjust as needed
+        const scrollOptions = {
+            behavior: "smooth",
+        };
+        if (tableWrapper.length) {
+            switch (direction) {
+                case "leftuserlists":
+                    tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
+                    break;
+                case "rightuserlists":
+                    tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
+                    break;
+                case "startlists":
+                    // Scroll to the absolute start (leftmost position)
+                    tableWrapper.animate({ scrollLeft: 0 }, "slow");
+                    break;
+                case "endlists":
+                    const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
+                    tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+
+    $(".refreshlistuser").click(function () {
+        $(".queryholderuserlistz").val("");
+        $("#maskuserlist").LoadingOverlay("show", {
+            background: "rgb(90,106,133,0.1)",
+            size: 3,
+        });
+        fetchUserlist(currentPage, pageLimit);
+    });
+
+    let debounceTimeouts = null;
+
+    $(document).ready(function () {
+        // Event listener for keyup on #myInput
+        $(document).on("keyup", "#selectuserlist", function () {
+            const query = $(this).val().trim();
+
+            // Only trigger if input is more than 2 characters
+            if (query.length > 1) {
+                clearTimeout(debounceTimeouts); // Clear any existing timeout
+                debounceTimeout = setTimeout(fetchUsers, 500, query); // Call fetchUsers with the query after 500ms delay
+            } else {
+                $(".queryholderuserlist").hide(); // Hide dropdown if input is less than 3 characters
+            }
+        });
+
+        // Handle dropdown item selection
+        $(document).on("change", ".queryholderuserlist", function () {
+            const selectedOption = $(this).find("option:selected");
+            const selectedUserId = selectedOption.val();
+            const selectedUsername = selectedOption.data("username");
+            console.log(selectedUserId);
+
+            if (selectedUserId) {
+                $("#selectuserlist").val(selectedUsername);
+                $(".userIds").val(selectedUserId);
+                $(".queryholderuserlist").hide();
+            }
+        });
+
+        $(document).on("click", function (e) {
+            const $dropdown = $("#userlists");
+            if (!$(e.target).closest("#selectuserlist, #userlists").length) {
+                $dropdown.hide();
+            }
+        });
+        // Handle manual input clearing
+        $(document).on("input", "#selectuserlist", function () {
+            if (!$(this).val()) {
+                $(".userIds").val(""); // Reset user ID if input is cleared
             }
         });
     });
-}
 
+    // Function to fetch and display users
+    function fetchUsers(query) {
+        let optionsHtml = "";
 
-  $(".playeruserlist").click(function () {
-      let direction = $(this).val();
-      const tableWrapper = $(".table-wrapperuserlist");
-      const tableWrappers = document.querySelector(".table-wrapperuserlist");
-      const scrollAmount = 1000; // Adjust as needed
-      const scrollOptions = {
-          behavior: "smooth",
-      };
-      if (tableWrapper.length) {
-          switch (direction) {
-              case "leftuserlists":
-                  tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
-                  break;
-              case "rightuserlists":
-                  tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
-                  break;
-              case "startlists":
-                  // Scroll to the absolute start (leftmost position)
-                  tableWrapper.animate({ scrollLeft: 0 }, "slow");
-                  break;
-              case "endlists":
-                  const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
-                  tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
-                  break;
-              default:
-                  break;
-          }
-      }
-  });
+        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+            try {
+                response = typeof response === "string" ? JSON.parse(response) : response;
+                response.forEach((user) => {
+                    let displayValues;
+                    let regnames;
+                    // Display based on regtype
+                    if (user.regtype === "email") {
+                        displayValues = user.email;
+                        regnames = user.email; // Show email
+                    } else if (user.regtype === "username") {
+                        displayValues = user.username;
+                        regnames = user.username; // Show username
+                    } else if (user.regtype === "contact") {
+                        displayValues = user.contact;
+                        regnames = user.contact; // Show contact
+                    } else {
+                        displayValues = "no data found..";
+                    }
+                    optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regnames}">${displayValues}</option>`;
+                });
 
-  $(".refreshlistuser").click(function () {
-      $(".queryholder").val("");
-      $("#maskuserlist").LoadingOverlay("show", {
-          background: "rgb(90,106,133,0.1)",
-          size: 3,
-      });
-      fetchUserlist(currentPage,pageLimit);
-  });
+                $(".queryholderuserlist").html(optionsHtml).show();
+            } catch (error) {
+                console.error("Error parsing response: ", error);
+                $(".queryholderuserlist").hide();
+            }
+        }).fail(function () {
+            console.error("Error fetching users.");
+            $(".queryholderuserlist").hide();
+        });
+    }
 
-  let debounceTimeouts = null;
+    $(document).on("click", ".executeuserlist", function () {
+        if ($("#selectuserlist").val() == "" && $(".states").val() == "") {
+            $("#dangerlist").modal("show");
+            return;
+        }
+        const username = $("#selectuserlist").val();
+        const states = $(".states").val();
+        const startdate = $(".startdate").val();
+        const enddate = $(".enddate").val();
+        console.log(states);
+        $(".loaderlist").removeClass("bx-check-double").addClass("bx-loader bx-spin");
+        setTimeout(() => {
+            filterUserlist(username, states, startdate, enddate, currentPage, pageLimit);
+        }, 100);
+    });
 
-  $(document).ready(function () {
-      // Event listener for keyup on #myInput
-      $(document).on("keyup", "#selectuserlist", function () {
-          const query = $(this).val().trim();
+    // $(document).on('click', '.tinfo', function () {
+    //   $("#signup-modal").modal("show");
+    //   const transactionId = $(this).attr('value')
+    //   console.log(transactionId)
+    //   $("#row1").html("")
+    //   $("#row2").html("")
+    //   fetchTrasactionBet(transactionId);
 
-          // Only trigger if input is more than 2 characters
-          if (query.length > 1) {
-              clearTimeout(debounceTimeouts); // Clear any existing timeout
-              debounceTimeout = setTimeout(fetchUsers, 500, query); // Call fetchUsers with the query after 500ms delay
-          } else {
-              $(".queryholderuserlist").hide(); // Hide dropdown if input is less than 3 characters
-          }
-      });
+    // })
 
-      // Handle dropdown item selection
-      $(document).on("change", ".queryholderuserlist", function () {
-          const selectedOption = $(this).find("option:selected");
-          const selectedUserId = selectedOption.val();
-          const selectedUsername = selectedOption.data("username");
-          console.log(selectedUserId);
+    // $(document).on("click", function () {
+    //   $(".queryholderxx").hide();
+    // });
 
-          if (selectedUserId) {
-              $("#selectuserlist").val(selectedUsername);
-              $(".userIds").val(selectedUserId);
-              $(".queryholderuserlist").hide();
-          }
-      });
+    $(".tclose").click(function () {
+        $("#signup-modal").modal("hide");
+    });
 
-      // Handle manual input clearing
-      $(document).on("input", "#selectuserlist", function () {
-          if (!$(this).val()) {
-              $(".userIds").val(""); // Reset user ID if input is cleared
-          }
-      });
-  });
+    $(document).on("click", ".addagent", function () {
+        $("#addagentmodal").modal("show");
+    });
 
-  // Function to fetch and display users
-  function fetchUsers(query) {
-      let optionsHtml = "";
+    $(".listclose").click(function () {
+        $("#addagentmodal").modal("hide");
+    });
 
-      $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
-          try {
-              response = typeof response === "string" ? JSON.parse(response) : response;
-              response.forEach((user) => {
-                  let displayValues;
-                  let regnames;
-                  // Display based on regtype
-                  if (user.regtype === "email") {
-                      displayValues = user.email;
-                      regnames = user.email; // Show email
-                  } else if (user.regtype === "username") {
-                      displayValues = user.username;
-                      regnames = user.username; // Show username
-                  } else if (user.regtype === "contact") {
-                      displayValues = user.contact;
-                      regnames = user.contact; // Show contact
-                  } else {
-                      displayValues = "no data found..";
-                  }
-                  optionsHtml += `<option class="optlpionlist" value="${user.uid}" data-username="${regnames}">${displayValues}</option>`;
-              });
+    async function fetchRebatedata() {
+        try {
+            const response = await fetch(`../admin/fetchRebatedata/`); // Await the fetch call
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
 
-              $(".queryholderuserlist").html(optionsHtml).show();
-          } catch (error) {
-              console.error("Error parsing response: ", error);
-              $(".queryholderuserlist").hide();
-          }
-      }).fail(function () {
-          console.error("Error fetching users.");
-          $(".queryholderuserlist").hide();
-      });
-  }
+            const data = await response.json(); // Parse JSON response
+            // console.log(data);
+            let html = "";
 
-  $(document).on("click", ".executeuserlist", function () {
-      if ($("#selectuserlist").val() == "" && $(".states").val() == "") {
-          $("#dangerlist").modal("show");
-          return;
-      }
-      const username = $("#selectuserlist").val();
-      const states = $(".states").val();
-      // const ordertype = $(".ordertype").val()
-      const startdate = $(".startdate").val();
-      const enddate = $(".enddate").val();
-      console.log(username);
-      $(".loaderlist").removeClass("bx-check-double").addClass("bx-loader bx-spin");
-      setTimeout(() => {
-          filterUserlist(username, states, startdate, enddate,currentPage,pageLimit);
-      }, 100);
-  });
+            // Check if data is not empty and iterate over it to generate options
+            if (Array.isArray(data) && data.length > 0) {
+                data.forEach((rebate) => {
+                    html += `<option value="${rebate.rebate}" class="">${rebate.rebate}</option>`;
+                });
+            } else {
+                html += `<option value="" disabled>No rebates found</option>`; // If no data, show a message
+            }
 
-  // $(document).on('click', '.tinfo', function () {
-  //   $("#signup-modal").modal("show");
-  //   const transactionId = $(this).attr('value')
-  //   console.log(transactionId)
-  //   $("#row1").html("")
-  //   $("#row2").html("")
-  //   fetchTrasactionBet(transactionId);
+            // Inject the options into the #rebatedata select element
+            $("#usererebate").html(html);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+    fetchRebatedata();
 
-  // })
+    $(document).on("click", ".btnaddagent", function () {
+        const datas = $("#agentform").serialize();
+        addAgent(datas);
+    });
 
-  // $(document).on("click", function () {
-  //   $(".queryholderxx").hide();
-  // });
+    async function addAgent(datas) {
+        try {
+            const response = await fetch(`../admin/addAgent/${datas}`);
+            const data = await response.json();
+            // console.log(response);
+            const errorMessages = {
+                emailexist: "Email already exists",
+                usernamePattern: "Username must  Contain only letters\n, numbers, and underscores\n Start with a letter",
+                username: "Username must contain only letters, numbers, and underscores and start with a letter",
+                email: "Email address is invalid",
+                passwordNumber: "Password must contain at least one number",
+                passwordCaseSensitive: "Password must contain at least one uppercase and\n lowercase letter",
+                passwordSpecialChar: "Password must contain at least one special symbol",
+                confirmPassword: "Password does not match",
+                passwordLength: "Password must be at least 8 characters",
+                passwordRequired: "Password is required",
+            };
+            let message = null;
+            // Loop through error keys to find the first error
+            for (const [key, errorMessage] of Object.entries(errorMessages)) {
+                if (data[key]) {
+                    message = errorMessage;
+                    break;
+                }
+            }
+            if (message) {
+                showToast("Heads up!!", message, "info");
+                return;
+            } else {
+                $(".loaders").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
+                setTimeout(function () {
+                    $(".loaders").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+                    $("#addagent").modal("hide");
+                    showToast("Success", "agent added sucessfully", "success");
+                    // fetchUserlist(currentPagelist);
+                }, 500);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
 
-  $(".tclose").click(function () {
-      $("#signup-modal").modal("hide");
-  });
+    async function fetchTopAgent(page) {
+        try {
+            const response = await fetch(`../admin/fetchTopAgent/${page}/${pageLimit}`);
 
-  $(document).on("click", ".addagent", function () {
-      $("#addagentmodal").modal("show");
-  });
+            const data = await response.json();
+            // console.log(response);
+            renderuserlist(data.topagent);
+            $("#masklist").LoadingOverlay("hide");
+            renderPaginationlist(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchTopAgent(newPage, pageLimit));
+            document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+            // return;
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
 
-  $(".listclose").click(function () {
-      $("#addagentmodal").modal("hide");
-  });
+    //get top agent
+    $(".gettopagent").click(function () {
+        fetchTopAgent(currentPage, pageLimit);
+    });
 
-  async function fetchRebatedata() {
-      try {
-          const response = await fetch(`../admin/fetchRebatedata/`); // Await the fetch call
-          if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-          }
+    //quota
+    $(document).on("click", ".viewquota", function () {
+        $("#viewquota").modal("show");
 
-          const data = await response.json(); // Parse JSON response
-          // console.log(data);
-          let html = "";
+        const uid = $(this).attr("data-uid").trim();
+        $(".userquotaid").val(uid);
+        console.log(uid);
 
-          // Check if data is not empty and iterate over it to generate options
-          if (Array.isArray(data) && data.length > 0) {
-              data.forEach((rebate) => {
-                  html += `<option value="${rebate.rebate}" class="">${rebate.rebate}</option>`;
-              });
-          } else {
-              html += `<option value="" disabled>No rebates found</option>`; // If no data, show a message
-          }
+        $.post(`../admin/getuserrebate/${uid}/`, function (data) {
+            const rebatelist = JSON.parse(data);
+            let tableBody = document.getElementById("quotatable").getElementsByTagName("tbody")[0];
+            while (tableBody.firstChild) {
+                tableBody.removeChild(tableBody.firstChild);
+            }
 
-          // Inject the options into the #rebatedata select element
-          $("#usererebate").html(html);
-      } catch (error) {
-          console.error("Error fetching data:", error);
-      }
-  }
-  fetchRebatedata();
+            rebatelist.forEach((item) => {
+                let row = tableBody.insertRow();
+                let rowData = [
+                    `<b class="rebate_group"> ${item.rebate}</b>`,
+                    `<b class="bonus_group">  ${item.odds_group}</b>`,
+                    `<b class="count_group">${item.counts} </b> / ${item.quota}`,
+                    `<input type="text" value="${item.quota}" class="quota_set form-control" />`,
+                ];
 
-  $(document).on("click", ".btnaddagent", function () {
-      const datas = $("#agentform").serialize();
-      addAgent(datas);
-  });
+                rowData.forEach((datass) => {
+                    let cell = row.insertCell();
+                    cell.innerHTML = datass;
+                });
+            });
+        });
+    });
 
-  async function addAgent(datas) {
-      try {
-          const response = await fetch(`../admin/addAgent/${datas}`);
-          const data = await response.json();
-          // console.log(response);
-          const errorMessages = {
-              emailexist: "Email already exists",
-              usernamePattern: "Username must  Contain only letters\n, numbers, and underscores\n Start with a letter",
-              username: "Username must contain only letters, numbers, and underscores and start with a letter",
-              email: "Email address is invalid",
-              passwordNumber: "Password must contain at least one number",
-              passwordCaseSensitive: "Password must contain at least one uppercase and\n lowercase letter",
-              passwordSpecialChar: "Password must contain at least one special symbol",
-              confirmPassword: "Password does not match",
-              passwordLength: "Password must be at least 8 characters",
-              passwordRequired: "Password is required",
-          };
-          let message = null;
-          // Loop through error keys to find the first error
-          for (const [key, errorMessage] of Object.entries(errorMessages)) {
-              if (data[key]) {
-                  message = errorMessage;
-                  break;
-              }
-          }
-          if (message) {
-              showToast("Heads up!!", message, "info");
-              return;
-          } else {
-              $(".loaders").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
-              setTimeout(function () {
-                  $(".loaders").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
-                  $("#addagent").modal("hide");
-                  showToast("Success", "agent added sucessfully", "success");
-                  // fetchUserlist(currentPagelist);
-              }, 500);
-          }
-      } catch (error) {
-          console.error("Error fetching data:", error);
-      }
-  }
+    $(document).on("click", ".updatequotabtn", function () {
+        // const $spinner = $(this).find('.spinner-borderrr');
+        // $spinner.show(); // Show the spinner immediately
+        let uid = $(".userquotaid").val();
+        let rebate_group = [];
+        let bonus_group = [];
+        let quata_group = [];
+        let count_group = [];
 
-  async function fetchTopAgent(page) {
-      try {
-          const response = await fetch(`../admin/fetchTopAgent/${page}/${pageLimit}`);
+        $(".rebate_group").each(function () {
+            var value = $(this).text();
+            rebate_group.push(value);
+        });
 
-          const data = await response.json();
-          // console.log(response);
-          renderuserlist(data.topagent);
-          $("#masklist").LoadingOverlay("hide");
-          // Render pagination
-          // renderPaginationlist(data.totalPages, pagelist, "normal");
-          // document.getElementById("paging_infolist").innerHTML = "Page " + pagelist + " of " + data.totalPages + " pages";
-          renderPaginationlist(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchTopAgent(newPage, pageLimit));
-          document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
-          // return;
-      } catch (error) {
-          console.error("Error fetching data:", error);
-      }
-  }
+        $(".bonus_group").each(function () {
+            var value = $(this).text();
+            bonus_group.push(value);
+        });
 
-  //get top agent
-  $(".gettopagent").click(function () {
-      fetchTopAgent(currentPage,pageLimit);
-  });
+        $(".quota_set").each(function () {
+            var value = $(this).val();
+            quata_group.push(value);
+        });
 
-  //quota
-  $(document).on("click", ".viewquota", function () {
-      $("#viewquota").modal("show");
+        $(".count_group").each(function () {
+            var value = $(this).text();
+            count_group.push(value);
+        });
 
-      const uid = $(this).attr("data-uid").trim();
-      $(".userquotaid").val(uid);
-      console.log(uid);
+        $(".loaderquota").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
+        //
+        $.post(
+            `../admin/updateUsedquota/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
 
-      $.post(`../admin/getuserrebate/${uid}/`, function (data) {
-          const rebatelist = JSON.parse(data);
-          let tableBody = document.getElementById("quotatable").getElementsByTagName("tbody")[0];
-          while (tableBody.firstChild) {
-              tableBody.removeChild(tableBody.firstChild);
-          }
+            function (result) {
+                // console.log(result);
+                setTimeout(function () {
+                    $(".loaderquota").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+                    if (result) {
+                        $("#viewquota").modal("hide");
+                        showToast("Success", "quota updated successfullly", "success");
+                    } else {
+                        showToast("Heads up !!", "no changes made", "info");
+                    }
+                }, 500); // Duration before showing the toast
+            }
+        );
+    });
 
-          rebatelist.forEach((item) => {
-              let row = tableBody.insertRow();
-              let rowData = [
-                  `<b class="rebate_group"> ${item.rebate}</b>`,
-                  `<b class="bonus_group">  ${item.odds_group}</b>`,
-                  `<b class="count_group">${item.counts} </b> / ${item.quota}`,
-                  `<input type="text" value="${item.quota}" class="quota_set form-control" />`,
-              ];
+    function tableScrolluserList() {
+        const tableContainerUser = document.querySelector(".table-wrapperuserlist");
+        const headerRowUserList = document.querySelector(".headrowuserlist");
 
-              rowData.forEach((datass) => {
-                  let cell = row.insertCell();
-                  cell.innerHTML = datass;
-              });
-          });
-      });
-  });
-
-  $(document).on("click", ".updatequotabtn", function () {
-      // const $spinner = $(this).find('.spinner-borderrr');
-      // $spinner.show(); // Show the spinner immediately
-      let uid = $(".userquotaid").val();
-      let rebate_group = [];
-      let bonus_group = [];
-      let quata_group = [];
-      let count_group = [];
-
-      $(".rebate_group").each(function () {
-          var value = $(this).text();
-          rebate_group.push(value);
-      });
-
-      $(".bonus_group").each(function () {
-          var value = $(this).text();
-          bonus_group.push(value);
-      });
-
-      $(".quota_set").each(function () {
-          var value = $(this).val();
-          quata_group.push(value);
-      });
-
-      $(".count_group").each(function () {
-          var value = $(this).text();
-          count_group.push(value);
-      });
-
-      $(".loaderquota").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
-      //
-      $.post(
-          `../admin/updateUsedquota/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
-
-          function (result) {
-              // console.log(result);
-              setTimeout(function () {
-                  $(".loaderquota").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
-                  if (result) {
-                      $("#viewquota").modal("hide");
-                      showToast("Success", "quota updated successfullly", "success");
-                  } else {
-                      showToast("Heads up !!", "no changes made", "info");
-                  }
-              }, 500); // Duration before showing the toast
-          }
-      );
-  });
-
-  function tableScrolluserList() {
-      const tableContainerUser = document.querySelector(".table-wrapperuserlist");
-      const headerRowUserList = document.querySelector(".headrowuserlist");
-
-      tableContainerUser.addEventListener("scroll", function () {
-          if (tableContainerUser.scrollTop > 0) {
-              headerRowUserList.classList.add("sticky-headeruserlist");
-          } else {
-              headerRowUserList.classList.remove("sticky-headeruserlist");
-          }
-      });
-  }
-  tableScrolluserList();
+        tableContainerUser.addEventListener("scroll", function () {
+            if (tableContainerUser.scrollTop > 0) {
+                headerRowUserList.classList.add("sticky-headeruserlist");
+            } else {
+                headerRowUserList.classList.remove("sticky-headeruserlist");
+            }
+        });
+    }
+    tableScrolluserList();
 });

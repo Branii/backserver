@@ -11,8 +11,8 @@ class UserManageModel extends MEDOOHelper
 
         $startpoint = ($page - 1) * $limit;
         $data = parent::query(
-            "SELECT uid, username,email,contact,nickname, agent_name, balance, recharge_level, user_state,reg_type,
-                  rebate, created_at, agent_id, account_type,reg_type
+            "SELECT uid, username,email,contact,nickname, agent_name, balance, recharge_level, user_state,reg_type,agent_level,
+                  rebate, created_at, agent_id, account_type
              FROM users_test
              ORDER BY uid DESC
              LIMIT :startpoint, :limit",
@@ -43,43 +43,94 @@ class UserManageModel extends MEDOOHelper
         return  $data = parent::query("SELECT nickname FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
     }
 
+    public static function getUserIdByMixedValued(array $mixedValue)
+    {
+        if (empty($mixedValue)) {
+            return []; // Return an empty array if input is empty
+        }
+    
+        try {
+            $placeholders = implode(',', array_fill(0, count($mixedValue), '?'));
+            $pdo = (new Database())->openLink();
+    
+            $stmt = $pdo->prepare("SELECT nickname FROM users_test WHERE uid IN ($placeholders)");
+            $stmt->execute($mixedValue);
+    
+            // Fetch all nicknames as an indexed array
+            $subordinates = $stmt->fetchAll(PDO::FETCH_COLUMN);
+            return $subordinates;
+    
+        } catch (PDOException $e) {
+            // Log or handle the error as needed
+            error_log("Database error: " . $e->getMessage());
+            return [];
+        }
+    }
+
     public static function Fetchsubordinates($uid)
     {
         $totalCount = parent::count("users_test", "*", ["AND" => ["agent_id" => $uid, "account_type" => 3, "uid[!]" => $uid]]);
         return $totalCount;
     }
 
-    public static function Filteruserlist($page, $limit, $username, $states, $startdate, $enddate)
+    public static function Filteruserlist($subQuery,$page, $limit)
     {
-        $whereConditions = self::FilterUserlistDataSubQuery($username, $states, $startdate, $enddate);
-        $startpoint = ($page * $limit) - $limit;
-        $data = parent::selectAll("users", '*', ["AND" => $whereConditions, "ORDER" => ["users.uid" => "DESC"], "LIMIT" => [$startpoint, $limit]]);
+        
+         $startpoint = ($page - 1) * $limit;
+ 
+          $sql = "SELECT uid, username,email,contact,nickname, agent_name, balance, recharge_level, user_state,reg_type,
+                  rebate, created_at, agent_id, account_type,reg_type
+             FROM users_test WHERE  $subQuery ";
+            
+        $countSql = "
+                SELECT 
+                    COUNT(*) AS total_count
+                FROM 
+                    users_test
+            WHERE
+                $subQuery
+                ";
+
+        $data = parent::query($sql);
+        $totalRecords = parent::query($countSql);
+        $totalRecords = $totalRecords[0]['total_count'];
         $lastQuery = MedooOrm::openLink()->log();
-        $totalRecords  = parent::selectAll('users', '*', ['AND' => $whereConditions]);
-        return ['data' => $data, 'total' => count($totalRecords), 'sql' => $lastQuery[0]];
+        return ['data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery[0]];
+        
     }
 
-    public static function FilterUserlistDataSubQuery($username = '', $states = '', $from = '', $to = '')
+    public static function FilterUserlistDataSubQuery($username,$states, $startdate, $enddate)
     {
-        $conditions = [];
+        $filterConditions = [];
 
-        if (!empty($username) && $username != 'all') {
-            $conditions['users.uid'] = $username;
+        // Build filter conditions
+        if (!empty($username)) {
+            $filterConditions[] = "uid = '$username'";
+        }
+       
+        if (!empty($states)) {
+            $filterConditions[] = "user_state = '$states'";
         }
 
-        if (!empty($states) && $states != 'all') {
-            $conditions['users.state'] = $states;
+        
+        if (!empty($startdate) && !empty($enddate)) {
+            $filterConditions[] = "created_at BETWEEN '$startdate' AND '$enddate'";
+        } elseif (!empty($startdate)) {
+            $filterConditions[] = "created_at = '$startdate'";
+        } elseif (!empty($enddate)) {
+            $filterConditions[] = "created_at = '$enddate'";
         }
 
-        if ($from != '' && $to != '') {
-            $conditions['users.date_created[<>]'] = [$from, $to];
-        } elseif ($from != '') {
-            $conditions['users.date_created[>=]'] = $from;
-        } elseif ($to != '') {
-            $conditions['users.date_created[<=]'] = $to;
+        // Combine conditions into the final query
+        if (!empty($filterConditions)) {
+            $subQuery = implode(' AND ', $filterConditions);
         }
 
-        return $conditions;
+        // Add ordering and limit to the query (you can also parameterize order if needed)
+        $subQuery .= " ORDER BY created_at DESC";
+
+        // Return the final subquery
+        return $subQuery;
     }
 
     public static function AddAgentData($datas)
@@ -248,7 +299,7 @@ class UserManageModel extends MEDOOHelper
             users_test.email, users_test.contact, users_test.reg_type ,
             COALESCE(users_test.username, 'N/A') AS username 
         FROM user_logs   
-        JOIN users_test ON users_test.uid = user_logs.uid  
+        LEFT JOIN users_test ON users_test.uid = user_logs.uid  
         ORDER BY user_logs.ulog_id DESC 
         LIMIT :startpoint, :limit
     ";
@@ -260,37 +311,73 @@ class UserManageModel extends MEDOOHelper
     }
 
 
-    public static function Filteruserlogs($page, $limit, $username, $startdate, $enddate)
+    public static function Filteruserlogs($subQuery, $page, $limit)
     {
-        $whereConditions = self::FilterUserlogsDataSubQuery($username,  $startdate, $enddate);
-        $startpoint = ($page * $limit) - $limit;
-        $data = parent::selectAll("user_logs", '*', ["AND" => $whereConditions, "ORDER" => ["ulog_id" => "DESC"], "LIMIT" => [$startpoint, $limit]]);
+        $startpoint = $page * $limit - $limit;
+        $sql = "
+        SELECT 
+            temp_table.*, 
+            users_test.email AS email,
+            users_test.username AS username,
+            users_test.contact AS contact,users_test.reg_type AS reg_type    
+        FROM 
+            (
+                SELECT * 
+                FROM user_logs
+                WHERE $subQuery
+            ) AS temp_table
+        LEFT JOIN 
+            users_test ON users_test.uid = temp_table.uid
+         LIMIT :offset, :limit
+       
+        ";
+
+        $countSql = "
+                SELECT 
+                    COUNT(*) AS total_count
+                FROM 
+                    user_logs
+            WHERE
+                $subQuery
+                ";
+
+        $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
+        $totalRecords = parent::query($countSql);
+        $totalRecords = $totalRecords[0]['total_count'];
         $lastQuery = MedooOrm::openLink()->log();
-        $totalRecords  = parent::selectAll('user_logs', '*', ['AND' => $whereConditions]);
-        return ['data' => $data, 'total' => count($totalRecords), 'sql' => $lastQuery[0]];
+        return ['data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery[0]];
     }
 
-    public static function FilterUserlogsDataSubQuery($username = '', $from = '', $to = '')
+    public static function FilterUserlogsDataSubQuery($username,$startdate,$enddate)
     {
-        $conditions = [];
+   
+        $filterConditions = [];
 
-        if (!empty($username) && $username != 'all') {
-            $conditions['user_logs.uid'] = $username;
+        // Build filter conditions
+        if (!empty($username)) {
+            $filterConditions[] = "uid = '$username'";
         }
 
-        // if (!empty($states) && $states != 'all') {
-        //     $conditions['users.state'] = $states;
-        // }
-
-        if ($from != '' && $to != '') {
-            $conditions['user_logs.date_created[<>]'] = [$from, $to];
-        } elseif ($from != '') {
-            $conditions['user_logs.date_created[>=]'] = $from;
-        } elseif ($to != '') {
-            $conditions['user_logs.date_created[<=]'] = $to;
+        
+        if (!empty($startdate) && !empty($enddate)) {
+            $filterConditions[] = "login_date BETWEEN '$startdate' AND '$enddate'";
+        } elseif (!empty($startdate)) {
+            $filterConditions[] = "login_date = '$startdate'";
+        } elseif (!empty($enddate)) {
+            $filterConditions[] = "login_date = '$enddate'";
         }
 
-        return $conditions;
+        // Combine conditions into the final query
+        if (!empty($filterConditions)) {
+            $subQuery = implode(' AND ', $filterConditions);
+        }
+
+        // Add ordering and limit to the query (you can also parameterize order if needed)
+        $subQuery .= " ORDER BY login_date DESC";
+
+        // Return the final subquery
+        return $subQuery;
+    
     }
 
     public static function fetchUserRebateList($uid)
