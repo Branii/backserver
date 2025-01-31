@@ -57,8 +57,9 @@ if ($flag == "filterfinance") {
     $uid = isset($this->viewData['uid']) ? (int) $this->viewData['uid'] :"";
     $amount = isset($this->viewData['amount']) ? (float)$this->viewData['amount'] : "";
     $username = isset($this->viewData['approvedby']) ? $this->viewData['approvedby'] : "";
-    $review = isset($this->viewData['review']) ? $this->viewData['review'] : "";
+    $review = urldecode(isset($this->viewData['review'])) ? urldecode($this->viewData['review']) : "";
     $username =  urldecode($username);
+
     $result = (new FinancialManageModel())->addMoneyData($depositetype,$uid,$amount,$username,$review) ?? [];
     echo json_encode($result);
 }

@@ -118,7 +118,7 @@ class BusinessFlowModel extends MEDOOHelper
     }
     public static function getUserIdByMixedValued(string $mixedValue)
     {
-        $data = parent::query("SELECT uid FROM users_test WHERE uid = :uid OR username = :username", ['uid' => $mixedValue, 'username' => $mixedValue]);
+        $data = parent::query("SELECT uid,nickname FROM users_test WHERE uid = :uid OR username = :username", ['uid' => $mixedValue, 'username' => $mixedValue]);
         return !empty($data) ? $data[0]['uid'] : '0';
     }
 
