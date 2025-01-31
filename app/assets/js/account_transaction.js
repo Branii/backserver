@@ -454,35 +454,6 @@ $(function () {
         fetchTrasaction(currentPage, numrow);
     });
 
-    let elem = "";
-    var menu = new BootstrapMenu(".chrome-tab", {
-        fetchElementData: function (element) {
-            elem = element;
-        },
-        actions: [
-            {
-                name: "<div class='pins'><i class='bx bxs-pin' style='font-size:15px;' ></i> <span style='font-size:12px'>Pin</span></div>",
-                onClick: function () {
-                    $(elem[0]).find(".chrome-tab-close").removeClass("chrome-tab-close").addClass("bx bxs-pin");
-                    console.log("Pinned");
-                },
-            },
-            {
-                name: "<div class='pins'><i class='bx bx-pin' style='font-size:15px;' ></i> <span style='font-size:12px'>Unpin</span></div>",
-                onClick: function () {
-                    $(elem[0]).find(".bxs-pin").removeClass("bx bxs-pin").addClass("chrome-tab-close");
-                    console.log("Uninned");
-                },
-            },
-            {
-                name: "<div class='pins'><i class='bx bx-checkbox-minus' style='font-size:15px;' ></i> <span style='font-size:12px'>Disable</span></div>",
-                onClick: function () {
-                    // $(elem[0]).find(".chrome-tab-close").removeClass("chrome-tab-close")
-                },
-            },
-        ],
-    });
-
     //search the for username
 
     let debounceTimeout = null;
