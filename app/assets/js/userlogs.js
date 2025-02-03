@@ -16,11 +16,11 @@ $(function () {
      
     data.forEach((item) => {
     
-        const ipInfo =fetchIpInfo(item.ip);
+          const ipInfo = fetchIpInfo(item.ip);
 
         // // Extract city from IP information or use a fallback
          const city = ipInfo?.geoplugin_city || 'Unknown';
-        let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
+         let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
         html += `
                     <tr>
                         <td>${username}</td>
@@ -61,9 +61,9 @@ $(function () {
 
     fetchUserlogs(currentPage,pageLimit);
   
-    async function filterUserlogs(username, startdatelog, enddatelog,currentPage,pageLimit) {
+    async function filterUserlogs(usernamelog, startdatelog, enddatelog,currentPage,pageLimit) {
       try {
-        const response = await fetch(`../admin/filterUserlogs/${username}/${startdatelog}/${enddatelog}/${currentPage}/${pageLimit}`);
+        const response = await fetch(`../admin/filterUserlogs/${usernamelog}/${startdatelog}/${enddatelog}/${currentPage}/${pageLimit}`);
          const data = await response.json();
             console.log(response)
           //  return
@@ -83,7 +83,7 @@ $(function () {
         renderuserlogs(data.userloggs);
   
         // Render pagination
-        renderuserlogPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterUserlogs(username, startdatelog, enddatelog,newPage,pageLimit));
+        renderuserlogPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterUserlogs(usernamelog, startdatelog, enddatelog,newPage,pageLimit));
           document.getElementById("paging_infologs").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
     
       } catch (error) {
@@ -197,13 +197,13 @@ $(function () {
         showToast("Heads up!!", "Select one or more data fields to filter", "info");
         return
       }
-      const username =  $("#userloginput").val();
+      const usernamelog =  $("#userloginput").val();
       const startdatelog = $(".startdatelog").val()
       const enddatelog = $(".enddatelog").val()
-      console.log(username)
+      console.log(usernamelog)
       $(".loaderlog").removeClass('bx-check-double').addClass('bx-loader bx-spin');
       setTimeout(() => {
-        filterUserlogs(username, startdatelog, enddatelog,currentPage,pageLimit);
+        filterUserlogs(usernamelog, startdatelog, enddatelog,currentPage,pageLimit);
       }, 100);
     })
   
@@ -330,9 +330,4 @@ $(function () {
         }
     }
 
- 
-
-      
-    
-   
   });

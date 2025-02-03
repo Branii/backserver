@@ -10,7 +10,7 @@ class UserManageModel extends MEDOOHelper
     {
         $startpoint = ($page - 1) * $limit;
         $sql = "SELECT 
-                            u.uid, 
+             u.uid, 
              u.username, 
              u.email, 
              u.contact, 
@@ -24,6 +24,7 @@ class UserManageModel extends MEDOOHelper
              u.rebate, 
              u.created_at, 
              u.agent_id, 
+             u.last_login, 
              u.account_type, 
                             GROUP_CONCAT(a.nickname) AS subordinates, 
                             COUNT(a.uid) AS sub_count, 
@@ -35,14 +36,16 @@ class UserManageModel extends MEDOOHelper
                         GROUP BY 
                             u.uid DESC
                         LIMIT :offset, :limit;";
-               $pdo = (new Database())->openLink();
+                $pdo = (new Database())->openLink();
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':offset', $startpoint, PDO::PARAM_INT);
                 $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
                 $stmt->execute();
 
                 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+                foreach ($data as &$row) {
+                    $row['logincount'] = self::countUserLogs($row['uid']);
+                }
 
          $totalRecords = parent::count('users_test');
 
@@ -338,20 +341,15 @@ class UserManageModel extends MEDOOHelper
         $startpoint = $page * $limit - $limit;
         $sql = "
         SELECT 
-            temp_table.*, 
-            users_test.email AS email,
-            users_test.username AS username,
-            users_test.contact AS contact,users_test.reg_type AS reg_type    
-        FROM 
-            (
-                SELECT * 
-                FROM user_logs
-                WHERE $subQuery
-            ) AS temp_table
-        LEFT JOIN 
-            users_test ON users_test.uid = temp_table.uid
-         LIMIT :offset, :limit
-       
+            user_logs.*, 
+            users_test.email,
+            users_test.username,
+            users_test.contact,
+            users_test.reg_type
+        FROM user_logs
+        LEFT JOIN users_test ON users_test.uid = user_logs.uid
+        WHERE $subQuery
+        LIMIT :offset, :limit
         ";
 
         $countSql = "
@@ -377,16 +375,15 @@ class UserManageModel extends MEDOOHelper
 
         // Build filter conditions
         if (!empty($username)) {
-            $filterConditions[] = "uid = '$username'";
+            $filterConditions[] = "user_logs.uid = '$username'";
         }
 
-        
         if (!empty($startdate) && !empty($enddate)) {
-            $filterConditions[] = "login_date BETWEEN '$startdate' AND '$enddate'";
+            $filterConditions[] = "user_logs.login_date BETWEEN '$startdate' AND '$enddate'";
         } elseif (!empty($startdate)) {
-            $filterConditions[] = "login_date = '$startdate'";
+            $filterConditions[] = "user_logs.login_date = '$startdate'";
         } elseif (!empty($enddate)) {
-            $filterConditions[] = "login_date = '$enddate'";
+            $filterConditions[] = "user_logs.login_date = '$enddate'";
         }
 
         // Combine conditions into the final query
@@ -394,10 +391,8 @@ class UserManageModel extends MEDOOHelper
             $subQuery = implode(' AND ', $filterConditions);
         }
 
-        // Add ordering and limit to the query (you can also parameterize order if needed)
         $subQuery .= " ORDER BY login_date DESC";
 
-        // Return the final subquery
         return $subQuery;
     
     }

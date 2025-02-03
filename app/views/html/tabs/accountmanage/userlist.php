@@ -468,12 +468,12 @@ section#tooltipp p {
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Creation Time']; ?></h6>
                         </th>
-                        <!-- <th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Login']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Login Count']; ?></h6>
-                        </th> -->
+                        </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
                         </th>
@@ -796,6 +796,3 @@ section#tooltipp p {
     <!-- /.modal-dialog -->
 </div>
 
-<div id="relationship-container">
-  <!-- Dynamic content will be added here -->
-</div>

@@ -266,6 +266,7 @@ class adminController extends Controller {
         $this->view('exec/lottery_basic_params', ['lottery_id' => $lottery_id,'page' => $page,'flag' => 'fetch-lottery-basic-params']);
         $this->view->render();
     }
+
     public function filteruserlist($username, $states , $startdate , $enddate , $pageNumber, $limit)
     {
         $this->view('exec/account_manage', [
@@ -328,7 +329,7 @@ class adminController extends Controller {
 
     public function filterUserlogs($username,  $startdate, $enddate, $pageNumber, $limit)
     {
-        $this->view('exec/account_manage', ['username' => $username,'startdate' => $startdate,
+        $this->view('exec/account_manage', ['usernamelog' => $username,'startdate' => $startdate,
         'enddate' => $enddate,'flag' => 'filterUserlogs','page' => $pageNumber,'limit' => $limit,]);
         $this->view->render();
     }

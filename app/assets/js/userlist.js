@@ -66,6 +66,7 @@ $(function () {
           //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
             // let relationType = item.account_type === "2" ? "Top Agent" : item.relationship
             const [date, time] = item.created_at.split(' ');
+            const [dates, times] = item.last_login !='*****' ?item.last_login.split(' ') :item.last_login;
             html += `
                   <tr>
                      <td>${username}</td>
@@ -75,11 +76,13 @@ $(function () {
                   <span class="tooltipp" style="">${subordinate}
                       <span class="tooltipp-text">${formattedSubordinates}</span>
                   </span>
-                </td>
-                     <td>${item.sub_count} </td>
+                  </td>
+                      <td>${item.sub_count} </td>
                       <td>${formatMoney(item.balance)}</td> 
                       <td>${item.rebate}</td>
                       <td>${date + ' / ' + time}</td>
+                      <td>${dates + ' / ' + times}</td>
+                      <td>${item.logincount}</td>
                       <td>${status[item.user_state]}</td>
                  
                         <td>

@@ -108,11 +108,12 @@ class BusinessFlowModel extends MEDOOHelper
     {
         $data = parent::query(
             "SELECT uid FROM users_test WHERE 
-      uid = :uid 
-      OR email = :email 
-      OR username = :username 
-      OR contact = :contact",
-            ['uid' => $key, 'email' => $key, 'username' => $key, 'contact' => $key]
+            uid = :uid 
+            OR email = :email 
+            OR username = :username 
+            OR contact = :contact",
+         ['uid' => $key, 'email' => $key, 'username' => $key, 'contact' => $key]
+         
         );
         return $data;
     }

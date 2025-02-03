@@ -12,34 +12,6 @@ if ($flag == "userlistdata") {
     $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
     $result = (new UserManageModel())->FetchUserlistData($page, $limit);
 
-    //  $usernameArray = [];
-    //   foreach ($result['data'] as $data) {
-    //                 $relationship = '';
-    //                 // Handle Top Agent, Sub-Agent, and Customer relationships
-    //         if ($data['account_type'] == 2) {  
-    //             // Top Agent (account_type 2 always shown as Top Agent)
-    //             $relationship = "Top Agent";
-    //         } elseif ($data['account_type'] == 3  && $data['total_subordinate'] == 1) {
-    //             // Sub-Agent with exactly one subordinate
-    //             $relationship = "{$data['agent_name']} -> {$data['nickname']}";
-    //         } elseif ($data['account_type'] == 2 && $data['total_subordinate'] > 1) {
-    //             // Sub-Agent with multiple subordinates
-    //             $relationship = "{$data['agent_name']} ... {$data['nickname']}";
-    //         }  else {
-    //             // Default empty relationship if no conditions match
-    //             $relationship = '';
-    //         }
-
-    //         $data['relationship'] = $relationship;
-            
-          
-          
-    //         // Handle the relationship condition without further queries
-          
-        
-    //         $usernameArray[] = $data;
-    //   }
-
       echo json_encode([
         'users' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit)
@@ -175,13 +147,7 @@ if ($flag  == "userlogsdata") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $result = (new UserManageModel())->FetchUserlogsData($page, $limit) ?? [];
-    // $users = [];
-    // foreach ($result['data'] as $data) {
-    //       $userlogins = (new UserManageModel())->countUserLogs($data['uid']);
-    //       $data['userlogins'] = $userlogins; 
-    //        $users[] = $data;
-    // }
-
+   
     echo json_encode([
         'userlogs' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit)
@@ -189,21 +155,20 @@ if ($flag  == "userlogsdata") {
 }
 
 if ($flag == "filterUserlogs") {
-    $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
+    $username = isset($this->viewData['usernamelog']) ? $this->viewData['usernamelog'] : '';
     $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($username);
     $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
     $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     if (!empty($usernameCheck) && $usernameCheck != null) {
-        $username = $usernameCheck[0]['uid'];
-        $sunquery = (new UserManageModel())->FilterUserlogsDataSubQuery($username, $startdate, $enddate);
+        $usernamelog = $usernameCheck[0]['uid'];
+        $sunquery = (new UserManageModel())->FilterUserlogsDataSubQuery($usernamelog, $startdate, $enddate);
         $result = (new UserManageModel())->Filteruserlogs($sunquery, $page, $limit) ?? [];
-
         echo json_encode([
-            'sql' => $result['sql'],
-            'userloggs' => $result['data'],
-            'totalPages' => ceil($result['total'] / $limit)
+             'sql' => $result['sql'],
+             'userloggs' => $result['data'],
+             'totalPages' =>  ceil($result['total'] / $limit)
         ]);
     } else {
 
