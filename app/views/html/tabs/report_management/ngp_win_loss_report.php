@@ -279,7 +279,7 @@ li.name-items:hover {
 .btn {
     color: #03122b !important;
 }
-#wl-empty-td:hover{
+#ngp-wl-empty-td:hover{
  background: #fff;
 }
 
@@ -330,7 +330,7 @@ li.name-items:hover {
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">GGP Win/Loss Report</h4>
+        <h4 class="card-title mb-0">NGP Win/Loss Report</h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist1">
@@ -340,18 +340,18 @@ li.name-items:hover {
           
                 <div style="width: 65%;">
           
- <input name="usernamelist" class="queryholderlist form-control bring-forward" id="wl-username" data-user-id="" placeholder="Username" autocomplete="off" style="width:97%;"> <div class="usr-res-wrapper" style="width: 26.5%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="user-list-wrapper"></ul> </div></div>
+ <input name="usernamelist" class="queryholderlist form-control bring-forward" id="ngp-wl-username" data-user-id="" placeholder="Username" autocomplete="off" style="width:97%;"> <div class="usr-res-wrapper" style="width: 26.5%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="user-list-wrapper"></ul> </div></div>
 
         
         <div class="custom-dropdown" style="width: 57%; margin-right: 5px;">
-        <select name="lotteryname" class="form-control form-select  wl-selectlottery" id="wl-selectlottery" data-bs-placeholder="Select Type"> 
+        <select name="lotteryname" class="form-control form-select  ngp-wl-selectlottery" id="ngp-wl-selectlottery" data-bs-placeholder="Select Type"> 
 
         </select>
                     </div>
 
-        <input type="date" name="startdate" class="form-control startdate"  placeholder="Name" id="wl-startdate" style="width: 50%;"/>
+        <input type="date" name="startdate" class="form-control startdate"  placeholder="Name" id="ngp-wl-startdate" style="width: 50%;"/>
 
-        <input type="date" name="enddate" class="form-control enddate" placeholder="Name" id="wl-enddate" style="width: 50%;"/>
+        <input type="date" name="enddate" class="form-control enddate" placeholder="Name" id="ngp-wl-enddate" style="width: 50%;"/>
   
 
 
@@ -376,7 +376,7 @@ li.name-items:hover {
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Top Agents">
                     <i class='bx bxs-user-account'></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle player wl-refreshlist" value="" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle player ngp-wl-refreshlist" value="" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
                 </button>
@@ -392,8 +392,8 @@ li.name-items:hover {
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperWl" id="wl-tbl-wrapper" style="height:530px;overflow-y:scroll;">
-            <table id="wl-tbl" class="table text-nowrap mb-0 align-middle table-bordered table-hover">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperWl" id="ngp-wl-tbl-wrapper" style="height:530px;overflow-y:scroll;">
+            <table id="ngp-wl-tbl" class="table text-nowrap mb-0 align-middle table-bordered table-hover">
                 <thead class="text-dark fs-4 tbl-headersUser">
                     <tr class="userlistheadrow">
                         <th>
@@ -424,6 +424,15 @@ li.name-items:hover {
                             <h6 class="fs-4 fw-semibold mb-0">Win/Loss</h6>
                         </th>
                         <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Promotions & Bonuses</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Fees</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Refund</h6>
+                        </th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0">Active/Total Subs</h6>
                         </th>
                     </tr>
@@ -431,7 +440,7 @@ li.name-items:hover {
                 <tbody id="winLossDtholder" class="tbl-content">
 
                     <tr class="no-resultslist">
-                        <td colspan="13" id="wl-empty-td">
+                        <td colspan="13" id="ngp-wl-empty-td">
                             <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
                         </td>
                     </tr>
@@ -444,10 +453,10 @@ li.name-items:hover {
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playerWinLoss" value="wl-leftlist">
+                <button type="button" class="btn bg-white-subtle playerWinLoss" value="ngp-wl-leftlist">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerWinLoss" value="wl-rightlist">
+                <button type="button" class="btn bg-white-subtle playerWinLoss" value="ngp-wl-rightlist">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
             </div>
@@ -458,15 +467,15 @@ li.name-items:hover {
 
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
-            <select class="left-element form-control numrowstrans" id="wl-numrowstans" style="font-size: 12px;">
+            <select class="left-element form-control numrowstrans" id="ngp-wl-numrowstans" style="font-size: 12px;">
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
                 <option value="50">50</option>
             </select>
-            <span id="wl-pagination-wrapper" class="right-element">lsdsdsa;fdjs;lfda </span>
+            <span id="ngp-wl-pagination-wrapper" class="right-element">lsdsdsa;fdjs;lfda </span>
         </span>
-        <!-- <span class="toplist-right" id="wl-pagination-wrapper" aria-label="Page navigation example">
+        <!-- <span class="toplist-right" id="ngp-wl-pagination-wrapper" aria-label="Page navigation example">
 
         </span> -->
 

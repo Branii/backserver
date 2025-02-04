@@ -327,7 +327,7 @@ return [
 'Report Management' => 'Report Management',
 
 //Win/Loss Report
-'Win/Loss Report' => 'Win/Loss Report',
+'GGP Win/Loss Report' => 'GGP Win/Loss Report',
 'Username' => 'Username',
 'Relationship' => 'Relationship',
 'Number of Bettors' => 'Number of Bettors',
@@ -814,6 +814,8 @@ return [
 'Total Rebate Amount'        => 'Total Rebate Amount',
 'Total Valid Amount'         => 'Total Valid Amount',
 'Total Win Amount'           => 'Total Win Amount',
+'NGP Win/Loss Report'        => 'NGP Win/Loss Report',
+
 
 
 
@@ -822,6 +824,10 @@ return [
 
 'Approved By'  => "Approved By",
 'Withdrawal Channel' => 'Withdrawal Channel'
+
+
+
+
 ];
 
 

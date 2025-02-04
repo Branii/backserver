@@ -178,9 +178,22 @@ class adminController extends Controller {
         $this->view('exec/win_loss',['lottery_name'=>$lottery_name,'flag' => 'filter-lotteries']);
         $this->view->render();
     }
-    public function searchWinLossUser($username,$lottery_id,$start_date,$end_date){
+    public function searchWinLossUser($user_id,$lottery_id,$start_date,$end_date){
+   
+        $this->view('exec/win_loss',['user_id'=>$user_id,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'flag' => 'search-user-win-loss']);
+        $this->view->render();
+    }
+    public function fetchTopAgents($lottery_id,$start_date,$end_date,$page,$limit){
       
-        $this->view('exec/win_loss',['username'=>$username,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'flag' => 'search-user-win-loss']);
+        $this->view('exec/win_loss',['lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'page' => $page,'limit' => $limit,'flag' => 'get-top-agents']);
+        $this->view->render();
+    }
+    public function fetchAgentSubs($agent_id,$lottery_id,$start_date,$end_date,$page,$limit){
+        $this->view('exec/win_loss',["agent_id" => $agent_id,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'page' => $page,'limit' => $limit,'flag' => 'get-agent-subs']);
+        $this->view->render();
+    }
+    public function getUserDetails($user_id,$lottery_id,$start_date,$end_date,){
+        $this->view('exec/win_loss',['user_id' => $user_id,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'flag' => 'get-user-details']);
         $this->view->render();
     }
 

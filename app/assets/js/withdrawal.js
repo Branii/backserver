@@ -254,7 +254,7 @@ $(function () {
        } else if(widrlEndDate.length == 0){
            widrlEndDate = "all";
        }
-       if(userID.length == 0 && widrlID.length == 0 && widrlChannels == 0 && widrlStatus == 0 && widrlStartDate == "all" && widrlEndDate == "all" && !isPaging){
+       if(userID.length == 0  && widrlID.length == 0 && widrlChannels == 0 && widrlStatus == 0 && widrlStartDate == "all" && widrlEndDate == "all" && !isPaging){
         showToast("No filters selected.", "Please select atleast one filter.", "info") ;
            return;
        }

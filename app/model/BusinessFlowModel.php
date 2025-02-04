@@ -169,7 +169,15 @@ class BusinessFlowModel extends MEDOOHelper
         $res = parent::selectAll("gamestable_map", ["bet_table", "game_type"]);
         return $res;
     }
+    public static function getAllGameIdsWithCondition($condition = ""): array
+    {
 
+        $sql = "SELECT bet_table,game_type FROM gamestable_map {$condition} ";
+        $stmt = self::openConnection("lottery")->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
     public static function fetchBetRecords($page, $limit): array
     {
         $startpoint = $page * $limit - $limit;

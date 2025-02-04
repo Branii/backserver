@@ -10,7 +10,16 @@ try {
  //    echo "Connected";
 } catch (\Throwable $th) {
     echo $th->getMessage();
+    
 }
+
+
+$str = [1,2,3,3,4,7,5,9,10];
+
+unset($str[array_search(1,$str)]);
+echo implode(",",$str);
+
+return;
 // $limit = 50;
 // $offset = 1;
 // $uid = 3;

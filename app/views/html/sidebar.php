@@ -73,7 +73,7 @@ $sidebarMenu = [
     5 => ['title'=> $translator['Deposit Record'], 'content' => 'Deposit'],
     6 => ['title'=> $translator['Withdrawal Records'], 'content' => 'Withdrawal'],
     7 => ['title'=> $translator['Finance Fund Changes'], 'content' => 'Finance'],
-    8 => ['title'=> $translator['Win/Loss Report'], 'content' => 'Win'],
+    8 => ['title'=> $translator['GGP Win/Loss Report'], 'content' => 'Win'],
     9 => ['title'=> $translator['User List'], 'content' => 'Userlist'],
     10 =>['title'=> $translator['User Logs'], 'content' => 'Userlogs'],
     11 =>['title'=> $translator['Invitation & Referral Links'], 'content' => 'Invitation'],
@@ -83,7 +83,8 @@ $sidebarMenu = [
     15 =>['title'=> $translator['Lottery Basic Parameters'], 'content' => 'lottery_basic_params'],
     16 =>['title'=> $translator['Lottery Bonus Parameters'], 'content' => 'lottery_parameters'],
     17 =>['title'=> $translator['Administrator List'], 'content' => 'administrator_list'],
-    18 =>['title'=> 'Backup & Restore', 'content' => 'backup_recovery']
+    18 =>['title'=> 'Backup & Restore', 'content' => 'backup_recovery'],
+    19 =>['title'=> $translator['NGP Win/Loss Report'], 'content' => 'NGPWin']
   ];
 
   $sidebarMain = [
