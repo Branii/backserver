@@ -340,7 +340,7 @@ return [
 'Report Management' => 'Report Management',
 
 //Win/Loss Report
-'Win/Loss Report' => 'Win/Loss Report',
+'GPP Win/Loss Report' => 'GPP Win/Loss Report',
 'Username' => 'Username',
 'Relationship' => 'Relationship',
 'Number of Bettors' => 'Number of Bettors',
@@ -354,7 +354,7 @@ return [
 'Total Win Amount' => 'Total Win Amount',
 'Win/Loss' => 'Win/Loss',
 'Action' => 'Action',
-
+'NGP Win/Loss Report' => 'NGP Win/Loss Report',
 //#(Operational Report)运营报表
 'Audit / Log Report' => 'Audit / Log Report',
 //'Operational Report' => 'Operational Report',
