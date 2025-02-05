@@ -801,3 +801,81 @@ section#tooltipp p {
     <!-- /.modal-dialog -->
 </div>
 
+
+
+<div id="viewaccount" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center mt-2 mb-4">
+                    <div class="d-flex justify-content-between">
+                        <div><?= $translator['Bet Info']; ?></div>
+                        <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
+                    </div>
+                </div>
+
+                <form>
+                    <div class="row">
+                        
+                    <div class="card-body p-4">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapper" id="mask" style="height: 530px; overflow-y: scroll;">
+            <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
+                <thead class="text-dark fs-4 tbl-header">
+                    <tr class="accheaderrow">
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['ID Number']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Type']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Amount']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Stake Time']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Server Time']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction ID']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody id="dataContainer" class="tbl-content">
+                    <tr class="no-results">
+                        <td colspan="9">
+                            <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+                        <!-- <div class="col-md-6">
+                            <table class="table table-bordered table-striped">
+                                <tbody id="rowbet1"></tbody>
+                            </table>
+                        </div>  -->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+

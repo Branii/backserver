@@ -595,7 +595,7 @@ $(function () {
  $(document).on("click", ".viewsub", function () {
     const names  = $(this).attr("data-uid").trim();
     const nameArray = names.split(','); 
-    console.log(nameArray);
+   // console.log(nameArray);
     navigationHistory.push({
         nameArray: nameArray,
         currentPage: currentPage,
@@ -612,7 +612,7 @@ function fetchsubagent(nameArray,currentPage, pageLimit) {
         function (response) {
         try {
            const data = JSON.parse(response);
-            console.log(data);
+          //  console.log(data);
             renderuserlist(data.subagent);
             //  return
               $("#maskuserlist").LoadingOverlay("hide");
@@ -673,6 +673,8 @@ $(document).on("click", ".viewuserinfo", function () {
 
 $(document).on("click", ".acountbtn", function (e) {
     let userid =$(this).attr("data-uid");
+    $("#viewaccount").modal("show");
+    
     $.post(`../admin/useraccountchange/${userid}/${currentPage}/${pageLimit}`, 
       function (data) {
         let fetchData = JSON.parse(data);

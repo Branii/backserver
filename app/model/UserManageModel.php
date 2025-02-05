@@ -332,7 +332,12 @@ class UserManageModel extends MEDOOHelper
                 ORDER BY 
                     transaction.trans_id DESC 
                 LIMIT :offset, :limit";
-        
+
+        $countSql = "SELECT COUNT(*) AS total_count 
+        FROM transaction 
+        LEFT JOIN users_test ON users_test.uid = transaction.uid  
+        WHERE transaction.uid = :uid";
+                
         $pdo = (new Database())->openLink();
         $stmt = $pdo->prepare($sql);
         
@@ -340,11 +345,16 @@ class UserManageModel extends MEDOOHelper
         $stmt->bindValue(':offset', (int)$startpoint, PDO::PARAM_INT);
         $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
         $stmt->bindValue(':uid', (int)$userid, PDO::PARAM_INT);
-        
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        return ['data' => $data];
+
+        // Count total records
+        $countStmt = $pdo->prepare($countSql);
+        $countStmt->bindValue(':uid', (int)$userid, PDO::PARAM_INT);
+        $countStmt->execute();
+        $totalRecords = $countStmt->fetchColumn();
+                
+        return ['data' => $data, 'total' => $totalRecords];
         
     }
    
