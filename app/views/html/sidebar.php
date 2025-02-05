@@ -83,7 +83,8 @@ $sidebarMenu = [
     15 =>['title'=> $translator['Lottery Basic Parameters'], 'content' => 'lottery_basic_params'],
     16 =>['title'=> $translator['Lottery Bonus Parameters'], 'content' => 'lottery_parameters'],
     17 =>['title'=> $translator['Administrator List'], 'content' => 'administrator_list'],
-    18 =>['title'=> 'Backup & Restore', 'content' => 'backup_recovery']
+    18 =>['title'=> 'Backup & Restore', 'content' => 'backup_recovery'] ,
+    
   ];
 
   $sidebarMain = [

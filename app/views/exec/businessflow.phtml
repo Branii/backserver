@@ -138,7 +138,7 @@ if ($flag == "filtertransactions") {
         $result = (new BusinessFlowModel())->FilterTrsansactionData($sunquery, $page, $limit) ?? [];
         echo json_encode([
             'response' => "success",
-            'transactions' => $uid,
+            'transactions' =>$result['data'],
             'totalPages' => ceil($result['total'] / $limit),
         ]);
     } 
@@ -148,7 +148,7 @@ if ($flag == "filtertransactions") {
         $result = (new BusinessFlowModel())->FilterTrsansactionData($sunquery, $page, $limit) ?? [];
         echo json_encode([
             // 'response' => "success",
-            'transactions' => 'successxcxcxcxcxc',
+            'transactions' => $result['data'],
             'totalPages' => ceil($result['total'] / $limit),
         ]);
      }

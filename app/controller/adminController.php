@@ -334,7 +334,18 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-
+    public function agent_subordinate($nickname,$pageNumber, $limit)
+    {
+        $this->view('exec/account_manage', ['nicknames' => $nickname ,'flag' => 'fetchsubagent','page' => $pageNumber, 'limit' => $limit,]);
+        $this->view->render();
+    }
+    public function useraccountchange($uid,$pageNumber, $limit)
+    {
+        $this->view('exec/account_manage', ['uid' => $uid ,'flag' => 'fetchaccountchange','page' => $pageNumber, 'limit' => $limit,]);
+        $this->view->render();
+    }
+    
+    
   
       //NOTE -
     //////////////INVITATION & REFERAL LINK -//////////

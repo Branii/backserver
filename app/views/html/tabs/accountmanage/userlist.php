@@ -349,7 +349,7 @@ section#tooltipp p {
   overflow-wrap: break-word; /* Modern alternative to word-wrap */
 }
 
-/* .tooltip .tooltip-text::after {
+.tooltipp .tooltipp-text::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -358,7 +358,7 @@ section#tooltipp p {
   border-width: 5px;
   border-style: solid;
   border-color: #bbb transparent transparent transparent;
-} */
+}
 
 .tooltipp:hover .tooltipp-text {
   visibility: visible;
@@ -373,7 +373,8 @@ section#tooltipp p {
     <div class="px-4 py-3 border-bottom">
     <h4 class="card-title mb-0"><?= $translator['User List']; ?></h4>
     </div>
-
+ 
+    <!-- <button id="backButton" style="display: none;">Back</button> -->
     <div class="px-4 py-3 border-bottom pagerlist1">
         <form action="" class="betform">
             <span class="top-left-btn">
@@ -385,7 +386,7 @@ section#tooltipp p {
                     </select>
                     
                     <select name="recharge" class="form-control form-select queryholderuserlistz recharges" data-bs-placeholder="Select Type">
-                    <option value="">-Rechatge Level-</option>
+                    <option value="">-Recharge Level-</option>
                     <option value="1">Level One</option>
                     <option value="2">Level Two</option>
                     <option value="3">Level Three</option>
@@ -400,14 +401,12 @@ section#tooltipp p {
                     </select>
 
 
-                    <input name="startdate" type="date" class="form-control queryholderuserlistz startdates" aria-describedby="name" placeholder="Name" />
+                    <input name="startdate" type="date" class="form-control queryholderuserlistz startdateuser" aria-describedby="name" placeholder="Name" />
 
-                    <input name="enddate" type="date" class="form-control queryholderuserlistz enddates" aria-describedby="name" placeholder="Name" />
+                    <input name="enddate" type="date" class="form-control queryholderuserlistz enddateuser" aria-describedby="name" placeholder="Name" />
 
-                    <!-- <button type="button" class="btn btn-outline-light text-dark queryholderbet addagents">
-                    <i class='bx bx-user-plus'></i> Add Agent</button>
-                <button type="button" class="btn btn-outline-light text-dark queryholderbet ">
-                    <i class='bx bx-user-plus'></i> Get Top Agent</button> -->
+                
+              
                 </div>
             </span>
             <span class="toplist-center" aria-label=" navigation example">
@@ -415,6 +414,9 @@ section#tooltipp p {
             </span>
             <span class="topplist-right" id="paginations" aria-label="Page navigation example">
                 <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                <button type="button" class="btn bg-white-subtle " id="backButton"  aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="back">
+                        <i class="bx bxs-chevron-left-circle" style="font-size: 20px;"></i>
+                    </button>
                 <button type="button" class="btn bg-white-subtle addagent" value="" aria-label="Execute"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add Agent">
                     <i class="bx bxs-user-plus" style="font-size: 20px;"></i>
                 </button>
@@ -428,6 +430,9 @@ section#tooltipp p {
                     <button type="button" class="btn bg-white-subtle executeuserlist" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                         <i class="bx bx-check-double loaderlist" style="font-size: 20px;"></i>
                     </button>
+
+                   
+              
                 </div>
             </span>
         </form>

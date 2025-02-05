@@ -21,6 +21,7 @@ $(function () {
         return moneyStr;
     }
     
+    
     const UserlistData = (data) => {
         let html = "";
         const status = {
@@ -47,11 +48,12 @@ $(function () {
 
           //  console.log(item)
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+
              let subordinate;
             if(item.account_type == 2){
                 subordinate =  "Top Agent"
             }else if(item.account_type == 3 && item.sub_count == 0 ){
-                subordinate = "---";
+                subordinate = "Sub Agent";
             }else if(item.account_type == 3 && item.sub_count == 1 ){
                 subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates
             }else if(item.account_type == 3 && item.sub_count == 2 ){
@@ -62,12 +64,21 @@ $(function () {
                 subordinate = "---";
             }
             
-            const formattedSubordinates = item.subordinates ? item.subordinates.split(',').join(" <i class='bx bx-right-arrow-alt'></i> ") : 'None';
+            const formattedSubordinates = item.subordinates ? username +" <i class='bx bx-right-arrow-alt'></i> " +item.subordinates.split(',').join(" <i class='bx bx-right-arrow-alt'></i> ") : 'None';
           //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-            // let relationType = item.account_type === "2" ? "Top Agent" : item.relationship
-            const [date, time] = item.created_at.split(' ');
-            const [dates, times] = item.last_login !='*****' ?item.last_login.split(' ') :item.last_login;
-            html += `
+             let logincount = item.logincount == null ? "0" : item.logincount
+             const [date, time] = item.created_at.split(' ');
+                let dates = '';
+                let times = '';
+                if (item.last_login && item.last_login !== "*****") {
+                [dates, times] = item.last_login.split(' ');
+                } else {
+                dates = item.last_login || ''; // Use empty string if null/undefined
+                times = item.last_login || '';
+                }
+                //  console.log(item.subordinates)
+                            
+             html += `
                   <tr>
                      <td>${username}</td>
                       <td>${item.nickname}</td>
@@ -82,7 +93,7 @@ $(function () {
                       <td>${item.rebate}</td>
                       <td>${date + ' / ' + time}</td>
                       <td>${dates + ' / ' + times}</td>
-                      <td>${item.logincount}</td>
+                      <td>${logincount}</td>
                       <td>${status[item.user_state]}</td>
                  
                         <td>
@@ -92,13 +103,24 @@ $(function () {
                                    <i class='bx bx-dots-vertical-rounded'></i>
                                   </a>
                                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
-                                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#signup" data-uidd="${item.uid}>
+                                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#signup" data-uidd="${item.uid}">
                                       <i class="bx bx-show fs-5"></i>View
                                     </a>
                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
                                       <i class="bx bx-show fs-5" ></i>Quota
                                     </a>
-                                    <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);">
+                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewsub" href="javascript:void(0);"data-uid="${item.subordinates}"> 
+                                      <i class="bx bx-show fs-5" ></i>Subs
+                                    </a>
+                                    <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1 acountbtn" href="javascript:void(0);"data-uid="${item.uid}">
+                                      <i class="bx bx-money fs-5"></i>Account Change
+                                    </a>
+                                     <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);">
+                                      <i class="bx bx-trash fs-5"></i>Delete
+                                    </a> <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);">
+                                      <i class="bx bx-trash fs-5"></i>Delete
+                                    </a>
+                                     <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);">
                                       <i class="bx bx-trash fs-5"></i>Delete
                                     </a>
                                   </div>
@@ -125,7 +147,7 @@ $(function () {
         try {
             const response = await fetch(`../admin/userlistdata/${page}/${pageLimit}`);
             const data = await response.json();
-              console.log(response);
+           //   console.log(response);
            //  return
             $("#maskuserlist").LoadingOverlay("hide");
             renderuserlist(data.users);
@@ -333,14 +355,14 @@ $(function () {
     }
 
     $(document).on("click", ".executeuserlist", function () {
-        if ($("#selectuserlist").val() == "" && $(".states").val() == "") {
-            $("#dangerlist").modal("show");
+        if ($("#selectuserlist").val() == "" && $(".states").val() == "" && $(".startdateuser").val() == "") {
+            showToast("Heads up!!", "Select one or more data fields to filter", "info");
             return;
         }
         const username = $("#selectuserlist").val();
         const states = $(".states").val();
-        const startdate = $(".startdate").val();
-        const enddate = $(".enddate").val();
+        const startdate = $(".startdateuser").val();
+        const enddate = $(".enddateuser").val();
         console.log(states);
         $(".loaderlist").removeClass("bx-check-double").addClass("bx-loader bx-spin");
         setTimeout(() => {
@@ -348,19 +370,6 @@ $(function () {
         }, 100);
     });
 
-    // $(document).on('click', '.tinfo', function () {
-    //   $("#signup-modal").modal("show");
-    //   const transactionId = $(this).attr('value')
-    //   console.log(transactionId)
-    //   $("#row1").html("")
-    //   $("#row2").html("")
-    //   fetchTrasactionBet(transactionId);
-
-    // })
-
-    // $(document).on("click", function () {
-    //   $(".queryholderxx").hide();
-    // });
 
     $(".tclose").click(function () {
         $("#signup-modal").modal("hide");
@@ -406,7 +415,7 @@ $(function () {
     const form = document.getElementById('agentform');
       const formData = new FormData(form);
       const datas = Object.fromEntries(formData.entries());
-        console.log(datas);
+       // console.log(datas);
         addAgent(datas);
     });
 // `../admin/addAgent/${datas}
@@ -505,7 +514,7 @@ $(function () {
 
         const uid = $(this).attr("data-uid").trim();
         $(".userquotaid").val(uid);
-        console.log(uid);
+       // console.log(uid);
 
         $.post(`../admin/getuserrebate/${uid}/`, function (data) {
             const rebatelist = JSON.parse(data);
@@ -580,6 +589,161 @@ $(function () {
         );
     });
 
+
+ //fetch_sub
+ let navigationHistory = [];
+ $(document).on("click", ".viewsub", function () {
+    const names  = $(this).attr("data-uid").trim();
+    const nameArray = names.split(','); 
+    console.log(nameArray);
+    navigationHistory.push({
+        nameArray: nameArray,
+        currentPage: currentPage,
+        pageLimit: pageLimit
+    });
+    // console.log("Navigation History:", navigationHistory);
+    fetchsubagent(nameArray,currentPage,pageLimit)
+    
+  
+});
+
+function fetchsubagent(nameArray,currentPage, pageLimit) {
+    $.post(`../admin/agent_subordinate/${nameArray}/${currentPage}/${pageLimit}`, 
+        function (response) {
+        try {
+           const data = JSON.parse(response);
+            console.log(data);
+            renderuserlist(data.subagent);
+            //  return
+              $("#maskuserlist").LoadingOverlay("hide");
+              renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray,newPage, pageLimit));
+              document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+              toggleBackButton();
+        } catch (error) {
+            console.error("Error parsing JSON response:", error);
+        } finally {
+           // $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+        }
+    }).fail(function (error) {
+        console.error("Error fetching data:", error);
+      //  $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+    });
+   
+}
+
+function toggleBackButton() {
+    if (navigationHistory.length > 1) {
+        $("#backButton").show();
+    } else {
+        $("#backButton").show();
+    }
+}
+
+
+$("#backButton").on("click", function () {
+    if (navigationHistory.length > 1) {
+        // Pop the last navigation state
+        navigationHistory.pop();
+        const previousState = navigationHistory[navigationHistory.length - 1];
+        
+        fetchsubagent(previousState.nameArray, previousState.currentPage, previousState.pageLimit);
+    } else {
+        navigationHistory = []; // Clear history
+        currentPage = 1;
+        fetchUserlist(currentPage, pageLimit);
+    }
+
+    // Hide back button if no navigation history
+    toggleBackButton();
+});
+
+$(document).on("click", ".viewuserinfo", function () {
+    const names  = $(this).attr("data-uidd");
+    // const nameArray = names.split(','); 
+     console.log(names);
+    // navigationHistory.push({
+    //     nameArray: nameArray,
+    //     currentPage: currentPage,
+    //     pageLimit: pageLimit
+    // });
+    // // console.log("Navigation History:", navigationHistory);
+    // fetchsubagent(nameArray,currentPage,pageLimit)
+});
+
+
+$(document).on("click", ".acountbtn", function (e) {
+    let userid =$(this).attr("data-uid");
+    $.post(`../admin/useraccountchange/${userid}/${currentPage}/${pageLimit}`, 
+      function (data) {
+        let fetchData = JSON.parse(data);
+           console.log(fetchData)
+          return
+        let tableBody = document
+          .getElementById("accountchange")
+          .getElementsByTagName("tbody")[0];
+        while (tableBody.firstChild) {
+          tableBody.removeChild(tableBody.firstChild);
+        }
+        fetchData.forEach((item) => {
+          let row = tableBody.insertRow();
+          // Create an array of the data to be displayed in each cell
+          let type = {
+            1: '<span class="tag tag-primary" style="">Deposit</span>',
+            2: '<span class="tag" style="background-color:#FFD700;color: #faebd7;">Win Bonus</span>',
+            3: '<span class="tag tag-success">Bet Awarded</span>',
+            4: '<span class="tag" style="background-color:#FF4500;color: #faebd7;">Withdrawal</span>',
+            5: '<span class="tag" style="background-color:#DC143C;color: #faebd7;">Bet deduct</span>',
+            6: '<span class="tag" style="background-color:#A9A9A9;color: #faebd7;">Bet Cancelled</span>',
+            7: '<span class="tag" style="background-color:#8A2BE2;color: #faebd7;">Rebate</span>',
+            8: '<span class="tag" style="background-color:#9370DB;color: #faebd7;">Self Rebate</span>',
+            9: '<span class="tag" style="background-color:#FF6347;color: #faebd7;">Sending Red Envelope</span>',
+            10: '<span class="tag" style="background-color:#FF69B4;color: #faebd7;">Red Envelope Received</span>',
+            11: '<span class="tag" style="background-color:#4682B4;color: #faebd7;">Bet Refund</span>',
+          };
+
+          statusText = type[item.order_type] ?? "Unknown";
+
+          let $creditamount = 0;
+          let $debitamount = 0;
+          if (item.transaction_type == 1) {
+            $creditamount =
+              '<span style="color:;">+' + item.account_change + "</span>";
+          } else {
+            $debitamount =
+              '<span style="color:re;"> ' + item.account_change + " </span>";
+          }
+
+          let states = "";
+          if (item.status == 1) {
+            states = "Completed";
+          }
+          let transid = ("T" + item.order_id).slice(0, 10);
+
+          let rowData = [
+            transid,
+            item.username,
+            statusText,
+            $debitamount,
+            $creditamount,
+            item.balance,
+            item.dateTime,
+            item.order_id,
+            states,
+          ];
+          // Iterate over rowData to create and fill each cell
+          rowData.forEach((datas) => {
+            let cell = row.insertCell();
+            cell.innerHTML = datas;
+          });
+
+          //console.log(fetchData)
+        });
+      }
+    );
+  });
+
+
+
     function tableScrolluserList() {
         const tableContainerUser = document.querySelector(".table-wrapperuserlist");
         const headerRowUserList = document.querySelector(".headrowuserlist");
@@ -594,10 +758,5 @@ $(function () {
     }
     tableScrolluserList();
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-    });
+    
 });

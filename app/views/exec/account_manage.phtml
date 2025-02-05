@@ -29,11 +29,21 @@ if ($flag == "filteruserlist") {
 
      if (!empty($usernameCheck) && $usernameCheck != null) {
          $username = $usernameCheck[0]['uid'];
-         $sunquery = (new UserManageModel())->FilterUserlistDataSubQuery($username,$states, $startdate, $enddate);
+        $sunquery = (new UserManageModel())->FilterUserlistDataSubQuery($username,$states, $startdate, $enddate);
          $result = (new UserManageModel())->Filteruserlist($sunquery,$page,$limit) ?? [];
+        //  echo json_encode([
+        //     // 'sql' => $result['sql'],
+        //      'userlists' => $result,
+        //      //'totalPages' => ceil($result['total'] / $limit)
+        //  ]);
      }else{
         $sunquery = (new UserManageModel())->FilterUserlistDataSubQuery($uid,$states, $startdate, $enddate);
          $result = (new UserManageModel())->Filteruserlist($sunquery,$page,$limit) ?? []; 
+        //  echo json_encode([
+        //     // 'sql' => $result['sql'],
+        //      'userlists' => $result,
+        //     // 'totalPages' => ceil($result['total'] / $limit)
+        //  ]);
      }
    
      $bigArr = [];
@@ -43,22 +53,22 @@ if ($flag == "filteruserlist") {
          $subor = (new UserManageModel())->getSubordinate($data['agent_id']);
          $totalsubordinate = (new UserManageModel())->Fetchsubordinates($data['uid']);
 
-           $relationship = '';
-           $subordinates = '';
-           if (!empty($data['agent_name']) && $data['agent_name'] !== "*****" && !empty($subor))  {
-             $relationship = $data['agent_name'] . ' ' . $referals . ' ' . $data['nickname'];
-             $subordinates = (count($subor) > 1) ? '...' : "";
-         } elseif ($data['agent_name'] && empty($subor)) {
-            $relationship = "Top Agent";
-        } else {
-             $relationship = '';
+        //    $relationship = '';
             $subordinates = '';
-        }
+        //    if (!empty($data['agent_name']) && $data['agent_name'] !== "*****" && !empty($subor))  {
+        //      $relationship = $data['agent_name'] . ' ' . $referals . ' ' . $data['nickname'];
+        //      $subordinates = (count($subor) > 1) ? '...' : "";
+        //  } elseif ($data['agent_name'] && empty($subor)) {
+        //     $relationship = "Top Agent";
+        // } else {
+        //      $relationship = '';
+        //     $subordinates = '';
+        // }
 
-         $data['subor'] = $subor;
-         $data['totalsubordinate'] = $totalsubordinate;
-         $data['relationship'] = $relationship;
-         $data['subordinates'] = $subordinates;
+        //   $data['subordinates'] = $subor;
+         $data['sub_count'] = $totalsubordinate;
+        //  $data['relationship'] = $relationship;
+        //   $data['subordinates'] = $subordinates;
          $bigArr [] = $data;
       
      }
@@ -227,3 +237,31 @@ if ($flag == "updateUsedquota") {
     $result = (new AgentManageModel())->UpdateUserquotaData(json_encode($results), $uid);
     echo json_encode($result);
 }
+
+if ($flag == "fetchsubagent") {
+
+    $nickname = isset($this->viewData['nicknames']) ? $this->viewData['nicknames'] : '';
+    $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
+    $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
+    $result =  (new UserManageModel())->FetchSubAgents($nickname,$page,$limit);
+    echo json_encode([
+        'subagent' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit)
+    ]);
+   
+}
+
+if ($flag == "fetchaccountchange") {
+
+    $uid = isset($this->viewData['uid']) ? $this->viewData['uid'] : '';
+    $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
+    $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
+    $result =  (new UserManageModel())->FetchUserAccountChange($uid,$page,$limit);
+    echo json_encode([
+        'account' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit)
+    ]);
+   
+}
+
+
