@@ -288,7 +288,7 @@ $(function () {
         return false;
       }
       $("#addfinancemodal").modal("hide");  
-      $(".userIdFields, .amount, .review, .approved,#financeinput").val(''); 
+      $(".userIdFields, .amount, .review,#financeinput").val(''); 
       $(".loaderfinanc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
       $.post(`../admin/addmoney/${depositype}/${usernames}/${amount}/${approvedby}/${review}`,
         function (response) {
