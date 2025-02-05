@@ -1,7 +1,18 @@
 <?php
 
 return [
-
+    'permissionAlert' => '用户未设置权限',
+    'permissionMess' => '请联系系统管理员',
+    'signout' => '退出',
+    'email' => '电子邮件地址',  
+    'password' => '密码',  
+    'signin' => '登录',  
+    'remember' => '记住我',
+    'Bet Lost' => '投注失败',
+    "Heads up!!" => "注意!!",
+    "All fields are mandatory" => "所有字段都是必填的",
+    "Invalid email or password" => "无效的电子邮件或密码",
+    "Signin successful" => "登录成功",
     'DASHBOARD'  => '仪表盘',
     'Business Flow' => '业务流水',
 
