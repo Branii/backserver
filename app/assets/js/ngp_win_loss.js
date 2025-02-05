@@ -16,8 +16,6 @@ $(() =>{
       }
 
 
-      console.log("I through and rough")
-
    const searchUserWinLoss = () => {
 
       const data = new URLSearchParams({username: username, lottery:lottery_id , start_date: start_date, end_date: end_date}).toString();
@@ -45,7 +43,7 @@ $(() =>{
                 
                 let htmlMarkup = "";
                 response.forEach((data,index) => {
-                    htmlMarkup += getUserRowMarkup(data);
+                    htmlMarkup += getUserRowMarkupNGP(data);
                 }); 
                 $("#win-loss-dtholder").html(htmlMarkup);
                 // historyStack = [htmlMarkup];
@@ -53,7 +51,7 @@ $(() =>{
                 
                 },
             error: function(xhr,status,error){
-                console.log("An error occured: " );
+               showToast("Error","")
             },
             complete: function(){
                     $("#win-loss-loader").css('display', 'none');
@@ -91,7 +89,7 @@ $(() =>{
 
 
     //
-    $(document).on('click','.go-back',function(){
+    $(document).on('click','.ngp-go-back',function(){
         if(historyStack.length === 0) {
             showToast("No Data","No data to show","info");
             return;
@@ -100,9 +98,9 @@ $(() =>{
         const pageData = pagesStack.pop();
         const pageInfo = pagingInfo.pop();
 
-        $("#winLossDtholder").html(content);
+        $("#ngp-winLossDtholder").html(content);
         $("#ngp-wl-pagination-wrapper").html(pageData);
-        $("#paging_infowl").html(pageInfo);
+        $("#ngp-paging_infowl").html(pageInfo);
 
     });
 
@@ -125,7 +123,7 @@ let debounceTimeout = null;
     $(document).on('keyup', '#ngp-wl-username', function () {
         const query = $(this).val().trim();
         if(query.length < 1){
-            $(".usr-res-wrapper").hide();
+            $(".ngp-usr-res-wrapper").hide();
             return;
         }
         // Only trigger if input is more than 2 characters
@@ -133,12 +131,12 @@ let debounceTimeout = null;
             clearTimeout(debounceTimeout); // Clear any existing timeout
             debounceTimeout = setTimeout(fetchbetUser, 300, query); // Call fetchUsers with the query after 500ms delay
         } else {
-            $('.userDropdown').hide(); // Hide dropdown if input is less than 3 characters
+            $('.ngp-userDropdown').hide(); // Hide dropdown if input is less than 3 characters
         }
 
 });
     // filter user name
-    $(document).on('click', '.fetch-user-win-loss', function () {
+    $(document).on('click', '.ngp-fetch-user-win-loss', function () {
         const userID  = $("#ngp-wl-username").attr("data-user-id");
 
     
@@ -169,20 +167,20 @@ let debounceTimeout = null;
                 $("#subs-back-btn").hide();
                 response  = JSON.parse(response);
                 if(response.status === "error"){
-                    $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 
+                    $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 
                     return
                 }
                
                 if(response.data.length == 0){
-                    $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
+                    $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
                     return; 
                 }
                 userObj   = response.data;
                 if(userObj.account_type > 1){
                     if(!$(".get-user-details-btn").hasClass("btn-disabled")) $(".get-user-details-btn").addClass("btn-disabled"); 
                 }
-                htmlMarkup = getUserRowMarkup(userObj);
-                $("#winLossDtholder").html(htmlMarkup);
+                htmlMarkup = getUserRowMarkupNGP(userObj);
+                $("#ngp-winLossDtholder").html(htmlMarkup);
                 
                 },
             error: function(xhr,status,error){
@@ -198,10 +196,10 @@ let debounceTimeout = null;
     });
 
      // filter user name
-     $(document).on('click', '.fetch-user-details', function () {
+     $(document).on('click', '.ngp-fetch-user-details', function () {
 
 
-         const numTableRows = $("#winLossDtholder").find('tr.ngp-wl-results');
+         const numTableRows = $("#ngp-winLossDtholder").find('tr.ngp-wl-results');
         
          if(numTableRows.length === 0) {
             showToast("No User Selected.","Please select a user.",'info');
@@ -213,7 +211,7 @@ let debounceTimeout = null;
             return;
          }
          
-        const userID  =  $("#winLossDtholder").find('tr:first-child').attr("id").split("-")[2];
+        const userID  =  $("#ngp-winLossDtholder").find('tr:first-child').attr("id").split("-")[2];
 
         let lotteryID = $("#ngp-wl-selectlottery").val();
         let startDate = $("#ngp-wl-startdate").val();
@@ -240,24 +238,24 @@ let debounceTimeout = null;
                 $("#subs-back-btn").hide();
                 response  = JSON.parse(response);
                 if(response.status === "error"){
-                    $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 
+                    $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 
                     return
                 }
                
                 if(response.data.length == 0){
-                    $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
-                    $("#paging_infowl").html('----------');
+                    $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
+                    $("#ngp-paging_infowl").html('----------');
                     return; 
                 }
                 userObj   = response.data;
                 if(userObj.account_type > 1){
                     if(!$(".get-user-details-btn").hasClass("btn-disabled")) $(".get-user-details-btn").addClass("btn-disabled"); 
                 }
-                htmlMarkup = getUserRowMarkup(userObj);
-                historyStack.push($("#winLossDtholder").html());
+                htmlMarkup = getUserRowMarkupNGP(userObj);
+                historyStack.push($("#ngp-winLossDtholder").html());
                 pagesStack.push($("#ngp-wl-pagination-wrapper").html());
-                pagingInfo.push($("#paging_infowl").html());
-                $("#winLossDtholder").html(htmlMarkup);
+                pagingInfo.push($("#ngp-paging_infowl").html());
+                $("#ngp-winLossDtholder").html(htmlMarkup);
                 
                 },
             error: function(xhr,status,error){
@@ -292,63 +290,28 @@ let debounceTimeout = null;
 });
 
     // Handle dropdown item selection
-    $(document).on('click', '.name-items', function () {
+    $(document).on('click', '.ngp-name-items', function () {
         if($(this).attr("data-username") != undefined){
             $("#ngp-wl-username").val($(this).attr('data-username'));
             $("#ngp-wl-username").attr('data-user-id',$(this).attr('data-user-id'));
-            $(".usr-res-wrapper").hide();
+            $(".ngp-usr-res-wrapper").hide();
         }else if($(this).attr("data-lot-name") != undefined){
             $("#ngp-wl-lottery").val($(this).attr('data-lot-name'));
             $("#ngp-wl-lottery").attr('data-lot-id',$(this).attr('data-lot-id'));
-            $(".lot-res-wrapper").hide();
+            $(".ngp-lot-res-wrapper").hide();
         }
 });
 
 
     // Get Top Agents
-    $(document).on("click", ".fetch-top-agents", function () { fetchTopAgents(1); });
+    $(document).on("click", ".ngp-fetch-top-agents", function () { 
+        let page = 1;
+        if($(this).hasClass("page-link")) page = parseInt($(this).attr("data-page"));
+        fetchTopAgents(1); 
+    });
 
     // Get Top Agents
-    $(document).on("click", ".fetch-agent-subs", function () { fetchAgentSubs(this,1); });
-
-
-//     // handle the back button action
-//     $(document).on("click",".fetch-user-details",function(){
-
-//             const lotteryID = $("#ngp-wl-lottery").attr("data-lot-id");
-//             const startDate = $("#startdate").val();
-//             const endDate   = $("#enddate").val();
-//             const agentID   = $("#winLossDtholder").find('tr:first-child').attr("id").split("-")[2];
-
-//                 $.ajax({
-//                     url: `../admin/get_user_details/${agentID}/${lotteryID}/${startDate}/${endDate}//}`,
-//                     type: "POST",
-//                     beforeSend: function(){
-//                         $("#win-loss-loader").css('display', 'flex');
-//                     },
-//                     success: function(response){
-//                     console.log(response);
-//                     response  = JSON.parse(response); // parse the response server
-                    
-                
-//                     if(response.length == 0){
-//                         // show the empty response placeholder
-//                         $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
-//                         return; 
-//                     }
-
-//                     // add the the tbody html with the new accumulated html markup
-//                     $("#winLossDtholder").html(getUserRowMarkup(response));
-                    
-//                     },
-//                     error: function(xhr,status,error){
-//                         console.log("An error occured: " );
-//                     },
-//                     complete: function(){
-//                         $("#win-loss-loader").css('display', 'none');
-//                     }
-//             });
-// });
+    $(document).on("click", ".ngp-fetch-agent-subs", function () { fetchAgentSubs(this,1); });
 
 
     // refresh list
@@ -359,33 +322,14 @@ let debounceTimeout = null;
         $("#ngp-wl-lottery").val(""); 
         $("#ngp-wl-startdate").val(""); 
         $("#ngp-wl-enddate").val(""); 
-        $("#winLossDtholder").html(`<tr class="no-resultslist"> <td colspan="13" id="ngp-wl-empty-td"><img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Empty Results" /></td></tr>`)
+        $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"> <td colspan="13" id="ngp-wl-empty-td"><img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Empty Results" /></td></tr>`)
         $("#ngp-wl-pagination-wrapper").html("");
-        $("#paging_infowl").html("---------");
+        $("#ngp-paging_infowl").html("---------");
         historyStack, pagesStack, pagingInfo = [];
         // fetchUsersWinLoss();
      });
 
 
-
-    // handle the back button action
-    $(document).on("click",".back-btn",function(){
-            const lastHistory = historyStack.pop(); // get the previous history html markup
-            const latestPage  = pagesStack.pop();  // get the previous pages html markup
-            
-            $("#winLossDtholder").html(lastHistory); // re-add the previous history html to the win loss dtHolder
-            $("#win-loss-pages-wrapper").html(latestPage); // re-add the previous pages html to the pages wrapper
-            
-            if(historyStack.length === 0){
-                $(".back-btn").addClass("btn-disabled"); // if the history stack is empty, disable the back button
-                if($($("#winLossDtholder").find("tr:first-child")[0]).attr('data-acc-type') == "agent" && $("#winLossDtholder").children().length === 1){
-                    if($(".get-user-details-btn").hasClass("btn-disabled")) $(".get-user-details-btn").removeClass("btn-disabled"); // remove disabled btn class from the get-user-details-btn 
-                }
-            }
-
-
-
-        });
 
 
 // Function to fetch and display users
@@ -403,10 +347,10 @@ const  fetchbetUser = (query) =>{
             for (let index = 0; index < response.length; index++) {
                 const user = response[index];
                 const username = getDisplayName(user);
-                optionsHtml += `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
+                optionsHtml += `<li class="name-items ngp-name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
             }
-            $('#user-list-wrapper').html(optionsHtml);
-            $(".usr-res-wrapper").show();
+            $('#ngp-user-list-wrapper').html(optionsHtml);
+            $(".ngp-usr-res-wrapper").show();
          } catch (error) {
             console.error("Error parsing response: ", error);
             $('.userDropdown').hide();
@@ -457,23 +401,12 @@ $(document).on('click', '.ngp-wl-pagination', function () {
     // fetchUsersWinLoss(lottery_id,startDate,endDate,page);
 });
 
-$(document).on('change', '#ngp-wl-numrowstans', function () {
-    const page       = $($("#ngp-wl-pagination").find(".page-item.active page-link")[0]).attr("data-page").trim();
-    const lottery_id = $("#ngp-wl-lottery").attr("data-lot-id"); 
-    const startDate  = $("#ngp-wl-startdate").val().trim(); 
-    const endDate    = $("#ngp-wl-enddate").val().trim(); 
-    const pageLimit  = $(this).val();
-    // fetchUsersWinLoss(lottery_id,startDate,endDate,page,pageLimit , false);
 
-});
-
-
-
-$(".playerWinLoss").click(function(e){
+$(".ngp-playerWinLoss").click(function(e){
    
     let direction = $(this).val();
-    const tableWrapper = $(".table-wrapperWl");
-    const tableWrappers = $(".table-wrapperWl")[0];
+    const tableWrapper = $(".ngp-table-wrapperWl");
+    const tableWrappers = $(".ngp-table-wrapperWl")[0];
     const scrollAmount = 1000; // Adjust as needed
     const scrollOptions = { behavior: "smooth" };
     if (tableWrapper.length) {
@@ -488,7 +421,7 @@ $(".playerWinLoss").click(function(e){
                 break;
         }
     }
-    e.stopPropagation(); // Prevent event bubbling
+    // e.stopPropagation(); // Prevent event bubbling
   });
  
   const fetchTopAgents = (currentPage) => {
@@ -516,17 +449,17 @@ $(".playerWinLoss").click(function(e){
             $("#subs-back-btn").hide();
             response  = JSON.parse(response);
             if(response.status === "error"){
-                $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 
+                $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 
                 return
             }
            
             if(response.data.length == 0){
-                historyStack.push($("#winLossDtholder").html());
+                historyStack.push($("#ngp-winLossDtholder").html());
                 pagesStack.push($("#ngp-wl-pagination-wrapper").html());
-                pagingInfo.push($("#paging_infowl").html());
-                $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
+                pagingInfo.push($("#ngp-paging_infowl").html());
+                $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
                 $("#ngp-wl-pagination-wrapper").html("");
-                $("#paging_infowl").html("---------");
+                $("#ngp-paging_infowl").html("---------");
                 return; 
             }
             userObjs   = response.data;
@@ -534,16 +467,15 @@ $(".playerWinLoss").click(function(e){
             
             htmlMarkup = "";
             userObjs.forEach((userObj) => {
-                htmlMarkup += getUserRowMarkup(userObj);
+                htmlMarkup += getUserRowMarkupNGP(userObj);
             });
-            $("#winLossDtholder").html(htmlMarkup);
+            $("#ngp-winLossDtholder").html(htmlMarkup);
             if(totalPages < 2){
-                console.log("Entered here..");
                 $("#ngp-wl-pagination-wrapper").html("");
-                $("#paging_infowl").html("---------");
+                $("#ngp-paging_infowl").html("---------");
                 return;
             }
-            renderwithdrawPagination(totalPages,parseInt(currentPage),"page-top-agents");
+            renderPaginationNGP(totalPages,parseInt(currentPage),"ngp-page-top-agents");
             
             },
         error: function(xhr,status,error){
@@ -559,7 +491,6 @@ $(".playerWinLoss").click(function(e){
 
   const fetchAgentSubs = (eventElement,currentPage) => {
 
-    console.log(eventElement);
     const agentID = $(eventElement).attr('data-agent-id');
     let lotteryID = $("#ngp-wl-selectlottery").val();
     let startDate = $("#ngp-wl-startdate").val();
@@ -574,7 +505,6 @@ $(".playerWinLoss").click(function(e){
     lotteryID = lotteryID == undefined ?  "all" : lotteryID;
     startDate = startDate.length != 0 ? startDate : "all";
     endDate   = endDate.length != 0 ? endDate : "all";
-    console.log(agentID);
     $.ajax({
         url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${currentPage}/${limit}`,
         type: "POST",
@@ -586,17 +516,17 @@ $(".playerWinLoss").click(function(e){
             $("#subs-back-btn").hide();
             response  = JSON.parse(response);
             if(response.status === "error"){
-                $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 
+                $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 
                 return
             }
            
             if(response.data.length == 0){
-                historyStack.push($("#winLossDtholder").html());
+                historyStack.push($("#ngp-winLossDtholder").html());
                 pagesStack.push($("#ngp-wl-pagination-wrapper").html());
-                pagingInfo.push($("#paging_infowl").html());
-                $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
+                pagingInfo.push($("#ngp-paging_infowl").html());
+                $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
                 $("#ngp-wl-pagination-wrapper").html("");
-                $("#paging_infowl").html("---------");
+                $("#ngp-paging_infowl").html("---------");
                 return; 
             }
             userObjs   = response.data;
@@ -605,19 +535,19 @@ $(".playerWinLoss").click(function(e){
             // }
             htmlMarkup = "";
             userObjs.forEach((userObj) => {
-                htmlMarkup += getUserRowMarkup(userObj);
+                htmlMarkup += getUserRowMarkupNGP(userObj);
             });
-            historyStack.push($("#winLossDtholder").html());
+            historyStack.push($("#ngp-winLossDtholder").html());
             pagesStack.push($("#ngp-wl-pagination-wrapper").html());
-            pagingInfo.push($("#paging_infowl").html());
-            $("#winLossDtholder").html(htmlMarkup);
+            pagingInfo.push($("#ngp-paging_infowl").html());
+            $("#ngp-winLossDtholder").html(htmlMarkup);
             const totalPages = Math.ceil(parseInt(userObjs[0].totalRecords) / 10)
             if(totalPages < 11){
                 $("#ngp-wl-pagination-wrapper").html("");
-                $("#paging_infowl").html("---------");
+                $("#ngp-paging_infowl").html("---------");
                 return;
             }
-            renderwithdrawPagination(totalPages,parseInt(currentPage),'page-agent-subs');
+            renderPaginationNGP(totalPages,parseInt(currentPage),'ngp-page-agent-subs');
             
             },
         error: function(xhr,status,error){
@@ -633,18 +563,20 @@ $(".playerWinLoss").click(function(e){
 
   }
 
-  $(document).on("click",".page-top-agents,.page-agent-subs",function(){
+  $(document).on("click",".ngp-page-top-agents,.ngp-page-agent-subs",function(){
     const page = parseInt($(this).attr("data-page"));
     if(page < 1) return;
-    if($(this).hasClass("page-top-agents")){
+    if($(this).hasClass("ngp-page-top-agents")){
         fetchTopAgents(page);
-    }else if($(this).hasClass("page-agent-subs")){
+    }else if($(this).hasClass("ngp-page-agent-subs")){
         fetchAgentSubs(this,page)
     }
   });
      
 
-  const  renderwithdrawPagination = (totalPages, currentPagewithdraw,type = "page-top-agents") => {
+});
+
+const  renderPaginationNGP = (totalPages, currentPagewithdraw,type = "ngp-page-top-agents") => {
     let pagLink = `<ul class='pagination justify-content-end'>`;
   
     // Previous Button
@@ -674,7 +606,7 @@ $(".playerWinLoss").click(function(e){
   
     pagLink += "</ul>";
     document.getElementById("ngp-wl-pagination-wrapper").innerHTML = pagLink;
-    $("#paging_infowl").text(`Page ${currentPagewithdraw} of ${totalPages} ${totalPages === 1 ? ' Page ' : ' Pages '} `)
+    $("#ngp-paging_infowl").text(`Page ${currentPagewithdraw} of ${totalPages} ${totalPages === 1 ? ' Page ' : ' Pages '} `)
     // Add click event listeners to pagination links
     // document.querySelectorAll("#paginationwithdraw .page-link").forEach((link) => {
     //   link.addEventListener("click", function (e) {
@@ -692,69 +624,27 @@ $(".playerWinLoss").click(function(e){
     // });
   }
 
-});
+const getUserRowMarkupNGP = (userData) => {
 
+    const subsBtn = parseInt(userData.account_type) === 2 || parseInt(userData.account_type) === 3 ? `<div class="btn-group mb-2 ngp-fetch-agent-subs" role="group" aria-label="Basic example" data-agent-id="${userData.user_id}" style="border:solid 1px #eee;color:#bbb;background-color:#fff;margin: 0px !important;">
+             <button type="button" class="btn bg-white-subtle ngp-playerWinLoss" value="ngp-wl-rightlist"> Subs </button></div>` : "";
 
-const renderPaginationNGP = (elementID,totalPages, currentPage, ) => {
-    const createPageLink = (i, label = i, disabled = false, active = false) =>
-        `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
-        <a class='page-link ngp-wl-pagination' href='#' data-page='${i}'>${label}</a>
-    </li>`;
-    let pagLink = `<ul class='pagination justify-content-end'>`;
+    return `<tr id='user-id-${userData.user_id}' id='${userData.account_type > 1 ? 'agent' : ''}' class='ngp-wl-results' data-acc-type='${userData.account_type > 1 ? 'agent' : ''}'>
+        <td> ${userData.username} </td>
+        <td> ${userData.num_bettors} </td>
+        <td> ${userData.num_bet_tickets} </td>
+        <td> ${userData.rebate} </td>
+        <td> ${userData.total_bet_amount} </td>
+        <td> ${userData.total_rebate_amount} </td>
+        <td> ${userData.total_valid_amount} </td>
+        <td> ${userData.total_win_amount} </td>
+        <td> ${userData.fees} </td>
+        <td> ${userData.total_promotions_and_bonus} </td>
+        <td> ${userData.total_refund_amount} </td>
+        <td> ${userData.win_loss} </td>
+        <td> ${subsBtn} </td>
+            </tr>`
 
-    // Previous Button
-    pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
-
-    // Page numbers with ellipsis
-    for (let i = 1; i <= totalPages; i++) {
-        if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
-            pagLink += createPageLink(i, i, false, i === currentPage);
-        } else if (i === currentPage - 3 || i === currentPage + 3) {
-            pagLink += createPageLink(i, "...", true);
-        }
-    }
-
-    // Next Button
-    pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
-    pagLink += "</ul>";
-
-    document.getElementById(elementID).innerHTML = pagLink;
-
-    // Add click event listeners
-    document.querySelectorAll(`#${elementID} .page-link`).forEach((link) => {
-        link.addEventListener("click", function (e) {
-            e.preventDefault();
-            const newPage = +this.getAttribute("data-page");
-            if (newPage > 0 && newPage <= totalPages) {
-                $("#mask").LoadingOverlay("show", {
-                    background: "rgb(90,106,133,0.1)",
-                    size: 3,
-                  });
-                // callback(newPage, pageLimit); // Call the provided callback with new page and pageLimit
-            }
-        });
-    });
-}
-
-
-// const getUserRowMarkup = (userData) => {
-
-//     const subsBtn = parseInt(userData.account_type) === 2 || parseInt(userData.account_type) === 3 ? `<div class="btn-group mb-2 fetch-agent-subs" role="group" aria-label="Basic example" data-agent-id="${userData.user_id}" style="border:solid 1px #eee;color:#bbb;background-color:#fff;margin: 0px !important;">
-//              <button type="button" class="btn bg-white-subtle playerWinLoss" value="ngp-wl-rightlist"> Subs </button></div>` : "";
-
-//     return `<tr id='user-id-${userData.user_id}' id='${userData.account_type > 1 ? 'agent' : ''}' class='ngp-wl-results' data-acc-type='${userData.account_type > 1 ? 'agent' : ''}'>
-//         <td> ${userData.username} </td>
-//         <td> ${userData.num_bettors} </td>
-//         <td> ${userData.num_bet_tickets} </td>
-//         <td> ${userData.rebate} </td>
-//         <td> ${userData.total_bet_amount} </td>
-//         <td> ${userData.total_rebate_amount} </td>
-//         <td> ${userData.total_valid_amount} </td>
-//         <td> ${userData.total_win_amount} </td>
-//         <td> ${userData.win_loss} </td>
-//         <td> ${subsBtn} </td>
-//             </tr>`
-
-// };
+};
 
 

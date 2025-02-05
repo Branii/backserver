@@ -174,9 +174,9 @@ class DataReportModel extends MedooOrm
        } 
 
        
-       $query = "SELECT   (SELECT SUM(expenditure_amount) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND (order_type = 3 || order_type = 12 )   {$where_clause}) AS total_bet_amount, (SELECT SUM(expenditure_amount) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND bet_type = 1 {$where_clause}) AS total_normal_bet_amount,  
+       $query = "SELECT    (SELECT SUM(expenditure_amount) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND bet_type = 1 {$where_clause}) AS total_normal_bet_amount, 
        (SELECT SUM(expenditure_amount) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND bet_type = 1 AND order_type = 12 {$where_clause}) AS total_loss_amount,
-       (SELECT SUM(account_change) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND bet_type = 1 {$where_clause} AND order_type = 3)  AS total_win_amount,(SELECT SUM(expenditure_amount) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND (order_type = 2 || order_type = 10)   {$where_clause}) AS total_promotions_and_bonus, 
+       (SELECT SUM(account_change) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND bet_type = 1 {$where_clause} AND order_type = 3)  AS total_win_amount,(SELECT SUM(expenditure_amount) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND bet_type = 1 AND order_type = 11 {$where_clause}) AS total_direct_refund_amount,(SELECT SUM(expenditure_amount) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND (order_type = 2 || order_type = 10)   {$where_clause}) AS total_promotions_and_bonus, 
        (SELECT SUM(account_change) FROM {$table_name} WHERE uid=:uid{$user_key} AND (order_type = 7 || order_type = 8) {$where_clause}) total_rebate_amount,
        SUM(CASE WHEN order_type = 2 THEN account_change ELSE 0 END) AS win_bonus, 
        SUM(CASE WHEN order_type = 3 THEN account_change ELSE 0 END) AS bet_awarded, 
@@ -193,27 +193,27 @@ class DataReportModel extends MedooOrm
 
         $total_normal_bet_amount = self::formatNumber(abs($results->total_normal_bet_amount ?? 0));
         $total_win_amount = self::formatNumber(abs($results->total_win_amount ?? 0));
-        $total_loss_amount = self::formatNumber(abs($results->total_loss_amount ?? 0));
         $total_rebate_amount  = self::formatNumber($results->total_rebate_amount ?? 0) ;
         $total_promotions_and_bonus  = self::formatNumber($results->total_promotions_and_bonus ?? 0) ;
+        $total_direct_refund_amount  = self::formatNumber($results->total_direct_refund_amount ?? 0) ;
 
-        $query = "SELECT SUM(done_amount) as total_done_amount, SUM(win_amount) AS total_win_amount, SUM(lost_amount) AS total_loss_amount,SUM(total_amount) as total_track_amount, SUM(tracked) as track_num_bets FROM trackbet WHERE user_id IN (".implode(',',$track_place_holder_uids).") {$track_where_clause}";
+        $query = "SELECT SUM(done_amount) as total_done_amount, SUM(win_amount) AS total_win_amount, SUM(lost_amount) AS total_loss_amount,SUM(total_amount) as total_track_amount,SUM(refund_amount) as total_refund_amount, SUM(tracked) as track_num_bets FROM trackbet WHERE user_id IN (".implode(',',$track_place_holder_uids).") {$track_where_clause}";
         $track_results  = $service->query( $query, $track_bet_params )->fetch(PDO::FETCH_OBJ);
         $total_valid_amount  = ($track_results->total_done_amount ?? 0) + $total_normal_bet_amount;
-        $total_track_win_amount = ($track_results->total_win_amount ?? 0) ;
-        $total_track_loss_amount = ($track_results->total_loss_amount ?? 0);
         $track_num_bets = ($track_results->track_num_bets ?? 0);
+        $total_track_refund_amount = ($track_results->total_refund_amount ?? 0);
+        $total_refund_amount       = $total_track_refund_amount + $total_direct_refund_amount;
+        $total_fee_amount = 0;
 
         $total_bet_amount = self::formatNumber(self::formatNumber(abs($results->total_normal_bet_amount ?? 0)) + ($track_results->total_track_amount ?? 0));
        
-        $results = ["user_id" => $user_id,"username" => $username,"account_type" => $account_type, "num_bettors" => $results->num_bettors,"num_bet_tickets" => $results->num_bet_tickets + $track_num_bets,"rebate" => $rebate, "total_bet_amount" =>  $total_bet_amount, "total_rebate_amount" => $total_rebate_amount , 'total_win_amount' => $total_win_amount + ($results->win_bonus ?? 0), "total_valid_amount" =>  $total_valid_amount, 'win_loss' =>  ($total_win_amount + $total_rebate_amount + $total_promotions_and_bonus) - $total_valid_amount, "num_subs" => max((count($subs_data) - 1),0),"total_promotions_and_bonus" => $total_promotions_and_bonus,];
-        
-       
+        $results = ["user_id" => $user_id,"username" => $username,"account_type" => $account_type, "num_bettors" => $results->num_bettors,"num_bet_tickets" => $results->num_bet_tickets + $track_num_bets,"rebate" => $rebate, "total_bet_amount" =>  $total_bet_amount, "total_rebate_amount" => $total_rebate_amount , 'total_win_amount' => $total_win_amount + ($results->win_bonus ?? 0), "total_valid_amount" =>  $total_valid_amount, 'win_loss' =>  ($total_win_amount + $total_rebate_amount + $total_promotions_and_bonus + $total_refund_amount) - $total_valid_amount + $total_fee_amount, "num_subs" => max((count($subs_data) - 1),0),"fees"=> $total_fee_amount ,"total_promotions_and_bonus" => $total_promotions_and_bonus,'total_refund_amount' => $total_refund_amount];
+
        return self::response($results);
         
     }catch(Exception $e){
         echo $e->getMessage();
-        return self::response("Internal Server Error.",false,);
+        return self::response("Internal Server Error.".$e->getMessage(),false,);
     }
     }
 
