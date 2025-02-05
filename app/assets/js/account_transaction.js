@@ -29,7 +29,7 @@ $(function () {
         let html = "";
 
         const status = {
-            1: { title: translator["Deposit"] || "Deposit", color: "#4CAF50" }, // Green
+            1: { title: translator["Deposit"] , color: "#4CAF50" }, // Green
             2: { title: translator["Win Bonus"], color: "#FF9800" }, // Orange
             3: { title: translator["Bet Awarded"], color: "#03A9F4" }, // Light Blue
             4: { title: translator["Withdrawal"], color: "#F44336" },
@@ -41,7 +41,7 @@ $(function () {
             9: { title: translator["Sending Red Envelope"], color: "#FF5722" }, // Deep Orange
             10: { title: translator["Red Envelope Receive"], color: "#795548" }, // Brown
             11: { title: translator["Bet Refund"], color: "#FFC107" }, // Amber
-            0: { title: translator["Complete"], color: "#ccc" }, // Amber
+            12: { title: translator["Bet Lost"], color: "orange" }, // Amber
         };
         let completes = translator["Completed"];
         const formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
@@ -53,7 +53,9 @@ $(function () {
                 <tr class="trow">
                   <td>${"TR" + item.order_id.substring(0, 7)}</td>
                   <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
-                    <td><i class='bx bxs-circle' style='color:${status[item.order_type].color};font-size:8px;margin-right:5px;'></i>${status[item.order_type].title}</td>
+                   <td><i class='bx bxs-circle' style='color:${status[item.order_type] && status[item.order_type].color ? status[item.order_type].color : "#000"};font-size:8px;margin-right:5px;'></i>
+                   ${status[item.order_type] && status[item.order_type].title ? status[item.order_type].title : "Unknown"}
+                  </td>
                     <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
                     <td>${formatMoney(item.balance)}</td>
                     <td>${formatTimestamp(item.dateTime)}</td>

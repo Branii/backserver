@@ -1,6 +1,5 @@
 <?php
 
-
 $dsn = 'mysql:host=192.168.1.51;dbname=lottery_test'; // Fixed variable name and removed extra space
 $pass = "enzerhub";
 $user = "enzerhub";
@@ -133,6 +132,13 @@ return;
 // print_r(value: count($rows));
 
 
+
+// try {
+//     $pdo = new PDO($dsn, $user, $pass);
+//  //    echo "Connected";
+// } catch (\Throwable $th) {
+//     echo $th->getMessage();
+// }
 // $sql = "
 //     SELECT GROUP_CONCAT(CONCAT('SELECT * FROM ', table_name, ' WHERE uid = 1') SEPARATOR ' UNION ALL ') AS query
 //     FROM information_schema.tables
@@ -183,55 +189,55 @@ return;
 // // }
 
 
-$page = $_GET['page'] ?? 1;
-$limit = $_GET['limit'] ?? 5;
-$keyword = $_GET['keyword'] ?? "default"; // You can sanitize the keyword later if needed
-$offset = ($page - 1) * $limit;
+// $page = $_GET['page'] ?? 1;
+// $limit = $_GET['limit'] ?? 5;
+// $keyword = $_GET['keyword'] ?? "default"; // You can sanitize the keyword later if needed
+// $offset = ($page - 1) * $limit;
 
-// Your base query (adjusted to your needs)
-$where = " WHERE bt.bet_status = 2 AND bt.uid = 3"; // Adjust this where clause if necessary
+// // Your base query (adjusted to your needs)
+// $where = " WHERE bt.bet_status = 2 AND bt.uid = 3"; // Adjust this where clause if necessary
 
-// Set session for group_concat_max_len
-$pdo->exec("SET SESSION group_concat_max_len = 1000000");
+// // Set session for group_concat_max_len
+// $pdo->exec("SET SESSION group_concat_max_len = 1000000");
 
-// Generate dynamic query to get the SELECT statements from all tables
+// // Generate dynamic query to get the SELECT statements from all tables
+// // $sql = "
+// //     SELECT GROUP_CONCAT(
+// //         'SELECT uid, bettype,bet_status, bet_amount, game_label, user_selection FROM ', table_name, '$where' 
+// //         SEPARATOR ' UNION ALL '
+// //     ) AS query
+// //     FROM information_schema.tables 
+// //     WHERE table_schema = 'lottery_test' AND table_name LIKE 'bt_%'
+// // ";
 // $sql = "
 //     SELECT GROUP_CONCAT(
-//         'SELECT uid, bettype,bet_status, bet_amount, game_label, user_selection FROM ', table_name, '$where' 
-//         SEPARATOR ' UNION ALL '
-//     ) AS query
+//         CONCAT(
+//             'SELECT bt.bet_odds, bt.draw_period, bt.bet_code, bt.game_label,bt.uid, bt.bet_number, 
+//              bt.unit_stake, bt.multiplier, bt.bet_amount, bt.win_amount, bt.win_bonus, bt.bet_status, bt.state, 
+//              bt.bet_time, bt.bet_date, bt.game_model, bt.server_date, bt.server_time, 
+//              u.username, u.email, u.contact, u.reg_type, 
+//              gt.name AS game_type, gt.gt_id AS gt_id 
+//              FROM ', table_name, ' bt 
+//              JOIN users_test u ON bt.uid = u.uid
+//              JOIN game_type gt ON gt.gt_id = bt.game_type
+//              $where'
+//         ) SEPARATOR ' UNION ALL '
+//     ) AS query 
 //     FROM information_schema.tables 
-//     WHERE table_schema = 'lottery_test' AND table_name LIKE 'bt_%'
+//     WHERE table_schema = 'lottery_test' 
+//     AND table_name LIKE 'bt_%'
 // ";
-$sql = "
-    SELECT GROUP_CONCAT(
-        CONCAT(
-            'SELECT bt.bet_odds, bt.draw_period, bt.bet_code, bt.game_label,bt.uid, bt.bet_number, 
-             bt.unit_stake, bt.multiplier, bt.bet_amount, bt.win_amount, bt.win_bonus, bt.bet_status, bt.state, 
-             bt.bet_time, bt.bet_date, bt.game_model, bt.server_date, bt.server_time, 
-             u.username, u.email, u.contact, u.reg_type, 
-             gt.name AS game_type, gt.gt_id AS gt_id 
-             FROM ', table_name, ' bt 
-             JOIN users_test u ON bt.uid = u.uid
-             JOIN game_type gt ON gt.gt_id = bt.game_type
-             $where'
-        ) SEPARATOR ' UNION ALL '
-    ) AS query 
-    FROM information_schema.tables 
-    WHERE table_schema = 'lottery_test' 
-    AND table_name LIKE 'bt_%'
-";
-// Execute the query to get the merged query string
-$mergedQuery = $pdo->query($sql)->fetchColumn();
+// // Execute the query to get the merged query string
+// $mergedQuery = $pdo->query($sql)->fetchColumn();
 
-// Prepare to count the total number of records (without pagination)
-$countStmt = $pdo->prepare("SELECT COUNT(*) AS total FROM ($mergedQuery) AS subquery");
-$countStmt->execute();
-$total = $countStmt->fetchColumn();
+// // Prepare to count the total number of records (without pagination)
+// $countStmt = $pdo->prepare("SELECT COUNT(*) AS total FROM ($mergedQuery) AS subquery");
+// $countStmt->execute();
+// $total = $countStmt->fetchColumn();
 
-// Prepare to fetch paginated data
-$dataStmt = $pdo->prepare("$mergedQuery LIMIT $limit OFFSET $offset");
-$dataStmt->execute();
+// // Prepare to fetch paginated data
+// $dataStmt = $pdo->prepare("$mergedQuery LIMIT $limit OFFSET $offset");
+// $dataStmt->execute();
 
 // Return the response as a JSON
 // echo json_encode([
@@ -240,89 +246,82 @@ $dataStmt->execute();
 //     'count' => $total // Total count of records
 // ]);
 
+
+function getSubAgents($agentId) {
+  // Connect to the database
+  $pdo = new PDO("mysql:host=192.168.1.51;dbname=lottery_test", "enzerhub", "enzerhub");
+
+  // Query to get sub-agents based on agent_id
+  $stmt = $pdo->prepare("
+      SELECT uid, nickname
+      FROM users_test 
+      WHERE agent_id = :agent_id
+  ");
+  $stmt->bindParam(':agent_id', $agentId, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// Handle AJAX request to fetch sub-agents
+if (isset($_GET['agent_id'])) {
+  $agentId = (int)$_GET['agent_id'];
+  $subAgents = getSubAgents($agentId);
+  echo json_encode($subAgents);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Slider Value Control</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-    }
-    .loader-bar {
-      width: 80%;
-      height: 25px;
-      background-color: #e0e0e0;
-      border-radius: 8px;
-      margin: 20px auto;
-      position: relative;
-    }
-    .progress {
-      height: 100%;
-      background-color: #76c7c0;
-      border-radius: 8px;
-      transition: width 0.3s ease;
-    }
-    #slider-container {
-      margin: 30px auto;
-      width: 80%;
-    }
-    #value-display {
-      font-size: 1.5rem;
-      margin-top: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent and Sub-Agents Table</title>
+    <script>
+        function viewSubAgents(agentId) {
+            fetch(`your_backend_script.php?agent_id=${agentId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const subAgentTable = document.getElementById('sub-agent-table');
+                    let rows = '<tr><th>Username</th><th>Age</th></tr>';
+                    data.forEach(agent => {
+                        rows += `<tr><td>${agent.nickname}</td><td>${agent.uid}</td></tr>`;
+                    });
+                    subAgentTable.innerHTML = rows;
+                })
+                .catch(error => console.error('Error fetching sub-agents:', error));
+        }
+    </script>
 </head>
 <body>
+    <h1>Agents Table</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Age</th>
+                <th>View Sub</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Static rows for demo purposes; Replace with dynamic PHP rows in production -->
+            <tr>
+                <td>Alice</td>
+                <td>35</td>
+                <td><button onclick="viewSubAgents(1)">View Sub</button></td>
+            </tr>
+            <tr>
+                <td>Bob</td>
+                <td>40</td>
+                <td><button onclick="viewSubAgents(2)">View Sub</button></td>
+            </tr>
+        </tbody>
+    </table>
 
-<h1>Dynamic Value with Slider Control</h1>
-
-<div class="loader-bar">
-  <div class="progress" id="progress-bar"></div>
-</div>
-
-<!-- Slider Control -->
-<div id="slider-container">
-  <input type="range" id="range-slider" min="0" max="100" value="100" />
-</div>
-
-<p id="value-display">Value: 10</p>
-
-<script>
-  const baseValue = 10; // Base value when at 100%
-  const progressBar = document.getElementById('progress-bar');
-  const slider = document.getElementById('range-slider');
-  const valueDisplay = document.getElementById('value-display');
-
-  // Update value and progress bar based on slider
-  function updateValue(percentage) {
-    const computedValue = Math.round((percentage / 100) * baseValue); // Compute proportional value
-    valueDisplay.textContent = `Value: ${computedValue}`;
-    progressBar.style.width = `${percentage}%`;
-
-    // Show or hide the progress bar based on the percentage
-    if (percentage > 0) {
-      progressBar.style.display = "block";
-    } else {
-      progressBar.style.display = "none";
-    }
-  }
-
-  // Update value on slider input
-  slider.addEventListener('input', (event) => {
-    updateValue(event.target.value);
-  });
-
-  // Initialize display
-  updateValue(slider.value);
-</script>
-
+    <h2>Sub-Agents Table</h2>
+    <table id="sub-agent-table" border="1">
+        <tr>
+            <th>Username</th>
+            <th>Age</th>
+        </tr>
+    </table>
 </body>
 </html>
-
-
-

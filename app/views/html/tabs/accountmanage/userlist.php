@@ -88,7 +88,7 @@
         z-index: 10;
     }
 
-    .queryholderbet {
+    .queryholderuserlistz {
         width: 19%;
         margin-right: 5px;
         background-color: #fff;
@@ -309,31 +309,90 @@
     background-color: red;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   }
+
+/*Tooltip*/
+section#tooltipp p {
+  margin: 20px 0;
+}
+
+/*Tooltip text*/
+.tooltipp {
+  position: relative;
+  width: auto;
+}
+
+.tooltipp .tooltipp-text {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1em;
+  line-height: 1.5em;
+  visibility: hidden;
+  width: 400px; /* Fixed width */
+  background-color: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  color: gray;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 0%;
+  margin-left: -60px;
+  opacity: 0;
+  cursor:pointer;
+  transition: .3s;
+  transform: translate3d(0px, 20px, 0px);
+
+  /* Ensure text wraps */
+  white-space: normal; /* Allow text to wrap */
+  word-wrap: break-word; /* Break long words */
+  overflow-wrap: break-word; /* Modern alternative to word-wrap */
+}
+
+.tooltipp .tooltipp-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #bbb transparent transparent transparent;
+}
+
+.tooltipp:hover .tooltipp-text {
+  visibility: visible;
+  opacity: 1;
+  transform: translate3d(0px, 0px, 0px);
+}
+
+ 
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
     <h4 class="card-title mb-0"><?= $translator['User List']; ?></h4>
     </div>
-
+ 
+    <!-- <button id="backButton" style="display: none;">Back</button> -->
     <div class="px-4 py-3 border-bottom pagerlist1">
         <form action="" class="betform">
             <span class="top-left-btn">
                 <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                    <input type="text" id="selectuserlist" class="form-control queryholderbet usernames" placeholder="Search usernames" />
+                    <input type="text" id="selectuserlist" class="form-control queryholderuserlistz usernames" placeholder="Search usernames" />
                     <input name="usernames" type="hidden" class="userIdbet" />
-                    <select class="form-control queryholderuserlist" size="5" style="display: none;" id="userlotteryDropdown">
+                    <select class="form-control queryholderuserlist" size="5" style="display: none;" id="userlists">
                         <!-- Options will be populated dynamically -->
                     </select>
                     
-                    <select name="recharge" class="form-control form-select queryholderbet recharges" data-bs-placeholder="Select Type">
-                    <option value="">-Rechatge Level-</option>
+                    <select name="recharge" class="form-control form-select queryholderuserlistz recharges" data-bs-placeholder="Select Type">
+                    <option value="">-Recharge Level-</option>
                     <option value="1">Level One</option>
                     <option value="2">Level Two</option>
                     <option value="3">Level Three</option>
                     </select>
 
-                    <select name="state" class="form-control form-select queryholderbet states" data-bs-placeholder="Select Type">
+                    <select name="state" class="form-control form-select queryholderuserlistz states" data-bs-placeholder="Select Type">
                     <option value="">-State-</option>
                     <option value="1">Enable to run</option>
                     <option value="2">Suspend Betting</option>
@@ -342,14 +401,12 @@
                     </select>
 
 
-                    <input name="startdate" type="date" class="form-control queryholderbet startdates" aria-describedby="name" placeholder="Name" />
+                    <input name="startdate" type="date" class="form-control queryholderuserlistz startdateuser" aria-describedby="name" placeholder="Name" />
 
-                    <input name="enddate" type="date" class="form-control queryholderbet enddates" aria-describedby="name" placeholder="Name" />
+                    <input name="enddate" type="date" class="form-control queryholderuserlistz enddateuser" aria-describedby="name" placeholder="Name" />
 
-                    <!-- <button type="button" class="btn btn-outline-light text-dark queryholderbet addagents">
-                    <i class='bx bx-user-plus'></i> Add Agent</button>
-                <button type="button" class="btn btn-outline-light text-dark queryholderbet ">
-                    <i class='bx bx-user-plus'></i> Get Top Agent</button> -->
+                
+              
                 </div>
             </span>
             <span class="toplist-center" aria-label=" navigation example">
@@ -357,6 +414,9 @@
             </span>
             <span class="topplist-right" id="paginations" aria-label="Page navigation example">
                 <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                <button type="button" class="btn bg-white-subtle " id="backButton"  aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="back">
+                        <i class="bx bxs-chevron-left-circle" style="font-size: 20px;"></i>
+                    </button>
                 <button type="button" class="btn bg-white-subtle addagent" value="" aria-label="Execute"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add Agent">
                     <i class="bx bxs-user-plus" style="font-size: 20px;"></i>
                 </button>
@@ -370,11 +430,16 @@
                     <button type="button" class="btn bg-white-subtle executeuserlist" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                         <i class="bx bx-check-double loaderlist" style="font-size: 20px;"></i>
                     </button>
+
+                   
+              
                 </div>
             </span>
         </form>
     </div>
 
+  
+    <!-- <span class="tooltipp">relacionamentos verticais<span class="tooltipp-text">Entre culturas e povos brasileiros de todo o mundo</span></span> -->
     <div class="card-body p-4">
         <div class="table-responsive mb-4 border rounded-1 table-wrapperuserlist" id="maskuserlist" style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
@@ -408,12 +473,12 @@
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Creation Time']; ?></h6>
                         </th>
-                        <!-- <th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Login']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Login Count']; ?></h6>
-                        </th> -->
+                        </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
                         </th>
@@ -487,8 +552,9 @@
                 <!-- Form -->
                 <form id="agentform">
                     <!-- Username Field -->
+               
                     <div class="form-floating mb-3">
-                        <input name="agentname" type="text" class="form-control border" placeholder="Username" />
+                        <input name="username" type="text" class="form-control border" placeholder="Username" />
                         <label>
                             <i class="bx bx-user me-2 fs-4 text-infod"></i>
                             <span class="border-start ps-3">Username</span>
@@ -497,7 +563,7 @@
 
                     <!-- Email Field -->
                     <div class="form-floating mb-3">
-                        <input name="agentemail" type="email" class="form-control border border-infos" placeholder="Email" />
+                        <input name="email" type="email" class="form-control border border-infos" placeholder="Email" />
                         <label>
                             <i class="bx bx-envelope me-2 fs-4 text-infod"></i>
                             <span class="border-start ps-3">Email address</span>
@@ -506,7 +572,7 @@
 
                     <!-- Password Field -->
                     <div class="form-floating mb-3">
-                        <input name="agentpassword" type="password" class="form-control border border-infs" placeholder="Password" />
+                        <input name="password" type="password" class="form-control border border-infs" placeholder="Password" />
                         <label>
                             <i class="bx bx-lock me-2 fs-4 text-infoss"></i>
                             <span class="border-start ps-3">Password</span>
@@ -514,17 +580,17 @@
                     </div>
 
                     <!-- Confirm Password Field -->
-                    <div class="form-floating mb-3">
-                        <input name="agentpassword1" type="password" class="form-control border border-infos" placeholder="Confirm Password" />
+                    <!-- <div class="form-floating mb-3">
+                        <input name="password" type="password" class="form-control border border-infos" placeholder="Confirm Password" />
                         <label>
                             <i class="bx bx-lock me-2 fs-4 text-infos"></i>
                             <span class="border-start ps-3">Confirm Password</span>
                         </label>
-                    </div>
+                    </div> -->
 
                     <!-- Rebate Field -->
                     <div class="form-floating mb-3">
-                        <select name="agentrebate" class="form-select form-control border border-infos" id="usererebate">
+                        <select name="rebate" class="form-select form-control border border-infos" id="usererebate">
                             <!-- \<option value="" disabled selected>Select Rebate</option> -->
                             <!-- Dynamically populated options -->
                         </select>
@@ -541,7 +607,7 @@
                             <label class="form-check-label" for="sf2">Verify before submit</label>
                         </div>
                         <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 btnaddagent" style="border: solid 1px #ccc;">
+                            <button type="button" class="btn hstack gap-6 btnaddagent" style="border: solid 1px #ccc;" data-bs-dismiss="modal" aria-label="Close">
                                 <i class="bx bx-send loaders"></i>
                                 Submit
                             </button>
@@ -559,7 +625,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Manage User Account</h5>
-                <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;"></i></div>
+                <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container">
                 <!-- User Profile Picture -->
@@ -693,7 +759,7 @@
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="text-infos">Quota</h5>
-                        <i class="bx bx-message-square-x listclose" style="color: #868c87; font-size: 25px; cursor: pointer;"></i>
+                        <i class="bx bx-message-square-x listclose" style="color: #868c87; font-size: 25px; cursor: pointer;"data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
                 </div>
 
@@ -734,3 +800,4 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+

@@ -8,19 +8,44 @@ class UserManageModel extends MEDOOHelper
 
     public static function FetchUserlistData($page, $limit): array
     {
-
         $startpoint = ($page - 1) * $limit;
-        $data = parent::query(
-            "SELECT uid, username,email,contact,nickname, agent_name, balance, recharge_level, user_state,reg_type,
-                  rebate, created_at, agent_id, account_type,reg_type
-             FROM users_test
-             ORDER BY uid DESC
-             LIMIT :startpoint, :limit",
-            [
-                'startpoint' => (int)$startpoint,
-                'limit' => (int)$limit
-            ]
-        );
+        $sql = "SELECT 
+             u.uid, 
+             u.username, 
+             u.email, 
+             u.contact, 
+             u.nickname, 
+             u.agent_name, 
+             u.balance, 
+             u.recharge_level, 
+             u.user_state, 
+             u.reg_type, 
+             u.agent_level,           
+             u.rebate, 
+             u.created_at, 
+             u.agent_id, 
+             u.last_login, 
+             u.account_type, 
+                            GROUP_CONCAT(a.nickname) AS subordinates, 
+                            COUNT(a.uid) AS sub_count, 
+                            u.rebate
+                        FROM 
+                            users_test u
+                        LEFT JOIN 
+                            users_test a ON u.uid = a.agent_id
+                        GROUP BY 
+                            u.uid DESC
+                        LIMIT :offset, :limit;";
+        $pdo = (new Database())->openLink();
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':offset', $startpoint, PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($data as &$row) {
+            $row['logincount'] = self::countUserLogs($row['uid']);
+        }
 
         $totalRecords = parent::count('users_test');
 
@@ -43,44 +68,288 @@ class UserManageModel extends MEDOOHelper
         return  $data = parent::query("SELECT nickname FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
     }
 
+    public static function getUserIdByMixedValued(array $mixedValue)
+    {
+        if (empty($mixedValue)) {
+            return []; // Return an empty array if input is empty
+        }
+
+        try {
+            $placeholders = implode(',', array_fill(0, count($mixedValue), '?'));
+            $pdo = (new Database())->openLink();
+
+            $stmt = $pdo->prepare("SELECT nickname FROM users_test WHERE uid IN ($placeholders)");
+            $stmt->execute($mixedValue);
+
+            // Fetch all nicknames as an indexed array
+            $subordinates = $stmt->fetchAll(PDO::FETCH_COLUMN);
+            return $subordinates;
+        } catch (PDOException $e) {
+            // Log or handle the error as needed
+            error_log("Database error: " . $e->getMessage());
+            return [];
+        }
+    }
+
     public static function Fetchsubordinates($uid)
     {
         $totalCount = parent::count("users_test", "*", ["AND" => ["agent_id" => $uid, "account_type" => 3, "uid[!]" => $uid]]);
         return $totalCount;
     }
 
-    public static function Filteruserlist($page, $limit, $username, $states, $startdate, $enddate)
+    public static function Filteruserlist($subQuery, $page, $limit)
     {
-        $whereConditions = self::FilterUserlistDataSubQuery($username, $states, $startdate, $enddate);
-        $startpoint = ($page * $limit) - $limit;
-        $data = parent::selectAll("users", '*', ["AND" => $whereConditions, "ORDER" => ["users.uid" => "DESC"], "LIMIT" => [$startpoint, $limit]]);
-        $lastQuery = MedooOrm::openLink()->log();
-        $totalRecords  = parent::selectAll('users', '*', ['AND' => $whereConditions]);
-        return ['data' => $data, 'total' => count($totalRecords), 'sql' => $lastQuery[0]];
+
+        $startpoint = ($page - 1) * $limit;
+
+        $sql = "SELECT uid, username,email,contact,nickname, agent_name, balance, recharge_level, user_state,reg_type,
+                  rebate, created_at, agent_id, account_type,reg_type,last_login
+             FROM users_test WHERE  $subQuery ";
+
+        $countSql = "
+                SELECT 
+                    COUNT(*) AS total_count
+                FROM 
+                    users_test
+            WHERE
+                $subQuery
+                ";
+
+
+    //     $sql = "
+    //     SELECT 
+    //         u.uid, 
+    //         u.username, 
+    //         u.email, 
+    //         u.contact, 
+    //         u.nickname, 
+    //         u.agent_name, 
+    //         u.balance, 
+    //         u.recharge_level, 
+    //         u.user_state, 
+    //         u.reg_type, 
+    //         u.agent_level,           
+    //         u.rebate, 
+    //         u.created_at, 
+    //         u.agent_id, 
+    //         u.last_login, 
+    //         u.account_type, 
+    //         GROUP_CONCAT(a.nickname) AS subordinates, 
+    //         COUNT(a.uid) AS sub_count
+    //     FROM 
+    //         users_test u
+    //     LEFT JOIN 
+    //         users_test a ON u.uid = a.agent_id
+    //       WHERE $subQuery
+    // GROUP BY u.uid
+    
+        
+    //  ";
+   
+
+    $data = parent::query($sql);
+    foreach ($data as &$row) {
+        $row['logincount'] = self::countUserLogs($row['uid']);
+    }
+    $totalRecords = parent::query($countSql);
+    $totalRecords = $totalRecords[0]['total_count'];
+    $lastQuery = MedooOrm::openLink()->log();
+    return ['data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery[0]];
+    //     // SQL to count total records
+    //     $countSql = "
+    //     SELECT COUNT(DISTINCT u.uid) AS total_count
+    //     FROM 
+    //         users_test u
+    //     LEFT JOIN 
+    //         users_test a ON u.uid = a.agent_id
+    //     WHERE $subQuery
+    // ";
+
+    //     try {
+    //         $pdo = (new Database())->openLink();
+
+    //         // Fetch paginated data
+    //         $stmt = $pdo->prepare($sql);
+    //         // $stmt->bindValue(':offset', $startpoint, PDO::PARAM_INT);
+    //         // $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    //         $stmt->execute();
+    //         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    //         // Count user logs for each row
+    //         foreach ($data as &$row) {
+    //             $row['logincount'] = self::countUserLogs($row['uid']);
+    //         }
+
+    //         // Fetch total record count
+    //         $countStmt = $pdo->prepare($countSql);
+    //         $countStmt->execute();
+    //         $totalRecords = (int)$countStmt->fetchColumn();
+
+    //         return ['data' => $data, 'total' => $totalRecords];
+    //     } catch (PDOException $e) {
+    //         // Log and handle database exceptions
+    //         error_log("Database error: " . $e->getMessage());
+    //         return ['error' => 'A database error occurred'];
+    //     }
     }
 
-    public static function FilterUserlistDataSubQuery($username = '', $states = '', $from = '', $to = '')
+    public static function FilterUserlistDataSubQuery($username, $states, $startdate, $enddate)
     {
-        $conditions = [];
+        $filterConditions = [];
 
-        if (!empty($username) && $username != 'all') {
-            $conditions['users.uid'] = $username;
+        // Build filter conditions
+        if (!empty($username)) {
+            $filterConditions[] = "uid = '$username'";
         }
 
-        if (!empty($states) && $states != 'all') {
-            $conditions['users.state'] = $states;
+        if (!empty($states)) {
+            $filterConditions[] = "user_state = '$states'";
         }
 
-        if ($from != '' && $to != '') {
-            $conditions['users.date_created[<>]'] = [$from, $to];
-        } elseif ($from != '') {
-            $conditions['users.date_created[>=]'] = $from;
-        } elseif ($to != '') {
-            $conditions['users.date_created[<=]'] = $to;
+        if (!empty($startdate) && !empty($enddate)) {
+            $filterConditions[] = "created_at BETWEEN '$startdate' AND '$enddate'";
+        } elseif (!empty($startdate)) {
+            $filterConditions[] = "created_at = '$startdate'";
+        } elseif (!empty($enddate)) {
+            $filterConditions[] = " created_at = '$enddate'";
         }
 
-        return $conditions;
+        // Combine conditions into the final query
+        if (!empty($filterConditions)) {
+            $subQuery = implode(' AND ', $filterConditions);
+        }
+
+        // Add ordering and limit to the query (you can also parameterize order if needed)
+        $subQuery .= " ORDER BY created_at DESC";
+
+        // Return the final subquery
+        return $subQuery;
     }
+
+    public static function  FetchSubAgents($nicknames, $page, $limit)
+    {
+        if (!is_array($nicknames)) {
+            $nicknames = explode(",", $nicknames); // Split string into array
+        }
+        $placeholders = implode(',', array_fill(0, count($nicknames), '?'));
+
+        if (!is_array($nicknames)) {
+            $nicknames = explode(",", $nicknames);
+        }
+
+        $startpoint = ($page - 1) * $limit;
+
+        if (empty($nicknames)) {
+            return ['data' => [], 'total' => 0];
+        }
+
+        // Named placeholders for nicknames
+        $placeholders = implode(',', array_map(fn($index) => ":nickname$index", array_keys($nicknames)));
+
+        // SQL to fetch data
+        $sql = "
+        SELECT 
+            u.uid, 
+            u.username, 
+            u.email, 
+            u.contact, 
+            u.nickname, 
+            u.agent_name, 
+            u.balance, 
+            u.recharge_level, 
+            u.user_state, 
+            u.reg_type, 
+            u.agent_level,           
+            u.rebate, 
+            u.created_at, 
+            u.agent_id, 
+            u.last_login, 
+            u.account_type, 
+            GROUP_CONCAT(a.nickname) AS subordinates, 
+            COUNT(a.uid) AS sub_count
+        FROM 
+            users_test u
+        LEFT JOIN 
+            users_test a ON u.uid = a.agent_id
+        WHERE 
+            u.nickname IN ($placeholders)
+        GROUP BY 
+            u.uid
+        LIMIT :offset, :limit
+        ";
+
+            // SQL to count total records
+            $countSql = "
+            SELECT 
+                COUNT(DISTINCT u.uid) AS total_count
+            FROM 
+                users_test u
+            LEFT JOIN 
+                users_test a ON u.uid = a.agent_id
+            WHERE 
+                u.nickname IN ($placeholders)
+        ";
+
+            $pdo = (new Database())->openLink();
+
+            // Prepare and bind nicknames for the main query
+            $stmt = $pdo->prepare($sql);
+            foreach ($nicknames as $index => $nickname) {
+                $stmt->bindValue(":nickname$index", $nickname, PDO::PARAM_STR);
+            }
+            $stmt->bindValue(':offset', $startpoint, PDO::PARAM_INT);
+            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($data as &$row) {
+                $row['logincount'] = self::countUserLogs($row['uid']);
+            }
+            // Prepare and bind nicknames for the count query
+            $countStmt = $pdo->prepare($countSql);
+            foreach ($nicknames as $index => $nickname) {
+                $countStmt->bindValue(":nickname$index", $nickname, PDO::PARAM_STR);
+            }
+            $countStmt->execute();
+            $totalRecords = $countStmt->fetchColumn();
+
+            return ['data' => $data, 'total' => $totalRecords];
+    }
+    public function FetchUserAccountChange($userid,$page,$limit){
+        $startpoint = ($page - 1) * $limit;
+        $sql = "SELECT 
+                    transaction.*, 
+                    users_test.email, 
+                    users_test.contact, 
+                    users_test.reg_type, 
+                    COALESCE(users_test.username, 'N/A') AS username 
+                FROM 
+                    transaction   
+                LEFT JOIN 
+                    users_test ON users_test.uid = transaction.uid  
+                WHERE 
+                    transaction.uid = :uid  
+                ORDER BY 
+                    transaction.trans_id DESC 
+                LIMIT :offset, :limit";
+        
+        $pdo = (new Database())->openLink();
+        $stmt = $pdo->prepare($sql);
+        
+        // Bind parameters correctly
+        $stmt->bindValue(':offset', (int)$startpoint, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':uid', (int)$userid, PDO::PARAM_INT);
+        
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        return ['data' => $data];
+        
+    }
+   
+
+    
 
     public static function AddAgentData($datas)
     {
@@ -113,7 +382,7 @@ class UserManageModel extends MEDOOHelper
         LIMIT :startpoint, :limit
       ";
 
-      $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+        $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
         // Count the total records with the same filter (for pagination)
         $totalRecords = parent::count("users_test");
 
@@ -248,49 +517,76 @@ class UserManageModel extends MEDOOHelper
             users_test.email, users_test.contact, users_test.reg_type ,
             COALESCE(users_test.username, 'N/A') AS username 
         FROM user_logs   
-        JOIN users_test ON users_test.uid = user_logs.uid  
+        LEFT JOIN users_test ON users_test.uid = user_logs.uid  
         ORDER BY user_logs.ulog_id DESC 
         LIMIT :startpoint, :limit
-    ";
-    
-    // Execute the query with pagination parameters
-      $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+     ";
+
+        // Execute the query with pagination parameters
+        $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
         $totalRecords  = parent::count('user_logs');
         return ['data' => $data, 'total' => $totalRecords];
     }
 
 
-    public static function Filteruserlogs($page, $limit, $username, $startdate, $enddate)
+    public static function Filteruserlogs($subQuery, $page, $limit)
     {
-        $whereConditions = self::FilterUserlogsDataSubQuery($username,  $startdate, $enddate);
-        $startpoint = ($page * $limit) - $limit;
-        $data = parent::selectAll("user_logs", '*', ["AND" => $whereConditions, "ORDER" => ["ulog_id" => "DESC"], "LIMIT" => [$startpoint, $limit]]);
+        $startpoint = $page * $limit - $limit;
+        $sql = "
+        SELECT 
+            user_logs.*, 
+            users_test.email,
+            users_test.username,
+            users_test.contact,
+            users_test.reg_type
+        FROM user_logs
+        LEFT JOIN users_test ON users_test.uid = user_logs.uid
+        WHERE $subQuery
+        LIMIT :offset, :limit
+        ";
+
+        $countSql = "
+                SELECT 
+                    COUNT(*) AS total_count
+                FROM 
+                    user_logs
+            WHERE
+                $subQuery
+                ";
+
+        $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
+        $totalRecords = parent::query($countSql);
+        $totalRecords = $totalRecords[0]['total_count'];
         $lastQuery = MedooOrm::openLink()->log();
-        $totalRecords  = parent::selectAll('user_logs', '*', ['AND' => $whereConditions]);
-        return ['data' => $data, 'total' => count($totalRecords), 'sql' => $lastQuery[0]];
+        return ['data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery[0]];
     }
 
-    public static function FilterUserlogsDataSubQuery($username = '', $from = '', $to = '')
+    public static function FilterUserlogsDataSubQuery($username, $startdate, $enddate)
     {
-        $conditions = [];
 
-        if (!empty($username) && $username != 'all') {
-            $conditions['user_logs.uid'] = $username;
+        $filterConditions = [];
+
+        // Build filter conditions
+        if (!empty($username)) {
+            $filterConditions[] = "user_logs.uid = '$username'";
         }
 
-        // if (!empty($states) && $states != 'all') {
-        //     $conditions['users.state'] = $states;
-        // }
-
-        if ($from != '' && $to != '') {
-            $conditions['user_logs.date_created[<>]'] = [$from, $to];
-        } elseif ($from != '') {
-            $conditions['user_logs.date_created[>=]'] = $from;
-        } elseif ($to != '') {
-            $conditions['user_logs.date_created[<=]'] = $to;
+        if (!empty($startdate) && !empty($enddate)) {
+            $filterConditions[] = "user_logs.login_date BETWEEN '$startdate' AND '$enddate'";
+        } elseif (!empty($startdate)) {
+            $filterConditions[] = "user_logs.login_date = '$startdate'";
+        } elseif (!empty($enddate)) {
+            $filterConditions[] = "user_logs.login_date = '$enddate'";
         }
 
-        return $conditions;
+        // Combine conditions into the final query
+        if (!empty($filterConditions)) {
+            $subQuery = implode(' AND ', $filterConditions);
+        }
+
+        // $subQuery .= " ORDER BY login_date DESC";
+
+        return $subQuery;
     }
 
     public static function fetchUserRebateList($uid)

@@ -85,6 +85,7 @@ $sidebarMenu = [
     17 =>['title'=> $translator['Administrator List'], 'content' => 'administrator_list'],
     18 =>['title'=> 'Backup & Restore', 'content' => 'backup_recovery'],
     19 =>['title'=> $translator['NGP Win/Loss Report'], 'content' => 'NGPWin']
+
   ];
 
   $sidebarMain = [

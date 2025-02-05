@@ -141,30 +141,83 @@
     }
 
     /* Custom Scrollbar for Webkit Browsers */
-    .table-wrapperlogs::-webkit-scrollbar {
+    .table-wrapperuserlogs::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
         /* Slimmer scrollbar height for horizontal scrolling */
     }
 
-    .table-wrapperlogs::-webkit-scrollbar-track {
+    .table-wrapperuserlogs::-webkit-scrollbar-track {
         background: #f1f1f1;
         /* Lighter background for track */
         border-radius: 5px;
     }
 
-    .table-wrapperlogs::-webkit-scrollbar-thumb {
+    .table-wrapperuserlogs::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .table-wrapperlogs::-webkit-scrollbar-thumb:hover {
+    .table-wrapperuserlogs::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
         /* Darker blue on hover */
     }
+
+    .tbl-userloghead {
+    position: sticky;
+    top: 0;
+  }
+
+  .sticky-userloghead {
+    position: relative;
+    bottom: 1px;
+    background-color: red;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  }
+
+  .userlogdropdown {
+        width: 32%;
+        position: absolute;
+        background-color: #fff;
+        color: #aaa;
+        max-height: 300px;
+        overflow-y: scroll;
+        border-radius: 5px;
+        padding: 10px;
+        top: 90%;
+        z-index: 9999;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        display: none;
+    }
+
+    /* Style for the scrollbar */
+    .userlogdropdown::-webkit-scrollbar {
+        width: 3px;
+        /* Width of the scrollbar */
+    }
+
+    .userlogdropdown::-webkit-scrollbar-track {
+        background: #f0f0f0;
+        /* Background of the scrollbar track */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
+
+    .userlogdropdown::-webkit-scrollbar-thumb {
+        background: #ccc;
+        /* Color of the scrollbar handle */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
+
+    .userlogdropdown::-webkit-scrollbar-thumb:hover {
+        background: #aaa;
+        /* Darker handle color on hover */
+    }
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -177,17 +230,17 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-                <input name="username" class="queryholderlogs form-control" id="selectuserlogs" placeholder="Username"
-                    autocomplete="off"></input>
-                <input type="text" class="userId" style="display:none" />
-                <ul class="queryholderxxx"></ul>
-
+              <input type="text" id="userloginput" class="form-control  queryholderlogs" placeholder="Search usernames" />
+                <input name="usernames" type="hidden" class="userIdfinancexcx" />
+                <select class="form-control userlogdropdown" size="5" style="display: none;" id="userfinaceuserlogs">
+              
+                </select>
                 
-                <input type="date" class="form-control queryholderlogs startdate" id="namete" aria-describedby="name"
+                <input type="date" class="form-control queryholderlogs startdatelog" id="namete" aria-describedby="name"
                     placeholder="Name" />
 
 
-                <input type="date" class="form-control queryholderlogs enddate" id="nametex" aria-describedby="name"
+                <input type="date" class="form-control queryholderlogs enddatelog" id="nametex" aria-describedby="name"
                     placeholder="Name" />
 
 
@@ -207,7 +260,7 @@
                 </button>
                 <button type="button" class="btn bg-white-subtle executeuserlogs" value="end" aria-label="Execute"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                    <i class='bx bx-check-double loader' style="font-size:20px"></i>
+                    <i class='bx bx-check-double loaderlog' style="font-size:20px"></i>
                 </button>
             </div>
 
@@ -216,16 +269,19 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperlogs" id="masklogs" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperuserlogs" id="masklogs" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
-                <thead class="text-dark fs-4">
-                    <tr>
+                <thead class="text-dark fs-4 tbl-userloghead">
+                    <tr class="userlogheadrow">
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Login Time']; ?></h6>
                         </th>
+                        <!-- <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Login Count']; ?></h6>
+                        </th> -->
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['IP']; ?></h6>
                         </th>
@@ -263,18 +319,18 @@
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playerlogs" value="startlogs">
+                <!-- <button type="button" class="btn bg-white-subtle playerlogs" value="startlogs">
                     <i class='bx bx-chevrons-left' style="font-size:20px"></i>
-                </button>
+                </button> -->
                 <button type="button" class="btn bg-white-subtle playerlogs" value="leftlogs">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle playerlogs" value="rightlogs">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerlogs" value="endlogs">
+                <!-- <button type="button" class="btn bg-white-subtle playerlogs" value="endlogs">
                     <i class='bx bx-chevrons-right' style="font-size:20px"></i>
-                </button>
+                </button> -->
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
@@ -282,33 +338,20 @@
             <span id="paging_infologs" style="color:#aaa">---</span>
 
         </span>
-        <span class="toplist-right" id="paginationlogs" aria-label="Page navigation example">
-
+        <span class="top-right-btn" aria-label="Page navigation example">
+            <select class="left-element form-control numrowslog" style="font-size: 12px;">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="500">500</option>
+            </select>
+            <span class="toplist-right" id="paginationlogs" aria-label="Page navigation example">
             <!--Dynamic pagination-->
-
+           </span>
+           
         </span>
-
+       
     </div>
 
 </div>
 
-<div class="modal fade" id="danger-userlogs" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content modal-filled " style="background-color:#F9F9F9">
-            <div class="modal-body p-4">
-                <div class="text-center text-danger">
-                    <i class="ti ti-hexagon-letter-x fs-7"></i>
-                    <h4 class="mt-2">Oh snap!</h4>
-                    <p class="mt-3" style="color:#aaa">
-                        All fields are required!
-                        Select one or more data fields to filter.
-                    </p>
-                    <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color:#ddd">
-                        Okay
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-</div>

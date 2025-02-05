@@ -156,13 +156,11 @@ class FinancialManageModel extends MEDOOHelper
             $recharge_balance = (float) $Data['balance'] - (float)$amount;
         }
 
-        // Insert into Deposits and Withdrawals
-            if($depositid == 4){
-            self::insertIntoWithrawManage($desposittype, $uid, $amount, $depositid, $username) ;
-            }
+        
         if (
             self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance) &&
-             self::insertIntoDepositsNew($desposittype, $uid, $amount, $depositid, $username) &&
+             self::insertIntoDepositsNew($uid, $amount, $username) &&
+             self::insertIntoWithrawManage($uid, $amount, $username)&&
             self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
         ) {
             // Update user balance if all operations succeed
@@ -189,8 +187,10 @@ class FinancialManageModel extends MEDOOHelper
         return  $inserdata = parent::insert("deposits_and_withdrawals", $params);
     }
 
-    public static function insertIntoDepositsNew($desposittype, $uid, $amount, $depositid,$username)
+    public static function insertIntoDepositsNew($uid, $amount,$username)
     {
+        $trans_oderId = bin2hex(random_bytes(4));
+         $depositid  =  'DEPO' . $trans_oderId ;
          $manualusername = "manual deposit";
          $manualemail    = "manualdeposit@gmail.com";
          $params = [
@@ -206,7 +206,7 @@ class FinancialManageModel extends MEDOOHelper
             'provider' =>'MTN',      
             'status' =>'success',
             'approved_by' => $username,
-            'desposit_channel' => $desposittype,
+            'desposit_channel' => '1',
         
      
         ];
@@ -215,23 +215,24 @@ class FinancialManageModel extends MEDOOHelper
     }
 
 
-    public static function insertIntoWithrawManage($desposittype, $uid, $amount, $depositid,$username)
+    public static function insertIntoWithrawManage($uid, $amount,$username)
     {
-            $manualusername = "manual deposit";
+            $manualusername = "Enzerhub";
             $manualemail = "manualdeposit@gmail.com";
             $currentDateTime = date('Y-m-d H:i:s');
             $currentTime = date('H:i:s');
             $currentDate = date('Y-m-d');
-
+            $trans_oderId = bin2hex(random_bytes(4));
+            $depositid  =  'WITHD' . $trans_oderId ;
             $params = [
                 'uid' => $uid,
                 'withdrawal_id' => $depositid,
                 'username' => $manualusername,
                 'user_email' => $manualemail,
-                'contact' => "MTN",
+                'contact' => "Company Number",
                 'user_level' => 'Vip',
-                'bank_type' => 'Company Number',
-                'withdrawal_channel' => $desposittype,
+                'bank_type' => 'MTN',
+                'withdrawal_channel' => '4',
                 'card_holder' => 'Enzerhub',
                 'bank_card_number' => 'Company Number',
                 'withdrawal_amount' => $amount,

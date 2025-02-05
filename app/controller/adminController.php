@@ -279,20 +279,21 @@ class adminController extends Controller {
         $this->view('exec/lottery_basic_params', ['lottery_id' => $lottery_id,'page' => $page,'flag' => 'fetch-lottery-basic-params']);
         $this->view->render();
     }
-    // public function filteruserlist($username = '', $states = '', $startdate = '', $enddate = '', $pageNumber, $limit)
-    // {
-    //     $this->view('exec/account_manage', [
-    //         'username' => $username,
-    //         'states' => $states,
-    //         'startdate' => $startdate,
-    //         'enddate' => $enddate,
-    //         'flag' => 'filteruserlist',
-    //         'page' => $pageNumber,
-    //         'limit' => $limit,
 
-    //     ]);
-    //     $this->view->render();
-    // }
+    public function filteruserlist($username, $states , $startdate , $enddate , $pageNumber, $limit)
+    {
+        $this->view('exec/account_manage', [
+            'username' => $username,
+            'states' => $states,
+            'startdate' => $startdate,
+            'enddate' => $enddate,
+            'flag' => 'filteruserlist',
+            'page' => $pageNumber,
+            'limit' => $limit,
+
+        ]);
+        $this->view->render();
+    }
 
     public function fetchRebatedata()
     {
@@ -338,14 +339,26 @@ class adminController extends Controller {
         $this->view('exec/account_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlogsdata']);
         $this->view->render();
      }
-    // public function filterUserlogs($username = '',  $startdate = '', $enddate = '', $pageNumber, $limit)
-    // {
-    //     $this->view('exec/account_manage', ['username' => $username,'startdate' => $startdate,
-    //     'enddate' => $enddate,'flag' => 'filterUserlogs','page' => $pageNumber,'limit' => $limit,]);
-    //     $this->view->render();
-    // }
 
+    public function filterUserlogs($username,  $startdate, $enddate, $pageNumber, $limit)
+    {
+        $this->view('exec/account_manage', ['usernamelog' => $username,'startdate' => $startdate,
+        'enddate' => $enddate,'flag' => 'filterUserlogs','page' => $pageNumber,'limit' => $limit,]);
+        $this->view->render();
+    }
 
+    public function agent_subordinate($nickname,$pageNumber, $limit)
+    {
+        $this->view('exec/account_manage', ['nicknames' => $nickname ,'flag' => 'fetchsubagent','page' => $pageNumber, 'limit' => $limit,]);
+        $this->view->render();
+    }
+    public function useraccountchange($uid,$pageNumber, $limit)
+    {
+        $this->view('exec/account_manage', ['uid' => $uid ,'flag' => 'fetchaccountchange','page' => $pageNumber, 'limit' => $limit,]);
+        $this->view->render();
+    }
+    
+    
   
       //NOTE -
     //////////////INVITATION & REFERAL LINK -//////////

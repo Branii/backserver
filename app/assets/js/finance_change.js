@@ -172,11 +172,11 @@ $(function () {
 
     $(document).on('click', '.executefinance', function () {
     
-    //   if ($("#financeDropdown").val() == "" && $(".depositestate").val() == "" && $(".startfinances").val() == "" ) {
-    //     // $("#danger-finance").modal("show");
-    //     showToast("Heads up!!","Select one or more data fields to filter","info")
-    //   //  return;
-    // }
+      if ($("#financeDropdown").val() == "" && $(".depositestate").val() == "" && $(".startfinances").val() == "" ) {
+        // $("#danger-finance").modal("show");
+        showToast("Heads up!!","Select one or more data fields to filter","info")
+        return;
+    }
   
       const depositestate = $(".depositestate").val();
       const username = $("#financeDropdown").val();
@@ -261,7 +261,7 @@ $(function () {
             }
           
               // Append the option to the optionsHtml string
-              optionsHtml += `<option class="optioknlist" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
+              optionsHtml += `<option class="optionlist" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
           });
                 $('.financeDropdowns').html(optionsHtml).show();
             } catch (error) {
@@ -286,11 +286,12 @@ $(function () {
         showToast("Heads up!!", "All field are required", "info");
         return false;
       }
-      $(".loaderfinance").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
+      $(".loaderfinanc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
       $.post(`../admin/addmoney/${depositype}/${usernames}/${amount}/${approvedby}/${review}`,
         function (response) {
           if (response) {
-            $(".loaderfinance").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send")
+            $(".loaderfinanc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send")
+            // $("#addfinancemodal").modal("hide");
             showToast("Success", "transaction perform success", "success");
             fetchfinance(currentPage,pageLimit);
           } else {
@@ -374,7 +375,7 @@ $(function () {
                     displayValues = 'no data found ...';
                     regnames  = 'no data found ...';  // Show contact
                    }
-                    optionsHtml += `<option class="optlpionlist" value="${user.uid}" data-username="${regnames}">${displayValues}</option>`;
+                    optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regnames}">${displayValues}</option>`;
                 });
     
                 $('.financeDropdown').html(optionsHtml).show();
