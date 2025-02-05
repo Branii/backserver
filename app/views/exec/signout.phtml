@@ -1,6 +1,9 @@
 <?php 
 session_start();
 $admin_id = $_SESSION['isUserLoggedInId'];
+$lang = $_SESSION['lang'];
 (new Controller)->addAdminLoggins($admin_id, "Sign Out", 'Signed In', 'Signed Out', $admin_id, 'success');
 session_destroy();
+session_start();
+$_SESSION['lang'] = $lang;
 header("location:../");

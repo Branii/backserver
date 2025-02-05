@@ -64,10 +64,19 @@ class Model extends MEDOOHelper{
 
     }
 
-    public static function getUserPermissionSidebar(string $email){
+    public static function getUserPermissions(string $email){
 
         try {
             return parent::selectOne('system_administrators',['permissions'], ['email' => $email])['permissions'];
+        } catch (\Throwable $th) {
+           var_dump($th);
+        }
+    }
+
+    public static function getPermissionSidebar(){
+
+        try {
+            return parent::selectOne('permissions_tbl',['side_bar_title','side_bar_menu']);
         } catch (\Throwable $th) {
            var_dump($th);
         }

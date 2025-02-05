@@ -370,7 +370,7 @@ li.name-items:hover {
 
                     <tr class="no-resultslist">
                         <td colspan="13">
-                            <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
+                        <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
                         </td>
                     </tr>
 

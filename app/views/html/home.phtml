@@ -1,7 +1,6 @@
 <?php
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
-  
 }
 isset($_SESSION['lang']) ? $_SESSION['lang'] : $_SESSION['lang'] = 'en';
 $lang = $_SESSION['lang'];
@@ -14,7 +13,7 @@ $translator = include "tabs/lang/{$lang}.php";
 
 ?>
 <!DOCTYPE html>
-<html oncontextmenu="return falsex" lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme"
+<html oncontextmenu="return falsex" lang="en" dir="ltr" data-color-theme="Blue_Theme"
   data-layout="vertical" data-boxed-layout="full" data-card="shadow">
 
 <head>
@@ -41,7 +40,7 @@ $translator = include "tabs/lang/{$lang}.php";
 
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-  <title>Limvo Admin</title>
+  <title>Limvo AdminX</title>
   <style>
     .chrome__tab {
       /* width: 400px;
@@ -103,7 +102,160 @@ $translator = include "tabs/lang/{$lang}.php";
     .hover-dropdown:hover .dropdown-menu {
       display: block;
     }
+
+    /* Custom scrollbar for Firefox Browsers */
+    .table-wrapper::-moz-scrollbar {
+      width: 5px;
+      /* Slimmer scrollbar width */
+      height: 5px;
+      /* Slimmer scrollbar height for horizontal scrolling */
+    }
+
+
+
+h1 {
+  font-size: calc( 1em + 3vmin );
+  font-weight: 500;
+  color: rgb(132, 143, 165);
+  --x-offset: -0.0625em;
+  --y-offset: 0.0625em;
+  --stroke: 0.025em;
+  --background-color: white;
+  --stroke-color: lightblue;
+  
+  text-shadow: 
+    
+    var(--x-offset)
+    var(--y-offset)
+    0px
+    var(--background-color), 
+    
+    calc( var(--x-offset) - var(--stroke) )
+    calc( var(--y-offset) + var(--stroke) )
+    0px
+    var(--stroke-color);
+  
+}
+@supports ( text-shadow: 1px 1px 1px 1px black ) {
+  h1 {
+    text-shadow:
+      
+      var(--x-offset)
+      var(--y-offset)
+      0px
+      0px
+      var(--background-color), 
+      
+      var(--x-offset) 
+      var(--y-offset)
+      var(--stroke)
+      0px
+      var(--stroke-color);
+    
+  }
+}
+
   </style>
+      <style>
+      /* :root {
+        --bg-color: #F9F9F9;
+        --text-color:rgb(29, 28, 28);
+        --accent-color: #007bff;
+        --border-color: #e0e0e0;
+        --chairman-dark:#ffffff;
+        --chairman-border-none:solid 1px #e0e0e0;
+        --chairman-color:#f9f9f9;
+        --chairman-tab-header:#ccc;
+        --chairmantext-color:#000000;
+        color-scheme: light;
+      }
+      
+      [data-theme="dark"] {
+        --bg-color: #1a1a1a;
+        --text-color: #ffffff;
+        --chairmantext-color: #ffffff;
+        --chairman-tab-header:rgb(9, 9, 9,.2);
+        --accent-color: #4da3ff;
+        --border-color: #444444;
+          color-scheme: dark;
+        --chairman-dark:#202a36;
+        --chairman-color:#202a36;
+        --chairman-border-none:solid 1px #1c1e1f;
+      }
+      
+      body {
+        background: var(--chairman-dark);
+        color: var(--text-color);
+        transition: background 0.3s ease;
+      }
+
+      .col-md-6{
+        padding: 10px;
+        border-radius: 10px;
+        background: var(--chairman-dark);
+      }
+
+      .maincard{
+        padding: 10px;
+        border-radius: 10px;
+        background: var(--chairman-dark);
+      }
+
+      .sidebarm{
+        background: var(--chairman-dark);
+        color: var(--text-color);
+        border: var(--chairman-border-none);
+      }
+
+      .accordion-header {
+          background: var(--chairman-color);
+          color: var(--text-color);
+          cursor: pointer;
+          height:40px;
+          padding: 5px;
+          transition: background-color 0.3s;
+          box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+          margin: 2px;
+      }
+
+      .custom-list {
+          background: var(--chairman-tab-header) !important;
+          color: var(--text-color) !important;
+      }
+
+      .logodivider{
+        background: var(--chairman-dark);
+      }
+
+      .chrome-tabs{
+        background: var(--chairman-tab-header);
+      }
+
+      .chrome-tab-drag-handle{
+        background: var(--chairman-dark);
+      }
+
+      .chrome-tab-title{
+        color: var(--text-color) !important;
+      }
+
+      .chrome-tabs-bottom-bar{
+        background: var(--chairman-dark) !important;
+      }
+
+      .card{
+        background: var(--chairman-dark);
+        color: var(--text-color);
+      }
+      
+      button {
+        padding: 10px;
+        background: var(--accent-color);
+        border: 2px solid var(--border-color);
+        color: var(--text-color);
+        cursor: pointer;
+      } */
+      </style>
 </head>
 
 <body>
@@ -112,46 +264,48 @@ $translator = include "tabs/lang/{$lang}.php";
     <div class="toast-body hstack align-items-start gap-6">
       <i class="ti ti-alert-circle fs-6"></i>
       <div>
-        <h5 class="text-white fs-3 mb-1">Welcome to Modernize</h5>
-        <h6 class="text-white fs-2 mb-0">Easy to costomize the Template!!!</h6>
+        <h5 class="text-white fs-3 mb-1">Welcome to Limvo</h5>
+        <h6 class="text-white fs-2 mb-0">Back Office Admin</h6>
       </div>
       <button type="button" class="btn-close btn-close-white fs-2 m-0 ms-auto shadow-none" data-bs-dismiss="toast"
         aria-label="Close"></button>
     </div>
   </div>
   <!-- Preloader -->
-  <!-- <div class="preloader">
-    <img src="<?php echo BASE_URL; ?>assets/images/logos/favicon.png"
-  alt="loader" class="lds-ripple img-fluid" />
-  </div> -->
+  <div class="preloader">
+    <img src="<?php echo BASE_URL; ?>assets/images/logos/Screenshot.jpg" alt="loader" class="lds-ripple img-fluid" style="width:150px;height:60px"/>
+  </div>
   <div id="main-wrapper">
     <!-- Sidebar Start -->
-    <aside class="left-sidebar with-vertical" style="background:#F9F9F9">
+    <aside class="left-sidebar with-vertical sidebarm">
       <div><!-- ---------------------------------- -->
         <!-- Start Vertical Layout Sidebar -->
         <!-- ---------------------------------- -->
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="<?php echo BASE_URL; ?>main/index.html"
             class="text-nowrap logo-img">
-            <img
+            <h1>Limvo&reg</h1> 
+            <!-- <img
               src="<?php echo BASE_URL; ?>assets/images/logos/limvo1.jpg" width="200"
-              class="dark-logo" alt="Logo-Dark" />
+              class="dark-logo" alt="Logo-Dark" /> -->
 
           </a>
           <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
             <i class="ti ti-x"></i>
           </a>
         </div>
-
+        <div class="logodivider"></div>
         <nav class="" data-simplebar>
+        
           <ul id="sidebarnav">
+          
 
             <?php include 'sidebar.php' ?>
-
+            <!-- <button id="theme-toggle">🌓 Toggle Theme</button> -->
           </ul>
         </nav>
-
-        <div class="p-3 mb-2 bg-white-subtle rounded mt-3" style="position:relative;background:#F9F9F9;border-radius:10px;border:solid 1px #eee">
+         <div class="mb-1" style="background-color:redl;position: fixed;bottom: 0;left:0;">
+        <div class="p-3 mb-0 bg-white-subtle rounded mt-3" style="position:relative;background:#F9F9F9;border:solid 1px #eee">
           <div class="hstack gap-3">
             <div class="john-img">
               <img
@@ -189,7 +343,7 @@ $translator = include "tabs/lang/{$lang}.php";
           </div>
         </div>
 
-        <div class="btn-group p- mb- bg-white-subtle rounded " role="group" style="width:100%;border:solid 1px #eee;color:#bbb;background-color:#F9F9F9">
+        <div class="btn-group bg-white-subtle rounded " role="group" style="width:100%;border:solid 1px #eee;color:#bbb;background-color:#F9F9F9">
           <button type="button" class="btn bg-white-subtle">
             <i class='bx bx-bell' style="font-size: 20px;"></i>
           </button>
@@ -234,9 +388,10 @@ $translator = include "tabs/lang/{$lang}.php";
 
           <div id="translation-container" data-translations='<?= json_encode($translator); ?>'></div>
         </div>
+        </div>
+      
 
-        <br>
-        <hr>
+       
 
         <!-- ---------------------------------- -->
         <!-- Start Vertical Layout Sidebar -->
@@ -245,10 +400,6 @@ $translator = include "tabs/lang/{$lang}.php";
     </aside>
     <!--  Sidebar End -->
     <div class="page-wrapper">
-
-
-
-
 
       <div class="containe-fluid">
 
@@ -474,9 +625,23 @@ $translator = include "tabs/lang/{$lang}.php";
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
     </script>
     <script>
+
+      // const themeToggle = document.getElementById('theme-toggle');
+      //   const html = document.documentElement;
+      //   // Check saved theme or system preference
+      //   const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      //   html.setAttribute('data-theme', savedTheme);
+
+      //   themeToggle.addEventListener('click', () => {
+      //     const currentTheme = html.getAttribute('data-theme');
+      //     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      //     html.setAttribute('data-theme', newTheme);
+      //     localStorage.setItem('theme', newTheme);
+      //   });
+
       document.addEventListener('DOMContentLoaded', function() {
         const tableContainer = document.querySelector('.table-wrapper');
-        const headerRow = document.querySelector('thead tr');
+        const headerRow = document.querySelector('.accheaderrow');
 
         tableContainer.addEventListener('scroll', function() {
           if (tableContainer.scrollTop > 0) {
