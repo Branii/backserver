@@ -225,7 +225,7 @@ class FinancialManageModel extends MEDOOHelper
             $trans_oderId = bin2hex(random_bytes(4));
             $depositid  =  'WITHD' . $trans_oderId ;
             $params = [
-                'uid' => $uid,
+                // 'uid' => $uid,
                 'withdrawal_id' => $depositid,
                 'username' => $manualusername,
                 'user_email' => $manualemail,
