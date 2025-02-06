@@ -264,4 +264,23 @@ if ($flag == "fetchaccountchange") {
    
 }
 
+if ($flag == "filterchange") {
+    $uid = isset($this->viewData['uid']) ? $this->viewData['uid'] : '';
+    $ordertype = isset($this->viewData['ordertype']) ? $this->viewData['ordertype'] : '';
+    $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
+    $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
+    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
+    $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
+    $subquery =  (new UserManageModel())->FilterChangeDataSubQuery($ordertype,$startdate,$enddate);
+    $result =  (new UserManageModel())->FilterUserAccountChange($subquery,$uid,$page,$limit);
+    echo json_encode([
+        'filteraccount' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit)
+    ]);
+   
+}
+
+
+
+
 

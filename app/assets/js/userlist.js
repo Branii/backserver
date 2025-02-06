@@ -20,8 +20,8 @@ $(function () {
         }
         return moneyStr;
     }
-    
-    
+
+    const translator = JSON.parse(document.getElementById("translation-container").getAttribute("data-translations"));
     const UserlistData = (data) => {
         let html = "";
         const status = {
@@ -45,40 +45,39 @@ $(function () {
         };
 
         data.forEach((item) => {
-
-          //  console.log(item)
+            //  console.log(item)
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
 
-             let subordinate;
-            if(item.account_type == 2){
-                subordinate =  "Top Agent"
-            }else if(item.account_type == 3 && item.sub_count == 0 ){
+            let subordinate;
+            if (item.account_type == 2) {
+                subordinate = "Top Agent";
+            } else if (item.account_type == 3 && item.sub_count == 0) {
                 subordinate = "Sub Agent";
-            }else if(item.account_type == 3 && item.sub_count == 1 ){
-                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates
-            }else if(item.account_type == 3 && item.sub_count == 2 ){
-                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(',')[0];
-            }else if(item.account_type == 3 && item.sub_count > 2 ){
-                subordinate = username + " <i class='bx bx-dots-horizontal-rounded' ></i>" + item.subordinates.split(',')[0];
-            }else if(item.account_type == 1 && item.sub_count == 0){
+            } else if (item.account_type == 3 && item.sub_count == 1) {
+                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates;
+            } else if (item.account_type == 3 && item.sub_count == 2) {
+                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",")[0];
+            } else if (item.account_type == 3 && item.sub_count > 2) {
+                subordinate = username + " <i class='bx bx-dots-horizontal-rounded' ></i>" + item.subordinates.split(",")[0];
+            } else if (item.account_type == 1 && item.sub_count == 0) {
                 subordinate = "---";
             }
-            
-            const formattedSubordinates = item.subordinates ? username +" <i class='bx bx-right-arrow-alt'></i> " +item.subordinates.split(',').join(" <i class='bx bx-right-arrow-alt'></i> ") : 'None';
-          //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-             let logincount = item.logincount == null ? "0" : item.logincount
-             const [date, time] = item.created_at.split(' ');
-                let dates = '';
-                let times = '';
-                if (item.last_login && item.last_login !== "*****") {
-                [dates, times] = item.last_login.split(' ');
-                } else {
-                dates = item.last_login || ''; // Use empty string if null/undefined
-                times = item.last_login || '';
-                }
-                //  console.log(item.subordinates)
-                            
-             html += `
+
+            const formattedSubordinates = item.subordinates ? username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",").join(" <i class='bx bx-right-arrow-alt'></i> ") : "None";
+            //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+            let logincount = item.logincount == null ? "0" : item.logincount;
+            const [date, time] = item.created_at.split(" ");
+            let dates = "";
+            let times = "";
+            if (item.last_login && item.last_login !== "*****") {
+                [dates, times] = item.last_login.split(" ");
+            } else {
+                dates = item.last_login || ""; // Use empty string if null/undefined
+                times = item.last_login || "";
+            }
+            //  console.log(item.subordinates)
+
+            html += `
                   <tr>
                      <td>${username}</td>
                       <td>${item.nickname}</td>
@@ -91,8 +90,8 @@ $(function () {
                       <td>${item.sub_count} </td>
                       <td>${formatMoney(item.balance)}</td> 
                       <td>${item.rebate}</td>
-                      <td>${date + ' / ' + time}</td>
-                      <td>${dates + ' / ' + times}</td>
+                      <td>${date + " / " + time}</td>
+                      <td>${dates + " / " + times}</td>
                       <td>${logincount}</td>
                       <td>${status[item.user_state]}</td>
                  
@@ -130,9 +129,8 @@ $(function () {
                   </tr>
               `;
         });
-       return  html;
+        return html;
     };
-
 
     const renderuserlist = (data) => {
         var html = UserlistData(data);
@@ -147,8 +145,8 @@ $(function () {
         try {
             const response = await fetch(`../admin/userlistdata/${page}/${pageLimit}`);
             const data = await response.json();
-           //   console.log(response);
-           //  return
+            //   console.log(response);
+            //  return
             $("#maskuserlist").LoadingOverlay("hide");
             renderuserlist(data.users);
 
@@ -164,7 +162,7 @@ $(function () {
         $.post(`../admin/filteruserlist/${username}/${states}/${startdate}/${enddate}/${currentPage}/${pageLimit}`, function (response) {
             try {
                 const data = JSON.parse(response);
-               // console.log(data);
+                // console.log(data);
                 //  return
                 $(".loaderlist").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
                 if (data.userlists.length < 1) {
@@ -197,7 +195,7 @@ $(function () {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
             `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
       <a class='page-link' href='#' data-page='${i}'>${label}</a>
-  </li>`;
+          </li>`;
         let pagLink = `<ul class='pagination justify-content-end'>`;
 
         // Previous Button
@@ -363,13 +361,12 @@ $(function () {
         const states = $(".states").val();
         const startdate = $(".startdateuser").val();
         const enddate = $(".enddateuser").val();
-        console.log(states);
+       // console.log(states);
         $(".loaderlist").removeClass("bx-check-double").addClass("bx-loader bx-spin");
         setTimeout(() => {
             filterUserlist(username, states, startdate, enddate, currentPage, pageLimit);
         }, 100);
     });
-
 
     $(".tclose").click(function () {
         $("#signup-modal").modal("hide");
@@ -412,42 +409,42 @@ $(function () {
     fetchRebatedata();
 
     $(document).on("click", ".btnaddagent", function () {
-    const form = document.getElementById('agentform');
-      const formData = new FormData(form);
-      const datas = Object.fromEntries(formData.entries());
-       // console.log(datas);
+        const form = document.getElementById("agentform");
+        const formData = new FormData(form);
+        const datas = Object.fromEntries(formData.entries());
+        // console.log(datas);
         addAgent(datas);
     });
-// `../admin/addAgent/${datas}
+    // `../admin/addAgent/${datas}
     async function addAgent(datas) {
         try {
             ///api/v1/limvo/selfregister
-            const response = await fetch('http://192.168.1.51/chairman_test/api/v1/limvo/register_super_user', {
-                method: 'POST',
+            const response = await fetch("http://192.168.1.51/chairman_test/api/v1/limvo/register_super_user", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(datas),
             });
-    
+
             if (!response.ok) {
                 throw new Error(`Error: ${response.type} - ${response.statusText}`);
             }
-           // const data = await response.json();
-           // console.log('Registration Success:', data);
+            // const data = await response.json();
+            // console.log('Registration Success:', data);
             const result = await response.json();
-           // console.log('Registration Success:', result);
+            // console.log('Registration Success:', result);
             // Handle success or error based on response type
-            if (result.type === 'success') {
+            if (result.type === "success") {
                 $(".loaders").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
-                     setTimeout(function () {
-                        $(".loaders").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
-                        showToast("Success", result.message, "success");
-                        //$("#addagent").modal("hide");
-                     }, 500);
-              
-                     fetchUserlist(currentPage,pageLimit);
-            } else if (result.type === 'error') {
+                setTimeout(function () {
+                    $(".loaders").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+                    showToast("Success", result.message, "success");
+                    //$("#addagent").modal("hide");
+                }, 500);
+
+                fetchUserlist(currentPage, pageLimit);
+            } else if (result.type === "error") {
                 showToast("Heads up!!", result.message, "info");
             }
             // const errorMessages = {
@@ -481,7 +478,7 @@ $(function () {
             //         showToast("Success", "agent added sucessfully", "success");
             //         // fetchUserlist(currentPagelist);
             //     }, 500);
-          //  }
+            //  }
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -514,7 +511,7 @@ $(function () {
 
         const uid = $(this).attr("data-uid").trim();
         $(".userquotaid").val(uid);
-       // console.log(uid);
+        // console.log(uid);
 
         $.post(`../admin/getuserrebate/${uid}/`, function (data) {
             const rebatelist = JSON.parse(data);
@@ -589,162 +586,157 @@ $(function () {
         );
     });
 
-
- //fetch_sub
- let navigationHistory = [];
- $(document).on("click", ".viewsub", function () {
-    const names  = $(this).attr("data-uid").trim();
-    const nameArray = names.split(','); 
-   // console.log(nameArray);
-    navigationHistory.push({
-        nameArray: nameArray,
-        currentPage: currentPage,
-        pageLimit: pageLimit
-    });
-    // console.log("Navigation History:", navigationHistory);
-    fetchsubagent(nameArray,currentPage,pageLimit)
-    
-  
-});
-
-function fetchsubagent(nameArray,currentPage, pageLimit) {
-    $.post(`../admin/agent_subordinate/${nameArray}/${currentPage}/${pageLimit}`, 
-        function (response) {
-        try {
-           const data = JSON.parse(response);
-          //  console.log(data);
-            renderuserlist(data.subagent);
-            //  return
-              $("#maskuserlist").LoadingOverlay("hide");
-              renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray,newPage, pageLimit));
-              document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
-              toggleBackButton();
-        } catch (error) {
-            console.error("Error parsing JSON response:", error);
-        } finally {
-           // $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-        }
-    }).fail(function (error) {
-        console.error("Error fetching data:", error);
-      //  $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-    });
-   
-}
-
-function toggleBackButton() {
-    if (navigationHistory.length > 1) {
-        $("#backButton").show();
-    } else {
-        $("#backButton").show();
-    }
-}
-
-
-$("#backButton").on("click", function () {
-    if (navigationHistory.length > 1) {
-        // Pop the last navigation state
-        navigationHistory.pop();
-        const previousState = navigationHistory[navigationHistory.length - 1];
-        
-        fetchsubagent(previousState.nameArray, previousState.currentPage, previousState.pageLimit);
-    } else {
-        navigationHistory = []; // Clear history
-        currentPage = 1;
-        fetchUserlist(currentPage, pageLimit);
-    }
-
-    // Hide back button if no navigation history
-    toggleBackButton();
-});
-
-$(document).on("click", ".viewuserinfo", function () {
-    const names  = $(this).attr("data-uidd");
-    // const nameArray = names.split(','); 
-     console.log(names);
-    // navigationHistory.push({
-    //     nameArray: nameArray,
-    //     currentPage: currentPage,
-    //     pageLimit: pageLimit
-    // });
-    // // console.log("Navigation History:", navigationHistory);
-    // fetchsubagent(nameArray,currentPage,pageLimit)
-});
-
-
-$(document).on("click", ".acountbtn", function (e) {
-    let userid =$(this).attr("data-uid");
-    $("#viewaccount").modal("show");
-    
-    $.post(`../admin/useraccountchange/${userid}/${currentPage}/${pageLimit}`, 
-      function (data) {
-        let fetchData = JSON.parse(data);
-           console.log(fetchData)
-          return
-        let tableBody = document
-          .getElementById("accountchange")
-          .getElementsByTagName("tbody")[0];
-        while (tableBody.firstChild) {
-          tableBody.removeChild(tableBody.firstChild);
-        }
-        fetchData.forEach((item) => {
-          let row = tableBody.insertRow();
-          // Create an array of the data to be displayed in each cell
-          let type = {
-            1: '<span class="tag tag-primary" style="">Deposit</span>',
-            2: '<span class="tag" style="background-color:#FFD700;color: #faebd7;">Win Bonus</span>',
-            3: '<span class="tag tag-success">Bet Awarded</span>',
-            4: '<span class="tag" style="background-color:#FF4500;color: #faebd7;">Withdrawal</span>',
-            5: '<span class="tag" style="background-color:#DC143C;color: #faebd7;">Bet deduct</span>',
-            6: '<span class="tag" style="background-color:#A9A9A9;color: #faebd7;">Bet Cancelled</span>',
-            7: '<span class="tag" style="background-color:#8A2BE2;color: #faebd7;">Rebate</span>',
-            8: '<span class="tag" style="background-color:#9370DB;color: #faebd7;">Self Rebate</span>',
-            9: '<span class="tag" style="background-color:#FF6347;color: #faebd7;">Sending Red Envelope</span>',
-            10: '<span class="tag" style="background-color:#FF69B4;color: #faebd7;">Red Envelope Received</span>',
-            11: '<span class="tag" style="background-color:#4682B4;color: #faebd7;">Bet Refund</span>',
-          };
-
-          statusText = type[item.order_type] ?? "Unknown";
-
-          let $creditamount = 0;
-          let $debitamount = 0;
-          if (item.transaction_type == 1) {
-            $creditamount =
-              '<span style="color:;">+' + item.account_change + "</span>";
-          } else {
-            $debitamount =
-              '<span style="color:re;"> ' + item.account_change + " </span>";
-          }
-
-          let states = "";
-          if (item.status == 1) {
-            states = "Completed";
-          }
-          let transid = ("T" + item.order_id).slice(0, 10);
-
-          let rowData = [
-            transid,
-            item.username,
-            statusText,
-            $debitamount,
-            $creditamount,
-            item.balance,
-            item.dateTime,
-            item.order_id,
-            states,
-          ];
-          // Iterate over rowData to create and fill each cell
-          rowData.forEach((datas) => {
-            let cell = row.insertCell();
-            cell.innerHTML = datas;
-          });
-
-          //console.log(fetchData)
+    //fetch_sub
+    let navigationHistory = [];
+    $(document).on("click", ".viewsub", function () {
+        const names = $(this).attr("data-uid").trim();
+        const nameArray = names.split(",");
+        // console.log(nameArray);
+        navigationHistory.push({
+            nameArray: nameArray,
+            currentPage: currentPage,
+            pageLimit: pageLimit,
         });
-      }
-    );
-  });
+        // console.log("Navigation History:", navigationHistory);
+        fetchsubagent(nameArray, currentPage, pageLimit);
+    });
 
+    function fetchsubagent(nameArray, currentPage, pageLimit) {
+        $.post(`../admin/agent_subordinate/${nameArray}/${currentPage}/${pageLimit}`, function (response) {
+            try {
+                const data = JSON.parse(response);
+                //  console.log(data);
+                renderuserlist(data.subagent);
+                //  return
+                $("#maskuserlist").LoadingOverlay("hide");
+                renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray, newPage, pageLimit));
+                document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+                toggleBackButton();
+            } catch (error) {
+                console.error("Error parsing JSON response:", error);
+            } finally {
+                // $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+            }
+        }).fail(function (error) {
+            console.error("Error fetching data:", error);
+            //  $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+        });
+    }
 
+    function toggleBackButton() {
+        if (navigationHistory.length > 1) {
+            $("#backButton").show();
+        } else {
+            $("#backButton").show();
+        }
+    }
+
+    $("#backButton").on("click", function () {
+        if (navigationHistory.length > 1) {
+            // Pop the last navigation state
+            navigationHistory.pop();
+            const previousState = navigationHistory[navigationHistory.length - 1];
+
+            fetchsubagent(previousState.nameArray, previousState.currentPage, previousState.pageLimit);
+        } else {
+            navigationHistory = []; // Clear history
+            currentPage = 1;
+            fetchUserlist(currentPage, pageLimit);
+        }
+
+        // Hide back button if no navigation history
+        toggleBackButton();
+    });
+
+    $(document).on("click", ".viewuserinfo", function () {
+        const names = $(this).attr("data-uidd");
+        console.log(names);
+       
+    });
+
+    const AccountTransactionss = (data) => {
+        let html = "";
+
+        const statusColor = {
+            1: { title: translator["Deposit"], color: "#4CAF50" }, // Green
+            2: { title: translator["Win Bonus"], color: "#FF9800" }, // Orange
+            3: { title: translator["Bet Awarded"], color: "#03A9F4" }, // Light Blue
+            4: { title: translator["Withdrawal"], color: "#F44336" },
+            5: { title: translator["Bet Deduct"], color: "#E91E63" }, // Red
+            6: { title: translator["Bet Cancelled"], color: "#9E9E9E" }, // Grey
+            7: { title: translator["Rebates"], color: "#8BC34A" }, // Light Green
+            8: { title: translator["Self Rebate"], color: "#00BCD4" }, // Cyan
+            9: { title: translator["Sending Red Envelope"], color: "#FF5722" }, // Deep Orange
+            10: { title: translator["Red Envelope Receive"], color: "#795548" }, // Brown
+            11: { title: translator["Bet Refund"], color: "#FFC107" }, // Amber
+            12: { title: translator["Bet Lost"], color: "#FFC107" }, // Amber
+        };
+
+        let completes = translator["Completed"];
+        const formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
+
+        data.forEach((item) => {
+            let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+
+            html += `
+            <tr class="trow">
+              <td>${"TR" + item.order_id.substring(0, 7)}</td>
+              <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
+                <td><i class='bx bxs-circle' style='color:${statusColor[item.order_type].color};font-size:8px;margin-right:5px;'></i>${statusColor[item.order_type].title}</td>
+                <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
+                <td>${formatMoney(item.balance)}</td>
+                <td>${formatTimestamp(item.dateTime)}</td>
+                <td>${formatTimestamp(item.date_created)}</td>
+                <td>${item.order_id}</td>
+                <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> ${completes}</td>
+                
+            </tr>
+        `;
+        });
+        return html;
+    };
+
+    const renders = (data) => {
+        var html = AccountTransactionss(data);
+        $("#accountchange").html(html);
+    };
+
+    async function fetchaccount(userid, currentPage, pageLimit) {
+        try {
+            const response = await fetch(`../admin/useraccountchange/${userid}/${currentPage}/${pageLimit}`);
+            const data = await response.json();
+            
+            $("#maskaccount").LoadingOverlay("hide");
+            if (data.account.length < 1) {
+                $("#accountchange").html(`
+          <tr class="no-results">
+            <td colspan="9">
+              <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="120px" />
+            </td>
+          </tr>
+       
+          ` );
+              return
+            }  
+        
+            renders(data.account);
+            tableScrolluserLists();
+            // Render pagination
+            render(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) =>  fetchaccount(userid, newPage, pageLimit));
+             document.getElementById("paging_infolistss").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+    
+    let userIdacc
+    $(document).on("click", ".acountbtn", function (e) {
+        let userid = $(this).attr("data-uid");
+        userIdacc = userid
+        $("#viewaccount").modal("show");
+        fetchaccount(userid, currentPage, pageLimit);
+      
+    });
 
     function tableScrolluserList() {
         const tableContainerUser = document.querySelector(".table-wrapperuserlist");
@@ -760,5 +752,158 @@ $(document).on("click", ".acountbtn", function (e) {
     }
     tableScrolluserList();
 
+    function render(totalPages, currentPage, pageLimit, callback) {
+        const createPageLink = (i, label = i, disabled = false, active = false) =>
+            `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+      <a class='page-link' href='#' data-page='${i}'>${label}</a>
+          </li>`;
+        let pagLink = `<ul class='pagination justify-content-end'>`;
+
+        // Previous Button
+        pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
+
+        // Page numbers with ellipsis
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+                pagLink += createPageLink(i, i, false, i === currentPage);
+            } else if (i === currentPage - 3 || i === currentPage + 3) {
+                pagLink += createPageLink(i, "...", true);
+            }
+        }
+
+        // Next Button
+        pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
+        pagLink += "</ul>";
+
+        document.getElementById("paginationacc").innerHTML = pagLink;
+
+        // Add click event listeners
+        document.querySelectorAll("#paginationacc .page-link").forEach((link) => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const newPage = +this.getAttribute("data-page");
+                if (newPage > 0 && newPage <= totalPages) {
+                    $("#maskaccount").LoadingOverlay("show", {
+                        background: "rgb(90,106,133,0.1)",
+                        size: 3,
+                    });
+                    callback(newPage, pageLimit); // Call the provided callback with new page and pageLimit
+                }
+            });
+        });
+    }
+
+
+    $(".numrowschange").change(function () {  
+        $("#maskaccount").LoadingOverlay("show", {
+            background: "rgb(90,106,133,0.1)",
+            size: 3,
+          });
+         const numrows = $(this).val();
+         fetchaccount(userIdacc,currentPage, numrows)
+     
+       });
+
+       $(".refreshuseracc").click(function () {
+        
+        $(".refresdata").val("");
+        $("#maskaccount").LoadingOverlay("show", {
+            background: "rgb(90,106,133,0.1)",
+            size: 3,
+          });
+          fetchaccount(userIdacc,currentPage,pageLimit)
+         });
+
+
+         async function  filterAccountChange (userIdacc,ordertype, startdateusers, enddateusers, currentPage, pageLimit) {
+            try {
+                const response = await fetch(`../admin/filterChangeAccount/${userIdacc}/${ordertype}/${startdateusers}/${enddateusers}/${currentPage}/${pageLimit}`);
+                const data = await response.json();
+            
+                ///console.log(response);
     
+                $(".loaderuseracc").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+                if (data.filteraccount.length < 1) {
+                    $("#accountchange").html(`
+                 <tr class="no-results">
+                <td colspan="9">
+                  <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="120px" />
+                </td>
+                 </tr>
+           
+              ` );
+                  return
+                }  
+                $("#maskaccount").LoadingOverlay("hide");
+                renders(data.filteraccount);
+    
+                // Render pagination
+                render(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterAccountChange (userIdacc,ordertype, startdateusers, enddateusers, newPage, pageLimit));
+                document.getElementById("paging_infolistss").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+
+
+         $(document).on("click", ".searchuseraccount", function () {
+            if ( $(".orderuserchange").val() == "" && $(".startdateusers").val() == "" ) {
+                showToast("Heads up!!", "Select one or more data fields to filter", "info");
+                return;
+            }
+            const ordertype = $(".orderuserchange").val();
+            const startdateusers = $(".startdateusers").val();
+            const enddateusers = $(".enddateusers").val();
+            console.log(ordertype);
+         
+            $(".loaderuseracc").removeClass("bx-check-double").addClass("bx-loader bx-spin");
+                filterAccountChange(userIdacc,ordertype, startdateusers, enddateusers, currentPage, pageLimit);
+         
+        });
+       
+  
+
+        function tableScrolluserLists() {
+            const tableContainerUsers = document.querySelector(".table-wrapperuserlistt");
+            const headerRowUserLists = document.querySelector(".headrowuserlists");
+    
+            tableContainerUsers.addEventListener("scroll", function () {
+                if (tableContainerUsers.scrollTop > 0) {
+                    headerRowUserLists.classList.add("sticky-headeruserlists");
+                } else {
+                    headerRowUserLists.classList.remove("sticky-headeruserlists");
+                }
+            });
+        }
+      
+
+        $(".playeruserlistt").click(function () {
+            let direction = $(this).val();
+            const tableWrapper = $(".table-wrapperuserlistt");
+            const tableWrappers = document.querySelector(".table-wrapperuserlistt");
+            const scrollAmount = 1000; // Adjust as needed
+            const scrollOptions = {
+                behavior: "smooth",
+            };
+            if (tableWrapper.length) {
+                switch (direction) {
+                    case "leftuserlistss":
+                        tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
+                        break;
+                    case "rightuserlistss":
+                        tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
+                        break;
+                    case "startlistss":
+                        // Scroll to the absolute start (leftmost position)
+                        tableWrapper.animate({ scrollLeft: 0 }, "slow");
+                        break;
+                    case "endlistss":
+                        const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
+                        tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 });

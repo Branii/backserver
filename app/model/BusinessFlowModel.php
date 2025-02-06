@@ -49,7 +49,7 @@ class BusinessFlowModel extends MEDOOHelper
         }
 
         // Add ordering and limit to the query (you can also parameterize order if needed)
-        $subQuery .= " ORDER BY date_created DESC";
+       $subQuery .= " ORDER BY trans_id DESC";
 
         // Return the final subquery
         return $subQuery;
@@ -71,7 +71,8 @@ class BusinessFlowModel extends MEDOOHelper
                 WHERE $subQuery
             ) AS temp_table
         LEFT JOIN 
-            users_test ON users_test.uid = temp_table.uid
+            users_test ON users_test.uid = temp_table.uid  ORDER BY 
+             temp_table.trans_id DESC
          LIMIT :offset, :limit
        
         ";

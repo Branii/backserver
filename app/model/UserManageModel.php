@@ -359,7 +359,78 @@ class UserManageModel extends MEDOOHelper
     }
    
 
+    public function FilterUserAccountChange($subquery,$userid, $page, $limit) {
+
+        $startpoint = ($page - 1) * $limit;
     
+        $sql = "SELECT 
+                    transaction.*, 
+                    users_test.email, 
+                    users_test.contact, 
+                    users_test.reg_type, 
+                    COALESCE(users_test.username, 'N/A') AS username 
+                FROM 
+                    transaction   
+                LEFT JOIN 
+                    users_test ON users_test.uid = transaction.uid  
+                 WHERE   $subquery AND transaction.uid = :uid
+                  ORDER BY  transaction.trans_id DESC 
+                LIMIT :offset, :limit";
+    
+        $countSql = "SELECT COUNT(*) AS total_count 
+                     FROM transaction 
+                     LEFT JOIN users_test ON users_test.uid = transaction.uid  
+                    WHERE $subquery AND transaction.uid = :uid";
+    
+        // Database connection
+        $pdo = (new Database())->openLink();
+    
+ 
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':uid', (int)$userid, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $startpoint, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        $countStmt = $pdo->prepare($countSql);
+        $countStmt->bindValue(':uid', (int)$userid, PDO::PARAM_INT);
+        $countStmt->execute();
+        $totalRecords = $countStmt->fetchColumn();
+    
+        return ['data' => $data, 'total' => $totalRecords];
+    }
+    
+    
+    public static function FilterChangeDataSubQuery($states, $startdate, $enddate)
+    {
+        $filterConditions = [];
+
+       
+        if (!empty($states)) {
+            $filterConditions[] = "transaction.order_type = '$states'";
+        }
+
+        if (!empty($startdate) && !empty($enddate)) {
+            $filterConditions[] = "transaction.date_created BETWEEN '$startdate' AND '$enddate'";
+        } elseif (!empty($startdate)) {
+            $filterConditions[] = "transaction.date_created = '$startdate'";
+        } elseif (!empty($enddate)) {
+            $filterConditions[] = "transaction.date_created = '$enddate'";
+        }
+
+        // Combine conditions into the final query
+        if (!empty($filterConditions)) {
+            $subQuery = implode(' AND ', $filterConditions);
+        }
+
+        // Add ordering and limit to the query (you can also parameterize order if needed)
+      //  $subQuery .= " ORDER BY dateTime DESC";
+
+        // Return the final subquery
+        return $subQuery;
+    }
+
 
     public static function AddAgentData($datas)
     {

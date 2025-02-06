@@ -55,13 +55,16 @@ if ($flag == "filterfinance") {
 
     $depositetype = isset($this->viewData['depositetype']) ? (int) $this->viewData['depositetype'] : "";
     $uid = isset($this->viewData['uid']) ? (int) $this->viewData['uid'] :"";
+  //  $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
     $amount = isset($this->viewData['amount']) ? (float)$this->viewData['amount'] : "";
     $username = isset($this->viewData['approvedby']) ? $this->viewData['approvedby'] : "";
     $review = urldecode(isset($this->viewData['review'])) ? urldecode($this->viewData['review']) : "";
     $username =  urldecode($username);
-
-    $result = (new FinancialManageModel())->addMoneyData($depositetype,$uid,$amount,$username,$review) ?? [];
+    // if (!empty($usernameCheck) && $usernameCheck != null) {
+    //     $userid = $usernameCheck[0]['uid']; 
+     $result = (new FinancialManageModel())->addMoneyData($depositetype,$uid,$amount,$username,$review) ?? [];
     echo json_encode($result);
+    //}
 }
 
 

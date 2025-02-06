@@ -72,21 +72,7 @@
         cursor: pointer;
     }
 
-    .table-wrapperuserlist {
-        overflow: hidden;
-        /* Hide the default scrollbar */
-        white-space: nowrap;
-        max-width: 100%;
-        /* Adjust based on your needs */
-        margin-bottom: 10px;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 10px;
-        background: rgb(38, 57, 77) 0px 20px 30px -10px;
-        /* Ensure it doesn't interfere with content */
-        z-index: 10;
-    }
+  
 
     .queryholderuserlistz {
         width: 19%;
@@ -165,6 +151,22 @@
         /* Darker blue on hover */
     }
 
+    .table-wrapperuserlist {
+        overflow: hidden;
+        /* Hide the default scrollbar */
+        white-space: nowrap;
+        max-width: 100%;
+        /* Adjust based on your needs */
+        margin-bottom: 10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: rgb(38, 57, 77) 0px 20px 30px -10px;
+        /* Ensure it doesn't interfere with content */
+        z-index: 10;
+    }
+
     .scrollable-container {
         max-height: 600px;
         /* Limit the container's height */
@@ -204,7 +206,6 @@
         /* Rounded corners for the track */
     }
 
-   
     .queryholderuserlist {
         width: 19%;
         position: absolute;
@@ -299,81 +300,133 @@
     }
 
     .tbl-headeruserlist {
-    position: sticky;
-    top: 0;
-  }
+        position: sticky;
+        top: 0;
+    }
 
-  .sticky-headeruserlist {
-    position: relative;
-    bottom: 1px;
-    background-color: red;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-  }
+    .sticky-headeruserlist {
+        position: relative;
+        bottom: 1px;
+        background-color: red;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    }
 
-/*Tooltip*/
-section#tooltipp p {
-  margin: 20px 0;
-}
+    .tbl-headeruserlists {
+        position: sticky;
+        top: 0;
+    }
 
-/*Tooltip text*/
-.tooltipp {
-  position: relative;
-  width: auto;
-}
+    .sticky-headeruserlists {
+        position: relative;
+        bottom: 1px;
+        background-color: red;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    }
 
-.tooltipp .tooltipp-text {
-  font-family: "Open Sans", sans-serif;
-  font-size: 1em;
-  line-height: 1.5em;
-  visibility: hidden;
-  width: 400px; /* Fixed width */
-  background-color: #fff;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  color: gray;
-  text-align: center;
-  border-radius: 6px;
-  padding: 10px;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 0%;
-  margin-left: -60px;
-  opacity: 0;
-  cursor:pointer;
-  transition: .3s;
-  transform: translate3d(0px, 20px, 0px);
 
-  /* Ensure text wraps */
-  white-space: normal; /* Allow text to wrap */
-  word-wrap: break-word; /* Break long words */
-  overflow-wrap: break-word; /* Modern alternative to word-wrap */
-}
+    /*Tooltip*/
+    section#tooltipp p {
+        margin: 20px 0;
+    }
 
-.tooltipp .tooltipp-text::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #bbb transparent transparent transparent;
-}
+    /*Tooltip text*/
+    .tooltipp {
+        position: relative;
+        width: auto;
+    }
 
-.tooltipp:hover .tooltipp-text {
-  visibility: visible;
-  opacity: 1;
-  transform: translate3d(0px, 0px, 0px);
-}
+    .tooltipp .tooltipp-text {
+        font-family: "Open Sans", sans-serif;
+        font-size: 1em;
+        line-height: 1.5em;
+        visibility: hidden;
+        width: 400px; /* Fixed width */
+        background-color: #fff;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        color: gray;
+        text-align: center;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 0%;
+        margin-left: -60px;
+        opacity: 0;
+        cursor: pointer;
+        transition: 0.3s;
+        transform: translate3d(0px, 20px, 0px);
 
- 
+        /* Ensure text wraps */
+        white-space: normal; /* Allow text to wrap */
+        word-wrap: break-word; /* Break long words */
+        overflow-wrap: break-word; /* Modern alternative to word-wrap */
+    }
+
+    .tooltipp .tooltipp-text::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #bbb transparent transparent transparent;
+    }
+
+    .tooltipp:hover .tooltipp-text {
+        visibility: visible;
+        opacity: 1;
+        transform: translate3d(0px, 0px, 0px);
+    }
+        /* Custom Scrollbar for Webkit Browsers */
+        .table-wrapperuserlistt::-webkit-scrollbar {
+        width: 5px;
+        /* Slimmer scrollbar width */
+        height: 5px;
+        /* Slimmer scrollbar height for horizontal scrolling */
+    }
+
+    .table-wrapperuserlistt::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        /* Lighter background for track */
+        border-radius: 5px;
+    }
+
+    .table-wrapperuserlistt::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        /* Blue color for thumb */
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .table-wrapperuserlistt::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+        /* Darker blue on hover */
+    }
+
+    .table-wrapperuserlistt {
+        overflow: hidden;
+        /* Hide the default scrollbar */
+        white-space: nowrap;
+        max-width: 100%;
+        /* Adjust based on your needs */
+        margin-bottom: 10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: rgb(38, 57, 77) 0px 20px 30px -10px;
+        /* Ensure it doesn't interfere with content */
+        z-index: 10;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0"><?= $translator['User List']; ?></h4>
+        <h4 class="card-title mb-0"><?= $translator['User List']; ?></h4>
     </div>
- 
+
     <!-- <button id="backButton" style="display: none;">Back</button> -->
     <div class="px-4 py-3 border-bottom pagerlist1">
         <form action="" class="betform">
@@ -384,29 +437,25 @@ section#tooltipp p {
                     <select class="form-control queryholderuserlist" size="5" style="display: none;" id="userlists">
                         <!-- Options will be populated dynamically -->
                     </select>
-                    
+
                     <select name="recharge" class="form-control form-select queryholderuserlistz recharges" data-bs-placeholder="Select Type">
-                    <option value="">-Recharge Level-</option>
-                    <option value="1">Level One</option>
-                    <option value="2">Level Two</option>
-                    <option value="3">Level Three</option>
+                        <option value="">-Recharge Level-</option>
+                        <option value="1">Level One</option>
+                        <option value="2">Level Two</option>
+                        <option value="3">Level Three</option>
                     </select>
 
                     <select name="state" class="form-control form-select queryholderuserlistz states" data-bs-placeholder="Select Type">
-                    <option value="">-State-</option>
-                    <option value="1">Enable to run</option>
-                    <option value="2">Suspend Betting</option>
-                    <option value="3">Forbidden to log in</option>
-                    <option value="4">Block User</option>
+                        <option value="">-State-</option>
+                        <option value="1">Enable to run</option>
+                        <option value="2">Suspend Betting</option>
+                        <option value="3">Forbidden to log in</option>
+                        <option value="4">Block User</option>
                     </select>
-
 
                     <input name="startdate" type="date" class="form-control queryholderuserlistz startdateuser" aria-describedby="name" placeholder="Name" />
 
                     <input name="enddate" type="date" class="form-control queryholderuserlistz enddateuser" aria-describedby="name" placeholder="Name" />
-
-                
-              
                 </div>
             </span>
             <span class="toplist-center" aria-label=" navigation example">
@@ -414,15 +463,15 @@ section#tooltipp p {
             </span>
             <span class="topplist-right" id="paginations" aria-label="Page navigation example">
                 <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-                <button type="button" class="btn bg-white-subtle " id="backButton"  aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="back">
+                    <button type="button" class="btn bg-white-subtle" id="backButton" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="back">
                         <i class="bx bxs-chevron-left-circle" style="font-size: 20px;"></i>
                     </button>
-                <button type="button" class="btn bg-white-subtle addagent" value="" aria-label="Execute"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add Agent">
-                    <i class="bx bxs-user-plus" style="font-size: 20px;"></i>
-                </button>
-                <button type="button" class="btn bg-white-subtle gettopagent" value="" aria-label="Get Top Agent" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Get Top Agent">
-                    <i class="bx bxs-user-account" style="font-size: 20px;"></i>
-                </button>
+                    <button type="button" class="btn bg-white-subtle addagent" value="" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add Agent">
+                        <i class="bx bxs-user-plus" style="font-size: 20px;"></i>
+                    </button>
+                    <button type="button" class="btn bg-white-subtle gettopagent" value="" aria-label="Get Top Agent" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Get Top Agent">
+                        <i class="bx bxs-user-account" style="font-size: 20px;"></i>
+                    </button>
 
                     <button type="button" class="btn bg-white-subtle player refreshlistuser" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                         <i class="bx bx-refresh" style="font-size: 20px;"></i>
@@ -430,22 +479,18 @@ section#tooltipp p {
                     <button type="button" class="btn bg-white-subtle executeuserlist" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                         <i class="bx bx-check-double loaderlist" style="font-size: 20px;"></i>
                     </button>
-
-                   
-              
                 </div>
             </span>
         </form>
     </div>
 
-  
     <!-- <span class="tooltipp">relacionamentos verticais<span class="tooltipp-text">Entre culturas e povos brasileiros de todo o mundo</span></span> -->
     <div class="card-body p-4">
         <div class="table-responsive mb-4 border rounded-1 table-wrapperuserlist" id="maskuserlist" style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
                 <thead class="text-dark fs-4 tbl-headeruserlist">
-                <tr class="headrowuserlist">
-                <th>
+                    <tr class="headrowuserlist">
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
                         <th>
@@ -485,7 +530,6 @@ section#tooltipp p {
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
                         </th>
-
                     </tr>
                 </thead>
                 <tbody id="userlistContainer" class="tbl-content">
@@ -526,12 +570,9 @@ section#tooltipp p {
                 <option value="500">500</option>
             </select>
             <span class="toplist-right" id="paginationuserlist" class="right-element">
-            <!-- paginationation -->
+                <!-- paginationation -->
             </span>
-           
         </span>
-     
-      
     </div>
 </div>
 
@@ -552,7 +593,7 @@ section#tooltipp p {
                 <!-- Form -->
                 <form id="agentform">
                     <!-- Username Field -->
-               
+
                     <div class="form-floating mb-3">
                         <input name="username" type="text" class="form-control border" placeholder="Username" />
                         <label>
@@ -759,7 +800,7 @@ section#tooltipp p {
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="text-infos">Quota</h5>
-                        <i class="bx bx-message-square-x listclose" style="color: #868c87; font-size: 25px; cursor: pointer;"data-bs-dismiss="modal" aria-label="Close"></i>
+                        <i class="bx bx-message-square-x listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
                 </div>
 
@@ -801,70 +842,141 @@ section#tooltipp p {
     <!-- /.modal-dialog -->
 </div>
 
-
-
 <div id="viewaccount" class="modal fade" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between">
-                        <div><?= $translator['Bet Info']; ?></div>
+                        <div>Account Change Info</div>
                         <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
                     </div>
                 </div>
 
                 <form>
                     <div class="row">
-                        
-                    <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapper" id="mask" style="height: 530px; overflow-y: scroll;">
-            <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
-                <thead class="text-dark fs-4 tbl-header">
-                    <tr class="accheaderrow">
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['ID Number']; ?></h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Type']; ?></h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Amount']; ?></h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Stake Time']; ?></h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Server Time']; ?></h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction ID']; ?></h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
-                        </th>
-                    </tr>
-                </thead>
+                        <div class="px-4 py-3 border-bottom pagerlist1">
+                            <form action="" class="betform">
+                                <span class="top-left-btn">
+                                    <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
+                                        <select name="order_type" class="form-control form-select orderuserchange refresdata" data-bs-placeholder="Select Type" style="width: 39%;">
+                                            <option value="">-<?= $translator['Transaction Type']; ?>-</option>
+                                            <option value="1"><?= $translator['Deposit']; ?></option>
+                                            <option value="2"><?= $translator['Win Bonus']; ?></option>
+                                            <option value="3"> <?= $translator['Bet Awarded']; ?></option>
+                                            <option value="4"><?= $translator['Withdrawal']; ?></option>
+                                            <option value="6"><?= $translator['Bet Cancelled']; ?></option>
+                                            <option value="5"><?= $translator['Bet Deduct']; ?></option>
+                                            <option value="7"><?= $translator['Rebates']; ?></option>
+                                            <option value="8"><?= $translator['Self Rebate']; ?></option>
+                                            <option value="9"><?= $translator['Sending Red Envelope']; ?></option>
+                                            <option value="10"><?= $translator['Red Envelope Receive']; ?></option>
+                                            <option value="11"><?= $translator['Bet Refund']; ?></option>
+                                            <option value="12"><?= $translator['Bet Lost']; ?></option>
+                                        </select>
 
-                <tbody id="dataContainer" class="tbl-content">
-                    <tr class="no-results">
-                        <td colspan="9">
-                            <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+                                        <input name="startdate" type="date" class="form-control startdateusers refresdata" aria-describedby="name" style="width: 39%; position: relative; left: 4%;" placeholder="Name" />
+
+                                        <input name="enddate" type="date" class="form-control enddateusers refresdata" aria-describedby="name" style="width: 39%; position: relative; left: 6%;" placeholder="Name" />
+                                    </div>
+                                </span>
+                                <span class="toplist-center" aria-label=" navigation example">
+                                    <!--enter is free-->
+                                </span>
+                                <span class="topplist-right" id="paginations" aria-label="Page navigation example">
+                                    <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                                        <button type="button" class="btn bg-white-subtle player refreshuseracc" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                                            <i class="bx bx-refresh" style="font-size: 20px;"></i>
+                                        </button>
+                                        <button type="button" class="btn bg-white-subtle searchuseraccount" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                                            <i class="bx bx-check-double loaderuseracc" style="font-size: 20px;"></i>
+                                        </button>
+                                    </div>
+                                </span>
+                            </form>
+                        </div>
+
+                        <div class="card-body p-4">
+                          
+                                        <div class="table-responsive mb-4 border rounded-1 table-wrapperuserlistt" id="maskaccount" style="height: 330px; overflow-y: scroll;">
+                                        <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
+                                            <thead class="text-dark fs-4 tbl-headeruserlists">
+                                        <tr class="headrowuserlists">
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['ID Number']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Type']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Amount']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Stake Time']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Server Time']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction ID']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
+                                            </th>
+                                            <!-- <th>
+                                            <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
+                                        </th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody id="accountchange" class="tbl-content">
+                                        <tr class="no-results">
+                                            <td colspan="9">
+                                                <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="px-4 py-3 border-top pagerlist">
+                            <span class="toplist-left-btn">
+                                <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                                    <!-- <button type="button" class="btn bg-white-subtle playerbet" value="betstart">
+                            <i class="bx bx-chevrons-left" style="font-size: 20px;"></i>
+                        </button> -->
+                                    <button type="button" class="btn bg-white-subtle playeruserlistt" value="leftuserlistss">
+                            <i class="bx bx-chevron-left" style="font-size: 20px;"></i>
+                        </button>
+                        <button type="button" class="btn bg-white-subtle playeruserlistt" value="rightuserlistss">
+                            <i class="bx bx-chevron-right" style="font-size: 20px;"></i>
+                        </button>
+                                    <!-- <button type="button" class="btn bg-white-subtle playerbet" value="betend">
+                            <i class="bx bx-chevrons-right" style="font-size: 20px;"></i>
+                        </button> -->
+                                </div>
+                            </span>
+                            <span class="toplist-center" aria-label=" navigation example">
+                                <span id="paging_infolistss" style="color: #aaa;">---</span>
+                            </span>
+                            <span class="top-right-btn" aria-label="Page navigation example">
+                                <select class="left-element form-control numrowschange" style="font-size: 12px;">
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="200">200</option>
+                                    <option value="500">500</option>
+                                </select>
+                                <span class="toplist-right" id="paginationacc" class="right-element">
+                                    <!-- paginationation -->
+                                </span>
+                            </span>
+                        </div>
                         <!-- <div class="col-md-6">
                             <table class="table table-bordered table-striped">
                                 <tbody id="rowbet1"></tbody>
@@ -878,4 +990,3 @@ section#tooltipp p {
     </div>
     <!-- /.modal-dialog -->
 </div>
-

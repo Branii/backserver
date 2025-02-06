@@ -226,14 +226,7 @@ class adminController extends Controller {
 
    //
 
-    //NOTE -
-    ////////////// USERLIST LIST -//////////
-    public function userlistdata($pageNumber, $limit)
-    {
-        $this->view('exec/account_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
-        $this->view->render();
-    }
-
+  
 
     /// ----- WIN LOSS REPORT --------------------------------
     public function users_win_loss($lottery_id, $start_date,$end_date, $page,$limit)
@@ -264,6 +257,14 @@ class adminController extends Controller {
     public function fetch_lottery_basic_params($lottery_id,$page)
     {
         $this->view('exec/lottery_basic_params', ['lottery_id' => $lottery_id,'page' => $page,'flag' => 'fetch-lottery-basic-params']);
+        $this->view->render();
+    }
+
+      //NOTE -
+    ////////////// USERLIST LIST -//////////
+    public function userlistdata($pageNumber, $limit)
+    {
+        $this->view('exec/account_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
         $this->view->render();
     }
 
@@ -317,6 +318,16 @@ class adminController extends Controller {
        
     }
     
+    public function filterChangeAccount($uid,$ordertype,$startdate,$enddate,$pageNumber,$limit){
+        $this->view('exec/account_manage',[
+            'uid' => $uid,
+            'ordertype' => $ordertype,'startdate' => $startdate,
+            'enddate' => $enddate, 'flag' => 'filterchange',
+            'page'=>$pageNumber,'limit'=>$limit,
+
+        ]);
+        $this->view->render();
+    }
 
   
      //NOTE -
