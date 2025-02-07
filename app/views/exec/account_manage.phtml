@@ -10,12 +10,18 @@ if ($flag == "userlistdata") {
 
     $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
     $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
-    $result = (new UserManageModel())->FetchUserlistData($page, $limit);
 
-      echo json_encode([
-        'users' => $result['data'],
-        'totalPages' => ceil($result['total'] / $limit)
-    ]);
+     $res = UserManageModel::fetchUsersData();
+     echo json_encode($res);
+     return;
+    // $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
+    // $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
+    // $result = (new UserManageModel())->FetchUserlistData($page, $limit);
+
+    //   echo json_encode([
+    //     'users' => $result['data'],
+    //     'totalPages' => ceil($result['total'] / $limit)
+    // ]);
 }
 
 if ($flag == "filteruserlist") {
