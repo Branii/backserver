@@ -357,18 +357,12 @@
         /* Rounded corners */
     }
 
-    .tbl-headeruserlist {
-<<<<<<< HEAD
+.tbl-headeruserlist {
     position: sticky;
     z-index: 999;
     top: 0;
   }
-=======
-        position: sticky;
-        top: 0;
-    }
->>>>>>> 323ec0abb730046633e32e794ebc49eaff8e8c64
-
+       
     .sticky-headeruserlist {
         position: relative;
         bottom: 1px;
@@ -942,7 +936,7 @@
                     <div class="d-md-flex align-items-center">
                         
                         <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 block-userbtn" style="border: solid 1px #ccc;color: #e60e38!important;!i;!;">
+                            <button type="button" class="btn hstack gap-6 block-userbtn" style="border: solid 1px #ccc;color: #e60e38!important;">
                                 <i class="bx bx-user-x loaderquota"></i>Deactivate User</button>
                         </div>
                     </div>
@@ -1019,7 +1013,7 @@
                     <div class="d-md-flex align-items-center">
                         
                         <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 usrl-delete-userbtn" style="border: solid 1px #ccc;color: #e60e38!important;!i;!;">
+                            <button type="button" class="btn hstack gap-6 usrl-delete-userbtn" style="border: solid 1px #ccc;color: #e60e38!important">
                                 <i class="bx bx-trash loaderquota"></i>Delete User</button>
                         </div>
                     </div>

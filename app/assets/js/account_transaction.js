@@ -60,7 +60,8 @@ $(function () {
                     <tr class="trow">
                       <td>${"TR" + item.order_id.substring(0, 7)}</td>
                       <td>${typeof username === "string" || typeof username === "number" 
-                        ? String(username).charAt(0).toUpperCase() + String(username).slice(1): "N/A"}</td>
+                        ? String(username).charAt(0).toUpperCase() + String(username).slice(1) 
+                        : "N/A"}</td>
                       <td><i class='bx bxs-circle' style='color:${status.color};font-size:8px;margin-right:5px;'></i>${status.title}</td>
                       <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
                       <td>${formatMoney(item.balance)}</td>
