@@ -269,7 +269,7 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Link']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Rebate%']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Rebate(%)']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Number of Registrations']; ?></h6>

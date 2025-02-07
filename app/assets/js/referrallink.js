@@ -11,8 +11,8 @@ $(function () {
                         <td>${item.agent_name}</td>
                         <td class='link-offset-1 text-decoration-underline'>${item.register_link}</td>
                         <td>${item.rebate}</td>
-                        <td>${item.register_count + '/' + item.quota_used}</td>
-                         <td>${item.date_created + '' + item.time_created}</td>
+                        <td>${item.register_count + ' / ' + item.quota_used}</td>
+                         <td>${item.date_created + ' / ' + item.time_created}</td>
                          <td>${item.remarks}</td>
                         
                     </tr>
@@ -159,10 +159,10 @@ $(function () {
     $(document).on('click', '.executeuserlinks', function () {
       console.log("hello jesus");
   
-      // if ($("#selectuserlinks").val() == "" && $(".linkstart").val() == "") {
-      //   $("#danger-userlinks").modal("show");
-      //   return
-      // }
+      if ($("#selectuserlinks").val() == "" && $(".linkstart").val() == "") {
+        $("#danger-userlinks").modal("show");
+        return
+      }
       // const username = $(".userId").val().trim() === "" ? $("#selectuserlinks").val() : $(".userId").val().trim();
       // const startdate = $(".startdate").val()
       // const enddate = $(".enddate").val()
