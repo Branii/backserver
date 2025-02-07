@@ -362,17 +362,3 @@ if ($flag == "filterchange") {
 
 
 
-function get_user_logs(array $userData = []): array
-{
-    $userLogs = AccountManage::userDataLogs($userData);
-    if (empty($userLogs)) return [];
-    $results['numLogs'] = $userLogs[0]->total_count;
-    foreach ($userLogs  as $data) {
-        $browser = substr($data->browser_info, 0, 10);
-        $device  = substr($data->device_info, 0, 20);
-
-        $results['data'][] = ['username' => $data->username, 'login_time' => $data->login_date . ' - ' . $data->login_time, 'ip' => $data->ip, 'ipLocation' => '', 'browser' => $browser, 'loginDevice' => $device, 'version' => $data->app_version];
-    }
-
-    return $results;
-}

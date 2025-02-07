@@ -1,5 +1,5 @@
 $(function () {
-    const  showToast = (title, message, type) =>{
+    const showToast = (title, message, type) => {
         $.toast({
             position: "bottom-right",
             title: title,
@@ -7,96 +7,90 @@ $(function () {
             type: type,
             duration: 3000, // auto-dismiss after 3s
         });
-    }
+    };
 
-
-       // editting the user from the userlist table
-  $(document).on("click", ".manage-user-btn,.user-restrictions-btn", function () {
-    let userID = $("#idHolder").val();
-    // console.log(id)
-    flag = "";
-    const data = new URLSearchParams({user_id: id}).toString();
+    // editting the user from the userlist table
+    $(document).on("click", ".manage-user-btn,.user-restrictions-btn", function () {
+        let userID = $("#idHolder").val();
+        // console.log(id)
+        flag = "";
+        const data = new URLSearchParams({ user_id: id }).toString();
         $.ajax({
             url: userListUrl,
             type: "POST",
-            beforeSend: function(){
+            beforeSend: function () {},
+            success: function (response) {
+                console.log(response);
+                res = JSON.parse(response);
+                console.log(res);
+
+                $("#usrl-username").val(res.username);
+                $("#usrl-accounting-binding").val(res.agent_username);
+                $("#usrl-withdrawal-limit").val(res.withdrawal_limit);
+                $("#usrl-state").val(res.state);
+                $("#usrl-rebate").val(res.rebate);
+                $("#usrl-daily-betting-total-limit").val(res.betlimit);
+                $("#usrl-account-type").val(res.recharge_level);
+                $("#usrl-deposit-limit").val(res.recharge_level);
+                $("#usrl-remarks").val(res.remark);
+                $("#usrl-login-password").val(res.money_password);
+                $("#usrl-withdrawal-password").val(res.money_password);
+                $("#usrl-contact").val(res.user_contact);
+                $("#usrl-whatsapp").val(res.user_contact);
+                $("#usrl-security").val(res.security_answer);
+                $("#usrl-email").val(res.user_email);
             },
-            success:function (response) {   
-        console.log(response);
-        res = JSON.parse(response);
-        console.log(res);
-        
-        $("#usrl-username").val(res.username);
-        $("#usrl-accounting-binding").val(res.agent_username);
-        $("#usrl-withdrawal-limit").val(res.withdrawal_limit);
-        $("#usrl-state").val(res.state);
-        $("#usrl-rebate").val(res.rebate);
-        $("#usrl-daily-betting-total-limit").val(res.betlimit);
-        $("#usrl-account-type").val(res.recharge_level);
-        $("#usrl-deposit-limit").val(res.recharge_level);
-        $("#usrl-remarks").val(res.remark);
-        $("#usrl-login-password").val(res.money_password);
-        $("#usrl-withdrawal-password").val(res.money_password);
-        $("#usrl-contact").val(res.user_contact);
-        $("#usrl-whatsapp").val(res.user_contact);
-        $("#usrl-security").val(res.security_answer);
-        $("#usrl-email").val(res.user_email);
+            error: function (xhr, status, error) {},
+            complete: function () {
+                $(`#${userListTitle}-loader`).css({ display: "none" });
             },
-            error: function(xhr,status,error){},
-            complete: function (){
-                $(`#${userListTitle}-loader`).css({'display': 'none'});
-            }
+        });
     });
-   
-  });
 
-
-    const fetchAgentSubs = (eventElement,currentPage) => {
-
+    const fetchAgentSubs = (eventElement, currentPage) => {
         console.log(eventElement);
-        const agentID = $(eventElement).attr('data-agent-id');
+        const agentID = $(eventElement).attr("data-agent-id");
         let lotteryID = $("#wl-selectlottery").val();
         let startDate = $("#wl-startdate").val();
-        let endDate   = $("#wl-enddate").val();
+        let endDate = $("#wl-enddate").val();
         const element = this;
         const limit = 10;
-        if(lotteryID != undefined){
-            if(lotteryID.length == 0) return;
+        if (lotteryID != undefined) {
+            if (lotteryID.length == 0) return;
         }
-    
-    
-        lotteryID = lotteryID == undefined ?  "all" : lotteryID;
+
+        lotteryID = lotteryID == undefined ? "all" : lotteryID;
         startDate = startDate.length != 0 ? startDate : "all";
-        endDate   = endDate.length != 0 ? endDate : "all";
-        flag     = "all-subs";
+        endDate = endDate.length != 0 ? endDate : "all";
+        flag = "all-subs";
         console.log(agentID);
         $.ajax({
             url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
             type: "POST",
-            beforeSend: function(){
-               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+            beforeSend: function () {
+                $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
                 //  $("#wl-tbl-wrapper").LoadingOverlay("show");
             },
-            success: function(response){
+            success: function (response) {
                 $("#subs-back-btn").hide();
-                response  = JSON.parse(response);
-                if(response.status === "error"){
-                    $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 
-                    return
+                response = JSON.parse(response);
+                if (response.status === "error") {
+                    $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`);
+                    return;
                 }
-               
-                if(response.data.length == 0){
+
+                if (response.data.length == 0) {
                     historyStack.push($("#winLossDtholder").html());
                     pagesStack.push($("#wl-pagination-wrapper").html());
                     pagingInfo.push($("#paging_infowl").html());
-                    $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
+                    $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
                     $("#wl-pagination-wrapper").html("");
                     $("#paging_infowl").html("---------");
-                    return; 
+                    return;
                 }
-                userObjs   = response.data;
+                userObjs = response.data;
                 // if(userObj.account_type > 1){
-                //     if(!$(".get-user-details-btn").hasClass("btn-disabled")) $(".get-user-details-btn").addClass("btn-disabled"); 
+                //     if(!$(".get-user-details-btn").hasClass("btn-disabled")) $(".get-user-details-btn").addClass("btn-disabled");
                 // }
                 htmlMarkup = "";
                 userObjs.forEach((userObj) => {
@@ -106,27 +100,24 @@ $(function () {
                 pagesStack.push($("#wl-pagination-wrapper").html());
                 pagingInfo.push($("#paging_infowl").html());
                 $("#winLossDtholder").html(htmlMarkup);
-                const totalPages = Math.ceil(parseInt(userObjs[0].totalRecords) / 10)
-                if(totalPages < 11){
+                const totalPages = Math.ceil(parseInt(userObjs[0].totalRecords) / 10);
+                if (totalPages < 11) {
                     $("#wl-pagination-wrapper").html("");
                     $("#paging_infowl").html("---------");
                     return;
                 }
                 // renderwithdrawPagination(totalPages,parseInt(currentPage),'page-agent-subs');
-                
-                },
-            error: function(xhr,status,error){
-                showToast("Error","An Error occured, please try again later.","info");
             },
-            complete: function(){
+            error: function (xhr, status, error) {
+                showToast("Error", "An Error occured, please try again later.", "info");
+            },
+            complete: function () {
                 $("#wl-tbl-wrapper").LoadingOverlay("hide");
                 // $($(element).find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx-check-double");
                 // $("#wl-pagination").html("")
-            }
+            },
         });
-    
-    
-      }
+    };
 
     function formatMoney(money) {
         let moneyStr = String(money);
@@ -139,9 +130,7 @@ $(function () {
         }
         return moneyStr;
     }
-    
 
-    
     const UserlistData = (data) => {
         let html = "";
         const status = {
@@ -165,40 +154,39 @@ $(function () {
         };
 
         data.forEach((item) => {
-
-          //  console.log(item)
+            //  console.log(item)
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
 
-             let subordinate;
-            if(item.account_type == 2){
-                subordinate =  "Top Agent"
-            }else if(item.account_type == 3 && item.sub_count == 0 ){
+            let subordinate;
+            if (item.account_type == 2) {
+                subordinate = "Top Agent";
+            } else if (item.account_type == 3 && item.sub_count == 0) {
                 subordinate = "Sub Agent";
-            }else if(item.account_type == 3 && item.sub_count == 1 ){
-                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates
-            }else if(item.account_type == 3 && item.sub_count == 2 ){
-                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(',')[0];
-            }else if(item.account_type == 3 && item.sub_count > 2 ){
-                subordinate = username + " <i class='bx bx-dots-horizontal-rounded' ></i>" + item.subordinates.split(',')[0];
-            }else if(item.account_type == 1 && item.sub_count == 0){
+            } else if (item.account_type == 3 && item.sub_count == 1) {
+                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates;
+            } else if (item.account_type == 3 && item.sub_count == 2) {
+                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",")[0];
+            } else if (item.account_type == 3 && item.sub_count > 2) {
+                subordinate = username + " <i class='bx bx-dots-horizontal-rounded' ></i>" + item.subordinates.split(",")[0];
+            } else if (item.account_type == 1 && item.sub_count == 0) {
                 subordinate = "---";
             }
-            
-            const formattedSubordinates = item.subordinates ? username +" <i class='bx bx-right-arrow-alt'></i> " +item.subordinates.split(',').join(" <i class='bx bx-right-arrow-alt'></i> ") : 'None';
-          //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-             let logincount = item.logincount == null ? "0" : item.logincount
-             const [date, time] = item.created_at.split(' ');
-                let dates = '';
-                let times = '';
-                if (item.last_login && item.last_login !== "*****") {
-                [dates, times] = item.last_login.split(' ');
-                } else {
-                dates = item.last_login || ''; // Use empty string if null/undefined
-                times = item.last_login || '';
-                }
-                //  console.log(item.subordinates)
-                            
-             html += `
+
+            const formattedSubordinates = item.subordinates ? username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",").join(" <i class='bx bx-right-arrow-alt'></i> ") : "None";
+            //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+            let logincount = item.logincount == null ? "0" : item.logincount;
+            const [date, time] = item.created_at.split(" ");
+            let dates = "";
+            let times = "";
+            if (item.last_login && item.last_login !== "*****") {
+                [dates, times] = item.last_login.split(" ");
+            } else {
+                dates = item.last_login || ""; // Use empty string if null/undefined
+                times = item.last_login || "";
+            }
+            //  console.log(item.subordinates)
+
+            html += `
                   <tr id="usrl-tr-${item.uid}">
                      <td>${username}</td>
                       <td>${item.nickname}</td>
@@ -211,8 +199,8 @@ $(function () {
                       <td>${item.sub_count} </td>
                       <td>${formatMoney(item.balance)}</td> 
                       <td>${item.rebate}</td>
-                      <td>${date + ' / ' + time}</td>
-                      <td>${dates + ' / ' + times}</td>
+                      <td>${date + " / " + time}</td>
+                      <td>${dates + " / " + times}</td>
                       <td>${logincount}</td>
                       <td id="usrl-state-${item.uid}">${status[item.user_state]}</td>
                  
@@ -223,7 +211,9 @@ $(function () {
                                    <i class='bx bx-dots-vertical-rounded'></i>
                                   </a>
                                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
-                                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${item.uid}">
+                                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${
+                                        item.uid
+                                    }">
                                       <i class="bx bx-show fs-5"></i>View
                                     </a>
                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
@@ -253,50 +243,46 @@ $(function () {
                   </tr>
               `;
         });
-       return  html;
+        return html;
     };
 
-
-    $(document).on("click",".usrl-listclose",function (){
-        const parent = $(this).parents('.modal').first();
+    $(document).on("click", ".usrl-listclose", function () {
+        const parent = $(this).parents(".modal").first();
         parent.removeClass("show");
-        parent.css({"display":"none"});
+        parent.css({ display: "none" });
     });
 
-    $(document).on("click",".usr-deactivate-user, .block-userbtn",function(){
-       showDialog("usl-deactivate-user-dialog"); 
-        if($(this).hasClass("usr-deactivate-user")){
-             $("#idHolder").val($(this).attr("data-uid"));
+    $(document).on("click", ".usr-deactivate-user, .block-userbtn", function () {
+        showDialog("usl-deactivate-user-dialog");
+        if ($(this).hasClass("usr-deactivate-user")) {
+            $("#idHolder").val($(this).attr("data-uid"));
         }
-       if($(this).hasClass("block-userbtn")){
-        manageUser("blockUser",this);
-       }
+        if ($(this).hasClass("block-userbtn")) {
+            manageUser("blockUser", this);
+        }
     });
-    $(document).on("click",".usr-white-list",function(){
+    $(document).on("click", ".usr-white-list", function () {
         showDialog("usl-whitelist-ips-modal");
         $("#idHolder").val($(this).attr("data-uid"));
         fetchUserLogs();
-       
     });
-    $(document).on("click",".user-lottery-name",function(){
+    $(document).on("click", ".user-lottery-name", function () {
         showDialog("usl-lottery-name-modal");
         $("#idHolder").val($(this).attr("data-uid"));
         fetchLotteryTypes();
-        
     });
-    $(document).on("click",".usr-delete-user,.usrl-delete-userbtn",function(){
+    $(document).on("click", ".usr-delete-user,.usrl-delete-userbtn", function () {
         showDialog("usl-delete-user-dialog");
-        if($(this).hasClass("usr-delete-user")){
+        if ($(this).hasClass("usr-delete-user")) {
             $("#idHolder").val($(this).attr("data-uid"));
-       }
-      if($(this).hasClass("usrl-delete-userbtn")){
-        manageUser("deleteUser");
-      }
+        }
+        if ($(this).hasClass("usrl-delete-userbtn")) {
+            manageUser("deleteUser");
+        }
     });
-
 
     const renderuserlist = (data) => {
-        if(data.length === 0){
+        if (data.length === 0) {
             $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
             return;
         }
@@ -312,12 +298,12 @@ $(function () {
         try {
             const response = await fetch(`../admin/userlistdata/${page}/${pageLimit}`);
             const data = await response.json();
-           //   console.log(response);
-           //  return
+            //   console.log(response);
+            //  return
             $("#maskuserlist").LoadingOverlay("hide");
             renderuserlist(data);
             // renderuserlist(data.users);
-            const totalPages = Math.ceil(data.data[0].total_records / 20 );
+            const totalPages = Math.ceil(data.data[0].total_records / 20);
             renderPaginationlist(totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlist(newPage, pageLimit));
             document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + totalPages + " pages";
         } catch (error) {
@@ -330,7 +316,7 @@ $(function () {
         $.post(`../admin/filteruserlist/${username}/${states}/${startdate}/${enddate}/${currentPage}/${pageLimit}`, function (response) {
             try {
                 const data = JSON.parse(response);
-               // console.log(data);
+                // console.log(data);
                 //  return
                 $(".loaderlist").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
                 if (data.userlists.length < 1) {
@@ -536,7 +522,6 @@ $(function () {
         }, 100);
     });
 
-
     $(".tclose").click(function () {
         $("#signup-modal").modal("hide");
     });
@@ -578,42 +563,42 @@ $(function () {
     fetchRebatedata();
 
     $(document).on("click", ".btnaddagent", function () {
-    const form = document.getElementById('agentform');
-      const formData = new FormData(form);
-      const datas = Object.fromEntries(formData.entries());
-       // console.log(datas);
+        const form = document.getElementById("agentform");
+        const formData = new FormData(form);
+        const datas = Object.fromEntries(formData.entries());
+        // console.log(datas);
         addAgent(datas);
     });
-// `../admin/addAgent/${datas}
+    // `../admin/addAgent/${datas}
     async function addAgent(datas) {
         try {
             ///api/v1/limvo/selfregister
-            const response = await fetch('http://192.168.1.51/chairman_test/api/v1/limvo/register_super_user', {
-                method: 'POST',
+            const response = await fetch("http://192.168.1.51/chairman_test/api/v1/limvo/register_super_user", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(datas),
             });
-    
+
             if (!response.ok) {
                 throw new Error(`Error: ${response.type} - ${response.statusText}`);
             }
-           // const data = await response.json();
-           // console.log('Registration Success:', data);
+            // const data = await response.json();
+            // console.log('Registration Success:', data);
             const result = await response.json();
-           // console.log('Registration Success:', result);
+            // console.log('Registration Success:', result);
             // Handle success or error based on response type
-            if (result.type === 'success') {
+            if (result.type === "success") {
                 $(".loaders").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
-                     setTimeout(function () {
-                        $(".loaders").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
-                        showToast("Success", result.message, "success");
-                        //$("#addagent").modal("hide");
-                     }, 500);
-              
-                     fetchUserlist(currentPage,pageLimit);
-            } else if (result.type === 'error') {
+                setTimeout(function () {
+                    $(".loaders").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+                    showToast("Success", result.message, "success");
+                    //$("#addagent").modal("hide");
+                }, 500);
+
+                fetchUserlist(currentPage, pageLimit);
+            } else if (result.type === "error") {
                 showToast("Heads up!!", result.message, "info");
             }
             // const errorMessages = {
@@ -647,7 +632,7 @@ $(function () {
             //         showToast("Success", "agent added sucessfully", "success");
             //         // fetchUserlist(currentPagelist);
             //     }, 500);
-          //  }
+            //  }
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -680,7 +665,7 @@ $(function () {
 
         const uid = $(this).attr("data-uid").trim();
         $(".userquotaid").val(uid);
-       // console.log(uid);
+        // console.log(uid);
 
         $.post(`../admin/getuserrebate/${uid}/`, function (data) {
             const rebatelist = JSON.parse(data);
@@ -755,152 +740,139 @@ $(function () {
         );
     });
 
-
- //fetch_sub
- let navigationHistory = [];
- $(document).on("click", ".viewsub", function () {
-    const userID  = $(this).attr("data-agent-id").trim();
-    navigationHistory.push({
-        nameArray: [],
-        currentPage: currentPage,
-        pageLimit: pageLimit
+    //fetch_sub
+    let navigationHistory = [];
+    $(document).on("click", ".viewsub", function () {
+        const userID = $(this).attr("data-agent-id").trim();
+        navigationHistory.push({
+            nameArray: [],
+            currentPage: currentPage,
+            pageLimit: pageLimit,
+        });
+        // console.log("Navigation History:", navigationHistory);
+        fetchsubagent(userID, currentPage, pageLimit, this);
     });
-    // console.log("Navigation History:", navigationHistory);
-    fetchsubagent(userID,currentPage,pageLimit,this)
-    
-  
-});
 
-
-const fetchsubagent = (userID,currentPage,pageLimit,element) => {
-
-    $.ajax({
-        url: `../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
-        type: "POST",
-        beforeSend: function(){
-        //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
-            //  $("#ngp-wl-tbl-wrapper").LoadingOverlay("show");
-        },
-        success: function(response){
-            response = JSON.parse(response);
-            const data     = response.data;
-            console.log(data);
-            if(response.status === "error"){
-                showToast("Error",data,'error');
-                // $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${data}</td></tr>`); 
-                return
-            }
-            if(data.length === 0){
-                $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
+    const fetchsubagent = (userID, currentPage, pageLimit, element) => {
+        $.ajax({
+            url: `../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
+            type: "POST",
+            beforeSend: function () {
+                //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+                //  $("#ngp-wl-tbl-wrapper").LoadingOverlay("show");
+            },
+            success: function (response) {
+                response = JSON.parse(response);
+                const data = response.data;
+                console.log(data);
+                if (response.status === "error") {
+                    showToast("Error", data, "error");
+                    // $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${data}</td></tr>`);
                     return;
+                }
+                if (data.length === 0) {
+                    $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
+                    return;
+                }
+
+                $("#userlistContainer").html(UserlistDataV2(response));
+                renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray, newPage, pageLimit));
+                document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+
+                return;
+            },
+            error: function (xhr, status, err) {},
+            complete: function () {},
+        });
+    };
+
+    const UserlistDataV2 = (response) => {
+        console.log(response);
+        let html = "";
+        const status = {
+            1: "Enable", // Green
+            2: "Suspend", // Orange
+            3: "Forbbiden", // Light Blue
+            4: "Blocked", // Red
+        };
+
+        //   const account_type = {
+        //     1 :"customer",
+        //     2 : "agent",
+        //     3 : "sub agent",        // Red
+        //   };
+
+        const recharges = {
+            1: "momo",
+            2: "bank Transfer",
+            3: "bank card",
+            4: "crypto", // Red
+        };
+
+        const data = response.data;
+        const login_counts = response.login_counts.data;
+        const subsLookups = response.direct_subs_count.data;
+
+        // Create a lookup object where the key is uid and the value is logs_count
+        const logsLookup = login_counts.reduce((lookup, item) => {
+            lookup[item.uid] = item.logs_count;
+            return lookup;
+        }, {});
+        // Create a lookup object where the key is uid and the value is logs_count
+        const subsLookup = subsLookups.reduce((lookup, item) => {
+            lookup[item.uid] = item.subs_count;
+            return lookup;
+        }, {});
+
+        data.forEach((item) => {
+            //  console.log(item)
+            let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+
+            let subordinate = "";
+            if (item.account_type == 2) {
+                subordinate = "Top Agent";
+            } else if (item.account_type == 3 && item.sub_count == 0) {
+                subordinate = "Sub Agent";
+            } else if (item.account_type == 3 && item.sub_count == 1) {
+                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates;
+            } else if (item.account_type == 3 && item.sub_count == 2) {
+                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",")[0];
+            } else if (item.account_type == 3 && item.sub_count > 2) {
+                subordinate = username + " <i class='bx bx-dots-horizontal-rounded' ></i>" + item.subordinates.split(",")[0];
+            } else if (item.account_type == 1 && item.sub_count == 0) {
+                subordinate = "---";
             }
-          
-            $("#userlistContainer").html(UserlistDataV2(response));
-            renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray,newPage, pageLimit));
-            document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
 
-            return;
-        },
-        error: function(xhr,status,err){
-
-        },
-        complete: function(){}
-
-});
-};
-
-
-   
-const UserlistDataV2 = (response) => {
-
-    console.log(response);
-    let html = "";
-    const status = {
-        1: "Enable", // Green
-        2: "Suspend", // Orange
-        3: "Forbbiden", // Light Blue
-        4: "Blocked", // Red
-    };
-
-    //   const account_type = {
-    //     1 :"customer",
-    //     2 : "agent",
-    //     3 : "sub agent",        // Red
-    //   };
-
-    const recharges = {
-        1: "momo",
-        2: "bank Transfer",
-        3: "bank card",
-        4: "crypto", // Red
-    };
-
-    const data = response.data;
-    const login_counts = response.login_counts.data;
-    const subsLookups  = response.direct_subs_count.data;
-
-    // Create a lookup object where the key is uid and the value is logs_count
-    const logsLookup = login_counts.reduce((lookup, item) => {
-    lookup[item.uid] = item.logs_count;
-    return lookup;
-}, {});
-    // Create a lookup object where the key is uid and the value is logs_count
-    const subsLookup = subsLookups.reduce((lookup, item) => {
-    lookup[item.uid] = item.subs_count;
-    return lookup;
-}, {});
-
-
-    data.forEach((item) => {
-
-      //  console.log(item)
-        let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
-
-         let subordinate = "";
-        if(item.account_type == 2){
-            subordinate =  "Top Agent"
-        }else if(item.account_type == 3 && item.sub_count == 0 ){
-            subordinate = "Sub Agent";
-        }else if(item.account_type == 3 && item.sub_count == 1 ){
-            subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates
-        }else if(item.account_type == 3 && item.sub_count == 2 ){
-            subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(',')[0];
-        }else if(item.account_type == 3 && item.sub_count > 2 ){
-            subordinate = username + " <i class='bx bx-dots-horizontal-rounded' ></i>" + item.subordinates.split(',')[0];
-        }else if(item.account_type == 1 && item.sub_count == 0){
-            subordinate = "---";
-        }
-        
-        const formattedSubordinates = item.subordinates ? username +" <i class='bx bx-right-arrow-alt'></i> " +item.subordinates.split(',').join(" <i class='bx bx-right-arrow-alt'></i> ") : 'None';
-      //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-         let logincount = item.logincount == null ? "0" : item.logincount
-         const [date, time] = item.created_at.split(' ');
-            let dates = '';
-            let times = '';
+            const formattedSubordinates = item.subordinates ? username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",").join(" <i class='bx bx-right-arrow-alt'></i> ") : "None";
+            //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+            let logincount = item.logincount == null ? "0" : item.logincount;
+            const [date, time] = item.created_at.split(" ");
+            let dates = "";
+            let times = "";
             if (item.last_login && item.last_login !== "*****") {
-            [dates, times] = item.last_login.split(' ');
+                [dates, times] = item.last_login.split(" ");
             } else {
-            dates = item.last_login || ''; // Use empty string if null/undefined
-            times = item.last_login || '';
+                dates = item.last_login || ""; // Use empty string if null/undefined
+                times = item.last_login || "";
             }
 
-        //     <span class="tooltipp" style="">${subordinate}
-        //     <span class="tooltipp-text">Surbodinate names</span>
-        // </span>
-                
-         html += `
+            //     <span class="tooltipp" style="">${subordinate}
+            //     <span class="tooltipp-text">Surbodinate names</span>
+            // </span>
+
+            html += `
               <tr id="usrl-tr-${item.uid}">
                  <td>${username}</td>
                   <td>${item.nickname}</td>
                   <td>VIP</td>
                  <td class="show-user-rel ${item.agent_level === "*****" ? "no-agent" : ""}" data-user-id="${item.uid}">
-               ${item.account_type == 1 ? "-------" : (item.account_type == 2 ? "Top Agent" : (subsLookups[item.uid] < 2 ? item.agent_name + "->" + username : item.agent_name + "->" + username + "..."))}
+               ${item.account_type == 1 ? "-------" : item.account_type == 2 ? "Top Agent" : subsLookups[item.uid] < 2 ? item.agent_name + "->" + username : item.agent_name + "->" + username + "..."}
               </td>
                   <td>${subsLookup[item.uid] ?? 0} </td>
                   <td>${formatMoney(item.balance)}</td> 
                   <td>${item.rebate}</td>
-                  <td>${date + ' / ' + time}</td>
-                  <td>${dates + ' / ' + times}</td>
+                  <td>${date + " / " + time}</td>
+                  <td>${dates + " / " + times}</td>
                   <td>${logsLookup[item.uid] ?? 0}</td>
                   <td id="usrl-state-${item.uid}">${status[item.user_state]}</td>
              
@@ -911,7 +883,9 @@ const UserlistDataV2 = (response) => {
                                <i class='bx bx-dots-vertical-rounded'></i>
                               </a>
                               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
-                                <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${item.uid}">
+                                <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${
+                                    item.uid
+                                }">
                                   <i class="bx bx-show fs-5"></i>View
                                 </a>
                                 <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
@@ -940,137 +914,61 @@ const UserlistDataV2 = (response) => {
                  
               </tr>
           `;
-    });
-   return  html;
-};
- 
-// function fetchsubagent(userID,currentPage, pageLimit) {
-//     $.post(`../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`, 
-//         function (response) {
-//         try {
-//            const data = JSON.parse(response);
-            
-            
-//             //  return
-//               $("#maskuserlist").LoadingOverlay("hide");
-             
-//               toggleBackButton();
-//         } catch (error) {
-//             console.error("Error parsing JSON response:", error);
-//         } finally {
-//            // $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-//         }
-//     }).fail(function (error) {
-//         console.error("Error fetching data:", error);
-//       //  $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-//     });
-   
-// }
-
-function toggleBackButton() {
-    if (navigationHistory.length > 1) {
-        $("#backButton").show();
-    } else {
-        $("#backButton").show();
-    }
-}
-
-
-$("#backButton").on("click", function () {
-    if (navigationHistory.length > 1) {
-        // Pop the last navigation state
-        navigationHistory.pop();
-        const previousState = navigationHistory[navigationHistory.length - 1];
-        
-        fetchsubagent(previousState.nameArray, previousState.currentPage, previousState.pageLimit,this);
-    } else {
-        navigationHistory = []; // Clear history
-        currentPage = 1;
-        fetchUserlist(currentPage, pageLimit);
-    }
-
-    // Hide back button if no navigation history
-    toggleBackButton();
-});
-
-$(document).on("click", ".viewuserinfo", function () {
-    $("#idHolder").val($(this).attr("data-uid"));
-    fetchUserInfo();
-});
-
-
-$(document).on("click", ".acountbtn", function (e) {
-    let userid =$(this).attr("data-uid");
-    $.post(`../admin/useraccountchange/${userid}/${currentPage}/${pageLimit}`, 
-      function (data) {
-        let fetchData = JSON.parse(data);
-           console.log(fetchData)
-          return
-        let tableBody = document
-          .getElementById("accountchange")
-          .getElementsByTagName("tbody")[0];
-        while (tableBody.firstChild) {
-          tableBody.removeChild(tableBody.firstChild);
-        }
-        fetchData.forEach((item) => {
-          let row = tableBody.insertRow();
-          // Create an array of the data to be displayed in each cell
-          let type = {
-            1: '<span class="tag tag-primary" style="">Deposit</span>',
-            2: '<span class="tag" style="background-color:#FFD700;color: #faebd7;">Win Bonus</span>',
-            3: '<span class="tag tag-success">Bet Awarded</span>',
-            4: '<span class="tag" style="background-color:#FF4500;color: #faebd7;">Withdrawal</span>',
-            5: '<span class="tag" style="background-color:#DC143C;color: #faebd7;">Bet deduct</span>',
-            6: '<span class="tag" style="background-color:#A9A9A9;color: #faebd7;">Bet Cancelled</span>',
-            7: '<span class="tag" style="background-color:#8A2BE2;color: #faebd7;">Rebate</span>',
-            8: '<span class="tag" style="background-color:#9370DB;color: #faebd7;">Self Rebate</span>',
-            9: '<span class="tag" style="background-color:#FF6347;color: #faebd7;">Sending Red Envelope</span>',
-            10: '<span class="tag" style="background-color:#FF69B4;color: #faebd7;">Red Envelope Received</span>',
-            11: '<span class="tag" style="background-color:#4682B4;color: #faebd7;">Bet Refund</span>',
-          };
-
-          statusText = type[item.order_type] ?? "Unknown";
-
-          let $creditamount = 0;
-          let $debitamount = 0;
-          if (item.transaction_type == 1) {
-            $creditamount =
-              '<span style="color:;">+' + item.account_change + "</span>";
-          } else {
-            $debitamount =
-              '<span style="color:re;"> ' + item.account_change + " </span>";
-          }
-
-          let states = "";
-          if (item.status == 1) {
-            states = "Completed";
-          }
-          let transid = ("T" + item.order_id).slice(0, 10);
-
-          let rowData = [
-            transid,
-            item.username,
-            statusText,
-            $debitamount,
-            $creditamount,
-            item.balance,
-            item.dateTime,
-            item.order_id,
-            states,
-          ];
-          // Iterate over rowData to create and fill each cell
-          rowData.forEach((datas) => {
-            let cell = row.insertCell();
-            cell.innerHTML = datas;
-          });
-
-          //console.log(fetchData)
         });
-      }
-    );
-  });
+        return html;
+    };
 
+    // function fetchsubagent(userID,currentPage, pageLimit) {
+    //     $.post(`../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
+    //         function (response) {
+    //         try {
+    //            const data = JSON.parse(response);
 
+    //             //  return
+    //               $("#maskuserlist").LoadingOverlay("hide");
+
+    //               toggleBackButton();
+    //         } catch (error) {
+    //             console.error("Error parsing JSON response:", error);
+    //         } finally {
+    //            // $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+    //         }
+    //     }).fail(function (error) {
+    //         console.error("Error fetching data:", error);
+    //       //  $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+    //     });
+
+    // }
+
+    function toggleBackButton() {
+        if (navigationHistory.length > 1) {
+            $("#backButton").show();
+        } else {
+            $("#backButton").show();
+        }
+    }
+
+    $("#backButton").on("click", function () {
+        if (navigationHistory.length > 1) {
+            // Pop the last navigation state
+            navigationHistory.pop();
+            const previousState = navigationHistory[navigationHistory.length - 1];
+
+            fetchsubagent(previousState.nameArray, previousState.currentPage, previousState.pageLimit, this);
+        } else {
+            navigationHistory = []; // Clear history
+            currentPage = 1;
+            fetchUserlist(currentPage, pageLimit);
+        }
+
+        // Hide back button if no navigation history
+        toggleBackButton();
+    });
+
+    $(document).on("click", ".viewuserinfo", function () {
+        $("#idHolder").val($(this).attr("data-uid"));
+        fetchUserInfo();
+    });
 
     function tableScrolluserList() {
         const tableContainerUser = document.querySelector(".table-wrapperuserlist");
@@ -1086,468 +984,562 @@ $(document).on("click", ".acountbtn", function (e) {
     }
     tableScrolluserList();
 
-
-const manageUser = (flag, elemennt) => {
-    const userID    = $("#idHolder").val();
-    const lotteryID = "all";
-    $.ajax({
-        url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
-        type: "POST",
-        beforeSend: function(){
-        //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
-            //  $("#wl-tbl-wrapper").LoadingOverlay("show");
-        },
-        success: function(response){
-            $("#subs-back-btn").hide();
-            response  = JSON.parse(response);
-            if(response.status === "error"){
-                showToast("Error","", "info");
-                return
-            }
-
-            if(response.data == 0 && flag == "blockUser"){
-                showToast("Blocked","Please this User has already being blocked.", "info");
-                return;
-            }
-            if(response.data == 0 && flag == "deleteUser"){
-                showToast("Delete","Operation Invalid", "error");
-                return;
-            }
-
-            
-           
-            let msg = "";
-            switch(flag){
-                case "blockUser":
-                    msg = "User Successfully Blocked.";
-                    $("#usrl-state-" + userID).text("Blocked");
-                    break;
-                case "deleteUser":
-                    msg  = "User Successfully Deleted";
-                    $("#usrl-tr-" + userID).remove();
-                    break;
-                case "lottery-name":
-                    msg = "Lottery status updated";
-                    break;
-                case "ips":
-                    msg = "Login Ip state updated";
-                    break;
-                default: msg = ""
-                     
-            }
-            if(msg.length == 0){
-                showToast("Error","Invalid operation.", 'error');
-                return;
-            }
-            showToast("Completed", msg,"success")
-             
-            
+    const manageUser = (flag, elemennt) => {
+        const userID = $("#idHolder").val();
+        const lotteryID = "all";
+        $.ajax({
+            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            type: "POST",
+            beforeSend: function () {
+                //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+                //  $("#wl-tbl-wrapper").LoadingOverlay("show");
             },
-        error: function(xhr,status,error){
-            showToast("Error","An Error occured, please try again later.","info");
-        },
-        complete: function(){
-            $("#wl-tbl-wrapper").LoadingOverlay("hide");
-            // $($(element).find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx-check-double");
-            // $("#wl-pagination").html("")
+            success: function (response) {
+                $("#subs-back-btn").hide();
+                response = JSON.parse(response);
+                if (response.status === "error") {
+                    showToast("Error", "", "info");
+                    return;
+                }
+
+                if (response.data == 0 && flag == "blockUser") {
+                    showToast("Blocked", "Please this User has already being blocked.", "info");
+                    return;
+                }
+                if (response.data == 0 && flag == "deleteUser") {
+                    showToast("Delete", "Operation Invalid", "error");
+                    return;
+                }
+
+                let msg = "";
+                switch (flag) {
+                    case "blockUser":
+                        msg = "User Successfully Blocked.";
+                        $("#usrl-state-" + userID).text("Blocked");
+                        break;
+                    case "deleteUser":
+                        msg = "User Successfully Deleted";
+                        $("#usrl-tr-" + userID).remove();
+                        break;
+                    case "lottery-name":
+                        msg = "Lottery status updated";
+                        break;
+                    case "ips":
+                        msg = "Login Ip state updated";
+                        break;
+                    default:
+                        msg = "";
+                }
+                if (msg.length == 0) {
+                    showToast("Error", "Invalid operation.", "error");
+                    return;
+                }
+                showToast("Completed", msg, "success");
+            },
+            error: function (xhr, status, error) {
+                showToast("Error", "An Error occured, please try again later.", "info");
+            },
+            complete: function () {
+                $("#wl-tbl-wrapper").LoadingOverlay("hide");
+                // $($(element).find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx-check-double");
+                // $("#wl-pagination").html("")
+            },
+        });
+    };
+
+    const fetchLotteryTypes = () => {
+        const userID = $("#idHolder").val();
+        const lotteryID = "all";
+        let flag = "fetchUserLotteries";
+        $.ajax({
+            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            type: "POST",
+            beforeSend: function () {},
+            success: function (response) {
+                response = JSON.parse(response);
+                console.log(response);
+                let responseMarkup = "";
+
+                if (response.status == "error") {
+                    showToast("Error", response.data, "error");
+                    return;
+                }
+                data = response.data;
+
+                let blockedLotteries = data[0].blockedLotteries == undefined ? [] : Object.values(data[0].blockedLotteries);
+
+                data.forEach((lottery) => {
+                    responseMarkup += lotteriesMarkup(lottery, blockedLotteries);
+                });
+                // return;
+                $("#usrl-lot-dtholder").html(responseMarkup);
+            },
+            error: function (res, status, error) {},
+            complete: function () {
+                console.log("Operation Completed Successfully.");
+            },
+        });
+    };
+
+    $(document).on("click", ".toggle-lot", function () {
+        if ($(this).is(":checked")) {
+            toggleLottery(this, true);
+        } else {
+            toggleLottery(this, false);
         }
     });
-
-
-};
-
-
-
-const fetchLotteryTypes = () => {
-    const userID = $("#idHolder").val();
-    const lotteryID = "all";
-    let flag = "fetchUserLotteries";
-    $.ajax({
-        url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
-        type: "POST",
-        beforeSend: function(){
-          
-        },
-        success:function (response) {  
-
-            response = JSON.parse(response);
-            console.log(response);
-            let responseMarkup  = '';
-
-            if(response.status == "error"){
-                showToast("Error",response.data,"error");
-                return;
-            }
-            data = response.data;
-
-            let blockedLotteries = data[0].blockedLotteries == undefined ? [] : Object.values(data[0].blockedLotteries); 
-            
-            data.forEach((lottery)=>{
-              
-              responseMarkup += lotteriesMarkup(lottery,blockedLotteries);
-            })
-            // return;
-            $('#usrl-lot-dtholder').html(responseMarkup);
-           
-        },
-        error:function (res,status,error) {  
-        
-        },
-        complete:function () {
-            console.log("Operation Completed Successfully.");
+    $(document).on("click", ".toggle-ip-state", function () {
+        if ($(this).is(":checked")) {
+            blockUserIps(this);
+        } else {
+            blockUserIps(this);
         }
+    });
+    $(document).on("click", "#update-user-infobtn", function () {
+        updateUserData();
+    });
 
-    }
-    );
-};
+    const toggleLottery = (element, toggle) => {
+        const userID = $("#idHolder").val();
+        const lotteryID = $(element).val();
+        let flag = "updateLotteryState";
 
-$(document).on("click",".toggle-lot",function(){
-    if ($(this).is(":checked")) {
-        toggleLottery(this,true);
-    }else{
-        toggleLottery(this,false);
-    }
-})
-$(document).on("click",".toggle-ip-state",function(){
-    if ($(this).is(":checked")) {
-        blockUserIps(this);
-    }else{
-        blockUserIps(this);
-    }
-})
-$(document).on("click","#update-user-infobtn",function(){
-    updateUserData();
-})
+        $.ajax({
+            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            type: "POST",
+            beforeSend: function () {},
+            success: function (response) {
+                console.log(response);
+                response = JSON.parse(response);
+                if (response.status == "error") {
+                    showToast("Error", response.data, "error");
+                    return;
+                }
 
+                if (response.data == 0) {
+                    showToast("Error", `Request Error`, "error");
+                }
 
-
-const toggleLottery = (element,toggle) => {
-    const userID = $("#idHolder").val();
-    const lotteryID = $(element).val();
-    let flag = "updateLotteryState";  
-
-    $.ajax({
-        url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
-      type: "POST",
-      beforeSend: function(){
-      },
-      success:function (response) {  
-        console.log(response);
-        response = JSON.parse(response); 
-        if(response.status == 'error'){
-            showToast("Error",response.data,"error");
-                return;
-        }
-
-        if(response.data == 0){
-            showToast("Error",`Request Error`, 'error');
-
-        }
-
-        if(toggle){
-            showToast("Enabled",`Lottery Enabled`, 'info');
-        }else{
-            showToast("Disabled",`Lottery  Disabled.`, 'error');
-        }
-       
-       
-      },
-      error:function (res,status,error) {  
-        
-      },
-      complete:function () {
-       
-      }
-      
-    }
-    );
-    
-}
-
-const updateUserData = () => {
-
-    const userID    = $("#idHolder").val();
-    const flag     = "updateUserInfo"
-    const depositLimit       = $("#usrl-deposit-limit").val();  
-    const withdrawalLimit  = $("#usrl-withdrawal-limit").val();
-    const rebate           = $("#usrl-rebate").val();
-    const state           = $("#usrl-state").val();
-    const dailyBettingLimit  = $("#usrl-daily-betting-total-limit").val();
-
-    $.ajax({
-        url: `../admin/updateUserData/${userID}/${depositLimit}/${withdrawalLimit}/${rebate}/${state}/${dailyBettingLimit}/${flag}`,
-      type: "POST",
-      beforeSend: function(){},
-      success:function (response) {  
-        console.log(response);
-        res = JSON.parse(response); 
-        
-
-        if(res.status == 'error'){
-            showToast("Error",res.data,'error');
-            return;
-        }
-
-        if(res.data == 0){
-
-            showToast("Error", "Error processing request","error");
-            return;
-        }
-        $(".close-modal").click();
-        showToast("Successful", "Records succesfully updated.","info");
-        
-
-      },
-      error:function (res,status,error) {  
-        
-      },
-      complete:function () {
-        $('#overlay-loader').hide();
-        console.log("Operation Completed Successfully.");
-      }
-      
-    }
-    );
-
-
-};
-      
-
-const fetchUserInfo = () => {
-
-    const userID    = $("#idHolder").val();
-    const flag       = "fetchUserInfo";  
-    const lotteryID  = "all";
-
-    $.ajax({
-        url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
-      type: "POST",
-      beforeSend: function(){},
-      success:function (response) {  
-        console.log(response);
-        res = JSON.parse(response); 
-        
-
-        if(res.status == 'error' || res.data.length === 0 ){
-            showToast("Error",res.data,'error');
-            return;
-        }
-
-        res = res.data;
-        
-        $("#usrl-username").val(res.username);
-        $("#usrl-accounting-binding").val(res.agent_username);
-        $("#usrl-withdrawal-limit").val(res.withdrawal_level);
-        $("#usrl-state").val(res.user_state);
-        $("#usrl-rebate").val(res.rebate);
-        $("#usrl-daily-betting-total-limit").val(res.daily_bet_llimit === "*****" ? 0 : res.daily_bet_llimit);
-        $("#usrl-account-type").val(res.recharge_level);
-        $("#usrl-deposit-limit").val(res.recharge_level);
-        $("#usrl-remarks").val(res.remark);
-        $("#usrl-login-password").val(res.money_password);
-        $("#usrl-withdrawal-password").val(res.money_password);
-        $("#usrl-contact").val(res.user_contact);
-        $("#usrl-whatsapp").val(res.user_contact);
-        $("#usrl-security").val(res.security_answer);
-        $("#usrl-email").val(res.user_email);
-
-      },
-      error:function (res,status,error) {  
-        
-      },
-      complete:function () {
-        $('#overlay-loader').hide();
-        console.log("Operation Completed Successfully.");
-      }
-      
-    }
-    );
-
-
-};
-      
-
- const blockUserIps = (element) => {
-       
-    const userID    = $("#idHolder").val();
-    const ulogID    = $(element).val();
-    let flag = "blockUserIp"; 
-
-    $.ajax({
-      url: `../admin/manageUser/${userID}/${ulogID}/${flag}`,
-      type: "POST",
-      beforeSend: function(){
-      },
-      success:function (response) {  
-        console.log(response);
-        response = JSON.parse(response); 
-
-
-        if(response.state == 0) return;
-        if(response.status == 'error'){
-                showToast('Error',response.data,"error");
-                return;
-        }
-
-        if(response.data == 0){
-            showToast("Not Done","Already blocked","info");
-            return;
-        }
-
-        showToast("Completed","IP state updated successfully.", "info");
-       
-      },
-      error:function (res,status,error) {  
-        
-      },
-      complete:function () {
-        $('#overlay-loader').hide();
-        console.log("Operation Completed Successfully.");
-      }
-      
-    }
-    );
-
- }
-
- const fetchUserLogs  = () => {
-       
-    const userID    = $("#idHolder").val();
-    const flag       = "fetchUserLogs";  
-    const lotteryID  = "all";
-
-    $.ajax({
-        url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
-      type: "POST",
-      beforeSend: function(){},
-      success:function (response) {  
-        console.log(response);
-        response = JSON.parse(response); 
-        console.log(response);
-        if(response.status == 'error'){
-            showToast("Error",response.data,'error');
-            $("#usrl-ipsholder").html(`<tr><td colspan="10">${response.data}</td></tr>`);
-            return;
-        }
-
-        if(response.data.length === 0 ){
-            $("#usrl-ipsholder").html(`<tr><td colspan="10"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
-            return;
-        }
-       
-        let markup = "";
-        response.data.forEach((data)=> {
-            markup += userIpsMarkup(data);
+                if (toggle) {
+                    showToast("Enabled", `Lottery Enabled`, "info");
+                } else {
+                    showToast("Disabled", `Lottery  Disabled.`, "error");
+                }
+            },
+            error: function (res, status, error) {},
+            complete: function () {},
         });
+    };
 
-        $("#usrl-ipsholder").html(markup);
+    const updateUserData = () => {
+        const userID = $("#idHolder").val();
+        const flag = "updateUserInfo";
+        const depositLimit = $("#usrl-deposit-limit").val();
+        const withdrawalLimit = $("#usrl-withdrawal-limit").val();
+        const rebate = $("#usrl-rebate").val();
+        const state = $("#usrl-state").val();
+        const dailyBettingLimit = $("#usrl-daily-betting-total-limit").val();
 
-      },
-      error:function (res,status,error) {  
-        
-      },
-      complete:function () {
-        $('#overlay-loader').hide();
-        console.log("Operation Completed Successfully.");
-      }
-      
-    }
-    );
-    
- };
+        $.ajax({
+            url: `../admin/updateUserData/${userID}/${depositLimit}/${withdrawalLimit}/${rebate}/${state}/${dailyBettingLimit}/${flag}`,
+            type: "POST",
+            beforeSend: function () {},
+            success: function (response) {
+                console.log(response);
+                res = JSON.parse(response);
 
+                if (res.status == "error") {
+                    showToast("Error", res.data, "error");
+                    return;
+                }
 
- $(document).on("click",".show-user-rel",function(){
-       
-        if($(this).hasClass("no-agent")){
+                if (res.data == 0) {
+                    showToast("Error", "Error processing request", "error");
+                    return;
+                }
+                $(".close-modal").click();
+                showToast("Successful", "Records succesfully updated.", "info");
+            },
+            error: function (res, status, error) {},
+            complete: function () {
+                $("#overlay-loader").hide();
+                console.log("Operation Completed Successfully.");
+            },
+        });
+    };
+
+    const fetchUserInfo = () => {
+        const userID = $("#idHolder").val();
+        const flag = "fetchUserInfo";
+        const lotteryID = "all";
+
+        $.ajax({
+            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            type: "POST",
+            beforeSend: function () {},
+            success: function (response) {
+                console.log(response);
+                res = JSON.parse(response);
+
+                if (res.status == "error" || res.data.length === 0) {
+                    showToast("Error", res.data, "error");
+                    return;
+                }
+
+                res = res.data;
+
+                $("#usrl-username").val(res.username);
+                $("#usrl-accounting-binding").val(res.agent_username);
+                $("#usrl-withdrawal-limit").val(res.withdrawal_level);
+                $("#usrl-state").val(res.user_state);
+                $("#usrl-rebate").val(res.rebate);
+                $("#usrl-daily-betting-total-limit").val(res.daily_bet_llimit === "*****" ? 0 : res.daily_bet_llimit);
+                $("#usrl-account-type").val(res.recharge_level);
+                $("#usrl-deposit-limit").val(res.recharge_level);
+                $("#usrl-remarks").val(res.remark);
+                $("#usrl-login-password").val(res.money_password);
+                $("#usrl-withdrawal-password").val(res.money_password);
+                $("#usrl-contact").val(res.user_contact);
+                $("#usrl-whatsapp").val(res.user_contact);
+                $("#usrl-security").val(res.security_answer);
+                $("#usrl-email").val(res.user_email);
+            },
+            error: function (res, status, error) {},
+            complete: function () {
+                $("#overlay-loader").hide();
+                console.log("Operation Completed Successfully.");
+            },
+        });
+    };
+
+    const blockUserIps = (element) => {
+        const userID = $("#idHolder").val();
+        const ulogID = $(element).val();
+        let flag = "blockUserIp";
+
+        $.ajax({
+            url: `../admin/manageUser/${userID}/${ulogID}/${flag}`,
+            type: "POST",
+            beforeSend: function () {},
+            success: function (response) {
+                console.log(response);
+                response = JSON.parse(response);
+
+                if (response.state == 0) return;
+                if (response.status == "error") {
+                    showToast("Error", response.data, "error");
+                    return;
+                }
+
+                if (response.data == 0) {
+                    showToast("Not Done", "Already blocked", "info");
+                    return;
+                }
+
+                showToast("Completed", "IP state updated successfully.", "info");
+            },
+            error: function (res, status, error) {},
+            complete: function () {
+                $("#overlay-loader").hide();
+                console.log("Operation Completed Successfully.");
+            },
+        });
+    };
+
+    const fetchUserLogs = () => {
+        const userID = $("#idHolder").val();
+        const flag = "fetchUserLogs";
+        const lotteryID = "all";
+
+        $.ajax({
+            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            type: "POST",
+            beforeSend: function () {},
+            success: function (response) {
+                console.log(response);
+                response = JSON.parse(response);
+                console.log(response);
+                if (response.status == "error") {
+                    showToast("Error", response.data, "error");
+                    $("#usrl-ipsholder").html(`<tr><td colspan="10">${response.data}</td></tr>`);
+                    return;
+                }
+
+                if (response.data.length === 0) {
+                    $("#usrl-ipsholder").html(`<tr><td colspan="10"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
+                    return;
+                }
+
+                let markup = "";
+                response.data.forEach((data) => {
+                    markup += userIpsMarkup(data);
+                });
+
+                $("#usrl-ipsholder").html(markup);
+            },
+            error: function (res, status, error) {},
+            complete: function () {
+                $("#overlay-loader").hide();
+                console.log("Operation Completed Successfully.");
+            },
+        });
+    };
+
+    $(document).on("click", ".show-user-rel", function () {
+        if ($(this).hasClass("no-agent")) {
             showToast("No Agent", "This user has no relationship.", "info");
             return;
         }
         showDialog("usrl-relationship-dialog");
         fetchUserRel($(this).attr("data-user-id"));
- });
+    });
 
+    const fetchUserRel = (userID) => {
+        $.ajax({
+            url: `../admin/manageUser/${userID}/all/fetchUserRel`,
+            type: "POST",
+            beforeSend: function () {},
+            success: function (response) {
+                console.log(response);
+                response = JSON.parse(response);
 
+                if (response.status == "error") {
+                    showToast("Error", response.data, "error");
+                    $("#usrl-ipsholder").html(`<tr><td colspan="10">${response.data}</td></tr>`);
+                    return;
+                }
 
- const fetchUserRel = (userID) => {
+                if (response.data.length === 0) {
+                    $("#usrl-ipsholder").html(`<tr><td colspan="10"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
+                    return;
+                }
 
-    $.ajax({
-        url: `../admin/manageUser/${userID}/all/fetchUserRel`,
-      type: "POST",
-      beforeSend: function(){},
-      success:function (response) {  
-        console.log(response);
-        response = JSON.parse(response); 
-        
-        if(response.status == 'error'){
-            showToast("Error",response.data,'error');
-            $("#usrl-ipsholder").html(`<tr><td colspan="10">${response.data}</td></tr>`);
-            return;
-        }
+                let markup = "";
+                const count = response.data.length;
+                response.data.reverse().forEach((data, index) => {
+                    markup += `<span>${data.username}</span> ${index == count - 1 ? "" : `<i class="bx bx-chevron-right" style="vertical-align: middle;margin: 0px 10px; font-size:24px;"></i><span>`}`;
+                });
 
-        if(response.data.length === 0 ){
-            $("#usrl-ipsholder").html(`<tr><td colspan="10"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
-            return;
-        }
-      
-        let markup = "";
-        const count = response.data.length;
-        response.data.reverse().forEach((data,index)=> {
-markup += `<span>${data.username}</span> ${(index == count - 1) ? "" : `<i class="bx bx-chevron-right" style="vertical-align: middle;margin: 0px 10px; font-size:24px;"></i><span>`}`;
+                $("#usrl-relholder").html(markup);
+            },
+            error: function (res, status, error) {},
+            complete: function () {
+                $("#overlay-loader").hide();
+                console.log("Operation Completed Successfully.");
+            },
         });
-    
-         $("#usrl-relholder").html(markup);
+    };
+    const translator = JSON.parse(document.getElementById("translation-container").getAttribute("data-translations"));
+    const AccountTransactionss = (data) => {
+        let html = "";
 
-      },
-      error:function (res,status,error) {  
-        
-      },
-      complete:function () {
-        $('#overlay-loader').hide();
-        console.log("Operation Completed Successfully.");
-      }
-      
+        const statusColor = {
+            1: { title: translator["Deposit"], color: "#4CAF50" }, // Green
+            2: { title: translator["Win Bonus"], color: "#FF9800" }, // Orange
+            3: { title: translator["Bet Awarded"], color: "#03A9F4" }, // Light Blue
+            4: { title: translator["Withdrawal"], color: "#F44336" },
+            5: { title: translator["Bet Deduct"], color: "#E91E63" }, // Red
+            6: { title: translator["Bet Cancelled"], color: "#9E9E9E" }, // Grey
+            7: { title: translator["Rebates"], color: "#8BC34A" }, // Light Green
+            8: { title: translator["Self Rebate"], color: "#00BCD4" }, // Cyan
+            9: { title: translator["Sending Red Envelope"], color: "#FF5722" }, // Deep Orange
+            10: { title: translator["Red Envelope Receive"], color: "#795548" }, // Brown
+            11: { title: translator["Bet Refund"], color: "#FFC107" }, // Amber
+            12: { title: translator["Bet Lost"], color: "#FFC107" }, // Amber
+        };
+
+        let completes = translator["Completed"];
+        const formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
+
+        data.forEach((item) => {
+            let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+
+            html += `
+        <tr class="trow">
+          <td>${"TR" + item.order_id.substring(0, 7)}</td>
+          <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
+            <td><i class='bx bxs-circle' style='color:${statusColor[item.order_type].color};font-size:8px;margin-right:5px;'></i>${statusColor[item.order_type].title}</td>
+            <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
+            <td>${formatMoney(item.balance)}</td>
+            <td>${formatTimestamp(item.dateTime)}</td>
+            <td>${formatTimestamp(item.date_created)}</td>
+            <td>${item.order_id}</td>
+            <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> ${completes}</td>
+            
+        </tr>
+    `;
+        });
+        return html;
+    };
+
+    const renders = (data) => {
+        var html = AccountTransactionss(data);
+        $("#accountchange").html(html);
+    };
+
+    async function fetchaccount(userid, currentPage, pageLimit) {
+        try {
+            const response = await fetch(`../admin/useraccountchange/${userid}/${currentPage}/${pageLimit}`);
+            const data = await response.json();
+              
+            $("#maskaccount").LoadingOverlay("hide");
+            if (data.account.length < 1) {
+                $("#accountchange").html(`
+                    <tr class="no-results">
+                        <td colspan="9">
+                        <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="120px" />
+                        </td>
+                    </tr>
+                
+                    `);
+                return;
+            }
+
+            renders(data.account);
+            tableScrolluserLists();
+            // Render pagination
+            render(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchaccount(userid, newPage, pageLimit));
+            document.getElementById("paging_infolistss").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     }
-    );
 
- };
-   
-   
+    let userIdacc;
+    $(document).on("click", ".acountbtn", function (e) {
+        let userid = $(this).attr("data-uid");
+        userIdacc = userid;
+        console.log(userIdacc);
+        $("#viewaccount").modal("show");
+        fetchaccount(userid, currentPage, pageLimit);
+    });
 
+    function tableScrolluserList() {
+        const tableContainerUser = document.querySelector(".table-wrapperuserlist");
+        const headerRowUserList = document.querySelector(".headrowuserlist");
 
-    
+        tableContainerUser.addEventListener("scroll", function () {
+            if (tableContainerUser.scrollTop > 0) {
+                headerRowUserList.classList.add("sticky-headeruserlist");
+            } else {
+                headerRowUserList.classList.remove("sticky-headeruserlist");
+            }
+        });
+    }
+    tableScrolluserList();
+
+    function render(totalPages, currentPage, pageLimit, callback) {
+        const createPageLink = (i, label = i, disabled = false, active = false) =>
+            `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+  <a class='page-link' href='#' data-page='${i}'>${label}</a>
+      </li>`;
+        let pagLink = `<ul class='pagination justify-content-end'>`;
+
+        // Previous Button
+        pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
+
+        // Page numbers with ellipsis
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+                pagLink += createPageLink(i, i, false, i === currentPage);
+            } else if (i === currentPage - 3 || i === currentPage + 3) {
+                pagLink += createPageLink(i, "...", true);
+            }
+        }
+
+        // Next Button
+        pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
+        pagLink += "</ul>";
+
+        document.getElementById("paginationacc").innerHTML = pagLink;
+
+        // Add click event listeners
+        document.querySelectorAll("#paginationacc .page-link").forEach((link) => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const newPage = +this.getAttribute("data-page");
+                if (newPage > 0 && newPage <= totalPages) {
+                    $("#maskaccount").LoadingOverlay("show", {
+                        background: "rgb(90,106,133,0.1)",
+                        size: 3,
+                    });
+                    callback(newPage, pageLimit); // Call the provided callback with new page and pageLimit
+                }
+            });
+        });
+    }
+
+    $(".numrowschange").change(function () {
+        $("#maskaccount").LoadingOverlay("show", {
+            background: "rgb(90,106,133,0.1)",
+            size: 3,
+        });
+        const numrows = $(this).val();
+        fetchaccount(userIdacc, currentPage, numrows);
+    });
+
+    $(".refreshuseracc").click(function () {
+        $(".refresdata").val("");
+        $("#maskaccount").LoadingOverlay("show", {
+            background: "rgb(90,106,133,0.1)",
+            size: 3,
+        });
+        fetchaccount(userIdacc, currentPage, pageLimit);
+    });
+
+    async function filterAccountChange(userIdacc, ordertype, startdateusers, enddateusers, currentPage, pageLimit) {
+        try {
+            const response = await fetch(`../admin/filterChangeAccount/${userIdacc}/${ordertype}/${startdateusers}/${enddateusers}/${currentPage}/${pageLimit}`);
+            const data = await response.json();
+
+            ///console.log(response);
+
+            $(".loaderuseracc").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+            if (data.filteraccount.length < 1) {
+                $("#accountchange").html(`
+             <tr class="no-results">
+            <td colspan="9">
+              <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="120px" />
+            </td>
+             </tr>
+       
+          `);
+                return;
+            }
+            $("#maskaccount").LoadingOverlay("hide");
+            renders(data.filteraccount);
+
+            // Render pagination
+            render(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterAccountChange(userIdacc, ordertype, startdateusers, enddateusers, newPage, pageLimit));
+            document.getElementById("paging_infolistss").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
 });
 
-
-
-
-
-const lotteriesMarkup = (lottery,blockedLotteries) => {
-        const lotteryID = lottery.lt_id;
-        const status = blockedLotteries.includes(`${lotteryID}`) ? "Disabled" : "Active";
-        const checkedState = status == "Active" ? "checked" : "";
-        return `<tr>
+const lotteriesMarkup = (lottery, blockedLotteries) => {
+    const lotteryID = lottery.lt_id;
+    const status = blockedLotteries.includes(`${lotteryID}`) ? "Disabled" : "Active";
+    const checkedState = status == "Active" ? "checked" : "";
+    return `<tr>
                  <td><b class="lottery-name"> ${lottery.name}</b></td>
                  <td><span class="lottery-status">${status}</span></td>
                  <td><input class="form-check-input toggle-lot" type="checkbox" value="${lotteryID}" id="flexCheckDefault" ${checkedState}></td>
                                 </tr>`;
-
 };
 const userIpsMarkup = (data) => {
-    
-        const checkedState = data.ip_state === "allowed" ? "checked" : "";
-        const ipState = data.ip_state === "allowed" ? "Allowed" : "Blocked";
-        return `<tr>
+    const checkedState = data.ip_state === "allowed" ? "checked" : "";
+    const ipState = data.ip_state === "allowed" ? "Allowed" : "Blocked";
+    return `<tr>
                  <td><b class="">${data.ip} </b></td>
                  <td><span class="lottery-status">${data.login_date} / ${data.login_time}</span></td>
                  <td><span class="">${ipState}</span></td>
                  <td><input class="form-check-input toggle-ip-state" type="checkbox" value="${data.ulog_id}" id="flexCheckDefault" ${checkedState}></td>
                                 </tr>`;
-
 };
-const  showDialog = (btnID) => {
-    const modalElement = $("#" +btnID);
-    modalElement.hasClass("show") ? modalElement.css({"display": "none"}) : modalElement.css({"display": "block"});
+const showDialog = (btnID) => {
+    const modalElement = $("#" + btnID);
+    modalElement.hasClass("show") ? modalElement.css({ display: "none" }) : modalElement.css({ display: "block" });
     modalElement.toggleClass("show");
-    
-}
+};
