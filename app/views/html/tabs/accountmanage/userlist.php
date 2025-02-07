@@ -167,6 +167,64 @@
         z-index: 10;
     }
 
+    .table-wrapperuserquota {
+        overflow: hidden;
+        /* Hide the default scrollbar */
+        white-space: nowrap;
+        max-width: 100%;
+        /* Adjust based on your needs */
+        margin-bottom: 10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: rgb(38, 57, 77) 0px 20px 30px -10px;
+        /* Ensure it doesn't interfere with content */
+        z-index: 10;
+    }
+
+    /* Custom Scrollbar for Webkit Browsers */
+    .table-wrapperuserquota::-webkit-scrollbar {
+        width: 5px;
+        /* Slimmer scrollbar width */
+        height: 5px;
+        /* Slimmer scrollbar height for horizontal scrolling */
+    }
+
+    .table-wrapperuserquota::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        /* Lighter background for track */
+        border-radius: 5px;
+    }
+
+    .table-wrapperuserquota::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        /* Blue color for thumb */
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .table-wrapperuserquota::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+        /* Darker blue on hover */
+    }
+
+    .table-wrapperuserquota {
+        overflow: hidden;
+        /* Hide the default scrollbar */
+        white-space: nowrap;
+        max-width: 100%;
+        /* Adjust based on your needs */
+        margin-bottom: 10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: rgb(38, 57, 77) 0px 20px 30px -10px;
+        /* Ensure it doesn't interfere with content */
+        z-index: 10;
+    }
+    
     .scrollable-container {
         max-height: 600px;
         /* Limit the container's height */
@@ -317,6 +375,18 @@
     }
 
     .sticky-headeruserlists {
+        position: relative;
+        bottom: 1px;
+        background-color: red;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    }
+
+    .tbl-headeruserquota {
+        position: sticky;
+        top: 0;
+    }
+
+    .sticky-headeruserquota {
         position: relative;
         bottom: 1px;
         background-color: red;
@@ -793,7 +863,7 @@
 </div>
 
 <div id="viewquota" class="modal fade" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="modal-content">
             <div class="modal-body">
                 <!-- Modal Header -->
@@ -807,11 +877,14 @@
                 <!-- Form -->
                 <form>
                     <input type="text" class="form-control userquotaid" hidden />
-                    <div class="modal-body scrollable-container">
+                    <div class="modal-body scrollable-containerxx">
                         <div style="overflow: hidden;">
-                            <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
-                                <thead>
-                                    <tr>
+                        <div class="card-body p-4">
+                        <div class="table-responsive mb-4 border rounded-1 table-wrapperuserquota" id="quotatable" style="height: 430px; overflow-y: scroll;">
+                            <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
+                            <thead class="text-dark fs-4 tbl-headeruserquota">
+                           <tr class="headrowusequota">
+                         
                                         <th class="font-weight-normal">Rebate(%)</th>
                                         <th class="font-weight-normal">Bonus Group</th>
                                         <th class="font-weight-normal">Quota Used</th>
@@ -819,11 +892,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Data rows will go here -->
+                                  
                                 </tbody>
                             </table>
+                          </div>
+                        </div>
                         </div>
                     </div>
+             
+        
                     <div class="d-md-flex align-items-center">
                         <div class="form-check">
                             <label class="form-check-label" for="sf2">Verify before submit</label>

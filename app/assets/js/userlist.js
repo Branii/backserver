@@ -528,13 +528,14 @@ $(function () {
                     `<span class="rebate_group"> ${item.rebate}</span>`,
                     `<span class="bonus_group">  ${item.odds_group}</span>`,
                     `<span class="count_group">${item.counts} </span> / ${item.quota}`,
-                    `<input type="text" value="${item.quota}" class="quota_set form-control" />`,
+                    `<input type="text" value="${item.quota}" class="quota_set form-control w-50" />`,
                 ];
 
                 rowData.forEach((datass) => {
                     let cell = row.insertCell();
                     cell.innerHTML = datass;
                 });
+                tableScrolluserListsquota()
             });
         });
     });
@@ -877,7 +878,20 @@ $(function () {
                 }
             });
         }
-      
+
+        function tableScrolluserListsquota() {
+            const tableContainerUsersquota = document.querySelector(".table-wrapperuserquota");
+            const headerRowUserListsquota = document.querySelector(".headrowusequota");
+    
+            tableContainerUsersquota.addEventListener("scroll", function () {
+                if (tableContainerUsersquota.scrollTop > 0) {
+                    headerRowUserListsquota.classList.add("sticky-headeruserquota");
+                } else {
+                    headerRowUserListsquota.classList.remove("sticky-headeruserquota");
+                }
+            });
+        }
+        
 
         $(".playeruserlistt").click(function () {
             let direction = $(this).val();
