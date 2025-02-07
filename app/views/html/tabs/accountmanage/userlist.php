@@ -1013,7 +1013,7 @@
                     <div class="d-md-flex align-items-center">
                         
                         <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 usrl-delete-userbtn" style="border: solid 1px #ccc;color: #e60e38!important">
+                            <button type="button" class="btn hstack gap-6 usrl-delete-userbtn" style="border: solid 1px #ccc;color: #e60e38!important;">
                                 <i class="bx bx-trash loaderquota"></i>Delete User</button>
                         </div>
                     </div>

@@ -331,6 +331,31 @@ class UserManageModel extends MEDOOHelper
     }
 
 
+    public static function fetchUsersData($page = 1, $limit = 20): array {
+
+        try{
+            $db = parent::getLink();
+            $offset = ($page - 1 ) * $limit;
+            $sql = "SELECT *,(SELECT COUNT(*) FROM users_test) AS total_records FROM users_test ORDER BY uid DESC LIMIT :offset, :limit";
+            $stmt = $db->query($sql, [":offset" => $offset, ":limit" => $limit]);
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+            
+            $uids     = array_column($data,'uid');
+            $login_counts = self::fetch_users_login_count($uids);
+            $subs_count = self::count_subs($uids);
+            // $res = self::fetch_user_rel($uids);
+
+        return ["status" => "success", "data" => $data,"login_counts" => $login_counts,"direct_subs_count" => $subs_count];
+            
+        }catch(Exception $e){
+            echo $e->getMessage();
+            return ["status" => "error" , 'data' => "Internal Server Error."];
+
+        }
+    }
+
+
 
     public static function blockUserData(int $userId)
     {

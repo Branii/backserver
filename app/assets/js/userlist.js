@@ -300,7 +300,7 @@ $(function () {
             $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
             return;
         }
-        var html = UserlistData(data);
+        var html = UserlistDataV2(data);
         $("#userlistContainer").html(html);
         //tippy('[data-tippy-content]');
     };
@@ -315,10 +315,11 @@ $(function () {
            //   console.log(response);
            //  return
             $("#maskuserlist").LoadingOverlay("hide");
-            renderuserlist(data.users);
-
-            renderPaginationlist(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlist(newPage, pageLimit));
-            document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+            renderuserlist(data);
+            // renderuserlist(data.users);
+            const totalPages = Math.ceil(data.data[0].total_records / 20 );
+            renderPaginationlist(totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlist(newPage, pageLimit));
+            document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + totalPages + " pages";
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -811,6 +812,8 @@ const fetchsubagent = (userID,currentPage,pageLimit,element) => {
 
    
 const UserlistDataV2 = (response) => {
+
+    console.log(response);
     let html = "";
     const status = {
         1: "Enable", // Green
@@ -891,7 +894,7 @@ const UserlistDataV2 = (response) => {
                   <td>${item.nickname}</td>
                   <td>VIP</td>
                  <td class="show-user-rel ${item.agent_level === "*****" ? "no-agent" : ""}" data-user-id="${item.uid}">
-               ${item.total_records < 2 ? item.agent_name + "->" + username : item.agent_name + "->" + username + "..."}
+               ${item.account_type == 1 ? "-------" : (item.account_type == 2 ? "Top Agent" : (subsLookups[item.uid] < 2 ? item.agent_name + "->" + username : item.agent_name + "->" + username + "..."))}
               </td>
                   <td>${subsLookup[item.uid] ?? 0} </td>
                   <td>${formatMoney(item.balance)}</td> 
