@@ -36,11 +36,11 @@ class BusinessFlowModel extends MEDOOHelper
         }
 
         if (!empty($startdate) && !empty($enddate)) {
-            $filterConditions[] = "date_created BETWEEN '$startdate' AND '$enddate'";
+            $filterConditions[] = "DATE(dateTime) BETWEEN '$startdate' AND '$enddate'";
         } elseif (!empty($startdate)) {
-            $filterConditions[] = "date_created = '$startdate'";
+            $filterConditions[] = "DATE(dateTime) = '$startdate'";
         } elseif (!empty($enddate)) {
-            $filterConditions[] = "date_created = '$enddate'";
+            $filterConditions[] = "DATE(dateTime) = '$enddate'";
         }
 
         // Combine conditions into the final query

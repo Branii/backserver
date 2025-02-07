@@ -291,7 +291,7 @@
                     <option value="9"><?= $translator['Sending Red Envelope']; ?></option>
                     <option value="10"><?= $translator['Red Envelope Receive']; ?></option>
                     <option value="11"><?= $translator['Bet Refund']; ?></option>
-                    <option value="12"><?= $translator['Bet Lost']; ?></option>
+                  
                 </select>
                 <input type="date" class="form-control queryholdertrans startdatet" id="namekext1" aria-describedby="name" placeholder="Name" />
                 <input type="date" class="form-control queryholdertrans enddatet" id="namehtex" aria-describedby="name" placeholder="Name" />

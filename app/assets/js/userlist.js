@@ -433,16 +433,16 @@ $(function () {
             // const data = await response.json();
             // console.log('Registration Success:', data);
             const result = await response.json();
-            // console.log('Registration Success:', result);
+             console.log('Registration Success:', result);
             // Handle success or error based on response type
-            if (result.type === "success") {
+            if (result.type == "success") {
                 $(".loaders").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
                 setTimeout(function () {
                     $(".loaders").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
                     showToast("Success", result.message, "success");
-                    //$("#addagent").modal("hide");
+                 
                 }, 500);
-
+                $("#addagentmodal").modal("hide");
                 fetchUserlist(currentPage, pageLimit);
             } else if (result.type === "error") {
                 showToast("Heads up!!", result.message, "info");
@@ -515,6 +515,8 @@ $(function () {
 
         $.post(`../admin/getuserrebate/${uid}/`, function (data) {
             const rebatelist = JSON.parse(data);
+            //console.log(data);
+            // return
             let tableBody = document.getElementById("quotatable").getElementsByTagName("tbody")[0];
             while (tableBody.firstChild) {
                 tableBody.removeChild(tableBody.firstChild);
@@ -523,9 +525,9 @@ $(function () {
             rebatelist.forEach((item) => {
                 let row = tableBody.insertRow();
                 let rowData = [
-                    `<b class="rebate_group"> ${item.rebate}</b>`,
-                    `<b class="bonus_group">  ${item.odds_group}</b>`,
-                    `<b class="count_group">${item.counts} </b> / ${item.quota}`,
+                    `<span class="rebate_group"> ${item.rebate}</span>`,
+                    `<span class="bonus_group">  ${item.odds_group}</span>`,
+                    `<span class="count_group">${item.counts} </span> / ${item.quota}`,
                     `<input type="text" value="${item.quota}" class="quota_set form-control" />`,
                 ];
 
@@ -854,7 +856,7 @@ $(function () {
             const ordertype = $(".orderuserchange").val();
             const startdateusers = $(".startdateusers").val();
             const enddateusers = $(".enddateusers").val();
-            console.log(ordertype);
+         //   console.log(ordertype);
          
             $(".loaderuseracc").removeClass("bx-check-double").addClass("bx-loader bx-spin");
                 filterAccountChange(userIdacc,ordertype, startdateusers, enddateusers, currentPage, pageLimit);

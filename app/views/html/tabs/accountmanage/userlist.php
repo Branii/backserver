@@ -648,7 +648,7 @@
                             <label class="form-check-label" for="sf2">Verify before submit</label>
                         </div>
                         <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 btnaddagent" style="border: solid 1px #ccc;" data-bs-dismiss="modal" aria-label="Close">
+                            <button type="button" class="btn hstack gap-6 btnaddagent" style="border: solid 1px #ccc;" data-bs-dismissz="modal" aria-label="Close">
                                 <i class="bx bx-send loaders"></i>
                                 Submit
                             </button>
@@ -877,7 +877,7 @@
 
                                         <input name="startdate" type="date" class="form-control startdateusers refresdata" aria-describedby="name" style="width: 39%; position: relative; left: 4%;" placeholder="Name" />
 
-                                        <input name="enddate" type="date" class="form-control enddateusers refresdata" aria-describedby="name" style="width: 39%; position: relative; left: 6%;" placeholder="Name" />
+                                        <input name="enddate" type="date" class="form-control enddateusers refresdata" aria-describedby="name" style="width: 39%; position: relative; left: 9%;" placeholder="Name" />
                                     </div>
                                 </span>
                                 <span class="toplist-center" aria-label=" navigation example">

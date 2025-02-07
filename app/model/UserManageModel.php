@@ -412,11 +412,11 @@ class UserManageModel extends MEDOOHelper
         }
 
         if (!empty($startdate) && !empty($enddate)) {
-            $filterConditions[] = "transaction.date_created BETWEEN '$startdate' AND '$enddate'";
+            $filterConditions[] = "DATE(transaction.dateTime) BETWEEN '$startdate' AND '$enddate'";
         } elseif (!empty($startdate)) {
-            $filterConditions[] = "transaction.date_created = '$startdate'";
+            $filterConditions[] = "DATE(transaction.dateTime) = '$startdate'";
         } elseif (!empty($enddate)) {
-            $filterConditions[] = "transaction.date_created = '$enddate'";
+            $filterConditions[] = "DATE(transaction.dateTime) = '$enddate'";
         }
 
         // Combine conditions into the final query
@@ -673,6 +673,8 @@ class UserManageModel extends MEDOOHelper
     public static function fetchUserRebateList($uid)
     {
         $rebatelist = parent::selectOne("users_test", "*", ["uid" => $uid])['rebate_list'];
-        return json_decode($rebatelist);
+       return  $data = json_decode($rebatelist,true);
+      //return   $datareverse = array_reverse($data);
+     
     }
 }

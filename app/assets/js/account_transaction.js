@@ -40,7 +40,7 @@ $(function () {
             9: { title: translator["Sending Red Envelope"], color: "#FF5722" }, // Deep Orange
             10: { title: translator["Red Envelope Receive"], color: "#795548" }, // Brown
             11: { title: translator["Bet Refund"], color: "#FFC107" }, // Amber
-            12: { title: translator["Bet Lost"], color: "#FFC107" } // Amber
+            // 12: { title: translator["Bet Lost"], color: "#FFC107" } // Amber
         };
         
         let completes = translator["Completed"];
@@ -48,21 +48,29 @@ $(function () {
 
         data.forEach((item) => {
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-
-            html += `
-                <tr class="trow">
-                  <td>${"TR" + item.order_id.substring(0, 7)}</td>
-                  <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
-                    <td><i class='bx bxs-circle' style='color:${statusColor[item.order_type].color};font-size:8px;margin-right:5px;'></i>${statusColor[item.order_type].title}</td>
-                    <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
-                    <td>${formatMoney(item.balance)}</td>
-                    <td>${formatTimestamp(item.dateTime)}</td>
-                    <td>${formatTimestamp(item.date_created)}</td>
-                    <td>${item.order_id}</td>
-                    <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> ${completes}</td>
-                    <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
-                </tr>
-            `;
+        
+            // Filter out items with order_type 12
+            const filteredItems = data.filter(i => i.order_type !== 12);
+        
+            // Loop through the filtered items to generate HTML
+            filteredItems.forEach(filteredItem => {
+                const status = statusColor[filteredItem.order_type] || { title: "Unknown", color: "#000" };
+        
+                html += `
+                    <tr class="trow">
+                      <td>${"TR" + item.order_id.substring(0, 7)}</td>
+                      <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
+                      <td><i class='bx bxs-circle' style='color:${status.color};font-size:8px;margin-right:5px;'></i>${status.title}</td>
+                      <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
+                      <td>${formatMoney(item.balance)}</td>
+                      <td>${formatTimestamp(item.dateTime)}</td>
+                      <td>${formatTimestamp(item.date_created)}</td>
+                      <td>${item.order_id}</td>
+                      <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> ${completes}</td>
+                      <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
+                    </tr>
+                `;
+            });
         });
         return html;
     };
