@@ -621,9 +621,10 @@ $(".playerWinLoss").click(function(e){
     lotteryID = lotteryID == undefined ?  "all" : lotteryID;
     startDate = startDate.length != 0 ? startDate : "all";
     endDate   = endDate.length != 0 ? endDate : "all";
+    flag      = "active-subs"
     console.log(agentID);
     $.ajax({
-        url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${currentPage}/${limit}`,
+        url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
         type: "POST",
         beforeSend: function(){
            $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

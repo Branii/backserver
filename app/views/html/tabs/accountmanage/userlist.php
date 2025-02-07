@@ -300,6 +300,7 @@
 
     .tbl-headeruserlist {
     position: sticky;
+    z-index: 999;
     top: 0;
   }
 
@@ -620,7 +621,7 @@ section#tooltipp p {
     <!-- /.modal-dialog -->
 </div>
 
-<div id="signup" class="modal fade" tabindex="-1" aria-hidden="true">
+<div id="usrl-manage-user" class="modal fade" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -633,6 +634,7 @@ section#tooltipp p {
                     <img src="<?php echo BASE_URL; ?>assets/images/profile/user-1.jpg" class="rounded-circle" width="120" height="120" alt="Profile Image" />
                 </div>
 
+
                 <!-- Personal Details Section -->
                 <div class="card border mb-4">
                     <div class="card-body">
@@ -641,46 +643,58 @@ section#tooltipp p {
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="userName" class="form-label">Your Name</label>
-                                        <input type="text" class="form-control" id="userName" placeholder="Mathew Anderson" />
+                                        <label for="userName" class="form-label">Contact</label>
+                                        <input type="text" class="form-control" id="usrl-contact" placeholder="Contact" disabled/>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="userLocation" class="form-label">Location</label>
-                                        <select id="userLocation" class="form-select">
-                                            <option selected>United Kingdom</option>
-                                            <option value="1">United States</option>
-                                            <option value="2">India</option>
-                                            <option value="3">Russia</option>
-                                        </select>
+                                        <label for="userEmail" class="form-label">Whatsapp</label>
+                                        <input type="email" class="form-control" id="usrl-whatsapp" placeholder="whatsapp" disabled/>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="userEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="userEmail" placeholder="info@modernize.com" />
+                                        <label for="userEmail" class="form-label">Username</label>
+                                        <input type="email" class="form-control" id="usrl-username" placeholder="username" disabled/>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="storeName" class="form-label">Store Name</label>
-                                        <input type="text" class="form-control" id="storeName" placeholder="Maxima Studio" />
+                                        <label for="storeName" class="form-label">Account Type</label>
+                                        <input type="text" class="form-control" id="usrl-account-type" placeholder="Account Type" disabled/>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="userCurrency" class="form-label">Currency</label>
-                                        <select id="userCurrency" class="form-select">
-                                            <option selected>India (INR)</option>
-                                            <option value="1">US Dollar ($)</option>
-                                            <option value="2">United Kingdom (Pound)</option>
-                                            <option value="3">Russia (Ruble)</option>
+                                        <label for="usrl-state" class="form-label">State</label>
+                                        <select id="usrl-state" class="form-select">
+                                                <option value="1">Enable to Run</option>
+												<option value="2">Suspend Betting</option>
+												<option value="3">Forbidden to Log In</option>
+												<option value="5">Forbidden to Deposit</option>
+												<option value="6">Forbidden to Withdraw</option>
+												<option value="4">Block User</option>
+
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="userPhone" class="form-label">Phone</label>
-                                        <input type="text" class="form-control" id="userPhone" placeholder="+91 12345 65478" />
+                                        <label for="usrl-rebate" class="form-label">Rebate (%)</label>
+                                        <input type="text" class="form-control" id="usrl-rebate" placeholder="rebate(%)" />
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="userAddress" class="form-label">Address</label>
-                                        <input type="text" class="form-control" id="userAddress" placeholder="814 Howard Street, 120065, India" />
+                                        <label for="userAddress" class="form-label">Remarks</label>
+                                        <input type="text" class="form-control" id="usrl-remarks" placeholder="remarks" disabled/>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="usrl-deposit-limit" class="form-label">Deposit Limit</label>
+                                        <input type="text" class="form-control" id="usrl-deposit-limit" placeholder="Deposit Limit" />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="usrl-withdrawal-limit" class="form-label">Withdrawal Limit</label>
+                                        <input type="text" class="form-control" id="usrl-withdrawal-limit" placeholder="Withdrawal Limit" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="usrl-daily-betting-total-limit" class="form-label">Daily Betting Total Limit</label>
+                                        <input type="text" class="form-control" id="usrl-daily-betting-total-limit" placeholder="Daily Betting Total Limit" />
                                     </div>
                                 </div>
                             </div>
@@ -691,57 +705,35 @@ section#tooltipp p {
                 <!-- Account Details Section -->
                 <div class="card border">
                     <div class="card-body">
-                        <h4 class="card-title">Account Details</h4>
+                        <h4 class="card-title">Account Security</h4>
                         <form id="accountDetailsForm">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="accountName" class="form-label">Your Name</label>
-                                        <input type="text" class="form-control" id="accountName" placeholder="" />
+                                        <label for="usrl-login-password" class="form-label">Login Password</label>
+                                        <input type="password" class="form-control" id="usrl-login-password" placeholder="Login Password" disabled/>
                                     </div>
+                                    
                                     <div class="mb-3">
-                                        <label for="accountLocation" class="form-label">Location</label>
-                                        <select id="accountLocation" class="form-select">
-                                            <option selected>United Kingdom</option>
-                                            <option value="1">United States</option>
-                                            <option value="2">India</option>
-                                            <option value="3">Russia</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="accountEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="accountEmail" placeholder="" />
+                                        <label for="usrl-withdrawal-password" class="form-label">Withdrawal Password</label>
+                                        <input type="password" class="form-control" id="usrl-withdrawal-password" placeholder="Withdrawal Password" disabled/>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="accountStoreName" class="form-label">Store Name</label>
-                                        <input type="text" class="form-control" id="accountStoreName" placeholder="" />
+                                        <label for="usrl-accounting-binding" class="form-label">Account Binding</label>
+                                        <input type="password" class="form-control" id="usrl-accounting-binding" placeholder="Account Binding"  disabled/>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="accountCurrency" class="form-label">Currency</label>
-                                        <select id="accountCurrency" class="form-select">
-                                            <option selected>India (INR)</option>
-                                            <option value="1">US Dollar ($)</option>
-                                            <option value="2">United Kingdom (Pound)</option>
-                                            <option value="3">Russia (Ruble)</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="accountPhone" class="form-label">Phone</label>
-                                        <input type="text" class="form-control" id="accountPhone" placeholder="" />
+                                        <label for="usrl-security" class="form-label">Security</label>
+                                        <input type="password" class="form-control" id="usrl-security" placeholder="Security" disabled/>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <label for="accountAddress" class="form-label">Address</label>
-                                        <input type="text" class="form-control" id="accountAddress" placeholder="" />
-                                    </div>
-                                </div>
+                                
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="update-user-infobtn">Save</button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -801,3 +793,204 @@ section#tooltipp p {
     <!-- /.modal-dialog -->
 </div>
 
+
+
+<div id="usl-deactivate-user-dialog" class="modal fade " tabindex="-1" aria-modal="true" role="dialog" style="display: none;top: 363px;left: 191px;">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content" style="width: 75%;">
+            <div class="modal-body">
+                <!-- Modal Header -->
+                <div class="text-center mt-2 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="text-infos" style="color: #e60e38;">Deactivate User</h5>
+                        <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form>
+                    
+                    <div class="modal-body scrollable-container">
+                        <div style="overflow: hidden;text-align: center;font-size: large;font-weight: bold;">
+                            <p>Are you sure you want to <span style="color: #e60e38;">Deactivate  Agent 1 ? </span></p>
+                        </div>
+                    </div>
+                    <div class="d-md-flex align-items-center">
+                        
+                        <div class="mt-3 mt-md-0 ms-auto">
+                            <button type="button" class="btn hstack gap-6 block-userbtn" style="border: solid 1px #ccc;color: #e60e38!important;!i;!;">
+                                <i class="bx bx-user-x loaderquota"></i>Deactivate User</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="usl-lottery-name-modal" class="modal fade" tabindex="-1" aria-modal="true" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- Modal Header -->
+                <div class="text-center mt-2 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="text-infos">Lottery Name</h5>
+                        <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form>
+                    <input type="text" class="form-control userquotaid" hidden="">
+                    <div class="modal-body scrollable-container">
+                        <div style="overflow: hidden;">
+                            <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
+                                <thead>
+                                    <tr>
+                                        <th class="font-weight-normal">Lottery Name</th>
+                                        <th class="font-weight-normal">Status</th>
+                                        <th class="font-weight-normal">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usrl-lot-dtholder"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="d-md-flex align-items-center">
+                        
+                        <div class="mt-3 mt-md-0 ms-auto">
+                            <button type="button" class="btn hstack gap-6 usrl-listclose" style="border: solid 1px #ccc;">
+                                <i class="bx bx-x-circle loaderquota"></i>Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="usl-delete-user-dialog" class="modal fade " tabindex="-1" aria-modal="true" role="dialog" style="display: none;top: 363px;left: 191px;">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content" style="width: 75%;">
+            <div class="modal-body">
+                <!-- Modal Header -->
+                <div class="text-center mt-2 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="text-infos" style="color: #e60e38;">Delete User</h5>
+                        <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form>
+                    
+                    <div class="modal-body scrollable-container">
+                        <div style="overflow: hidden;text-align: center;font-size: large;font-weight: bold;">
+                            <p>Are you sure you want to <span style="color: #e60e38;">Delete  Agent 1 ? </span></p>
+                        </div>
+                    </div>
+                    <div class="d-md-flex align-items-center">
+                        
+                        <div class="mt-3 mt-md-0 ms-auto">
+                            <button type="button" class="btn hstack gap-6 usrl-delete-userbtn" style="border: solid 1px #ccc;color: #e60e38!important;!i;!;">
+                                <i class="bx bx-trash loaderquota"></i>Delete User</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="usl-whitelist-ips-modal" class="modal fade " tabindex="-1" aria-modal="true" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- Modal Header -->
+                <div class="text-center mt-2 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="text-infos">White List Ips</h5>
+                        <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form>
+                    <input type="text" class="form-control userquotaid" hidden="">
+                    <div class="modal-body scrollable-container">
+                        <div style="overflow: hidden;">
+                            <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
+                                <thead>
+                                    <tr>
+                                        <th class="font-weight-normal">IPs</th>
+                                        <th class="font-weight-normal">Time</th>
+                                        <th class="font-weight-normal">Status</th>
+                                        <th class="font-weight-normal">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usrl-ipsholder">
+                                <tr>
+                                    <td><b class="lottery-name"> 14.0</b></td>
+                                    <td><b class="lottery-status">  1980</b></td>
+                                    <td><b class="lottery-actn">0 </b> / 20</td>
+                                    <td><b class="lottery-actn">0 </b> / 20</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="d-md-flex align-items-center">
+                        <!-- <div class="form-check">
+                            <label class="form-check-label" for="sf2">Verify before submit</label>
+                        </div> -->
+                        <div class="mt-3 mt-md-0 ms-auto">
+                            <button type="button" class="btn hstack gap-6 usrl-listclose" style="border: solid 1px #ccc;">
+                                <i class="bx bx-x-circle loaderquota"></i>
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<input id="idHolder" type="hidden" value="">
+
+
+<div id="usrl-relationship-dialog" class="modal fade" tabindex="-1" aria-modal="true" role="dialog" style="display: none; top: 363px; left: 191px;">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content" style="width: 75%;">
+            <div class="modal-body">
+                <!-- Modal Header -->
+                <div class="text-center mt-2 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="text-infos" style="">Relationship</h5>
+                        <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form>
+                    
+                    <div class="modal-body scrollable-container">
+                        <div style="overflow: hidden;text-align: center;font-weight: bold;">
+                            <p id="usrl-relholder"></p>
+                        </div>
+                    </div>
+                    <div class="d-md-flex align-items-center">
+                        
+                        <div class="mt-3 mt-md-0 ms-auto">
+                            
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

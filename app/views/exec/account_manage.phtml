@@ -239,17 +239,88 @@ if ($flag == "updateUsedquota") {
 }
 
 if ($flag == "fetchsubagent") {
-
-    $nickname = isset($this->viewData['nicknames']) ? $this->viewData['nicknames'] : '';
+    $user_id   = $this->viewData['user_id'];
     $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
     $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
-    $result =  (new UserManageModel())->FetchSubAgents($nickname,$page,$limit);
-    echo json_encode([
-        'subagent' => $result['data'],
-        'totalPages' => ceil($result['total'] / $limit)
-    ]);
+
+     $res = UserManageModel::fetchAgentSubs($user_id);
+     echo json_encode($res);
+
+    return;
+  
+    // $result =  (new UserManageModel())->FetchSubAgents($nickname,$page,$limit);
+    // echo json_encode([
+    //     'subagent' => $result['data'],
+    //     'totalPages' => ceil($result['total'] / $limit)
+    // ]);
    
+}else if($flag == "blockUser"){
+
+    $user_id = $this->viewData["user_id"];
+    $res     = UserManageModel::blockUserData($user_id);
+    echo json_encode($res);
+    return;
+}else if($flag == "deleteUser"){
+
+    $user_id = $this->viewData["user_id"];
+    $res     = UserManageModel::deleteUserData($user_id);
+    echo json_encode($res);
+    return;
+}else if($flag == "fetchUserLotteries"){
+;    $user_id = $this->viewData["user_id"];
+    $res     = UserManageModel::fetchUserLotteries($user_id);
+    echo json_encode($res);
+}else if($flag == "updateLotteryState"){
+    $user_id    = $this->viewData["user_id"];
+    $lottery_id = $this->viewData["lottery_id"];
+    
+    $res        = UserManageModel::update_lottery_stat_for_user($user_id,$lottery_id);
+
+    echo json_encode($res);
+}else if($flag === "fetchUserLogs"){
+
+
+    $user_id    = $this->viewData["user_id"];
+    $res        = UserManageModel::fetchUserLogs($user_id);
+    echo json_encode($res);
+
+  
+
+}else if($flag == "blockUserIp"){
+    $ip_id  = $this->viewData['ulog_id'];
+    $uid    = $this->viewData['user_id'];
+    $res    = UserManageModel::block_user_ip($uid, $ip_id);
+    echo json_encode($res);
+}else if($flag === "fetchUserInfo"){
+
+    $user_id         = $this->viewData['user_id'];
+    $user_id         = intval($user_id);
+    $data            = UserManageModel::FetchUserData($user_id);
+    // $userData        = UserManageModel::getBankAccounts($user_id );
+    // $withdrawalCount = UserManageModel::withdrawalCount($user_id);
+  
+
+    echo json_encode($data);
+}else if($flag === "updateUserData"){
+    $user_id         = $this->viewData["user_id"];
+    $depositLimit    = $this->viewData["depositLimit"];
+    $withdrawalLimit = $this->viewData["withdrawalLimit"];
+    $rebate          = $this->viewData["rebate"];
+    $state           = $this->viewData["state"];
+    $dailyBettingTotalLimit = $this->viewData["dailyBettingTotalLimit"];
+
+    $data = UserManageModel::updateUserInfo($user_id, $depositLimit,$withdrawalLimit, $rebate,$state,$dailyBettingTotalLimit);
+
+    echo json_encode($data);
+}else if($flag === "fetchUserRel"){
+    $user_id   = $this->viewData["user_id"];
+    $data = UserManageModel::fetch_user_rel($user_id);
+
+    echo json_encode($data);
+    return;
 }
+
+
 
 if ($flag == "fetchaccountchange") {
 
@@ -265,3 +336,18 @@ if ($flag == "fetchaccountchange") {
 }
 
 
+
+function get_user_logs(array $userData = []): array
+{
+    $userLogs = AccountManage::userDataLogs($userData);
+    if (empty($userLogs)) return [];
+    $results['numLogs'] = $userLogs[0]->total_count;
+    foreach ($userLogs  as $data) {
+        $browser = substr($data->browser_info, 0, 10);
+        $device  = substr($data->device_info, 0, 20);
+
+        $results['data'][] = ['username' => $data->username, 'login_time' => $data->login_date . ' - ' . $data->login_time, 'ip' => $data->ip, 'ipLocation' => '', 'browser' => $browser, 'loginDevice' => $device, 'version' => $data->app_version];
+    }
+
+    return $results;
+}

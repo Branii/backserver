@@ -1,5 +1,5 @@
 $(function () {
-    function showToast(title, message, type) {
+    const  showToast = (title, message, type) =>{
         $.toast({
             position: "bottom-right",
             title: title,
@@ -8,6 +8,125 @@ $(function () {
             duration: 3000, // auto-dismiss after 3s
         });
     }
+
+
+       // editting the user from the userlist table
+  $(document).on("click", ".manage-user-btn,.user-restrictions-btn", function () {
+    let userID = $("#idHolder").val();
+    // console.log(id)
+    flag = "";
+    const data = new URLSearchParams({user_id: id}).toString();
+        $.ajax({
+            url: userListUrl,
+            type: "POST",
+            beforeSend: function(){
+            },
+            success:function (response) {   
+        console.log(response);
+        res = JSON.parse(response);
+        console.log(res);
+        
+        $("#usrl-username").val(res.username);
+        $("#usrl-accounting-binding").val(res.agent_username);
+        $("#usrl-withdrawal-limit").val(res.withdrawal_limit);
+        $("#usrl-state").val(res.state);
+        $("#usrl-rebate").val(res.rebate);
+        $("#usrl-daily-betting-total-limit").val(res.betlimit);
+        $("#usrl-account-type").val(res.recharge_level);
+        $("#usrl-deposit-limit").val(res.recharge_level);
+        $("#usrl-remarks").val(res.remark);
+        $("#usrl-login-password").val(res.money_password);
+        $("#usrl-withdrawal-password").val(res.money_password);
+        $("#usrl-contact").val(res.user_contact);
+        $("#usrl-whatsapp").val(res.user_contact);
+        $("#usrl-security").val(res.security_answer);
+        $("#usrl-email").val(res.user_email);
+            },
+            error: function(xhr,status,error){},
+            complete: function (){
+                $(`#${userListTitle}-loader`).css({'display': 'none'});
+            }
+    });
+   
+  });
+
+
+    const fetchAgentSubs = (eventElement,currentPage) => {
+
+        console.log(eventElement);
+        const agentID = $(eventElement).attr('data-agent-id');
+        let lotteryID = $("#wl-selectlottery").val();
+        let startDate = $("#wl-startdate").val();
+        let endDate   = $("#wl-enddate").val();
+        const element = this;
+        const limit = 10;
+        if(lotteryID != undefined){
+            if(lotteryID.length == 0) return;
+        }
+    
+    
+        lotteryID = lotteryID == undefined ?  "all" : lotteryID;
+        startDate = startDate.length != 0 ? startDate : "all";
+        endDate   = endDate.length != 0 ? endDate : "all";
+        flag     = "all-subs";
+        console.log(agentID);
+        $.ajax({
+            url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
+            type: "POST",
+            beforeSend: function(){
+               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+                //  $("#wl-tbl-wrapper").LoadingOverlay("show");
+            },
+            success: function(response){
+                $("#subs-back-btn").hide();
+                response  = JSON.parse(response);
+                if(response.status === "error"){
+                    $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 
+                    return
+                }
+               
+                if(response.data.length == 0){
+                    historyStack.push($("#winLossDtholder").html());
+                    pagesStack.push($("#wl-pagination-wrapper").html());
+                    pagingInfo.push($("#paging_infowl").html());
+                    $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
+                    $("#wl-pagination-wrapper").html("");
+                    $("#paging_infowl").html("---------");
+                    return; 
+                }
+                userObjs   = response.data;
+                // if(userObj.account_type > 1){
+                //     if(!$(".get-user-details-btn").hasClass("btn-disabled")) $(".get-user-details-btn").addClass("btn-disabled"); 
+                // }
+                htmlMarkup = "";
+                userObjs.forEach((userObj) => {
+                    htmlMarkup += getUserRowMarkup(userObj);
+                });
+                historyStack.push($("#winLossDtholder").html());
+                pagesStack.push($("#wl-pagination-wrapper").html());
+                pagingInfo.push($("#paging_infowl").html());
+                $("#winLossDtholder").html(htmlMarkup);
+                const totalPages = Math.ceil(parseInt(userObjs[0].totalRecords) / 10)
+                if(totalPages < 11){
+                    $("#wl-pagination-wrapper").html("");
+                    $("#paging_infowl").html("---------");
+                    return;
+                }
+                // renderwithdrawPagination(totalPages,parseInt(currentPage),'page-agent-subs');
+                
+                },
+            error: function(xhr,status,error){
+                showToast("Error","An Error occured, please try again later.","info");
+            },
+            complete: function(){
+                $("#wl-tbl-wrapper").LoadingOverlay("hide");
+                // $($(element).find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx-check-double");
+                // $("#wl-pagination").html("")
+            }
+        });
+    
+    
+      }
 
     function formatMoney(money) {
         let moneyStr = String(money);
@@ -21,6 +140,7 @@ $(function () {
         return moneyStr;
     }
     
+
     
     const UserlistData = (data) => {
         let html = "";
@@ -79,7 +199,7 @@ $(function () {
                 //  console.log(item.subordinates)
                             
              html += `
-                  <tr>
+                  <tr id="usrl-tr-${item.uid}">
                      <td>${username}</td>
                       <td>${item.nickname}</td>
                       <td>VIP</td>
@@ -94,7 +214,7 @@ $(function () {
                       <td>${date + ' / ' + time}</td>
                       <td>${dates + ' / ' + times}</td>
                       <td>${logincount}</td>
-                      <td>${status[item.user_state]}</td>
+                      <td id="usrl-state-${item.uid}">${status[item.user_state]}</td>
                  
                         <td>
                           
@@ -103,25 +223,28 @@ $(function () {
                                    <i class='bx bx-dots-vertical-rounded'></i>
                                   </a>
                                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
-                                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#signup" data-uidd="${item.uid}">
+                                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${item.uid}">
                                       <i class="bx bx-show fs-5"></i>View
                                     </a>
                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
                                       <i class="bx bx-show fs-5" ></i>Quota
                                     </a>
-                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewsub" href="javascript:void(0);"data-uid="${item.subordinates}"> 
+                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewsub" data-agent-id="${item.uid}" href="javascript:void(0);"data-uid="${item.subordinates}"> 
                                       <i class="bx bx-show fs-5" ></i>Subs
                                     </a>
                                     <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1 acountbtn" href="javascript:void(0);"data-uid="${item.uid}">
                                       <i class="bx bx-money fs-5"></i>Account Change
                                     </a>
-                                     <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);">
-                                      <i class="bx bx-trash fs-5"></i>Delete
-                                    </a> <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);">
-                                      <i class="bx bx-trash fs-5"></i>Delete
+                                     <a class="dropdown-item usr-deactivate-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                      <i class="bx bx-trash fs-5"></i>Deactivate User
+                                    </a> <a class="dropdown-item user-lottery-name cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                      <i class="bx bx-trash fs-5"></i>Lottery Name
                                     </a>
-                                     <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);">
-                                      <i class="bx bx-trash fs-5"></i>Delete
+                                     <a class="dropdown-item usr-white-list cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                      <i class="bx bx-trash fs-5"></i>White List
+                                    </a>
+                                     <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                      <i class="bx bx-trash fs-5"></i>Delete User
                                     </a>
                                   </div>
                                 </div>
@@ -134,7 +257,49 @@ $(function () {
     };
 
 
+    $(document).on("click",".usrl-listclose",function (){
+        const parent = $(this).parents('.modal').first();
+        parent.removeClass("show");
+        parent.css({"display":"none"});
+    });
+
+    $(document).on("click",".usr-deactivate-user, .block-userbtn",function(){
+       showDialog("usl-deactivate-user-dialog"); 
+        if($(this).hasClass("usr-deactivate-user")){
+             $("#idHolder").val($(this).attr("data-uid"));
+        }
+       if($(this).hasClass("block-userbtn")){
+        manageUser("blockUser",this);
+       }
+    });
+    $(document).on("click",".usr-white-list",function(){
+        showDialog("usl-whitelist-ips-modal");
+        $("#idHolder").val($(this).attr("data-uid"));
+        fetchUserLogs();
+       
+    });
+    $(document).on("click",".user-lottery-name",function(){
+        showDialog("usl-lottery-name-modal");
+        $("#idHolder").val($(this).attr("data-uid"));
+        fetchLotteryTypes();
+        
+    });
+    $(document).on("click",".usr-delete-user,.usrl-delete-userbtn",function(){
+        showDialog("usl-delete-user-dialog");
+        if($(this).hasClass("usr-delete-user")){
+            $("#idHolder").val($(this).attr("data-uid"));
+       }
+      if($(this).hasClass("usrl-delete-userbtn")){
+        manageUser("deleteUser");
+      }
+    });
+
+
     const renderuserlist = (data) => {
+        if(data.length === 0){
+            $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
+            return;
+        }
         var html = UserlistData(data);
         $("#userlistContainer").html(html);
         //tippy('[data-tippy-content]');
@@ -593,43 +758,211 @@ $(function () {
  //fetch_sub
  let navigationHistory = [];
  $(document).on("click", ".viewsub", function () {
-    const names  = $(this).attr("data-uid").trim();
-    const nameArray = names.split(','); 
-    console.log(nameArray);
+    const userID  = $(this).attr("data-agent-id").trim();
     navigationHistory.push({
-        nameArray: nameArray,
+        nameArray: [],
         currentPage: currentPage,
         pageLimit: pageLimit
     });
     // console.log("Navigation History:", navigationHistory);
-    fetchsubagent(nameArray,currentPage,pageLimit)
+    fetchsubagent(userID,currentPage,pageLimit,this)
     
   
 });
 
-function fetchsubagent(nameArray,currentPage, pageLimit) {
-    $.post(`../admin/agent_subordinate/${nameArray}/${currentPage}/${pageLimit}`, 
-        function (response) {
-        try {
-           const data = JSON.parse(response);
+
+const fetchsubagent = (userID,currentPage,pageLimit,element) => {
+
+    $.ajax({
+        url: `../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
+        type: "POST",
+        beforeSend: function(){
+        //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+            //  $("#ngp-wl-tbl-wrapper").LoadingOverlay("show");
+        },
+        success: function(response){
+            response = JSON.parse(response);
+            const data     = response.data;
             console.log(data);
-            renderuserlist(data.subagent);
-            //  return
-              $("#maskuserlist").LoadingOverlay("hide");
-              renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray,newPage, pageLimit));
-              document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
-              toggleBackButton();
-        } catch (error) {
-            console.error("Error parsing JSON response:", error);
-        } finally {
-           // $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-        }
-    }).fail(function (error) {
-        console.error("Error fetching data:", error);
-      //  $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-    });
+            if(response.status === "error"){
+                showToast("Error",data,'error');
+                // $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${data}</td></tr>`); 
+                return
+            }
+            if(data.length === 0){
+                $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
+                    return;
+            }
+          
+            $("#userlistContainer").html(UserlistDataV2(response));
+            renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray,newPage, pageLimit));
+            document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+
+            return;
+        },
+        error: function(xhr,status,err){
+
+        },
+        complete: function(){}
+
+});
+};
+
+
    
-}
+const UserlistDataV2 = (response) => {
+    let html = "";
+    const status = {
+        1: "Enable", // Green
+        2: "Suspend", // Orange
+        3: "Forbbiden", // Light Blue
+        4: "Blocked", // Red
+    };
+
+    //   const account_type = {
+    //     1 :"customer",
+    //     2 : "agent",
+    //     3 : "sub agent",        // Red
+    //   };
+
+    const recharges = {
+        1: "momo",
+        2: "bank Transfer",
+        3: "bank card",
+        4: "crypto", // Red
+    };
+
+    const data = response.data;
+    const login_counts = response.login_counts.data;
+    const subsLookups  = response.direct_subs_count.data;
+
+    // Create a lookup object where the key is uid and the value is logs_count
+    const logsLookup = login_counts.reduce((lookup, item) => {
+    lookup[item.uid] = item.logs_count;
+    return lookup;
+}, {});
+    // Create a lookup object where the key is uid and the value is logs_count
+    const subsLookup = subsLookups.reduce((lookup, item) => {
+    lookup[item.uid] = item.subs_count;
+    return lookup;
+}, {});
+
+
+    data.forEach((item) => {
+
+      //  console.log(item)
+        let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
+
+         let subordinate = "";
+        if(item.account_type == 2){
+            subordinate =  "Top Agent"
+        }else if(item.account_type == 3 && item.sub_count == 0 ){
+            subordinate = "Sub Agent";
+        }else if(item.account_type == 3 && item.sub_count == 1 ){
+            subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates
+        }else if(item.account_type == 3 && item.sub_count == 2 ){
+            subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(',')[0];
+        }else if(item.account_type == 3 && item.sub_count > 2 ){
+            subordinate = username + " <i class='bx bx-dots-horizontal-rounded' ></i>" + item.subordinates.split(',')[0];
+        }else if(item.account_type == 1 && item.sub_count == 0){
+            subordinate = "---";
+        }
+        
+        const formattedSubordinates = item.subordinates ? username +" <i class='bx bx-right-arrow-alt'></i> " +item.subordinates.split(',').join(" <i class='bx bx-right-arrow-alt'></i> ") : 'None';
+      //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+         let logincount = item.logincount == null ? "0" : item.logincount
+         const [date, time] = item.created_at.split(' ');
+            let dates = '';
+            let times = '';
+            if (item.last_login && item.last_login !== "*****") {
+            [dates, times] = item.last_login.split(' ');
+            } else {
+            dates = item.last_login || ''; // Use empty string if null/undefined
+            times = item.last_login || '';
+            }
+
+        //     <span class="tooltipp" style="">${subordinate}
+        //     <span class="tooltipp-text">Surbodinate names</span>
+        // </span>
+                
+         html += `
+              <tr id="usrl-tr-${item.uid}">
+                 <td>${username}</td>
+                  <td>${item.nickname}</td>
+                  <td>VIP</td>
+                 <td class="show-user-rel ${item.agent_level === "*****" ? "no-agent" : ""}" data-user-id="${item.uid}">
+               ${item.total_records < 2 ? item.agent_name + "->" + username : item.agent_name + "->" + username + "..."}
+              </td>
+                  <td>${subsLookup[item.uid] ?? 0} </td>
+                  <td>${formatMoney(item.balance)}</td> 
+                  <td>${item.rebate}</td>
+                  <td>${date + ' / ' + time}</td>
+                  <td>${dates + ' / ' + times}</td>
+                  <td>${logsLookup[item.uid] ?? 0}</td>
+                  <td id="usrl-state-${item.uid}">${status[item.user_state]}</td>
+             
+                    <td>
+                      
+                       <div class="dropdown">
+                              <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                               <i class='bx bx-dots-vertical-rounded'></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+                                <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${item.uid}">
+                                  <i class="bx bx-show fs-5"></i>View
+                                </a>
+                                <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
+                                  <i class="bx bx-show fs-5" ></i>Quota
+                                </a>
+                                 <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewsub" data-agent-id="${item.uid}" href="javascript:void(0);"data-uid="${item.subordinates}"> 
+                                  <i class="bx bx-show fs-5" ></i>Subs
+                                </a>
+                                <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1 acountbtn" href="javascript:void(0);"data-uid="${item.uid}">
+                                  <i class="bx bx-money fs-5"></i>Account Change
+                                </a>
+                                 <a class="dropdown-item usr-deactivate-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                  <i class="bx bx-trash fs-5"></i>Deactivate User
+                                </a> <a class="dropdown-item user-lottery-name cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                  <i class="bx bx-trash fs-5"></i>Lottery Name
+                                </a>
+                                 <a class="dropdown-item usr-white-list cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                  <i class="bx bx-trash fs-5"></i>White List
+                                </a>
+                                 <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                  <i class="bx bx-trash fs-5"></i>Delete User
+                                </a>
+                              </div>
+                            </div>
+                  </td>
+                 
+              </tr>
+          `;
+    });
+   return  html;
+};
+ 
+// function fetchsubagent(userID,currentPage, pageLimit) {
+//     $.post(`../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`, 
+//         function (response) {
+//         try {
+//            const data = JSON.parse(response);
+            
+            
+//             //  return
+//               $("#maskuserlist").LoadingOverlay("hide");
+             
+//               toggleBackButton();
+//         } catch (error) {
+//             console.error("Error parsing JSON response:", error);
+//         } finally {
+//            // $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+//         }
+//     }).fail(function (error) {
+//         console.error("Error fetching data:", error);
+//       //  $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+//     });
+   
+// }
 
 function toggleBackButton() {
     if (navigationHistory.length > 1) {
@@ -646,7 +979,7 @@ $("#backButton").on("click", function () {
         navigationHistory.pop();
         const previousState = navigationHistory[navigationHistory.length - 1];
         
-        fetchsubagent(previousState.nameArray, previousState.currentPage, previousState.pageLimit);
+        fetchsubagent(previousState.nameArray, previousState.currentPage, previousState.pageLimit,this);
     } else {
         navigationHistory = []; // Clear history
         currentPage = 1;
@@ -658,16 +991,8 @@ $("#backButton").on("click", function () {
 });
 
 $(document).on("click", ".viewuserinfo", function () {
-    const names  = $(this).attr("data-uidd");
-    // const nameArray = names.split(','); 
-     console.log(names);
-    // navigationHistory.push({
-    //     nameArray: nameArray,
-    //     currentPage: currentPage,
-    //     pageLimit: pageLimit
-    // });
-    // // console.log("Navigation History:", navigationHistory);
-    // fetchsubagent(nameArray,currentPage,pageLimit)
+    $("#idHolder").val($(this).attr("data-uid"));
+    fetchUserInfo();
 });
 
 
@@ -758,5 +1083,468 @@ $(document).on("click", ".acountbtn", function (e) {
     }
     tableScrolluserList();
 
+
+const manageUser = (flag, elemennt) => {
+    const userID    = $("#idHolder").val();
+    const lotteryID = "all";
+    $.ajax({
+        url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+        type: "POST",
+        beforeSend: function(){
+        //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+            //  $("#wl-tbl-wrapper").LoadingOverlay("show");
+        },
+        success: function(response){
+            $("#subs-back-btn").hide();
+            response  = JSON.parse(response);
+            if(response.status === "error"){
+                showToast("Error","", "info");
+                return
+            }
+
+            if(response.data == 0 && flag == "blockUser"){
+                showToast("Blocked","Please this User has already being blocked.", "info");
+                return;
+            }
+            if(response.data == 0 && flag == "deleteUser"){
+                showToast("Delete","Operation Invalid", "error");
+                return;
+            }
+
+            
+           
+            let msg = "";
+            switch(flag){
+                case "blockUser":
+                    msg = "User Successfully Blocked.";
+                    $("#usrl-state-" + userID).text("Blocked");
+                    break;
+                case "deleteUser":
+                    msg  = "User Successfully Deleted";
+                    $("#usrl-tr-" + userID).remove();
+                    break;
+                case "lottery-name":
+                    msg = "Lottery status updated";
+                    break;
+                case "ips":
+                    msg = "Login Ip state updated";
+                    break;
+                default: msg = ""
+                     
+            }
+            if(msg.length == 0){
+                showToast("Error","Invalid operation.", 'error');
+                return;
+            }
+            showToast("Completed", msg,"success")
+             
+            
+            },
+        error: function(xhr,status,error){
+            showToast("Error","An Error occured, please try again later.","info");
+        },
+        complete: function(){
+            $("#wl-tbl-wrapper").LoadingOverlay("hide");
+            // $($(element).find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx-check-double");
+            // $("#wl-pagination").html("")
+        }
+    });
+
+
+};
+
+
+
+const fetchLotteryTypes = () => {
+    const userID = $("#idHolder").val();
+    const lotteryID = "all";
+    let flag = "fetchUserLotteries";
+    $.ajax({
+        url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+        type: "POST",
+        beforeSend: function(){
+          
+        },
+        success:function (response) {  
+
+            response = JSON.parse(response);
+            console.log(response);
+            let responseMarkup  = '';
+
+            if(response.status == "error"){
+                showToast("Error",response.data,"error");
+                return;
+            }
+            data = response.data;
+
+            let blockedLotteries = data[0].blockedLotteries == undefined ? [] : Object.values(data[0].blockedLotteries); 
+            
+            data.forEach((lottery)=>{
+              
+              responseMarkup += lotteriesMarkup(lottery,blockedLotteries);
+            })
+            // return;
+            $('#usrl-lot-dtholder').html(responseMarkup);
+           
+        },
+        error:function (res,status,error) {  
+        
+        },
+        complete:function () {
+            console.log("Operation Completed Successfully.");
+        }
+
+    }
+    );
+};
+
+$(document).on("click",".toggle-lot",function(){
+    if ($(this).is(":checked")) {
+        toggleLottery(this,true);
+    }else{
+        toggleLottery(this,false);
+    }
+})
+$(document).on("click",".toggle-ip-state",function(){
+    if ($(this).is(":checked")) {
+        blockUserIps(this);
+    }else{
+        blockUserIps(this);
+    }
+})
+$(document).on("click","#update-user-infobtn",function(){
+    updateUserData();
+})
+
+
+
+const toggleLottery = (element,toggle) => {
+    const userID = $("#idHolder").val();
+    const lotteryID = $(element).val();
+    let flag = "updateLotteryState";  
+
+    $.ajax({
+        url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+      type: "POST",
+      beforeSend: function(){
+      },
+      success:function (response) {  
+        console.log(response);
+        response = JSON.parse(response); 
+        if(response.status == 'error'){
+            showToast("Error",response.data,"error");
+                return;
+        }
+
+        if(response.data == 0){
+            showToast("Error",`Request Error`, 'error');
+
+        }
+
+        if(toggle){
+            showToast("Enabled",`Lottery Enabled`, 'info');
+        }else{
+            showToast("Disabled",`Lottery  Disabled.`, 'error');
+        }
+       
+       
+      },
+      error:function (res,status,error) {  
+        
+      },
+      complete:function () {
+       
+      }
+      
+    }
+    );
+    
+}
+
+const updateUserData = () => {
+
+    const userID    = $("#idHolder").val();
+    const flag     = "updateUserInfo"
+    const depositLimit       = $("#usrl-deposit-limit").val();  
+    const withdrawalLimit  = $("#usrl-withdrawal-limit").val();
+    const rebate           = $("#usrl-rebate").val();
+    const state           = $("#usrl-state").val();
+    const dailyBettingLimit  = $("#usrl-daily-betting-total-limit").val();
+
+    $.ajax({
+        url: `../admin/updateUserData/${userID}/${depositLimit}/${withdrawalLimit}/${rebate}/${state}/${dailyBettingLimit}/${flag}`,
+      type: "POST",
+      beforeSend: function(){},
+      success:function (response) {  
+        console.log(response);
+        res = JSON.parse(response); 
+        
+
+        if(res.status == 'error'){
+            showToast("Error",res.data,'error');
+            return;
+        }
+
+        if(res.data == 0){
+
+            showToast("Error", "Error processing request","error");
+            return;
+        }
+        $(".close-modal").click();
+        showToast("Successful", "Records succesfully updated.","info");
+        
+
+      },
+      error:function (res,status,error) {  
+        
+      },
+      complete:function () {
+        $('#overlay-loader').hide();
+        console.log("Operation Completed Successfully.");
+      }
+      
+    }
+    );
+
+
+};
+      
+
+const fetchUserInfo = () => {
+
+    const userID    = $("#idHolder").val();
+    const flag       = "fetchUserInfo";  
+    const lotteryID  = "all";
+
+    $.ajax({
+        url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+      type: "POST",
+      beforeSend: function(){},
+      success:function (response) {  
+        console.log(response);
+        res = JSON.parse(response); 
+        
+
+        if(res.status == 'error' || res.data.length === 0 ){
+            showToast("Error",res.data,'error');
+            return;
+        }
+
+        res = res.data;
+        
+        $("#usrl-username").val(res.username);
+        $("#usrl-accounting-binding").val(res.agent_username);
+        $("#usrl-withdrawal-limit").val(res.withdrawal_level);
+        $("#usrl-state").val(res.user_state);
+        $("#usrl-rebate").val(res.rebate);
+        $("#usrl-daily-betting-total-limit").val(res.daily_bet_llimit === "*****" ? 0 : res.daily_bet_llimit);
+        $("#usrl-account-type").val(res.recharge_level);
+        $("#usrl-deposit-limit").val(res.recharge_level);
+        $("#usrl-remarks").val(res.remark);
+        $("#usrl-login-password").val(res.money_password);
+        $("#usrl-withdrawal-password").val(res.money_password);
+        $("#usrl-contact").val(res.user_contact);
+        $("#usrl-whatsapp").val(res.user_contact);
+        $("#usrl-security").val(res.security_answer);
+        $("#usrl-email").val(res.user_email);
+
+      },
+      error:function (res,status,error) {  
+        
+      },
+      complete:function () {
+        $('#overlay-loader').hide();
+        console.log("Operation Completed Successfully.");
+      }
+      
+    }
+    );
+
+
+};
+      
+
+ const blockUserIps = (element) => {
+       
+    const userID    = $("#idHolder").val();
+    const ulogID    = $(element).val();
+    let flag = "blockUserIp"; 
+
+    $.ajax({
+      url: `../admin/manageUser/${userID}/${ulogID}/${flag}`,
+      type: "POST",
+      beforeSend: function(){
+      },
+      success:function (response) {  
+        console.log(response);
+        response = JSON.parse(response); 
+
+
+        if(response.state == 0) return;
+        if(response.status == 'error'){
+                showToast('Error',response.data,"error");
+                return;
+        }
+
+        if(response.data == 0){
+            showToast("Not Done","Already blocked","info");
+            return;
+        }
+
+        showToast("Completed","IP state updated successfully.", "info");
+       
+      },
+      error:function (res,status,error) {  
+        
+      },
+      complete:function () {
+        $('#overlay-loader').hide();
+        console.log("Operation Completed Successfully.");
+      }
+      
+    }
+    );
+
+ }
+
+ const fetchUserLogs  = () => {
+       
+    const userID    = $("#idHolder").val();
+    const flag       = "fetchUserLogs";  
+    const lotteryID  = "all";
+
+    $.ajax({
+        url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+      type: "POST",
+      beforeSend: function(){},
+      success:function (response) {  
+        console.log(response);
+        response = JSON.parse(response); 
+        console.log(response);
+        if(response.status == 'error'){
+            showToast("Error",response.data,'error');
+            $("#usrl-ipsholder").html(`<tr><td colspan="10">${response.data}</td></tr>`);
+            return;
+        }
+
+        if(response.data.length === 0 ){
+            $("#usrl-ipsholder").html(`<tr><td colspan="10"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
+            return;
+        }
+       
+        let markup = "";
+        response.data.forEach((data)=> {
+            markup += userIpsMarkup(data);
+        });
+
+        $("#usrl-ipsholder").html(markup);
+
+      },
+      error:function (res,status,error) {  
+        
+      },
+      complete:function () {
+        $('#overlay-loader').hide();
+        console.log("Operation Completed Successfully.");
+      }
+      
+    }
+    );
+    
+ };
+
+
+ $(document).on("click",".show-user-rel",function(){
+       
+        if($(this).hasClass("no-agent")){
+            showToast("No Agent", "This user has no relationship.", "info");
+            return;
+        }
+        showDialog("usrl-relationship-dialog");
+        fetchUserRel($(this).attr("data-user-id"));
+ });
+
+
+
+ const fetchUserRel = (userID) => {
+
+    $.ajax({
+        url: `../admin/manageUser/${userID}/all/fetchUserRel`,
+      type: "POST",
+      beforeSend: function(){},
+      success:function (response) {  
+        console.log(response);
+        response = JSON.parse(response); 
+        
+        if(response.status == 'error'){
+            showToast("Error",response.data,'error');
+            $("#usrl-ipsholder").html(`<tr><td colspan="10">${response.data}</td></tr>`);
+            return;
+        }
+
+        if(response.data.length === 0 ){
+            $("#usrl-ipsholder").html(`<tr><td colspan="10"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
+            return;
+        }
+      
+        let markup = "";
+        const count = response.data.length;
+        response.data.reverse().forEach((data,index)=> {
+markup += `<span>${data.username}</span> ${(index == count - 1) ? "" : `<i class="bx bx-chevron-right" style="vertical-align: middle;margin: 0px 10px; font-size:24px;"></i><span>`}`;
+        });
+    
+         $("#usrl-relholder").html(markup);
+
+      },
+      error:function (res,status,error) {  
+        
+      },
+      complete:function () {
+        $('#overlay-loader').hide();
+        console.log("Operation Completed Successfully.");
+      }
+      
+    }
+    );
+
+ };
+   
+   
+
+
     
 });
+
+
+
+
+
+const lotteriesMarkup = (lottery,blockedLotteries) => {
+        const lotteryID = lottery.lt_id;
+        const status = blockedLotteries.includes(`${lotteryID}`) ? "Disabled" : "Active";
+        const checkedState = status == "Active" ? "checked" : "";
+        return `<tr>
+                 <td><b class="lottery-name"> ${lottery.name}</b></td>
+                 <td><span class="lottery-status">${status}</span></td>
+                 <td><input class="form-check-input toggle-lot" type="checkbox" value="${lotteryID}" id="flexCheckDefault" ${checkedState}></td>
+                                </tr>`;
+
+};
+const userIpsMarkup = (data) => {
+    
+        const checkedState = data.ip_state === "allowed" ? "checked" : "";
+        const ipState = data.ip_state === "allowed" ? "Allowed" : "Blocked";
+        return `<tr>
+                 <td><b class="">${data.ip} </b></td>
+                 <td><span class="lottery-status">${data.login_date} / ${data.login_time}</span></td>
+                 <td><span class="">${ipState}</span></td>
+                 <td><input class="form-check-input toggle-ip-state" type="checkbox" value="${data.ulog_id}" id="flexCheckDefault" ${checkedState}></td>
+                                </tr>`;
+
+};
+const  showDialog = (btnID) => {
+    const modalElement = $("#" +btnID);
+    modalElement.hasClass("show") ? modalElement.css({"display": "none"}) : modalElement.css({"display": "block"});
+    modalElement.toggleClass("show");
+    
+}

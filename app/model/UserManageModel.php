@@ -1,5 +1,9 @@
 <?php
 
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+    // Throw an Exception with the error message and details
+    throw new \Exception("$errstr in $errfile on line $errline", $errno);
+});
 class UserManageModel extends MEDOOHelper
 {
 
@@ -225,6 +229,307 @@ class UserManageModel extends MEDOOHelper
         // Return the final subquery
         return $subQuery;
     }
+
+    public static function fetch_user_hierarchy($user_id)
+    {
+        $db = parent::getLink();
+        $sql  = "SELECT uid,username,agent_level,account_type FROM users_test  WHERE uid=:user_id";
+        $stmt = $db->query($sql,[":user_id" => intval($user_id)]);
+        return $stmt->fetch(PDO::FETCH_OBJ);
+
+    }
+
+    public static function fetch_user_rel($user_id): array {
+       
+       try{
+
+      
+            $db = parent::getLink();
+           
+            $agent_level_res = self::fetch_user_hierarchy($user_id);
+            if(empty($agent_level_res) || $agent_level_res->agent_level === "*****") return ["status" => "success","data" => []];
+            $unserialized_hierarchy  = unserialize($agent_level_res->agent_level);
+            $params = [];
+            $placeholders = [];
+            foreach ($unserialized_hierarchy as $agent_id => $agent_rebate) {
+                $place_holder = ":uid{$agent_id}";
+                $placeholders[] = $place_holder;
+                $params[$place_holder] = $agent_id;
+            }
+            $sql = "SELECT uid,username FROM users_test WHERE  uid IN (".implode(',',$placeholders).") ORDER BY users_test.uid DESC";
+            $stmt = $db->query($sql,$params);
+            // Fetch the results as an array of objects
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+        
+            return ["status" => "success", 'data' => $data ];
+        }catch(Exception $e){
+            return ["status" => "error","data" => "Internal Server Error.".$e->getMessage()];
+         }
+
+    }
+
+    public static function fetch_users_login_count(array $user_ids):array{
+
+        try{
+            $db = parent::getLink();
+            $placeholders = [];
+            $params = [];
+            foreach($user_ids as $user_id){
+                $placeholders[] = ":uid$user_id";
+                $params[":uid$user_id"] = $user_id;
+            }
+            $sql = "SELECT uid,COUNT(*) as logs_count FROM `user_logs` WHERE uid IN (".implode(',', $placeholders).") GROUP BY uid";
+            $stmt = $db->query($sql,$params);
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return ["status" => "success","data" => $data];
+        }catch(Exception $e){   
+            return ["status" => "error", "data" => "Internal Server Error."];
+
+        }
+    }
+
+    public static function count_subs(array $agent_ids):array {
+
+        try{
+            $db = parent::getLink();
+            $placeholders = [];
+            $params = [];
+            foreach($agent_ids as $agent_id){
+                $placeholders[] = ":uid$agent_id";
+                $params[":uid$agent_id"] = $agent_id;
+            }
+            $sql = "SELECT agent_id,COUNT(*) as subs_count FROM `users_test` WHERE agent_id IN (".implode(',', $placeholders).") GROUP BY agent_id";
+            $stmt = $db->query($sql,$params);
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return ["status" => "success","data" => $data];
+
+        }catch(Exception $e){
+
+            return ["status" => "error", "data" => "Internal Server Error."];
+        }
+    }
+    
+
+    public static function fetchAgentSubs($agent_id, $page = 1, $limit = 20) : array {
+        try{
+            $all_subs = DataReportModel::allSubs($agent_id);
+            if(empty($all_subs["data"])) return ["status" => "success","data" => []];
+            $all_subs = $all_subs["data"];
+            
+            $uids     = array_column($all_subs,'uid');
+            $login_counts = self::fetch_users_login_count($uids);
+            $subs_count = self::count_subs($uids);
+            // $res = self::fetch_user_rel($uids);
+
+        return ["status" => "success", "data" => $all_subs,"login_counts" => $login_counts,"direct_subs_count" => $subs_count];
+            
+        }catch(Exception $e){
+            echo $e->getMessage();
+            return ["status" => "error" , 'data' => "Internal Server Error."];
+
+        }
+    }
+
+
+
+    public static function blockUserData(int $userId)
+    {
+
+        $db = parent::getLink();
+        $params = [":userid" => intval($userId)];
+        try {
+            
+            $sql = "UPDATE users_test SET user_state = 4 WHERE uid = :userid";
+            $stmt = $db->query($sql,$params);
+            $row_count = $stmt->rowCount();
+            if ($row_count > 0) {
+             return ['status' => 'success', 'data' => $row_count];
+            } else {
+                return  ['status' => 'success', 'data' => 0];
+            }
+        } catch (PDOException $pDOException) {
+         return ['status' => 'error', 'message' => $pDOException];
+        }
+
+     
+    }
+
+
+    public static function fetch_user_ips($user_id)
+    {
+        $db = parent::getLink();
+        $sql = "SELECT ulog_id,login_date,login_time,ip,ip_state FROM `user_logs` WHERE uid=:user_id";
+        $stmt = $db->query($sql,[":user_id" => $user_id]);
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+
+
+
+    public static function deleteUserData(int $userId)
+    {
+
+        try{
+            $db = parent::getLink();
+            $sql = "DELETE FROM users_test WHERE uid = :userid";
+            $stmt = $db->query($sql,[":userid" => intval($userId)]);
+            if ($stmt->rowCount() > 0) {
+                return ['status' => 'success','data' => $stmt->rowCount()];
+            } else {
+                return ['status' => 'success', 'data' => 0];
+            }
+        }catch(Exception $e){
+            return ["status"=>"error","data" => "Internal Server Error."];
+        }
+       
+    }
+
+    public static function fetchUserLotteries($user_id)
+    {
+        try{
+            
+          
+        $db = parent::getLink();
+        $sql = "SELECT lt_id,name,(SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id ) as blockedLotteries FROM `lottery_type`";
+        $stmt = $db->query($sql,[":user_id"=> $user_id]);
+        $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if(empty($data)){
+            return ["status" => "error", "data", "No Lotteries registered"];
+        }
+        $blocked_lotteries = $data[0]->blockedLotteries;
+       if($blocked_lotteries != null && $blocked_lotteries != "*****") $data[0]->blockedLotteries = unserialize($blocked_lotteries);
+
+        return ["status"=>"success","data"=> $data];
+        }catch(Exception $e){
+            return ["status" => "error", "data" => "Internal Server Error.". $e->getMessage()];
+        }
+        // return ['lotteries' => $lotteries, 'blockedLotteries' => empty($data->blocked_lotteries) ? [] : unserialize($data->blocked_lotteries)];
+    }
+
+    
+
+    public static function update_lottery_stat_for_user($user_id,$lottery_id)
+    {
+
+        
+       
+        try{
+        $db   = parent::getLink();
+        $sql = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
+        $stmt = $db->query($sql,[":user_id" => $user_id]);
+        $data = $stmt->fetch(PDO::FETCH_OBJ);
+            $state = false;
+        
+            $unserialized_lotteries = empty($data->blocked_lotteries) || $data->blocked_lotteries == "*****" ? [] : unserialize($data->blocked_lotteries);
+           
+            if(empty($unserialized_lotteries)){
+                $state = true;
+                $sql = "UPDATE `users_test` SET blocked_lotteries='".serialize([$lottery_id])."' WHERE uid=:user_id";
+            }else{
+                if(in_array($lottery_id,$unserialized_lotteries)){
+                    $unserialized_lotteries = array_diff($unserialized_lotteries,[$lottery_id]);
+                }else{
+                     $state = true;
+                     array_push($unserialized_lotteries,$lottery_id);
+                }
+                
+                $sql = "UPDATE `users_test` SET blocked_lotteries='" . serialize($unserialized_lotteries) . "' WHERE uid=:user_id";
+            }
+            $stmt = $db->query($sql,[":user_id" => $user_id]);
+            if($stmt->rowCount()){
+                return ['status' => 'success', 'data' => $stmt->rowCount()];
+            }
+           
+            print_r($unserialized_lotteries);
+            return ['status' => 'success', 'data' => 0];
+       
+        } catch (Exception $e) {
+            return ['status' => 'error', 'msg' => 'Error Blocking Lottery for User.'. $e->getMessage()];
+        }
+    }
+
+
+
+    public static function fetchUserLogs($user_id,$page = 1, $limit = 100): array {
+
+        try{
+         
+            $db   = parent::getLink();
+            $offset = ($page - 1) * $limit;
+
+            $sql = "SELECT ulog_id,uid,ip,login_date,login_time,(SELECT COUNT(ulog_id) FROM user_logs WHERE uid=:user_id) as totalPages, CASE ip_state WHEN 1 THEN 'allowed' ELSE 'unknown' END AS ip_state FROM user_logs WHERE uid=:user_id LIMIT :offset, :limit";
+            $stmt = $db->query($sql,[":user_id" => $user_id, ":offset" => $offset, ":limit" => $limit]);
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return ['status' => 'success', "data" =>$data];
+        }catch(Exception $e){
+            return ["status" => "error", "data" => "Internal Server Error."];
+    
+        }
+    }
+
+    public static function block_user_ip($user_id, $ip_id)
+    {
+        try {
+           
+            $db   = parent::getLink();
+            $sql = "UPDATE user_logs SET ip_state = CASE ip_state WHEN 1  THEN 2 ELSE 1 END WHERE uid =:user_id AND ulog_id=:ulog_id";
+            $stmt = $db->query($sql,[":user_id" => $user_id,":ulog_id" => $ip_id ]);
+            if ($stmt->rowCount() > 0) {
+                return ['status' => 'success', "data" => $stmt->rowCount()];
+            } else {
+                return ['status' => 'success', 'data' => 0];
+            }
+        } catch (PDOException $e) {
+            return ['status' => 'error', 'msg' => 'Error Blocking Lottery for User.' . $e->getMessage()];
+        }
+    }
+
+    public static function FetchUserData(int $user_id)
+    {
+        try{
+
+       
+        $db = parent::getLink();
+        $sql  = "SELECT * FROM users_test WHERE uid = :user_id";
+        $stmt = $db->query($sql,[":user_id" => $user_id]);
+        $data = $stmt->fetch(PDO::FETCH_OBJ);
+        return ["status" => "success", "data" => $data];
+    }catch(Exception $e){
+        return ["status" => "error", "data" => $e->getMessage()];       
+    }
+    }
+
+    public static function updateUserInfo($user_id, $depositLimit,$withdrawalLimit, $rebate,$state,$dailyBettingTotalLimit)
+    {
+        try{
+
+
+       
+        $db = parent::getLink();
+        $sql  = "UPDATE  users_test SET rebate=:rebate, user_state =:user_state, daily_bet_llimit=:daily_bet_llimit, withdrawal_level=:withdrawal_level,recharge_level=:recharge_level  WHERE uid = :user_id";
+        $stmt = $db->query($sql,[":user_id" => intval($user_id),":rebate" => $rebate,":user_state" => $state,":daily_bet_llimit" => $dailyBettingTotalLimit,":withdrawal_level" => $withdrawalLimit, ":recharge_level" => $depositLimit]);
+        $data =  $stmt->rowCount();
+        return ["status" => "success", "data" => $data];
+    }catch(Exception $e){
+        return ["status" => "error", "data" => $e->getMessage()];       
+    }
+    }
+
+    // public static function fetchUserRel($user_id)
+    // {
+    //     try{
+
+    //     $db = parent::getLink();
+    //     $sql  = "UPDATE  users_test SET rebate=:rebate, user_state =:user_state, daily_bet_llimit=:daily_bet_llimit, withdrawal_level=:withdrawal_level,recharge_level=:recharge_level  WHERE uid = :user_id";
+    //     $stmt = $db->query($sql,[":user_id" => intval($user_id),":rebate" => $rebate,":user_state" => $state,":daily_bet_llimit" => $dailyBettingTotalLimit,":withdrawal_level" => $withdrawalLimit, ":recharge_level" => $depositLimit]);
+    //     $data =  $stmt->rowCount();
+    //     return ["status" => "success", "data" => $data];
+    // }catch(Exception $e){
+    //     return ["status" => "error", "data" => $e->getMessage()];       
+    // }
+    // }
+
+
 
     public static function  FetchSubAgents($nicknames, $page, $limit)
     {
