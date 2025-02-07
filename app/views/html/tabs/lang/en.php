@@ -1,7 +1,19 @@
 <?php
 
 return [
-'DASHBOARD'  =>'DASHBOARD',
+'permissionAlert' => 'No permissions set for user',
+'permissionMess' => 'Contact system administrator',
+'signout' => 'Sign out',
+'email' => 'Email Address', 
+'password' => 'Password',
+'signin' => 'Sign in', 
+'remember' => 'Remember me', 
+'DASHBOARD'  =>'Dashboard',
+'Bet Lost' => 'Bet Lost',
+"Heads up!!" => "Heads up!!",
+"All fields are mandatory" => "All fields are mandatory",
+"Invalid email or password" => "Invalid email or password",
+"Signin successful" => "Signin successful",
 //business flows
 'Business Flow' => 'Business Flow',
 
@@ -328,7 +340,9 @@ return [
 'Report Management' => 'Report Management',
 
 //Win/Loss Report
+
 'GGP Win/Loss Report' => 'GGP Win/Loss Report',
+
 'Username' => 'Username',
 'Relationship' => 'Relationship',
 'Number of Bettors' => 'Number of Bettors',
@@ -342,7 +356,7 @@ return [
 'Total Win Amount' => 'Total Win Amount',
 'Win/Loss' => 'Win/Loss',
 'Action' => 'Action',
-
+'NGP Win/Loss Report' => 'NGP Win/Loss Report',
 //#(Operational Report)运营报表
 'Audit / Log Report' => 'Audit / Log Report',
 //'Operational Report' => 'Operational Report',

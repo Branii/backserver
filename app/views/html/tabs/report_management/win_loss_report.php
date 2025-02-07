@@ -431,8 +431,13 @@ li.name-items:hover {
                 <tbody id="winLossDtholder" class="tbl-content">
 
                     <tr class="no-resultslist">
+<<<<<<< HEAD
                         <td colspan="13" id="wl-empty-td">
                             <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
+=======
+                        <td colspan="13">
+                        <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
+>>>>>>> 323ec0abb730046633e32e794ebc49eaff8e8c64
                         </td>
                     </tr>
 

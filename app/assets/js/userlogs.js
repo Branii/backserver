@@ -23,7 +23,8 @@ $(function () {
          let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
         html += `
                     <tr>
-                        <td>${username}</td>
+                        <td>${typeof username === "string" || typeof username === "number" 
+                        ? String(username).charAt(0).toUpperCase() + String(username).slice(1): "N/A"}</td>
                         <td>${item.login_date + ' / ' + item.login_time}</td>
                         <td>${item.ip}</td>
                         <td>${city}</td>

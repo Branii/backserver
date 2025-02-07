@@ -292,7 +292,7 @@
 
           <tr class="no-results">
             <td colspan="9">
-              <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
+              <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
             </td>
           </tr>
 

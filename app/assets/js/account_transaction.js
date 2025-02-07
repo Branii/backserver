@@ -28,43 +28,50 @@ $(function () {
     const AccountTransactions = (data) => {
         let html = "";
 
-        const status = {
-            1: { title: translator["Deposit"] , color: "#4CAF50" }, // Green
+        const statusColor = {
+            1: { title: translator["Deposit"], color: "#4CAF50" }, // Green
             2: { title: translator["Win Bonus"], color: "#FF9800" }, // Orange
             3: { title: translator["Bet Awarded"], color: "#03A9F4" }, // Light Blue
             4: { title: translator["Withdrawal"], color: "#F44336" },
             5: { title: translator["Bet Deduct"], color: "#E91E63" }, // Red
             6: { title: translator["Bet Cancelled"], color: "#9E9E9E" }, // Grey
-            // Pink
             7: { title: translator["Rebates"], color: "#8BC34A" }, // Light Green
             8: { title: translator["Self Rebate"], color: "#00BCD4" }, // Cyan
             9: { title: translator["Sending Red Envelope"], color: "#FF5722" }, // Deep Orange
             10: { title: translator["Red Envelope Receive"], color: "#795548" }, // Brown
             11: { title: translator["Bet Refund"], color: "#FFC107" }, // Amber
-            12: { title: translator["Bet Lost"], color: "orange" }, // Amber
+            // 12: { title: translator["Bet Lost"], color: "#FFC107" } // Amber
         };
+        
         let completes = translator["Completed"];
         const formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
 
         data.forEach((item) => {
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-
-            html += `
-                <tr class="trow">
-                  <td>${"TR" + item.order_id.substring(0, 7)}</td>
-                  <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
-                   <td><i class='bx bxs-circle' style='color:${status[item.order_type] && status[item.order_type].color ? status[item.order_type].color : "#000"};font-size:8px;margin-right:5px;'></i>
-                   ${status[item.order_type] && status[item.order_type].title ? status[item.order_type].title : "Unknown"}
-                  </td>
-                    <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
-                    <td>${formatMoney(item.balance)}</td>
-                    <td>${formatTimestamp(item.dateTime)}</td>
-                    <td>${formatTimestamp(item.date_created)}</td>
-                    <td>${item.order_id}</td>
-                    <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> ${completes}</td>
-                    <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
-                </tr>
-            `;
+        
+            // Filter out items with order_type 12
+            const filteredItems = data.filter(i => i.order_type !== 12);
+        
+            // Loop through the filtered items to generate HTML
+            filteredItems.forEach(filteredItem => {
+                const status = statusColor[filteredItem.order_type] || { title: "Unknown", color: "#000" };
+        
+                html += `
+                    <tr class="trow">
+                      <td>${"TR" + item.order_id.substring(0, 7)}</td>
+                      <td>${typeof username === "string" || typeof username === "number" 
+                        ? String(username).charAt(0).toUpperCase() + String(username).slice(1): "N/A"}</td>
+                      <td><i class='bx bxs-circle' style='color:${status.color};font-size:8px;margin-right:5px;'></i>${status.title}</td>
+                      <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
+                      <td>${formatMoney(item.balance)}</td>
+                      <td>${formatTimestamp(item.dateTime)}</td>
+                      <td>${formatTimestamp(item.date_created)}</td>
+                      <td>${item.order_id}</td>
+                      <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> ${completes}</td>
+                      <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
+                    </tr>
+                `;
+            });
         });
         return html;
     };
@@ -128,7 +135,7 @@ $(function () {
     };
 
     let currentPage = 1;
-    let pageLimit = 20;
+    let pageLimit = 50;
 
     async function fetchTrasaction(page, pageLimit) {
         try {
@@ -454,35 +461,6 @@ $(function () {
         });
         const numrow = $(this).val();
         fetchTrasaction(currentPage, numrow);
-    });
-
-    let elem = "";
-    var menu = new BootstrapMenu(".chrome-tab", {
-        fetchElementData: function (element) {
-            elem = element;
-        },
-        actions: [
-            {
-                name: "<div class='pins'><i class='bx bxs-pin' style='font-size:15px;' ></i> <span style='font-size:12px'>Pin</span></div>",
-                onClick: function () {
-                    $(elem[0]).find(".chrome-tab-close").removeClass("chrome-tab-close").addClass("bx bxs-pin");
-                    console.log("Pinned");
-                },
-            },
-            {
-                name: "<div class='pins'><i class='bx bx-pin' style='font-size:15px;' ></i> <span style='font-size:12px'>Unpin</span></div>",
-                onClick: function () {
-                    $(elem[0]).find(".bxs-pin").removeClass("bx bxs-pin").addClass("chrome-tab-close");
-                    console.log("Uninned");
-                },
-            },
-            {
-                name: "<div class='pins'><i class='bx bx-checkbox-minus' style='font-size:15px;' ></i> <span style='font-size:12px'>Disable</span></div>",
-                onClick: function () {
-                    // $(elem[0]).find(".chrome-tab-close").removeClass("chrome-tab-close")
-                },
-            },
-        ],
     });
 
     //search the for username

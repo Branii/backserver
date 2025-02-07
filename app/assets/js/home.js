@@ -66,7 +66,6 @@ $(function () {
     }
   }
 
-
   function renderPagination(totalPages, currentPage) {
     let pagLink = `<ul class='pagination justify-content-end'>`;
 
@@ -123,7 +122,7 @@ $(function () {
     });
   }
 
-   fetchTrasaction(currentPage);
+  fetchTrasaction(currentPage);
 
   $(".player").click(function () {
     let direction = $(this).val();
@@ -168,6 +167,7 @@ $(function () {
     console.log("spinning");
     $(".loader").remove("bx bx-check-double").addClass("bx bx-loader bx-spin");
   });
+  
   let debounceTimeout;
   $(".username").keyup(function () {
     let searchkey = $(this).val();

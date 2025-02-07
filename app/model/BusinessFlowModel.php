@@ -36,11 +36,11 @@ class BusinessFlowModel extends MEDOOHelper
         }
 
         if (!empty($startdate) && !empty($enddate)) {
-            $filterConditions[] = "date_created BETWEEN '$startdate' AND '$enddate'";
+            $filterConditions[] = "DATE(dateTime) BETWEEN '$startdate' AND '$enddate'";
         } elseif (!empty($startdate)) {
-            $filterConditions[] = "date_created = '$startdate'";
+            $filterConditions[] = "DATE(dateTime) = '$startdate'";
         } elseif (!empty($enddate)) {
-            $filterConditions[] = "date_created = '$enddate'";
+            $filterConditions[] = "DATE(dateTime) = '$enddate'";
         }
 
         // Combine conditions into the final query
@@ -49,7 +49,7 @@ class BusinessFlowModel extends MEDOOHelper
         }
 
         // Add ordering and limit to the query (you can also parameterize order if needed)
-        $subQuery .= " ORDER BY date_created DESC";
+       $subQuery .= " ORDER BY trans_id DESC";
 
         // Return the final subquery
         return $subQuery;
@@ -71,7 +71,8 @@ class BusinessFlowModel extends MEDOOHelper
                 WHERE $subQuery
             ) AS temp_table
         LEFT JOIN 
-            users_test ON users_test.uid = temp_table.uid
+            users_test ON users_test.uid = temp_table.uid  ORDER BY 
+             temp_table.trans_id DESC
          LIMIT :offset, :limit
        
         ";

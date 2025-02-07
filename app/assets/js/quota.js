@@ -163,5 +163,21 @@ $(function () {
               console.error("Error fetching data:", error);
           }
         });
+
+        
+        function tableScrollQuota() {
+          const tableContainerQuota = document.querySelector(".table-wrapperquota");
+          const headerRowQuota = document.querySelector(".headrowquota");
+  
+          tableContainerQuota.addEventListener("scroll", function () {
+              if (tableContainerQuota.scrollTop > 0) {
+                  headerRowQuota.classList.add("sticky-headerquota");
+              } else {
+                  headerRowQuota.classList.remove("sticky-headerquota");
+              }
+          });
+      }
+
+      tableScrollQuota()
       
 });

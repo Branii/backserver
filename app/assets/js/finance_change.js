@@ -243,7 +243,7 @@ $(function () {
             try {
                 response = typeof response === 'string' ? JSON.parse(response) : response;
 
-                console.log(response);
+           //     console.log(response);
               
           response.forEach(user => {
            let   displayValue;
@@ -258,7 +258,10 @@ $(function () {
             } else if (user.regtype === "contact") {
               displayValue = user.contact;
               regname  = user.contact;  // Show contact
-            }
+            }else{
+              displayValue = 'no data found ...';
+              regname = 'no data found ...';  // Show contact
+             }
           
               // Append the option to the optionsHtml string
               optionsHtml += `<option class="optionlist" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
@@ -277,7 +280,8 @@ $(function () {
 
     //add money
     $(document).on("click", ".addmoneybtn", function () {
-      const depositype =$(".depositt").val()
+      // const deposity = $("#financeinput").val()
+      const depositype = $(".depositt").val()
       const usernames = $(".userIdFields").val();
       const amount = $(".amount").val();
       const review = $(".review").val();
@@ -286,14 +290,18 @@ $(function () {
         showToast("Heads up!!", "All field are required", "info");
         return false;
       }
+      $("#addfinancemodal").modal("hide");  
+      $(".userIdFields, .amount,.review,#financeinput").val(''); 
       $(".loaderfinanc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
       $.post(`../admin/addmoney/${depositype}/${usernames}/${amount}/${approvedby}/${review}`,
         function (response) {
           if (response) {
             $(".loaderfinanc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send")
-            // $("#addfinancemodal").modal("hide");
+           
             showToast("Success", "transaction perform success", "success");
             fetchfinance(currentPage,pageLimit);
+            // Clear input fields
+          
           } else {
             showToast("Heads up!!","transaction failed", "info");
           }

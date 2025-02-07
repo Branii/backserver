@@ -72,7 +72,7 @@
         cursor: pointer;
     }
 
-    .table-wrapperlist {
+    .table-wrapperquota {
         overflow: hidden;
         /* Hide the default scrollbar */
         white-space: nowrap;
@@ -141,27 +141,27 @@
     }
 
     /* Custom Scrollbar for Webkit Browsers */
-    .table-wrapperlist::-webkit-scrollbar {
+    .table-wrapperquota::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
         /* Slimmer scrollbar height for horizontal scrolling */
     }
 
-    .table-wrapperlist::-webkit-scrollbar-track {
+    .table-wrapperquota::-webkit-scrollbar-track {
         background: #f1f1f1;
         /* Lighter background for track */
         border-radius: 5px;
     }
 
-    .table-wrapperlist::-webkit-scrollbar-thumb {
+    .table-wrapperquota::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .table-wrapperlist::-webkit-scrollbar-thumb:hover {
+    .table-wrapperquota::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
         /* Darker blue on hover */
     }
@@ -176,6 +176,21 @@
         background-color: #fff;
         /* Optional: Make it stand out */
     }
+
+
+    .tbl-headerquota {
+        position: sticky;
+        top: 0;
+    }
+
+    
+    .sticky-headerquota {
+        position: relative;
+        bottom: 1px;
+        background-color: red;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    }
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -224,10 +239,10 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperlist" id="maskquota" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperquota" id="maskquota" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
-                <thead class="text-dark fs-4">
-                    <tr>
+                <thead class="text-dark fs-4 tbl-headerquota">
+                    <tr class="headrowquota">
 
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bonus Group']; ?></h6>
@@ -260,18 +275,18 @@
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playerlinks" value="startlinks">
+                <!-- <button type="button" class="btn bg-white-subtle playerlinks" value="startlinks">
                     <i class='bx bx-chevrons-left' style="font-size:20px"></i>
-                </button>
+                </button> -->
                 <button type="button" class="btn bg-white-subtle playerquota" value="leftlinks">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle playerquota" value="rightlinks">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerquota" value="endlinks">
+                <!-- <button type="button" class="btn bg-white-subtle playerquota" value="endlinks">
                     <i class='bx bx-chevrons-right' style="font-size:20px"></i>
-                </button>
+                </button> -->
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">

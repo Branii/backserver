@@ -26,8 +26,10 @@ $(function () {
     };
 
     data.forEach((item) => {
-      let first = item.full_name.split(" ")[0][0] ?? "";
-      let last = item.full_name.split(" ")[1][0] ?? "";
+
+      let nameParts = item.full_name?.split(" ") ?? [];
+      let first = nameParts[0]?.[0] ?? "";
+      let last = nameParts[1]?.[0] ?? "";
 
       html += `
                 <tr class="trow">
@@ -121,7 +123,7 @@ $(function () {
   }
 
   let currentPage = 1;
-  let pageLimit = 50;
+  let pageLimit = 11;
 
   const renderAdmin = (data) => {
     var html = AdminTable(data);
@@ -132,6 +134,7 @@ $(function () {
     var html = AdminLogsTable(data);
     $("#adminLogsContainer").html(html);
   };
+
   async function fetchAdmins(currentPage, pageLimit) {
     try {
       const response = await fetch(

@@ -43,7 +43,7 @@
         </div>
         <div class="chrome-tab-content">
           <div class="chrome-tab-favicon"></div>
-          <div class="chrome-tab-title"></div>
+          <div class="chrome-tab-title titletext"></div>
           <div class="chrome-tab-holder" hidden></div>
           <div class="chrome-tab-drag-handle"></div>
           <div class="chrome-tab-close"></div>

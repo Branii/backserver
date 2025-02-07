@@ -349,7 +349,7 @@
                 <tbody id="financeContainer">
                     <tr class="no-resultslist">
                         <td colspan="9">
-                            <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
+                        <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
                         </td>
                     </tr>
                 </tbody>
@@ -484,7 +484,7 @@
                             <label class="form-check-label" for="sf2"><?=$translator['Verify before submit']; ?></label>
                         </div>
                         <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 addmoneybtn" style="border: solid 1px #ccc;"  data-bs-dismiss="modal" aria-label="Close">
+                            <button type="button" class="btn hstack gap-6 addmoneybtn" style="border: solid 1px #ccc;"  data-bss-dismiss="modal" aria-label="Close">
                                 <i class="bx bx-send loaderfinanc" ></i>
                                <?=$translator['Submit']; ?>
                             </button>
