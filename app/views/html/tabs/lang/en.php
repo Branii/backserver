@@ -341,8 +341,8 @@ return [
 
 //Win/Loss Report
 
-'GGP Win/Loss Report' => 'GGP Win/Loss Report',
-
+'GPP Win/Loss Report' => 'GPP Win/Loss Report',
+// 'GGP Win/Loss Report' => 'GGP Win/Loss Report',
 'Username' => 'Username',
 'Relationship' => 'Relationship',
 'Number of Bettors' => 'Number of Bettors',
