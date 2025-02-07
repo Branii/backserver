@@ -239,7 +239,7 @@ li.name-items:last-child {
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
 }
-.usr-res-wrapper {
+.ngp-usr-res-wrapper {
     position: absolute;
     width: 17%;
     border-radius: 5px;
@@ -279,11 +279,11 @@ li.name-items:hover {
 .btn {
     color: #03122b !important;
 }
-#wl-empty-td:hover{
+#ngp-wl-empty-td:hover{
  background: #fff;
 }
 
-.table-wrapperWl {
+.ngp-table-wrapperWl {
         overflow: hidden;
         /* Hide the default scrollbar */
         white-space: nowrap;
@@ -301,27 +301,27 @@ li.name-items:hover {
 
 
  /* Custom Scrollbar for Webkit Browsers */
- .table-wrapperWl::-webkit-scrollbar {
+ .ngp-table-wrapperWl::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
         /* Slimmer scrollbar height for horizontal scrolling */
     }
 
-    .table-wrapperWl::-webkit-scrollbar-track {
+    .ngp-table-wrapperWl::-webkit-scrollbar-track {
         background: #f1f1f1;
         /* Lighter background for track */
         border-radius: 5px;
     }
 
-    .table-wrapperWl::-webkit-scrollbar-thumb {
+    .ngp-table-wrapperWl::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .table-wrapperWl::-webkit-scrollbar-thumb:hover {
+    .ngp-table-wrapperWl::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
         /* Darker blue on hover */
     }
@@ -330,7 +330,7 @@ li.name-items:hover {
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">GGP Win/Loss Report</h4>
+        <h4 class="card-title mb-0">NGP Win/Loss Report</h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist1">
@@ -340,18 +340,18 @@ li.name-items:hover {
           
                 <div style="width: 65%;">
           
- <input name="usernamelist" class="queryholderlist form-control bring-forward" id="wl-username" data-user-id="" placeholder="Username" autocomplete="off" style="width:97%;"> <div class="usr-res-wrapper" style="width: 26.5%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="user-list-wrapper"></ul> </div></div>
+ <input name="usernamelist" class="queryholderlist form-control bring-forward" id="ngp-wl-username" data-user-id="" placeholder="Username" autocomplete="off" style="width:97%;"> <div class="ngp-usr-res-wrapper" style="width: 26.5%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="ngp-user-list-wrapper"></ul> </div></div>
 
         
         <div class="custom-dropdown" style="width: 57%; margin-right: 5px;">
-        <select name="lotteryname" class="form-control form-select  wl-selectlottery" id="wl-selectlottery" data-bs-placeholder="Select Type"> 
+        <select name="lotteryname" class="form-control form-select  ngp-wl-selectlottery" id="ngp-wl-selectlottery" data-bs-placeholder="Select Type"> 
 
         </select>
                     </div>
 
-        <input type="date" name="startdate" class="form-control startdate"  placeholder="Name" id="wl-startdate" style="width: 50%;"/>
+        <input type="date" name="startdate" class="form-control startdate"  placeholder="Name" id="ngp-wl-startdate" style="width: 50%;"/>
 
-        <input type="date" name="enddate" class="form-control enddate" placeholder="Name" id="wl-enddate" style="width: 50%;"/>
+        <input type="date" name="enddate" class="form-control enddate" placeholder="Name" id="ngp-wl-enddate" style="width: 50%;"/>
   
 
 
@@ -364,23 +364,23 @@ li.name-items:hover {
 
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle player go-back" value="" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle player ngp-go-back" value="" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Back">
                     <i class='bx bxs-chevron-left-circle'></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle player fetch-user-details" value="" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle player ngp-fetch-user-details" value="" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="User Detail">
                     <i class='bx bxs-user-detail'></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle player fetch-top-agents" value="" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle player ngp-fetch-top-agents" value="" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Top Agents">
                     <i class='bx bxs-user-account'></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle player wl-refreshlist" value="" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle player ngp-wl-refreshlist" value="" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle fetch-user-win-loss" value="" aria-label="Search"
+                <button type="button" class="btn bg-white-subtle ngp-fetch-user-win-loss" value="" aria-label="Search"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Search">
                     <i class='bx bx-check-double loaderlist' style="font-size:20px"></i>
                 </button>
@@ -392,8 +392,8 @@ li.name-items:hover {
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperWl" id="wl-tbl-wrapper" style="height:530px;overflow-y:scroll;">
-            <table id="wl-tbl" class="table text-nowrap mb-0 align-middle table-bordered table-hover">
+        <div class="table-responsive mb-4 border rounded-1 ngp-table-wrapperWl" id="ngp-wl-tbl-wrapper" style="height:530px;overflow-y:scroll;">
+            <table id="ngp-wl-tbl" class="table text-nowrap mb-0 align-middle table-bordered table-hover">
                 <thead class="text-dark fs-4 tbl-headersUser">
                     <tr class="userlistheadrow">
                         <th>
@@ -421,6 +421,15 @@ li.name-items:hover {
                             <h6 class="fs-4 fw-semibold mb-0">Total Win Amount</h6>
                         </th>
                         <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Promotions & Bonuses</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Fees</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Refund</h6>
+                        </th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0">Win/Loss</h6>
                         </th>
                         <th>
@@ -428,16 +437,11 @@ li.name-items:hover {
                         </th>
                     </tr>
                 </thead>
-                <tbody id="winLossDtholder" class="tbl-content">
+                <tbody id="ngp-winLossDtholder" class="tbl-content">
 
                     <tr class="no-resultslist">
-<<<<<<< HEAD
-                        <td colspan="13" id="wl-empty-td">
+                        <td colspan="13" id="ngp-wl-empty-td">
                             <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
-=======
-                        <td colspan="13">
-                        <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
->>>>>>> 323ec0abb730046633e32e794ebc49eaff8e8c64
                         </td>
                     </tr>
 
@@ -449,29 +453,29 @@ li.name-items:hover {
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playerWinLoss" value="wl-leftlist">
+                <button type="button" class="btn bg-white-subtle ngp-playerWinLoss" value="ngp-wl-leftlist">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerWinLoss" value="wl-rightlist">
+                <button type="button" class="btn bg-white-subtle ngp-playerWinLoss" value="ngp-wl-rightlist">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
 
-            <span id="paging_infowl" style="color:#aaa">---</span>
+            <span id="ngp-paging_infowl" style="color:#aaa">---</span>
 
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
-            <select class="left-element form-control numrowstrans" id="wl-numrowstans" style="font-size: 12px;">
+            <select class="left-element form-control numrowstrans" id="ngp-wl-numrowstans" style="font-size: 12px;">
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
                 <option value="50">50</option>
             </select>
-            <span id="wl-pagination-wrapper" class="right-element">lsdsdsa;fdjs;lfda </span>
+            <span id="ngp-wl-pagination-wrapper" class="right-element">lsdsdsa;fdjs;lfda </span>
         </span>
-        <!-- <span class="toplist-right" id="wl-pagination-wrapper" aria-label="Page navigation example">
+        <!-- <span class="toplist-right" id="ngp-wl-pagination-wrapper" aria-label="Page navigation example">
 
         </span> -->
 

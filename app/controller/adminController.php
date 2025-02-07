@@ -178,9 +178,22 @@ class adminController extends Controller {
         $this->view('exec/win_loss',['lottery_name'=>$lottery_name,'flag' => 'filter-lotteries']);
         $this->view->render();
     }
-    public function searchWinLossUser($username,$lottery_id,$start_date,$end_date){
+    public function searchWinLossUser($user_id,$lottery_id,$start_date,$end_date){
+   
+        $this->view('exec/win_loss',['user_id'=>$user_id,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'flag' => 'search-user-win-loss']);
+        $this->view->render();
+    }
+    public function fetchTopAgents($lottery_id,$start_date,$end_date,$page,$limit){
       
-        $this->view('exec/win_loss',['username'=>$username,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'flag' => 'search-user-win-loss']);
+        $this->view('exec/win_loss',['lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'page' => $page,'limit' => $limit,'flag' => 'get-top-agents']);
+        $this->view->render();
+    }
+    public function fetchAgentSubs($agent_id,$lottery_id,$start_date,$end_date,$flag,$page,$limit){
+        $this->view('exec/win_loss',["agent_id" => $agent_id,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'page' => $page,'limit' => $limit,'flag' => $flag]);
+        $this->view->render();
+    }
+    public function getUserDetails($user_id,$lottery_id,$start_date,$end_date,){
+        $this->view('exec/win_loss',['user_id' => $user_id,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'flag' => 'get-user-details']);
         $this->view->render();
     }
 
@@ -226,14 +239,7 @@ class adminController extends Controller {
 
    //
 
-    //NOTE -
-    ////////////// USERLIST LIST -//////////
-    public function userlistdata($pageNumber, $limit)
-    {
-        $this->view('exec/account_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
-        $this->view->render();
-    }
-
+  
 
     /// ----- WIN LOSS REPORT --------------------------------
     public function users_win_loss($lottery_id, $start_date,$end_date, $page,$limit)
@@ -264,6 +270,14 @@ class adminController extends Controller {
     public function fetch_lottery_basic_params($lottery_id,$page)
     {
         $this->view('exec/lottery_basic_params', ['lottery_id' => $lottery_id,'page' => $page,'flag' => 'fetch-lottery-basic-params']);
+        $this->view->render();
+    }
+
+      //NOTE -
+    ////////////// USERLIST LIST -//////////
+    public function userlistdata($pageNumber, $limit)
+    {
+        $this->view('exec/account_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
         $this->view->render();
     }
 
@@ -317,6 +331,16 @@ class adminController extends Controller {
        
     }
     
+    public function filterChangeAccount($uid,$ordertype,$startdate,$enddate,$pageNumber,$limit){
+        $this->view('exec/account_manage',[
+            'uid' => $uid,
+            'ordertype' => $ordertype,'startdate' => $startdate,
+            'enddate' => $enddate, 'flag' => 'filterchange',
+            'page'=>$pageNumber,'limit'=>$limit,
+
+        ]);
+        $this->view->render();
+    }
 
   
      //NOTE -
@@ -333,15 +357,27 @@ class adminController extends Controller {
         'enddate' => $enddate,'flag' => 'filterUserlogs','page' => $pageNumber,'limit' => $limit,]);
         $this->view->render();
     }
-
-    public function agent_subordinate($nickname,$pageNumber, $limit)
+    public function manageUser($userID,  $lotteryID,$flag)
     {
-        $this->view('exec/account_manage', ['nicknames' => $nickname ,'flag' => 'fetchsubagent','page' => $pageNumber, 'limit' => $limit,]);
+        $this->view('exec/account_manage', ['user_id' => $userID,'ulog_id' => $lotteryID,'lottery_id' => $lotteryID,"flag" => $flag]);
+        $this->view->render();
+    }
+
+    public function agent_subordinate($user_id,$pageNumber, $limit)
+    {
+        $this->view('exec/account_manage', ['user_id' => $user_id ,'flag' => 'fetchsubagent','page' => $pageNumber, 'limit' => $limit,]);
         $this->view->render();
     }
     public function useraccountchange($uid,$pageNumber, $limit)
     {
         $this->view('exec/account_manage', ['uid' => $uid ,'flag' => 'fetchaccountchange','page' => $pageNumber, 'limit' => $limit,]);
+        $this->view->render();
+    }
+    
+    public function updateUserData($userID,$depositLimit, $withdrawalLimit, $rebate, $state,$dailyBettingLimit,$flag)
+    {
+
+        $this->view('exec/account_manage', ['user_id' => $userID,'depositLimit' => $depositLimit ,'withdrawalLimit' => $withdrawalLimit,'rebate' => $rebate,"state" => $state, "dailyBettingTotalLimit" => $dailyBettingLimit,'flag' => 'updateUserData',]);
         $this->view->render();
     }
     

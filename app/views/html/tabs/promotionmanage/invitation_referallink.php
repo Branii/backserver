@@ -72,7 +72,7 @@
         cursor: pointer;
     }
 
-    .table-wrapperlist {
+    .table-wrapperlistlinks {
         overflow: hidden;
         /* Hide the default scrollbar */
         white-space: nowrap;
@@ -88,13 +88,13 @@
         z-index: 10;
     }
 
-    .queryholderlogs {
+    .queryholderlogss {
         width: 33%;
         margin-right: 5px;
         background-color: #FFF;
     }
 
-    .queryholderlinks {
+    .queryholderlinkss {
         width:  33%;
         position: absolute;
         background-color: #fff;
@@ -108,13 +108,13 @@
         display: none;
     }
 
-    .optionlink {
+    .optionlist {
         text-align: left;
         border-bottom: solid 1px #eee;
         padding: 5px;
     }
 
-    .optionlink:hover {
+    .optionlist:hover {
         background-color: #eee;
     }
 
@@ -141,30 +141,71 @@
     }
 
     /* Custom Scrollbar for Webkit Browsers */
-    .table-wrapperlist::-webkit-scrollbar {
+    .table-wrapperlistlinks::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
         /* Slimmer scrollbar height for horizontal scrolling */
     }
 
-    .table-wrapperlist::-webkit-scrollbar-track {
+    .table-wrapperlistlinks::-webkit-scrollbar-track {
         background: #f1f1f1;
         /* Lighter background for track */
         border-radius: 5px;
     }
 
-    .table-wrapperlist::-webkit-scrollbar-thumb {
+    .table-wrapperlistlinks::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .table-wrapperlist::-webkit-scrollbar-thumb:hover {
+    .table-wrapperlistlinks::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
         /* Darker blue on hover */
     }
+
+    .linkDropdown {
+        width: 32%;
+        position: absolute;
+        background-color: #fff;
+        color: #aaa;
+        max-height: 300px;
+        overflow-y: scroll;
+        border-radius: 5px;
+        padding: 10px;
+        top: 90%;
+        z-index: 9999;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        display: none;
+    }
+
+     /* Style for the scrollbar */
+     .linkDropdown::-webkit-scrollbar {
+        width: 3px;
+        /* Width of the scrollbar */
+    }
+
+    .linkDropdown::-webkit-scrollbar-track {
+        background: #f0f0f0;
+        /* Background of the scrollbar track */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
+
+    .linkDropdown::-webkit-scrollbar-thumb {
+        background: #ccc;
+        /* Color of the scrollbar handle */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
+
+    .linkDropdown::-webkit-scrollbar-thumb:hover {
+        background: #aaa;
+        /* Darker handle color on hover */
+    }
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -177,17 +218,18 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-                <input name="username" class="queryholderlogs form-control" id="selectuserlinks" placeholder="Username"
-                    autocomplete="off"></input>
-                <input type="text" class="userId" style="display:none" />
-                <ul class="queryholderlinks"></ul>
+              <input type="text" id="linkinput" class="form-control queryholderlogss " placeholder="Search usernames" />
+                <input name="usernames" type="hidden" class="userIdfinance" />
+                <select class="form-control linkDropdown" size="5" style="display: none;" id="linkinputdowns">
+                    <!-- Options will be populated dynamically -->
+                </select>
 
                 
-                <input type="date" class="form-control queryholderlogs startdate" id="nametel" aria-describedby="name"
+                 <input type="date" class="form-control queryholderlogss linkstart" id="nametel" aria-describedby="name"
                     placeholder="Name" />
 
 
-                <input type="date" class="form-control queryholderlogs enddate" id="nametexi" aria-describedby="name"
+                <input type="date" class="form-control queryholderlogss linkenddate" id="nametexi" aria-describedby="name"
                     placeholder="Name" />
 
 
@@ -216,10 +258,10 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperlist" id="masklinks" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperlistlinks" id="masklinks" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
-                <thead class="text-dark fs-4">
-                    <tr>
+                <thead class="text-dark fs-4 tbl-headerlinks">
+                    <tr class="headrowlinks">
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
@@ -227,7 +269,7 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Link']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Rebate%']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Rebate(%)']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Number of Registrations']; ?></h6>
@@ -261,18 +303,18 @@
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playerlinks" value="startlinks">
+                <!-- <button type="button" class="btn bg-white-subtle playerlinks" value="startlinks">
                     <i class='bx bx-chevrons-left' style="font-size:20px"></i>
-                </button>
+                </button> -->
                 <button type="button" class="btn bg-white-subtle playerlinks" value="leftlinks">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle playerlinks" value="rightlinks">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerlinks" value="endlinks">
+                <!-- <button type="button" class="btn bg-white-subtle playerlinks" value="endlinks">
                     <i class='bx bx-chevrons-right' style="font-size:20px"></i>
-                </button>
+                </button> -->
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
@@ -290,23 +332,3 @@
 
 </div>
 
-<div class="modal fade" id="danger-userlinks" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content modal-filled " style="background-color:#F9F9F9">
-            <div class="modal-body p-4">
-                <div class="text-center text-danger">
-                    <i class="ti ti-hexagon-letter-x fs-7"></i>
-                    <h4 class="mt-2">Oh snap!</h4>
-                    <p class="mt-3" style="color:#aaa">
-                        All fields are required!
-                        Select one or more data fields to filter.
-                    </p>
-                    <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color:#ddd">
-                        Okay
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-</div>

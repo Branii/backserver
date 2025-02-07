@@ -304,11 +304,10 @@
                     </tr>
                 </thead>
                 <tbody id="userlogsContainer">
-
-                    <tr class="no-resultslist">
-                        <td colspan="9">
+                    <tr class="no-resultslists">
+                        <!-- <td colspan="9">
                             <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
-                        </td>
+                        </td> -->
                     </tr>
 
                 </tbody>

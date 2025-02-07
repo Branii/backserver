@@ -57,7 +57,8 @@ $(function () {
             htmls += `
                     <tr>
                         <td>${item.track_token}</td>
-                       <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
+                       <td>${typeof username === "string" || typeof username === "number" 
+                        ? String(username).charAt(0).toUpperCase() + String(username).slice(1): "N/A"}</td>
                         <td>${item.game_type}</td>
                         <td>${item.start_draw}</td>
                         <td>${item.tracked + "/" + item.total_bets}</td>
