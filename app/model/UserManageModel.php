@@ -329,6 +329,25 @@ class UserManageModel extends MEDOOHelper
 
         }
     }
+    public static function fetchTopAgents($page = 1, $limit = 20) : array {
+        try{
+            $top_agents = DataReportModel::fetch_top_agents($page, $limit);
+            if(empty($all_subs["data"])) return ["status" => "success","data" => []];
+            $top_agents = $top_agents["data"];
+            
+            $uids     = array_column($all_subs,'uid');
+            $login_counts = self::fetch_users_login_count($uids);
+            $subs_count = self::count_subs($uids);
+            // $res = self::fetch_user_rel($uids);
+
+        return ["status" => "success", "data" => $all_subs,"login_counts" => $login_counts,"direct_subs_count" => $subs_count];
+            
+        }catch(Exception $e){
+            echo $e->getMessage();
+            return ["status" => "error" , 'data' => "Internal Server Error."];
+
+        }
+    }
 
 
     public static function fetchUsersData($page = 1, $limit = 20): array {

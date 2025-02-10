@@ -129,7 +129,7 @@ if ($flag == "addAgent") {
 }
 
 
-if ($flag == "fetchTopAgent") {
+if ($flag == "fetchTopAgentV1") {
 
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
@@ -242,6 +242,16 @@ if ($flag == "updateUsedquota") {
     // Map the results to an array with keys
     $result = (new AgentManageModel())->UpdateUserquotaData(json_encode($results), $uid);
     echo json_encode($result);
+}
+
+if($flag == "fetchTopAgent"){
+    $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
+    $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
+
+     $res = UserManageModel::fetchTopAgents($user_id);
+     echo json_encode($res);
+
+    return;
 }
 
 if ($flag == "fetchsubagent") {
