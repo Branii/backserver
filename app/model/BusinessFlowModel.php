@@ -24,23 +24,23 @@ class BusinessFlowModel extends MEDOOHelper
 
         // Build filter conditions
         if (!empty($username)) {
-            $filterConditions[] = "uid = '$username'";
+            $filterConditions[] = "transaction.uid = '$username'";
         }
 
         if (!empty($orderid)) {
-            $filterConditions[] = "order_id ='$orderid'";
+            $filterConditions[] = "transaction.order_id ='$orderid'";
         }
 
         if (!empty($ordertype)) {
-            $filterConditions[] = "order_type = '$ordertype'";
+            $filterConditions[] = "transaction.order_type = '$ordertype'";
         }
 
         if (!empty($startdate) && !empty($enddate)) {
-            $filterConditions[] = "DATE(dateTime) BETWEEN '$startdate' AND '$enddate'";
+            $filterConditions[] = "DATE(transaction.dateTime) BETWEEN '$startdate' AND '$enddate'";
         } elseif (!empty($startdate)) {
-            $filterConditions[] = "DATE(dateTime) = '$startdate'";
+            $filterConditions[] = "DATE(transaction.dateTime) = '$startdate'";
         } elseif (!empty($enddate)) {
-            $filterConditions[] = "DATE(dateTime) = '$enddate'";
+            $filterConditions[] = "DATE(transaction.dateTime) = '$enddate'";
         }
 
         // Combine conditions into the final query
@@ -48,8 +48,7 @@ class BusinessFlowModel extends MEDOOHelper
             $subQuery = implode(' AND ', $filterConditions);
         }
 
-        // Add ordering and limit to the query (you can also parameterize order if needed)
-       $subQuery .= " ORDER BY trans_id DESC";
+       $subQuery .= " ORDER BY transaction.trans_id DESC";
 
         // Return the final subquery
         return $subQuery;
@@ -59,22 +58,17 @@ class BusinessFlowModel extends MEDOOHelper
     {
         $startpoint = $page * $limit - $limit;
         $sql = "
-        SELECT 
-            temp_table.*, 
-            users_test.email AS email,
-            users_test.username AS username,
-            users_test.contact AS contact,users_test.reg_type AS reg_type    
-        FROM 
-            (
-                SELECT * 
-                FROM transaction
-                WHERE $subQuery
-            ) AS temp_table
-        LEFT JOIN 
-            users_test ON users_test.uid = temp_table.uid  ORDER BY 
-             temp_table.trans_id DESC
-         LIMIT :offset, :limit
-       
+                SELECT 
+                transaction.*, 
+                users_test.email AS email,
+                users_test.username AS username,
+                users_test.contact AS contact,
+                users_test.reg_type AS reg_type    
+            FROM transaction
+            LEFT JOIN users_test ON users_test.uid = transaction.uid
+            WHERE $subQuery
+            LIMIT :offset, :limit
+            
         ";
 
         $countSql = "
@@ -112,8 +106,10 @@ class BusinessFlowModel extends MEDOOHelper
             uid = :uid 
             OR email = :email 
             OR username = :username 
-            OR contact = :contact",
-         ['uid' => $key, 'email' => $key, 'username' => $key, 'contact' => $key]
+            OR contact = :contact
+            OR nickname = :nickname",
+            
+         ['uid' => $key, 'email' => $key, 'username' => $key, 'contact' => $key,'nickname' => $key]
          
         );
         return $data;

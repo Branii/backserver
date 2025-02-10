@@ -958,9 +958,10 @@ class UserManageModel extends MEDOOHelper
 
     public static function validateRegister($datas)
     {
-
+         print_r($datas);
+         exit;
         $errors = [];
-        $emailexist = self::checkEmailExist($datas['agentemail']);
+        $emailexist = self::checkEmailExist(trim($datas['agentemail']));
         $password = trim($datas['agentpassword'] ?? '');
         $confirmPassword = trim($datas['agentpassword1'] ?? '');
         $email = trim($datas['agentemail'] ?? '');
