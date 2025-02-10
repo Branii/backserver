@@ -312,23 +312,27 @@ $(function () {
    }
    tableScrollUserLogs();
     
-    async function fetchIpInfo(ip) {
-        try {
-            // Fetch IP information from the API
-            const url = `http://www.geoplugin.net/json.gp?ip=${ip}`;
-            const response = await fetch(url);
-            // Ensure the request is successful
-            if (!response.ok) {
-                throw new Error(`Failed to fetch data for IP: ${ip}`);
-            }
-    
-            // Parse the response as JSON
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error(`Error fetching IP info for ${ip}:`, error.message);
-            return null; // Fallback in case of an error
+   async function fetchIpInfo(ip) {
+    try {
+        const url = `https://www.geoplugin.net/json.gp?ip=${ip}`; // Use HTTPS for security
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch data for IP: ${ip} - ${response.statusText}`);
         }
+
+        const data = await response.json();
+
+        // Ensure the response contains valid data
+        if (!data || !data.geoplugin_city) {
+            throw new Error(`Invalid response for IP: ${ip}`);
+        }
+
+        return data;
+    } catch (error) {
+        console.error(`Error fetching IP info for ${ip}:`, error.message);
+        return null;
     }
+}
 
   });

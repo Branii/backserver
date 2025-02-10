@@ -569,11 +569,11 @@ $(function () {
         // console.log(datas);
         addAgent(datas);
     });
-    // `../admin/addAgent/${datas}
+ 
     async function addAgent(datas) {
         try {
             ///api/v1/limvo/selfregister
-            const response = await fetch("https://winsstarts.com/chairman_test/api/v1/limvo/register_super_user", {
+            const response = await fetch("localhost/chairman_test/api/v1/limvo/register_super_user", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -584,11 +584,9 @@ $(function () {
             if (!response.ok) {
                 throw new Error(`Error: ${response.type} - ${response.statusText}`);
             }
-            // const data = await response.json();
-            // console.log('Registration Success:', data);
+         
             const result = await response.json();
-            // console.log('Registration Success:', result);
-            // Handle success or error based on response type
+        
             if (result.type === "success") {
                 $(".loaders").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
                 setTimeout(function () {
