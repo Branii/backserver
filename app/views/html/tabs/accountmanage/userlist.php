@@ -504,19 +504,19 @@
             <span class="top-left-btn">
                 <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
                     <input type="text" id="selectuserlist" class="form-control queryholderuserlistz usernames" placeholder="Search usernames" />
-                    <input name="usernames" type="hidden" class="userIdbet" />
+                    <input name="usernames" type="hidden" id="usrl-id-holder" />
                     <select class="form-control queryholderuserlist" size="5" style="display: none;" id="userlists">
                         <!-- Options will be populated dynamically -->
                     </select>
 
-                    <select name="recharge" class="form-control form-select queryholderuserlistz recharges" data-bs-placeholder="Select Type">
+                    <select name="recharge" id="usrl-recharge-lvl" class="form-control form-select queryholderuserlistz recharges" data-bs-placeholder="Select Type">
                         <option value="">-Recharge Level-</option>
                         <option value="1">Level One</option>
                         <option value="2">Level Two</option>
                         <option value="3">Level Three</option>
                     </select>
 
-                    <select name="state" class="form-control form-select queryholderuserlistz states" data-bs-placeholder="Select Type">
+                    <select name="state" id="usrl-state" class="form-control form-select queryholderuserlistz states" data-bs-placeholder="Select Type">
                         <option value="">-State-</option>
                         <option value="1">Enable to run</option>
                         <option value="2">Suspend Betting</option>
@@ -524,9 +524,9 @@
                         <option value="4">Block User</option>
                     </select>
 
-                    <input name="startdate" type="date" class="form-control queryholderuserlistz startdateuser" aria-describedby="name" placeholder="Name" />
+                    <input name="startdate" id="usrl-start-date" type="date" class="form-control queryholderuserlistz startdateuser" aria-describedby="name" placeholder="Name" />
 
-                    <input name="enddate" type="date" class="form-control queryholderuserlistz enddateuser" aria-describedby="name" placeholder="Name" />
+                    <input name="enddate" id="usrl-end-date" type="date" class="form-control queryholderuserlistz enddateuser" aria-describedby="name" placeholder="Name" />
                 </div>
             </span>
             <span class="toplist-center" aria-label=" navigation example">

@@ -24,6 +24,25 @@ if ($flag == "userlistdata") {
     // ]);
 }
 
+if($flag === "searchUserlistData") {
+    
+    $uid = isset($this->viewData['uid']) ? max($this->viewData['uid'],0) : '';
+    $states = isset($this->viewData['state']) ? max($this->viewData['state'],0) : '';
+    $recharge_level = isset($this->viewData['recharge_level']) ? max($this->viewData['recharge_level'],0) : '';
+    $startdate = isset($this->viewData['startdate']) ? max($this->viewData['startdate'],0) : '';
+    $enddate = isset($this->viewData['enddate']) ? max($this->viewData['enddate'],0) : '';
+     
+
+    echo json_encode([$uid,$states,$uid,$recharge_level,$startdate,$enddate]);
+    return;
+    $uid = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : 0;
+    $res = UserManageModel::searchUserData(["uid" => $uid,"states" => $states,"recharge_level" =>  $recharge_level,"start_date" => $startdate, "end_date" => $enddate]);
+     echo json_encode($res);
+     return;
+
+
+}
+
 if ($flag == "filteruserlist") {
     $uid = isset($this->viewData['username']) ? $this->viewData['username'] : '';
     $states = isset($this->viewData['states']) ? $this->viewData['states'] : '';
@@ -33,9 +52,11 @@ if ($flag == "filteruserlist") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
 
+
+
      if (!empty($usernameCheck) && $usernameCheck != null) {
          $username = $usernameCheck[0]['uid'];
-        $sunquery = (new UserManageModel())->FilterUserlistDataSubQuery($username,$states, $startdate, $enddate);
+         $sunquery = (new UserManageModel())->FilterUserlistDataSubQuery($username,$states, $startdate, $enddate);
          $result = (new UserManageModel())->Filteruserlist($sunquery,$page,$limit) ?? [];
         //  echo json_encode([
         //     // 'sql' => $result['sql'],
@@ -301,10 +322,28 @@ if ($flag == "updateUsedquota") {
 }
 
 if($flag == "fetchTopAgent"){
-    $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
+    $recharge_level = isset($this->viewData['recharge_level']) ? max((int)$this->viewData['recharge_level'], 0) : ""; // Ensure valid page number
+    $state          = isset($this->viewData['state']) ? max((int)$this->viewData['state'], 0) : ""; // Ensure valid limit 
+    $start_date     = isset($this->viewData['start_date']) ? max((int)$this->viewData['start_date'], 0) : ""; // Ensure valid page number
+    $end_date       = isset($this->viewData['end_date']) ? max((int)$this->viewData['end_date'], 0) : ""; // Ensure valid limit 
+    $page           = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : ""; // Ensure valid page number
+    $limit          = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
+
+
+    // echo json_encode(["recharge_level" => $recharge_level,"user_state" => $state,"start_date" => $start_date,"end_date" => $end_date]);
+
+    // return;
+
+     $res = UserManageModel::fetchTopAgents(["recharge_level" => $recharge_level,"user_state" => $state,"start_date" => $start_date,"end_date" => $end_date], $page , $limit);
+     echo json_encode($res);
+
+    return;
+}
+if($flag == "fetchUserData"){
+      $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
     $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
 
-     $res = UserManageModel::fetchTopAgents($user_id);
+     $res = UserManageModel::fetchTopAgents($page,$limit);
      echo json_encode($res);
 
     return;
