@@ -47,23 +47,17 @@ $(function () {
         const formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
 
         data.forEach((item) => {
-            let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-        
-            // Filter out items with order_type 12
-            const filteredItems = data.filter(i => i.order_type !== 12);
-        
-            // Loop through the filtered items to generate HTML
-            filteredItems.forEach(filteredItem => {
-                const status = statusColor[filteredItem.order_type] || { title: "Unknown", color: "#000" };
-        
+             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+             if (item.order_type === 12) return;
+ 
                 html += `
                     <tr class="trow">
                       <td>${"TR" + item.order_id.substring(0, 7)}</td>
                       <td>${typeof username === "string" || typeof username === "number" 
                         ? String(username).charAt(0).toUpperCase() + String(username).slice(1) 
                         : "N/A"}</td>
-                      <td><i class='bx bxs-circle' style='color:${status.color};font-size:8px;margin-right:5px;'></i>${status.title}</td>
-                      <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
+                      <td><i class='bx bxs-circle' style='color:${statusColor[item.order_type].color};font-size:8px;margin-right:5px;'></i>${statusColor[item.order_type].title}</td>
+                     <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
                       <td>${formatMoney(item.balance)}</td>
                       <td>${formatTimestamp(item.dateTime)}</td>
                       <td>${formatTimestamp(item.date_created)}</td>
@@ -73,7 +67,7 @@ $(function () {
                     </tr>
                 `;
             });
-        });
+    
         return html;
     };
 

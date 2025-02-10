@@ -677,9 +677,9 @@ $(function () {
             rebatelist.forEach((item) => {
                 let row = tableBody.insertRow();
                 let rowData = [
-                    `<b class="rebate_group"> ${item.rebate}</b>`,
-                    `<b class="bonus_group">  ${item.odds_group}</b>`,
-                    `<b class="count_group">${item.counts} </b> / ${item.quota}`,
+                    `<span class="rebate_group"> ${item.rebate}</span>`,
+                    `<span class="bonus_group">  ${item.odds_group}</span>`,
+                    `<span class="count_group">${item.counts} </span> / ${item.quota}`,
                     `<input type="text" value="${item.quota}" class="quota_set form-control" />`,
                 ];
 
@@ -969,77 +969,6 @@ $(function () {
         $("#idHolder").val($(this).attr("data-uid"));
         fetchUserInfo();
     });
-
-    // $(document).on("click", ".acountbtn", function (e) {
-    //     let userid =$(this).attr("data-uid");
-    //     $.post(`../admin/useraccountchange/${userid}/${currentPage}/${pageLimit}`,
-    //       function (data) {
-    //         let fetchData = JSON.parse(data);
-    //            console.log(fetchData)
-    //           return
-    //         let tableBody = document
-    //           .getElementById("accountchange")
-    //           .getElementsByTagName("tbody")[0];
-    //         while (tableBody.firstChild) {
-    //           tableBody.removeChild(tableBody.firstChild);
-    //         }
-    //         fetchData.forEach((item) => {
-    //           let row = tableBody.insertRow();
-    //           // Create an array of the data to be displayed in each cell
-    //           let type = {
-    //             1: '<span class="tag tag-primary" style="">Deposit</span>',
-    //             2: '<span class="tag" style="background-color:#FFD700;color: #faebd7;">Win Bonus</span>',
-    //             3: '<span class="tag tag-success">Bet Awarded</span>',
-    //             4: '<span class="tag" style="background-color:#FF4500;color: #faebd7;">Withdrawal</span>',
-    //             5: '<span class="tag" style="background-color:#DC143C;color: #faebd7;">Bet deduct</span>',
-    //             6: '<span class="tag" style="background-color:#A9A9A9;color: #faebd7;">Bet Cancelled</span>',
-    //             7: '<span class="tag" style="background-color:#8A2BE2;color: #faebd7;">Rebate</span>',
-    //             8: '<span class="tag" style="background-color:#9370DB;color: #faebd7;">Self Rebate</span>',
-    //             9: '<span class="tag" style="background-color:#FF6347;color: #faebd7;">Sending Red Envelope</span>',
-    //             10: '<span class="tag" style="background-color:#FF69B4;color: #faebd7;">Red Envelope Received</span>',
-    //             11: '<span class="tag" style="background-color:#4682B4;color: #faebd7;">Bet Refund</span>',
-    //           };
-
-    //           statusText = type[item.order_type] ?? "Unknown";
-
-    //           let $creditamount = 0;
-    //           let $debitamount = 0;
-    //           if (item.transaction_type == 1) {
-    //             $creditamount =
-    //               '<span style="color:;">+' + item.account_change + "</span>";
-    //           } else {
-    //             $debitamount =
-    //               '<span style="color:re;"> ' + item.account_change + " </span>";
-    //           }
-
-    //           let states = "";
-    //           if (item.status == 1) {
-    //             states = "Completed";
-    //           }
-    //           let transid = ("T" + item.order_id).slice(0, 10);
-
-    //           let rowData = [
-    //             transid,
-    //             item.username,
-    //             statusText,
-    //             $debitamount,
-    //             $creditamount,
-    //             item.balance,
-    //             item.dateTime,
-    //             item.order_id,
-    //             states,
-    //           ];
-    //           // Iterate over rowData to create and fill each cell
-    //           rowData.forEach((datas) => {
-    //             let cell = row.insertCell();
-    //             cell.innerHTML = datas;
-    //           });
-
-    //           //console.log(fetchData)
-    //         });
-    //       }
-    //     );
-    //   });
 
     function tableScrolluserList() {
         const tableContainerUser = document.querySelector(".table-wrapperuserlist");
@@ -1401,7 +1330,6 @@ $(function () {
         });
     };
 
-
     const translator = JSON.parse(document.getElementById("translation-container").getAttribute("data-translations"));
     const AccountTransactionss = (data) => {
         let html = "";
@@ -1458,13 +1386,13 @@ $(function () {
             $("#maskaccount").LoadingOverlay("hide");
             if (data.account.length < 1) {
                 $("#accountchange").html(`
-      <tr class="no-results">
-        <td colspan="9">
-          <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="120px" />
-        </td>
-      </tr>
-   
-      `);
+                <tr class="no-results">
+                    <td colspan="9">
+                    <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="120px" />
+                    </td>
+                </tr>
+            
+                `);
                 return;
             }
 
@@ -1502,9 +1430,9 @@ $(function () {
 
     function render(totalPages, currentPage, pageLimit, callback) {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
-            `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
-  <a class='page-link' href='#' data-page='${i}'>${label}</a>
-      </li>`;
+        `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+             <a class='page-link' href='#' data-page='${i}'>${label}</a>
+         </li>`;
         let pagLink = `<ul class='pagination justify-content-end'>`;
 
         // Previous Button
@@ -1588,6 +1516,23 @@ $(function () {
             console.error("Error fetching data:", error);
         }
     }
+
+
+    $(document).on("click", ".searchuseraccount", function () {
+        if ( $(".orderuserchange").val() == "" && $(".startdateusers").val() == "" ) {
+            showToast("Heads up!!", "Select one or more data fields to filter", "info");
+            return;
+        }
+        const ordertype = $(".orderuserchange").val();
+        const startdateusers = $(".startdateusers").val();
+        const enddateusers = $(".enddateusers").val();
+     //   console.log(ordertype);
+     
+        $(".loaderuseracc").removeClass("bx-check-double").addClass("bx-loader bx-spin");
+            filterAccountChange(userIdacc,ordertype, startdateusers, enddateusers, currentPage, pageLimit);
+     
+    });
+
 });
 
 const lotteriesMarkup = (lottery, blockedLotteries) => {
@@ -1598,7 +1543,7 @@ const lotteriesMarkup = (lottery, blockedLotteries) => {
                  <td><b class="lottery-name"> ${lottery.name}</b></td>
                  <td><span class="lottery-status">${status}</span></td>
                  <td><input class="form-check-input toggle-lot" type="checkbox" value="${lotteryID}" id="flexCheckDefault" ${checkedState}></td>
-                                </tr>`;
+             </tr>`;
 };
 const userIpsMarkup = (data) => {
     const checkedState = data.ip_state === "allowed" ? "checked" : "";
