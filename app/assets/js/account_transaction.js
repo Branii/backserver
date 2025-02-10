@@ -148,41 +148,6 @@ $(function () {
         }
     }
 
-    async function filterTrasaction(username, orderid, ordertype, startdatet, enddatet, currentPage, pageLimit) {
-        try {
-            const response = await fetch(`../admin/filtertransactions/${username}/${orderid}/${ordertype}/${startdatet}/${enddatet}/${currentPage}/${pageLimit}`);
-            const data = await response.json();
-            if (data.response == "error") {
-                showToast("Alert", "User does not exist", "info");
-                $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-                return;
-            }
-
-            ///console.log(response);
-
-            $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-            if (data.transactions.length < 1) {
-                let html = `
-              <tr class="no-results">
-                  <td colspan="9">
-                      <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-                  </td>
-              </tr>`;
-                $("#mask").LoadingOverlay("hide");
-                $("#dataContainer").html(html);
-                return;
-            }
-            $("#mask").LoadingOverlay("hide");
-            render(data.transactions);
-
-            // Render pagination
-            renderPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterTrasaction(username, orderid, ordertype, startdatet, enddatet, newPage, pageLimit));
-            document.getElementById("paging_info").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    }
-
     function renderPagination(totalPages, currentPage, pageLimit, callback) {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
             `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
@@ -268,24 +233,61 @@ $(function () {
     });
 
     $(document).on("click", ".executetrans", function () {
-        if ($("#mytrans").val() == "" && $(".ordertype").val() == "" && $(".startdatet").val() == "" && $(".orderid").val() == "") {
-            //  $("#al-danger-alert").modal("show");
+        if ($("#transuser").val() == ""  && $(".orderidtrans").val() == "" 
+           && $(".ordertypetrans").val() == ""  && $(".startdatrans").val() == "") {
             showToast("Heads up!!", "Select one or more data fields to filter", "info");
             return;
         }
-        const username = $("#mytrans").val();
-        // const username = $(".userIdtrans").val();
-        const orderid = $(".orderid").val();
-        const ordertype = $(".ordertype").val();
-        const startdatet = $(".startdatet").val();
-        const enddatet = $(".enddatet").val();
-        console.log(username);
-        //  return
+        
+        const transusername  = $("#transuser").val();
+        const orderidtrans = $(".orderidtrans").val();
+        const ordertypetrans = $(".ordertypetrans").val();
+        const startdatrans = $(".startdatrans").val();
+        const enddatetrans = $(".enddatetrans").val();
+       // console.log(username);
+      
         $(".loader").removeClass("bx-check-double").addClass("bx-loader bx-spin");
         setTimeout(() => {
-            filterTrasaction(username, orderid, ordertype, startdatet, enddatet, currentPage, pageLimit);
+            filterTrasaction(transusername, orderidtrans, ordertypetrans, startdatrans, enddatetrans, currentPage, pageLimit);
         }, 100);
     });
+
+    
+    async function filterTrasaction(transusername, orderidtrans, ordertypetrans, startdatrans, enddatetrans, currentPage, pageLimit) {
+        try {
+            const response = await fetch(`../admin/filtertransactions/${transusername}/${orderidtrans}/${ordertypetrans}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
+            const data = await response.json();
+            if (data.response == "error") {
+                showToast("Alert", "User does not exist", "info");
+                $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+                return;
+            }
+
+            ///console.log(response);
+
+            $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+            if (data.transactions.length < 1) {
+                let html = `
+              <tr class="no-results">
+                  <td colspan="9">
+                      <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                  </td>
+              </tr>`;
+                $("#mask").LoadingOverlay("hide");
+                $("#dataContainer").html(html);
+                return;
+            }
+            $("#mask").LoadingOverlay("hide");
+            render(data.transactions);
+
+            // Render pagination
+            renderPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterTrasaction(transusername, orderidtrans, ordertypetrans, startdatrans, enddatetrans, newPage, pageLimit) );
+            document.getElementById("paging_info").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
 
     $("#viewbetdatahide").hide();
     $("#transacttbl").hide();
@@ -465,7 +467,7 @@ $(function () {
 
     $(document).ready(function () {
         // Event listener for keyup on #myInput
-        $(document).on("keyup", "#mytrans", function () {
+        $(document).on("keyup", "#transuser", function () {
             const query = $(this).val().trim();
 
             // Only trigger if input is more than 2 characters
@@ -477,7 +479,7 @@ $(function () {
             }
         });
 
-        $(document).on("paste", "#mytrans", function () {
+        $(document).on("paste", "#transuser", function () {
             isPastings = true; // Set the flag to true when paste happens
             $(".useraccount").hide();
             setTimeout(function () {
@@ -492,7 +494,7 @@ $(function () {
             const selectedUsername = selectedOption.data("username");
 
             if (selectedUserId) {
-                $("#mytrans").val(selectedUsername);
+                $("#transuser").val(selectedUsername);
                 $(".userIdtrans").val(selectedUserId);
                 $(".useraccount").hide();
             }
@@ -502,12 +504,12 @@ $(function () {
 
         $(document).on("click", function (e) {
             const $dropdown = $("#userAccountDropdown");
-            if (!$(e.target).closest("#mytrans, #userAccountDropdown").length) {
+            if (!$(e.target).closest("#transuser, #userAccountDropdown").length) {
                 $dropdown.hide();
             }
         });
         // Handle manual input clearing
-        $(document).on("input", "#mytrans", function () {
+        $(document).on("input", "#transuser", function () {
             if (!$(this).val()) {
                 $(".userIdtrans").val(""); // Reset user ID if input is cleared
             }
@@ -564,7 +566,7 @@ $(function () {
         $(this).val(""); // Clears the input field
     });
 
-    $(".mytrans").on("input paste", function () {
+    $(".transuser").on("input paste", function () {
         const self = this;
         setTimeout(() => {
             // Trim leading spaces
