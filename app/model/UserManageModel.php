@@ -330,16 +330,127 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function fetchTopAgents($page = 1, $limit = 20) : array {
-        try{
-            $top_agents = DataReportModel::fetch_top_agents($page, $limit);
-            if(empty($all_subs["data"])) return ["status" => "success","data" => []];
-            $top_agents = $top_agents["data"];
+    public static function filter_user(array $filters = []): array{
+          try{
+            $database = parent::getLink();
+
+            // Add binding parameters
+            $params = [":uid" => $filters["uid"]];
+            $table_name = "users_test";
+            $whereClause = "";
             
-            $uids     = array_column($top_agents,'uid');
+            $startDate = $filters["start_date"];
+            $endDate   = $filters["end_date"];
+
+            if(!empty($filters["recharge_level"])){
+                $params[":recharge_level"] = $filters["recharge_level"];
+                $whereClause = " AND recharge_level=:recharge_level ";
+            }
+            if(!empty($filters["state"])){
+                $params[":user_state"] = $filters["state"];
+                $whereClause .=  " AND user_state=:user_state";
+            }
+
+             if (!empty($startDate) && empty($endDate)){
+                $whereClause .= "AND created_at = :start_date";
+                $params[':start_date'] = $startDate;
+            } elseif (empty($startDate) && !empty($endDate)) {
+                $whereClause .= "AND created_at = :end_date";
+                $params[':end_date'] = $endDate;
+            } elseif (!empty($startDate) && !empty($endDate)) {
+                $start = min($startDate, $endDate);
+                $end = max($startDate, $endDate);
+                $whereClause .= " AND created_at BETWEEN :start_date AND :end_date ";
+                $params[':start_date'] = $start;
+                $params[':end_date'] = $end;
+            }
+
+            // Build the query
+           echo $sql = "SELECT *,(SELECT COUNT(*) FROM users_test WHERE {$table_name}.account_type=2) as total_records FROM users_test WHERE {$table_name}.uid=:uid {$whereClause}";
+    
+            // Execute query using Medoo's query method
+            $data = $database->query($sql, $params)->fetchAll(PDO::FETCH_OBJ);
+            return DataReportModel::response($data);
+        }catch(Exception $e){
+            return DataReportModel::response("Internal Server Error.". $e->getMessage(),false);
+        }
+    }
+    
+    public static function filter_top_agents(array $filters = [], $page,$limit):array {
+        try{
+            $database = parent::getLink();
+
+            // Pagination setup
+            $offset = ($page - 1) * $limit;
+              // Add binding parameters
+            $params = [':offset' => intval($offset), ':limit' => intval($limit)];
+            $table_name = "users_test";
+            $whereClause = "";
+            $startDate = $filters["start_date"];
+            $endDate   = $filters["end_date"];
+
+            if(!empty($filters["recharge_level"])){
+                $params[":recharge_level"] = $filters["recharge_level"];
+                $whereClause = " AND recharge_level=:recharge_level ";
+            }
+            if(!empty($filters["state"])){
+                $params[":user_state"] = $filters["state"];
+                $whereClause .=  " AND user_state=:user_state";
+            }
+
+             if (!empty($startDate) && empty($endDate)){
+                $whereClause .= "AND created_at = :start_date";
+                $params[':start_date'] = $startDate;
+            } elseif (empty($startDate) && !empty($endDate)) {
+                $whereClause .= "AND created_at = :end_date";
+                $params[':end_date'] = $endDate;
+            } elseif (!empty($startDate) && !empty($endDate)) {
+                $start = min($startDate, $endDate);
+                $end = max($startDate, $endDate);
+                $whereClause .= " AND created_at BETWEEN :start_date AND :end_date ";
+                $params[':start_date'] = $start;
+                $params[':end_date'] = $end;
+            }
+
+            // Build the query
+           echo $sql = "SELECT *,(SELECT COUNT(*) FROM users_test WHERE {$table_name}.account_type=2) as total_records FROM users_test WHERE {$table_name}.account_type=2 {$whereClause} ORDER BY {$table_name}.uid DESC LIMIT :offset, :limit";
+    
+            // Execute query using Medoo's query method
+            $data = $database->query($sql, $params)->fetchAll(PDO::FETCH_OBJ);
+            return DataReportModel::response($data);
+        }catch(Exception $e){
+            return DataReportModel::response("Internal Server Error.". $e->getMessage(),false);
+        }
+    }
+
+
+    public static function searchUserData($filters): array {
+             try{
+           
+            $top_agents = self::filter_user($filters);
+            if(empty($top_agents["data"])) return ["status" => "success","data" => []];
+            $top_agents   = $top_agents["data"];
+            $uids         = array_column($top_agents,'uid');
             $login_counts = self::fetch_users_login_count($uids);
-            $subs_count = self::count_subs($uids);
-            // $res = self::fetch_user_rel($uids);
+            $subs_count   = self::count_subs($uids);
+
+        return ["status" => "success", "data" => $top_agents,"login_counts" => $login_counts,"direct_subs_count" => $subs_count];
+            
+        }catch(Exception $e){
+            echo $e->getMessage();
+            return ["status" => "error" , 'data' => "Internal Server Error."];
+
+        }
+    }
+    public static function fetchTopAgents(array $filters,$page = 1, $limit = 20) : array {
+        try{
+           
+            $top_agents = self::filter_top_agents($filters,$page, $limit);
+            if(empty($top_agents["data"])) return ["status" => "success","data" => []];
+            $top_agents   = $top_agents["data"];
+            $uids         = array_column($top_agents,'uid');
+            $login_counts = self::fetch_users_login_count($uids);
+            $subs_count   = self::count_subs($uids);
 
         return ["status" => "success", "data" => $top_agents,"login_counts" => $login_counts,"direct_subs_count" => $subs_count];
             

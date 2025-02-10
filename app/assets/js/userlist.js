@@ -312,9 +312,11 @@ $(function () {
     }
     fetchUserlist(currentPage, pageLimit);
 
-    function filterUserlist(username, states, startdate, enddate, currentPage, pageLimit) {
-        $.post(`../admin/filteruserlist/${username}/${states}/${startdate}/${enddate}/${currentPage}/${pageLimit}`, function (response) {
+    function filterUserlist(currentPage, pageLimit) {
+        $.post(`../admin/filteruserlist/${currentPage}/${pageLimit}`, function (response) {
+          
             try {
+                console.log(response);
                 const data = JSON.parse(response);
                 // console.log(data);
                 //  return
@@ -344,6 +346,48 @@ $(function () {
             $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
         });
     }
+
+
+   const searchUserListData = (uid,rechargeLevel,state,startDate,endDate) => {
+        $.post(`../admin/searchUserListData/${uid}/${rechargeLevel}/${state}/${startDate}/${endDate}/1`, function (response) {
+        // $.post(`../admin/searchUserListData/uid/rechargeLevel/state/startDate/endDate`, function (response) {
+          
+            try {
+                console.log(response);
+                const data = JSON.parse(response);
+                // console.log(data);
+                // return;
+                $(".loaderlist").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+                if (data.userlists.length < 1) {
+                    $("#userlistContainer").html(`
+              <tr class="no-results">
+                <td colspan="9">
+                  <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                </td>
+              </tr>
+            `);
+                    return;
+                }
+                $("#maskuserlist").LoadingOverlay("hide");
+                renderuserlist(data.userlists);
+                // Render pagination
+                renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterUserlist(username, states, startdate, enddate, newPage, pageLimit));
+                document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            } catch (error) {
+                console.error("Error parsing JSON response:", error);
+            } finally {
+                $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+            }
+        }).fail(function (error) {
+            console.error("Error fetching data:", error);
+            $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+        });
+    }
+   
+
+    $(document).on("click", "#userlists option",function(){
+            $("#usrl-id-holder").val($(this).val());
+    });
 
     function renderPaginationlist(totalPages, currentPage, pageLimit, callback) {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
@@ -507,18 +551,23 @@ $(function () {
     }
 
     $(document).on("click", ".executeuserlist", function () {
-        if ($("#selectuserlist").val() == "" && $(".states").val() == "" && $(".startdateuser").val() == "") {
+        const uid = $("#usrl-id-holder").val();
+        const states = $("#usrl-state").val();
+        const rechargeLevel = $("#usrl-recharge-lvl").val();
+        const startdate = $("#usrl-start-date").val();
+        const enddate = $("#usrl-end-date").val();
+
+        if (uid == "" && states == "" && rechargeLevel == "" && startdate && enddate == "") {
             showToast("Heads up!!", "Select one or more data fields to filter", "info");
             return;
         }
-        const username = $("#selectuserlist").val();
-        const states = $(".states").val();
-        const startdate = $(".startdateuser").val();
-        const enddate = $(".enddateuser").val();
+
+        searchUserListData(uid,rechargeLevel,states,startdate,enddate);
+       return;
         console.log(states);
         $(".loaderlist").removeClass("bx-check-double").addClass("bx-loader bx-spin");
         setTimeout(() => {
-            filterUserlist(username, states, startdate, enddate, currentPage, pageLimit);
+            filterUserlist(username,recharge_level, states, startdate, enddate, currentPage, pageLimit);
         }, 100);
     });
 
@@ -640,15 +689,29 @@ $(function () {
     }
 
     async function fetchTopAgent(page) {
-        try {
-            const response = await fetch(`../admin/fetchTopAgent/${page}/${pageLimit}`);
+        const rechargeLevel = $("#usrl-recharge-lvl").val();
+        const state         = $("#usrl-state").val();
+        const startDate     = $("#usrl-start-date").val();
+        const endDate       = $("#usrl-end-date").val();
 
-            const data = await response.json();
-            // console.log(response);
-            renderuserlist(data);
-            $("#masklist").LoadingOverlay("hide");
-            renderPaginationlist(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchTopAgent(newPage, pageLimit));
-            document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+        try {
+            $.ajax({
+            url: `../admin/fetchTopAgent/${rechargeLevel}/${state}/${startDate}/${endDate}/${page}/${pageLimit}`,
+            type: "POST",
+            beforeSend: function () { },
+            success: function (response) {
+                console.log(response);
+                const data = JSON.parse(response);
+                const totalPages = data.data.length == 0  ? 0 : Math.ceil(data.data[0].total_records / pageLimit);
+                renderuserlist(data);
+                $("#masklist").LoadingOverlay("hide");
+                renderPaginationlist(totalPages, page, pageLimit, (newPage, pageLimit) => fetchTopAgent(newPage, pageLimit));
+                document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + totalPages + " pages";
+            },error: function(){
+
+
+            },
+        });
             // return;
         } catch (error) {
             console.error("Error fetching data:", error);

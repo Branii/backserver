@@ -282,16 +282,25 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function filteruserlist($username, $states , $startdate , $enddate , $pageNumber, $limit)
+    public function filteruserlist($pageNumber, $limit)
     {
         $this->view('exec/account_manage', [
-            'username' => $username,
-            'states' => $states,
-            'startdate' => $startdate,
-            'enddate' => $enddate,
             'flag' => 'filteruserlist',
             'page' => $pageNumber,
             'limit' => $limit,
+
+        ]);
+        $this->view->render();
+    }
+    public function searchUserListData($username,$recharge_level, $states , $startdate , $enddate,$miscelleanous)
+    {
+        $this->view('exec/account_manage', [
+            'uid' => $username,
+            'recharge_level' => $recharge_level,
+            'state' => $states,
+            'startdate' => $startdate,
+            'enddate' => $enddate,
+            'flag' => 'searchUserlistData',
 
         ]);
         $this->view->render();
@@ -309,9 +318,9 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function  fetchTopAgent($pageNumber, $limit)
+    public function  fetchTopAgent($recharge_level,$state,$start_date,$end_date,$page, $limit)
     {
-        $this->view('exec/account_manage', ['page' => $pageNumber, 'limit' => $limit,'flag' => 'fetchTopAgent']);
+        $this->view('exec/account_manage', ["recharge_level"=>$recharge_level,"state" => $state,"start_date" => $start_date,"end_date" => $end_date,'page' => $page, 'limit' => $limit,'flag' => 'fetchTopAgent']);
         $this->view->render();
     }
 
