@@ -96,36 +96,92 @@ if ($flag  == "fetchRebatedata") {
 if ($flag == "addAgent") {
 
     $data = isset($this->viewData['data']) ? $this->viewData['data'] : '';
-    parse_str($data, $parsedData);
-    $result = (new UserManageModel())->validateRegister($parsedData) ?? [];
-    if ($result == []) {
-        $dateTime = date("Y-m-d H:i:s");
-        $account_type = 2;
-        $rebatelist =  (new UserManageModel())->fetchquotaData($parsedData['agentrebate']);
-        $nickname = (new UserManageModel())->generateRandomNickname();
-        $userstate = 1;
-        $userstatus = 1;
-        $type = "email";
-        $datas = [
-            'username' => $parsedData['agentname'],
-            'nickname' => $nickname,
-            'agent_name' =>  $parsedData['agentname'],
-            'upassword' =>  password_hash($parsedData['agentpassword'], PASSWORD_BCRYPT),
-            'email' =>  $parsedData['agentemail'],
-            'rebate' =>  $parsedData['agentrebate'],
-            'account_type' => $account_type,
-            'created_at' => $dateTime,
-            'user_state' => $userstate,
-            'user_status' => $userstatus,
-            'rebate_list' => $rebatelist,
-            'reg_type' =>  $type,
-            'agent_level' => '*****',
-        ];
+    //  $data = urldecode($data);
+     parse_str($data, $parsedData);
+     $result = (new UserManageModel())->validateRegister($data) ?? [];
+    // if ($result == []) {
+    //     $dateTime = date("Y-m-d H:i:s");
+    //     $account_type = 2;
+    //     $rebatelist =  (new UserManageModel())->fetchquotaData($parsedData['agentrebate']);
+    //     $nickname = (new UserManageModel())->generateRandomNickname();
+    //     $userstate = 1;
+    //     $userstatus = 1;
+    //     $type = "email";
+    //     $uniqueId = bin2hex(random_bytes(12));
+    //     $datas = [
+    //         'unique_id' =>$uniqueId,
+    //         'username' => $parsedData['agentname'],
+    //         'nickname' => $nickname,
+    //         'agent_name' =>  $parsedData['agentname'],
+    //         'upassword' =>  password_hash($parsedData['agentpassword'], PASSWORD_BCRYPT),
+    //         'email' =>  $parsedData['agentemail'],
+    //         'rebate' =>  $parsedData['agentrebate'],
+    //         'account_type' => $account_type,
+    //         'created_at' => $dateTime,
+    //         'user_state' => $userstate,
+    //         'user_status' => $userstatus,
+    //         'rebate_list' => $rebatelist,
+    //         'reg_type' =>  $type,
+    //         'agent_level' => '*****',
+    //     ];
 
-        $result = (new UserManageModel())->AddAgentData($datas) ?? [];
-    }
+        
+        // return [
+        //     (string) bin2hex(random_bytes(12)), //unique_id
+        //     (string) $parsedData['agentname'], //username
+        //     (string) 1, //username_verified
+        //     (string) $nickname,  //nickname
+        //     (string) $email , // email
+        //     (string) password_hash($parsedData['agentpassword'], PASSWORD_BCRYPT), //password,
+        //     (string) 1, //email_verified,
+        //     (string) '*****',//dob,
+        //     (string) $country_code,
+        //     (string) '*****'.bin2hex(random_bytes(10)), // contact
+        //     (string) 0,
+        //     (string) '/assets/avators/profile.png', // avatar
+        //     (string) '*****', //agent_id,
+        //     (string) '*****', //agent_name,
+        //     (string) '*****', //agent_level,
+        //     (string) '*****', //referral_code,
+        //     (string) 0.0000, //balance,
+        //     (string) $rebate, //rebate,
+        //     (string) '*****', //last_login,
+        //     (string) 0, //login_attempt
+        //     (string) $this->getServerId(), //ip_address,
+        //     (string) '*****', //money_password,
+        //     (string) '*****', //browser_info,
+        //     (string) '*****', //device_info,
+        //     (string) 1, //user_state,   1:enabled, 2:suspended, 3:forbidden, 4:blocked
+        //     (string) 1, //user_status,  1:active,  0:inactive
+        //     (string) 2, //account_type, 1:customer, 2:TobAgent, 3:sub-agent
+        //     (string) '*****', //idcard_number,
+        //     (string) '*****', //idcard_front,
+        //     (string) '*****', //idcard_back,
+        //     (string) '*****', //login_token,
+        //     (string) 0, // current_action,    1:loggedin,  0:logged out
+        //     (string) 1, // withdral_level,    1:range(1-20,000) 2: range(1-50,000) , 3:range(1-100,000)
+        //     (string) 1, //recharge_level,
+        //     (string) '*****', //security_question,
+        //     (string) '*****', //security_answer,
+        //     (string) '*****', //auth_type,
+        //     (string) '*****', //isOtpEnable,
+        //     (string) '*****', //isSmsEnable,
+        //     (string) '*****', //isGoogleAuthEnable,
+        //     (string) $rebateList, //rebate_list,
+        //     (string) '*****', //blocked_lotteries,
+        //     (string) '*****', //linker,
+        //     (string) '*****', //email_verification_token
+        //     (string) '*****', //contact_verification_token
+        //     (string) '*****', //reset_token,
+        //     (string) date("Y-m-d"), // created at
+        //     (string) '*****', //updated_at,
+        //     (string) $type
+        // ];
 
-    echo json_encode($result);
+       // $result = (new UserManageModel())->AddAgentData($datas) ?? [];
+    //}
+
+     print_r($data);
 }
 
 
