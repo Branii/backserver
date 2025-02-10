@@ -8,7 +8,7 @@ class BusinessFlowModel extends MEDOOHelper
         $startpoint = $page * $limit - $limit;
         $data = parent::query(
             "SELECT transaction.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.username, 'N/A') AS username FROM transaction   
-            left JOIN users_test ON users_test.uid = transaction.uid  ORDER BY trans_id DESC LIMIT :offset, :limit",
+            LEFT JOIN users_test ON users_test.uid = transaction.uid  ORDER BY trans_id DESC LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
         );
         $totalRecords = parent::count('transaction');
@@ -171,15 +171,7 @@ class BusinessFlowModel extends MEDOOHelper
         $res = parent::selectAll("gamestable_map", ["bet_table", "game_type"]);
         return $res;
     }
-    public static function getAllGameIdsWithCondition($condition = ""): array
-    {
-
-        $sql = "SELECT bet_table,game_type FROM gamestable_map {$condition} ";
-        $stmt = self::openConnection("lottery")->prepare($sql);
-        $stmt->execute();
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $data;
-    }
+   
     public static function fetchBetRecords($page, $limit): array
     {
         $startpoint = $page * $limit - $limit;

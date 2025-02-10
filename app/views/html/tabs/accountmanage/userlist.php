@@ -357,18 +357,12 @@
         /* Rounded corners */
     }
 
-    .tbl-headeruserlist {
-<<<<<<< HEAD
+.tbl-headeruserlist {
     position: sticky;
     z-index: 999;
     top: 0;
   }
-=======
-        position: sticky;
-        top: 0;
-    }
->>>>>>> 323ec0abb730046633e32e794ebc49eaff8e8c64
-
+       
     .sticky-headeruserlist {
         position: relative;
         bottom: 1px;
@@ -1117,4 +1111,154 @@
             </div>
         </div>
     </div>
+</div>
+
+
+<div id="viewaccount" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center mt-2 mb-4">
+                    <div class="d-flex justify-content-between">
+                        <div>Account Change Info</div>
+                        <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
+                    </div>
+                </div>
+
+                <form>
+                    <div class="row">
+                        <div class="px-4 py-3 border-bottom pagerlist1">
+                            <form action="" class="betform">
+                                <span class="top-left-btn">
+                                    <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
+                                        <select name="order_type" class="form-control form-select orderuserchange refresdata" data-bs-placeholder="Select Type" style="width: 39%;">
+                                            <option value="">-<?= $translator['Transaction Type']; ?>-</option>
+                                            <option value="1"><?= $translator['Deposit']; ?></option>
+                                            <option value="2"><?= $translator['Win Bonus']; ?></option>
+                                            <option value="3"> <?= $translator['Bet Awarded']; ?></option>
+                                            <option value="4"><?= $translator['Withdrawal']; ?></option>
+                                            <option value="6"><?= $translator['Bet Cancelled']; ?></option>
+                                            <option value="5"><?= $translator['Bet Deduct']; ?></option>
+                                            <option value="7"><?= $translator['Rebates']; ?></option>
+                                            <option value="8"><?= $translator['Self Rebate']; ?></option>
+                                            <option value="9"><?= $translator['Sending Red Envelope']; ?></option>
+                                            <option value="10"><?= $translator['Red Envelope Receive']; ?></option>
+                                            <option value="11"><?= $translator['Bet Refund']; ?></option>
+                                            <option value="12"><?= $translator['Bet Lost']; ?></option>
+                                        </select>
+
+                                        <input name="startdate" type="date" class="form-control startdateusers refresdata" aria-describedby="name" style="width: 39%; position: relative; left: 4%;" placeholder="Name" />
+
+                                        <input name="enddate" type="date" class="form-control enddateusers refresdata" aria-describedby="name" style="width: 39%; position: relative; left: 9%;" placeholder="Name" />
+                                    </div>
+                                </span>
+                                <span class="toplist-center" aria-label=" navigation example">
+                                    <!--enter is free-->
+                                </span>
+                                <span class="topplist-right" id="paginations" aria-label="Page navigation example">
+                                    <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                                        <button type="button" class="btn bg-white-subtle player refreshuseracc" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                                            <i class="bx bx-refresh" style="font-size: 20px;"></i>
+                                        </button>
+                                        <button type="button" class="btn bg-white-subtle searchuseraccount" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                                            <i class="bx bx-check-double loaderuseracc" style="font-size: 20px;"></i>
+                                        </button>
+                                    </div>
+                                </span>
+                            </form>
+                        </div>
+
+                        <div class="card-body p-4">
+                          
+                                        <div class="table-responsive mb-4 border rounded-1 table-wrapperuserlistt" id="maskaccount" style="height: 330px; overflow-y: scroll;">
+                                        <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
+                                            <thead class="text-dark fs-4 tbl-headeruserlists">
+                                        <tr class="headrowuserlists">
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['ID Number']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Type']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Amount']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Stake Time']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Server Time']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction ID']; ?></h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
+                                            </th>
+                                            <!-- <th>
+                                            <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
+                                        </th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody id="accountchange" class="tbl-content">
+                                        <tr class="no-results">
+                                            <td colspan="9">
+                                                <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="px-4 py-3 border-top pagerlist">
+                            <span class="toplist-left-btn">
+                                <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                                    <!-- <button type="button" class="btn bg-white-subtle playerbet" value="betstart">
+                            <i class="bx bx-chevrons-left" style="font-size: 20px;"></i>
+                        </button> -->
+                                    <button type="button" class="btn bg-white-subtle playeruserlistt" value="leftuserlistss">
+                            <i class="bx bx-chevron-left" style="font-size: 20px;"></i>
+                        </button>
+                        <button type="button" class="btn bg-white-subtle playeruserlistt" value="rightuserlistss">
+                            <i class="bx bx-chevron-right" style="font-size: 20px;"></i>
+                        </button>
+                                    <!-- <button type="button" class="btn bg-white-subtle playerbet" value="betend">
+                            <i class="bx bx-chevrons-right" style="font-size: 20px;"></i>
+                        </button> -->
+                                </div>
+                            </span>
+                            <span class="toplist-center" aria-label=" navigation example">
+                                <span id="paging_infolistss" style="color: #aaa;">---</span>
+                            </span>
+                            <span class="top-right-btn" aria-label="Page navigation example">
+                                <select class="left-element form-control numrowschange" style="font-size: 12px;">
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="200">200</option>
+                                    <option value="500">500</option>
+                                </select>
+                                <span class="toplist-right" id="paginationacc" class="right-element">
+                                    <!-- paginationation -->
+                                </span>
+                            </span>
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <table class="table table-bordered table-striped">
+                                <tbody id="rowbet1"></tbody>
+                            </table>
+                        </div>  -->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>
