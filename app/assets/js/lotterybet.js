@@ -263,7 +263,7 @@ $(function () {
           
           }
           $("#maskbet").LoadingOverlay("hide");
-          renderlottery(data.filterbet);
+           renderlottery(data.filterbet);
           renderbetPagination(data.totalPages, currentPagebet, (page) => {
             filterbetdatas(uidd, gametype, betsate, betstatus, startdates, enddates, page, pageLimit);
           }); // Pass callback

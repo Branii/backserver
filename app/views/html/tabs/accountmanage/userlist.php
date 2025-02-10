@@ -666,7 +666,7 @@
                     <!-- Username Field -->
 
                     <div class="form-floating mb-3">
-                        <input name="username" type="text" class="form-control border" placeholder="Username" />
+                        <input name="agentname" type="text" class="form-control border" placeholder="Username" />
                         <label>
                             <i class="bx bx-user me-2 fs-4 text-infod"></i>
                             <span class="border-start ps-3">Username</span>
@@ -675,7 +675,7 @@
 
                     <!-- Email Field -->
                     <div class="form-floating mb-3">
-                        <input name="email" type="email" class="form-control border border-infos" placeholder="Email" />
+                        <input name="agentemail" type="email" class="form-control border border-infos" placeholder="Email" />
                         <label>
                             <i class="bx bx-envelope me-2 fs-4 text-infod"></i>
                             <span class="border-start ps-3">Email address</span>
@@ -684,7 +684,7 @@
 
                     <!-- Password Field -->
                     <div class="form-floating mb-3">
-                        <input name="password" type="password" class="form-control border border-infs" placeholder="Password" />
+                        <input name="agentpassword" type="password" class="form-control border border-infs" placeholder="Password" />
                         <label>
                             <i class="bx bx-lock me-2 fs-4 text-infoss"></i>
                             <span class="border-start ps-3">Password</span>
@@ -692,17 +692,17 @@
                     </div>
 
                     <!-- Confirm Password Field -->
-                    <!-- <div class="form-floating mb-3">
-                        <input name="password" type="password" class="form-control border border-infos" placeholder="Confirm Password" />
+                    <div class="form-floating mb-3">
+                        <input name="agentpassword1" type="password" class="form-control border border-infos" placeholder="Confirm Password" />
                         <label>
                             <i class="bx bx-lock me-2 fs-4 text-infos"></i>
                             <span class="border-start ps-3">Confirm Password</span>
                         </label>
-                    </div> -->
+                    </div>
 
                     <!-- Rebate Field -->
                     <div class="form-floating mb-3">
-                        <select name="rebate" class="form-select form-control border border-infos" id="usererebate">
+                        <select name="agentrebate" class="form-select form-control border border-infos" id="usererebate">
                             <!-- \<option value="" disabled selected>Select Rebate</option> -->
                             <!-- Dynamically populated options -->
                         </select>

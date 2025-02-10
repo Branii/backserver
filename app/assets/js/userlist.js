@@ -573,7 +573,7 @@ $(function () {
     async function addAgent(datas) {
         try {
             ///api/v1/limvo/selfregister
-            const response = await fetch("chairman_test/api/v1/limvo/register_super_user", {
+            const response = await fetch(`../admin/addAgent/${datas}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -586,7 +586,10 @@ $(function () {
             }
          
             const result = await response.json();
-        
+              
+
+            console.log(result);
+            return
             if (result.type === "success") {
                 $(".loaders").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
                 setTimeout(function () {

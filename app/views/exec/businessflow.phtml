@@ -1,8 +1,7 @@
 <?php
 session_start();
-// declare(strict_types=1);
-// header('Content-Type: application/json');
 ini_set('display_errors', 1);
+
 isset($_SESSION['lang']) ? $_SESSION['lang'] : $_SESSION['lang'] = 'en';
 $lang = $_SESSION['lang'];
 // echo $lang;
