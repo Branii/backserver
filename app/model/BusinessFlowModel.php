@@ -112,8 +112,10 @@ class BusinessFlowModel extends MEDOOHelper
             uid = :uid 
             OR email = :email 
             OR username = :username 
-            OR contact = :contact",
-         ['uid' => $key, 'email' => $key, 'username' => $key, 'contact' => $key]
+            OR contact = :contact
+            OR nickname = :nickname",
+            
+         ['uid' => $key, 'email' => $key, 'username' => $key, 'contact' => $key,'nickname' => $key]
          
         );
         return $data;
