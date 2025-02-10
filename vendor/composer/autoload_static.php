@@ -44,10 +44,6 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             'Codedungeon\\PHPCliColors\\' => 25,
         ),
-        'A' => 
-        array (
-            'App\\' => 4,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -91,19 +87,34 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             0 => __DIR__ . '/..' . '/codedungeon/php-cli-colors/src',
         ),
-        'App\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/app',
-        ),
     );
 
     public static $classMap = array (
+        'AdminModel' => __DIR__ . '/../..' . '/app/model/AdminModel.php',
+        'AgentManageModel' => __DIR__ . '/../..' . '/app/model/AgentManageModel.php',
+        'App' => __DIR__ . '/../..' . '/app/core/App.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
+        'BusinessFlowModel' => __DIR__ . '/../..' . '/app/model/BusinessFlowModel.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Controller' => __DIR__ . '/../..' . '/app/core/Controller.php',
+        'DataReportModel' => __DIR__ . '/../..' . '/app/model/DataReportModel.php',
+        'Database' => __DIR__ . '/../..' . '/app/database/Database.php',
+        'FinancialManageModel' => __DIR__ . '/../..' . '/app/model/FinancialManageModel.php',
+        'GameManageModel' => __DIR__ . '/../..' . '/app/model/GameManageModel.php',
+        'MEDOOHelper' => __DIR__ . '/../..' . '/app/model/MEDOOHelper.php',
+        'MedooOrm' => __DIR__ . '/../..' . '/app/database/MedooOrm.php',
+        'Model' => __DIR__ . '/../..' . '/app/model/Model.php',
+        'PDOHelper' => __DIR__ . '/../..' . '/app/model/PDOHelper.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
+        'PromotionManageModel' => __DIR__ . '/../..' . '/app/model/PromotionManageModel.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
+        'UserBankManageModel' => __DIR__ . '/../..' . '/app/model/UserBankManageModel.php',
+        'UserManageModel' => __DIR__ . '/../..' . '/app/model/UserManageModel.php',
+        'Utils' => __DIR__ . '/../..' . '/app/utils/Utils.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
+        'View' => __DIR__ . '/../..' . '/app/core/View.php',
+        'adminController' => __DIR__ . '/../..' . '/app/controller/adminController.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
