@@ -238,8 +238,8 @@ $(function () {
   }
   
   // Filter and fetch lottery bet data
-  async function filterbetdatas(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit) {
-    $.post(`../admin/filterbetdata/${uidd}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`)
+  async function filterbetdatas(uidd,betOrderID,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit) {
+    $.post(`../admin/filterbetdata/${uidd}/${betOrderID}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`)
       .done(function (response) {
         try {
           const data = JSON.parse(response);
@@ -331,12 +331,13 @@ $(function () {
 
   $(".executebet").click(function () {
     if ($("#myInput").val() == "" && $(".typelottery").val() == "" && $(".startdates").val() == ""
-    && $(".betsate").val() == "" && $(".betstatus").val() == "") {
+    && $(".betsate").val() == "" && $(".betstatus").val() == "" && $("#lot-betID").val() == "") {
       // $("#dangerbet").modal("show");
       showToast("Heads up!!","Select one or more data fields to filter","info")
       return;
   }
     const uidd = $('#myInput').val();
+    const betOrderID = $('#lot-betID').val();
     const gametype = $('.typelottery').val();
     const betsate = $('.betsate').val();
     const betstatus = $('.betstatus').val();
@@ -345,7 +346,7 @@ $(function () {
     console.log(uidd)
     console.log(enddates)
 
-    filterbetdatas(uidd,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit)
+    filterbetdatas(uidd,betOrderID,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit)
 
     $(".loaderbet").removeClass("bx bx-check-double").addClass("bx bx-loader bx-spin");
   

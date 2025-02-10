@@ -332,6 +332,7 @@
                 <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
                     <input type="text" id="myInput" class="form-control queryholderbet usernames" placeholder="Search usernames" />
                     <input name="usernames" type="hidden" class="userIdbet" />
+                    <input type="text" id="lot-betID" class="form-control queryholderbet search-betID" placeholder="Search BetID" />
                     <select class="form-control userDropdownb" size="5" style="display: none;" id="userlotteryDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>
@@ -369,10 +370,7 @@
 
                     <input name="enddate" type="date" class="form-control queryholderbet enddates" aria-describedby="name" placeholder="Name" />
 
-                    <!-- <button type="button" class="btn btn-outline-light text-dark queryholderbet addagents">
-                    <i class='bx bx-user-plus'></i> Add Agent</button>
-                <button type="button" class="btn btn-outline-light text-dark queryholderbet ">
-                    <i class='bx bx-user-plus'></i> Get Top Agent</button> -->
+               
                 </div>
             </span>
             <span class="toplist-center" aria-label=" navigation example">
@@ -505,26 +503,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="dangerbet" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content modal-filled" style="background-color: #f9f9f9;">
-            <div class="modal-body p-4">
-                <div class="text-center text-danger">
-                    <i class="ti ti-hexagon-letter-x fs-7"></i>
-                    <h4 class="mt-2">Oh snap!</h4>
-                    <p class="mt-3" style="color: #aaa;">
-                       
-                        All fields are required! Select one or more data fields to filter.
-                    </p>
-                    <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color: #ddd;">
-                     Okay
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-</div>
 
 <!--view bet modal -->
 

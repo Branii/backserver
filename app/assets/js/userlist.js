@@ -1354,7 +1354,7 @@ $(function () {
 
         data.forEach((item) => {
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-
+            if (item.order_type === 12) return;
             html += `
         <tr class="trow">
           <td>${"TR" + item.order_id.substring(0, 7)}</td>
