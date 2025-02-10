@@ -252,15 +252,16 @@ class BusinessFlowModel extends MEDOOHelper
         return ['data' => $data, 'total' => count($totalcount)];
     }
 
-    public static function getAllUserBetByUserId($uid, $gametype, $betstate, $betstatus, $enddate, $startdate, $page, $limit)
+    public static function getAllUserBetByUserId($uid,$betOrderID, $gametype, $betstate, $betstatus, $enddate, $startdate, $page, $limit)
     {
+
         $offset = ($page - 1) * $limit;
 
         $pdo = (new Database())->openLink();
         $pdo->exec("SET SESSION group_concat_max_len = 1000000");
 
         // Generate the filter query using the filterBetData method
-        $subquery = self::filterBetData($uid, $gametype, $betstate, $betstatus, $enddate, $startdate);
+        $subquery = self::filterBetData($uid,$betOrderID, $gametype, $betstate, $betstatus, $enddate, $startdate);
         $whereClause = $subquery['query'];
       
         $sql = "
@@ -300,9 +301,11 @@ class BusinessFlowModel extends MEDOOHelper
                 'data' => $dataStmt->fetchAll(PDO::FETCH_ASSOC),
                 'total' => $totalRecords,
             ];
+
+      
     }
 
-    public static function filterBetData($uid, $gametype, $betstate, $betstatus, $enddate, $startdate)
+    public static function filterBetData($uid,$betOrderID, $gametype, $betstate, $betstatus, $enddate, $startdate)
     {
         $filterConditions = [];
         $params = [];
@@ -310,6 +313,10 @@ class BusinessFlowModel extends MEDOOHelper
         if (!empty($uid)) {
             $filterConditions[] = "bt.uid = :username";
             $params['username'] = $uid;
+        }
+        if (!empty($betOrderID)) {
+            $filterConditions[] = "bt.bet_code = :bet_code";
+            $params['bet_code'] = $betOrderID;
         }
 
         if (!empty($gametype)) {

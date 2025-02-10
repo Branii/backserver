@@ -209,6 +209,7 @@ if ($flag == "fetchLotteryname") {
 
 if ($flag == "filterbetdata") {
     $uid = isset($this->viewData['uid']) ? $this->viewData['uid'] : '';
+    $betOrderID = isset($this->viewData['betOrderID']) ? $this->viewData['betOrderID'] : '';
     $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
     $gametype = isset($this->viewData['gametype']) ? $this->viewData['gametype'] : '';
     $betstate = isset($this->viewData['betstate']) ? $this->viewData['betstate'] : '';
@@ -221,7 +222,7 @@ if ($flag == "filterbetdata") {
     if (!empty($usernameCheck) && $usernameCheck != null) {
         $uid = $usernameCheck[0]['uid'];
        // $sunquery = (new BusinessFlowModel())->filterBetData($usernames, $gametype, $betstate, $betstatus, $enddate, $startdate);
-        $result = (new BusinessFlowModel())->getAllUserBetByUserId($uid, $gametype, $betstate, $betstatus, $enddate, $startdate, $page, $limit);
+        $result = (new BusinessFlowModel())->getAllUserBetByUserId($uid,$betOrderID, $gametype, $betstate, $betstatus, $enddate, $startdate, $page, $limit);
 
         echo json_encode([
             'filterbet' =>  $result['data'],
@@ -229,7 +230,7 @@ if ($flag == "filterbetdata") {
         ]);
     } else {
        // $sunquery = (new BusinessFlowModel())->filterBetData($uid, $gametype, $betstate, $betstatus, $enddate, $startdate);
-       $result = (new BusinessFlowModel())->getAllUserBetByUserId($uid, $gametype, $betstate, $betstatus, $enddate, $startdate, $page, $limit);
+       $result = (new BusinessFlowModel())->getAllUserBetByUserId($uid,$betOrderID, $gametype, $betstate, $betstatus, $enddate, $startdate, $page, $limit);
 
        echo json_encode([
            'filterbet' => $result['data'],
