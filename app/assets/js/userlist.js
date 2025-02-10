@@ -573,7 +573,7 @@ $(function () {
     async function addAgent(datas) {
         try {
             ///api/v1/limvo/selfregister
-            const response = await fetch("https://localhost/chairman_test/api/v1/limvo/register_super_user", {
+            const response = await fetch("https://winsstarts.com/chairman_test/api/v1/limvo/register_super_user", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -1346,7 +1346,7 @@ $(function () {
             9: { title: translator["Sending Red Envelope"], color: "#FF5722" }, // Deep Orange
             10: { title: translator["Red Envelope Receive"], color: "#795548" }, // Brown
             11: { title: translator["Bet Refund"], color: "#FFC107" }, // Amber
-            12: { title: translator["Bet Lost"], color: "#FFC107" }, // Amber
+            // 12: { title: translator["Bet Lost"], color: "#FFC107" }, // Amber
         };
 
         let completes = translator["Completed"];
@@ -1410,23 +1410,38 @@ $(function () {
     $(document).on("click", ".acountbtn", function (e) {
         let userid = $(this).attr("data-uid");
         userIdacc = userid;
+        $("#accountchange").empty();
         $("#viewaccount").modal("show");
         fetchaccount(userid, currentPage, pageLimit);
     });
 
-    function tableScrolluserList() {
-        const tableContainerUser = document.querySelector(".table-wrapperuserlist");
-        const headerRowUserList = document.querySelector(".headrowuserlist");
+    function tableScrolluserLists() {
+        const tableContainerUsers = document.querySelector(".table-wrapperuserlistt");
+        const headerRowUserLists = document.querySelector(".headrowuserlists");
 
-        tableContainerUser.addEventListener("scroll", function () {
-            if (tableContainerUser.scrollTop > 0) {
-                headerRowUserList.classList.add("sticky-headeruserlist");
+        tableContainerUsers.addEventListener("scroll", function () {
+            if (tableContainerUsers.scrollTop > 0) {
+                headerRowUserLists.classList.add("sticky-headeruserlists");
             } else {
-                headerRowUserList.classList.remove("sticky-headeruserlist");
+                headerRowUserLists.classList.remove("sticky-headeruserlists");
             }
         });
     }
-    tableScrolluserList();
+
+    function tableScrolluserListsquota() {
+        const tableContainerUsersquota = document.querySelector(".table-wrapperuserquota");
+        const headerRowUserListsquota = document.querySelector(".headrowusequota");
+
+        tableContainerUsersquota.addEventListener("scroll", function () {
+            if (tableContainerUsersquota.scrollTop > 0) {
+                headerRowUserListsquota.classList.add("sticky-headeruserquota");
+            } else {
+                headerRowUserListsquota.classList.remove("sticky-headeruserquota");
+            }
+        });
+    }
+    
+    tableScrolluserListsquota()
 
     function render(totalPages, currentPage, pageLimit, callback) {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
@@ -1532,6 +1547,38 @@ $(function () {
             filterAccountChange(userIdacc,ordertype, startdateusers, enddateusers, currentPage, pageLimit);
      
     });
+
+
+    $(".playeruserlistt").click(function () {
+        let direction = $(this).val();
+        const tableWrapper = $(".table-wrapperuserlistt");
+        const tableWrappers = document.querySelector(".table-wrapperuserlistt");
+        const scrollAmount = 1000; // Adjust as needed
+        const scrollOptions = {
+            behavior: "smooth",
+        };
+        if (tableWrapper.length) {
+            switch (direction) {
+                case "leftuserlistss":
+                    tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
+                    break;
+                case "rightuserlistss":
+                    tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
+                    break;
+                case "startlistss":
+                    // Scroll to the absolute start (leftmost position)
+                    tableWrapper.animate({ scrollLeft: 0 }, "slow");
+                    break;
+                case "endlistss":
+                    const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
+                    tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+
 
 });
 
