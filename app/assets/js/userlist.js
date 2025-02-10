@@ -644,7 +644,7 @@ $(function () {
 
             const data = await response.json();
             // console.log(response);
-            renderuserlist(data.topagent);
+            renderuserlist(data);
             $("#masklist").LoadingOverlay("hide");
             renderPaginationlist(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchTopAgent(newPage, pageLimit));
             document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
