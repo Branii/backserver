@@ -1088,7 +1088,7 @@
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="text-infos" style="">Relationship</h5>
+                        <h5 class="text-infos" >Relationship</h5>
                         <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
                 </div>

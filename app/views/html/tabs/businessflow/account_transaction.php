@@ -214,55 +214,6 @@
         background-color: #f0f0f0;
     }
 
-    /* Base styling for the table cell */
-    .bet_userSelection {
-        position: relative; /* Necessary for positioning the tooltip */
-        max-width: 200px; /* Limit width for ellipsis */
-        white-space: nowrap; /* Prevent text wrapping */
-        overflow: hidden; /* Hide overflow text */
-        text-overflow: ellipsis; /* Show ellipsis for truncated text */
-        cursor: pointer;
-    }
-
-    /* Tooltip text */
-    .tooltip-text {
-        visibility: hidden; /* Hidden by default */
-        opacity: 0; /* Fully transparent by default */
-        position: absolute;
-        bottom: 125%; /* Position above the cell */
-        left: 50%; /* Center horizontally */
-        transform: translateX(-50%);
-        background-color: rgba(0, 0, 0, 0.8); /* Dark background */
-        color: #fff; /* White text */
-        padding: 8px 12px; /* Add padding for readability */
-        border-radius: 4px; /* Rounded corners */
-        font-size: 12px; /* Smaller font size */
-        line-height: 1.5;
-        white-space: pre-wrap; /* Allow line breaks for long content */
-        z-index: 1000; /* Make sure it appears on top */
-        transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out; /* Smooth transition */
-        width: max-content; /* Fit content */
-        max-width: 300px; /* Prevent tooltip from being too wide */
-        text-align: left;
-    }
-
-    /* Tooltip arrow */
-    .tooltip-text::after {
-        content: "";
-        position: absolute;
-        top: 100%; /* Position at the bottom of the tooltip */
-        left: 50%;
-        transform: translateX(-50%);
-        border-width: 6px;
-        border-style: solid;
-        border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent; /* Arrow pointing down */
-    }
-
-    /* Show tooltip on hover */
-    .bet_userSelection:hover .tooltip-text {
-        visibility: visible; /* Show tooltip */
-        opacity: 1; /* Make it fully visible */
-    }
 </style>
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
@@ -271,14 +222,14 @@
     <div class="px-4 py-3 border-bottom pager1">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                <input type="text" id="transuser" class="form-control queryholdertrans usernames mytrans" placeholder="Search usernames" />
-                <input name="usernames" type="hidden" class="userIdtrans" />
+                <input type="text" id="transuser" class="form-control queryholdertrans usernames transuser" placeholder="Search usernames" />
+                <input name="usernames" type="hidden" class=""/>
                 <select class="form-control useraccount" size="5" style="display: none;" id="userAccountDropdown">
                     <!-- Options will be populated dynamically -->
                 </select>
-                <input type="text" class="form-control queryholdertrans orderidtrans"  aria-describedby="name" placeholder="Enter Transaction ID" />
+                <input type="text" class="form-control queryholdertrans clearitem"  id= "transactionId" aria-describedby="name" placeholder="Enter Transaction ID" />
                 
-                <select name="order_type" class="form-control form-select queryholdertrans ordertypetrans" data-bs-placeholder="Select Type">
+                <select name="order_type" class="form-control form-select queryholdertrans " id="ordertypetrans" data-bs-placeholder="Select Type">
                     <option value="">-<?= $translator['Transaction Type']; ?>-</option>
                     <option value="1"><?= $translator['Deposit']; ?></option>
                     <option value="2"><?= $translator['Win Bonus']; ?></option>
@@ -293,8 +244,8 @@
                     <option value="11"><?= $translator['Bet Refund']; ?></option>
                   
                 </select>
-                <input type="date" class="form-control queryholdertrans startdatrans"  aria-describedby="name" placeholder="Name" />
-                <input type="date" class="form-control queryholdertrans enddatetrans"  aria-describedby="name" placeholder="Name" />
+                <input type="date" class="form-control queryholdertrans "  id="startdatrans"  aria-describedby="name" placeholder="Name" />
+                <input type="date" class="form-control queryholdertrans "  id="enddatetrans" aria-describedby="name" placeholder="Name" />
             </div>
         </span>
         <span class="top-center" aria-label=" navigation example">
