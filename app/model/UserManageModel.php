@@ -256,7 +256,7 @@ class UserManageModel extends MEDOOHelper
                 $placeholders[] = $place_holder;
                 $params[$place_holder] = $agent_id;
             }
-            $sql = "SELECT uid,username FROM users_test WHERE  uid IN (".implode(',',$placeholders).") ORDER BY users_test.uid DESC";
+            $sql = "SELECT uid, CASE WHEN reg_type = 'email' THEN email WHEN reg_type = 'contact' THEN contact WHEN reg_type = 'username' THEN username END AS username FROM users_test WHERE  uid IN (".implode(',',$placeholders).") ORDER BY users_test.uid DESC";
             $stmt = $db->query($sql,$params);
             // Fetch the results as an array of objects
             $data = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -343,7 +343,7 @@ class UserManageModel extends MEDOOHelper
             $subs_count = self::count_subs($uids);
             $agent_nicknames = self::fetch_agent_nickname($agent_ids);
 
-        return ["status" => "success", "data" => $all_subs,"login_counts" => $login_counts,"direct_subs_count" => $subs_count,"agents_nicknames" => $agent_nicknames];
+        return ["status" => "success", "data" => $all_subs,"login_counts" => $login_counts,"direct_subs_count" => $subs_count,"agent_nicknames" => $agent_nicknames];
             
         }catch(Exception $e){
             echo $e->getMessage();

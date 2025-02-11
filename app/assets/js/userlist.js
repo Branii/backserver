@@ -870,6 +870,10 @@ $(function () {
                     return;
                 }
                 if (data.length === 0) {
+                    const content = $("#userlistContainer").html();
+                    const pagesInfo = $("#paging_infolist").html();
+                    const pagination = $("#paginationuserlist").html();
+                    navigationHistory.push({content: content, pagination: pagination, pagesInfo: pagesInfo});
                     $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
                     return;
                 }
