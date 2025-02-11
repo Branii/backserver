@@ -294,21 +294,46 @@ $(function () {
     let currentPage = 1;
     let pageLimit = 20;
 
-    async function fetchUserlist(page, pageLimit) {
-        try {
-            const response = await fetch(`../admin/userlistdata/${page}/${pageLimit}`);
-            const data = await response.json();
-            //   console.log(response);
-            //  return
-            $("#maskuserlist").LoadingOverlay("hide");
+    async function fetchUserlist(page = 1, pageLimit = 20) {
+        const uid = $("#usrl-id-holder").val();
+        const rechargeLevel = $("#usrl-recharge-lvl").val();
+        const state = $("#usrl-filter-state").val();
+        const startdate = $("#usrl-start-date").val();
+        const enddate = $("#usrl-end-date").val();
+
+             try {
+            $.ajax({
+            url: `../admin/userlistdata/${uid}/${rechargeLevel}/${state}/${startdate}/${enddate}/${page}/${pageLimit}/1`,
+            type: "POST",
+            beforeSend: function () { },
+            success: function (response) {
+                console.log(response);
+                const data = JSON.parse(response);
+                if(data.data.length === 0 ){
+                         $("#userlistContainer").html(`<tr class="no-results"><td colspan="9">
+                  <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" /></td></tr>
+            `);
+                    return;
+                }
+            
             renderuserlist(data);
             // renderuserlist(data.users);
-            const totalPages = Math.ceil(data.data[0].total_records / 20);
+            const totalPages = Math.ceil(data.data[0].total_records / pageLimit);
             renderPaginationlist(totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlist(newPage, pageLimit));
             document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + totalPages + " pages";
+            },error: function(){
+
+
+            },complete: function(){
+                 $("#maskuserlist").LoadingOverlay("hide",);
+            }
+        });
+            // return;
         } catch (error) {
             console.error("Error fetching data:", error);
         }
+
+     
     }
     fetchUserlist(currentPage, pageLimit);
 
@@ -557,17 +582,19 @@ $(function () {
 
     $(document).on("click", ".executeuserlist", function () {
         const uid = $("#usrl-id-holder").val();
-        const states = $("#usrl-filter-state").val();
+        const state = $("#usrl-filter-state").val();
         const rechargeLevel = $("#usrl-recharge-lvl").val();
         const startdate = $("#usrl-start-date").val();
         const enddate = $("#usrl-end-date").val();
 
-        if (uid == "" && states == "" && rechargeLevel == "" && startdate && enddate == "") {
+        if (uid == "" && state == "" && rechargeLevel == "" && startdate == "" && enddate == "") {
             showToast("Heads up!!", "Select one or more data fields to filter", "info");
             return;
         }
 
-        searchUserListData(uid,rechargeLevel,states,startdate,enddate);
+        fetchUserlist();
+
+        // searchUserListData(uid,rechargeLevel,states,startdate,enddate);
        return;
         console.log(states);
         $(".loaderlist").removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -821,11 +848,6 @@ $(function () {
     let navigationHistory = [];
     $(document).on("click", ".viewsub", function () {
         const userID = $(this).attr("data-agent-id").trim();
-        navigationHistory.push({
-            nameArray: [],
-            currentPage: currentPage,
-            pageLimit: pageLimit,
-        });
         // console.log("Navigation History:", navigationHistory);
         fetchsubagent(userID, currentPage, pageLimit, this);
     });
@@ -851,7 +873,10 @@ $(function () {
                     $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
                     return;
                 }
-
+                const content = $("#userlistContainer").html();
+                const pagesInfo = $("#paging_infolist").html();
+                const pagination = $("#paginationuserlist").html();
+                navigationHistory.push({content: content, pagination: pagination, pagesInfo: pagesInfo});
                 $("#userlistContainer").html(UserlistDataV2(response));
                 renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray, newPage, pageLimit));
                 document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
@@ -1028,20 +1053,30 @@ $(function () {
     }
 
     $("#backButton").on("click", function () {
-        if (navigationHistory.length > 1) {
-            // Pop the last navigation state
-            navigationHistory.pop();
-            const previousState = navigationHistory[navigationHistory.length - 1];
+        if(navigationHistory.length === 0 ){
+            showToast("No Pages","Please you are on the main page",'info');
 
-            fetchsubagent(previousState.nameArray, previousState.currentPage, previousState.pageLimit, this);
-        } else {
-            navigationHistory = []; // Clear history
-            currentPage = 1;
-            fetchUserlist(currentPage, pageLimit);
+            return;
         }
+        const obj = navigationHistory.pop();
+        $("#userlistContainer").html(obj.content);
+        $("#paging_infolist").html(obj.pagesInfo);
+        $("#paginationuserlist").html(obj.pagination);
+
+        // if (navigationHistory.length > 1) {
+        //     // Pop the last navigation state
+        //     navigationHistory.pop();
+        //     const previousState = navigationHistory[navigationHistory.length - 1];
+
+        //     fetchsubagent(previousState.nameArray, previousState.currentPage, previousState.pageLimit, this);
+        // } else {
+        //     navigationHistory = []; // Clear history
+        //     currentPage = 1;
+        //     fetchUserlist(currentPage, pageLimit);
+        // }  
 
         // Hide back button if no navigation history
-        toggleBackButton();
+        // toggleBackButton();
     });
 
     $(document).on("click", ".viewuserinfo", function () {

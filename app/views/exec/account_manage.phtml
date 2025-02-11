@@ -10,8 +10,13 @@ if ($flag == "userlistdata") {
 
     $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
     $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
-
-     $res = UserManageModel::fetchUsersData();
+   
+    $uid = isset($this->viewData['uid']) ? max((int)$this->viewData['uid'], 0) : ""; // Ensure valid page 
+    $recharge_level = isset($this->viewData['recharge_level']) ? max((int)$this->viewData['recharge_level'], 0) : ""; // Ensure valid page 
+    $state          = isset($this->viewData['state']) ? max((int)$this->viewData['state'], 0) : ""; // Ensure valid limit 
+    $start_date     = isset($this->viewData['start_date']) ? max((int)$this->viewData['start_date'], 0) : ""; // Ensure valid page number
+    $end_date       = isset($this->viewData['end_date']) ? max((int)$this->viewData['end_date'], 0) : ""; // Ensure valid limit 
+     $res = UserManageModel::fetchUsersData(["uid" => $uid,"state" => $state,"recharge_level" =>  $recharge_level,"start_date" => $start_date, "end_date" => $end_date],$page,$limit);
      echo json_encode($res);
      return;
     // $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
