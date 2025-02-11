@@ -347,7 +347,7 @@ $(function () {
         });
     }
 
-
+    
    const searchUserListData = (uid,rechargeLevel,state,startDate,endDate) => {
         $.post(`../admin/searchUserListData/${uid}/${rechargeLevel}/${state}/${startDate}/${endDate}/1`, function (response) {
         // $.post(`../admin/searchUserListData/uid/rechargeLevel/state/startDate/endDate`, function (response) {
@@ -358,21 +358,25 @@ $(function () {
                 // console.log(data);
                 // return;
                 $(".loaderlist").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-                if (data.userlists.length < 1) {
+                if(data.status === "error"){
+                       showToast("Warning",data.data,"info");
+                    return;
+                }
+                if (data.data.length < 1) {
                     $("#userlistContainer").html(`
-              <tr class="no-results">
-                <td colspan="9">
-                  <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+              <tr class="no-results"><td colspan="9"><img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
                 </td>
               </tr>
             `);
                     return;
                 }
+               
                 $("#maskuserlist").LoadingOverlay("hide");
-                renderuserlist(data.userlists);
+                renderuserlist(data);
                 // Render pagination
-                renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterUserlist(username, states, startdate, enddate, newPage, pageLimit));
-                document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+                 document.getElementById("paginationuserlist").innerHTML = "";
+                // renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterUserlist(username, states, startdate, enddate, newPage, pageLimit));
+                document.getElementById("paging_infolist").innerHTML = "Page 1 of 1 pages";
             } catch (error) {
                 console.error("Error parsing JSON response:", error);
             } finally {
@@ -383,6 +387,7 @@ $(function () {
             $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
         });
     }
+   
    
 
     $(document).on("click", "#userlists option",function(){
@@ -552,7 +557,7 @@ $(function () {
 
     $(document).on("click", ".executeuserlist", function () {
         const uid = $("#usrl-id-holder").val();
-        const states = $("#usrl-state").val();
+        const states = $("#usrl-filter-state").val();
         const rechargeLevel = $("#usrl-recharge-lvl").val();
         const startdate = $("#usrl-start-date").val();
         const enddate = $("#usrl-end-date").val();
@@ -688,12 +693,14 @@ $(function () {
         }
     }
 
-    async function fetchTopAgent(page) {
+    async function fetchTopAgent(page,pageLimit) {
+        $("#usrl-id-holder").val("");
+        $("#selectuserlist").val("");
         const rechargeLevel = $("#usrl-recharge-lvl").val();
-        const state         = $("#usrl-state").val();
+        const state         = $("#usrl-filter-state").val();
         const startDate     = $("#usrl-start-date").val();
         const endDate       = $("#usrl-end-date").val();
-
+        console.log(pageLimit);
         try {
             $.ajax({
             url: `../admin/fetchTopAgent/${rechargeLevel}/${state}/${startDate}/${endDate}/${page}/${pageLimit}`,
@@ -702,6 +709,12 @@ $(function () {
             success: function (response) {
                 console.log(response);
                 const data = JSON.parse(response);
+                if(data.data.length === 0 ){
+                         $("#userlistContainer").html(`<tr class="no-results"><td colspan="9">
+                  <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" /></td></tr>
+            `);
+                    return;
+                }
                 const totalPages = data.data.length == 0  ? 0 : Math.ceil(data.data[0].total_records / pageLimit);
                 renderuserlist(data);
                 $("#masklist").LoadingOverlay("hide");
@@ -856,8 +869,10 @@ $(function () {
         const status = {
             1: "Enable", // Green
             2: "Suspend", // Orange
-            3: "Forbbiden", // Light Blue
+            3: "Forbbiden to Log In", // Light Blue
             4: "Blocked", // Red
+            5: "Forbbiden to Log Deposit", // Light Blue
+            6: "Forbbiden to Withdraw", // Red
         };
 
         //   const account_type = {
@@ -929,7 +944,7 @@ $(function () {
                  <td>${username}</td>
                   <td>${item.nickname}</td>
                   <td>VIP</td>
-                 <td class="show-user-rel ${item.agent_level === "*****" ? "no-agent" : ""}" data-user-id="${item.uid}">
+                 <td class="show-user-rel ${item.agent_level === "*****" ? "no-agent" : ""}" data-user-id="${item.uid}" style="cursor:pointer;">
                ${item.account_type == 1 ? "-------" : item.account_type == 2 ? "Top Agent" : subsLookups[item.uid] < 2 ? item.agent_name + "->" + username : item.agent_name + "->" + username + "..."}
               </td>
                   <td>${subsLookup[item.uid] ?? 0} </td>
@@ -1201,7 +1216,7 @@ $(function () {
         const depositLimit = $("#usrl-deposit-limit").val();
         const withdrawalLimit = $("#usrl-withdrawal-limit").val();
         const rebate = $("#usrl-rebate").val();
-        const state = $("#usrl-state").val();
+        const state = $("#usrl-filter-state").val();
         const dailyBettingLimit = $("#usrl-daily-betting-total-limit").val();
 
         $.ajax({

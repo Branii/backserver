@@ -219,7 +219,7 @@ $(function () {
     });
 
     $(".accountrefresh").click(function () {
-        $(".queryholdertrans").val("");
+        $(".queryholdertransaction").val("");
 
         $("#mask").LoadingOverlay("show", {
             background: "rgb(90,106,133,0.1)",
