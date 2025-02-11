@@ -84,10 +84,10 @@
         /* Ensure it doesn't interfere with content */
         z-index: 10;
     }
-    .queryholdertrans {
-        width: 19%;
-        margin-right: 5px;
-        background-color: #fff;
+    .queryholdertransaction {
+        width: 39%;
+        margin-right: 7px;
+        background-color:white;
     }
     /* .acc_transaction_username {
         width: 19%;
@@ -135,6 +135,7 @@
         /* Lighter background for track */
         border-radius: 5px;
     }
+
     .table-wrapper::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
@@ -222,14 +223,14 @@
     <div class="px-4 py-3 border-bottom pager1">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                <input type="text" id="transuser" class="form-control queryholdertrans usernames transuser" placeholder="Search usernames" />
+                <input type="text" id="transuser" class="form-control queryholdertransaction usernames transuser" placeholder="Search usernames" />
                 <input name="usernames" type="hidden" class=""/>
                 <select class="form-control useraccount" size="5" style="display: none;" id="userAccountDropdown">
                     <!-- Options will be populated dynamically -->
                 </select>
-                <input type="text" class="form-control queryholdertrans clearitem"  id= "transactionId" aria-describedby="name" placeholder="Enter Transaction ID" />
+                <input type="text" class="form-control queryholdertransaction clearitem"  id= "transactionId" aria-describedby="name" placeholder="Enter Transaction ID" />
                 
-                <select name="order_type" class="form-control form-select queryholdertrans " id="ordertypetrans" data-bs-placeholder="Select Type">
+                <select name="order_type" class="form-control form-select queryholdertransaction " id="ordertypetrans" data-bs-placeholder="Select Type">
                     <option value="">-<?= $translator['Transaction Type']; ?>-</option>
                     <option value="1"><?= $translator['Deposit']; ?></option>
                     <option value="2"><?= $translator['Win Bonus']; ?></option>
@@ -244,8 +245,8 @@
                     <option value="11"><?= $translator['Bet Refund']; ?></option>
                   
                 </select>
-                <input type="date" class="form-control queryholdertrans "  id="startdatrans"  aria-describedby="name" placeholder="Name" />
-                <input type="date" class="form-control queryholdertrans "  id="enddatetrans" aria-describedby="name" placeholder="Name" />
+                <input type="date" class="form-control queryholdertransaction"  id="startdatrans"  aria-describedby="name" placeholder="Name" />
+                <input type="date" class="form-control queryholdertransaction"  id="enddatetrans" aria-describedby="name" placeholder="Name" />
             </div>
         </span>
         <span class="top-center" aria-label=" navigation example">
@@ -404,9 +405,11 @@
                         </tbody>
                     </table>
                 </div>
+
                 <div id="loadingIndicator" class="spinner-border text-primary" role="status" style="display: none; position: relative; left: 40%;">
                     <span class="sr-only">Loading...</span>
                 </div>
+
                 <div id="transredenvelop">
                     <table class="table table-hover table-bordered text-nowrap mb-0 table-responsive" id="transtbls">
                         <thead>
