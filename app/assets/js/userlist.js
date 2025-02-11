@@ -924,7 +924,7 @@ $(function () {
         }, {});
         // Create a lookup object where the key is uid and the value is logs_count
         const subsLookup = subsLookups.reduce((lookup, item) => {
-            lookup[item.uid] = item.subs_count;
+            lookup[item.agent_id] = item.subs_count;
             return lookup;
         }, {});
 

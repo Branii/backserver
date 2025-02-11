@@ -310,18 +310,40 @@ class UserManageModel extends MEDOOHelper
     }
     
 
+    public static function fetch_agent_nickname(array $agent_ids):array {
+
+        try{
+            $db = parent::getLink();
+            $placeholders = [];
+            $params = [];
+            foreach($agent_ids as $key => $agent_id){
+                $placeholders[] = ":uid$key";
+                $params[":uid$key"] = $agent_id;
+            }
+            $sql = "SELECT uid,nickname FROM `users_test` WHERE uid IN (".implode(',', $placeholders).") GROUP BY uid";
+            $stmt = $db->query($sql,$params);
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return ["status" => "success","data" => $data];
+
+        }catch(Exception $e){
+
+            return ["status" => "error", "data" => "Internal Server Error.".$e->getMessage()];
+        }
+    }
+
     public static function fetchAgentSubs($agent_id, $page = 1, $limit = 20) : array {
         try{
-            $all_subs = DataReportModel::allSubs($agent_id);
+            $all_subs = DataReportModel::allSubs($agent_id,$page, $limit);
             if(empty($all_subs["data"])) return ["status" => "success","data" => []];
             $all_subs = $all_subs["data"];
             
             $uids     = array_column($all_subs,'uid');
+            $agent_ids     = array_column($all_subs,'agent_id');
             $login_counts = self::fetch_users_login_count($uids);
             $subs_count = self::count_subs($uids);
-            // $res = self::fetch_user_rel($uids);
+            $agent_nicknames = self::fetch_agent_nickname($agent_ids);
 
-        return ["status" => "success", "data" => $all_subs,"login_counts" => $login_counts,"direct_subs_count" => $subs_count];
+        return ["status" => "success", "data" => $all_subs,"login_counts" => $login_counts,"direct_subs_count" => $subs_count,"agents_nicknames" => $agent_nicknames];
             
         }catch(Exception $e){
             echo $e->getMessage();
@@ -510,14 +532,14 @@ class UserManageModel extends MEDOOHelper
 
             
             $uids     = array_column($data,'uid');
+            $agent_ids     = array_column($data,'agent_id');
             $login_counts = self::fetch_users_login_count($uids);
             $subs_count = self::count_subs($uids);
-            // $res = self::fetch_user_rel($uids);
+            $agent_nicknames = self::fetch_agent_nickname($agent_ids);
 
-        return ["status" => "success", "data" => $data,"login_counts" => $login_counts,"direct_subs_count" => $subs_count];
+        return ["status" => "success", "data" => $data,"login_counts" => $login_counts,"direct_subs_count" => $subs_count,"agent_nicknames" => $agent_nicknames];
             
         }catch(Exception $e){
-            echo $e->getMessage();
             return ["status" => "error" , 'data' => "Internal Server Error."];
 
         }
