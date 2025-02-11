@@ -265,7 +265,7 @@ $(function () {
           $("#maskbet").LoadingOverlay("hide");
            renderlottery(data.filterbet);
           renderbetPagination(data.totalPages, currentPagebet, (page) => {
-            filterbetdatas(uidd, gametype, betsate, betstatus, startdates, enddates, page, pageLimit);
+            filterbetdatas(uidd,betOrderID, gametype, betsate, betstatus, startdates, enddates, page, pageLimit);
           }); // Pass callback
   
           document.getElementById("paging_infobet").innerHTML = 
