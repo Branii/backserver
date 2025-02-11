@@ -1,4 +1,8 @@
 
+<<<<<<< HEAD
+=======
+</style>
+>>>>>>> refs/remotes/origin/online
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Account Transaction Details']; ?></h4>
@@ -6,14 +10,14 @@
     <div class="px-4 py-3 border-bottom pager1">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                <input type="text" id="transuser" class="form-control queryholdertrans usernames mytrans" placeholder="Search usernames" />
-                <input name="usernames" type="hidden" class="userIdtrans" />
+                <input type="text" id="transuser" class="form-control queryholdertrans usernames transuser" placeholder="Search usernames" />
+                <input name="usernames" type="hidden" class=""/>
                 <select class="form-control useraccount" size="5" style="display: none;" id="userAccountDropdown">
                     <!-- Options will be populated dynamically -->
                 </select>
-                <input type="text" class="form-control queryholdertrans orderidtrans"  aria-describedby="name" placeholder="Enter Transaction ID" />
+                <input type="text" class="form-control queryholdertrans clearitem"  id= "transactionId" aria-describedby="name" placeholder="Enter Transaction ID" />
                 
-                <select name="order_type" class="form-control form-select queryholdertrans ordertypetrans" data-bs-placeholder="Select Type">
+                <select name="order_type" class="form-control form-select queryholdertrans " id="ordertypetrans" data-bs-placeholder="Select Type">
                     <option value="">-<?= $translator['Transaction Type']; ?>-</option>
                     <option value="1"><?= $translator['Deposit']; ?></option>
                     <option value="2"><?= $translator['Win Bonus']; ?></option>
@@ -28,8 +32,8 @@
                     <option value="11"><?= $translator['Bet Refund']; ?></option>
                   
                 </select>
-                <input type="date" class="form-control queryholdertrans startdatrans"  aria-describedby="name" placeholder="Name" />
-                <input type="date" class="form-control queryholdertrans enddatetrans"  aria-describedby="name" placeholder="Name" />
+                <input type="date" class="form-control queryholdertrans "  id="startdatrans"  aria-describedby="name" placeholder="Name" />
+                <input type="date" class="form-control queryholdertrans "  id="enddatetrans" aria-describedby="name" placeholder="Name" />
             </div>
         </span>
         <span class="top-center" aria-label=" navigation example">
