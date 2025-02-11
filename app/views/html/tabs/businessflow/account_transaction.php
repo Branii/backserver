@@ -267,7 +267,7 @@
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle executetrans" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                    <i class="bx bx-check-double loader" style="font-size: 20px;"></i>
+                    <i class="bx bx-check-double loadertrans" style="font-size: 20px;"></i>
                 </button>
             </div>
         </span>

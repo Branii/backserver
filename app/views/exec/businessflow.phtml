@@ -130,12 +130,12 @@ if ($flag == "filtertransactions") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
-    $username = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : $uid;
-    $sunquery = (new BusinessFlowModel())->FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
-    $result   = (new BusinessFlowModel())->FilterTrsansactionData($sunquery, $page, $limit) ?? [];
+     $username = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : $uid;
+     $sunquery = (new BusinessFlowModel())->FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
+    // $result   = (new BusinessFlowModel())->FilterTrsansactionData($sunquery, $page, $limit) ?? [];
 
     $response = [
-        'transactions' => $result['data'] ?? [],
+        'transactions' => $sunquery?? [],
         'totalPages' => !empty($result['total']) ? ceil($result['total'] / $limit) : 0,
     ];
 
@@ -241,7 +241,7 @@ if ($flag == "filterTrack") {
 
     $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
     $username = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : $uid;  
-     //   $subquery = (new BusinessFlowModel())->FilterSubQuery($username, $trackstatus, $tracklotery, $enddate, $startdate);
+       $subquery = (new BusinessFlowModel())->FilterSubQuery($username, $trackstatus, $tracklotery, $enddate, $startdate);
         $result = (new BusinessFlowModel())->FilterTrackData($subquery, $page, $limit);
 
         echo json_encode([
