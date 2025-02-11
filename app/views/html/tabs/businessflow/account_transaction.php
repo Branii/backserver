@@ -1,8 +1,5 @@
 
-<<<<<<< HEAD
-=======
 </style>
->>>>>>> refs/remotes/origin/online
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Account Transaction Details']; ?></h4>
