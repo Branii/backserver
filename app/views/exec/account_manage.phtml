@@ -31,12 +31,14 @@ if($flag === "searchUserlistData") {
     $recharge_level = isset($this->viewData['recharge_level']) ? max($this->viewData['recharge_level'],0) : '';
     $startdate = isset($this->viewData['startdate']) ? max($this->viewData['startdate'],0) : '';
     $enddate = isset($this->viewData['enddate']) ? max($this->viewData['enddate'],0) : '';
-     
+  
+    
+    if(empty($uid)) {
+        echo json_encode(["status" => "error", "data" => "Please select a user."]);
+        return; 
+    }
 
-    echo json_encode([$uid,$states,$uid,$recharge_level,$startdate,$enddate]);
-    return;
-    $uid = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : 0;
-    $res = UserManageModel::searchUserData(["uid" => $uid,"states" => $states,"recharge_level" =>  $recharge_level,"start_date" => $startdate, "end_date" => $enddate]);
+    $res = UserManageModel::searchUserData(["uid" => $uid,"state" => $states,"recharge_level" =>  $recharge_level,"start_date" => $startdate, "end_date" => $enddate]);
      echo json_encode($res);
      return;
 
@@ -334,7 +336,7 @@ if($flag == "fetchTopAgent"){
 
     // return;
 
-     $res = UserManageModel::fetchTopAgents(["recharge_level" => $recharge_level,"user_state" => $state,"start_date" => $start_date,"end_date" => $end_date], $page , $limit);
+     $res = UserManageModel::fetchTopAgents(["recharge_level" => $recharge_level,"state" => $state,"start_date" => $start_date,"end_date" => $end_date], $page , $limit);
      echo json_encode($res);
 
     return;

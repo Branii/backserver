@@ -491,6 +491,13 @@
         /* Ensure it doesn't interfere with content */
         z-index: 10;
     }
+    .show-user-rel:hover{
+        font-weight: 900;
+    }
+
+    tr,td{
+         transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -516,7 +523,7 @@
                         <option value="3">Level Three</option>
                     </select>
 
-                    <select name="state" id="usrl-state" class="form-control form-select queryholderuserlistz states" data-bs-placeholder="Select Type">
+                    <select name="state" id="usrl-filter-state" class="form-control form-select queryholderuserlistz states" data-bs-placeholder="Select Type">
                         <option value="">-State-</option>
                         <option value="1">Enable to run</option>
                         <option value="2">Suspend Betting</option>

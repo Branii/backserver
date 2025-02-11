@@ -366,7 +366,7 @@ class UserManageModel extends MEDOOHelper
             }
 
             // Build the query
-           echo $sql = "SELECT *,(SELECT COUNT(*) FROM users_test WHERE {$table_name}.account_type=2) as total_records FROM users_test WHERE {$table_name}.uid=:uid {$whereClause}";
+            $sql = "SELECT *,(SELECT COUNT(*) FROM users_test WHERE {$table_name}.account_type=2) as total_records FROM users_test WHERE {$table_name}.uid=:uid {$whereClause}";
     
             // Execute query using Medoo's query method
             $data = $database->query($sql, $params)->fetchAll(PDO::FETCH_OBJ);
@@ -413,7 +413,7 @@ class UserManageModel extends MEDOOHelper
             }
 
             // Build the query
-           echo $sql = "SELECT *,(SELECT COUNT(*) FROM users_test WHERE {$table_name}.account_type=2) as total_records FROM users_test WHERE {$table_name}.account_type=2 {$whereClause} ORDER BY {$table_name}.uid DESC LIMIT :offset, :limit";
+            $sql = "SELECT *,(SELECT COUNT(*) FROM users_test WHERE {$table_name}.account_type=2 {$whereClause}) as total_records FROM users_test WHERE {$table_name}.account_type=2 {$whereClause} ORDER BY {$table_name}.uid DESC LIMIT :offset, :limit";
     
             // Execute query using Medoo's query method
             $data = $database->query($sql, $params)->fetchAll(PDO::FETCH_OBJ);
@@ -446,7 +446,7 @@ class UserManageModel extends MEDOOHelper
         try{
            
             $top_agents = self::filter_top_agents($filters,$page, $limit);
-            if(empty($top_agents["data"])) return ["status" => "success","data" => []];
+            if(empty($top_agents["data"])) return ["status" => "success", "data" => [],"login_counts" => [],"direct_subs_count" => []];
             $top_agents   = $top_agents["data"];
             $uids         = array_column($top_agents,'uid');
             $login_counts = self::fetch_users_login_count($uids);
