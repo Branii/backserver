@@ -491,12 +491,8 @@
         /* Ensure it doesn't interfere with content */
         z-index: 10;
     }
-    .show-user-rel:hover{
+    .show-user-rel{
         font-weight: 900;
-    }
-
-    tr,td{
-         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 </style>
 
@@ -1095,7 +1091,7 @@
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="text-infos" >Relationship</h5>
+                        <h5 class="text-infos" style="">Relationship</h5>
                         <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
                 </div>
