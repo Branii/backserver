@@ -343,7 +343,7 @@ class UserManageModel extends MEDOOHelper
             $subs_count = self::count_subs($uids);
             $agent_nicknames = self::fetch_agent_nickname($agent_ids);
 
-        return ["status" => "success", "data" => $all_subs,"login_counts" => $login_counts,"direct_subs_count" => $subs_count,"agents_nicknames" => $agent_nicknames];
+        return ["status" => "success", "data" => $all_subs,"login_counts" => $login_counts,"direct_subs_count" => $subs_count,"agent_nicknames" => $agent_nicknames];
             
         }catch(Exception $e){
             echo $e->getMessage();
