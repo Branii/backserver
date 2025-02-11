@@ -2,7 +2,7 @@ $(function () {
   //NOTE -
   //////////////ACCOUNT TRANSACTION-//////////
 
-  const AccountTransactions = (data) => {
+  const AccountTransactionxs = (data) => {
     let html = "";
     const status = {
       1: "Deposit",
@@ -37,8 +37,8 @@ $(function () {
   };
 
   const render = (data) => {
-    var html = AccountTransactions(data);
-    $("#dataContainer").html(html);
+    var html = AccountTransactionxs(data);
+    $("#dataContainerx").html(html);
   };
 
   let currentPage = 1;
@@ -47,7 +47,7 @@ $(function () {
   async function fetchTrasaction(page) {
     try {
       const response = await fetch(
-        `../admin/transactiondata/${page}/${pageLimit}`
+        `../admin/transactiondatax/${page}/${pageLimit}`
       );
       const data = await response.json();
       console.log(response);
@@ -108,13 +108,13 @@ $(function () {
     document.getElementById("pagination").innerHTML = pagLink;
 
     // Add click event listeners to pagination links
-    document.querySelectorAll("#pagination .page-link").forEach((link) => {
+    document.querySelectorAll("#paginationx .page-link").forEach((link) => {
       link.addEventListener("click", function (e) {
         e.preventDefault();
         const newPage = parseInt(this.getAttribute("data-page"));
         if (newPage > 0 && newPage <= totalPages) {
           currentPage = newPage;
-          document.getElementById("paging_info").innerHTML =
+          document.getElementById("paging_infox").innerHTML =
             "Page " + currentPage + " of " + totalPages + " pages";
           fetchTrasaction(currentPage);
         }
@@ -126,7 +126,7 @@ $(function () {
 
   $(".player").click(function () {
     let direction = $(this).val();
-    const tableWrapper = $(".table-wrapper");
+    const tableWrapper = $(".table-wrapperx");
     const tableWrappers = document.querySelector(".table-wrapper");
     const scrollAmount = 1000; // Adjust as needed
     const scrollOptions = {
@@ -197,7 +197,7 @@ $(function () {
     $("#userDropdown").hide();
   });
 
-  $(document).on("click", ".executetrans", function () {
+  $(document).on("click", ".execu", function () {
     const username = $(".username").val();
     const order_id = $(".orderid").val();
     const odertype = $(".ordertype").val();

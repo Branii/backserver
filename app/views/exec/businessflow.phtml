@@ -120,17 +120,15 @@ if ($flag == "getTransactionBet") {
     echo json_encode($result);
 }
 
-
 if ($flag == "filtertransactions") {
 
-    $uid = $this->viewData['username'] ?? '';
-    $orderid = $this->viewData['orderid'] ?? '';
-    $ordertype = $this->viewData['ordertype'] ?? '';
-    $startdate = $this->viewData['startdate'] ?? '';
-    $enddate = $this->viewData['enddate'] ?? '';
+    $uid  = isset($this->viewData['username']) ? $this->viewData['username'] : '';
+    $orderid = isset($this->viewData['orderid']) ? $this->viewData['orderid'] : '';
+    $ordertype = isset($this->viewData['ordertype']) ? $this->viewData['ordertype'] : '';
+    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
+    $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-
     $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
     $username = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : $uid;
     $sunquery = (new BusinessFlowModel())->FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
@@ -143,7 +141,16 @@ if ($flag == "filtertransactions") {
     ];
 
     echo json_encode($response);
-   
+}
+
+if ($flag == "lotterydata") {
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $result = (new BusinessFlowModel())->fetchBetRecordsFast($page, $limit) ?? [];
+    echo json_encode([
+        'lotterybet' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
 }
 
 if ($flag == "viewBetstake") {
