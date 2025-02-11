@@ -240,9 +240,9 @@ $(function () {
         const ordertypetrans = $("#ordertypetrans").val();
         const startdatrans = $("#startdatrans").val();
         const enddatetrans = $("#enddatetrans").val();
-       //  console.log(transusername);
-
-        $(".loader").removeClass("bx-check-double").addClass("bx-loader bx-spin");
+        console.log(enddatetrans);
+     
+        $(".loadertrans").removeClass("bx-check-double").addClass("bx-loader bx-spin");
         setTimeout(() => {
             filterTrasaction(transusername, transactionId, ordertypetrans, startdatrans, enddatetrans, currentPage, pageLimit);
         }, 100);
@@ -252,15 +252,9 @@ $(function () {
         try {
             const response = await fetch(`../admin/filtertransactions/${transusername}/${transactionId}/${ordertypetrans}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
             const data = await response.json();
-            if (data.response == "error") {
-                showToast("Alert", "User does not exist", "info");
-                $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-                return;
-            }
-
             ///console.log(response);
 
-            $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+            $(".loadertrans").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             if (data.transactions.length < 1) {
                 let html = `
                 <tr class="no-results">

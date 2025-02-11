@@ -121,9 +121,12 @@ class adminController extends Controller {
 
     public function filtertransactions($username,$orderid,$ordertype,$startdate,$enddate,$pageNumber,$limit){
         $this->view('exec/businessflow',[
-            'username' => $username,'orderid' => $orderid,
-            'ordertype' => $ordertype,'startdate' => $startdate,
-            'enddate' => $enddate, 'flag' => 'filtertransactions',
+            'username' => $username,
+            'orderid' => $orderid,
+            'ordertype' => $ordertype,
+            'startdate' => $startdate,
+            'enddate' => $enddate, 
+            'flag' => 'filtertransactions',
             'page'=>$pageNumber,'limit'=>$limit,
 
         ]);
@@ -276,9 +279,9 @@ class adminController extends Controller {
 
       //NOTE -
     ////////////// USERLIST LIST -//////////
-    public function userlistdata($pageNumber, $limit)
+    public function userlistdata($uid,$recharge_level, $state, $start_date, $end_date,$pageNumber, $limit,$miscelleanous)
     {
-        $this->view('exec/account_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
+        $this->view('exec/account_manage', ['uid' => $uid,'recharge_level' => $recharge_level,'state' => $state, 'startdate' => $start_date, 'enddate' => $end_date,'page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
         $this->view->render();
     }
 

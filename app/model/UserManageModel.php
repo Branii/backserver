@@ -310,18 +310,40 @@ class UserManageModel extends MEDOOHelper
     }
     
 
+    public static function fetch_agent_nickname(array $agent_ids):array {
+
+        try{
+            $db = parent::getLink();
+            $placeholders = [];
+            $params = [];
+            foreach($agent_ids as $key => $agent_id){
+                $placeholders[] = ":uid$key";
+                $params[":uid$key"] = $agent_id;
+            }
+            $sql = "SELECT uid,nickname FROM `users_test` WHERE uid IN (".implode(',', $placeholders).") GROUP BY uid";
+            $stmt = $db->query($sql,$params);
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return ["status" => "success","data" => $data];
+
+        }catch(Exception $e){
+
+            return ["status" => "error", "data" => "Internal Server Error.".$e->getMessage()];
+        }
+    }
+
     public static function fetchAgentSubs($agent_id, $page = 1, $limit = 20) : array {
         try{
-            $all_subs = DataReportModel::allSubs($agent_id);
+            $all_subs = DataReportModel::allSubs($agent_id,$page, $limit);
             if(empty($all_subs["data"])) return ["status" => "success","data" => []];
             $all_subs = $all_subs["data"];
             
             $uids     = array_column($all_subs,'uid');
+            $agent_ids     = array_column($all_subs,'agent_id');
             $login_counts = self::fetch_users_login_count($uids);
             $subs_count = self::count_subs($uids);
-            // $res = self::fetch_user_rel($uids);
+            $agent_nicknames = self::fetch_agent_nickname($agent_ids);
 
-        return ["status" => "success", "data" => $all_subs,"login_counts" => $login_counts,"direct_subs_count" => $subs_count];
+        return ["status" => "success", "data" => $all_subs,"login_counts" => $login_counts,"direct_subs_count" => $subs_count,"agents_nicknames" => $agent_nicknames];
             
         }catch(Exception $e){
             echo $e->getMessage();
@@ -462,25 +484,62 @@ class UserManageModel extends MEDOOHelper
     }
 
 
-    public static function fetchUsersData($page = 1, $limit = 20): array {
+    public static function fetchUsersData(array $filters =[],$page = 1, $limit): array {
 
         try{
             $db = parent::getLink();
-            $offset = ($page - 1 ) * $limit;
-            $sql = "SELECT *,(SELECT COUNT(*) FROM users_test) AS total_records FROM users_test ORDER BY uid DESC LIMIT :offset, :limit";
-            $stmt = $db->query($sql, [":offset" => $offset, ":limit" => $limit]);
+             // Pagination setup
+            $offset = ($page - 1) * $limit;
+              // Add binding parameters
+            $params = [':offset' => intval($offset), ':limit' => intval($limit)];
+            $table_name = "users_test";
+            $whereClause = "";
+            $startDate = $filters["start_date"];
+            $endDate   = $filters["end_date"];
+
+            if(!empty($filters["recharge_level"])){
+                $params[":recharge_level"] = $filters["recharge_level"];
+                $whereClause = empty($whereClause) ?  " recharge_level=:recharge_level " : " AND recharge_level=:recharge_level ";
+            }
+            if(!empty($filters["state"])){
+                $params[":user_state"] = $filters["state"];
+                $whereClause .=  empty($whereClause) ? " user_state=:user_state " : " AND user_state=:user_state ";
+            }
+            if(!empty($filters["uid"])){
+                $params[":uid"] = $filters["uid"];
+                $whereClause .=  empty($whereClause) ? " uid=:uid " : " AND uid=:uid ";
+            }
+
+             if (!empty($startDate) && empty($endDate)){
+                $whereClause .= empty($whereClause) ? " created_at = :start_date " : "AND created_at = :start_date ";
+                $params[':start_date'] = $startDate;
+            } elseif (empty($startDate) && !empty($endDate)) {
+                $whereClause .= empty($whereClause) ? " created_at = :end_date " : "AND created_at = :end_date ";
+                $params[':end_date'] = $endDate;
+            } elseif (!empty($startDate) && !empty($endDate)) {
+                $start = min($startDate, $endDate);
+                $end   = max($startDate, $endDate);
+                $whereClause .= empty($whereClause) ? " created_at BETWEEN :start_date AND :end_date  " : " AND created_at BETWEEN :start_date AND :end_date ";
+                $params[':start_date'] = $start;
+                $params[':end_date'] = $end;
+            }
+
+            $whereClause = empty($whereClause) ? " " :" WHERE  {$whereClause} ";
+
+            $sql = "SELECT *,(SELECT COUNT(*) FROM users_test {$whereClause}) AS total_records FROM users_test {$whereClause}  ORDER BY uid DESC LIMIT :offset, :limit";
+            $stmt = $db->query($sql, $params);
             $data = $stmt->fetchAll(PDO::FETCH_OBJ);
 
             
             $uids     = array_column($data,'uid');
+            $agent_ids     = array_column($data,'agent_id');
             $login_counts = self::fetch_users_login_count($uids);
             $subs_count = self::count_subs($uids);
-            // $res = self::fetch_user_rel($uids);
+            $agent_nicknames = self::fetch_agent_nickname($agent_ids);
 
-        return ["status" => "success", "data" => $data,"login_counts" => $login_counts,"direct_subs_count" => $subs_count];
+        return ["status" => "success", "data" => $data,"login_counts" => $login_counts,"direct_subs_count" => $subs_count,"agent_nicknames" => $agent_nicknames];
             
         }catch(Exception $e){
-            echo $e->getMessage();
             return ["status" => "error" , 'data' => "Internal Server Error."];
 
         }
