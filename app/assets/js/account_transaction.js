@@ -8,7 +8,7 @@ $(function () {
             duration: 3000, // auto-dismiss after 3s
         });
     }
- 
+
     function formatMoney(money) {
         let moneyStr = String(money);
         if (moneyStr.includes(".")) {
@@ -21,7 +21,6 @@ $(function () {
         return moneyStr;
     }
 
-  
     const translator = JSON.parse(document.getElementById("translation-container").getAttribute("data-translations"));
     // console.log(translations)
 
@@ -42,32 +41,30 @@ $(function () {
             11: { title: translator["Bet Refund"], color: "#FFC107" }, // Amber
             // 12: { title: translator["Bet Lost"], color: "#FFC107" } // Amber
         };
-        
+
         let completes = translator["Completed"];
         const formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
 
         data.forEach((item) => {
-             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-             if (item.order_type === 12) return;
- 
-                html += `
-                    <tr class="trow">
-                      <td>${"TR" + item.order_id.substring(0, 7)}</td>
-                      <td>${typeof username === "string" || typeof username === "number" 
-                        ? String(username).charAt(0).toUpperCase() + String(username).slice(1) 
-                        : "N/A"}</td>
-                      <td><i class='bx bxs-circle' style='color:${statusColor[item.order_type].color};font-size:8px;margin-right:5px;'></i>${statusColor[item.order_type].title}</td>
-                     <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
-                      <td>${formatMoney(item.balance)}</td>
-                      <td>${formatTimestamp(item.dateTime)}</td>
-                      <td>${formatTimestamp(item.date_created)}</td>
-                      <td>${item.order_id}</td>
-                      <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> ${completes}</td>
-                      <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
-                    </tr>
-                `;
-            });
-    
+            let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+            if (item.order_type === 12) return;
+
+            html += `
+                      <tr class="trow">
+                        <td>${"TR" + item.order_id.substring(0, 7)}</td>
+                        <td>${typeof username === "string" || typeof username === "number" ? String(username).charAt(0).toUpperCase() + String(username).slice(1) : "N/A"}</td>
+                        <td><i class='bx bxs-circle' style='color:${statusColor[item.order_type].color};font-size:8px;margin-right:5px;'></i>${statusColor[item.order_type].title}</td>
+                       <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
+                        <td>${formatMoney(item.balance)}</td>
+                        <td>${formatTimestamp(item.dateTime)}</td>
+                        <td>${formatTimestamp(item.date_created)}</td>
+                        <td>${item.order_id}</td>
+                        <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> ${completes}</td>
+                        <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
+                      </tr>
+                  `;
+        });
+
         return html;
     };
 
@@ -77,20 +74,20 @@ $(function () {
         Object.entries(transactiondata).forEach(([key, value]) => {
             if (value === "Bet Selection") {
                 html += `
-                 <td>${value}</td>
-                <td class="${key === "user_selection" ? "bet_userSelection" : ""}">
-                    <textarea class="form-control" readonly style="height:75px;">${obj[key]}</textarea>
-                </td>`;
+                   <td>${value}</td>
+                  <td class="${key === "user_selection" ? "bet_userSelec" : ""}">
+                     <textarea class="form-control" readonly style="height:75px;">${obj[key]}</textarea>
+                  </td>`;
             } else {
                 html += `
-                 <tr>
-                   <td>${value}</td>
-                   <td class="${key === "user_selection" ? "bet_userSelection" : ""}" 
-                     ${key === "user_selection" ? `title="${obj[key]}"` : ""}>
-                     ${key === "win_bonus" || key === "bet_amount" || key === "rebate_amount" ? `${formatMoney(obj[key])}` : `${obj[key]}`}
-                    </td>
-                 </tr>
-                 `;
+                   <tr>
+                     <td>${value}</td>
+                     <td class="${key === "user_selection" ? "bt" : ""}" 
+                       ${key === "user_selection" ? `ti="${obj[key]}"` : ""}>
+                       ${key === "win_bonus" || key === "bet_amount" || key === "rebate_amount" ? `${formatMoney(obj[key])}` : `${obj[key]}`}
+                      </td>
+                   </tr>
+                   `;
             }
         });
 
@@ -130,7 +127,7 @@ $(function () {
     };
 
     let currentPage = 1;
-    let pageLimit = 50;
+    let pageLimit = 20;
 
     async function fetchTrasaction(page, pageLimit) {
         try {
@@ -151,8 +148,8 @@ $(function () {
     function renderPagination(totalPages, currentPage, pageLimit, callback) {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
             `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
-            <a class='page-link' href='#' data-page='${i}'>${label}</a>
-        </li>`;
+              <a class='page-link' href='#' data-page='${i}'>${label}</a>
+          </li>`;
         let pagLink = `<ul class='pagination justify-content-end'>`;
 
         // Previous Button
@@ -233,29 +230,27 @@ $(function () {
     });
 
     $(document).on("click", ".executetrans", function () {
-        if ($("#transuser").val() == ""  && $(".orderidtrans").val() == "" 
-           && $(".ordertypetrans").val() == ""  && $(".startdatrans").val() == "") {
+        if ($("#transuser").val() == "" && $("#transactionId").val() == "" && $("#ordertypetrans").val() == "" && $("#startdatrans").val() == "") {
             showToast("Heads up!!", "Select one or more data fields to filter", "info");
             return;
         }
-        
-        const transusername  = $("#transuser").val();
-        const orderidtrans = $(".orderidtrans").val();
-        const ordertypetrans = $(".ordertypetrans").val();
-        const startdatrans = $(".startdatrans").val();
-        const enddatetrans = $(".enddatetrans").val();
-       // console.log(username);
-      
+
+        const transusername = $("#transuser").val();
+        const transactionId = $("#transactionId").val();
+        const ordertypetrans = $("#ordertypetrans").val();
+        const startdatrans = $("#startdatrans").val();
+        const enddatetrans = $("#enddatetrans").val();
+       //  console.log(transusername);
+
         $(".loader").removeClass("bx-check-double").addClass("bx-loader bx-spin");
         setTimeout(() => {
-            filterTrasaction(transusername, orderidtrans, ordertypetrans, startdatrans, enddatetrans, currentPage, pageLimit);
+            filterTrasaction(transusername, transactionId, ordertypetrans, startdatrans, enddatetrans, currentPage, pageLimit);
         }, 100);
     });
 
-    
-    async function filterTrasaction(transusername, orderidtrans, ordertypetrans, startdatrans, enddatetrans, currentPage, pageLimit) {
+    async function filterTrasaction(transusername, transactionId, ordertypetrans, startdatrans, enddatetrans, currentPage, pageLimit) {
         try {
-            const response = await fetch(`../admin/filtertransactions/${transusername}/${orderidtrans}/${ordertypetrans}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
+            const response = await fetch(`../admin/filtertransactions/${transusername}/${transactionId}/${ordertypetrans}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
             const data = await response.json();
             if (data.response == "error") {
                 showToast("Alert", "User does not exist", "info");
@@ -268,11 +263,11 @@ $(function () {
             $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             if (data.transactions.length < 1) {
                 let html = `
-              <tr class="no-results">
-                  <td colspan="9">
-                      <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-                  </td>
-              </tr>`;
+                <tr class="no-results">
+                    <td colspan="9">
+                        <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                    </td>
+                </tr>`;
                 $("#mask").LoadingOverlay("hide");
                 $("#dataContainer").html(html);
                 return;
@@ -281,13 +276,12 @@ $(function () {
             render(data.transactions);
 
             // Render pagination
-            renderPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterTrasaction(transusername, orderidtrans, ordertypetrans, startdatrans, enddatetrans, newPage, pageLimit) );
+            renderPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterTrasaction(transusername, transactionId, ordertypetrans, startdatrans, enddatetrans, newPage, pageLimit));
             document.getElementById("paging_info").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     }
-
 
     $("#viewbetdatahide").hide();
     $("#transacttbl").hide();
@@ -562,7 +556,7 @@ $(function () {
         });
     }
 
-    $("#nametext").on("dblclick", function () {
+    $(".clearitem").on("dblclick", function () {
         $(this).val(""); // Clears the input field
     });
 
