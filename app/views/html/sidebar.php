@@ -5,7 +5,6 @@ $adminEmail = $controller->getSeesion("isUserLoggedIn");
 $userPermissions = $controller->getUserPermissions($adminEmail);
 $definedPermissions = $controller->getPermissionSidebars();
 
-
 foreach ($userPermissions as $sidebar => $menu): ?>
     <div class="accordion-item accord-item">
         <div class="accordion-header" onclick="toggleAccordion(this)">
