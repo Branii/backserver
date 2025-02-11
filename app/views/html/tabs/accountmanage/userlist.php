@@ -491,7 +491,7 @@
         /* Ensure it doesn't interfere with content */
         z-index: 10;
     }
-    .show-user-rel{
+    .show-user-rel:hover{
         font-weight: 900;
     }
 </style>
