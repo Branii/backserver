@@ -12,7 +12,7 @@ $(function () {
     // editting the user from the userlist table
     $(document).on("click", ".manage-user-btn,.user-restrictions-btn", function () {
         let userID = $("#idHolder").val();
-        // console.log(id)
+        // // console.log(id)
         flag = "";
         const data = new URLSearchParams({ user_id: id }).toString();
         $.ajax({
@@ -20,9 +20,9 @@ $(function () {
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
-                console.log(response);
+
                 res = JSON.parse(response);
-                console.log(res);
+
 
                 $("#usrl-username").val(res.username);
                 $("#usrl-accounting-binding").val(res.agent_username);
@@ -48,7 +48,7 @@ $(function () {
     });
 
     const fetchAgentSubs = (eventElement, currentPage) => {
-        console.log(eventElement);
+
         const agentID = $(eventElement).attr("data-agent-id");
         let lotteryID = $("#wl-selectlottery").val();
         let startDate = $("#wl-startdate").val();
@@ -63,7 +63,7 @@ $(function () {
         startDate = startDate.length != 0 ? startDate : "all";
         endDate = endDate.length != 0 ? endDate : "all";
         flag = "all-subs";
-        console.log(agentID);
+        // console.log(agentID);
         $.ajax({
             url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
             type: "POST",
@@ -154,7 +154,7 @@ $(function () {
         };
 
         data.forEach((item) => {
-            //  console.log(item)
+            //  // console.log(item)
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
 
             let subordinate;
@@ -184,7 +184,7 @@ $(function () {
                 dates = item.last_login || ""; // Use empty string if null/undefined
                 times = item.last_login || "";
             }
-            //  console.log(item.subordinates)
+            //  // console.log(item.subordinates)
 
             html += `
                   <tr id="usrl-tr-${item.uid}">
@@ -307,7 +307,7 @@ $(function () {
             type: "POST",
             beforeSend: function () { },
             success: function (response) {
-                console.log(response);
+                // console.log(response);
                 const data = JSON.parse(response);
                 if(data.data.length === 0 ){
                          $("#userlistContainer").html(`<tr class="no-results"><td colspan="9">
@@ -341,9 +341,9 @@ $(function () {
         $.post(`../admin/filteruserlist/${currentPage}/${pageLimit}`, function (response) {
           
             try {
-                console.log(response);
+                // console.log(response);
                 const data = JSON.parse(response);
-                // console.log(data);
+                // // console.log(data);
                 //  return
                 $(".loaderlist").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
                 if (data.userlists.length < 1) {
@@ -378,9 +378,9 @@ $(function () {
         // $.post(`../admin/searchUserListData/uid/rechargeLevel/state/startDate/endDate`, function (response) {
           
             try {
-                console.log(response);
+                // console.log(response);
                 const data = JSON.parse(response);
-                // console.log(data);
+                // // console.log(data);
                 // return;
                 $(".loaderlist").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
                 if(data.status === "error"){
@@ -520,7 +520,7 @@ $(function () {
             const selectedOption = $(this).find("option:selected");
             const selectedUserId = selectedOption.val();
             const selectedUsername = selectedOption.data("username");
-            console.log(selectedUserId);
+            // console.log(selectedUserId);
 
             if (selectedUserId) {
                 $("#selectuserlist").val(selectedUsername);
@@ -596,7 +596,7 @@ $(function () {
 
         // searchUserListData(uid,rechargeLevel,states,startdate,enddate);
        return;
-        console.log(states);
+        // console.log(states);
         $(".loaderlist").removeClass("bx-check-double").addClass("bx-loader bx-spin");
         setTimeout(() => {
             filterUserlist(username,recharge_level, states, startdate, enddate, currentPage, pageLimit);
@@ -623,7 +623,7 @@ $(function () {
             }
 
             const data = await response.json(); // Parse JSON response
-            // console.log(data);
+            // // console.log(data);
             let html = "";
 
             // Check if data is not empty and iterate over it to generate options
@@ -647,7 +647,7 @@ $(function () {
         const form = document.getElementById("agentform");
         const formData = new FormData(form);
         const datas = Object.fromEntries(formData.entries());
-        // console.log(datas);
+        // // console.log(datas);
         addAgent(datas);
     });
  
@@ -669,7 +669,7 @@ $(function () {
             const result = await response.json();
               
 
-            console.log(result);
+            // console.log(result);
             return
             if (result.type === "success") {
                 $(".loaders").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
@@ -727,14 +727,14 @@ $(function () {
         const state         = $("#usrl-filter-state").val();
         const startDate     = $("#usrl-start-date").val();
         const endDate       = $("#usrl-end-date").val();
-        console.log(pageLimit);
+        // console.log(pageLimit);
         try {
             $.ajax({
             url: `../admin/fetchTopAgent/${rechargeLevel}/${state}/${startDate}/${endDate}/${page}/${pageLimit}`,
             type: "POST",
             beforeSend: function () { },
             success: function (response) {
-                console.log(response);
+                // console.log(response);
                 const data = JSON.parse(response);
                 if(data.data.length === 0 ){
                          $("#userlistContainer").html(`<tr class="no-results"><td colspan="9">
@@ -769,7 +769,7 @@ $(function () {
 
         const uid = $(this).attr("data-uid").trim();
         $(".userquotaid").val(uid);
-        // console.log(uid);
+        // // console.log(uid);
 
         $.post(`../admin/getuserrebate/${uid}/`, function (data) {
             const rebatelist = JSON.parse(data);
@@ -830,7 +830,7 @@ $(function () {
             `../admin/updateUsedquota/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
 
             function (result) {
-                // console.log(result);
+                // // console.log(result);
                 setTimeout(function () {
                     $(".loaderquota").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
                     if (result) {
@@ -848,7 +848,7 @@ $(function () {
     let navigationHistory = [];
     $(document).on("click", ".viewsub", function () {
         const userID = $(this).attr("data-agent-id").trim();
-        // console.log("Navigation History:", navigationHistory);
+        // // console.log("Navigation History:", navigationHistory);
         fetchsubagent(userID, currentPage, pageLimit, this);
     });
 
@@ -863,7 +863,7 @@ $(function () {
             success: function (response) {
                 response = JSON.parse(response);
                 const data = response.data;
-                console.log(data);
+                // console.log(data);
                 if (response.status === "error") {
                     showToast("Error", data, "error");
                     // $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${data}</td></tr>`);
@@ -889,7 +889,7 @@ $(function () {
     };
 
     const UserlistDataV2 = (response) => {
-        console.log(response);
+        // console.log(response);
         let html = "";
         const status = {
             1: "Enable", // Green
@@ -916,20 +916,27 @@ $(function () {
         const data = response.data;
         const login_counts = response.login_counts.data;
         const subsLookups = response.direct_subs_count.data;
+        const agentNicknames = response.agent_nicknames.data;
 
         // Create a lookup object where the key is uid and the value is logs_count
         const logsLookup = login_counts.reduce((lookup, item) => {
-            lookup[item.uid] = item.logs_count;
+            lookup[parseInt(item.uid)] = item.logs_count;
             return lookup;
         }, {});
         // Create a lookup object where the key is uid and the value is logs_count
         const subsLookup = subsLookups.reduce((lookup, item) => {
-            lookup[item.uid] = item.subs_count;
+            lookup[item.agent_id] = item.subs_count;
             return lookup;
         }, {});
-
+         // Create a lookup object where the key is uid and the value is logs_count
+        const agentNicknamesLookups = agentNicknames.reduce((lookup, item) => {
+            lookup[item.uid] = item.nickname;
+            return lookup;
+        }, {});
+        // console.log(subsLookups);
+       
         data.forEach((item) => {
-            //  console.log(item)
+            //  // console.log(item)
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
 
             let subordinate = "";
@@ -963,14 +970,14 @@ $(function () {
             //     <span class="tooltipp" style="">${subordinate}
             //     <span class="tooltipp-text">Surbodinate names</span>
             // </span>
-
+          
             html += `
               <tr id="usrl-tr-${item.uid}">
                  <td>${username}</td>
                   <td>${item.nickname}</td>
                   <td>VIP</td>
                  <td class="show-user-rel ${item.agent_level === "*****" ? "no-agent" : ""}" data-user-id="${item.uid}" style="cursor:pointer;">
-               ${item.account_type == 1 ? "-------" : item.account_type == 2 ? "Top Agent" : subsLookups[item.uid] < 2 ? item.agent_name + "->" + username : item.agent_name + "->" + username + "..."}
+               ${item.account_type == 1 ? "-------" : (item.account_type == 2 ? "Top Agent" : subsLookups[item.uid] < 2 ? agentNicknamesLookups[item.agent_id] + "->" + username : agentNicknamesLookups[item.agent_id] + "->" + username + "...")}
               </td>
                   <td>${subsLookup[item.uid] ?? 0} </td>
                   <td>${formatMoney(item.balance)}</td> 
@@ -1171,7 +1178,7 @@ $(function () {
             beforeSend: function () {},
             success: function (response) {
                 response = JSON.parse(response);
-                console.log(response);
+                // console.log(response);
                 let responseMarkup = "";
 
                 if (response.status == "error") {
@@ -1190,7 +1197,7 @@ $(function () {
             },
             error: function (res, status, error) {},
             complete: function () {
-                console.log("Operation Completed Successfully.");
+                // console.log("Operation Completed Successfully.");
             },
         });
     };
@@ -1223,7 +1230,7 @@ $(function () {
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
-                console.log(response);
+                // console.log(response);
                 response = JSON.parse(response);
                 if (response.status == "error") {
                     showToast("Error", response.data, "error");
@@ -1259,7 +1266,7 @@ $(function () {
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
-                console.log(response);
+                // console.log(response);
                 res = JSON.parse(response);
 
                 if (res.status == "error") {
@@ -1277,7 +1284,7 @@ $(function () {
             error: function (res, status, error) {},
             complete: function () {
                 $("#overlay-loader").hide();
-                console.log("Operation Completed Successfully.");
+                // console.log("Operation Completed Successfully.");
             },
         });
     };
@@ -1292,7 +1299,7 @@ $(function () {
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
-                console.log(response);
+                // console.log(response);
                 res = JSON.parse(response);
 
                 if (res.status == "error" || res.data.length === 0) {
@@ -1321,7 +1328,7 @@ $(function () {
             error: function (res, status, error) {},
             complete: function () {
                 $("#overlay-loader").hide();
-                console.log("Operation Completed Successfully.");
+                // console.log("Operation Completed Successfully.");
             },
         });
     };
@@ -1336,7 +1343,7 @@ $(function () {
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
-                console.log(response);
+                // console.log(response);
                 response = JSON.parse(response);
 
                 if (response.state == 0) return;
@@ -1355,7 +1362,7 @@ $(function () {
             error: function (res, status, error) {},
             complete: function () {
                 $("#overlay-loader").hide();
-                console.log("Operation Completed Successfully.");
+                // console.log("Operation Completed Successfully.");
             },
         });
     };
@@ -1370,9 +1377,9 @@ $(function () {
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
-                console.log(response);
+                // console.log(response);
                 response = JSON.parse(response);
-                console.log(response);
+                // console.log(response);
                 if (response.status == "error") {
                     showToast("Error", response.data, "error");
                     $("#usrl-ipsholder").html(`<tr><td colspan="10">${response.data}</td></tr>`);
@@ -1394,7 +1401,7 @@ $(function () {
             error: function (res, status, error) {},
             complete: function () {
                 $("#overlay-loader").hide();
-                console.log("Operation Completed Successfully.");
+                // console.log("Operation Completed Successfully.");
             },
         });
     };
@@ -1414,7 +1421,7 @@ $(function () {
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
-                console.log(response);
+                // console.log(response);
                 response = JSON.parse(response);
 
                 if (response.status == "error") {
@@ -1439,7 +1446,7 @@ $(function () {
             error: function (res, status, error) {},
             complete: function () {
                 $("#overlay-loader").hide();
-                console.log("Operation Completed Successfully.");
+                // console.log("Operation Completed Successfully.");
             },
         });
     };
@@ -1621,7 +1628,7 @@ $(function () {
             const response = await fetch(`../admin/filterChangeAccount/${userIdacc}/${ordertype}/${startdateusers}/${enddateusers}/${currentPage}/${pageLimit}`);
             const data = await response.json();
 
-            ///console.log(response);
+            ///// console.log(response);
 
             $(".loaderuseracc").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             if (data.filteraccount.length < 1) {
@@ -1655,7 +1662,7 @@ $(function () {
         const ordertype = $(".orderuserchange").val();
         const startdateusers = $(".startdateusers").val();
         const enddateusers = $(".enddateusers").val();
-     //   console.log(ordertype);
+     //   // console.log(ordertype);
      
         $(".loaderuseracc").removeClass("bx-check-double").addClass("bx-loader bx-spin");
             filterAccountChange(userIdacc,ordertype, startdateusers, enddateusers, currentPage, pageLimit);

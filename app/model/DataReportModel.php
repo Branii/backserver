@@ -247,6 +247,8 @@ public static function allSubs($agent_id, int $currentPage = 1, int $limit = 10,
     }
     }
 
+
+
     public static function getActiveSubs($agent_id, int $currentPage = 1, int $limit = 10, bool $addAgent = false) {
         try{
             $table_name = "users_test";
