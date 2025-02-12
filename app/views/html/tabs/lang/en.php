@@ -330,6 +330,7 @@ return [
 'Most Recent Dividends Date' => 'Most Recent Dividends Date',
 'Distribution Mechanism' => 'Distribution Mechanism',
 'Action' => 'Action',
+'Bank Transfer' =>'Bank Transfer',
 
 //Platform Fee Deposit
 'Rebate Records' => 'Rebate Records',

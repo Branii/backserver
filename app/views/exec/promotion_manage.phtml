@@ -15,43 +15,25 @@ if ($flag == "userlinkdata") {
             'totalPages' => ceil($result['total'] / $limit)
         ]);
     
-} elseif($flag  == "filterUserlinks"){
+} 
+
+if($flag  == "filterUserlinks"){
 
     
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
-    $realUsername = '';
-    if (empty($username)) {
-        $realUsername = $username;
-    } else {
-        $realUsername = (new BusinessFlowModel())->getUserIdByMixedValued($username);
-        if ($realUsername == 0) {
-            echo json_encode([
-                'sql' => '',
-                'userlinkss' => [],
-                'totalPages' => 0
-            ]);
-            exit;
-        }
-    }
-
-
+    $uid = isset($this->viewData['username']) ? $this->viewData['username'] : '';
     $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
     $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
-    $result = (new PromotionManageModel())->FilterUserlinks($page, $limit, $realUsername, $startdate, $enddate) ?? [];
 
-    $bigArrlinks = [];
-    foreach ($result['data'] as $data) {
-        $username  = (new BusinessFlowModel())->getUsernameById($data['agent_id']);
-        $data['username'] = $username;
-        $bigArrlinks[] = $data;
-
-    }
-
+    $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
+    $username = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : $uid;
+    $subquery =   (new PromotionManageModel())->FilterUserlinksDataSubQuery($username, $startdate, $enddate) ;
+    $result = (new PromotionManageModel())->FilterUserlinks($subquery,$page, $limit) ?? [];
+ 
     echo json_encode([
         'sql' => $result['sql'],
-        'userlinkss' => $bigArrlinks,
+        'userlinkss' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit)
     ]);
 }

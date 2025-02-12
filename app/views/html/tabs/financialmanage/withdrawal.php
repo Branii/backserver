@@ -376,7 +376,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="addContactMbodavoc" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
+<div class="modal fade" id="add=ContactMbodavoc" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header d-flex align-items-center">
@@ -386,7 +386,7 @@
             <div class="modal-body">
                 <div class="add-contact-box">
                     <div class="add-contact-content">
-                        <form id="add[CbontactModalTitle">
+                        <form id="add=CbontactModalTitle">
                              
                             <div class="row">
                                 <div class="col-md-12">

@@ -35,7 +35,7 @@ elseif($flag  == "UpdateAllquota"){
 
 elseif($flag  == "filterRebate"){
 
-    $rebate = isset($this->viewData['rebate']) ?  (float)$this->viewData['rebate'] :[];
+    $rebate = isset($this->viewData['rebate']) ?  $this->viewData['rebate'] :[];
 
     $result = (new AgentManageModel())->FilterRebate($rebate) ?? [];
     echo json_encode(["filterquota"=> $result['data']]);

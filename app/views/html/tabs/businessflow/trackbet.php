@@ -357,8 +357,8 @@
                     <select class="form-control trackdown" size="5" style="display: none;" id="usertrackDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>
-
-                <select name="recharge" class="form-control form-select queryholderlist trackstatus"
+                    <input name="usernames"  class="form-control queryholderlist clearitem"  id="trackcode" placeholder="Search Track Id"/>
+                 <select name="recharge" class="form-control form-select queryholderlist trackstatus"
                     data-bs-placeholder="Select Type">
                     <option value="">-Track Status-</option>
                     <option value="1"><?= $translator['Running'];?></option>
@@ -366,10 +366,10 @@
                     <option value="3"><?= $translator['Completed'];?></option>
                     <option value="4"><?= $translator['Stop If Win'];?></option>
                     <option value="5"><?= $translator['Stop If Not Win'];?></option>
-                </select>
+                  </select>
 
                 <div class="custom-dropdown">
-                        <select name="lotteryname" class="form-control form-select queryholderlist tracklotery selectlottery" data-bs-placeholder="Select Type"> </select>
+                    <select name="lotteryname" class="form-control form-select queryholderlist tracklotery selectlottery" data-bs-placeholder="Select Type"> </select>
                  </div>
 
                 <input type="date" class="form-control queryholderlist startdatetrack"  aria-describedby="name"

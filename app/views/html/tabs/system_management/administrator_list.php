@@ -357,7 +357,7 @@
 
 </div>
 
-<div class="modal fade" id="al-danger-alert" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
+<div class="modal fade" id="al-danger-alertwe" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content modal-filled " style="background-color:#F9F9F9">
       <div class="modal-body p-4">

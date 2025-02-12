@@ -35,8 +35,8 @@ $(function () {
         html += `
                       <tr>
                  <td>${typeof username === "string" || typeof username === "number" 
-    ? String(username).charAt(0).toUpperCase() + String(username).slice(1) 
-    : "N/A"}</td>
+                  ? String(username).charAt(0).toUpperCase() + String(username).slice(1) 
+                  : "N/A"}</td>
                       <td>VIP</td>
                       <td class="editables">${types}</td>
                       <td class="editables">${formatMoney(total_income)}</td>
@@ -133,9 +133,9 @@ $(function () {
   
     //search function
 
-    async function filterfinance(username, depositestate, startfinance, endfinance, currentPage, pageLimit) {
+    async function filterfinance(username, financetype, startfinance, endfinance, currentPage, pageLimit) {
       $.post(
-        `../admin/filterfinance/${username}/${depositestate}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
+        `../admin/filterfinance/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
         function (response) {
           try {
             const data = JSON.parse(response);
@@ -155,7 +155,7 @@ $(function () {
             $("#maskfinance").LoadingOverlay("hide");
              renderfinace(data.finances);
           // Render pagination
-          renderfinacePagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterfinance(username, depositestate, startfinance, endfinance, newPage, pageLimit));
+          renderfinacePagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterfinance(username, financetype, startfinance, endfinance, newPage, pageLimit));
           document.getElementById("paging_infofinance").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
     
           } catch (error) {
@@ -172,20 +172,20 @@ $(function () {
 
     $(document).on('click', '.executefinance', function () {
     
-      if ($("#financeDropdown").val() == "" && $(".depositestate").val() == "" && $(".startfinances").val() == "" ) {
+      if ($("#financeDropdown").val() == "" && $(".financetype").val() == "" && $(".startfinances").val() == "" ) {
         // $("#danger-finance").modal("show");
         showToast("Heads up!!","Select one or more data fields to filter","info")
         return;
     }
   
-      const depositestate = $(".depositestate").val();
+      const financetype = $(".financetype").val();
       const username = $("#financeDropdown").val();
       const startfinance = $(".startfinances").val();
       const endfinance = $(".endfinances").val();
-       console.log(endfinance)
+       //console.log(endfinance)
       // return
    
-     filterfinance(username,depositestate,startfinance,endfinance,currentPage,pageLimit)
+     filterfinance(username,financetype,startfinance,endfinance,currentPage,pageLimit)
       // Show loader
       $(".loaderfinance").removeClass('bx-check-double').addClass('bx-loader bx-spin');
   
