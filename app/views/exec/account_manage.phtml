@@ -127,6 +127,7 @@ if ($flag == "addAgent") {
      // $data = urldecode($data);
      parse_str($data, $parsedData);
      $result = (new UserManageModel())->validateRegister($parsedData) ?? [];
+     $rebatelist =  (new UserManageModel())->fetchquotaData($parsedData['agentrebate']);
     if ($result == []) {
         $dateTime = date("Y-m-d H:i:s");
         $account_type = 2;
@@ -165,7 +166,14 @@ if ($flag == "addAgent") {
              'money_password' =>"*****",
              'browser_info' =>"*****",
              'linker' =>"*****",
-           
+             'idcard_number' =>"*****",
+             'idcard_front' =>"*****",
+             'idcard_back' =>"*****",
+             'withdrawal_level' =>"1",
+             'recharge_level' =>"*****",
+             'security_question'=>"*****",
+             'security_answer' =>"*****",
+             'auth_type' =>"*****"
         ];
 
        
@@ -173,7 +181,7 @@ if ($flag == "addAgent") {
        $result = (new UserManageModel())->AddAgentData($datas) ?? [];
     }
 
-    echo json_encode($result);
+    echo json_encode($rebatelist);
 }
 
 
