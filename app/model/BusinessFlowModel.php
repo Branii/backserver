@@ -100,17 +100,32 @@ class BusinessFlowModel extends MEDOOHelper
 
    public static function getUserIdByUsername(string $key)
    {
+      if (empty($key)) {
+         return []; // Return empty if no key is provided
+     }
+ 
+   
       $data = parent::query(
-         "SELECT uid FROM users_test WHERE 
-            uid = :uid 
-            OR email = :email 
-            OR username = :username 
-            OR contact = :contact
-            OR nickname = :nickname",
-
-         ['uid' => $key, 'email' => $key, 'username' => $key, 'contact' => $key, 'nickname' => $key]
+            "SELECT uid FROM users_test WHERE 
+               uid = :key 
+               OR email = :key 
+               OR username = :key 
+               OR contact = :key 
+               OR nickname = :key",
+            ['key' => $key]
       );
       return $data;
+      // $data = parent::query(
+      //    "SELECT uid FROM users_test WHERE 
+      //       uid = :uid 
+      //       OR email = :email 
+      //       OR username = :username 
+      //       OR contact = :contact
+      //       OR nickname = :nickname",
+
+      //    ['uid' => $key, 'email' => $key, 'username' => $key, 'contact' => $key, 'nickname' => $key]
+      // );
+      // return $data;
    }
    public static function getUserIdByMixedValued(string $mixedValue)
    {
@@ -387,59 +402,35 @@ class BusinessFlowModel extends MEDOOHelper
       return ['data' => $data, 'total' => $totalRecords];
    }
 
-   public static function GetTrackWins($token)
-   {
-      $bettable = self::getAllGameIds();
-      $totalPrize = 0;
-
-      foreach ($bettable as $tables) {
-         $tableName = $tables['bet_table'];
-
-         $sql = "SELECT SUM(win_bonus) AS total_prize FROM {$tableName} 
-                    WHERE token = :token AND bet_status = 2 AND state = 1";
-
-         try {
-            // Execute the query and fetch the data
-            $data = parent::query($sql, ['token' => $token]);
-
-            // If data is returned and total_prize exists, add it to the accumulator
-            if ($data && isset($data[0]['total_prize'])) {
-               $totalPrize += $data[0]['total_prize'];
-            }
-         } catch (Exception $e) {
-            // Log any exceptions or errors that occur during the query
-            error_log("Error executing query for table {$tableName}: " . $e->getMessage());
-         }
-      }
-
-      // Return the total prize accumulated from all tables
-      return $totalPrize;
-   }
 
    //filtertrack
-   public static function FilterSubQuery($username, $trackstatus, $tracklotery, $enddate, $startdate)
+   public static function FilterSubQuery($username, $trackstatus, $tracklotery,$trackcode, $enddate, $startdate)
    {
       $filterConditions = [];
 
       // Build filter conditions
       if (!empty($username)) {
-         $filterConditions[] = "user_id = '$username'";
+         $filterConditions[] = "trackbet.user_id = '$username'";
       }
 
       if (!empty($trackstatus)) {
-         $filterConditions[] = "track_status = '$trackstatus'";
+         $filterConditions[] = "trackbet.track_status = '$trackstatus'";
+      }
+      
+      if (!empty($trackcode)) {
+         $filterConditions[] = "trackbet.track_token = '$trackcode'";
       }
 
       if (!empty($tracklotery)) {
-         $filterConditions[] = "game_type_id = '$tracklotery'";
+         $filterConditions[] = "trackbet.game_type_id = '$tracklotery'";
       }
 
       if (!empty($startdate) && !empty($enddate)) {
-         $filterConditions[] = "server_date BETWEEN '$startdate' AND '$enddate'";
+         $filterConditions[] = "trackbet.server_date BETWEEN '$startdate' AND '$enddate'";
       } elseif (!empty($startdate)) {
-         $filterConditions[] = "server_date = '$startdate'";
+         $filterConditions[] = "trackbet.server_date = '$startdate'";
       } elseif (!empty($enddate)) {
-         $filterConditions[] = "server_date = '$enddate'";
+         $filterConditions[] = "trackbet.server_date = '$enddate'";
       }
 
       // Add conditions to subquery (handle WHERE and AND appropriately)
@@ -447,7 +438,7 @@ class BusinessFlowModel extends MEDOOHelper
          $subQuery = implode(' AND ', $filterConditions);
       }
       // Add ordering and limit to the query
-      // $subQuery .= " ORDER BY bt.server_date DESC";
+       $subQuery .= " ORDER BY trackbet.server_date DESC";
 
       return $subQuery;
    }
@@ -456,23 +447,18 @@ class BusinessFlowModel extends MEDOOHelper
    {
       $startpoint = ($page - 1) * $limit;
 
-      $sql = "
-                SELECT 
-                    temp_tables.*, 
-                    users_test.email AS email, 
-                    users_test.reg_type,
-                    users_test.username AS username, 
-                    users_test.contact
-                FROM 
-                    (
-                        SELECT * 
-                        FROM trackbet
-                        WHERE $subQuery
-                    ) AS temp_tables
-               LEFT JOIN 
-                    users_test ON users_test.uid = temp_tables.user_id
-                LIMIT :offset, :limit
-            ";
+            $sql = "
+            SELECT 
+               trackbet.*, 
+               users_test.email AS email, 
+               users_test.reg_type,
+               users_test.username AS username, 
+               users_test.contact
+            FROM trackbet
+            LEFT JOIN users_test ON users_test.uid = trackbet.user_id
+            WHERE $subQuery
+            LIMIT :offset, :limit
+      ";
 
       // Define the query to count total records
       $countSqls = "
@@ -495,11 +481,7 @@ class BusinessFlowModel extends MEDOOHelper
       $lastQuery = MedooOrm::openLink()->log();
 
       // Return the results
-      return [
-         'data' => $data,
-         'total' => $totalRecords,
-         'sql' => $lastQuery[0],
-      ];
+      return [ 'data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery[0]];
    }
 
    public static function getTrackData($betTable, $tracktoken)

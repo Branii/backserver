@@ -378,7 +378,7 @@
 </div>
 
 <!-- sample modal content -->
-<div id="add-new" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
+<div id="add-newx" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
 <div class="modal-dialog modal-dialog-scrollable modal-lg">
 <div class="modal-content" style="padding:20px">
 <div class="d-flex justify-content-between">
@@ -389,7 +389,7 @@
               <!-- start Info Border with Icons -->
               <div class="cardd">
                 <div class="card-body">
-                  <form id="admins">
+                  <form id="adminsx">
                     <div class="form-floating mb-3 d-flex row justify-content-center">
 
                       <div class="d-flex align-items-center">
@@ -463,7 +463,7 @@
                     </div>
 
                     <div class="form-floating mb-3" >
-                    <select id="user-role" class="form-select fullrole" name="role">
+                    <select id="user-roles" class="form-select fullrole" name="role">
                       <option value="super_admin">Super Admin</option>
                       <option value="admin">Admin</option>
                       <option value="moderator">Moderator</option>

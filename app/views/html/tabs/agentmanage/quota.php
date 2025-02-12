@@ -207,8 +207,8 @@
             
             </div> -->
             <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon12" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
-                    <input type="text" class="form-control queryholder userrebate" placeholder="Enter Rebate (%)" aria-label="Username" aria-describedby="basic-addon1" />
+                    <span class="input-group-text" id="basic-axxddon12" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
+                    <input type="text" class="form-control queryholder userrebatess" placeholder="Enter Rebate (%)" aria-label="Username" aria-describedby="basic-addon1" />
           </div>
 
         </span>
@@ -228,7 +228,7 @@
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle executeuserlinks" value="end" aria-label="Execute"
+                <button type="button" class="btn bg-white-subtle executeuserlinkss" value="end" aria-label="Execute"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                     <i class='bx bx-check-double loaderlinks' style="font-size:20px"></i>
                 </button>

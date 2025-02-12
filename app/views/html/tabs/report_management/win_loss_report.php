@@ -495,7 +495,7 @@ li.name-items:hover {
     </div>
 </div>
 
-<div id="addagentmodal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
+<div id="addagentmodaly" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-body">
@@ -508,7 +508,7 @@ li.name-items:hover {
                 </div>
 
                 <!-- Form -->
-                <form id="agentform">
+                <form id="agentformy">
 
 
                     <!-- Username Field -->
@@ -549,7 +549,7 @@ li.name-items:hover {
 
                     <!-- Rebate Field -->
                     <div class="form-floating mb-3">
-                        <select name="agentrebate" class="form-select form-control border border-infos" id="usererebate">
+                        <select name="agentrebate" class="form-select form-control border border-infos" id="usexrerebate">
                             <!-- \<option value="" disabled selected>Select Rebate</option> -->
                             <!-- Dynamically populated options -->
                         </select>
@@ -597,16 +597,16 @@ li.name-items:hover {
                 <div class="card border mb-4">
                     <div class="card-body">
                         <h4 class="card-title">Personal Details</h4>
-                        <form id="personalDetailsForm">
+                        <form id="personalDetairlsForm">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label for="userName" class="form-label">Your Name</label>
-                                        <input type="text" class="form-control" id="userName" placeholder="Mathew Anderson">
+                                        <input type="text" class="form-control" id="userrName" placeholder="Mathew Anderson">
                                     </div>
                                     <div class="mb-3">
                                         <label for="userLocation" class="form-label">Location</label>
-                                        <select id="userLocation" class="form-select">
+                                        <select id="userLocration" class="form-select">
                                             <option selected>United Kingdom</option>
                                             <option value="1">United States</option>
                                             <option value="2">India</option>
@@ -615,17 +615,17 @@ li.name-items:hover {
                                     </div>
                                     <div class="mb-3">
                                         <label for="userEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="userEmail" placeholder="info@modernize.com">
+                                        <input type="email" class="form-control" id="userrEmail" placeholder="info@modernize.com">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label for="storeName" class="form-label">Store Name</label>
-                                        <input type="text" class="form-control" id="storeName" placeholder="Maxima Studio">
+                                        <input type="text" class="form-control" id="storeNarme" placeholder="Maxima Studio">
                                     </div>
                                     <div class="mb-3">
                                         <label for="userCurrency" class="form-label">Currency</label>
-                                        <select id="userCurrency" class="form-select">
+                                        <select id="userCurrrency" class="form-select">
                                             <option selected>India (INR)</option>
                                             <option value="1">US Dollar ($)</option>
                                             <option value="2">United Kingdom (Pound)</option>
@@ -634,13 +634,13 @@ li.name-items:hover {
                                     </div>
                                     <div class="mb-3">
                                         <label for="userPhone" class="form-label">Phone</label>
-                                        <input type="text" class="form-control" id="userPhone" placeholder="+91 12345 65478">
+                                        <input type="text" class="form-control" id="userrPhone" placeholder="+91 12345 65478">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label for="userAddress" class="form-label">Address</label>
-                                        <input type="text" class="form-control" id="userAddress" placeholder="814 Howard Street, 120065, India">
+                                        <input type="text" class="form-control" id="userAdrdress" placeholder="814 Howard Street, 120065, India">
                                     </div>
                                 </div>
                             </div>
@@ -652,16 +652,16 @@ li.name-items:hover {
                 <div class="card border">
                     <div class="card-body">
                         <h4 class="card-title">Account Details</h4>
-                        <form id="accountDetailsForm">
+                        <form id="accountDetailsForma">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label for="accountName" class="form-label">Your Name</label>
-                                        <input type="text" class="form-control" id="accountName" placeholder="">
+                                        <input type="text" class="form-control" id="accountNamea" placeholder="">
                                     </div>
                                     <div class="mb-3">
                                         <label for="accountLocation" class="form-label">Location</label>
-                                        <select id="accountLocation" class="form-select">
+                                        <select id="accountLocationa" class="form-select">
                                             <option selected>United Kingdom</option>
                                             <option value="1">United States</option>
                                             <option value="2">India</option>
@@ -670,17 +670,17 @@ li.name-items:hover {
                                     </div>
                                     <div class="mb-3">
                                         <label for="accountEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="accountEmail" placeholder="">
+                                        <input type="email" class="form-control" id="accountEmaila" placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label for="accountStoreName" class="form-label">Store Name</label>
-                                        <input type="text" class="form-control" id="accountStoreName" placeholder="">
+                                        <input type="text" class="form-control" id="accountStoreNamea" placeholder="">
                                     </div>
                                     <div class="mb-3">
                                         <label for="accountCurrency" class="form-label">Currency</label>
-                                        <select id="accountCurrency" class="form-select">
+                                        <select id="accountCurrencya" class="form-select">
                                             <option selected>India (INR)</option>
                                             <option value="1">US Dollar ($)</option>
                                             <option value="2">United Kingdom (Pound)</option>
@@ -689,13 +689,13 @@ li.name-items:hover {
                                     </div>
                                     <div class="mb-3">
                                         <label for="accountPhone" class="form-label">Phone</label>
-                                        <input type="text" class="form-control" id="accountPhone" placeholder="">
+                                        <input type="text" class="form-control" id="accountPhonea" placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label for="accountAddress" class="form-label">Address</label>
-                                        <input type="text" class="form-control" id="accountAddress" placeholder="">
+                                        <input type="text" class="form-control" id="accountAddressa" placeholder="">
                                     </div>
                                 </div>
                             </div>

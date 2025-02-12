@@ -858,7 +858,7 @@
 </div>
 
 <div id="viewquota" class="modal fade" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-body">
                 <!-- Modal Header -->

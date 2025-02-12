@@ -263,7 +263,7 @@ class FinancialManageModel extends MEDOOHelper
             'balance' =>  $recharge_balance,
             'total_income' =>  0,
             'account_change' => $amount,
-            'date_created' =>  date("Y-m-d"),
+            'date_created' =>  date("Y-m-d H:i:s"),
             'dateTime' => date("Y-m-d H:i:s"),
             'description' => $review,
             'remarks' => $review,

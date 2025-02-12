@@ -217,10 +217,11 @@ class adminController extends Controller {
         $this->view->render();
     }
     
-    public function filterTrackdata($username,$trackstatus,$tracklotery,$startdate,$enddate,$page,$limit){
+    public function filterTrackdata($username,$trackstatus,$trackcode,$tracklotery,$startdate,$enddate,$page,$limit){
         $this->view('exec/businessflow',[
         'username'=>$username,
         'trackstatus'=>$trackstatus,
+        'trackcode'=>$trackcode,
         'tracklotery'=>$tracklotery,
         'startdate'=>$startdate,
         'enddate'=>$enddate,
@@ -404,12 +405,12 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    // public function  filterUserlinks($username = '',  $startdate = '', $enddate = '', $pageNumber, $limit)
-    // {
-    //     $this->view('exec/promotion_manage', ['username' => $username,'startdate' => $startdate,
-    //     'enddate' => $enddate,'flag' => 'filterUserlinks','page' => $pageNumber,'limit' => $limit,]);
-    //     $this->view->render();
-    // }
+    public function  filterUserlinks($username,$startdate, $enddate, $pageNumber, $limit)
+    {
+        $this->view('exec/promotion_manage', ['username' => $username,'startdate' => $startdate,
+        'enddate' => $enddate,'flag' => 'filterUserlinks','page' => $pageNumber,'limit' => $limit,]);
+        $this->view->render();
+    }
 
       //NOTE -
     //////////////Quota Settings -//////////

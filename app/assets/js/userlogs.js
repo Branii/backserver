@@ -311,28 +311,27 @@ $(function () {
       });
    }
    tableScrollUserLogs();
-    
-//    async function fetchIpInfo(ip) {
-//     try {
-//         const url = `https://www.geoplugin.net/json.gp?ip=${ip}`; // Use HTTPS for security
-//         const response = await fetch(url);
-
-//         if (!response.ok) {
-//             throw new Error(`Failed to fetch data for IP: ${ip} - ${response.statusText}`);
-//         }
-
-//         const data = await response.json();
-
-//         // Ensure the response contains valid data
-//         if (!data || !data.geoplugin_city) {
-//             throw new Error(`Invalid response for IP: ${ip}`);
-//         }
-
-//         return data;
-//     } catch (error) {
-//         console.error(`Error fetching IP info for ${ip}:`, error.message);
-//         return null;
-//     }
+    // function getIpLocation(ip = "157.173.97.174:443") {
+//   const url = ip ? `http://www.geoplugin.net/json.gp?ip=${ip}` : "http://www.geoplugin.net/json.gp";
+  
+//   $.getJSON(url, function(data) {
+//       console.log("IP Address: " + data.geoplugin_request);
+//       console.log("City: " + data.geoplugin_city);
+//       console.log("Region: " + data.geoplugin_region);
+//       console.log("Country: " + data.geoplugin_countryName);
+//   }).fail(function() {
+//       console.error("Failed to fetch location data.");
+//   });
 // }
+
+// // Usage Example:
+// // Get location of visitor's IP
+//   getIpLocation(); 
+
+// // Get location of a specific IP
+// // getIpLocation("8.8.8.8");
+
+
+
 
   });

@@ -134,14 +134,15 @@ $(function () {
   
 
      
-        $(document).on("keyup", ".userrebate", function () {
+        $(document).on("keyup", ".userrebatess", function () {
           const inputValue = $(this).val().trim(); // Remove any extra spaces
-          let datarebate = parseFloat(inputValue); // Try to convert to float
-       
+          let datarebate = parseFloat(inputValue).toFixed(1); // Try to convert to float
+          // console.log(datarebate);
           // Check if the input is valid
           if (isNaN(datarebate)) {
               // Input is not a number
-              renderquota([]); // Reset or clear results
+              //renderquota([]); // Reset or clear results
+              fetchquota(currentPagequota)
               let html = `
               <tr class="no-results" >
                   <td colspan="9">

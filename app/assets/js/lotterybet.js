@@ -361,7 +361,7 @@ $(function () {
 
       const data = await response.json(); // Parse JSON response
       // console.log(data);
-      let html = `<option value=""selected></option>`;
+      let html =`<option value="" >Lottery Type</option>`;
       data.forEach((lottery) => {
           html += `<option value="${lottery.gt_id}">${lottery.name}</option>`;
       });
@@ -526,12 +526,17 @@ $(function () {
   }
   tableScroll();
 
-  $("#myInput").on("input paste", function () {
+  $(".search-betID").on("input paste", function () {
     const self = this;
     setTimeout(() => {
       // Trim leading spaces
       $(self).val($(self).val().replace(/^\s+/, ""));
     }, 0);
   });
+
+  $(".search-betID").on("dblclick", function () {
+    $(this).val(""); // Clears the input field
+});
+
 
 });
