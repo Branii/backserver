@@ -170,7 +170,7 @@ if ($flag == "users-win-loss") {
      
      $subs = DataReportModel::getActiveSubs($agent_id);
      
-     if(empty($subs)){  empty_response(); return; }
+     if(empty($subs)){  echo empty_response(); return; }
    
      $results = [];
      foreach($subs as $key => $sub){

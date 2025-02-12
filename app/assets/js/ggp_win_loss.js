@@ -602,6 +602,7 @@ $(".playerWinLoss").click(function(e){
         }
     });
 
+    
   }
 
   const fetchAgentSubs = (eventElement,currentPage) => {
@@ -621,7 +622,7 @@ $(".playerWinLoss").click(function(e){
     lotteryID = lotteryID == undefined ?  "all" : lotteryID;
     startDate = startDate.length != 0 ? startDate : "all";
     endDate   = endDate.length != 0 ? endDate : "all";
-    flag      = "active-subs"
+    flag      = "get-active-subs"
     console.log(agentID);
     $.ajax({
         url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
