@@ -274,7 +274,7 @@
                     <!-- Options will be populated dynamically -->
                 </select>
 
-                <select name="betsate" class="form-control form-select queryholderlistt depositestate"  data-bs-placeholder="Select Type">
+                <select name="betsate" class="form-control form-select queryholderlistt financetype"  data-bs-placeholder="Select Type">
                     <option value="">-<?= $translator['Transaction Type']; ?>-</option>
                     <option value="1"><?= $translator['Deposit']; ?></option>
                     <option value="4"><?= $translator['Withdrawal']; ?></option>

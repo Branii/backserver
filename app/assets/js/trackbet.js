@@ -160,9 +160,9 @@ $(function () {
         }
     }
 
-    async function filterTrack(usernames, trackstatus, tracklotery, startdatetrack, enddatetrack, currentPagetrack, pageLimit) {
+    async function filterTrack(usernames, trackstatus,trackcode, tracklotery, startdatetrack, enddatetrack, currentPagetrack, pageLimit) {
         try {
-            const response = await fetch(`../admin/filterTrackdata/${usernames}/${trackstatus}/${tracklotery}/${startdatetrack}/${enddatetrack}/${currentPagetrack}/${pageLimit}`);
+            const response = await fetch(`../admin/filterTrackdata/${usernames}/${trackstatus}/${trackcode}/${tracklotery}/${startdatetrack}/${enddatetrack}/${currentPagetrack}/${pageLimit}`);
 
             const data = await response.json();
             if (data.response == "error") {
@@ -189,7 +189,7 @@ $(function () {
             rendertrack(data.trackfilter);
 
             // Render pagination
-            renderPaginationtrack(data.totalPages, currentPagetrack, pageLimit, (newPage, pageLimit) => filterTrack(usernames, trackstatus, tracklotery, startdatetrack, enddatetrack, newPage, pageLimit));
+            renderPaginationtrack(data.totalPages, currentPagetrack, pageLimit, (newPage, pageLimit) => filterTrack(usernames, trackstatus, trackcode,tracklotery, startdatetrack, enddatetrack, newPage, pageLimit));
             document.getElementById("paging_infotrack").innerHTML = "Page " + currentPagetrack + " of " + data.totalPages + " pages";
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -288,7 +288,8 @@ $(function () {
     });
 
     $(".executetrack").click(function () {
-        if ($("#trackinput").val() == "" && $(".trackstatus").val() == "" && $(".tracklotery").val() == "" && $(".startdatetrack").val() == "") {
+        if ($("#trackinput").val() == "" && $(".trackstatus").val() == "" && $(".tracklotery").val() == ""
+          && $(".startdatetrack").val() == "" && $("#trackcode").val() =="") {
             //$("#dangertrack").modal("show");
             showToast("Heads up!!","Select one or more data fields to filter","info")
             return;
@@ -296,10 +297,11 @@ $(function () {
         const usernames = $("#trackinput").val();
         const trackstatus = $(".trackstatus").val();
         const tracklotery = $(".tracklotery").val();
+        const trackcode = $("#trackcode").val();
         const startdatetrack = $(".startdatetrack").val();
         const enddatetrack = $(".enddatetrack").val();
-        console.log(usernames);
-        filterTrack(usernames, trackstatus, tracklotery, startdatetrack, enddatetrack, currentPagetrack, pageLimit);
+        console.log(trackcode);
+        filterTrack(usernames, trackstatus, tracklotery, trackcode,startdatetrack, enddatetrack, currentPagetrack, pageLimit);
         $(".loadertrack").remove("bx bx-check-double").addClass("bx bx-loader bx-spin");
     });
 
@@ -478,4 +480,10 @@ $(function () {
         });
     }
     tableScrolltrack();
+
+
+    $(".clearitem").on("dblclick", function () {
+        $(this).val(""); // Clears the input field
+    });
+    
 });

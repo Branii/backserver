@@ -228,7 +228,7 @@
                 <select class="form-control useraccount" size="5" style="display: none;" id="userAccountDropdown">
                     <!-- Options will be populated dynamically -->
                 </select>
-                <input type="text" class="form-control queryholdertransaction clearitem"  id= "transactionId" aria-describedby="name" placeholder="Enter Transaction ID" />
+                <input type="text" class="form-control queryholdertransaction clearitem"  id= "transactionId" aria-describedby="name" placeholder="Search Transaction ID" />
                 
                 <select name="order_type" class="form-control form-select queryholdertransaction " id="ordertypetrans" data-bs-placeholder="Select Type">
                     <option value="">-<?= $translator['Transaction Type']; ?>-</option>

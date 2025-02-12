@@ -225,11 +225,11 @@
                 </select>
 
                 
-                 <input type="date" class="form-control queryholderlogss linkstart" id="nametel" aria-describedby="name"
+                 <input type="date" class="form-control queryholderlogss linkstart"  aria-describedby="name"
                     placeholder="Name" />
 
 
-                <input type="date" class="form-control queryholderlogss linkenddate" id="nametexi" aria-describedby="name"
+                <input type="date" class="form-control queryholderlogss linkenddate"  aria-describedby="name"
                     placeholder="Name" />
 
 
@@ -243,13 +243,13 @@
 
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle player refreshlinks" value="right" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle player refreshreferal" value="right" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle executeuserlinks" value="end" aria-label="Execute"
+                <button type="button" class="btn bg-white-subtle executeusereferal" value="end" aria-label="Execute"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                    <i class='bx bx-check-double loaderlinks' style="font-size:20px"></i>
+                    <i class='bx bx-check-double loaderreferal' style="font-size:20px"></i>
                 </button>
             </div>
 
@@ -258,7 +258,7 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperlistlinks" id="masklinks" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperlistlinks" id="maskreferal" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4 tbl-headerlinks">
                     <tr class="headrowlinks">
@@ -319,10 +319,10 @@
         </span>
         <span class="toplist-center" aria-label=" navigation example">
 
-            <span id="paging_infolinks" style="color:#aaa">---</span>
+            <span id="paging_inforeferal" style="color:#aaa">---</span>
 
         </span>
-        <span class="toplist-right" id="paginationlinks" aria-label="Page navigation example">
+        <span class="toplist-right" id="paginationreferal" aria-label="Page navigation example">
 
             <!--Dynamic pagination-->
 
