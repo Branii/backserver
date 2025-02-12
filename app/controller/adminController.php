@@ -175,6 +175,10 @@ class adminController extends Controller {
         $this->view('exec/businessflow',['username'=>$username,'flag' => 'searchusername']);
         $this->view->render();
     }
+    public function searchBankTypes($bank_type){
+        $this->view('exec/userbank_manage',['bank_type'=>$bank_type,'flag' => 'search-bank-name']);
+        $this->view->render();
+    }
 
 
     // --- MUNIRU ----
@@ -509,9 +513,9 @@ class adminController extends Controller {
      //NOTE -
     //////////////Bank Cardlist Records -//////////
     // 
-    public function   fetchbankcard($pageNumber, $limit)
+    public function   fetchbankcard($uid,$bank_type,$card_number,$status,$pageNumber, $limit,$miscelleanous)
     {
-        $this->view('exec/userbank_manage', ['page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchbankcard']);
+        $this->view('exec/userbank_manage', ['uid' => $uid,'bank_type' => $bank_type,'card_number' => $card_number,'status' => $status,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchbankcard']);
         $this->view->render();
     }
   

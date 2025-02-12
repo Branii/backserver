@@ -176,6 +176,21 @@
         background-color: #fff;
         /* Optional: Make it stand out */
     }
+    .bl-users-wrapper,.bl-bank-type-wrapper {
+    position: absolute;
+    width: 17%;
+    border-radius: 5px;
+    max-height: fit-content;
+    background: #fff;
+    border: 1px solid #dfe5ef;
+    display: none;
+    z-index: 10;
+    }
+    #bl-names-wrapper {
+        max-height: 403px;
+        margin: 0px;
+        overflow-y: auto;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -184,39 +199,55 @@
         <h4 class="card-title mb-0"><?= $translator['Bank Card List']; ?></h4>
     </div>
 
-    <div class="px-4 py-3 border-bottom pagerlist">
+    <div class="px-4 py-3 border-bottom pagerlist1">
         <span class="top-left-btn">
-            <!-- <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
-            <input type="text" class="form-control product-search ps-5 userrebate" id="input-rsearch" placeholder="Search Rebate..." />
-            <i class="bx bx-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
-            
-            </div> -->
-            <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon12" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
-                    <input type="text" class="form-control queryholder userrebate" placeholder="Enter Rebate (%)" aria-label="Username" aria-describedby="basic-addon1" />
-          </div>
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:120%;">
 
+            <input id="bl-idholder" type="hidden" value="">
+                <div style="width: 65%;">
+          
+ <input name="usernamelist" class="form-control bring-forward" id="bl-username" data-user-id="" placeholder="Search Username" autocomplete="off" style="width:97%;"><div class="bl-users-wrapper" style="width: 24.5%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="bl-names-wrapper"></ul> </div> </div>
+
+ <div style="width: 65%;">
+          
+ <input name="bank-type" class="form-control bring-forward" id="bl-bank-type" placeholder="Search Bank Type" autocomplete="off" style="width:97%;"><div class="bl-bank-type-wrapper" style="width: 24.5%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="bl-bank-type-wrapper"></ul> </div>  </div>
+ <div style="width: 65%;">
+          
+ <input name="card-number" type="text" class="form-control bring-forward" value="" id="bl-card-number"  placeholder="Search Card Number" autocomplete="off" style="width:97%;"> </div>
+
+
+        <div class="custom-dropdown" style="width: 57%; margin-right: 5px;">
+        <select name="lotteryname" class="form-control form-select  " id="bl-status" data-bs-placeholder="Select Type">
+            <option value="0">Status</option>
+            <option value="1">In Force</option>
+            <option value="2">Not Active</option>
+            <option value="3">Terminated</option>
+            <option value="4">Deleted</option>
+        </select>
+                    </div>
+        <!-- <input type="date" name="startdate" class="form-control startdate" placeholder="Name" id="wl-startdate" style="width: 50%;">
+
+            <input type="date" name="enddate" class="form-control enddate" placeholder="Name" id="wl-enddate" style="width: 50%;"> -->
+      
+  
+
+
+            </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
             <!--enter is free-->
         </span>
         <span class="topplist-right" id="paginations" aria-label="Page navigation example">
 
-            <div class="btn-group mb-2" role="group" aria-label="Basic example"
-                style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <!-- <i ' ></i> -->
-                <!-- <button type="button" class="btn bg-white-subtle player setallbankcard" value="right" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Set all bankcard">
-                    <i class='bx bx-plus' style="font-size:20px"></i>
-                </button> -->
-                <button type="button" class="btn bg-white-subtle player refreshbankcard" value="right" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
-                    <i class='bx bx-refresh' style="font-size:20px"></i>
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border:solid 1px #eee;color:#bbb;background-color:#fff">
+              
+                <button type="button" class="btn bg-white-subtle player refreshbankcard" value="" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                    <i class="bx bx-refresh" style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle executeuserlinks" value="end" aria-label="Execute"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                    <i class='bx bx-check-double loaderlinks' style="font-size:20px"></i>
+                <button type="button" class="btn bg-white-subtle bl-search" value="" aria-label="Search" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Search">
+                    <i class="bx loaderlist bx-check-double" style="font-size:20px"></i>
                 </button>
+
             </div>
 
         </span>

@@ -157,15 +157,26 @@ class FinancialManageModel extends MEDOOHelper
         }
 
         
-        if (
-            self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance) &&
-             self::insertIntoDepositsNew($uid, $amount, $username) &&
-             self::insertIntoWithrawManage($uid, $amount, $username)&&
-            self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
-        ) {
-            // Update user balance if all operations succeed
-            self::updateBalance($uid, $recharge_balance);
-            $success = true;
+        if ($desposittype == 1) {
+            if (
+                self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance) &&
+                self::insertIntoDepositsNew($uid, $amount, $username) &&
+                self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
+            ) {
+                // Update user balance if all operations succeed
+                self::updateBalance($uid, $recharge_balance);
+                $success = true;
+            }
+        } elseif ($desposittype == 4) {
+            if (
+                self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance) &&
+                self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data) &&
+                self::insertIntoWithrawManage($uid, $amount, $username)
+            ) {
+                // Update user balance if all operations succeed
+                self::updateBalance($uid, $recharge_balance);
+                $success = true;
+            }
         }
         
         return $success ? "success" : "no changes made";
