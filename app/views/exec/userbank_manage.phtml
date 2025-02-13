@@ -8,9 +8,9 @@ $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 if ($flag == "fetchbankcard") {
 
     $uid = isset($this->viewData['uid']) ? (int) $this->viewData['uid'] : "";
-    $bank_type = isset($this->viewData['bank_type']) ? (int) $this->viewData['bank_type'] : "";
-    $card_number = isset($this->viewData['card_number']) ? (int) $this->viewData['card_number'] : "";
-    $status = isset($this->viewData['status']) ? (int) $this->viewData['status'] : 0;
+    $bank_type = isset($this->viewData['bank_type']) ?  $this->viewData['bank_type'] : "";
+    $card_number = isset($this->viewData['card_number']) ?  $this->viewData['card_number'] : "";
+    $status = isset($this->viewData['status']) ?  $this->viewData['status'] : 0;
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $result =  UserBankManageModel::FetchBankcardlistData(["uid" => $uid, "bank_type" => $bank_type, "card_number" => $card_number, "status" => $status],$page, $limit);

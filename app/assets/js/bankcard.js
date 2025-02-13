@@ -38,6 +38,20 @@ $(function () {
       };
   
 
+      function tableScrolluserListt() {
+        const tableContainerUsert = document.querySelector(".table-wrapperbankcard");
+        const headerRowUserListt = document.querySelector(".headrowuserbank");
+
+        tableContainerUsert.addEventListener("scroll", function () {
+            if (tableContainerUsert.scrollTop > 0) {
+                headerRowUserListt.classList.add("sticky-headeruserbank");
+            } else {
+                headerRowUserListt.classList.remove("sticky-headeruserbank");
+            }
+        });
+    }
+    tableScrolluserListt();
+
   
     let currentPagebankcard = 1;
     let pageLimit = 20;
@@ -62,9 +76,9 @@ $(function () {
         $("#maskbanks").LoadingOverlay("hide");
         $("#bankcardContainer").html(bankcarddata(data.data));
         const totalPages = Math.ceil(data.data[0].total_records / pageLimit);
-
+        console.log(data);
         // // Render pagination
-        renderPaginationlist(totalPages, pagebankcard, pageLimit,(newpage) => fetchBankTypes(newpage));
+        renderPaginationlist(totalPages, pagebankcard, pageLimit,(newpage) => fetchbankcard(newpage));
          document.getElementById("paging_infobankcard").innerHTML = 'Page ' + pagebankcard + ' of ' + totalPages + ' pages'
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -128,7 +142,9 @@ $(function () {
         background: "rgb(90,106,133,0.1)",
         size: 3,
       });
+
       $("#bl-idholder").val("");
+      $("#bl-username").val("");
       $("#bl-bank-type").val("");
       $("#bl-card-number").val("");
       $("#bl-status").val(0);
@@ -194,71 +210,75 @@ $(function () {
 
 
       $(document).on("click", ".bl-search",function (){
-
-        try {
-
-          const userID     = $("#bl-idholder").val();
-          const bankType   = $("#bl-bank-type").val();
-          const cardNumber = $("#bl-card-number").val();
-          const state      = $("#bl-status").val();
-          const element    = this;
-          const currentPage  = 1;
-          const pageLimit    = 20;
-
-          if(userID.length == "" && bankType.length == "" && cardNumber.length == "" && state.length == ""){
-            showToast("Field Required","Please select at least one field", "info");
-            return;
-        }
-        console.log(userID,bankType,cardNumber,state,currentPage,pageLimit);
-     $.ajax({
-            url: `../admin/fetchbankcard/${userID}/${bankType}/${cardNumber}/${state}/${currentPage}/${pageLimit}/1`,
-            type: "POST",
-            beforeSend: function(){
-               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
-            },
-            success: function(response){
-                console.log(response);
-                response  = JSON.parse(response);
-                console.log(response);
-                if(response.status === "error"){
-                    $("#bankcardContainer").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 
-                    return
-                }
-               
-                if(response.data.length == 0){
-                    $("#bankcardContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
-                    $("#bl-pagination-wrapper").html("");
-                    $("#bl-paging_infowl").html("---------");
-                    return; 
-                }
-                bankCardObjs   = response.data;
-                $("#bankcardContainer").html(bankcarddata(bankCardObjs));
-                const totalPages = Math.ceil(bankCardObjs[0].total_records / pageLimit);
-        
-                // Render pagination
-                renderPaginationlist(totalPages, currentPagebankcard, pageLimit,(newpage) => fetchBankTypes(newpage));
-                document.getElementById("paging_infobankcard").innerHTML = 'Page ' + currentPagebankcard + ' of ' + totalPages + ' pages'
-                
-                },
-            error: function(xhr,status,error){
-                showToast("Error","An Error occured, please try again later.","info");
-            },
-            complete: function(){
-                $($(element).find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx-check-double");
-                $("#wl-pagination").html("")
-            }
-        });
-    
-        
-
-        } catch (error) {
-          console.log(error);
-          showToast("Error","Client Script exception, please contact admin", "error");
-        }
-
+        searchBankList(1);
       });
 
 
+const searchBankList = (currentPage) => {
+
+
+  try {
+
+    const userID     = $("#bl-idholder").val();
+    const bankType   = $("#bl-bank-type").val();
+    const cardNumber = $("#bl-card-number").val();
+    const state      = $("#bl-status").val();
+    const element    = this;
+    const pageLimit    = 20;
+
+    if(userID.length == "" && bankType.length == "" && cardNumber.length == "" && state.length == ""){
+      showToast("Field Required","Please select at least one field", "info");
+      return;
+  }
+$.ajax({
+      url: `../admin/fetchbankcard/${userID}/${bankType}/${cardNumber}/${state}/${currentPage}/${pageLimit}/1`,
+      type: "POST",
+      beforeSend: function(){
+         $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+      },
+      success: function(response){
+          console.log(response);
+          response  = JSON.parse(response);
+          console.log(response);
+          if(response.status === "error"){
+              $("#bankcardContainer").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 
+              return
+          }
+         
+          if(response.data.length == 0){
+              $("#bankcardContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
+              $("#bl-pagination-wrapper").html("");
+              $("#bl-paging_infowl").html("---------");
+              return; 
+          }
+          bankCardObjs   = response.data;
+          $("#bankcardContainer").html(bankcarddata(bankCardObjs));
+          const totalPages = Math.ceil(bankCardObjs[0].total_records / pageLimit);
+  
+          // Render pagination
+          renderPaginationlist(totalPages, currentPage, pageLimit,(newpage) => searchBankList(newpage));
+          document.getElementById("paging_infobankcard").innerHTML = 'Page ' + currentPage + ' of ' + totalPages + ' pages'
+          
+          },
+      error: function(xhr,status,error){
+          showToast("Error","An Error occured, please try again later.","info");
+      },
+      complete: function(){
+          $($(element).find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx-check-double");
+          $("#wl-pagination").html("")
+      }
+  });
+
+  
+
+  } catch (error) {
+    console.log(error);
+    showToast("Error","Client Script exception, please contact admin", "error");
+  }
+
+
+
+};
 
 // Function to fetch and display users
 const  fetchUsers = (query) =>{
@@ -295,46 +315,54 @@ const  fetchUsers = (query) =>{
 
 // Function to fetch and display users
 const  fetchBankTypes = (query) =>{
-  let optionsHtml = '';
 
-  $.post(`../admin/searchBankTypes/${encodeURIComponent(query)}`, function (response) {
-      try {
-          
-          response = typeof response === 'string' ? JSON.parse(response) : response;
-        
-          if(response.status == "error"){
-            showToast("Error", "Request could not be completed, please try again.","error");
-           
-            return;
-          }
-
-          const data = response.data;
-          if(data.length == 0){
-            $('#bl-bank-type-wrapper').html(`<li class="name-items" data-user-id="" data-username="">No results found.</li>`);
-            $(".bl-bank-type-wrapper").show();
-            return;
-          }
-
-          let optionsHtml = "";
-          for (let index = 0; index < data.length; index++) {
-              const bankType = data[index];
-              const bankName = bankType.bank_type;
-              optionsHtml += `<li class="name-items" data-bank-id="${bankType.bank_id}" data-bank-name="${bankName}">${bankName}</li>`;
-          }
-
-          $('#bl-bank-type-wrapper').html(optionsHtml);
-          $(".bl-bank-type-wrapper").show();
-       } catch (error) {
-        console.log(error);
-          showToast("Error", "Request could not be completed, please try again.","error");
+  try {
+          const elemennt = this;
+  $.ajax({
+    url: `../admin/searchBankTypes/${query}`,
+    type: "POST",
+    beforeSend: function(){
+      //  $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+    },
+    success: function(response){
+      response = JSON.parse(response);
+      if(response.status == "error"){
+        showToast("Error", "Request could not be completed, please try again.","error");
+       
+        return;
       }
-  }).fail(function () {
-    showToast("Error", "Request could not be completed, please try again.","error");
+
+      const data = response.data;
+      if(data.length == 0){
+        $('#bl-bank-type-wrapper').html(`<li class="name-items" data-user-id="" data-username="">No results found.</li>`);
+        $(".bl-bank-type-wrapper").show();
+        return;
+      }
+
+      let optionsHtml = "";
+      for (let index = 0; index < data.length; index++) {
+          const bankType = data[index];
+          const bankName = bankType.bank_type;
+          optionsHtml += `<li class="name-items" data-bank-id="${bankType.bank_id}" data-bank-name="${bankName}">${bankName}</li>`;
+      }
+
+      $('#bl-bank-type-wrapper').html(optionsHtml);
+      $(".bl-bank-type-wrapper").show();
+    },
+    error: function(xhr,status,err){
+
+    },complete: function (){
+
+    }
   });
+
+  } catch (error) {
+    console.log(error);
+    showToast("Error", "Request could not be completed, please try again.","error");
 }
 
-
-
+  
+}
 
 function renderPaginationlist(totalPages, currentPage, pageLimit, callback) {
   const createPageLink = (i, label = i, disabled = false, active = false) =>
@@ -359,10 +387,10 @@ function renderPaginationlist(totalPages, currentPage, pageLimit, callback) {
   pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
   pagLink += "</ul>";
 
-  document.getElementById("paging_infobankcard").innerHTML = pagLink;
+  document.getElementById("paginationbankcard").innerHTML = pagLink;
 
   // Add click event listeners
-  document.querySelectorAll("#paginationbankcard .page-link").forEach((link) => {
+  document.querySelectorAll(".pagination .page-link").forEach((link) => {
       link.addEventListener("click", function (e) {
           e.preventDefault();
           const newPage = +this.getAttribute("data-page");
@@ -371,7 +399,7 @@ function renderPaginationlist(totalPages, currentPage, pageLimit, callback) {
                   background: "rgb(90,106,133,0.1)",
                   size: 3,
               });
-              callback(newPage, pageLimit); // Call the provided callback with new page and pageLimit
+              callback(newPage); // Call the provided callback with new page 
           }
       });
   });

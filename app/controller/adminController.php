@@ -176,7 +176,8 @@ class adminController extends Controller {
         $this->view->render();
     }
     public function searchBankTypes($bank_type){
-        $this->view('exec/userbank_manage',['bank_type'=>$bank_type,'flag' => 'search-bank-name']);
+        // echo $bank_type;
+        $this->view('exec/userbank_manage',['bank_type'=> urldecode($bank_type),'flag' => 'search-bank-name']);
         $this->view->render();
     }
 
@@ -515,7 +516,8 @@ class adminController extends Controller {
     // 
     public function   fetchbankcard($uid,$bank_type,$card_number,$status,$pageNumber, $limit,$miscelleanous)
     {
-        $this->view('exec/userbank_manage', ['uid' => $uid,'bank_type' => $bank_type,'card_number' => $card_number,'status' => $status,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchbankcard']);
+
+        $this->view('exec/userbank_manage', ['uid' => $uid,'bank_type' => urldecode($bank_type),'card_number' => $card_number,'status' => $status,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchbankcard']);
         $this->view->render();
     }
   

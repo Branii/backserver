@@ -266,7 +266,7 @@ $(function () {
         const ordertypetrans = $("#ordertypetrans").val();
         const startdatrans = $("#startdatrans").val();
         const enddatetrans = $("#enddatetrans").val();
-        console.log(enddatetrans);
+        // console.log(enddatetrans);
      
         $(".loadertrans").removeClass("bx-check-double").addClass("bx-loader bx-spin");
         setTimeout(() => {
