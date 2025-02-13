@@ -181,7 +181,7 @@ if ($flag == "addAgent") {
        $result = (new UserManageModel())->AddAgentData($datas) ?? [];
     }
 
-    echo json_encode($rebatelist);
+    echo json_encode($result);
 }
 
 
@@ -287,8 +287,8 @@ if ($flag == "updateUsedquota") {
     $results = [];
     foreach ($parsedBonus as $key => $value) {
         $row = [
-            $keys[0] => $parsedBonus[$key] ?? null,
-            $keys[1] => $parsedRebate[$key] ?? null,
+            $keys[0] => $parsedRebate[$key] ?? null,
+            $keys[1] => $parsedBonus[$key] ?? null,
             $keys[2] => $parsedQuota[$key] ?? null,
             $keys[3] => $parsedCount[$key] ?? null,
         ];
