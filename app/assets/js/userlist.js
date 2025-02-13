@@ -982,24 +982,24 @@ $(function () {
                                   <i class="bx bx-show fs-5"></i>View
                                 </a>
                                 <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
-                                  <i class="bx bx-show fs-5" ></i>Quota
+                                  <i class='bx bx-list-minus'></i>Quota
                                 </a>
                                  <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewsub" data-agent-id="${item.uid}" href="javascript:void(0);"data-uid="${item.subordinates}"> 
-                                  <i class="bx bx-show fs-5" ></i>Subs
+                                  <i class='bx bx-git-merge'></i>Subs
                                 </a>
                                 <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1 acountbtn" href="javascript:void(0);"data-uid="${item.uid}">
                                   <i class="bx bx-money fs-5"></i>Account Change
                                 </a>
                                  <a class="dropdown-item usr-deactivate-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class="bx bx-trash fs-5"></i>Deactivate User
+                                  <i class='bx bx-user-x' ></i>Deactivate User
                                 </a> <a class="dropdown-item user-lottery-name cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class="bx bx-trash fs-5"></i>Lottery Name
+                                  <i class='bx bx-filter' ></i>Lottery Name
                                 </a>
                                  <a class="dropdown-item usr-white-list cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                   <i class="bx bx-trash fs-5"></i>White List
                                 </a>
                                  <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class="bx bx-trash fs-5"></i>Delete User
+                                  <i class='bx bx-user-minus' ></i>Delete User
                                 </a>
                               </div>
                             </div>
