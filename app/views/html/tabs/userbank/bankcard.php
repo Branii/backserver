@@ -191,6 +191,78 @@
         margin: 0px;
         overflow-y: auto;
     }
+
+    .tbl-bl-headeruserlist {
+    position: sticky;
+    z-index: 999;
+    top: 0;
+  }
+       
+    .sticky-bl-headeruserlist {
+        position: relative;
+        bottom: 1px;
+        background-color: red;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    }
+
+    .tbl-bl-headeruserlists {
+        position: sticky;
+        top: 0;
+    }
+
+    .sticky-bl-headeruserlists {
+        position: relative;
+        bottom: 1px;
+        background-color: red;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    }
+
+
+
+      /* Custom Scrollbar for Webkit Browsers */
+      .table-wrapperbankcard::-webkit-scrollbar {
+        width: 5px;
+        /* Slimmer scrollbar width */
+        height: 5px;
+        /* Slimmer scrollbar height for horizontal scrolling */
+    }
+
+    .table-wrapperbankcard::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        /* Lighter background for track */
+        border-radius: 5px;
+    }
+
+    .table-wrapperbankcard::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        /* Blue color for thumb */
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .table-wrapperbankcard::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+        /* Darker blue on hover */
+    }
+
+    .table-wrapperbankcard {
+        overflow: hidden;
+        /* Hide the default scrollbar */
+        white-space: nowrap;
+        max-width: 100%;
+        /* Adjust based on your needs */
+        margin-bottom: 10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: rgb(38, 57, 77) 0px 20px 30px -10px;
+        /* Ensure it doesn't interfere with content */
+        z-index: 10;
+    }
+
+   
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -257,8 +329,8 @@
     <div class="card-body p-4">
         <div class="table-responsive mb-4 border rounded-1 table-wrapperbankcard" id="maskbanks" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
-                <thead class="text-dark fs-4">
-                    <tr>
+                <thead class="text-dark fs-4 bl-headeruserlist">
+                    <tr class="bl-headrowuserlist sticky-bl-headeruserlist">
 
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
@@ -305,17 +377,11 @@
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playerlinks" value="startlinks">
-                    <i class='bx bx-chevrons-left' style="font-size:20px"></i>
-                </button>
                 <button type="button" class="btn bg-white-subtle playerbankcard" value="leftlinks">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle playerbankcard" value="rightlinks">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
-                </button>
-                <button type="button" class="btn bg-white-subtle playerbankcard" value="endlinks">
-                    <i class='bx bx-chevrons-right' style="font-size:20px"></i>
                 </button>
             </div>
         </span>

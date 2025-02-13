@@ -18,8 +18,6 @@ class UserBankManageModel extends MEDOOHelper
 
         try{
 
-          
-
         $db = parent::getLink();
         $offset = ($page - 1) * $limit;
         $whereClause = "";
@@ -33,7 +31,7 @@ class UserBankManageModel extends MEDOOHelper
         }
 
       $whereClause = empty($whereClause) ? " " : " WHERE {$whereClause} ";
-        $sql = "SELECT user_bank.*,(SELECT COUNT(*) FROM user_bank) AS total_records, users_test.username, users_test.nickname, users_test.email
+        $sql = "SELECT user_bank.*,(SELECT COUNT(*) FROM user_bank {$whereClause} ) AS total_records, users_test.username, users_test.nickname, users_test.email
             FROM user_bank
             JOIN users_test ON user_bank.uid = users_test.uid 
             {$whereClause} 

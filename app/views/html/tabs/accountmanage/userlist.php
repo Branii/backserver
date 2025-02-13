@@ -450,8 +450,9 @@
         opacity: 1;
         transform: translate3d(0px, 0px, 0px);
     }
-        /* Custom Scrollbar for Webkit Browsers */
-        .table-wrapperuserlistt::-webkit-scrollbar {
+    
+    /* Custom Scrollbar for Webkit Browsers */
+    .table-wrapperuserlistt::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
@@ -491,6 +492,8 @@
         /* Ensure it doesn't interfere with content */
         z-index: 10;
     }
+
+    
     .show-user-rel:hover{
         font-weight: 900;
     }

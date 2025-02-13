@@ -101,6 +101,7 @@ class DataReportModel extends MedooOrm
         $table_name = "transaction";
         $user_and_subs =  !$isForOnlyUser ? self::allSubs($user_id,1,1000,true) : self::fetchUserByID($user_id);
       
+        $user_and_subs_uids = array_column($user_and_subs,"uids");
         if($user_and_subs["status"] === "error") return $user_and_subs;
         $place_holders = [];
         $params = [];
@@ -179,7 +180,7 @@ class DataReportModel extends MedooOrm
 
        (SELECT SUM(expenditure_amount) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND bet_type = 1 AND order_type = 12 {$where_clause}) AS total_loss_amount,
        (SELECT SUM(account_change) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND bet_type = 1 {$where_clause} AND order_type = 3)  AS total_win_amount,(SELECT SUM(expenditure_amount) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND bet_type = 1 AND order_type = 11 {$where_clause}) AS total_direct_refund_amount,(SELECT SUM(expenditure_amount) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND (order_type = 2 || order_type = 10)   {$where_clause}) AS total_promotions_and_bonus, 
-       (SELECT SUM(account_change) FROM {$table_name} WHERE uid=:uid{$user_key} AND (order_type = 7 || order_type = 8) {$where_clause}) total_rebate_amount,
+       (SELECT SUM(account_change) FROM {$table_name} WHERE uid IN(".implode(',',$place_holders).") AND (order_type = 7 || order_type = 8) {$where_clause}) total_rebate_amount,
        SUM(CASE WHEN order_type = 2 THEN account_change ELSE 0 END) AS win_bonus, 
        SUM(CASE WHEN order_type = 3 THEN account_change ELSE 0 END) AS bet_awarded, 
        SUM(CASE WHEN order_type = 5 THEN account_change ELSE 0 END) AS bet_deduct, 
@@ -209,7 +210,7 @@ class DataReportModel extends MedooOrm
 
         $total_bet_amount = self::formatNumber(self::formatNumber(abs($results->total_normal_bet_amount ?? 0)) + ($track_results->total_track_amount ?? 0));
        
-        $results = ["user_id" => $user_id,"username" => $username,"account_type" => $account_type, "num_bettors" => $results->num_bettors,"num_bet_tickets" => $results->num_bet_tickets + $track_num_bets,"rebate" => $rebate, "total_bet_amount" =>  $total_bet_amount, "total_rebate_amount" => $total_rebate_amount , 'total_win_amount' => $total_win_amount + ($results->win_bonus ?? 0), "total_valid_amount" =>  $total_valid_amount, 'win_loss' =>  ($total_win_amount + $total_rebate_amount + $total_promotions_and_bonus + $total_refund_amount) - $total_valid_amount + $total_fee_amount, "num_subs" => max((count($subs_data) - 1),0),"fees"=> $total_fee_amount ,"total_promotions_and_bonus" => $total_promotions_and_bonus,'total_refund_amount' => $total_refund_amount];
+        $results = ["user_id" => $user_id,"username" => $username,"account_type" => $account_type, "num_bettors" => $results->num_bettors,"num_bet_tickets" => $results->num_bet_tickets + $track_num_bets,"rebate" => $rebate, "total_bet_amount" =>  $total_bet_amount, "total_rebate_amount" => $total_rebate_amount , 'total_win_amount' => $total_win_amount + ($results->win_bonus ?? 0), "total_valid_amount" =>  $total_valid_amount, 'win_loss' =>  self::formatNumber(($total_win_amount + $total_rebate_amount + $total_promotions_and_bonus + $total_refund_amount) - ($total_valid_amount + $total_fee_amount)), "num_subs" => max((count($subs_data) - 1),0),"fees"=> $total_fee_amount ,"total_promotions_and_bonus" => $total_promotions_and_bonus,'total_refund_amount' => $total_refund_amount];
 
        return self::response($results);
         
