@@ -652,7 +652,6 @@ $(function () {
             if (!response.ok) {
                 throw new Error(`Error: ${response.type} - ${response.statusText}`);
             }
-
             const data = await response.json();
 
             const errorMessages = {
@@ -753,8 +752,8 @@ $(function () {
             rebatelist.forEach((item) => {
                 let row = tableBody.insertRow();
                 let rowData = [
-                    `<span class="rebate_group"> ${item.rebate}</span>`,
                     `<span class="bonus_group">  ${item.odds_group}</span>`,
+                    `<span class="rebate_group"> ${item.rebate}</span>`,
                     `<span class="count_group">${item.counts} </span> / ${item.quota}`,
                     `<input type="text" value="${item.quota}" class="quota_set form-control" />`,
                 ];
@@ -802,7 +801,6 @@ $(function () {
             `../admin/updateUsedquota/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
 
             function (result) {
-                // // console.log(result);
                 setTimeout(function () {
                     $(".loaderquota").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
                     if (result) {

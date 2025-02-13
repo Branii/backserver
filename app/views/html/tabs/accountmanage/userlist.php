@@ -883,8 +883,8 @@
                             <thead class="text-dark fs-4 tbl-headeruserquota">
                            <tr class="headrowusequota">
                          
-                                        <th class="font-weight-normal">Rebate(%)</th>
-                                        <th class="font-weight-normal">Bonus Group</th>
+                                   <th class="font-weight-normal">Bonus Group</th>
+                                     <th class="font-weight-normal">Rebate(%)</th>
                                         <th class="font-weight-normal">Quota Used</th>
                                         <th class="font-weight-normal">Quota Set</th>
                                     </tr>
