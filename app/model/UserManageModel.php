@@ -1025,7 +1025,6 @@ class UserManageModel extends MEDOOHelper
         $email = trim($datas['agentemail'] ?? '');
         $username = trim($datas['agentname'] ?? '');
 
-
         //email exit    
         if ($emailexist) {
             $errors['emailexist'] = "Email already exists";
