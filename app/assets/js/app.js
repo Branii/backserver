@@ -5,7 +5,9 @@ $(function(){
 
     //accont transaction 
     const keys = ["trans_id", "username", "order_type", "account_change", "balance", "dateTime", "date_created", "order_id", "status"];
-    fetchData(`../business/account_transaction`,page,limit,renderTable,"accountTransactionTable","accPageBox", "accPageInfo", {}, keys) 
+    fetchData(`../business/account_transaction`,page,limit,accountTransactionTable,"accountTransactionTable","accPageBox", "accPageInfo", {}, keys) 
+
+    
 
 
 

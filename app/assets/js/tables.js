@@ -13,22 +13,25 @@ let html = data
     document.getElementById(tableId).innerHTML = html;
 };
 
-// create custom table here below
+// create custom table here below // ["trans_id", "username", "order_type", "account_change", "balance", "dateTime", "date_created", "order_id", "status"];
 
 const accountTransactionTable = (data, tableId, keys) => {
 let html = "";
 data.forEach((item) => {
-    //  so logics here
-    const colors = statusColor[item.uid];
-    console.log(colors.color);
+    const statusColor = betStatus[item.order_type]
     html += `
         <tr>
-            <td style="background-color:${colors.color}">${item.uid}</td>
+            <td>${item.trans_id}</td>
             <td>${item.username}</td>
-            <td>${item.nickname}</td>
-            <td>${item.email}</td>
-            <td>  <button class="view">view</button> </td>
-        </tr>
+            <td><i class='bx bxs-circle' style="font-size:10px;margin-right:10px;color:${statusColor.color}"></i>${statusColor.title}</td>
+            <td>${item.account_change}</td>
+            <td>${item.balance}</td>
+            <td>${item.dateTime}</td>
+            <td>${item.date_created}</td>
+            <td>${item.order_id}</td>
+            <td><span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Complete</span></td>
+            <td><i value='${item.order_id}_${item.game_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
+        </tr> 
         `;
 });
 document.getElementById(tableId).innerHTML = html;

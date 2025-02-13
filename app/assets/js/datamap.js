@@ -11,7 +11,8 @@
       8: { title: "Self Rebate", color: "#00BCD4" },       // Cyan
       9: { title: "Send Red Envelope", color: "#FF5722" }, // Deep Orange
       10: { title: "Receive Red Envelope", color: "#795548" }, // Brown
-      11: { title: "Bet Refund", color: "#FFC107" }        // Amber
+      11: { title: "Bet Refund", color: "#FFC107" },     // Amber
+      12: { title: "Bet Lost", color: "#FFC107" }        // Amber
   };
 
   const firstRow = {
@@ -42,5 +43,9 @@
       'test': ' ',
     }
 
+
+    const datas = {
+      user:"branmoo"
+    }
 
 

@@ -15,8 +15,7 @@
             //const query = new URLSearchParams({page,pageLimit,...params,}).toString();
             const response = await fetch(`${url}/${page}/${pageLimit}/${JSON.stringify(params)}`);
             const result = await response.json();
-            //console.log(result);
-          
+
             $("#" + tableId).LoadingOverlay("hide");
             renderCallback(result.data, tableId, keys);
 
@@ -85,7 +84,6 @@
                 tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
                 break;
             case "start":
-                // Scroll to the absolute start (leftmost position)
                 tableWrapper.animate({ scrollLeft: 0 }, "slow");
                 break;
             case "end":
@@ -98,6 +96,19 @@
             }
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const tableContainer = document.querySelector('.table-wrapper');
+        const headerRow = document.querySelector('thead tr');
+
+        tableContainer.addEventListener('scroll', function() {
+          if (tableContainer.scrollTop > 0) {
+            headerRow.classList.add('sticky-header');
+          } else {
+            headerRow.classList.remove('sticky-header');
+          }
+        });
+    });
 
 
 
