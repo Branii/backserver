@@ -153,4 +153,18 @@ $(function(){
       getAllBackups(currentPage,numrow);
     })
 
+    function tableScrollLotteryDraw() {
+      const tableContainerLotteryDraw = document.querySelector(".table-wrapperDraws");
+      const headerRowLotteryDraw = document.querySelector(".headrowLotteryDraw");
+  
+      tableContainerLotteryDraw.addEventListener("scroll", function () {
+        if (tableContainerLotteryDraw.scrollTop > 0) {
+          headerRowLotteryDraw.classList.add("sticky-headerLotteryDraw");
+        } else {
+          headerRowLotteryDraw.classList.remove("sticky-headerLotteryDraw");
+        }
+      });
+    }
+    tableScrollLotteryDraw();
+
 })

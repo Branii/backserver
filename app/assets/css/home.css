@@ -1,0 +1,49 @@
+.chrome__tab {
+    /* width: 400px;
+      height: auto;
+      border: solid 2px #ccc; */
+    padding: 20px;
+    display: none;
+}
+
+.chrome__tabb {
+    /* width: 400px;
+      height: auto;
+      border: solid 2px #ccc; */
+    padding: 20px;
+    display: none;
+}
+
+.chromclass {
+    border-top: solid 3px orangered !important;
+}
+
+.chrome-tab-drag-handle {
+    cursor: pointer !important;
+}
+
+/* Custom Scrollbar for Webkit Browsers */
+.table-wrapper::-webkit-scrollbar {
+    width: 5px;
+    /* Slimmer scrollbar width */
+    height: 5px;
+    /* Slimmer scrollbar height for horizontal scrolling */
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Lighter background for track */
+    border-radius: 5px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    /* Blue color for thumb */
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+    /* Darker blue on hover */
+}

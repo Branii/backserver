@@ -288,8 +288,13 @@
               <h6 class="fs-4 fw-semibold mb-0">Balance</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Date/Time</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Bet Date/Time</h6>
             </th>
+
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Server Date/Time</h6>
+            </th>
+
             <th>
               <h6 class="fs-4 fw-semibold mb-0">Transaction ID</h6>
             </th>
@@ -301,7 +306,7 @@
             </th>
           </tr>
         </thead> 
-        <tbody id="dataContainer" class="tbl-content">
+        <tbody id="accountTransactionTable" class="tbl-content">
 
           <tr class="no-results">
             <td colspan="9">
@@ -317,40 +322,30 @@
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
         style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-        <button type="button" class="btn bg-white-subtle player" value="start">
-          <i class='bx bx-chevrons-left' style="font-size:20px"></i>
-        </button>
         <button type="button" class="btn bg-white-subtle player" value="left">
           <i class='bx bx-chevron-left' style="font-size:20px"></i>
         </button>
         <button type="button" class="btn bg-white-subtle player" value="right">
           <i class='bx bx-chevron-right' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle player" value="end">
-          <i class='bx bx-chevrons-right' style="font-size:20px"></i>
-        </button>
       </div>
     </span>
-    <span class="top-center" aria-label=" navigation example">
 
-      <span id="paging_info" style="color:#aaa">---</span>
-
+    <span class="top-center">
+      <span id="accPageInfo" style="color:#aaa">---</span>
     </span>
-
-   
-      
 
     <span class="top-right-btn"  aria-label="Page navigation example">
     <select class="left-element form-control numrows" style="font-size:12px">
-            <!-- <option value="5" class="fromnumrows">5</option>
+            <option value="5" class="fromnumrows">5</option>
             <option value="10">10</option>
-            <option value="20">20</option> -->
+            <option value="20">20</option>
             <option value="50">50</option>
             <option value="100">100</option>
             <option value="200">200</option>
             <option value="500">500</option>
      </select>
-      <span id="pagination" class="right-element"> </span>
+      <span id="accPageBox" class="right-element"> </span>
     </span>
 
   </div>

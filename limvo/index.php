@@ -10,10 +10,11 @@ define("MODEL", APP . 'model' . DIRECTORY_SEPARATOR);
 define("DATABASE", APP . 'database' . DIRECTORY_SEPARATOR);
 define("CORE", APP . 'core' . DIRECTORY_SEPARATOR);
 define("VIEWS", APP . 'views' . DIRECTORY_SEPARATOR);
+define("EXEC", APP . 'exec' . DIRECTORY_SEPARATOR);
 define("CONTROLLER", APP . 'controller' . DIRECTORY_SEPARATOR);
 define("UTILS", APP . 'utils' . DIRECTORY_SEPARATOR);
 define('BASE_URL','/admin/app/'); 
-$modules = [APP, MODEL, DATABASE, CORE, CONTROLLER,UTILS];
+$modules = [APP, MODEL, DATABASE, CORE, VIEWS, EXEC, CONTROLLER, UTILS,];
 // Custom Autoloader Function
 spl_autoload_register(function ($className) use ($modules) {
     foreach ($modules as $module) {
@@ -25,5 +26,5 @@ spl_autoload_register(function ($className) use ($modules) {
     }
 });
 
-// (new ModernPHPException())->start();
+ //(new ModernPHPException())->start();
 (new App());

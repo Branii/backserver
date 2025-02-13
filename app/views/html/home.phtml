@@ -17,93 +17,23 @@ if (session_status() == PHP_SESSION_NONE) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Favicon icon-->
-  <link rel="shortcut icon" type="image/png"
-    href="<?php echo BASE_URL; ?>assets/images/logos/favicon.png" />
+  <link rel="shortcut icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/toast/toast.css" />
   <!-- Core Css -->
-  <link rel="stylesheet"
-    href="<?php echo BASE_URL; ?>assets/css/styles.css" />
-  <link rel="stylesheet"
-    href="<?php echo BASE_URL; ?>assets/css/chrometab.css" />
-  <link rel="stylesheet"
-    href="<?php echo BASE_URL; ?>assets/css/sidebar.css" />
-
-  <link rel="stylesheet"
-    href="<?php echo BASE_URL; ?>assets/css/daterangepicker.css" />
-
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/styles.css" />
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/chrometab.css" />
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css" />
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/home.css" />
 
   <title>Limvo Admin</title>
-  <style>
-    .chrome__tab {
-      /* width: 400px;
-        height: auto;
-        border: solid 2px #ccc; */
-      padding: 20px;
-      display: none;
-    }
 
-    .chrome__tabb {
-      /* width: 400px;
-        height: auto;
-        border: solid 2px #ccc; */
-      padding: 20px;
-      display: none;
-    }
-
-    .chromclass {
-      border-top: solid 3px orangered !important;
-    }
-
-    .chrome-tab-drag-handle {
-      cursor: pointer !important;
-    }
-
-    /* Custom Scrollbar for Webkit Browsers */
-    .table-wrapper::-webkit-scrollbar {
-      width: 5px;
-      /* Slimmer scrollbar width */
-      height: 5px;
-      /* Slimmer scrollbar height for horizontal scrolling */
-    }
-
-    .table-wrapper::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      /* Lighter background for track */
-      border-radius: 5px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-thumb {
-      background-color: #ccc;
-      /* Blue color for thumb */
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    .table-wrapper::-webkit-scrollbar-thumb:hover {
-      background-color: #aaa;
-      /* Darker blue on hover */
-    }
-  </style>
 </head>
 
 <body>
-  <div class="toast toast-onload align-items-center text-bg-primary border-0" role="alert" aria-live="assertive"
-    aria-atomic="true">
-    <div class="toast-body hstack align-items-start gap-6">
-      <i class="ti ti-alert-circle fs-6"></i>
-      <div>
-        <h5 class="text-white fs-3 mb-1">Welcome to Modernize</h5>
-        <h6 class="text-white fs-2 mb-0">Easy to costomize the Template!!!</h6>
-      </div>
-      <button type="button" class="btn-close btn-close-white fs-2 m-0 ms-auto shadow-none" data-bs-dismiss="toast"
-        aria-label="Close"></button>
-    </div>
-  </div>
   <!-- Preloader -->
   <!-- <div class="preloader">
-    <img src="<?php echo BASE_URL; ?>assets/images/logos/favicon.png"
-  alt="loader" class="lds-ripple img-fluid" />
+    <img src="<?php echo BASE_URL; ?>assets/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
   </div> -->
   <div id="main-wrapper">
     <!-- Sidebar Start -->
@@ -175,7 +105,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <i class='bx bx-bell' style="font-size: 20px;"></i>
           </button>
           <button type="button" class="btn bg-white-subtle ">
-            <a href="../admin/signout"> <i class='bx bx-power-off' style="font-size: 20px;"></i> </a>
+            <a href="../auth/signout"> <i class='bx bx-power-off' style="font-size: 20px;"></i> </a>
           </button>
           <button type="button" class="btn bg-white-subtle ">
             <i class='bx bx-history' style="font-size: 20px;"></i>
@@ -185,22 +115,11 @@ if (session_status() == PHP_SESSION_NONE) {
           </button>
         </div>
 
-
-        <br>
-        <hr>
-
-        <!-- ---------------------------------- -->
-        <!-- Start Vertical Layout Sidebar -->
-        <!-- ---------------------------------- -->
       </div>
     </aside>
-    <!--  Sidebar End -->
+
+    
     <div class="page-wrapper">
-
-
-
-
-
       <div class="containe-fluid">
 
         <div class="surface">
@@ -258,205 +177,36 @@ if (session_status() == PHP_SESSION_NONE) {
             <?php include "tabs/home.php" ?>
           </div>
 
-
           <div class="chrome__tab account_transaction">
             <?php include "tabs/businessflow/account_transaction.php" ?>
           </div>
 
-          <div class="chrome__tab game_getting_statistics">
-            <?php include "tabs/businessflow/game_getting_statistics.php" ?>
-          </div>
-
-          <div class="chrome__tab Lottery">
-            <?php include "tabs/businessflow/lottery_betting_record.php" ?>
-          </div>
-
-          <div class="chrome__tab Track">
-            <?php include "tabs/businessflow/trackbet.php" ?>
-          </div>
-
-          <div class="chrome__tab Deposit">
-            <?php include "tabs/financialmanage/deposit.php" ?>
-          </div>
-
-          <div class="chrome__tab Finance">
-            <?php include "tabs/financialmanage/finance_changes.php" ?>
-          </div>
-
-          <div class="chrome__tab Withdrawal">
-            <?php include "tabs/financialmanage/withdrawal.php" ?>
-          </div>
-
-          <div class="chrome__tab Userlogs">
-            <?php include "tabs/accountmanage/userlogs.php" ?>
-          </div>
-
-          <div class="chrome__tab Userlist">
-            <?php include "tabs/accountmanage/userlist.php" ?>
-          </div>
-
-          <div class="chrome__tab Invitation">
-            <?php include "tabs/promotionmanage/invitation_referallink.php" ?>
-          </div>
-
-          <div class="chrome__tab quota">
-            <?php include "tabs/agentmanage/quota.php" ?>
-          </div>
-
-         
-              <!--User Bank management-->
-              <div class="chrome__tab  Bank">
-            <?php include "tabs/userbank/bankcard.php" ?>
-          </div>
-
-             <!--User Bank management-->
-
-
-          <!--system managenet-->
-
-          <div class="chrome__tab administrator_list">
-            <?php include "tabs/system_management/administrator_list.php" ?>
-          </div>
-
-          <div class="chrome__tab backup_recovery">
-            <?php include "tabs/system_management/backup_recovery.php" ?>
-          </div>
-
-          <!--system managenet-->
-
-
-          <!--game managenet-->
-
-          <div class="chrome__tab lottery_draw_records">
-            <?php include "tabs/game_management/lottery_draw_records.php" ?>
-          </div>
-
-          <div class="chrome__tab lotteryparameters">
-            <?php include "tabs/game_management/lottery_parameters.php" ?>
-          </div>
-
-          <div class="chrome__tab backup_recovery">
-            <?php include "tabs/system_management/backup_recovery.php" ?>
-          </div>
-
-          <!--system managenet-->
-
         </div>
-
       </div>
-      <script>
-        function handleColorTheme(e) {
-          document.documentElement.setAttribute("data-color-theme", e);
-        }
-      </script>
-
     </div>
-    <div class="dark-transparent sidebartoggler"></div>
-    <script src="<?php echo BASE_URL; ?>assets/js/vendor.min.js"></script>
-    <!-- Import Js Files -->
+
+    <!--core js-->
     <script src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/draggabilly.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/bootstrap.bundle.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/libs/simplebar/dist/simplebar.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/app.init.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/theme.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/app.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/sidebarmenu.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/chrometab.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/pagination.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/loadingoverlay.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/BootstrapMenu.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/moment.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.init.js"></script>
-
-    <!--custom js-->
+    <script src="<?php echo BASE_URL; ?>assets/js/chrometab.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/chairman.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/template.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/account_transaction.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/admin_list.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/userlist.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/backup.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/lottery_draws.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/userlogs.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/referrallink.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/quota.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/lotterybet.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/trackbet.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/finance_change.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/deposit.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/withdrawal.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/bankcard.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/lottery_parameters.js"></script>
+    <!--system js-->
+    <!-- <script src="<?php echo BASE_URL; ?>assets/js/template.js"></script> -->
+    <!-- <script src="<?php echo BASE_URL; ?>assets/js/account_transaction.js"></script> -->
+    <!-- <script src="<?php echo BASE_URL; ?>assets/libs/apexcharts/dist/apexcharts.min.js"></script> -->
+    <!-- <script src="<?php echo BASE_URL; ?>assets/js/dashboard.js"></script> -->
+  
+
+    <script src="<?php echo BASE_URL; ?>assets/js/tables.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/helper.js" defer></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/datamap.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/app.js" defer></script>
 
 
-    <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.init.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.js"></script>
 
-
-    <!-- solar icons -->
-    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
-    <script
-      src="<?php echo BASE_URL; ?>assets/libs/apexcharts/dist/apexcharts.min.js">
-    </script>
-    <script src="<?php echo BASE_URL; ?>assets/js/dashboard.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
-    </script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const tableContainer = document.querySelector('.table-wrapper');
-        const headerRow = document.querySelector('thead tr');
-
-        tableContainer.addEventListener('scroll', function() {
-          if (tableContainer.scrollTop > 0) {
-            headerRow.classList.add('sticky-header');
-          } else {
-            headerRow.classList.remove('sticky-header');
-          }
-        });
-
-      });
-      // document.addEventListener('DOMContentLoaded', function () {
-      //   const tableWrapper = document.querySelector('.table-wrapper');
-      //   const rangeInput = document.getElementById('customRange1');
-
-      //   if (!tableWrapper || !rangeInput) {
-      //     console.error("Table wrapper or range input not found!");
-      //     return;
-      //   }
-
-      //   // Function to update the max value of the range input based on scrollable width
-      //   const updateRangeMax = () => {
-      //     const maxScrollLeft = tableWrapper.scrollWidth - tableWrapper.clientWidth;
-      //     rangeInput.max = maxScrollLeft > 0 ? maxScrollLeft : 0;
-      //   };
-
-      //   // Initial setup to set the range max value
-      //   updateRangeMax();
-
-      //   // Smooth scrolling based on range input
-      //   rangeInput.addEventListener('input', function () {
-      //     tableWrapper.scrollTo({
-      //       left: this.value,
-      //       behavior: 'smooth'
-      //     });
-      //   });
-
-      //   // Update the range slider based on the table's scroll position
-      //   tableWrapper.addEventListener('scroll', function () {
-      //     rangeInput.value = tableWrapper.scrollLeft;
-      //   });
-
-      //   // Adjust range max value on window resize
-      //   window.addEventListener('resize', updateRangeMax);
-
-      //   // Listen for table content load (if dynamic content is added)
-      //   const observer = new MutationObserver(updateRangeMax);
-      //   observer.observe(tableWrapper, { childList: true, subtree: true });
-      // });
-    </script>
 </body>
 
 </html>
