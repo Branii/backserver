@@ -25,12 +25,16 @@ $(function () {
   const lotteryParamTable = (data) => {
     let html = "";
     data.forEach((item) => {
+      console.log(typeof item.modified_odds);
       html += `
                     <tr class="trow">
                         <td>${item.gameplay_name}</td>
                         <td>${item.group_type}</td>
                         <td>${item.name}</td>
-                        <td><input type='text' class='form-control' value='${item.modified_odds}'></td>
+                        <td><input type='text' class='form-control' value='${item.modified_odds}'class="oddsone">
+                        <input type="range" id="rangeSliderone" min="0" max="100" value="100">
+                          <span id="rangeValue">100%</span>
+                        </td>
                         <td> <label class="switch gameplaybtn"><input type="checkbox" value ="${item.state}" style="z-index:999"/> <span class="slider"></span></label></td>
                      
                          <td>
@@ -402,5 +406,22 @@ $(function () {
     
   });
 
+  $(document).on('input', '#rangeSliderone', function() {
+    // Get the initial values from the input box
+    let originalValues =parseFloat($(".oddsone").val());
+ console.log(originalValues);
+    // Get the current percentage from the range slider
+    // let percentage = $(this).val();
+    // $("#rangeValue").text(percentage + "%");
+
+    // // Function to update values based on the percentage
+    // function updateValues(percentage) {
+    //     let scaledValues = originalValues.map(value => (value * percentage / 100).toFixed(2));
+    //     $(".oddsone").val(`[${scaledValues.join(", ")}]`);
+    // }
+
+    // // Update the values
+    // updateValues(percentage);
+});
 
 });

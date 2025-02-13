@@ -13,12 +13,12 @@ try {
 }
 
 
-$str = [1,2,3,3,4,7,5,9,10];
+// $str = [1,2,3,3,4,7,5,9,10];
 
-unset($str[array_search(1,$str)]);
-echo implode(",",$str);
+// unset($str[array_search(1,$str)]);
+// echo implode(",",$str);
 
-return;
+// return;
 // $limit = 50;
 // $offset = 1;
 // $uid = 3;
@@ -247,4 +247,60 @@ return;
 // ]);
 
  
+?>
+<!-- <input type="range" id="rangeSlider" min="0" max="100" value="100">
+<span id="rangeValue">100%</span>
 
+<input type="text" id="valueList" class="form-control" readonly>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        let originalValues = [10, 20, 30];
+        
+        // Function to update values based on the percentage
+        function updateValues(percentage) {
+            let scaledValues = originalValues.map(value => (value * percentage / 100));
+            $("#valueList").val(`[${scaledValues.join(", ")}]`);
+        }
+
+        // Initial load
+        updateValues(100);
+
+        // Update values on slider change
+        $("#rangeSlider").on("input", function() {
+            let percentage = $(this).val();
+            $("#rangeValue").text(percentage + "%");
+            updateValues(percentage);
+        });
+    });
+</script> -->
+
+
+<input type='text' class='form-control oddsone' value='[10, 20, 30]' readonly>
+<input type="range" id="rangeSliderone" min="0" max="100" value="100">
+<span id="rangeValue">100%</span>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Get the initial values from the input box
+    let originalValues = JSON.parse($(".oddsone").val());
+
+    // Function to update values based on the percentage
+    function updateValues(percentage) {
+        let scaledValues = originalValues.map(value => (value * percentage / 100).toFixed(0));
+        $(".oddsone").val(`[${scaledValues.join(", ")}]`);
+    }
+
+    // Initial load
+    updateValues(100);
+
+    // Update values on slider change
+    $("#rangeSliderone").on("input", function() {
+        let percentage = $(this).val();
+        $("#rangeValue").text(percentage + "%");
+        updateValues(percentage);
+    });
+});
+</script>

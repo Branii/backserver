@@ -38,19 +38,19 @@ $(function () {
       };
   
 
-      function tableScrolluserList() {
-        const tableContainerUser = document.querySelector(".table-wrapperbankcard");
-        const headerRowUserList = document.querySelector(".bl-headrowuserlist");
+      function tableScrolluserListt() {
+        const tableContainerUsert = document.querySelector(".table-wrapperbankcard");
+        const headerRowUserListt = document.querySelector(".headrowuserbank");
 
-        tableContainerUser.addEventListener("scroll", function () {
-            if (tableContainerUser.scrollTop > 0) {
-                headerRowUserList.classList.add("sticky-bl-headeruserlist");
+        tableContainerUsert.addEventListener("scroll", function () {
+            if (tableContainerUsert.scrollTop > 0) {
+                headerRowUserListt.classList.add("sticky-headeruserbank");
             } else {
-                headerRowUserList.classList.remove("sticky-bl-headeruserlist");
+                headerRowUserListt.classList.remove("sticky-headeruserbank");
             }
         });
     }
-    tableScrolluserList();
+    tableScrolluserListt();
 
   
     let currentPagebankcard = 1;
