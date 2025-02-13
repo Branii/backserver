@@ -72,7 +72,7 @@ $(function () {
         const data = response.data
           // return
         $("#maskwithdraw").LoadingOverlay("hide");
-        console.log(data)
+      //  console.log(data)
         renderwithdraw(data);
         const totalPages = Math.ceil(data[0].total_records / 10);
   
@@ -274,7 +274,7 @@ $(function () {
            success: function(response){
                console.log(response);
                response  = JSON.parse(response);
-               console.log(response);
+               //console.log(response);
               
                if(response.status === "error"){
                    $("#withdrawContainer").html(`<tr class="no-resultslist"><td colspan="15">Error: ${response.data}</td></tr>`); 
@@ -329,7 +329,7 @@ $(function () {
 
     $(document).on("keyup", ".widrl-username", function () {
     const query = $(this).val().trim();
-      console.log("Hitting here period");
+    //  console.log("Hitting here period");
     // Only trigger if input is more than 2 characters
     if (query.length > 2) {
         clearTimeout(debounceTimeout); // Clear any existing timeout
@@ -359,7 +359,7 @@ $(function () {
           $("#users-options-wrapper").hide();
       }
 
-      console.log(selectedUsername)
+   //   console.log(selectedUsername)
   });
 
 
@@ -385,7 +385,7 @@ const  fetchbetUser = (query) =>{
               const username = getDisplayName(user);
               optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${username}">${username}</option>`;
           }
-          console.log(optionsHtml);
+        //  console.log(optionsHtml);
           $('#users-options-wrapper').html(optionsHtml);
           $("#users-options-wrapper").css({"display":"inline-block"});
        } catch (error) {
