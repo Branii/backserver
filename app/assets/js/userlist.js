@@ -1296,7 +1296,7 @@ $(function () {
                 $("#usrl-withdrawal-limit").val(res.withdrawal_level);
                 $("#usrl-state").val(res.user_state);
                 $("#usrl-rebate").val(res.rebate);
-                $("#usrl-daily-betting-total-limit").val(res.daily_bet_llimit === "*****" ? 0 : res.daily_bet_llimit);
+                $("#usrl-daily-betting-total-limit").val(res.daily_bet_limit === "*****" ? 0 : res.daily_bet_limit);
                 $("#usrl-account-type").val(res.recharge_level);
                 $("#usrl-deposit-limit").val(res.recharge_level);
                 $("#usrl-remarks").val(res.remark);
