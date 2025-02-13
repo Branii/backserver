@@ -598,6 +598,7 @@ $(function () {
     });
 
     $(document).on("click", ".addagent", function () {
+        $("#agentform")[0].reset();
         $("#addagentmodal").modal("show");
     });
 
