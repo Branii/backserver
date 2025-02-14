@@ -493,7 +493,7 @@
         z-index: 10;
     }
 
-    
+
     .show-user-rel:hover{
         font-weight: 900;
     }
@@ -509,7 +509,7 @@
         <form action="" class="betform">
             <span class="top-left-btn">
                 <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                    <input type="text" id="selectuserlist" class="form-control queryholderuserlistz usernames" placeholder="Search usernames" />
+                    <input type="text" id="selectuserlist" class="form-control queryholderuserlistz usernames" placeholder="Search Usernames" />
                     <input name="usernames" type="hidden" id="usrl-id-holder" />
                     <select class="form-control queryholderuserlist" size="5" style="display: none;" id="userlists">
                         <!-- Options will be populated dynamically -->

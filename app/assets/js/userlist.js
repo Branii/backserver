@@ -954,12 +954,12 @@ $(function () {
                  <td class="show-user-rel ${item.agent_level === "*****" ? "no-agent" : ""}" data-user-id="${item.uid}" style="cursor:pointer;">
                ${
                    item.account_type == 1
-                       ? "-------"
+                       ? "Customer"
                        : item.account_type == 2
                        ? "Top Agent"
                        : subsLookups[item.uid] < 2
-                       ? agentNicknamesLookups[item.agent_id] + "->" + username
-                       : agentNicknamesLookups[item.agent_id] + "->" + username + "..."
+                       ? agentNicknamesLookups[item.agent_id] + " > " + username
+                       : agentNicknamesLookups[item.agent_id] + " ... " + username 
                }
               </td>
                   <td>${subsLookup[item.uid] ?? 0} </td>

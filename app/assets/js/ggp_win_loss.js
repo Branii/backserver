@@ -214,6 +214,8 @@ let debounceTimeout = null;
             },
             success: function(response){
                 $("#subs-back-btn").hide();
+                console.log(response);
+               
                 response  = JSON.parse(response);
                 if(response.status === "error"){
                     $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 

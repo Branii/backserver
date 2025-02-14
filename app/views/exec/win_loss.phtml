@@ -39,6 +39,11 @@ if ($flag == "users-win-loss") {
         return true;
     }
 
+
+//     echo $user_id;
+//     $subs = DataReportModel::fetchFullHierarchyV2($user_id);
+//    echo json_encode($subs);
+//     return;
     $user_res = DataReportModel::filterWinLossRecordsForUser($user_id,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date]);
     echo json_encode($user_res);
 
@@ -167,11 +172,16 @@ if ($flag == "users-win-loss") {
      $end_date   = $this->viewData['end_date'];
      $limit      = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 10) : 10;
      
+
+     $subs = DataReportModel::allSubs($agent_id);
      
-     $subs = DataReportModel::getActiveSubs($agent_id);
+
+     if($subs["status"] == "error") return ["status" => "error", "data" => "Internal Server Error."];
      
-     if(empty($subs)){  echo empty_response(); return; }
-   
+    //  print_r($subs);
+     if(empty($subs["data"])){  echo empty_response(); return; }
+    
+     $subs = $subs["data"];
      $results = [];
      foreach($subs as $key => $sub){
          $res = DataReportModel::filterWinLossRecordsForUser($sub->uid,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date,]);
