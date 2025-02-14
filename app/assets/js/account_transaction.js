@@ -52,7 +52,7 @@ $(function () {
             html += `
                       <tr class="trow">
                         <td>${"TR" + item.order_id.substring(0, 7)}</td>
-                        <td>${typeof username === "string" || typeof username === "number" ? String(username).charAt(0).toUpperCase() + String(username).slice(1) : "N/A"}</td>
+                        <td>${username}</td>
                         <td><i class='bx bxs-circle' style='color:${statusColor[item.order_type].color};font-size:8px;margin-right:5px;'></i>${statusColor[item.order_type].title}</td>
                        <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
                         <td>${formatMoney(item.balance)}</td>
@@ -454,7 +454,7 @@ $(function () {
         }, 100);
         $("#signup-modal").modal("show");
         const transactionId = $(this).attr("value");
-        console.log(transactionId);
+        //console.log(transactionId);
 
         $("#row1").empty();
         $("#row2").empty();

@@ -334,6 +334,8 @@ return [
 
 //Platform Fee Deposit
 'Rebate Records' => 'Rebate Records',
+// 'Searchs Username' =>'Search Username',
+// 'Searchs Transaction ID' =>'Search Transaction ID',
 
 
 

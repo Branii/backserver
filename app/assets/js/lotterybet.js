@@ -73,9 +73,7 @@ $(function () {
       htmls += `
                     <tr>
                         <td>${item.bet_code}</td>
-                        <td>${typeof username === "string" || typeof username === "number" 
-                        ? String(username).charAt(0).toUpperCase() + String(username).slice(1) 
-                        : "N/A"}</td>
+                        <td>${typeof username}</td>
                         <td>${item.draw_period}</td>
                         <td>${item.game_type}</td>
                           <td>${gamemodel[item.game_model]}</td>

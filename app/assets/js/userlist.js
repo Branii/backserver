@@ -1679,6 +1679,21 @@ $(function () {
             }
         }
     });
+
+      $('.showpass').click(function() {
+        var passwordField = $('#agentpassword');
+        var toggleIcon = $('.showpass');
+        
+        // Check if the type is password and toggle between text and password
+        if (passwordField.attr('type') === 'password') {
+          passwordField.attr('type', 'text'); // Change input to text (show password)
+          toggleIcon.removeClass('bx-show').addClass('bx-hide'); // Change icon to "hide"
+        } else {
+          passwordField.attr('type', 'password'); // Change input to password (hide password)
+          toggleIcon.removeClass('bx-hide').addClass('bx-show'); // Change icon to "show"
+        }
+      });
+
 });
 
 const lotteriesMarkup = (lottery, blockedLotteries) => {

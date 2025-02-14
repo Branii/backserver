@@ -25,15 +25,15 @@ $(function () {
   const lotteryParamTable = (data) => {
     let html = "";
     data.forEach((item) => {
-      console.log(typeof item.modified_odds);
+    
       html += `
                     <tr class="trow">
                         <td>${item.gameplay_name}</td>
                         <td>${item.group_type}</td>
                         <td>${item.name}</td>
-                        <td><input type='text' class='form-control' value='${item.modified_odds}'class="oddsone">
-                        <input type="range" id="rangeSliderone" min="0" max="100" value="100">
-                          <span id="rangeValue">100%</span>
+                        <td><input type='text' class='form-control oddsone' value='${item.modified_odds}'/>
+                        <input type="range" class="rangeSliderone" min="0" max="100" value="100">
+                          <span class="rangeValue">100%</span>
                         </td>
                         <td> <label class="switch gameplaybtn"><input type="checkbox" value ="${item.state}" style="z-index:999"/> <span class="slider"></span></label></td>
                      
@@ -406,22 +406,62 @@ $(function () {
     
   });
 
-  $(document).on('input', '#rangeSliderone', function() {
-    // Get the initial values from the input box
-    let originalValues =parseFloat($(".oddsone").val());
- console.log(originalValues);
-    // Get the current percentage from the range slider
-    // let percentage = $(this).val();
-    // $("#rangeValue").text(percentage + "%");
 
-    // // Function to update values based on the percentage
-    // function updateValues(percentage) {
-    //     let scaledValues = originalValues.map(value => (value * percentage / 100).toFixed(2));
-    //     $(".oddsone").val(`[${scaledValues.join(", ")}]`);
-    // }
+  let oddsElement;
+  let rangeValue;
+  let originalValues;
+  
+  $(document).on('input', '.rangeSliderone', function() {
+      // Find the closest row and the necessary elements
+      oddsElement = $(this).closest("tr").find(".oddsone");
+      rangeValue = $(this).closest("tr").find(".rangeValue");
+      
+      // Get the original values when the input is triggered
+      originalValues = getOriginalValues(oddsElement);
+  
+      // Update the values
+      updateValues($(this)); // Pass the slider element to the function
+  });
+  
+  // Safely parse the values
+  function getOriginalValues(oddsElement) {
+      try {
+          // Parse the value as JSON
+          let values = JSON.parse(oddsElement.val());
+          // Ensure it's an array of numbers
+          if (Array.isArray(values) && values.every(num => !isNaN(num))) {
+              return values;
+          } else {
+              console.error("Invalid value format");
+              return [];
+          }
+      } catch (e) {
+          console.error("Failed to parse value:", e);
+          return [];
+      }
+  }
+  
+  // Function to update values based on the percentage
+  function updateValues(slider) {
+      const percentage = slider.val();
+      rangeValue.text(percentage + "%");  // Update the range value display
+  
+      if (originalValues.length > 0) {
+          let scaledValues;
+          if (percentage === "0") {
+              // If the percentage is 0, set to original values or set a fallback
+              scaledValues = originalValues; // Use original values for 0% (or you could set to something else)
+          } else {
+              // Scale each individual value in the array
+              scaledValues = originalValues.map(value => (value * percentage / 100).toFixed(0));
+          }
+          oddsElement.val(`[${scaledValues.join(", ")}]`);
+          console.log(`[${scaledValues.join(", ")}]`)
+      } else {
+          oddsElement.val('[]');
+      }
+  }
+  
 
-    // // Update the values
-    // updateValues(percentage);
-});
 
 });

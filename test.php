@@ -276,7 +276,7 @@ try {
     });
 </script> -->
 
-
+<!-- 
 <input type='text' class='form-control oddsone' value='[10, 20, 30]' readonly>
 <input type="range" id="rangeSliderone" min="0" max="100" value="100">
 <span id="rangeValue">100%</span>
@@ -303,4 +303,84 @@ $(document).ready(function() {
         updateValues(percentage);
     });
 });
+</script> -->
+<table>
+  <thead>
+    <tr>
+      <th>Odds</th>
+      <th>Slider</th>
+      <th>Percentage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <input type='text' class='form-control oddsone' value='[11, 20, 30]' readonly>
+      </td>
+      <td>
+        <input type="range" class="rangeSlider" value="100" min="0" max="100" step="1">
+      </td>
+      <td>
+        <span class="rangeValue">100%</span>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <input type='text' class='form-control oddsone' value='[15, 25, 35]' readonly>
+      </td>
+      <td>
+        <input type="range" class="rangeSlider" value="100" min="0" max="100" step="1">
+      </td>
+      <td>
+        <span class="rangeValue">100%</span>
+      </td>
+    </tr>
+
+    <!-- Add more rows as needed -->
+  </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // Initialize for each rangeSlider
+    $(".rangeSlider").each(function() {
+      const rangeSlider = $(this);
+      const oddsElement = rangeSlider.closest("tr").find(".oddsone");
+      const rangeValue = rangeSlider.closest("tr").find(".rangeValue");
+      let originalValues = [];
+
+      // Safely parse the values
+      try {
+        originalValues = JSON.parse(oddsElement.val());
+        if (!Array.isArray(originalValues) || originalValues.some(num => isNaN(num))) {
+          throw new Error("Invalid value format");
+        }
+      } catch (e) {
+        console.error("Failed to parse value:", e);
+        return;
+      }
+
+      // Function to update values based on the percentage
+      function updateValues() {
+        const percentage = rangeSlider.val();
+        rangeValue.text(percentage + "%");
+
+        if (originalValues.length > 0) {
+          // Scale each individual value in the array
+          const scaledValues = originalValues.map(value => (value * percentage / 100));
+          oddsElement.val(`[${scaledValues.join(", ")}]`);
+        } else {
+          oddsElement.val('[]');
+        }
+      }
+
+      // Bind the input event to update values on slider change
+      rangeSlider.on("input", updateValues);
+
+      // Initial load
+      updateValues();
+    });
+  });
 </script>
