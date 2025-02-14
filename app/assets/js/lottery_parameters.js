@@ -22,7 +22,7 @@ $(function () {
     });
   }
 
-  const lotteryParamTable = (data) => {
+  const lotteryParamTable = (data) => { 
     let html = "";
     data.forEach((item) => {
     
