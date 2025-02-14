@@ -34,9 +34,7 @@ $(function () {
 
         html += `
                       <tr>
-                 <td>${typeof username === "string" || typeof username === "number" 
-                  ? String(username).charAt(0).toUpperCase() + String(username).slice(1) 
-                  : "N/A"}</td>
+                     <td>${username}</td>
                       <td>VIP</td>
                       <td class="editables">${types}</td>
                       <td class="editables">${formatMoney(total_income)}</td>

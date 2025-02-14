@@ -721,8 +721,8 @@ class UserManageModel extends MEDOOHelper
 
        
         $db = parent::getLink();
-        $sql  = "UPDATE  users_test SET rebate=:rebate, user_state =:user_state, daily_bet_llimit=:daily_bet_llimit, withdrawal_level=:withdrawal_level,recharge_level=:recharge_level  WHERE uid = :user_id";
-        $stmt = $db->query($sql,[":user_id" => intval($user_id),":rebate" => $rebate,":user_state" => $state,":daily_bet_llimit" => $dailyBettingTotalLimit,":withdrawal_level" => $withdrawalLimit, ":recharge_level" => $depositLimit]);
+        $sql  = "UPDATE  users_test SET rebate=:rebate, user_state =:user_state, daily_bet_limit=:daily_bet_limit, withdrawal_level=:withdrawal_level,recharge_level=:recharge_level  WHERE uid = :user_id";
+        $stmt = $db->query($sql,[":user_id" => intval($user_id),":rebate" => $rebate,":user_state" => $state,":daily_bet_limit" => $dailyBettingTotalLimit,":withdrawal_level" => $withdrawalLimit, ":recharge_level" => $depositLimit]);
         $data =  $stmt->rowCount();
         return ["status" => "success", "data" => $data];
     }catch(Exception $e){
@@ -735,8 +735,8 @@ class UserManageModel extends MEDOOHelper
     //     try{
 
     //     $db = parent::getLink();
-    //     $sql  = "UPDATE  users_test SET rebate=:rebate, user_state =:user_state, daily_bet_llimit=:daily_bet_llimit, withdrawal_level=:withdrawal_level,recharge_level=:recharge_level  WHERE uid = :user_id";
-    //     $stmt = $db->query($sql,[":user_id" => intval($user_id),":rebate" => $rebate,":user_state" => $state,":daily_bet_llimit" => $dailyBettingTotalLimit,":withdrawal_level" => $withdrawalLimit, ":recharge_level" => $depositLimit]);
+    //     $sql  = "UPDATE  users_test SET rebate=:rebate, user_state =:user_state, daily_bet_limit=:daily_bet_limit, withdrawal_level=:withdrawal_level,recharge_level=:recharge_level  WHERE uid = :user_id";
+    //     $stmt = $db->query($sql,[":user_id" => intval($user_id),":rebate" => $rebate,":user_state" => $state,":daily_bet_limit" => $dailyBettingTotalLimit,":withdrawal_level" => $withdrawalLimit, ":recharge_level" => $depositLimit]);
     //     $data =  $stmt->rowCount();
     //     return ["status" => "success", "data" => $data];
     // }catch(Exception $e){
@@ -993,7 +993,7 @@ class UserManageModel extends MEDOOHelper
 
     public static function checkEmailExist($datas)
     {
-        return  $agentemail = parent::selectAll("users_test", ["email", "uid"], ["email" => $datas]);
+        return  $agentemail = parent::selectAll("users_test", ["username", "uid"], ["username" => $datas]);
     }
 
     public static function UpdateAgentTable($userData)
@@ -1019,15 +1019,15 @@ class UserManageModel extends MEDOOHelper
     {
          
         $errors = [];
-        $emailexist = self::checkEmailExist(trim($datas['agentemail']));
+        $emailexist = self::checkEmailExist(trim($datas['agentname']));
         $password = trim($datas['agentpassword'] ?? '');
-        $confirmPassword = trim($datas['agentpassword1'] ?? '');
-        $email = trim($datas['agentemail'] ?? '');
+        // $confirmPassword = trim($datas['agentpassword1'] ?? '');
+      //  $email = trim($datas['agentemail'] ?? '');
         $username = trim($datas['agentname'] ?? '');
 
-        //email exit    
+        // //email exit    
         if ($emailexist) {
-            $errors['emailexist'] = "Email already exists";
+            $errors['emailexist'] = "Username already taken";
         }
         // Password validation
         if (empty($password)) {
@@ -1037,9 +1037,9 @@ class UserManageModel extends MEDOOHelper
         }
 
         // Confirm password validation
-        if ($password !== $confirmPassword) {
-            $errors['confirmPassword'] = "Password doesn't match";
-        }
+        // if ($password !== $confirmPassword) {
+        //     $errors['confirmPassword'] = "Password doesn't match";
+        // }
 
         if (!preg_match('/^(?=.*[~`!@#$%^&*()\-+={}[\]|\\:;"\'<>,.?\/₹]).*$/', $password)) {
             $errors['passwordSpecialChar'] = "Password must contain at least one special symbol";
@@ -1056,11 +1056,11 @@ class UserManageModel extends MEDOOHelper
         }
 
         // Email validation
-        if (empty($email)) {
-            $errors['email'] = "Email is required";
-        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors['email'] = "Email address is invalid";
-        }
+        // if (empty($email)) {
+        //     $errors['email'] = "Email is required";
+        // } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        //     $errors['email'] = "Email address is invalid";
+        // }
 
         // Username validation
         if (empty($username)) {

@@ -95,13 +95,9 @@ class DataReportModel extends MedooOrm
     public static function filterWinLossRecordsForUser($user_id,$filters = [],bool $isForOnlyUser = false,bool $addAgent = true){
         try{
 
-      
-           
-
         $table_name = "transaction";
-        $user_and_subs =  !$isForOnlyUser ? self::allSubs($user_id,1,1000,true) : self::fetchUserByID($user_id);
-      
-        $user_and_subs_uids = array_column($user_and_subs,"uids");
+        $user_and_subs =  !$isForOnlyUser ? self::fetchFullHierarchyV2($user_id,) : self::fetchUserByID($user_id);
+
         if($user_and_subs["status"] === "error") return $user_and_subs;
         $place_holders = [];
         $params = [];
@@ -173,14 +169,12 @@ class DataReportModel extends MedooOrm
        if(!$isForOnlyUser){
            unset($subs_uids[array_search($user_id,$subs_uids)]);
        } 
-
        
 
        $query = "SELECT    (SELECT SUM(expenditure_amount) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND bet_type = 1 AND order_type != 11 {$where_clause}) AS total_normal_bet_amount, 
-
        (SELECT SUM(expenditure_amount) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND bet_type = 1 AND order_type = 12 {$where_clause}) AS total_loss_amount,
        (SELECT SUM(account_change) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND bet_type = 1 {$where_clause} AND order_type = 3)  AS total_win_amount,(SELECT SUM(expenditure_amount) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND bet_type = 1 AND order_type = 11 {$where_clause}) AS total_direct_refund_amount,(SELECT SUM(expenditure_amount) FROM {$table_name} WHERE uid IN (".implode(',',$place_holders).") AND (order_type = 2 || order_type = 10)   {$where_clause}) AS total_promotions_and_bonus, 
-       (SELECT SUM(account_change) FROM {$table_name} WHERE uid IN(".implode(',',$place_holders).") AND (order_type = 7 || order_type = 8) {$where_clause}) total_rebate_amount,
+       (SELECT SUM(account_change) FROM {$table_name} WHERE uid IN(".implode(',',$place_holders).") AND (order_type = 7 || order_type = 8) {$where_clause}) AS total_rebate_amount,
        SUM(CASE WHEN order_type = 2 THEN account_change ELSE 0 END) AS win_bonus, 
        SUM(CASE WHEN order_type = 3 THEN account_change ELSE 0 END) AS bet_awarded, 
        SUM(CASE WHEN order_type = 5 THEN account_change ELSE 0 END) AS bet_deduct, 
@@ -194,11 +188,11 @@ class DataReportModel extends MedooOrm
 
         // get all combne both the total bet amounts for the games won and the total bet amounts for the games lost
 
-        $total_normal_bet_amount = self::formatNumber(abs($results->total_normal_bet_amount ?? 0));
-        $total_win_amount = self::formatNumber(abs($results->total_win_amount ?? 0));
-        $total_rebate_amount  = self::formatNumber($results->total_rebate_amount ?? 0) ;
-        $total_promotions_and_bonus  = self::formatNumber($results->total_promotions_and_bonus ?? 0) ;
-        $total_direct_refund_amount  = self::formatNumber($results->total_direct_refund_amount ?? 0) ;
+        $total_normal_bet_amount = $results->total_normal_bet_amount ?? 0;
+        $total_win_amount = $results->total_win_amount ?? 0;
+        $total_rebate_amount  = $results->total_rebate_amount ?? 0 ;
+        $total_promotions_and_bonus  = $results->total_promotions_and_bonus ?? 0;
+        $total_direct_refund_amount  = $results->total_direct_refund_amount ?? 0;
 
         $query = "SELECT SUM(done_amount) as total_done_amount, SUM(win_amount) AS total_win_amount, SUM(lost_amount) AS total_loss_amount,SUM(total_amount) as total_track_amount,SUM(refund_amount) as total_refund_amount, SUM(tracked) as track_num_bets FROM trackbet WHERE user_id IN (".implode(',',$track_place_holder_uids).") {$track_where_clause}";
         $track_results  = $service->query( $query, $track_bet_params )->fetch(PDO::FETCH_OBJ);
@@ -208,9 +202,9 @@ class DataReportModel extends MedooOrm
         $total_refund_amount       = $total_track_refund_amount + $total_direct_refund_amount;
         $total_fee_amount = 0;
 
-        $total_bet_amount = self::formatNumber(self::formatNumber(abs($results->total_normal_bet_amount ?? 0)) + ($track_results->total_track_amount ?? 0));
+        $total_bet_amount = $results->total_normal_bet_amount ?? 0 + ($track_results->total_track_amount ?? 0);
        
-        $results = ["user_id" => $user_id,"username" => $username,"account_type" => $account_type, "num_bettors" => $results->num_bettors,"num_bet_tickets" => $results->num_bet_tickets + $track_num_bets,"rebate" => $rebate, "total_bet_amount" =>  $total_bet_amount, "total_rebate_amount" => $total_rebate_amount , 'total_win_amount' => $total_win_amount + ($results->win_bonus ?? 0), "total_valid_amount" =>  $total_valid_amount, 'win_loss' =>  self::formatNumber(($total_win_amount + $total_rebate_amount + $total_promotions_and_bonus + $total_refund_amount) - ($total_valid_amount + $total_fee_amount)), "num_subs" => max((count($subs_data) - 1),0),"fees"=> $total_fee_amount ,"total_promotions_and_bonus" => $total_promotions_and_bonus,'total_refund_amount' => $total_refund_amount];
+        $results = ["user_id" => $user_id,"username" => $username,"account_type" => $account_type, "num_bettors" => $results->num_bettors,"num_bet_tickets" => $results->num_bet_tickets + $track_num_bets,"rebate" => $rebate, "total_bet_amount" =>  self::formatNumber($total_bet_amount), "total_rebate_amount" => self::formatNumber($total_rebate_amount), 'total_win_amount' => self::formatNumber($total_win_amount + ($results->win_bonus ?? 0)), "total_valid_amount" =>  self::formatNumber($total_valid_amount), 'win_loss' =>  self::formatNumber(($total_win_amount + $total_rebate_amount + $total_promotions_and_bonus + $total_refund_amount) - ($total_valid_amount + $total_fee_amount)), "num_subs" => max((count($subs_data) - 1),0),"fees"=> self::formatNumber($total_fee_amount) ,"total_promotions_and_bonus" => self::formatNumber($total_promotions_and_bonus),'total_refund_amount' => self::formatNumber($total_refund_amount)];
 
        return self::response($results);
         
@@ -247,6 +241,41 @@ public static function allSubs($agent_id, int $currentPage = 1, int $limit = 10,
         return self::response("Internal Server Error.". $e->getMessage(),false);
     }
     }
+   
+
+public static function fetchFullHierarchy($agent_id) {
+    try{
+        $table_name = "user_rebate";
+        $db = parent::getLink();
+        // Construct raw SQL query
+        $sql = "SELECT DISTINCT user_id as uid FROM {$table_name}  WHERE {$table_name}.agent_id = :agent_id  ";
+         
+
+        // Execute the query using Medoo's `query` method
+        $stmt = $db->query($sql, [':agent_id' => $agent_id]);
+
+         // Fetch results
+         $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+         $uids = array_column($data,"uid");
+         $agent_id = intval($agent_id);
+         if(empty($agent_id))  return self::response("Internal Server Error.",false);
+
+         $table_name = "users_test";
+         $uids[] = $agent_id;
+
+         $sql = "SELECT *  FROM  {$table_name}   WHERE uid IN (".implode(",",$uids).") ";
+
+        // Execute the query using Medoo's `query` method
+        $stmt = $db->query($sql);
+
+        // Fetch results
+        $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return self::response($data);
+    }catch(Exception $e){
+        return self::response("Internal Server Error.". $e->getMessage(),false);
+    }
+    }
 
 
 
@@ -257,7 +286,7 @@ public static function allSubs($agent_id, int $currentPage = 1, int $limit = 10,
             $offset = ($currentPage - 1) * $limit;
 
             // Construct raw SQL query
-            $sql = "SELECT *,(SELECT COUNT(*) FROM {$table_name} WHERE {$table_name}.agent_id=112 AND uid !=:agent_id) AS total_records FROM {$table_name} JOIN transaction ON transaction.uid = {$table_name}.uid WHERE {$table_name}.agent_id =:agent_id AND transaction.order_type IN (3,12)  AND {$table_name}.uid !=:agent_id GROUP BY {$table_name}.uid ORDER BY {$table_name}.uid DESC LIMIT :offset, :limit ";
+            $sql = "SELECT *,(SELECT COUNT(*) FROM {$table_name} WHERE {$table_name}.agent_id=:agent_id AND uid !=:agent_id) AS total_records FROM {$table_name} JOIN transaction ON transaction.uid = {$table_name}.uid WHERE {$table_name}.agent_id =:agent_id AND transaction.order_type IN (3,12)  AND {$table_name}.uid !=:agent_id GROUP BY {$table_name}.uid ORDER BY {$table_name}.uid DESC LIMIT :offset, :limit ";
     
             // Execute the query using Medoo's `query` method
             $stmt = $db->query($sql, [
@@ -271,7 +300,71 @@ public static function allSubs($agent_id, int $currentPage = 1, int $limit = 10,
            
         }catch(Exception $e){
             // log the error msg and return an empty array
-            return [];
+            return ["status" => "error", "data" => "Internal Server Error."];
+        }
+        }
+
+    public static function fetchFullHierarchyV2($agent_id) {
+        try{
+
+
+
+            $db = parent::getLink();
+
+
+            // Construct query for all active bettors
+            $sql = "SELECT DISTINCT user_id FROM user_rebate WHERE agent_id=:agent_id ";
+            // execute the query to get the results for all active bettors
+            $stmt = $db->query($sql, [':agent_id' => $agent_id]);
+            // Fetch results
+            $active_downlines = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+            if(empty($active_downlines))  {
+                $sql = "SELECT *,(SELECT COUNT(*) FROM users_test WHERE uid =:agent_id) AS total_records FROM users_test WHERE uid =:agent_id ORDER BY uid DESC ";
+
+                // Execute the query using Medoo's `query` method
+                $stmt = $db->query($sql,[":agent_id" => $agent_id]);
+    
+                // Fetch results
+                $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+                return ["status" => "success", "data"=> $data];
+            }
+
+            $active_downlines_uids = array_column($active_downlines,"user_id");
+
+            // Construct raw SQL query
+             $sql = "SELECT DISTINCT agent_id,user_id FROM user_rebate WHERE user_id IN (".implode(',',$active_downlines_uids).") ";
+
+             // Execute the query using Medoo's `query` method
+             $stmt = $db->query($sql);
+
+             // Fetch results
+            $active_tree_res = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+
+            $active_agent_tree = array_column($active_tree_res,"agent_id");
+            $unique_ids =   array_unique(array_merge($active_downlines_uids,$active_agent_tree));
+
+            sort($unique_ids);
+            $unique_ids = array_slice($unique_ids,array_search($agent_id,$unique_ids));
+
+
+            
+
+              // Construct raw SQL query
+         $sql = "SELECT *,(SELECT COUNT(*) FROM users_test WHERE uid IN (".implode(',',$unique_ids).")) AS total_records FROM users_test WHERE uid IN (".implode(',',$unique_ids).") ORDER BY uid DESC ";
+
+            // Execute the query using Medoo's `query` method
+            $stmt = $db->query($sql);
+
+            // Fetch results
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return ["status" => "success", "data"=> $data];
+           
+        }catch(Exception $e){
+           
+            // log the error msg and return an empty array
+            return ["status" => "error", "data" => "Internal Server Error."];
         }
         }
 

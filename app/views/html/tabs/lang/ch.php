@@ -1,6 +1,7 @@
 <?php
 
 return [
+    // 'Searchs Username' =>'搜索用户名',
     'permissionAlert' => '用户未设置权限',
     'permissionMess' => '请联系系统管理员',
     'signout' => '退出',
