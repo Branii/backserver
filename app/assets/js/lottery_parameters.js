@@ -407,61 +407,117 @@ $(function () {
   });
 
 
-  let oddsElement;
-  let rangeValue;
-  let originalValues;
+  // let oddsElement;
+  // let rangeValue;
+  // let originalValues;
   
-  $(document).on('input', '.rangeSliderone', function() {
-      // Find the closest row and the necessary elements
-      oddsElement = $(this).closest("tr").find(".oddsone");
-      rangeValue = $(this).closest("tr").find(".rangeValue");
+  // $(document).on('input', '.rangeSliderone', function() {
+  //     // Find the closest row and the necessary elements
+  //     oddsElement = $(this).closest("tr").find(".oddsone");
+  //     rangeValue = $(this).closest("tr").find(".rangeValue");
       
-      // Get the original values when the input is triggered
-      originalValues = getOriginalValues(oddsElement);
+  //     // Get the original values when the input is triggered
+  //     originalValues = getOriginalValues(oddsElement);
   
-      // Update the values
-      updateValues($(this)); // Pass the slider element to the function
-  });
+  //     // Update the values
+  //     updateValues($(this)); // Pass the slider element to the function
+  // });
   
-  // Safely parse the values
-  function getOriginalValues(oddsElement) {
-      try {
-          // Parse the value as JSON
-          let values = JSON.parse(oddsElement.val());
-          // Ensure it's an array of numbers
-          if (Array.isArray(values) && values.every(num => !isNaN(num))) {
-              return values;
-          } else {
-              console.error("Invalid value format");
-              return [];
-          }
-      } catch (e) {
-          console.error("Failed to parse value:", e);
-          return [];
-      }
-  }
+  // // Safely parse the values
+  // function getOriginalValues(oddsElement) {
+  //     try {
+  //         // Parse the value as JSON
+  //         let values = JSON.parse(oddsElement.val());
+  //         // Ensure it's an array of numbers
+  //         if (Array.isArray(values) && values.every(num => !isNaN(num))) {
+  //             return values;
+  //         } else {
+  //             console.error("Invalid value format");
+  //             return [];
+  //         }
+  //     } catch (e) {
+  //         console.error("Failed to parse value:", e);
+  //         return [];
+  //     }
+  // }
   
-  // Function to update values based on the percentage
-  function updateValues(slider) {
-      const percentage = slider.val();
-      rangeValue.text(percentage + "%");  // Update the range value display
+  // // Function to update values based on the percentage
+  // function updateValues(slider) {
+  //     const percentage = slider.val();
+  //     rangeValue.text(percentage + "%");  // Update the range value display
   
-      if (originalValues.length > 0) {
-          let scaledValues;
-          if (percentage === "0") {
-              // If the percentage is 0, set to original values or set a fallback
-              scaledValues = originalValues; // Use original values for 0% (or you could set to something else)
-          } else {
-              // Scale each individual value in the array
-              scaledValues = originalValues.map(value => (value * percentage / 100).toFixed(0));
-          }
-          oddsElement.val(`[${scaledValues.join(", ")}]`);
-          console.log(`[${scaledValues.join(", ")}]`)
-      } else {
-          oddsElement.val('[]');
-      }
-  }
+  //     if (originalValues.length > 0) {
+  //         let scaledValues;
+  //         if (percentage === "0") {
+  //             // If the percentage is 0, set to original values or set a fallback
+  //             scaledValues = originalValues; // Use original values for 0% (or you could set to something else)
+  //         } else {
+  //             // Scale each individual value in the array
+  //             scaledValues = originalValues.map(value => (value * percentage / 100).toFixed(0));
+  //         }
+  //         oddsElement.val(`[${scaledValues.join(", ")}]`);
+  //         console.log(`[${scaledValues.join(", ")}]`)
+  //     } else {
+  //         oddsElement.val('[]');
+  //     }
+  // }
   
+ let oddsElement;
+let rangeValue;
+let originalValues;
+
+$(document).on('input', '.rangeSliderone', function() {
+    // Find the closest row and the necessary elements
+    oddsElement = $(this).closest("tr").find(".oddsone");
+    rangeValue = $(this).closest("tr").find(".rangeValue");
+
+    // Get the original values when the input is triggered
+    originalValues = getOriginalValues(oddsElement);
+
+    // Update the values based on the slider percentage
+    updateValues($(this)); // Pass the slider element to the function
+});
+
+// Safely parse the values from .oddsone input
+function getOriginalValues(oddsElement) {
+    try {
+        // Parse the value as JSON
+        let values = JSON.parse(oddsElement.val());
+        // Ensure it's an array of numbers
+        if (Array.isArray(values) && values.every(num => !isNaN(num))) {
+            return values;
+        } else {
+            console.error("Invalid value format");
+            return [];
+        }
+    } catch (e) {
+        console.error("Failed to parse value:", e);
+        return [];
+    }
+}
+
+// Function to update values based on the slider percentage
+function updateValues(slider) {
+    const percentage = slider.val();
+    rangeValue.text(percentage + "%");  // Update the range value display
+
+    if (originalValues.length > 0) {
+        let scaledValues;
+
+        // If the slider is at 0%, reset the values to the original ones
+        if (percentage === "0") {
+            scaledValues = originalValues;  // Set to original values when slider is at 0%
+        } else {
+            // Scale each individual value in the array based on the percentage
+            scaledValues = originalValues.map(value => (value * percentage / 100).toFixed(0));
+        }
+
+        // Update the .oddsone input field with the scaled values
+        oddsElement.val(`[${scaledValues.join(", ")}]`);
+    } else {
+        oddsElement.val('[]');
+    }
+}
 
 
 });
