@@ -38,8 +38,7 @@ $(function () {
           html += `
                       <tr>
                           <td>${item.payment_reference}</td>
-                           <td>${typeof username === "string" || typeof username === "number" 
-                          ? String(username).charAt(0).toUpperCase() + String(username).slice(1) : "N/A"}
+                           <td>${username}
                           </td>
                           <td>VIP</td>
                           <td>${states[item.desposit_channel]? states[item.desposit_channel]: "N/A"}</td>
