@@ -721,8 +721,8 @@ class UserManageModel extends MEDOOHelper
 
        
         $db = parent::getLink();
-        $sql  = "UPDATE  users_test SET rebate=:rebate, user_state =:user_state, daily_bet_llimit=:daily_bet_llimit, withdrawal_level=:withdrawal_level,recharge_level=:recharge_level  WHERE uid = :user_id";
-        $stmt = $db->query($sql,[":user_id" => intval($user_id),":rebate" => $rebate,":user_state" => $state,":daily_bet_llimit" => $dailyBettingTotalLimit,":withdrawal_level" => $withdrawalLimit, ":recharge_level" => $depositLimit]);
+        $sql  = "UPDATE  users_test SET rebate=:rebate, user_state =:user_state, daily_bet_limit=:daily_bet_limit, withdrawal_level=:withdrawal_level,recharge_level=:recharge_level  WHERE uid = :user_id";
+        $stmt = $db->query($sql,[":user_id" => intval($user_id),":rebate" => $rebate,":user_state" => $state,":daily_bet_limit" => $dailyBettingTotalLimit,":withdrawal_level" => $withdrawalLimit, ":recharge_level" => $depositLimit]);
         $data =  $stmt->rowCount();
         return ["status" => "success", "data" => $data];
     }catch(Exception $e){
@@ -735,8 +735,8 @@ class UserManageModel extends MEDOOHelper
     //     try{
 
     //     $db = parent::getLink();
-    //     $sql  = "UPDATE  users_test SET rebate=:rebate, user_state =:user_state, daily_bet_llimit=:daily_bet_llimit, withdrawal_level=:withdrawal_level,recharge_level=:recharge_level  WHERE uid = :user_id";
-    //     $stmt = $db->query($sql,[":user_id" => intval($user_id),":rebate" => $rebate,":user_state" => $state,":daily_bet_llimit" => $dailyBettingTotalLimit,":withdrawal_level" => $withdrawalLimit, ":recharge_level" => $depositLimit]);
+    //     $sql  = "UPDATE  users_test SET rebate=:rebate, user_state =:user_state, daily_bet_limit=:daily_bet_limit, withdrawal_level=:withdrawal_level,recharge_level=:recharge_level  WHERE uid = :user_id";
+    //     $stmt = $db->query($sql,[":user_id" => intval($user_id),":rebate" => $rebate,":user_state" => $state,":daily_bet_limit" => $dailyBettingTotalLimit,":withdrawal_level" => $withdrawalLimit, ":recharge_level" => $depositLimit]);
     //     $data =  $stmt->rowCount();
     //     return ["status" => "success", "data" => $data];
     // }catch(Exception $e){

@@ -954,12 +954,12 @@ $(function () {
                  <td class="show-user-rel ${item.agent_level === "*****" ? "no-agent" : ""}" data-user-id="${item.uid}" style="cursor:pointer;">
                ${
                    item.account_type == 1
-                       ? "-------"
+                       ? "Customer"
                        : item.account_type == 2
                        ? "Top Agent"
                        : subsLookups[item.uid] < 2
-                       ? agentNicknamesLookups[item.agent_id] + "->" + username
-                       : agentNicknamesLookups[item.agent_id] + "->" + username + "..."
+                       ? agentNicknamesLookups[item.agent_id] + " > " + username
+                       : agentNicknamesLookups[item.agent_id] + " ... " + username 
                }
               </td>
                   <td>${subsLookup[item.uid] ?? 0} </td>
@@ -1297,7 +1297,7 @@ $(function () {
                 $("#usrl-withdrawal-limit").val(res.withdrawal_level);
                 $("#usrl-state").val(res.user_state);
                 $("#usrl-rebate").val(res.rebate);
-                $("#usrl-daily-betting-total-limit").val(res.daily_bet_llimit === "*****" ? 0 : res.daily_bet_llimit);
+                $("#usrl-daily-betting-total-limit").val(res.daily_bet_limit === "*****" ? 0 : res.daily_bet_limit);
                 $("#usrl-account-type").val(res.recharge_level);
                 $("#usrl-deposit-limit").val(res.recharge_level);
                 $("#usrl-remarks").val(res.remark);

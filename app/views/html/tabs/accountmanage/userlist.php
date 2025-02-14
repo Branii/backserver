@@ -483,26 +483,10 @@ section#tooltipp p {
     /* Darker blue on hover */
 }
 
-.table-wrapperuserlistt {
-    overflow: hidden;
-    /* Hide the default scrollbar */
-    white-space: nowrap;
-    max-width: 100%;
-    /* Adjust based on your needs */
-    margin-bottom: 10px;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 10px;
-    background: rgb(38, 57, 77) 0px 20px 30px -10px;
-    /* Ensure it doesn't interfere with content */
-    z-index: 10;
-}
 
-
-.show-user-rel:hover {
-    font-weight: 900;
-}
+    .show-user-rel:hover{
+        font-weight: 900;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -515,8 +499,7 @@ section#tooltipp p {
         <form action="" class="betform">
             <span class="top-left-btn">
                 <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                    <input type="text" id="selectuserlist" class="form-control queryholderuserlistz usernames"
-                        placeholder="Search usernames" />
+                    <input type="text" id="selectuserlist" class="form-control queryholderuserlistz usernames" placeholder="Search Usernames" />
                     <input name="usernames" type="hidden" id="usrl-id-holder" />
                     <select class="form-control queryholderuserlist" size="5" style="display: none;" id="userlists">
                         <!-- Options will be populated dynamically -->
