@@ -1,0 +1,69 @@
+const page = 1;
+const limit = 10;
+
+$(document).on("click", ".tinfo", function(e) {
+    const value = $(this).attr("value");
+    getSingleData(`../business/fetch_lottery`, { betcode: value })  
+})
+
+$(document).on("click", ".accplayer", function(e) {
+    const value = $(this).attr("value");
+    directions(value, "acctablewrapper")
+})
+
+$(".accrowsort").change(function(){
+    const numrow = $(this).val();
+    const params = [$("#trans_username").val(),$("#trans_id").val(),$("#trans_datefrom").val(),$("#trans_dateto").val()]
+    const isEmpty = params.every(param => param === "");
+    if(isEmpty && $("#trans_type").val() == ""){
+        const keys = ["trans_id", "username", "order_type", "account_change", "balance", "dateTime", "date_created", "order_id", "status"];
+        const elements = {
+            table: "accountTransactionTable",refresh: "accrefresh", execute: "acctrans", pagination: "accPageBox", paging: "accPageInfo"
+        }
+        $("#accountTransactionTable").LoadingOverlay("show", { background: "rgb(90,106,133,0.1)", size: 3 });
+        fetchData(`../business/account_transaction`, page, numrow, accountTransactionTable, elements, {}, keys)
+    }else{
+        const filter = {
+            username: $("#trans_username").val(),
+            transactionid: $("#trans_id").val(),
+            transactiontype: $("#trans_type").val(),
+            datefrom: $("#trans_datefrom").val(),
+            dateto: $("#trans_dateto").val()
+        }
+        const keys = ["trans_id", "username", "order_type", "account_change", "balance", "dateTime", "date_created", "order_id", "status"];
+        const elements = {
+             table: "accountTransactionTable",refresh: "accrefresh", execute: "acctrans", pagination: "accPageBox", paging: "accPageInfo"
+        }
+        $("#accountTransactionTable").LoadingOverlay("show", { background: "rgb(90,106,133,0.1)", size: 3 });
+        fetchData(`../business/filter_transaction`, page, numrow, accountTransactionTable, elements, filter, keys)
+    }
+
+  })
+
+
+$(document).on("click", "#refresh_trans", function(e) {
+    const keys = ["trans_id", "username", "order_type", "account_change", "balance", "dateTime", "date_created", "order_id", "status"];
+    const elements = {
+        table: "accountTransactionTable",refresh: "accrefresh", execute: "acctrans", pagination: "accPageBox", paging: "accPageInfo"
+    }
+    $("#accountTransactionTable").LoadingOverlay("show", { background: "rgb(90,106,133,0.1)", size: 3 });
+    fetchData(`../business/account_transaction`, page, limit, accountTransactionTable, elements, {}, keys) 
+})
+
+$(document).on("click", "#exec_trans", function(e) {
+    params = {
+        username: $("#trans_username").val(),
+        transactionid: $("#trans_id").val(),
+        transactiontype: $("#trans_type").val(),
+        datefrom: $("#trans_datefrom").val(),
+        dateto: $("#trans_dateto").val()
+    }
+    const keys = ["trans_id", "username", "order_type", "account_change", "balance", "dateTime", "date_created", "order_id", "status"];
+    const elements = {
+         table: "accountTransactionTable",refresh: "accrefresh", execute: "acctrans", pagination: "accPageBox", paging: "accPageInfo"
+    }
+    $("#accountTransactionTable").LoadingOverlay("show", { background: "rgb(90,106,133,0.1)", size: 3 });
+    fetchData(`../business/filter_transaction`, page, limit, accountTransactionTable, elements, params, keys) 
+})
+
+

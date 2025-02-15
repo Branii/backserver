@@ -1,6 +1,7 @@
 <?php
 require '../vendor/autoload.php';
 require_once("../autoload.php");
+use Josantonius\Session\Session;
 use ModernPHPException\ModernPHPException;
 
 // Constants definition
@@ -13,8 +14,9 @@ define("VIEWS", APP . 'views' . DIRECTORY_SEPARATOR);
 define("EXEC", APP . 'exec' . DIRECTORY_SEPARATOR);
 define("CONTROLLER", APP . 'controller' . DIRECTORY_SEPARATOR);
 define("UTILS", APP . 'utils' . DIRECTORY_SEPARATOR);
+define("EXCEPTIONS", APP . 'exceptions' . DIRECTORY_SEPARATOR);
 define('BASE_URL','/admin/app/'); 
-$modules = [APP, MODEL, DATABASE, CORE, VIEWS, EXEC, CONTROLLER, UTILS,];
+$modules = [APP, MODEL, DATABASE, CORE, VIEWS, EXEC, CONTROLLER, EXCEPTIONS, UTILS,];
 // Custom Autoloader Function
 spl_autoload_register(function ($className) use ($modules) {
     foreach ($modules as $module) {

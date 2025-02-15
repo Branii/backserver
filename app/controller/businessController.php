@@ -17,8 +17,21 @@ class businessController extends Controller {
         $this->view->render();
     }
 
-    public function home(){
-        $this->view('html/home');
+    public function filter_transaction(int $page, int $limit, $params){
+        $this->view('exec/businessflow',[
+            'page' => $page,
+            'limit'=>$limit, 
+            'flag' => 'filter_transaction',
+            'params' => $params
+        ]);
+        $this->view->render();
+    }
+
+    public function fetch_lottery($params){
+        $this->view('exec/businessflow',[ 
+            'flag' => 'fetch_lottery',
+            'params' => $params
+        ]);
         $this->view->render();
     }
     

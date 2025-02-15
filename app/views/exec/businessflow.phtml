@@ -11,7 +11,7 @@ error_reporting(E_ALL);
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
 $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-$params = isset($this->viewData['params']) ? (int) $this->viewData['limit'] : 20;
+$object = isset($this->viewData['params']) ?  $this->viewData['params'] : '';
 $offset = ($page * $limit) - $limit;
 
 
@@ -27,9 +27,35 @@ $offset = ($page * $limit) - $limit;
 // }
 
 if ($flag == "account_transaction") {
-   $result = (new BusinessFlowModel())->FetchTransactionData($offset, $limit) ?? [];
+
+    $result = (new BusinessFlowModel())->FetchTransactionData($offset, $limit) ?? [];
     echo json_encode($result);
+
+}elseif ($flag == "filter_transaction") {
+
+    $decodedStr = urldecode($object);
+    $params = json_decode($decodedStr, true); 
+    $result = (new BusinessFlowModel())->FilterTransactionDataSubQuery($offset,$limit,$params);
+    echo json_encode($result);
+
+}elseif($flag == "fetch_lottery"){
+
+    $decodedStr = urldecode($object);
+    $params = json_decode($decodedStr, true); 
+    $data = explode("_",$params['betcode']);
+    $result = (new BusinessFlowModel())->getLotteryData($data[1],$data[2]) ?? [];
+    $draws = wordwrap($result['draw_number'], 30, "\n", true); //wrap
+    $selection = wordwrap($result['user_selection'], 30, "\n", true); //wrap
+    $result['draw_number'] = $draws;
+    $result['user_selection'] = $selection;
+    $result['username'] = $data[0];
+    echo json_encode([
+        'data' => $result,
+    ]);
+    
 }
+
+
 
 
 // if ($flag == "lotterydata") {

@@ -1,11 +1,11 @@
 <?php 
 
-class PDOHelper extends Database {
+class PDOHelper  {
 
     public static function Executequery($sql,$params = []) {
-        $req = parent::openLink()->prepare($sql);
+        $req = (new Database)::openLink()->prepare($sql);
         $req->execute($params);
-        parent::closeLink();
+        (new Database)::closeLink();
         return $req;
     }
 

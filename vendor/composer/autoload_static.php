@@ -25,12 +25,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         ),
         'M' => 
         array (
-            'ModernPHPException\\' => 19,
             'Medoo\\' => 6,
-        ),
-        'J' => 
-        array (
-            'Josantonius\\Session\\' => 20,
         ),
         'G' => 
         array (
@@ -39,10 +34,6 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'D' => 
         array (
             'Dotenv\\' => 7,
-        ),
-        'C' => 
-        array (
-            'Codedungeon\\PHPCliColors\\' => 25,
         ),
         'A' => 
         array (
@@ -67,17 +58,9 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
         ),
-        'ModernPHPException\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/brenno-duarte/modern-php-exception/src',
-        ),
         'Medoo\\' => 
         array (
             0 => __DIR__ . '/..' . '/catfan/medoo/src',
-        ),
-        'Josantonius\\Session\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/josantonius/session/src',
         ),
         'GrahamCampbell\\ResultType\\' => 
         array (
@@ -86,10 +69,6 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
-        ),
-        'Codedungeon\\PHPCliColors\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/codedungeon/php-cli-colors/src',
         ),
         'App\\' => 
         array (

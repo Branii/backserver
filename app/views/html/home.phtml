@@ -1,10 +1,6 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-  session_start();
-}
-!(new Controller)->isUserLoggedIn() ? header("location:../") : "";
-// $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
-// echo $adminEmail;
+!(new SessionMan)->isUserLoggedIn() ? header("location:../") : "";
+$adminEmail = (new SessionMan)->getSession("isUserLoggedIn");
 ?>
 <!DOCTYPE html>
 <html oncontextmenu="return falsex" lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme"
@@ -25,9 +21,52 @@ if (session_status() == PHP_SESSION_NONE) {
   <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sidebar.css" />
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/home.css" />
-
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/micromodal.css" />
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/homepage.css" />
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/modal.css" />
   <title>Limvo Admin</title>
+<style>
+  .tab-container {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    clip-path: inset(0px 0px -10px 0px); 
+}
 
+.tab-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.scroll-left,
+.scroll-right {
+    /* background: #f1f1f1; */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.arrows{
+  font-size:25px;
+  color:rgb(131,143,164,0.5)
+}
+
+.arrows {
+    color: #ddd;
+}
+.tabs-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar (for Chrome, Safari) */
+}
+.tab-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar (for Chrome, Safari) */
+}
+
+.tab-container::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 3px;
+}
+</style>
 </head>
 
 <body>
@@ -35,9 +74,9 @@ if (session_status() == PHP_SESSION_NONE) {
   <!-- <div class="preloader">
     <img src="<?php echo BASE_URL; ?>assets/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
   </div> -->
-  <div id="main-wrapper">
+  <div id="main-wrapper"  style="overflow: none;">
     <!-- Sidebar Start -->
-    <aside class="left-sidebar with-vertical" style="background:#F9F9F9">
+    <aside class="left-sidebar with-vertical" style="background:#F9F9F9;z-index: 0;">
       <div><!-- ---------------------------------- -->
         <!-- Start Vertical Layout Sidebar -->
         <!-- ---------------------------------- -->
@@ -119,13 +158,16 @@ if (session_status() == PHP_SESSION_NONE) {
     </aside>
 
     
-    <div class="page-wrapper">
+    <div class="page-wrapper"  style="overflow: hidden;">
       <div class="containe-fluid">
 
         <div class="surface">
+        
           <div class="mock-browser">
-            <div class="chrome-tabs" style="--tab-content-margin: 9px">
-              <div class="chrome-tabs-content">
+          
+            <div class="chrome-tabs tab-wrapper" style="--tab-content-margin: 9px">
+            <div class="scroll-left arrow-btn" ><i class='bx bx-chevron-left arrows' ></i></div>
+              <div class="chrome-tabs-content tab-container">
                 <div class="chrome-tab" id="tabhead" active>
                   <div class="chrome-tab-dividers"></div>
                   <div class="chrome-tab-background">
@@ -164,11 +206,14 @@ if (session_status() == PHP_SESSION_NONE) {
                   </div>
                 </div>
               </div>
+            <span class="scroll-right arrow-btn"><i class='bx bx-chevron-right arrows'></i></span>
               <div class="chrome-tabs-bottom-bar"></div>
               <!-- Styles to prevent flash after JS initialization -->
             </div>
             <!-- <div class="chrome-tabs-optional-shadow-below-bottom-bar"></div> -->
+        
           </div>
+        
         </div>
 
         <div class="rowr" style="padding:0px;overflow-x:hidden;">
@@ -182,14 +227,21 @@ if (session_status() == PHP_SESSION_NONE) {
           </div>
 
         </div>
+
       </div>
     </div>
+  </div>
+
 
     <!--core js-->
     <script src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/draggabilly.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/loadingoverlay.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/app.init.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/app.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/BootstrapMenu.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/theme.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/chrometab.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/sidebar.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/chairman.min.js"></script>
@@ -203,7 +255,26 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="<?php echo BASE_URL; ?>assets/js/tables.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/helper.js" defer></script>
     <script src="<?php echo BASE_URL; ?>assets/js/app.js" defer></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/handler.js" defer></script>
+    <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
 
+    
+    <script>
+      MicroModal.init();
+
+      const tabContainer = document.querySelector(".tab-container");
+      const scrollLeftBtn = document.querySelector(".scroll-left");
+      const scrollRightBtn = document.querySelector(".scroll-right");
+
+      scrollLeftBtn.addEventListener("click", () => {
+          tabContainer.scrollBy({ left: -150, behavior: "smooth" });
+      });
+
+      scrollRightBtn.addEventListener("click", () => {
+          tabContainer.scrollBy({ left: 150, behavior: "smooth" });
+      });
+
+    </script>
 </body>
 
-</html>
+</html> 

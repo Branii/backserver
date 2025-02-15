@@ -1,64 +1,96 @@
 <?php
 
-class BusinessFlowModel {
+class BusinessFlowModel
+{
 
 
-    public static function FetchTransactionData($offset, $limit): array {
-       
-        $stmt = (new Database)::openLink()->prepare(
-            "SELECT transaction.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.username, 'N/A') AS username FROM transaction   
-            JOIN users_test ON users_test.uid = transaction.uid  ORDER BY trans_id DESC LIMIT $offset, $limit");
-        $stmt->execute();
+    public static function FetchTransactionData($offset, $limit): array
+    {
+        $sql = "SELECT transaction.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.nickname, 'N/A') AS username FROM transaction   
+        JOIN users_test ON users_test.uid = transaction.uid  ORDER BY trans_id DESC LIMIT $offset, $limit";
+        $result = PDOHelper::selectAll($sql);
         $total_rows = (new Database)::openLink()->query("SELECT COUNT(*) FROM transaction")->fetchColumn();
+        return [
+            "data" => $result,
+            "totalPages" => ceil($total_rows / $limit)
+        ];
+    }
+
+    public static function FilterTransactionDataSubQuery($offset, int $limit, $params)
+    {
+        $conditions = [];
+        $bind_params = [];
+    
+        // Filtering Conditions
+        if (!empty($params['username'])) {
+            $conditions[] = "transaction.uid = ?";
+            $bind_params[] = self::getUserIdByUserName($params['username']);
+        }
+    
+        if (!empty($params['transactionid'])) {
+            $conditions[] = "transaction.order_id = ?";
+            $bind_params[] = $params['transactionid']; // Fixed key name
+        }
+    
+        if (!empty($params['transactiontype'])) {
+            $conditions[] = "transaction.order_type = ?";
+            $bind_params[] = $params['transactiontype'];
+        }
+    
+        if (!empty($params['datefrom']) && !empty($params['dateto'])) {
+            $conditions[] = "transaction.date_created BETWEEN ? AND ?";
+            $bind_params[] = $params['datefrom'];
+            $bind_params[] = $params['dateto'];
+        } elseif (!empty($params['datefrom'])) {
+            $conditions[] = "transaction.date_created >= ?";
+            $bind_params[] = $params['datefrom'];
+        } elseif (!empty($params['dateto'])) {
+            $conditions[] = "transaction.date_created <= ?";
+            $bind_params[] = $params['dateto'];
+        }
+    
+        // Build Condition String
+        $condition_str = $conditions ? "WHERE " . implode(" AND ", $conditions) : "";
+    
+        // SQL Query for Data
+        $sql = "SELECT transaction.*, users_test.email, users_test.contact, users_test.reg_type, 
+                       COALESCE(users_test.nickname, 'N/A') AS username 
+                FROM transaction 
+                JOIN users_test ON users_test.uid = transaction.uid 
+                $condition_str 
+                ORDER BY transaction.uid ASC 
+                LIMIT $offset, $limit";
+    
+        $stmt = (new Database())->openLink()->prepare($sql);
+    
+        // Bind Parameters
+        $stmt->execute([...$bind_params]);
+    
+        // SQL Query for Total Count
+        $count_sql = "SELECT COUNT(*) FROM transaction JOIN users_test ON users_test.uid = transaction.uid $condition_str";
+        $count_stmt = (new Database())->openLink()->prepare($count_sql);
+        $count_stmt->execute($bind_params);
+        $total_rows = $count_stmt->fetchColumn();
+    
         return [
             "data" => $stmt->fetchAll(PDO::FETCH_ASSOC),
             "totalPages" => ceil($total_rows / $limit)
         ];
     }
+    
 
-    // public static function FilterTrsansactionDataSubQuery($username = '', $orderid = '', $ordertype = '', $from = '', $to = '')
-    // {
-    //     $conditions = [];
+    public static function getUserIdByUserName(string $username): int
+    {
+        $sql = "SELECT uid FROM users_test WHERE username = ? OR nickname = ? OR uid = ?";
+        return PDOHelper::selectOne($sql, [$username, $username, $username])['uid'] ?? 0;
+    }
 
-    //     if (!empty($username) && $username != 'all') {
-    //         $conditions['transaction.uid'] = $username;
-    //     }
-
-    //     if (!empty($orderid) && $orderid != 'all') {
-    //         $conditions['transaction.order_id'] = $orderid;
-    //     }
-
-    //     if (!empty($ordertype) && $ordertype != 'all') {
-    //         $conditions['transaction.order_type'] = $ordertype;
-    //     }
-
-    //     if ($from != '' && $to != '') {
-    //         $conditions['transaction.date_created[<>]'] = [$from, $to];
-    //     } elseif ($from != '') {
-    //         $conditions['transaction.date_created[>=]'] = $from;
-    //     } elseif ($to != '') {
-    //         $conditions['transaction.date_created[<=]'] = $to;
-    //     }
-
-    //     return $conditions;
-    // }
-
-    // public static function FilterTrsansactionData($page, $limit, $username, $orderid, $ordertype, $startdate, $enddate)
-    // {
-
-    //     $whereConditions = self::FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
-    //     $startpoint = ($page * $limit) - $limit;
-    //     $data = parent::selectAll("transaction", '*', [
-    //         "AND" => $whereConditions,
-    //         "ORDER" => ["transaction.trans_id" => "DESC"],
-    //         "LIMIT" => [$startpoint, $limit]
-    //     ]);
-    //     $lastQuery = MedooOrm::openLink()->log();
-    //     $totalRecords  = parent::selectAll('transaction', '*',     [
-    //         'AND' => $whereConditions
-    //     ]);
-    //     return ['data' => $data, 'total' => count($totalRecords), 'sql' => $lastQuery[0]];
-    // }
+    public static function getLotteryData(string $lotteryCode, string $lotteryId)
+    {
+        $tableName = Utils::getTables($lotteryId)['bet_table'];
+        $sql = "SELECT * FROM $tableName WHERE bet_code = ?";
+        return PDOHelper::selectAll($sql,[$lotteryCode])[0];
+    }
 
     // public static function filterusername(string $username)
     // {
@@ -86,15 +118,6 @@ class BusinessFlowModel {
     //     return parent::selectAll($betTable, '*', ['bet_code' => $transactionId]);
     // }
 
-    // public static function getTables()
-    // {
-    //     $res = parent::selectAll("gamestable_map", ["game_type", "draw_table", "bet_table", "draw_storage"]);
-    //     $mainData = [];
-    //     foreach ($res as $data) {
-    //         $mainData[$data['game_type']] = $data;
-    //     }
-    //     return $mainData;
-    // }
 
     // public static function  getdrawtable($gametype)
     // {
@@ -224,7 +247,7 @@ class BusinessFlowModel {
     //             game_type ON game_type.gt_id = temp_table.game_type
     //         LIMIT :offset, :limit
     //     ";
-        
+
 
     //         try {
 

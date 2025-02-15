@@ -1,11 +1,22 @@
+<?php
 
+class Utils 
+{
 
-<?php 
+    public static function getTables(int $lotteryId)
+    {
+        return (new Model())->getTables($lotteryId);
+    }
 
-class Utils extends BusinessFlowModel{
-
-public static function getGameIdsByGameType(): array {
- return parent::getTables();
-}
+    public static function getUserIP()
+    {
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            return $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            return trim(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0]);
+        } else {
+            return $_SERVER['REMOTE_ADDR'];
+        }
+    }
 
 }

@@ -7,19 +7,29 @@ class Controller{
       return $this->view;
     }
 
-    public function isUserLoggedIn(){
-      return (new Session)->has("isUserLoggedIn");
+    public function getUsername(string $fullname){
+      return (new Model())->getUsername($fullname);
     }
 
-    public function getSeesion(string $name){
-      return (new Session)->get($name);
+
+    public function getUserPermissions(string $email){
+      $response = (new Model())->getUserPermissions($email);
+      return json_decode($response,true);
+    }
+
+    public function getPermissionSidebars(){
+      $result = [];
+      $response = (new Model())->getPermissionSidebar();
+      $result['title'] = json_decode($response['side_bar_title'],true);
+      $result['menu']  = json_decode($response['side_bar_menu'],true);
+      return $result;
     }
 
     public function getUserPermissionSidebars(string $email){
       return (new Model())->getUserPermissionSidebar($email);
     }
 
-    //admin_id	action_performed	created_date	created_time	ip_address	affected_entity	old_value	new_value	action_status	
+
     public function addAdminLoggins(string $adminId, string $actionPerformed, string $oldVal, string $newVal, string $affectedEntity, string $status){
       return (new Model())->addAdminLogs($adminId, $actionPerformed, $oldVal, $newVal, $affectedEntity, $status);
     }

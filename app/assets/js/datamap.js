@@ -24,14 +24,15 @@
       'multiplier': 'Multiplier:',
       'bet_status': 'Bet Status:',
       'game_label': 'Game Type::',
-      'draw_number': 'Draw Results:',
       'num_wins': 'Number of wins:',
-      'bettype': 'Bet Type:'
+      'bettype': 'Bet Type:',
+      'draw_number': 'Draw Results:',
     }
   
   const secondRow = {
       'game_type': 'Lottery Type::',
       'bet_time': 'Bet Time:',
+      'draw_time': 'Draw Time:',
       'closing_time': 'Closing Time:',
       'opening_time': 'Draw Time::',
       'bet_number': 'Total Bet:',
@@ -40,7 +41,7 @@
       'server_date': 'Win Amount:',
       'server_time': 'Actual profit:',
       'user_selection': 'Bet Details',
-      'test': ' ',
+      //'test': ' ',
     }
 
 

@@ -1,6 +1,14 @@
 $(function(){
 
-    console.log("ok i loaded")
+    function showToast(title, message, type) {
+        $.toast({
+            position: "bottom-right",
+            title: title,
+            message: message,
+            type: type,
+            duration: 3000, // auto-dismiss after 3s
+        });
+    }
 
     const request = (url,params) => {
         $(".load").removeClass("bx-check-shield").addClass("bx-loader bx-spin");

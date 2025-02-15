@@ -1,5 +1,3 @@
-
-
     function showToast(title, message, type) {
         $.toast({
             position: "bottom-right",
@@ -10,19 +8,18 @@
         });
     }
 
-    async function fetchData(url,page,pageLimit,renderCallback,tableId, paginationContainer, pagingNumber, params = {},keys = []) {
+    async function fetchData(url,page,pageLimit,renderCallback,element={}, params = {},keys = []) {
         try {
             //const query = new URLSearchParams({page,pageLimit,...params,}).toString();
             const response = await fetch(`${url}/${page}/${pageLimit}/${JSON.stringify(params)}`);
             const result = await response.json();
-
-            $("#" + tableId).LoadingOverlay("hide");
-            renderCallback(result.data, tableId, keys);
-
-            renderPagination(result.totalPages, page, pageLimit, paginationContainer, tableId, (newPage, newLimit) =>
-                fetchData(url, newPage, newLimit, renderCallback, tableId, paginationContainer, pagingNumber, params, keys)
+         
+            $("#" + element.table).LoadingOverlay("hide");
+            renderCallback(result.data, element.table, keys);
+            renderPagination(result.totalPages, page, pageLimit, element.pagination, element.table, (newPage, newLimit) =>
+                fetchData(url, newPage, newLimit, renderCallback, element, params, keys)
             );
-            document.getElementById(pagingNumber).innerHTML = `Page ${page} Of ${result.totalPages} Pages`;
+            document.getElementById(element.paging).innerHTML = `Page ${page} Of ${result.totalPages} Pages`;
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -67,10 +64,10 @@
         });
     }
 
-    function directions(element, Wrapper) {
-        let direction = $(this).val();
-        const tableWrapper = $(Wrapper);
-        const tableWrappers = document.querySelector(Wrapper);
+    function directions(elementDirection, Wrapper) {
+        let direction = elementDirection;
+        const tableWrapper = $("." + Wrapper);
+        const tableWrappers = document.querySelector("." + Wrapper);
         const scrollAmount = 1000; // Adjust as needed
         const scrollOptions = {
             behavior: "smooth",
@@ -109,6 +106,20 @@
           }
         });
     });
+
+   //async function 
+
+   async function getSingleData(url,params = {}) {
+    try {
+        const response = await fetch(`${url}/${JSON.stringify(params)}`);
+        const result = await response.json();
+        formatAccountTransactionTable(result.data, "firstrow", firstRow)
+        formatAccountTransactionTable(result.data, "secondrow", secondRow)
+        MicroModal.show("modal-1");
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+   }
 
 
 
