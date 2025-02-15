@@ -7,9 +7,9 @@ class Controller{
       return $this->view;
     }
 
-    public function getUsername(string $fullname){
-      return (new Model())->getUsername($fullname);
-    }
+    // public function getUsername(string $fullname){
+    //   return (new Model())->getUsername($fullname);
+    // }
 
 
     public function getUserPermissions(string $email){
