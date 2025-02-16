@@ -11,6 +11,11 @@ $(document).on("click", ".accplayer", function(e) {
     directions(value, "acctablewrapper")
 })
 
+$(document).on("click", ".lang", function(e) {
+    const value = $(this).attr("value")
+    loadTranslations(value)
+})
+
 $(".accrowsort").change(function(){
     const numrow = $(this).val();
     const params = [$("#trans_username").val(),$("#trans_id").val(),$("#trans_datefrom").val(),$("#trans_dateto").val()]
@@ -18,9 +23,9 @@ $(".accrowsort").change(function(){
     if(isEmpty && $("#trans_type").val() == ""){
         const keys = ["trans_id", "username", "order_type", "account_change", "balance", "dateTime", "date_created", "order_id", "status"];
         const elements = {
-            table: "accountTransactionTable",refresh: "accrefresh", execute: "acctrans", pagination: "accPageBox", paging: "accPageInfo"
+            table: "accountTransactionTable",refresh: "accrefresh", execute: "acctrans", pagination: "accPageBox", paging: "accPageInfo",tableWrapper: "acc_mask"
         }
-        $("#accountTransactionTable").LoadingOverlay("show", { background: "rgb(90,106,133,0.1)", size: 3 });
+        $("#acc_mask").LoadingOverlay("show", { background: "rgb(90,106,133,0.1)", size: 3 });
         fetchData(`../business/account_transaction`, page, numrow, accountTransactionTable, elements, {}, keys)
     }else{
         const filter = {
@@ -32,21 +37,20 @@ $(".accrowsort").change(function(){
         }
         const keys = ["trans_id", "username", "order_type", "account_change", "balance", "dateTime", "date_created", "order_id", "status"];
         const elements = {
-             table: "accountTransactionTable",refresh: "accrefresh", execute: "acctrans", pagination: "accPageBox", paging: "accPageInfo"
+             table: "accountTransactionTable",refresh: "accrefresh", execute: "acctrans", pagination: "accPageBox", paging: "accPageInfo",tableWrapper: "acc_mask"
         }
-        $("#accountTransactionTable").LoadingOverlay("show", { background: "rgb(90,106,133,0.1)", size: 3 });
+        $("#acc_mask").LoadingOverlay("show", { background: "rgb(90,106,133,0.1)", size: 3 });
         fetchData(`../business/filter_transaction`, page, numrow, accountTransactionTable, elements, filter, keys)
     }
 
-  })
-
+})
 
 $(document).on("click", "#refresh_trans", function(e) {
     const keys = ["trans_id", "username", "order_type", "account_change", "balance", "dateTime", "date_created", "order_id", "status"];
     const elements = {
-        table: "accountTransactionTable",refresh: "accrefresh", execute: "acctrans", pagination: "accPageBox", paging: "accPageInfo"
+        table: "accountTransactionTable",refresh: "accrefresh", execute: "acctrans", pagination: "accPageBox", paging: "accPageInfo",tableWrapper: "acc_mask"
     }
-    $("#accountTransactionTable").LoadingOverlay("show", { background: "rgb(90,106,133,0.1)", size: 3 });
+    $("#acc_mask").LoadingOverlay("show", { background: "rgb(90,106,133,0.1)", size: 3 });
     fetchData(`../business/account_transaction`, page, limit, accountTransactionTable, elements, {}, keys) 
 })
 

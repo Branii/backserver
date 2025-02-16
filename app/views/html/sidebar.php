@@ -9,7 +9,8 @@ foreach ($userPermissions as $sidebar => $menu): ?>
     <div class="accordion-item accord-item">
         <div class="accordion-header" onclick="toggleAccordion(this)">
             <span style="margin-left:15px"><?= $definedPermissions['title'][$sidebar]['icon'] ?>
-                <span style="font-size:16px"><?= $definedPermissions['title'][$sidebar]['title'] ?></span>
+                <?php $titleKey = $definedPermissions['title'][$sidebar]['titlekey'] ?>
+                <span style="font-size:16px" class="translatable" data-key="<?=$titleKey?>"><?= $definedPermissions['title'][$sidebar]['title'] ?></span>
             </span>
         </div>
         <div class="accordion-content">
@@ -17,10 +18,13 @@ foreach ($userPermissions as $sidebar => $menu): ?>
                 <?php foreach ($menu as $item): ?>
                     <li class="tab-button item" value="<?= $definedPermissions['menu'][$item]['content'] ?>">
                         <i class="bx bx-radio-circle-marked" style="font-size:20px;margin-left:10px"></i>
-                        <span style="margin-left:7px;font-size:14px"><?= $definedPermissions['menu'][$item]['title'] ?></span>
+                        <?php $menukey = $definedPermissions['menu'][$item]['menukey'];?>
+                        <span style="margin-left:7px;font-size:14px" class="translatable glowing red" data-key="<?=$menukey?>"><?= $definedPermissions['menu'][$item]['title'] ?>cvc</span>
                     </li>
                 <?php endforeach; ?>
             </ul>
         </div>
     </div>
 <?php endforeach; ?>
+
+

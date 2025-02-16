@@ -1,0 +1,45 @@
+.tab-container {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    clip-path: inset(0px 0px -10px 0px); 
+}
+
+.tab-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.scroll-left,
+.scroll-right {
+    /* background: #f1f1f1; */
+    border: none;
+    cursor: pointer;
+    z-index: 9999;
+    padding:4px;
+}
+
+.arrows{
+  padding:4px;
+  font-size:25px;
+  color:rgb(131,143,164,0.2)
+}
+
+.arrows:hover {
+   padding:4px;
+   position:relative;
+   border-radius: 50%;
+   background-color: #eee;
+   color: #bbb;
+}
+.tabs-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar (for Chrome, Safari) */
+}
+.tab-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar (for Chrome, Safari) */
+}
+
+.tab-container::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 3px;
+}

@@ -43,10 +43,3 @@
       'user_selection': 'Bet Details',
       //'test': ' ',
     }
-
-
-    const datas = {
-      user:"branmoo"
-    }
-
-

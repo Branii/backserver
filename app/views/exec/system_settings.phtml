@@ -1,0 +1,10 @@
+<?php 
+
+$flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+$object = isset($this->viewData['params']) ?  $this->viewData['params'] : '';
+
+if ($flag == "change_language") {
+    $decodedStr = urldecode($object);
+    $object = json_decode($decodedStr, true);
+    $lang = $object['lang'];
+}

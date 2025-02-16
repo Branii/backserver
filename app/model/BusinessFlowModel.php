@@ -24,7 +24,7 @@ class BusinessFlowModel
         // Filtering Conditions
         if (!empty($params['username'])) {
             $conditions[] = "transaction.uid = ?";
-            $bind_params[] = self::getUserIdByUserName($params['username']);
+            $bind_params[] = self::getUserIdByUserName($params['username']) ?? 0;
         }
     
         if (!empty($params['transactionid'])) {

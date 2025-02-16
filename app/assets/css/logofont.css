@@ -1,0 +1,50 @@
+  @font-face {
+    font-family: 'Rocher';
+    src: url('https://assets.codepen.io/9632/RocherColorGX.woff2') format('woff2');
+    font-display: swap;
+  }
+
+  .grays {
+    font-family: 'Rocher';
+    base-palette: 3; 
+   }
+  
+  /* .purples {
+    font-family: 'Rocher', sans-serif;
+    font-palette: --Purples;
+  }
+  
+  .mint {
+    font-family: 'Rocher', sans-serif;
+    font-palette: --Mint;
+  }
+
+  .oranges {
+    font-family: 'Rocher', sans-serif;
+    font-palette: --Oranges;
+  }
+
+  .yellows {
+    font-family: 'Rocher', sans-serif;
+    font-palette: --Yellows;
+  }
+
+  .blues {
+    font-family: 'Rocher', sans-serif;
+    font-palette: --Blues;
+  }
+
+  .greens {
+    font-family: 'Rocher', sans-serif;
+    font-palette: --Greens;
+  }
+
+  .browns {
+    font-family: 'Rocher', sans-serif;
+    font-palette: --Browns;
+  }
+
+  .reds {
+    font-family: 'Rocher', sans-serif;
+    font-palette: --Reds;
+  } */

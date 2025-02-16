@@ -14,9 +14,9 @@
             const response = await fetch(`${url}/${page}/${pageLimit}/${JSON.stringify(params)}`);
             const result = await response.json();
          
-            $("#" + element.table).LoadingOverlay("hide");
+            $("#" + element.tableWrapper).LoadingOverlay("hide");
             renderCallback(result.data, element.table, keys);
-            renderPagination(result.totalPages, page, pageLimit, element.pagination, element.table, (newPage, newLimit) =>
+            renderPagination(result.totalPages, page, pageLimit, element.pagination, element.tableWrapper, (newPage, newLimit) =>
                 fetchData(url, newPage, newLimit, renderCallback, element, params, keys)
             );
             document.getElementById(element.paging).innerHTML = `Page ${page} Of ${result.totalPages} Pages`;
@@ -97,7 +97,6 @@
     document.addEventListener('DOMContentLoaded', function() {
         const tableContainer = document.querySelector('.table-wrapper');
         const headerRow = document.querySelector('thead tr');
-
         tableContainer.addEventListener('scroll', function() {
           if (tableContainer.scrollTop > 0) {
             headerRow.classList.add('sticky-header');
@@ -120,6 +119,31 @@
         console.error("Error fetching data:", error);
     }
    }
+
+   function loadTranslations(lang) {
+    if (localStorage.getItem(`selectedLanguage`) == lang) {
+        applyTranslations(JSON.parse(localStorage.getItem(`translations`)));
+    } else {
+        $.getJSON("../../app/assets/lang/lang.json", function (data) {
+            if (data[lang]) {
+                localStorage.setItem(`translations`, JSON.stringify(data[lang]));
+                localStorage.setItem("selectedLanguage", lang);
+                applyTranslations(data[lang]);
+            }
+        });
+    }
+}
+
+   function applyTranslations(translations) {
+    $(".translatable").each(function () {
+        let key = $(this).data("key");
+        if (translations[key]) {
+            $(this).text(translations[key]);
+        }
+    });
+}
+
+
 
 
 

@@ -24,9 +24,9 @@
 
 /* Custom Scrollbar for Webkit Browsers */
 .table-wrapper::-webkit-scrollbar {
-    width: 5px;
+    width:2px;
     /* Slimmer scrollbar width */
-    height: 5px;
+    height: 2px;
     /* Slimmer scrollbar height for horizontal scrolling */
 }
 
@@ -37,7 +37,7 @@
 }
 
 .table-wrapper::-webkit-scrollbar-thumb {
-    background-color: #ccc;
+    background-color: #cccccc;
     /* Blue color for thumb */
     border-radius: 10px;
     cursor: pointer;

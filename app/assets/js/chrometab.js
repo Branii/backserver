@@ -13,7 +13,7 @@
     const TAB_OVERLAP_DISTANCE = (TAB_CONTENT_MARGIN * 2) + TAB_CONTENT_OVERLAP_DISTANCE
   
     const TAB_CONTENT_MIN_WIDTH = 24
-    const TAB_CONTENT_MAX_WIDTH = 240
+    const TAB_CONTENT_MAX_WIDTH = 200 // 240 default
   
     const TAB_SIZE_SMALL = 84
     const TAB_SIZE_SMALLER = 60
@@ -116,36 +116,36 @@
         return this.el.querySelector('.chrome-tabs-content')
       }
   
-      // get tabContentWidths() {
-      //   const numberOfTabs = this.tabEls.length
-      //   const tabsContentWidth = this.tabContentEl.clientWidth
-      //   const tabsCumulativeOverlappedWidth = (numberOfTabs - 1) * TAB_CONTENT_OVERLAP_DISTANCE
-      //   const targetWidth = (tabsContentWidth - (2 * TAB_CONTENT_MARGIN) + tabsCumulativeOverlappedWidth) / numberOfTabs
-      //   const clampedTargetWidth = Math.max(TAB_CONTENT_MIN_WIDTH, Math.min(TAB_CONTENT_MAX_WIDTH, targetWidth))
-      //   const flooredClampedTargetWidth = Math.floor(clampedTargetWidth)
-      //   const totalTabsWidthUsingTarget = (flooredClampedTargetWidth * numberOfTabs) + (2 * TAB_CONTENT_MARGIN) - tabsCumulativeOverlappedWidth
-      //   const totalExtraWidthDueToFlooring = tabsContentWidth - totalTabsWidthUsingTarget
-  
-      //   // TODO - Support tabs with different widths / e.g. "pinned" tabs
-      //   const widths = []
-      //   let extraWidthRemaining = totalExtraWidthDueToFlooring
-      //   for (let i = 0; i < numberOfTabs; i += 1) {
-      //     const extraWidth = flooredClampedTargetWidth < TAB_CONTENT_MAX_WIDTH && extraWidthRemaining > 0 ? 1 : 0
-      //     widths.push(flooredClampedTargetWidth + extraWidth)
-      //     if (extraWidthRemaining > 0) extraWidthRemaining -= 1
-      //   }
-  
-      //   return widths
-      // }
-
       get tabContentWidths() {
-        const numberOfTabs = this.tabEls.length;
+        const numberOfTabs = this.tabEls.length
+        const tabsContentWidth = this.tabContentEl.clientWidth
+        const tabsCumulativeOverlappedWidth = (numberOfTabs - 1) * TAB_CONTENT_OVERLAP_DISTANCE
+        const targetWidth = (tabsContentWidth - (2 * TAB_CONTENT_MARGIN) + tabsCumulativeOverlappedWidth) / numberOfTabs
+        const clampedTargetWidth = Math.max(TAB_CONTENT_MIN_WIDTH, Math.min(TAB_CONTENT_MAX_WIDTH, targetWidth))
+        const flooredClampedTargetWidth = Math.floor(clampedTargetWidth)
+        const totalTabsWidthUsingTarget = (flooredClampedTargetWidth * numberOfTabs) + (2 * TAB_CONTENT_MARGIN) - tabsCumulativeOverlappedWidth
+        const totalExtraWidthDueToFlooring = tabsContentWidth - totalTabsWidthUsingTarget
+  
+        // TODO - Support tabs with different widths / e.g. "pinned" tabs
+        const widths = []
+        let extraWidthRemaining = totalExtraWidthDueToFlooring
+        for (let i = 0; i < numberOfTabs; i += 1) {
+          const extraWidth = flooredClampedTargetWidth < TAB_CONTENT_MAX_WIDTH && extraWidthRemaining > 0 ? 1 : 0
+          widths.push(flooredClampedTargetWidth + extraWidth)
+          if (extraWidthRemaining > 0) extraWidthRemaining -= 1
+        }
+  
+        return widths
+      }
+
+    //   get tabContentWidths() {
+    //     const numberOfTabs = this.tabEls.length;
     
-        // Force each tab to have a fixed width, allowing overflow
-        const widths = new Array(numberOfTabs).fill(TAB_CONTENT_MAX_WIDTH);
+    //     // Force each tab to have a fixed width, allowing overflow
+    //     const widths = new Array(numberOfTabs).fill(TAB_CONTENT_MAX_WIDTH);
     
-        return widths;
-    }
+    //     return widths;
+    // }
   
       get tabContentPositions() {
         const positions = []

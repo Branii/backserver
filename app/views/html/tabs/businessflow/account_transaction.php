@@ -67,7 +67,7 @@
   </div>
 
   <div class="card-body p-4">
-    <div class="table-responsive mb-4 border rounded-1 table-wrapper acctablewrapper" id="mask" style="height:530px;overflow-y:scroll;">
+    <div class="table-responsive mb-4 border rounded-1 table-wrapper acctablewrapper" id="acc_mask" style="height:555px;overflow-y:scroll;">
       <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
         <thead class="text-dark fs-4 tbl-header" style="background-color: red;">
           <tr class="accheaderrow">
@@ -159,11 +159,8 @@
           <div class="modal-container">
               <header class="modal-container-header">
                   <span class="modal-container-title">
-                      <svg aria-hidden="true" height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M0 0h24v24H0z" fill="none"></path>
-                          <path d="M14 9V4H5v16h6.056c.328.417.724.785 1.18 1.085l1.39.915H3.993A.993.993 0 0 1 3 21.008V2.992C3 2.455 3.449 2 4.002 2h10.995L21 8v1h-7zm-2 2h9v5.949c0 .99-.501 1.916-1.336 2.465L16.5 21.498l-3.164-2.084A2.953 2.953 0 0 1 12 16.95V11zm2 5.949c0 .316.162.614.436.795l2.064 1.36 2.064-1.36a.954.954 0 0 0 .436-.795V13h-5v3.949z" fill="currentColor"></path>
-                      </svg>
-                      Terms and Services
+                  <i class='bx bx-receipt' style="font-size: 20px;"></i>
+                      Bet Details
                   </span>
                   <!-- <button class="icon-buttonm" > -->
                       <i class='bx bx-x-circle' style="font-size: 30px;color:#ccc" aria-label="Close modal" data-micromodal-close></i>
@@ -185,7 +182,6 @@
                 </div>
       
               </section>
-              <hr>
               <!-- <footer class="modal-container-footer">
                   <button class="button is-ghost">Decline</button>
                   <button class="button is-primary">Accept</button>
