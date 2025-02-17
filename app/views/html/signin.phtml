@@ -14,6 +14,7 @@
   <!-- Core Css -->
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/toast/toast.css" />
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/styles.css" />
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/stylex.css" />
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/signin.css" />
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <title>Limvo Admin</title>
@@ -24,6 +25,8 @@
   <!-- <div class="preloader">
     <img src="<?php echo BASE_URL; ?>assets/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
   </div> -->
+
+  <div id="main-wrapper" class="bg auth-customizer-none">
   <div class="top-right-box">
   <div class="btn-group mb-2 flagholder" role="group" aria-label="Basic example"
         style="border:solid 1px #eee;color:#bbb;background-color:#fff">
@@ -35,8 +38,7 @@
         </button>
       </div>
   </div>
-  <div id="main-wrapper" class="auth-customizer-none">
-    <div class="position-relative overflow-hidden min-vh-100 w-100 d-flex align-items-center justify-content-center">
+    <div class="position-relative overflow-hidden min-vh-100 w-100 d-flex align-items-center justify-content-center" style="z-index: 999;">
       <div class="d-flex align-items-center justify-content-center w-100">
         <div class="row justify-content-center w-100">
 
@@ -104,12 +106,27 @@
         </div>
       </div>
     </div>
-
-
+    <div id="boxes"></div>
+</div>
     <script src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/index.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/randombg.js"></script>
+    <!-- <script type="module">
+        import { AestheticFluidBg  } from "../../admin/app/assets/js/build/jsm/AestheticFluidBg.module.js"
+        let colorbg = new AestheticFluidBg ({
+        // The DOM element where the background should be attached
+        dom: "main-wrapper",  
+        // Up to 6 colors
+        colors: ["#D1ADFF", "#98D69B", "#FAE390", "#FFACD8", "#7DD5FF", "#D1ADFF"],  
+        // Ensures consistent pattern generation
+        seed: 1000,  
+        // Whether the background should animate continuously
+        loop: true 
+    });
+    </script> -->
+
 
 </body>
 
