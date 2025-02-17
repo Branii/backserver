@@ -13,13 +13,20 @@
             //const query = new URLSearchParams({page,pageLimit,...params,}).toString();
             const response = await fetch(`${url}/${page}/${pageLimit}/${JSON.stringify(params)}`);
             const result = await response.json();
+            if(result.data.length > 0) {
+                $("#" + element.tableWrapper).LoadingOverlay("hide");
+                renderCallback(result.data, element.table, keys);
+                renderPagination(result.totalPages, page, pageLimit, element.pagination, element.tableWrapper, (newPage, newLimit) =>
+                    fetchData(url, newPage, newLimit, renderCallback, element, params, keys)
+                );
+                document.getElementById(element.paging).innerHTML = `Page ${page} Of ${result.totalPages} Pages`;
+            }else{
+                $("#" + element.tableWrapper).LoadingOverlay("hide");
+                document.getElementById(element.table).innerHTML = "<img class='text-center error-holder' src='../../app/assets/images/empty.png' alt='empty image' />";
+                document.getElementById(element.paging).innerHTML = "";
+            }
          
-            $("#" + element.tableWrapper).LoadingOverlay("hide");
-            renderCallback(result.data, element.table, keys);
-            renderPagination(result.totalPages, page, pageLimit, element.pagination, element.tableWrapper, (newPage, newLimit) =>
-                fetchData(url, newPage, newLimit, renderCallback, element, params, keys)
-            );
-            document.getElementById(element.paging).innerHTML = `Page ${page} Of ${result.totalPages} Pages`;
+
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -121,29 +128,34 @@
    }
 
    function loadTranslations(lang) {
-    if (localStorage.getItem(`selectedLanguage`) == lang) {
-        applyTranslations(JSON.parse(localStorage.getItem(`translations`)));
-    } else {
-        $.getJSON("../../app/assets/lang/lang.json", function (data) {
-            if (data[lang]) {
-                localStorage.setItem(`translations`, JSON.stringify(data[lang]));
-                localStorage.setItem("selectedLanguage", lang);
-                applyTranslations(data[lang]);
+        if (localStorage.getItem(`selectedLanguage`) == lang) {
+            applyTranslations(JSON.parse(localStorage.getItem(`translations`)));
+        } else {
+            $.getJSON("../../app/assets/lang/lang.json", function (data) {
+                if (data[lang]) {
+                    localStorage.setItem(`translations`, JSON.stringify(data[lang]));
+                    localStorage.setItem("selectedLanguage", lang);
+                    applyTranslations(data[lang]);
+                }
+            });
+        }
+   }
+
+   function applyTranslations(translations) {
+        $(".translatable").each(function () {
+            let key = $(this).data("key");
+            if (translations[key]) {
+                $(this).text(translations[key]);
+                $(this).attr("placeholder", translations[key]);
             }
         });
     }
-}
 
-   function applyTranslations(translations) {
-    $(".translatable").each(function () {
-        let key = $(this).data("key");
-        if (translations[key]) {
-            $(this).text(translations[key]);
-        }
-    });
-}
-
-
+    function truncateToFourDecimals(num) {
+        let parsedNum = Number(num); // Ensure it's a number
+        if (isNaN(parsedNum)) return num; // Return original value if not a number
+        return parsedNum % 1 === 0 ? parsedNum : parsedNum.toFixed(4);
+    }
 
 
 

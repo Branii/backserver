@@ -10,7 +10,6 @@ $(function(){
     fetchData(`../business/account_transaction`,page,limit,accountTransactionTable, elements, {}, keys) 
 
     let savedLang = localStorage.getItem("selectedLanguage") || "en";
-    console.log(savedLang)
     loadTranslations(savedLang);
 
 })

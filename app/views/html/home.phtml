@@ -27,6 +27,7 @@ $adminEmail = (new SessionMan)->getSession("isUserLoggedIn");
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/logofont.css" />
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/glowing.css" />
   <!-- <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/customtab.css" /> -->
+     <!-- <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/theme.custom.css" /> -->
   <title>Limvo Admin</title>
 <style>
 .tab-container {
@@ -100,6 +101,7 @@ $adminEmail = (new SessionMan)->getSession("isUserLoggedIn");
           <ul id="sidebarnav">
 
             <?php include 'sidebar.php' ?>
+            <!-- <button id="theme-toggle">🌓 Toggle Theme</button> -->
 
           </ul>
         </nav>
@@ -278,6 +280,19 @@ $adminEmail = (new SessionMan)->getSession("isUserLoggedIn");
       scrollRightBtn.addEventListener("click", () => {
           tabContainer.scrollBy({ left: 150, behavior: "smooth" });
       });
+
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        // Check saved theme or system preference
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        html.setAttribute('data-theme', savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+          const currentTheme = html.getAttribute('data-theme');
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+          html.setAttribute('data-theme', newTheme);
+          localStorage.setItem('theme', newTheme);
+        });
 
     </script>
 </body>

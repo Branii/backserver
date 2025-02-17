@@ -1,31 +1,31 @@
 
 <div class="card w-100 position-relative overflow-hidden">
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0">Account Transactions</h4>
+    <h4 class="card-title mb-0 translatable" data-key="account_transaction">Account Transactions</h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pager1">
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-        <input name="username" class="queryholder form-control" id="trans_username" placeholder="Enter Username" autocomplete="off"></input>
+        <input name="username" class="queryholder form-control translatable" data-key="enter_username" id="trans_username" placeholder="Enter Username" autocomplete="off"></input>
 
-        <input type="text" class="form-control queryholder" id="trans_id" placeholder="Enter Transaction ID">
+        <input type="text" class="form-control queryholder translatable" data-key="enter_transaction" id="trans_id" placeholder="Enter Transaction ID">
 
         <select name="order_type" class="form-control form-select queryholder" id="trans_type">
-          <option value="">Transaction Type</option>
-          <option value="1">Deposit</option>
-          <option value="2">Win Bonus</option>
-          <option value="3">Bet Awarded</option>
-          <option value="4">Withdrawal</option>
-          <option value="5">Bet Deduct</option>
-          <option value="6">Bet Cancelled</option>
-          <option value="7">Rebate</option>
-          <option value="8">Self Rebate</option>
-          <option value="9">Send Red Envelope</option>
-          <option value="10">Receive Red Envelope</option>
-          <option value="11">Bet Refund</option>
-          <option value="12">Bet Lost</option>
+          <option value="" class="translatable" data-key="transaction_type">Transaction Type</option>
+          <option value="1" class="translatable" data-key="deposit">Deposit</option>
+          <option value="2" class="translatable" data-key="win_bonus">Win Bonus</option>
+          <option value="3" class="translatable" data-key="bet_awarded">Bet Awarded</option>
+          <option value="4" class="translatable" data-key="withdrawal">Withdrawal</option>
+          <option value="5" class="translatable" data-key="bet_deduct">Bet Deduct</option>
+          <option value="6" class="translatable" data-key="bet_cancelled">Bet Cancelled</option>
+          <option value="7" class="translatable" data-key="rebate">Rebate</option>
+          <option value="8" class="translatable" data-key="self_rebate">Self Rebate</option>
+          <option value="9" class="translatable" data-key="send_red">Send Red Envelope</option>
+          <option value="10" class="translatable" data-key="receive_red">Receive Red Envelope</option>
+          <option value="11" class="translatable" data-key="bet_refund">Bet Refund</option>
+          <option value="12" class="translatable" data-key="bet_lost">Bet Lost</option>
         </select>
 
         <input type="date" class="form-control queryholder" id="trans_datefrom"/>
@@ -70,38 +70,38 @@
     <div class="table-responsive mb-4 border rounded-1 table-wrapper acctablewrapper" id="acc_mask" style="height:555px;overflow-y:scroll;">
       <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
         <thead class="text-dark fs-4 tbl-header" style="background-color: red;">
-          <tr class="accheaderrow">
+          <tr class="accheaderrow"> 
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">ID Number</h6>
+              <h6 class="fs-4 fw-semibold mb-0 translatable" data-key="id_number">ID Number</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">User Name</h6>
+              <h6 class="fs-4 fw-semibold mb-0 translatable" data-key="user_name">User Name</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Transaction Type</h6>
+              <h6 class="fs-4 fw-semibold mb-0 translatable" data-key="transaction_type">Transaction Type</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0"> Amount </h6>
+              <h6 class="fs-4 fw-semibold mb-0 translatable" data-key="amount"> Amount </h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Balance</h6>
+              <h6 class="fs-4 fw-semibold mb-0 translatable" data-key="balance">Balance</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Bet Date/Time</h6>
-            </th>
-
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Server Date/Time</h6>
+              <h6 class="fs-4 fw-semibold mb-0 translatable" data-key="bet_date">Bet Date/Time</h6>
             </th>
 
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Transaction ID</h6>
+              <h6 class="fs-4 fw-semibold mb-0 translatable" data-key="server_date">Server Date/Time</h6>
+            </th>
+
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0 translatable" data-key="transaction_id">Transaction ID</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Status</h6>
+              <h6 class="fs-4 fw-semibold mb-0 translatable" data-key="status">Status</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
+              <h6 class="fs-4 fw-semibold mb-0 translatable"></h6><i class='bx bx-dots-vertical-rounded'></i></h6>
             </th>
           </tr>
         </thead> 

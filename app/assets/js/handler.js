@@ -64,10 +64,9 @@ $(document).on("click", "#exec_trans", function(e) {
     }
     const keys = ["trans_id", "username", "order_type", "account_change", "balance", "dateTime", "date_created", "order_id", "status"];
     const elements = {
-         table: "accountTransactionTable",refresh: "accrefresh", execute: "acctrans", pagination: "accPageBox", paging: "accPageInfo"
+         table: "accountTransactionTable",refresh: "accrefresh", execute: "acctrans", pagination: "accPageBox", paging: "accPageInfo",tableWrapper: "acc_mask"
     }
-    $("#accountTransactionTable").LoadingOverlay("show", { background: "rgb(90,106,133,0.1)", size: 3 });
+    $("#acc_mask").LoadingOverlay("show", { background: "rgb(90,106,133,0.1)", size: 3 });
     fetchData(`../business/filter_transaction`, page, limit, accountTransactionTable, elements, params, keys) 
 })
-
 

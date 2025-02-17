@@ -8,6 +8,8 @@ $(function(){
             type: type,
             duration: 3000, // auto-dismiss after 3s
         });
+        let savedLang = localStorage.getItem("selectedLanguage") || "en";
+        loadTranslations(savedLang);
     }
 
     const request = (url,params) => {
@@ -18,10 +20,10 @@ $(function(){
               $(".load").removeClass("bx-loader bx-spin").addClass("bx-check-shield");
               if(JSON.parse(result).type == 'success'){
                   window.location.href = JSON.parse(result).url
+              }else{
+               showToast("<span class='translatable' data-key='heads_up'>Heads up!!</span>","<span class='translatable' data-key='wrong_password'>Wrong email or password</span>","error")
               }
-              showToast("Heads up!!","Wrong email or password.","error")
-              console.log(JSON.parse(result))
-              console.log(result);
+
             });
         },1000)
     }
@@ -30,7 +32,44 @@ $(function(){
         evt.preventDefault()
         let params = {email: $(".email").val().trim(),password: $(".password").val().trim()};
         let isEmpty = Object.values(params).some(param => param === "");
-        !isEmpty ? request('../limvo/auth/signin',params) : showToast("Heads up!!","All fields are mandatory","info");
+        !isEmpty ? request('../limvo/auth/signin',params) : showToast('<span class="translatable" data-key="heads_up">Heads up!!</span>','<span class="translatable" data-key="required_fields">All fields are required</span>','info');
     })
 
+    $(document).on("click", "#en_lang", function() {
+        loadTranslations("en");
+    })
+    
+    $(document).on("click", "#zh_lang", function() {
+        loadTranslations("zh");
+    })
+    
+    function loadTranslations(lang) {
+        if (localStorage.getItem(`selectedLanguage`) == lang) {
+            applyTranslations(JSON.parse(localStorage.getItem(`translations`)));
+        } else {
+            $.getJSON("../../admin/app/assets/lang/lang.json", function (data) {
+                if (data[lang]) {
+                    localStorage.setItem(`translations`, JSON.stringify(data[lang]));
+                    localStorage.setItem("selectedLanguage", lang);
+                    applyTranslations(data[lang]);
+                }
+            });
+        }
+   }
+
+   function applyTranslations(translations) {
+        $(".translatable").each(function () {
+            let key = $(this).data("key");
+            if (translations[key]) {
+                $(this).text(translations[key]);
+                $(this).attr("placeholder", translations[key]);
+            }
+        });
+    }
+
+    let savedLang = localStorage.getItem("selectedLanguage") || "en";
+    loadTranslations(savedLang);
+
 })
+
+

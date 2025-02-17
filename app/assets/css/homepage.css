@@ -198,3 +198,11 @@ border: none;
 color: inherit;
 outline: none;
 }
+
+.error-holder{
+  width: 15%;
+  height: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
