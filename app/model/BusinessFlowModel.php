@@ -92,6 +92,11 @@ class BusinessFlowModel
         return PDOHelper::selectAll($sql,[$lotteryCode])[0];
     }
 
+    public static function getDepositWithdrawalData(string $reference){
+        $sql = "SELECT * FROM deposit_new WHERE payment_reference =?";
+        return PDOHelper::selectOne($sql,[$reference]);
+    }
+
     // public static function filterusername(string $username)
     // {
     //     $data = parent::query("SELECT uid,username FROM users_test WHERE username LIKE :username ORDER BY username ASC", ['username' => "%{$username}%"]);

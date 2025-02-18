@@ -193,7 +193,7 @@
   </div>
 
 
-  <div class="micromodal" id="modal-niii" aria-hidden="true">
+  <div class="micromodal" id="deposit_withdrawal" aria-hidden="true">
     <div class="micromodal__overlay" tabindex="-1" data-micromodal-close>
       <div class="micromodal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title" >
 
@@ -204,31 +204,83 @@
                           <path d="M0 0h24v24H0z" fill="none"></path>
                           <path d="M14 9V4H5v16h6.056c.328.417.724.785 1.18 1.085l1.39.915H3.993A.993.993 0 0 1 3 21.008V2.992C3 2.455 3.449 2 4.002 2h10.995L21 8v1h-7zm-2 2h9v5.949c0 .99-.501 1.916-1.336 2.465L16.5 21.498l-3.164-2.084A2.953 2.953 0 0 1 12 16.95V11zm2 5.949c0 .316.162.614.436.795l2.064 1.36 2.064-1.36a.954.954 0 0 0 .436-.795V13h-5v3.949z" fill="currentColor"></path>
                       </svg>
-                      Terms and Services
+                      Deposit Record
                   </span>
                   <!-- <button class="icon-buttonm" > -->
                       <i class='bx bx-x-circle' style="font-size: 30px;color:#ccc" aria-label="Close modal" data-micromodal-close></i>
                   <!-- </button> -->
               </header>
-              <section class="modal-container-body rtf">
+              <section class="modal-container-body rtf" style="width:500px">
+
+              <div class="div" style="display: flex; justify-content: center; padding: 10px;border-bottom:solid 1px #ccc;position:relative;bottom:20px;">
+                    <div style="font-size:20px;padding:5px;background-color:#eee;border-radius:10%" >GH₵ <span class="amount_recieved">00.00</span></div>
+                </div>
                  
-                <div class="div" style="display:flex">
-                   <div class="left" style="width: 500px;height:600px;">
-                      <table class="table">
-                          <tbody id="firstrow"></tbody>
-                      </table>
-                   </div>
-                   <div class="right" style="width: 500px;height:600px;">
-                   <table class="table">
-                          <tbody id="secondrow"></tbody>
-                      </table>
-                   </div>
+                <div class="div" style="display: flex; justify-content: space-between; padding: 10px;border-bottom:solid 1px #ccc">
+                    <div>Amount Paid (GHS)</div>
+                    <div class="amount_paid">0.00</div>
+                </div>
+
+                <div class="div" style="display: flex; justify-content: space-between; padding: 10px;border-bottom:solid 1px #ccc">
+                    <div>Amount Recieved (GHS)</div>
+                    <div class="amount_recieved">0.00</div>
+                </div>
+
+                <div class="div" style="display: flex; justify-content: space-between; padding: 10px;border-bottom:solid 1px #ccc">
+                    <div>Total Charges (GHS)</div>
+                    <div class="total_charges">0.00</div>
+                </div>
+
+                <div class="div" style="display: flex; justify-content: space-between; padding: 10px; border-bottom: solid 2px #ccc">
+                    <div>Transaction Id</div>
+                    <div class="transactionid">000xxx</div>
+                </div>
+
+                <div class="div" style="display: flex; justify-content: space-between; padding: 10px;border-bottom:solid 1px #ccc">
+                    <div>Deposit From</div>
+                    <div class="banktype"> xxx</div>
+                </div>
+
+                <div class="div" style="display: flex; justify-content: space-between; padding: 10px;border-bottom: dotted 3px #ccc">
+                    <div>Date Created</div>
+                    <div class="date_time_full">/</div>
+                </div>
+
+                <div class="div" style="">
+                <ol class="timeline">
+                  <li class="timeline-item">
+                  <span class="timeline-item-icon | faded-icon">
+                   <i class='bx bx-right-arrow-alt' ></i>
+                    </span>
+                    <div class="new-comment" style="display: flex;justify-content: space-between; padding: 10px;">
+                      <span>Request Deposit</span>
+                      <span class="date_time">/</span>
+                    </div>
+                  </li>
+                  <li class="timeline-item">
+                    <span class="timeline-item-icon | faded-icon">
+                     <i class='bx bx-refresh' ></i>
+                    </span>
+                    <div class="new-comment" style="display: flex;justify-content: space-between; padding: 10px;">
+                      <span>Processing</span>
+                      <span class="date_time">/</span>
+                    </div>
+                  </li>
+                  <li class="timeline-item">
+                    <span class="timeline-item-icon | faded-icon">
+                       <i class='bx bx-check'></i>
+                    </span>
+                    <div class="new-comment" style="display: flex;justify-content: space-between; padding: 10px;">
+                      <span>Completed</span>
+                      <span class="date_time">/</span>
+                    </div>
+                  </li>
+                </ol>
                 </div>
       
               </section>
               <footer class="modal-container-footer">
-                  <button class="button is-ghost">Decline</button>
-                  <button class="button is-primary">Accept</button>
+                  <span style="">Approved By: <b><span class="approved"></span></b></span>
               </footer>
           </div>
    

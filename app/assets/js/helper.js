@@ -127,6 +127,26 @@
     }
    }
 
+   async function getDepositsAndWithdrawals(url,params = {}) {
+    try {
+        const response = await fetch(`${url}/${JSON.stringify(params)}`);
+        const result = await response.json();
+        console.log(result)
+        $(".amount_paid").text(result.amount_paid)
+        $(".amount_recieved").text(result.amount_recieved)
+        $(".total_charges").text(result.charges)
+        $(".transactionid").text(result.payment_reference)
+        $(".banktype").text(result.provider + " (" + result.user_mobile + ")")
+        $(".date_time").text(result.time_created)
+        $(".date_time_full").text(result.date_created + ' ' + result.time_created)
+        $(".approved").text(result.approved_by)
+        
+        MicroModal.show("deposit_withdrawal");
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+   }
+
    function loadTranslations(lang) {
         if (localStorage.getItem(`selectedLanguage`) == lang) {
             applyTranslations(JSON.parse(localStorage.getItem(`translations`)));

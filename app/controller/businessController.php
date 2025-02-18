@@ -34,5 +34,15 @@ class businessController extends Controller {
         ]);
         $this->view->render();
     }
+
+    public function fetch_deposit_and_withdrawal($params){
+        $this->view('exec/businessflow',[ 
+            'flag' => 'fetch_deposit_and_withdrawal',
+            'params' => $params
+        ]);
+        $this->view->render();
+    }
+
+    
     
 }

@@ -53,6 +53,14 @@ if ($flag == "account_transaction") {
         'data' => $result,
     ]);
     
+}elseif($flag == "fetch_deposit_and_withdrawal"){
+
+    $decodedStr = urldecode($object);
+    $params = json_decode($decodedStr, true);
+    $result = (new BusinessFlowModel())->getDepositWithdrawalData($params['reference'])?? [];
+    echo json_encode($result);
+    
+
 }
 
 

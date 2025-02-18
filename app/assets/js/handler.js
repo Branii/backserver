@@ -3,7 +3,15 @@ const limit = 10;
 
 $(document).on("click", ".tinfo", function(e) {
     const value = $(this).attr("value");
-    getSingleData(`../business/fetch_lottery`, { betcode: value })  
+    const data = value.split("_")[3];
+    if(data == "Deposit" || data == "Withdrawal"){
+        getDepositsAndWithdrawals(`../business/fetch_deposit_and_withdrawal`, { reference: value.split("_")[1] })
+    }else if(data == "Send Red Envelope" || data == "Receive Red Envelope"){
+        alert(); //getSingleData(`../business/fetch_red_envelop`, { withdrawal_id: data })
+    }else{
+        getSingleData(`../business/fetch_lottery`, { betcode: value })
+    }
+  
 })
 
 $(document).on("click", ".accplayer", function(e) {

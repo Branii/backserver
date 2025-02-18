@@ -26,7 +26,7 @@ data.forEach((item) => {
             <td>${item.date_created}</td>
             <td>${item.order_id}</td>
             <td><span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success translatable" data-key="completed">Complete</span></td>
-            <td><i value='${item.username}_${item.order_id}_${item.game_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
+            <td><i value='${item.username}_${item.order_id}_${item.game_type}_${statusColor.title}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
         </tr> 
         `;
 });
