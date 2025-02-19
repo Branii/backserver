@@ -867,30 +867,30 @@ function renderPaginationlist(totalPages, currentPage, pageLimit, callback) {
 }
 
 
-$(".playeruserlist").click(function () {
+$(".lb_data_scroll").click(function () {
   let direction = $(this).val();
-  const tableWrapper = $(".table-wrapperuserlist");
-  const tableWrappers = document.querySelector(".table-wrapperuserlist");
-  const scrollAmount = 1000; // Adjust as needed
+  const tableWrapper = $(".table-wrapperbaic");
+  const tableWrappers = document.querySelector(".table-wrapperbaic");
+  const scrollAmount = 1300; // Adjust as needed
   const scrollOptions = {
       behavior: "smooth",
   };
   if (tableWrapper.length) {
       switch (direction) {
-          case "leftuserlists":
+          case "leftb":
               tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
               break;
-          case "rightuserlists":
+          case "rightb":
               tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
               break;
-          case "startlists":
-              // Scroll to the absolute start (leftmost position)
-              tableWrapper.animate({ scrollLeft: 0 }, "slow");
-              break;
-          case "endlists":
-              const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
-              tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
-              break;
+          // case "startlists":
+          //     // Scroll to the absolute start (leftmost position)
+          //     tableWrapper.animate({ scrollLeft: 0 }, "slow");
+          //     break;
+          // case "endlists":
+          //     const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
+          //     tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
+          //     break;
           default:
               break;
       }

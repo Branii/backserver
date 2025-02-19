@@ -258,7 +258,7 @@
   </div>
 
   <div class="card-body p-4">
-    <div class="table-responsive mb-4 border rounded-1 table-wrapper table-wrapperDraws" id="maskkk" style="height:530px;overflow-y:scroll;">
+    <div class="table-responsive mb-4 border rounded-1 table-wrapper table-wrapperDraws ld-table-wrapperDraws" id="maskkk" style="height:530px;overflow-y:scroll;">
       <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
         <thead class="text-dark fs-4 tbl-header">
           <tr class="headrowDraws">
@@ -314,18 +314,14 @@
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
         style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-        <button type="button" class="btn bg-white-subtle player" value="start">
-          <i class='bx bx-chevrons-left' style="font-size:20px"></i>
-        </button>
-        <button type="button" class="btn bg-white-subtle player" value="left">
+       
+        <button type="button" class="btn bg-white-subtle ld_data_scroll" value="left">
           <i class='bx bx-chevron-left' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle player" value="right">
+        <button type="button" class="btn bg-white-subtle ld_data_scroll" value="right">
           <i class='bx bx-chevron-right' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle player" value="end">
-          <i class='bx bx-chevrons-right' style="font-size:20px"></i>
-        </button>
+       
       </div>
     </span>
     <span class="top-center" aria-label=" navigation example">

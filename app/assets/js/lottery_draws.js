@@ -184,3 +184,34 @@ $(function(){
   })
 
 })
+
+
+$(".ld_data_scroll").click(function () {
+  let direction = $(this).val();
+  const tableWrapper = $(".ld-table-wrapperDraws");
+  const tableWrappers = document.querySelector(".ld-table-wrapperDraws");
+  const scrollAmount = 1300; // Adjust as needed
+  const scrollOptions = {
+      behavior: "smooth",
+  };
+  if (tableWrapper.length) {
+      switch (direction) {
+          case "left":
+              tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
+              break;
+          case "right":
+              tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
+              break;
+          // case "startlists":
+          //     // Scroll to the absolute start (leftmost position)
+          //     tableWrapper.animate({ scrollLeft: 0 }, "slow");
+          //     break;
+          // case "endlists":
+          //     const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
+          //     tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
+          //     break;
+          default:
+              break;
+      }
+  }
+});

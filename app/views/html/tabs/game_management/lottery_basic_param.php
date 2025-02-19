@@ -408,18 +408,14 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playerbasic" value="startb">
-                    <i class='bx bx-chevrons-left' style="font-size:20px"></i>
-                </button>
-                <button type="button" class="btn bg-white-subtle playerbasic" value="leftb">
+               
+                <button type="button" class="btn bg-white-subtle lb_data_scroll" value="leftb">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerbasic" value="rightb">
+                <button type="button" class="btn bg-white-subtle lb_data_scroll" value="rightb">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerbasic" value="endb">
-                    <i class='bx bx-chevrons-right' style="font-size:20px"></i>
-                </button>
+                
             </div>
         </span>
         <span class="top-center" aria-label=" navigation example">
