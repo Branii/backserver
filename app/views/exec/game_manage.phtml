@@ -5,21 +5,21 @@ declare(strict_types=1);
 
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 
-if ($flag == "fetchgames") {
+if ($flag == "getDraws") {
+$game_id = isset($this->viewData['gameId']) ? max($this->viewData['gameId'],0) : 0;
+$limit = isset($this->viewData['limit'])  ? max($this->viewData['limit'] ,0) : 20;
+$page = isset($this->viewData['page']) ? max($this->viewData['page'],0)  : 0;
+$start_date = isset($this->viewData['start_date']) ? $this->viewData['start_date'] : "";
+$end_date = isset($this->viewData['end_date']) ?$this->viewData['end_date'] : "";
+$issue_number = isset($this->viewData['issue_number']) ? $this->viewData['issue_number'] : "";
 
-    $result = (new GameManageModel())->FetchMainGames();
+
+
+    $result = GameManageModel::getDrawTableInfo($game_id,$issue_number,$start_date,$end_date,$page,$limit);
     echo json_encode($result );
 
 }
 
-if ($flag == "fetchgamebyid") {
-    $gameid = isset($this->viewData['gameid']) ? (int) $this->viewData['gameid'] : "";
-    $tablename = isset($this->viewData['tablename']) ?  $this->viewData['tablename'] : "";
-    
-    $result = (new GameManageModel())->FetchMainGamesById($gameid,$tablename);
-    echo json_encode(["maingame" => $result]);
-  
 
-}
 
 

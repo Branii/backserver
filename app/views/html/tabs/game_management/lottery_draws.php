@@ -201,17 +201,29 @@
 
   <div class="px-4 py-3 border-bottom pager1">
     <span class="top-left-btn">
-      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
+    <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:156%;">
 
-        <select name="order_type" id="allGameNames" class="form-control form-select queryholder ordertype" data-bs-placeholder="Select Type">
+      <select name="order_type" id="allGameNames" class="form-control form-select queryholder ordertype" data-bs-placeholder="Select Type" style="width: 15%;">
+      <option value="1">Royal 5</option>
+      </select>
+<div style="width: 15%;">
+    <input name="issuenumber" class="queryholderlist form-control bring-forward" id="ltd-issuenumber" placeholder="Search Issue Number" autocomplete="off" style="width:97%;"> </div>
 
-        </select>
 
-        <input type="date" class="form-control queryholder startdate" id="drawfrom"/>
 
-        <input type="date" class="form-control queryholder enddate" id="drawto"/>
+  <select name="status" id="ltd-status" class="form-control form-select queryholder" data-bs-placeholder="Select Status" style="width: 15%;">
+    <option value="0">-- Status --</option>
+    <option value="1">Open</option>
+    <option value="2">Closed</option>
+    <option value="waiting">Settling</option>
+    <option value="done">Settled</option>
 
-      </div>
+</select>
+
+  <input type="date" class="form-control queryholder startdate" id="ltd-start-date" style="width: 15%;">
+  <input type="date" class="form-control queryholder enddate" id="ltd-end-date" style="width: 15%;">
+
+</div>
     </span>
     <span class="top-center" aria-label=" navigation example">
       <!--enter is free-->
@@ -250,14 +262,11 @@
       <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
         <thead class="text-dark fs-4 tbl-header">
           <tr class="headrowDraws">
-            <!-- <th>
+            <th>
               <h6 class="fs-4 fw-semibold mb-0">Lottery Type</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Lottery Alias</h6>
-            </th> -->
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Draw Id</h6>
+              <h6 class="fs-4 fw-semibold mb-0">Lottery Code</h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Issue Number']; ?></h6>
@@ -271,27 +280,28 @@
             <th>
               <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win Amount']; ?></h6>
             </th>
-            <!-- <th>
+            <th>
               <h6 class="fs-4 fw-semibold mb-0">Draw Time</h6>
-            </th> -->
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Sales Deadline']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Actual Draw Time']; ?></h6>
+              <h6 class="fs-4 fw-semibold mb-0">Sales Deadline</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Settlement Completion Time']; ?></h6>
+              <h6 class="fs-4 fw-semibold mb-0">Actual Draw Time</h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
+              <h6 class="fs-4 fw-semibold mb-0">Settlement Completion Time</h6>
             </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Status</h6>
+            </th>
+            
           </tr>
         </thead> 
         <tbody id="dataContainerDrawsss" class="tbl-content">
 
           <tr class="no-results">
-            <td colspan="9">
+            <td colspan="12">
               <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
             </td>
           </tr>
@@ -320,7 +330,7 @@
     </span>
     <span class="top-center" aria-label=" navigation example">
 
-      <span id="paging_info_draws" style="color:#aaa">---</span>
+      <span id="ltd_paging_info_draws" style="color:#aaa">---</span>
 
     </span>
 
@@ -337,7 +347,7 @@
             <option value="200">200</option>
             <option value="500">500</option>
      </select>
-      <span id="paginationDraws" class="right-element"> </span>
+      <span id="ltd_paginationDraws" class="right-element"> </span>
     </span>
 
   </div>

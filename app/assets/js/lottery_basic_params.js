@@ -399,6 +399,19 @@ $(() => {
 
   // fetch the lottery draw records on page read
 
+
+
+  function showToast(title, message, type,duration) {
+    
+    $.toast({
+      position: "bottom-right",
+      title: title,
+      message: message,
+      type: type,
+      duration: duration === undefined ? 3000 : duration * 1000, // auto-dismiss after 3s
+    });
+  }
+
   // filter user name
 
   $(document).on("keyup", "#ld-lottery", function () {
@@ -418,48 +431,71 @@ $(() => {
     }
   });
 
-  // Handle dropdown item selection
-  $(document).on("click", ".name-items", function () {
-    $("#ld-lottery").val($(this).attr("data-lot-name"));
-    $("#ld-lottery").attr("data-lot-id", $(this).attr("data-lot-id"));
-    $(".lot-drw-res-wrapper").hide();
-  });
-  // Handle dropdown item selection
-  $(document).on("click", ".lb-refreshlist", function () {
-    fetchLotteryBasicParams(1, 1);
-    $("#ld-lottery").val("");
+  $(document).on('click','.tclose,.close-modal',function(){
+    $("#lb-edit").removeClass("show");
+    $("#lb-edit").css("display","none");
   });
 
-  $(document).on("click", ".fetch-lotter-basic-records", function () {
-    const lottery_id = $("#lottery").val();
-    const page = 1;
+  $(document).on('click','.lb-tclose',function(){
+    $("#lb-toggle-lottery").removeClass("show");
+    $("#lb-toggle-lottery").css("display","none");
+  });
+
+  $(document).on("click", '.edit-params-act-btn',function(){
+    
+    $("#lb-edit").addClass("show");
+    $("#lb-edit").css("display","block");
+
+    const lotteryID  = $(this).attr("id").split('-')[1];
+    const maxPrizeAmount = $(`#td-mx-prize-${lotteryID}`).text();
+    const maxWinPerPersonPerIssue = $(`#td-mx-win-${lotteryID}`).text();
+    const maxBetAmountPerIssue = $(`#td-mx-amt-${lotteryID}`).text();
+    const minBetAmountPerIssue = $(`#td-mn-amt-${lotteryID}`).text();
+    const lockTimeForClosingBet = $(`#td-clsing-${lotteryID}`).text();
+
+    $(`#lb-dialog-mx-prize`).val(maxPrizeAmount);
+    $(`#lb-dialog-mx-win`).val(maxWinPerPersonPerIssue);
+    $(`#lb-dialog-mx-amt`).val(maxBetAmountPerIssue);
+    $(`#lb-dialog-mn-amt`).val(minBetAmountPerIssue);
+    $(`#lb-dialog-clsing`).val(lockTimeForClosingBet);
+
+    $("#lb-id-holder ").val(lotteryID)
+
+    
+  });
+
+
+  $(document).on('click','#lb-update-lottery',function(){
+
+    const lotteryID = $("#lb-id-holder").val();
+    const maxPrizeAmount =   $(`#lb-dialog-mx-prize`).val();
+    const maxWinPerPersonPerIssue = $(`#lb-dialog-mx-win`).val();
+    const maxBetAmountPerIssue =  $(`#lb-dialog-mx-amt`).val();
+    const minBetAmountPerIssue =   $(`#lb-dialog-mn-amt`).val();
+    const lockTimeForClosingBet =     $(`#lb-dialog-clsing`).val();
     $.ajax({
-      url: `../admin/fetch_lottery_basic_params/${lottery_id}/${page}`,
+      url: `../admin/updateLottery/${maxPrizeAmount}/${maxBetAmountPerIssue}/${maxWinPerPersonPerIssue}/${minBetAmountPerIssue}/${lockTimeForClosingBet}/${lotteryID}`,
       type: "POST",
       beforeSend: function () {
         $("#lottery-draw-loader").css({ display: "flex" });
       },
       success: function (response) {
         response = JSON.parse(response);
-      //  console.log(response);
         const data = response.data;
-        const totalCount = response.totalCount;
-      //  console.log(data);
-
-        if (response.length === 0) {
-          $("#lot-basic-dtholder").html(
-            `<tr class="no-results"> <td colspan="9"><img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`
-          );
-          $("#lottery-draws-pages-wrapper").html("");
+        if (response.status === "error") {
+          showToast("Error", "Lottery Data Successfully Updated.","error");
+  
           return;
         }
-        let rowsMarkup = "";
-        //console.log(data);
-        data.forEach((row) => {
-          rowsMarkup += lotteryBasicParametersMarkup(row);
-        });
-      //  console.log(rowsMarkup);
-        $("#lot-basic-dtholder").html(rowsMarkup);
+  
+       
+       $(`#td-mx-prize-${lotteryID}`).text(maxPrizeAmount);
+       $(`#td-mx-win-${lotteryID}`).text(maxWinPerPersonPerIssue);
+       $(`#td-mx-amt-${lotteryID}`).text(maxBetAmountPerIssue);
+       $(`#td-mn-amt-${lotteryID}`).text(minBetAmountPerIssue);
+       $(`#td-clsing-${lotteryID}`).text(lockTimeForClosingBet);
+       $('.tclose').click();
+       showToast("Success", "Lottery Data Successfully Updated.","info");
       },
       error: function (res, status, error) {
         $(".dataholder").html(
@@ -471,12 +507,145 @@ $(() => {
         $("#lottery-draw-loader").css({ display: "none" });
       },
     });
+
   });
 
-  fetchLotteryBasicParams(1, 1);
-});
+  $(document).on('click','.update-lottery-state-btn',function(){
+  const lotteryID =  $("#lb-id-holder").val();
+  const status    =  $("#lb-toggle-lottery").attr("data-status");
+    $.ajax({
+      url: `../admin/updateLotteryStatus/${lotteryID}/${status}`,
+      type: "POST",
+      beforeSend: function () {
+        $("#lottery-draw-loader").css({ display: "flex" });
+      },
+      success: function (response) {
+        console.log(response);
+        response = JSON.parse(response);
+        const data = response.data;
+        if (response.status === "error") {
+          showToast("Error", "Lottery Data Successfully Updated.","error");
+          return;
+        }
 
-const fetchLotteryBasicParams = (lottery_id = 1, page) => {
+        if(data == 0){
+          showToast("Error", "Updated unsuccessful, please try again","error");
+          $('.lb-tclose').click();
+          return;
+        }
+  
+       $('.lb-tclose').click();
+       showToast("Success", "Lottery Data Successfully Updated.","info");
+       $("#state-" + lotteryID).text(status === "gameon" ? "Turned On" : "Turned Off");
+      },
+      error: function (res, status, error) {
+        $(".dataholder").html(
+          "<tr><td colspan='12' style='text-align:center;'>An error occured, please try again later.</td></tr>"
+        );
+        console.log("An error occured: " + status + " - " + error);
+      },
+      complete: function () {
+        $("#lottery-draw-loader").css({ display: "none" });
+      },
+    });
+
+  });
+
+  $(document).on('click','.gameon,.gameoff',function(){
+
+    $("#lb-toggle-lottery").addClass("show");
+    $("#lb-toggle-lottery").css("display", "block");
+
+   const lotteryName =  $($($(this).parents("tr")[0]).find("td:eq(3)")[0]).text();
+
+    $("#lb-id-holder").val($(this).attr("data-target"));
+    let status = $(this).attr("class").split(" ")[1];
+    $("#toggle-lottery-msg").html(`Are you sure you want to  ${status === "gameon" ? " <span style='color:#2aa96b;'> Turn On </span> " : " <span style='color:#e60e38;'> Turn Off </span> " }  <span style="font-weight: 900;">${lotteryName}</span> ? `);
+    $("#lb-toggle-lottery").attr({"data-status": status});
+
+
+
+  });
+
+
+
+  $('input').on('focus', function() {
+    var $this = $(this);
+    // Get current value
+    var val = $this.val();
+    // Clear and set it back to move the caret to the end
+    $this.val('').val(val);
+  });
+
+  // Handle dropdown item selection
+  $(document).on("click", ".name-items", function () {
+    $("#ld-lottery").val($(this).attr("data-lot-name"));
+    $("#ld-lottery").attr("data-lot-id", $(this).attr("data-lot-id"));
+    $(".lot-drw-res-wrapper").hide();
+  });
+  // Handle dropdown item selection
+  $(document).on("click", ".lb-refreshlist", function () {
+    $("#lottery").val(0);
+    fetchLotteryBasicParams(1);
+  });
+
+
+  $(document).on('click','.toggle-lottery',function(){
+        console.log($("#lb-id-holder").val());
+  });
+
+  $(document).on("click", ".fetch-lotter-basic-records", function () {
+    // const lottery_id = $("#lottery").val();
+
+    // $.ajax({
+    //   url: `../admin/fetch_lottery_basic_params/${lottery_id}/${page}`,
+    //   type: "POST",
+    //   beforeSend: function () {
+    //     $("#lottery-draw-loader").css({ display: "flex" });
+    //   },
+    //   success: function (response) {
+    //     response = JSON.parse(response);
+    //   //  console.log(response);
+    //     const data = response.data;
+    //     const totalCount = response.totalCount;
+    //   //  console.log(data);
+
+    //     if (response.length === 0) {
+    //       $("#lot-basic-dtholder").html(
+    //         `<tr class="no-results"> <td colspan="9"><img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`
+    //       );
+    //       $("#lottery-draws-pages-wrapper").html("");
+    //       return;
+    //     }
+    //     let rowsMarkup = "";
+    //     //console.log(data);
+    //     data.forEach((row) => {
+    //       rowsMarkup += lotteryBasicParametersMarkup(row);
+    //     });
+    //   //  console.log(rowsMarkup);
+    //     $("#lot-basic-dtholder").html(rowsMarkup);
+    //     const totalPages = Math.ceil(totalCount / 20);
+    //     renderPaginationlist(totalPages,1,() => );
+    //   },
+    //   error: function (res, status, error) {
+    //     $(".dataholder").html(
+    //       "<tr><td colspan='12' style='text-align:center;'>An error occured, please try again later.</td></tr>"
+    //     );
+    //     console.log("An error occured: " + status + " - " + error);
+    //   },
+    //   complete: function () {
+    //     $("#lottery-draw-loader").css({ display: "none" });
+    //   },
+    // });
+    fetchLotteryBasicParams(1);
+
+  });
+
+  fetchLotteryBasicParams(1);
+});
+const pageLimit = 20;
+const fetchLotteryBasicParams = (page) => {
+  const lottery_id = $("#lottery").val();
   $.ajax({
     url: `../admin/fetch_lottery_basic_params/${lottery_id}/${page}`,
     type: "POST",
@@ -484,21 +653,20 @@ const fetchLotteryBasicParams = (lottery_id = 1, page) => {
       $("#lottery-draw-loader").css({ display: "flex" });
     },
     success: function (response) {
-     // console.log("LOTTERY DRAW RECORDS: ", response);
+    //  console.log("LOTTERY DRAW RECORDS: ", response);
       response = JSON.parse(response);
-   //   console.log(response);
+     console.log(response);
       const data = response.data;
-      const totalCount = response.totalCount;
-
-      renderPagination(totalCount, page, "lb-pagination");
-
-      if (response.length === 0) {
+      
+      if (data.length === 0) {
         $("#lot-basic-dtholder").html(
           `<tr class="no-results"> <td colspan="9"><img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`
         );
-        $("#lottery-draws-pages-wrapper").html("");
+        $("#lb-pagination").html("");
         return;
       }
+
+     
       let rowsMarkup = "";
      // console.log(data);
       data.forEach((row) => {
@@ -506,6 +674,8 @@ const fetchLotteryBasicParams = (lottery_id = 1, page) => {
       });
      // console.log(rowsMarkup);
       $("#lot-basic-dtholder").html(rowsMarkup);
+      const totalPages = Math.ceil(response.totalCount / 20);
+      renderPaginationlist(totalPages,page,pageLimit,(newpage) => fetchLotteryBasicParams(newpage));
     },
     error: function (res, status, error) {
       $(".dataholder").html(
@@ -555,34 +725,34 @@ function lotteryBasicParametersMarkup(data) {
                 <i class="fe fe-mail"></i>
             </button>
             <ul class="dropdown-menu">
-                <li class="action-btn">
+                <li class="action-btn" style="cursor:pointer;">
                     <a class="dropdown-item edit-params-act-btn" 
-                       data-bs-target="#edit-params-act-btn" 
-                       data-bs-toggle="modal" 
+                      
+                       
                        max-prize-amt-per-bet="${data.max_prize_per_bet}" 
                        maximum_win_per_issue="${data.max_win}" 
                        maximum_amount_per_issue="${data.max_amt_per_issue}"  
                        minimum_amount_per_issue="${data.mn_amt_per_issue}"  
                        closing_time="${data.clsing}" 
                        game-id="${data.id}" 
-                       id="edit-${data.id}">
-                        edit
+                       id="edit-${data.id}" >
+                        Edit
                     </a>
                 </li>
-                <li class="action-btn">
+                <li class="action-btn" style="cursor:pointer;">
                     <a class="dropdown-item gameon" 
                        data-target="${data.id}" 
                        data-bs-target="#confirm-state-modal-gameon" 
-                       data-bs-toggle="modal">
-                        turn on
+                       data-bs-toggle="modal" >
+                        Turn On
                     </a>
                 </li>
-                <li class="action-btn">
+                <li class="action-btn" style="cursor:pointer;">
                     <a class="dropdown-item gameoff" 
                        data-target="${data.id}" 
                        data-bs-target="#confirm-state-modal-gameoff" 
-                       data-bs-toggle="modal">
-                        turn off
+                       data-bs-toggle="modal" >
+                        Turn Off
                     </a>
                 </li>
             </ul>
@@ -634,7 +804,6 @@ const fetchLotteryname = (lotteryName) => {
        // console.log(response);
         response =
           typeof response === "string" ? JSON.parse(response) : response;
-      //  console.log(response);
 
         for (let index = 0; index < response.length; index++) {
           const lot = response[index];
@@ -654,41 +823,76 @@ const fetchLotteryname = (lotteryName) => {
   });
 };
 
-const renderPagination = (totalPages, currentPage, pagesWrapper = "") => {
+
+function renderPaginationlist(totalPages, currentPage, pageLimit, callback) {
   const createPageLink = (i, label = i, disabled = false, active = false) =>
-    `<li class='page-item ${disabled ? "disabled" : ""} ${
-      active ? "active" : ""
-    }'>
-        <a class='page-link' href='#' data-page='${i}'>${label}</a>
-      </li>`;
+      `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+<a class='page-link' href='#' data-page='${i}'>${label}</a>
+</li>`;
   let pagLink = `<ul class='pagination justify-content-end'>`;
 
-  totalPages = totalPages / 10;
-
   // Previous Button
-  pagLink += createPageLink(
-    currentPage - 1,
-    `<i class='bx bx-chevron-left'></i>`,
-    currentPage === 1
-  );
+  pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
 
   // Page numbers with ellipsis
   for (let i = 1; i <= totalPages; i++) {
-    if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
-      pagLink += createPageLink(i, i, false, i === currentPage);
-    } else if (i === currentPage - 3 || i === currentPage + 3) {
-      pagLink += createPageLink(i, "...", true);
-    }
+      if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+          pagLink += createPageLink(i, i, false, i === currentPage);
+      } else if (i === currentPage - 3 || i === currentPage + 3) {
+          pagLink += createPageLink(i, "...", true);
+      }
   }
 
   // Next Button
-  pagLink += createPageLink(
-    currentPage + 1,
-    `<i class='bx bx-chevron-right'></i>`,
-    currentPage === totalPages
-  );
+  pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
   pagLink += "</ul>";
 
-  document.getElementById(`${pagesWrapper}-pages-wrapper`).innerHTML = pagLink;
-  // document.getElementById("pagination").innerHTML = pagLink;
-};
+  document.getElementById("lb-pagination").innerHTML = pagLink;
+  $("#paging_info_drawsw").html(`Page ${currentPage} of ${totalPages} Pages`);
+
+  // Add click event listeners
+  document.querySelectorAll("#lb-pagination .page-link").forEach((link) => {
+      link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const newPage = +this.getAttribute("data-page");
+          if (newPage > 0 && newPage <= totalPages) {
+              $("#maskuserlist").LoadingOverlay("show", {
+                  background: "rgb(90,106,133,0.1)",
+                  size: 3,
+              });
+              callback(newPage, pageLimit); // Call the provided callback with new page and pageLimit
+          }
+      });
+  });
+}
+
+
+$(".playeruserlist").click(function () {
+  let direction = $(this).val();
+  const tableWrapper = $(".table-wrapperuserlist");
+  const tableWrappers = document.querySelector(".table-wrapperuserlist");
+  const scrollAmount = 1000; // Adjust as needed
+  const scrollOptions = {
+      behavior: "smooth",
+  };
+  if (tableWrapper.length) {
+      switch (direction) {
+          case "leftuserlists":
+              tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
+              break;
+          case "rightuserlists":
+              tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
+              break;
+          case "startlists":
+              // Scroll to the absolute start (leftmost position)
+              tableWrapper.animate({ scrollLeft: 0 }, "slow");
+              break;
+          case "endlists":
+              const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
+              tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
+              break;
+          default:
+              break;
+      }
+  }
+});

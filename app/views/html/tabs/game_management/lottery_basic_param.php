@@ -204,6 +204,91 @@
 } */
 </style>
 
+<div id="lb-edit" class="modal fade " tabindex="-1" style="display: none;" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Lottery</h5>
+                <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
+            </div>
+            <div class="scrollable-container">
+                <div class="card border">
+                    <div class="card-body">
+                        <h4 class="card-title">Lottery Info</h4>
+                        <form id="accountDetailsForm">
+                            <div class="row">
+                                <input type="hidden" value="" id="lb-id-holder">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="lb-dialog-mx-prize" class="form-label">Maximum Prize Amount Per Bet</label>
+                                        <input type="text" class="form-control" id="lb-dialog-mx-prize" placeholder="Login Password">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="lb-dialog-mx-win" class="form-label">Maximum Winnings Per Person Per Issue</label>
+                                        <input type="text" class="form-control" id="lb-dialog-mx-win" placeholder="Withdrawal Password">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="lb-dialog-mx-amt" class="form-label">Maximum Bet Amount Per Issue</label>
+                                        <input type="text" class="form-control" id="lb-dialog-mx-amt" placeholder="Account Binding" >
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="lb-dialog-mn-amt" class="form-label">Minimum Bet Amount Per Issue</label>
+                                        <input type="text" class="form-control" id="lb-dialog-mn-amt" placeholder="Security">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="lb-dialog-clsing" class="form-label">Lock Time for Closing Bets</label>
+                                        <input type="text" class="form-control" id="lb-dialog-clsing" placeholder="Account Binding">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-primary" id="lb-update-lottery">Save</button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="lb-toggle-lottery" class="modal fade " tabindex="-1" aria-modal="true" role="dialog" style="display: none; top: 363px; left: 191px;">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content" style="width: 75%;">
+            <div class="modal-body">
+                <div class="text-center mt-2 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="text-infos" style="color:  #2a3547;">Toggle Lottery</h5>
+                        <i class="bx bx-message-square-x lb-tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
+                    </div>
+                </div>
+                <form>
+
+                    <div class="modal-body scrollable-container">
+                        <div style="overflow: hidden;text-align: center;font-size: large;font-weight: 400;">
+                            <p id="toggle-lottery-msg"></p>
+                        </div>
+                    </div>
+                    <div class="d-md-flex align-items-center">
+
+                        <div class="mt-3 mt-md-0 ms-auto">
+                            <button type="button" class="btn hstack gap-6 update-lottery-state-btn" style="border: solid 1px #ccc;color: #2a3547!important;">
+                                Confirm</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
@@ -216,7 +301,7 @@
 
 
                 <select name="betsate" class="form-control form-select queryholderlistt depositestate " data-bs-placeholder="Select Type" id="lottery" style="width: 70%;">
-                    <option value="all">--<?= $translator['Select Lottery']; ?>--</option>
+                    <option value="0">--<?= $translator['Select Lottery']; ?>--</option>
                     <option value="1" id="lt_1" name="lottery_type">5D</option>
                     <option value="2" id="lt_2" name="lottery_type">PK10</option>
                     <option value="3" id="lt_3" name="lottery_type">FAST3</option>
@@ -236,16 +321,6 @@
 
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-
-
-                <button type="button" class="btn bg-white-subtle btn-disabled" value="" aria-label="Back"
-                    data-bs-placement="top" data-bs-title="Get User Details">
-                    <i class='bx bxs-user' style="font-size:20px"></i>
-                </button>
-                <button type="button" class="btn bg-white-subtle btn-disabled" value="" aria-label="Get Top Agent"
-                    data-bs-title="Get Top Agent">
-                    <i class='bx bxs-user-account' style="font-size:20px"></i>
-                </button>
                 <button type="button" class="btn bg-white-subtle player lb-refreshlist" value="" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
@@ -357,7 +432,7 @@
 
 
         <span id="lb-pagination-pages-wrapper" class="top-right-btn" aria-label="Page navigation example">
-            <!-- <select class="left-element form-control numrows" style="font-size:12px">
+           <select class="left-element form-control numrows" style="font-size:12px">
             <option value="5" class="fromnumrows">5</option>
             <option value="10">10</option>
             <option value="20">20</option> 
@@ -365,8 +440,8 @@
             <option value="100">100</option>
             <option value="200">200</option>
             <option value="500">500</option>
-     </select>
-      <span id="paginationDraws" class="right-element"> </span> -->
+    </select> 
+  <span id="lb-pagination" class="right-element"> </span> 
         </span>
 
     </div>

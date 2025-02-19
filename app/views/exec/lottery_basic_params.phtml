@@ -6,6 +6,7 @@
     $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
     $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 10; // Ensure valid limit 
     $results = [];
+
 if ($flag == "update-params") {
 
     parse_str($_POST["data"], $userData); // parse the data from the client request
@@ -16,13 +17,21 @@ if ($flag == "update-params") {
     parse_str($_POST["data"], $userData); // parse the data from the client request
     $results = GameManageModel::updateLotterState($userData); // update the lottery state and send the response back.
 }else if($flag == 'fetch-lottery-basic-params'){
-         $path =  'http://192.168.1.51/task/admin/assets/lottery';
-         $lottery_id = isset($this->viewData['lottery_id']) ? max((int)$this->viewData['lottery_id'], 1) : ""; 
-         
+
+    try{
+
+   
+    $path =  'http://192.168.1.51/task/admin/assets/lottery';
+    $lottery_id = isset($this->viewData['lottery_id']) ? $this->viewData['lottery_id']: ""; 
+        
 
     $model = GameManageModel::fetchGameTypesForLottery($lottery_id,$page);
 
 
+    if($model['status'] === 'error') return ['status' => 'error', 'data' => "Internal Server Error."];
+
+  
+    $model = $model['data'];
     $final_results = [];
     $total_count = 0;
     if(!empty($model)) $total_count = $model[0]->total_count; 
@@ -44,7 +53,49 @@ if ($flag == "update-params") {
        
         }
 
-        $results = ['data'=>$final_results, 'totalCount'=>$total_count];
+        $results = ['data'=> $final_results, 'totalCount'=>$total_count];
+    }catch(Exception $e){
+        
+        $results = ['status' => 'error', 'data' => 'Internal Server Error.'.$e->getMessage()];
+    }
+}else if($flag === "updateLottery"){
+   
+    try{
+
+    
+
+    $maxPrizeAmountPerBet = isset($this->viewData['maxPrizeAmountPerBet']) ? $this->viewData['maxPrizeAmountPerBet'] : "";
+    $maxAmtPerIssue = isset($this->viewData['maxAmtPerIssue']) ? $this->viewData['maxAmtPerIssue'] : ""; // Ensure valid page number
+    $maxWinPerPersonPerIssue = isset($this->viewData['maxWinPerPersonPerIssue']) ? $this->viewData['maxWinPerPersonPerIssue']: ""; // Ensure valid limit 
+    $minBetAmtPerIssue = isset($this->viewData['minBetAmtPerIssue']) ? $this->viewData['minBetAmtPerIssue']: ""; // Ensure valid limit 
+    $lockTimeForClsing = isset($this->viewData['lockTimeForClsing']) ? $this->viewData['lockTimeForClsing']: ""; // Ensure valid limit 
+    $game_type_id = isset($this->viewData['game_type_id']) ? $this->viewData['game_type_id']: ""; // Ensure valid limit 
+
+    $results = GameManageModel::updateLotteryData($maxPrizeAmountPerBet,$maxAmtPerIssue, $maxWinPerPersonPerIssue,$minBetAmtPerIssue,$lockTimeForClsing,$game_type_id);
+
+    }catch(Exception $e){
+
+        echo $e->getMessage();
+    }
+
+
+
+}else if($flag === "updateLotteryStatus"){
+   
+    try{
+    $game_type_id = isset($this->viewData['game_type_id']) ? $this->viewData['game_type_id']: ""; 
+    $status = isset($this->viewData['status']) ? $this->viewData['status']: ""; 
+
+    $results = GameManageModel::updateLotteryStatus($game_type_id,$status);
+
+    if($results['status'] == "error") return ['status' => "error", "data" => "Internal Server Error."];
+
+    }catch(Exception $e){
+
+       $results = ["status" => "error", "data" => "Request Failed."];
+    }
+
+
 
 }
 

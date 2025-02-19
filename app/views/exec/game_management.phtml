@@ -49,3 +49,23 @@ if($flag == "getSpecificDraws") {
         'totalPages' => ceil($result['total'] / $limit),
     ]);
 }
+
+if ($flag == "getDraws") {
+    $game_id = isset($this->viewData['gameId']) ? max($this->viewData['gameId'],1) : 0;
+    $limit = isset($this->viewData['limit'])  ? max($this->viewData['limit'] ,0) : 20;
+    $page = isset($this->viewData['page']) ? max($this->viewData['page'],0)  : 0;
+    $start_date = isset($this->viewData['start_date']) ? $this->viewData['start_date'] : "";
+    $end_date = isset($this->viewData['end_date']) ?  $this->viewData['end_date'] : "";
+    $issue_number = isset($this->viewData['issue_number']) ? $this->viewData['issue_number'] : "";
+    $draw_status = isset($this->viewData['status']) ? $this->viewData['status'] : "";
+
+
+    // echo json_encode(['game_id' => $game_id, 'limit' => $limit , 'page' => $page, 'start_date' => $start_date, 'end_date' => $end_date, 'issue_number' => $issue_number, 'draw_status' => $draw_status]);
+    // return;
+     if(empty($game_id))return ["status" => 'error', "data" => "Internal Server Error"];
+
+    
+    $result = GameManageModel::getDrawTableInfo($game_id,$issue_number,$draw_status,$start_date,$end_date,$page,$limit);
+    echo json_encode($result );
+    
+    }
