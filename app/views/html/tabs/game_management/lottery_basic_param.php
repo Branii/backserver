@@ -218,31 +218,38 @@
                         <form id="accountDetailsForm">
                             <div class="row">
                                 <input type="hidden" value="" id="lb-id-holder">
+                                <input type="hidden" value="" id="lb-lottery-type">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label for="lb-dialog-mx-prize" class="form-label">Maximum Prize Amount Per Bet</label>
-                                        <input type="text" class="form-control" id="lb-dialog-mx-prize" placeholder="Login Password">
+                                        <input type="text" class="form-control" id="lb-dialog-mx-prize" placeholder="Maximum Prize Amount Per Bet">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="lb-dialog-mx-win" class="form-label">Maximum Winnings Per Person Per Issue</label>
-                                        <input type="text" class="form-control" id="lb-dialog-mx-win" placeholder="Withdrawal Password">
+                                        <input type="text" class="form-control" id="lb-dialog-mx-win" placeholder="Maximum Winnings Per Person Per Issue">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label for="lb-dialog-mx-amt" class="form-label">Maximum Bet Amount Per Issue</label>
-                                        <input type="text" class="form-control" id="lb-dialog-mx-amt" placeholder="Account Binding" >
+                                        <input type="text" class="form-control" id="lb-dialog-mx-amt" placeholder="Maximum Bet Amount Per Issue" >
                                     </div>
                                     <div class="mb-3">
                                         <label for="lb-dialog-mn-amt" class="form-label">Minimum Bet Amount Per Issue</label>
-                                        <input type="text" class="form-control" id="lb-dialog-mn-amt" placeholder="Security">
+                                        <input type="text" class="form-control" id="lb-dialog-mn-amt" placeholder="Minimum Bet Amount Per Issue">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label for="lb-dialog-clsing" class="form-label">Lock Time for Closing Bets</label>
-                                        <input type="text" class="form-control" id="lb-dialog-clsing" placeholder="Account Binding">
+                                        <input type="text" class="form-control" id="lb-dialog-clsing" placeholder="Lock Time for Closing Bets">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                <div class="mb-3">
+                                        <label for="lb-dialog-sorting-weight" class="form-label">Sorting Weight</label>
+                                        <input type="text" class="form-control" id="lb-dialog-sorting-weight" placeholder="Sorting Weight">
                                     </div>
                                 </div>
 
@@ -277,7 +284,6 @@
                         </div>
                     </div>
                     <div class="d-md-flex align-items-center">
-
                         <div class="mt-3 mt-md-0 ms-auto">
                             <button type="button" class="btn hstack gap-6 update-lottery-state-btn" style="border: solid 1px #ccc;color: #2a3547!important;">
                                 Confirm</button>

@@ -132,13 +132,38 @@ class GameManageModel extends MEDOOHelper
     }
 
     }
-    public static function updateLotteryData($maxPrizeAmountPerBet,$maxAmtPerIssue, $maxWinPerPersonPerIssue,$minBetAmtPerIssue,$lockTimeForClsing,$game_type_id): array {
+    public static function updateLotteryData($maxPrizeAmountPerBet,$maxAmtPerIssue, $maxWinPerPersonPerIssue,$minBetAmtPerIssue,$lockTimeForClsing,$sortingWeight,$lottery_type,$game_type_id): array {
         try{
+
+            if($sortingWeight < 1)return ["status" => "error", "data" => "Sorting Weight must be greater than zero."];
+
 
             // return [":maximum_prize_per_bet" => $maxPrizeAmountPerBet, ':maximum_amount_per_issue' => $maxAmtPerIssue,':maximum_win_per_issue' => $maxWinPerPersonPerIssue, ':minimum_amount_per_issue' => $minBetAmtPerIssue, ':closing_time' => $lockTimeForClsing, ':game_type_id' => $game_type_id ];
         $database = parent::openLink();
-        $stmt = $database->query("UPDATE game_type SET maximum_prize_per_bet = :maximum_prize_per_bet,maximum_win_per_issue = :maximum_win_per_issue,maximum_amount_per_issue = :maximum_amount_per_issue, minimum_amount_per_issue = :minimum_amount_per_issue , closing_time =:closing_time  WHERE game_type.gt_id = :game_type_id
-            ",[":maximum_prize_per_bet" => (int) $maxPrizeAmountPerBet, ':maximum_amount_per_issue' => (int) $maxAmtPerIssue,':maximum_win_per_issue' => (int) $maxWinPerPersonPerIssue, ':minimum_amount_per_issue' => (int) $minBetAmtPerIssue, ':closing_time' => (int) $lockTimeForClsing, ':game_type_id' => (int) $game_type_id ]);
+        $stmt = $database->query("SELECT sort_weight FROM lottery_type WHERE lt_id=:lt_id",[':lt_id' => $lottery_type]);
+        $data = $stmt->fetch(PDO::FETCH_OBJ);
+        $lottery_type_sort_weight = $data->sort_weight;
+        $lottery_type_sort_weight =  json_decode($lottery_type_sort_weight,true);
+        $sorting_weight_flipped   = array_flip($lottery_type_sort_weight);
+        // echo "Entered here";
+       
+        if(empty($sorting_weight_flipped) || !in_array((int) $sortingWeight,$lottery_type_sort_weight)){
+            $lottery_type_sort_weight[$game_type_id] = $sortingWeight;
+        }else{
+         
+          $res =  self::swapElements($lottery_type_sort_weight,$game_type_id,$sortingWeight,$sorting_weight_flipped[$sortingWeight]);
+            if(!$res){
+                return ['status' => "error", 'data' => "Duplicated Sorting Weight"];
+            }
+        }
+            
+        $sorting_weight = $database->query("UPDATE lottery_type SET sort_weight = :sorting_weight  WHERE lottery_type.lt_id = :lottery_id
+            ",[":sorting_weight" => json_encode($lottery_type_sort_weight), ':lottery_id' => (int) $lottery_type ]);
+        // $stmt = $database->query("UPDATE game_type SET maximum_prize_per_bet = :maximum_prize_per_bet,maximum_win_per_issue = :maximum_win_per_issue,maximum_amount_per_issue = :maximum_amount_per_issue, minimum_amount_per_issue = :minimum_amount_per_issue , closing_time =:closing_time  WHERE game_type.gt_id = :game_type_id
+        //     ",[":maximum_prize_per_bet" => (int) $maxPrizeAmountPerBet, ':maximum_amount_per_issue' => (int) $maxAmtPerIssue,':maximum_win_per_issue' => (int) $maxWinPerPersonPerIssue, ':minimum_amount_per_issue' => (int) $minBetAmtPerIssue, ':closing_time' => (int) $lockTimeForClsing, ':game_type_id' => (int) $game_type_id ]);
+     
+
+
         return ['status' => "success", 'data' => $stmt->rowCount()];
 
     }catch(Exception $e){
@@ -234,6 +259,39 @@ class GameManageModel extends MEDOOHelper
             $data[] = ['lottery_type' => $value->name, 'lottery_code' => $value->game_group , 'issue_number' => $value->period , 'winning_numbers' => implode(',',json_decode($value->draw_number)), 'total_bet_amount' => $value->sumTotalAmount ?? 0 , 'total_win_amount' => $value->total_won_amount ?? 0, 'draw_time' => $value->time_added, 'sales_deadline' => $value->my_closing, 'actual_draw_time' => $value->time_added, 'settlement_completion_time' => $value->settlement_completion_time ?? 0,'status' => $value->draw_status, 'total_records' => $value->total_records] ;
         }
         return ['status' => 'success','data' => $data];
+    }
+
+
+    public static function swapElements(&$array, $element1 = 0,$element1NewWeight = 0, $element2 = 0) {
+       try{
+
+      
+        $element1 = (int) $element1;
+        $element2 = (int) $element2;
+
+        if(!array_key_exists($element2,$array)){
+            $array[$element1] = $element1NewWeight;
+            return true;
+        }
+        if (!array_key_exists($element1,$array) || !array_key_exists($element2,$array)) {
+            return false; // Ensure elements exist
+        }
+
+
+        $element1OldWeight = $array[$element1];
+
+        if((int) $element1OldWeight == ($element1NewWeight)){
+        return false;
+        }
+  
+        $array[$element1] = $element1NewWeight;
+        $array[$element2] = $element1OldWeight;
+        return true; // Successful swap
+
+    }catch(Exception $e){
+        echo $e->getMessage();
+        return ["status" => "error", "data" => $e->getMessage()];
+       }
     }
 
 }

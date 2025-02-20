@@ -18,7 +18,7 @@ $(function(){
       data.forEach((item) => {
         html += `<tr class="trow">
                       <td>${item.lottery_type}</td>
-                      <td>${item.lottery_code}</td>
+                      <td>${transformInputLd(item.lottery_code)}</td>
                       <td>${item.issue_number}</td>
                       <td>${item.winning_numbers}</td>
                       <td>${item.total_bet_amount}</td>
@@ -183,8 +183,6 @@ $(function(){
     getAllBackups(currentPage,numrow);
   })
 
-})
-
 
 $(".ld_data_scroll").click(function () {
   let direction = $(this).val();
@@ -215,3 +213,75 @@ $(".ld_data_scroll").click(function () {
       }
   }
 });
+
+const transformInputLd = (str) => {
+  // Trim whitespace from both ends
+  str = str.trim();
+
+  // Rule 1: If the string starts with digits, an 'x', and then more digits (e.g. "11x5")
+  if (/^\d+x\d+/.test(str)) {
+    // Take everything before the first space as the prefix
+    const prefix = str.split(/\s+/)[0];
+    return prefix.charAt(0).toUpperCase() + prefix.slice(1) + "1001";
+  } else {
+    // Rule 2: Process as a name-like string
+
+    // Remove any trailing digits (e.g., "RoodevFast3" -> "RoodevFast")
+    str = str.replace(/\d+$/, "");
+
+    let words = [];
+
+    // If there's a space, split on whitespace
+    if (str.includes(" ")) {
+      words = str.split(/\s+/);
+    } else {
+      // Otherwise, try splitting on CamelCase: sequences of capital letter + subsequent lowercase
+      const matches = str.match(/[A-Z][a-z]*/g);
+      if (matches) {
+        words = matches;
+      } else {
+        // If we can't split (or there's no CamelCase), treat the entire string as one word
+        words = [str];
+      }
+    }
+
+    // If no words found, just return the (trimmed) string as-is
+    if (words.length === 0) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    // Build the abbreviation
+    // 1) First letter of the first word
+    let abbreviation = words[0].charAt(0);
+
+    // 2) Append the first consonant (non-vowel) that follows in the first word
+    const vowels = "aeiouAEIOU";
+    for (let i = 1; i < words[0].length; i++) {
+      if (!vowels.includes(words[0][i])) {
+        abbreviation += words[0][i];
+        break;
+      }
+    }
+
+    // 3) If there's a second word, add its first letter;
+    // otherwise, if the first word has >= 3 letters, add the third letter
+    if (words.length > 1) {
+      abbreviation += words[1].charAt(0);
+    } else {
+      if (words[0].length >= 3) {
+        abbreviation += words[0].charAt(2);
+      }
+    }
+
+    // Capitalize and append "500"
+    return abbreviation.charAt(0).toUpperCase() + abbreviation.slice(1) + "500";
+  }
+}
+
+})
+
+
+
+
+
+

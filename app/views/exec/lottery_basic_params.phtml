@@ -7,6 +7,7 @@
     $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 10; // Ensure valid limit 
     $results = [];
 
+
 if ($flag == "update-params") {
 
     parse_str($_POST["data"], $userData); // parse the data from the client request
@@ -48,7 +49,7 @@ if ($flag == "update-params") {
             $state = "<span class='tag' id='state-{$data->gt_id}'>Turned Off</span>";
          }
 
-        $final_results[] = ["id" => $data->gt_id, 'lottery_image' => $path . '/' . $data->logo,'lottery_name' =>
+        $final_results[] = ["id" => $data->gt_id,'sort_weight' => json_decode($data->sort_weight), 'lottery_id' => $data->lt_id,'lottery_image' => $path . '/' . $data->logo,'lottery_name' =>
         $data->name, 'lottery_type' => $lottrytype, 'alias' => $data->alias , 'max_prize_per_bet' =>  trim($data->maximum_prize_per_bet) , 'max_win' =>  trim($data->maximum_win_per_issue) , 'max_amt_per_issue' =>  trim($data->maximum_amount_per_issue) , 'mn_amt_per_issue' => trim($data->minimum_amount_per_issue) , 'clsing' => trim($data->closing_time) , 'state' => $state ];
        
         }
@@ -69,9 +70,14 @@ if ($flag == "update-params") {
     $maxWinPerPersonPerIssue = isset($this->viewData['maxWinPerPersonPerIssue']) ? $this->viewData['maxWinPerPersonPerIssue']: ""; // Ensure valid limit 
     $minBetAmtPerIssue = isset($this->viewData['minBetAmtPerIssue']) ? $this->viewData['minBetAmtPerIssue']: ""; // Ensure valid limit 
     $lockTimeForClsing = isset($this->viewData['lockTimeForClsing']) ? $this->viewData['lockTimeForClsing']: ""; // Ensure valid limit 
+    $sortingWeight = isset($this->viewData['sortingWeight']) ? $this->viewData['sortingWeight']: ""; // Sorting Weight 
     $game_type_id = isset($this->viewData['game_type_id']) ? $this->viewData['game_type_id']: ""; // Ensure valid limit 
+    $lottery_type = isset($this->viewData['lottery_type']) ? $this->viewData['lottery_type']: ""; // Ensure valid limit 
 
-    $results = GameManageModel::updateLotteryData($maxPrizeAmountPerBet,$maxAmtPerIssue, $maxWinPerPersonPerIssue,$minBetAmtPerIssue,$lockTimeForClsing,$game_type_id);
+
+
+
+    $results = GameManageModel::updateLotteryData($maxPrizeAmountPerBet,$maxAmtPerIssue, $maxWinPerPersonPerIssue,$minBetAmtPerIssue,$lockTimeForClsing,$sortingWeight,$lottery_type,$game_type_id);
 
     }catch(Exception $e){
 

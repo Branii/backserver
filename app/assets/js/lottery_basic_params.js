@@ -452,14 +452,17 @@ $(() => {
     const maxBetAmountPerIssue = $(`#td-mx-amt-${lotteryID}`).text();
     const minBetAmountPerIssue = $(`#td-mn-amt-${lotteryID}`).text();
     const lockTimeForClosingBet = $(`#td-clsing-${lotteryID}`).text();
+    const sortingWeight = $(`#td-sorting-weight-${lotteryID}`).text();
 
     $(`#lb-dialog-mx-prize`).val(maxPrizeAmount);
     $(`#lb-dialog-mx-win`).val(maxWinPerPersonPerIssue);
     $(`#lb-dialog-mx-amt`).val(maxBetAmountPerIssue);
     $(`#lb-dialog-mn-amt`).val(minBetAmountPerIssue);
     $(`#lb-dialog-clsing`).val(lockTimeForClosingBet);
+    $(`#lb-dialog-sorting-weight`).val(sortingWeight);
 
     $("#lb-id-holder ").val(lotteryID)
+    $("#lb-lottery-type").val($(this).attr("data-lottery-type"))
 
     
   });
@@ -473,18 +476,21 @@ $(() => {
     const maxBetAmountPerIssue =  $(`#lb-dialog-mx-amt`).val();
     const minBetAmountPerIssue =   $(`#lb-dialog-mn-amt`).val();
     const lockTimeForClosingBet =     $(`#lb-dialog-clsing`).val();
+    const sortingWeight =     $(`#lb-dialog-sorting-weight`).val();
+    const  lotteryType =     $(`#lb-lottery-type`).val();
     $.ajax({
-      url: `../admin/updateLottery/${maxPrizeAmount}/${maxBetAmountPerIssue}/${maxWinPerPersonPerIssue}/${minBetAmountPerIssue}/${lockTimeForClosingBet}/${lotteryID}`,
+      url: `../admin/updateLottery/${maxPrizeAmount}/${maxBetAmountPerIssue}/${maxWinPerPersonPerIssue}/${minBetAmountPerIssue}/${lockTimeForClosingBet}/${sortingWeight}/${lotteryType}/${lotteryID}`,
       type: "POST",
       beforeSend: function () {
         $("#lottery-draw-loader").css({ display: "flex" });
       },
       success: function (response) {
+        console.log(response);
+        return;
         response = JSON.parse(response);
         const data = response.data;
         if (response.status === "error") {
           showToast("Error", "Lottery Data Successfully Updated.","error");
-  
           return;
         }
   
@@ -494,6 +500,7 @@ $(() => {
        $(`#td-mx-amt-${lotteryID}`).text(maxBetAmountPerIssue);
        $(`#td-mn-amt-${lotteryID}`).text(minBetAmountPerIssue);
        $(`#td-clsing-${lotteryID}`).text(lockTimeForClosingBet);
+       $(`#td-sorting-weight-${lotteryID}`).text(sortingWeight);
        $('.tclose').click();
        showToast("Success", "Lottery Data Successfully Updated.","info");
       },
@@ -529,13 +536,13 @@ $(() => {
         }
 
         if(data == 0){
-          showToast("Error", "Updated unsuccessful, please try again","error");
+          showToast("Error", "This lottery has already being " + (status === "gameon" ? " Turned On " : " Turned Off "),"error");
           $('.lb-tclose').click();
           return;
         }
   
        $('.lb-tclose').click();
-       showToast("Success", "Lottery Data Successfully Updated.","info");
+       showToast("Success", "Lottery " + (status === "gameon" ? " Turned On " : " Turned Off ") + " Successfully.","info");
        $("#state-" + lotteryID).text(status === "gameon" ? "Turned On" : "Turned Off");
       },
       error: function (res, status, error) {
@@ -641,8 +648,119 @@ $(() => {
 
   });
 
-  fetchLotteryBasicParams(1);
-});
+ 
+
+
+  $(".lb_data_scroll").click(function () {
+    let direction = $(this).val();
+    const tableWrapper = $(".table-wrapperbaic");
+    const tableWrappers = document.querySelector(".table-wrapperbaic");
+    const scrollAmount = 1300; // Adjust as needed
+    const scrollOptions = {
+        behavior: "smooth",
+    };
+    if (tableWrapper.length) {
+        switch (direction) {
+            case "leftb":
+                tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
+                break;
+            case "rightb":
+                tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
+                break;
+            // case "startlists":
+            //     // Scroll to the absolute start (leftmost position)
+            //     tableWrapper.animate({ scrollLeft: 0 }, "slow");
+            //     break;
+            // case "endlists":
+            //     const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
+            //     tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
+            //     break;
+            default:
+                break;
+        }
+    }
+  });
+
+  function lotteryDrawMarkup(data) {
+    return `<tr>
+              <td>${data.lottery_type}</td>
+              <td>${transformInput(data.lottery_code)}</td>
+              <td>${data.period}</td>
+              <td>${data.draw_number}</td>
+              <td>${data.total_bet_amount}</td>
+              <td>${data.total_bet_won}</td>
+              <td>${data.time_added}</td>
+              <td>${data.closing_time}</td>
+              <td>${data.opening_time}</td>
+              <td>${data.closing_time}</td>
+              <td>${data.state}</td>
+              </tr>`;
+  }
+  
+  function lotteryBasicParametersMarkup(data) {
+    return `
+  <tr>
+      <td>${data.id}</td>
+      <td><img src="${sanitizeHTML(
+        data.lottery_image
+      )}" alt="lottery icon" width="40"></td>
+      <td id="td-sorting-weight-${data.id}">${data.sort_weight[data.id] ?? 0}</td>
+      <td>${data.lottery_type}</td>
+      <td>${transformInput(data.lottery_name)}</td>
+      <td></td>
+      <td>${transformInput(data.lottery_name)}</td>
+      <td id="td-mx-prize-${data.id}">${data.max_prize_per_bet}</td>
+      <td id="td-mx-win-${data.id}">${data.max_win}</td>
+      <td id="td-mx-amt-${data.id}">${data.max_amt_per_issue}</td>
+      <td id="td-mn-amt-${data.id}">${data.mn_amt_per_issue}</td>
+      <td id="td-clsing-${data.id}">${data.clsing}</td>
+      <td><span class="state">${data.state}</span></td>
+      <td>
+          <div class="btn-group mb-2 mt-2">
+              <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fe fe-mail"></i>
+              </button>
+              <ul class="dropdown-menu">
+                  <li class="action-btn" style="cursor:pointer;">
+                      <a class="dropdown-item edit-params-act-btn" 
+                        data-lottery-type="${data.lottery_id}"
+                         
+                         max-prize-amt-per-bet="${data.max_prize_per_bet}" 
+                         maximum_win_per_issue="${data.max_win}" 
+                         maximum_amount_per_issue="${data.max_amt_per_issue}"  
+                         minimum_amount_per_issue="${data.mn_amt_per_issue}"  
+                         closing_time="${data.clsing}" 
+                         game-id="${data.id}" 
+                         id="edit-${data.id}" >
+                          Edit
+                      </a>
+                  </li>
+                  <li class="action-btn" style="cursor:pointer;">
+                      <a class="dropdown-item gameon" 
+                         data-target="${data.id}" 
+                         data-bs-target="#confirm-state-modal-gameon" 
+                         data-bs-toggle="modal" >
+                          Turn On
+                      </a>
+                  </li>
+                  <li class="action-btn" style="cursor:pointer;">
+                      <a class="dropdown-item gameoff" 
+                         data-target="${data.id}" 
+                         data-bs-target="#confirm-state-modal-gameoff" 
+                         data-bs-toggle="modal" >
+                          Turn Off
+                      </a>
+                  </li>
+              </ul>
+          </div>
+      </td>
+  </tr>`;
+  }
+  
+  
+
+
+
 const pageLimit = 20;
 const fetchLotteryBasicParams = (page) => {
   const lottery_id = $("#lottery").val();
@@ -701,81 +819,6 @@ function sanitizeHTML(str) {
     .replace(/'/g, "&#039;");
 }
 
-function lotteryBasicParametersMarkup(data) {
-  return `
-<tr>
-    <td>${data.id}</td>
-    <td><img src="${sanitizeHTML(
-      data.lottery_image
-    )}" alt="lottery icon" width="40"></td>
-    <td>${data.lottery_name}</td>
-    <td>${data.lottery_type}</td>
-    <td></td>
-    <td></td>
-    <td>${data.alias}</td>
-    <td id="td-mx-prize-${data.id}">${data.max_prize_per_bet}</td>
-    <td id="td-mx-win-${data.id}">${data.max_win}</td>
-    <td id="td-mx-amt-${data.id}">${data.max_amt_per_issue}</td>
-    <td id="td-mn-amt-${data.id}">${data.mn_amt_per_issue}</td>
-    <td id="td-clsing-${data.id}">${data.clsing}</td>
-    <td><span class="state">${data.state}</span></td>
-    <td>
-        <div class="btn-group mb-2 mt-2">
-            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fe fe-mail"></i>
-            </button>
-            <ul class="dropdown-menu">
-                <li class="action-btn" style="cursor:pointer;">
-                    <a class="dropdown-item edit-params-act-btn" 
-                      
-                       
-                       max-prize-amt-per-bet="${data.max_prize_per_bet}" 
-                       maximum_win_per_issue="${data.max_win}" 
-                       maximum_amount_per_issue="${data.max_amt_per_issue}"  
-                       minimum_amount_per_issue="${data.mn_amt_per_issue}"  
-                       closing_time="${data.clsing}" 
-                       game-id="${data.id}" 
-                       id="edit-${data.id}" >
-                        Edit
-                    </a>
-                </li>
-                <li class="action-btn" style="cursor:pointer;">
-                    <a class="dropdown-item gameon" 
-                       data-target="${data.id}" 
-                       data-bs-target="#confirm-state-modal-gameon" 
-                       data-bs-toggle="modal" >
-                        Turn On
-                    </a>
-                </li>
-                <li class="action-btn" style="cursor:pointer;">
-                    <a class="dropdown-item gameoff" 
-                       data-target="${data.id}" 
-                       data-bs-target="#confirm-state-modal-gameoff" 
-                       data-bs-toggle="modal" >
-                        Turn Off
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </td>
-</tr>`;
-}
-
-function lotteryDrawMarkup(data) {
-  return `<tr>
-            <td>${data.lottery_type}</td>
-            <td>${data.lottery_code}</td>
-            <td>${data.period}</td>
-            <td>${data.draw_number}</td>
-            <td>${data.total_bet_amount}</td>
-            <td>${data.total_bet_won}</td>
-            <td>${data.time_added}</td>
-            <td>${data.closing_time}</td>
-            <td>${data.opening_time}</td>
-            <td>${data.closing_time}</td>
-            <td>${data.state}</td>
-            </tr>`;
-}
 
 function gather_update_fields() {
   max_prize_amt_per_bet = $(this).attr("max-prize-amt-per-bet");
@@ -867,32 +910,74 @@ function renderPaginationlist(totalPages, currentPage, pageLimit, callback) {
 }
 
 
-$(".lb_data_scroll").click(function () {
-  let direction = $(this).val();
-  const tableWrapper = $(".table-wrapperbaic");
-  const tableWrappers = document.querySelector(".table-wrapperbaic");
-  const scrollAmount = 1300; // Adjust as needed
-  const scrollOptions = {
-      behavior: "smooth",
-  };
-  if (tableWrapper.length) {
-      switch (direction) {
-          case "leftb":
-              tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
-              break;
-          case "rightb":
-              tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
-              break;
-          // case "startlists":
-          //     // Scroll to the absolute start (leftmost position)
-          //     tableWrapper.animate({ scrollLeft: 0 }, "slow");
-          //     break;
-          // case "endlists":
-          //     const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
-          //     tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
-          //     break;
-          default:
-              break;
+
+  
+const transformInput = (str) => {
+  // Trim whitespace from both ends
+  str = str.trim();
+
+  // Rule 1: If the string starts with digits, an 'x', and then more digits (e.g. "11x5")
+  if (/^\d+x\d+/.test(str)) {
+    // Take everything before the first space as the prefix
+    const prefix = str.split(/\s+/)[0];
+    return prefix.charAt(0).toUpperCase() + prefix.slice(1) + "1001";
+  } else {
+    // Rule 2: Process as a name-like string
+
+    // Remove any trailing digits (e.g., "RoodevFast3" -> "RoodevFast")
+    str = str.replace(/\d+$/, "");
+
+    let words = [];
+
+    // If there's a space, split on whitespace
+    if (str.includes(" ")) {
+      words = str.split(/\s+/);
+    } else {
+      // Otherwise, try splitting on CamelCase: sequences of capital letter + subsequent lowercase
+      const matches = str.match(/[A-Z][a-z]*/g);
+      if (matches) {
+        words = matches;
+      } else {
+        // If we can't split (or there's no CamelCase), treat the entire string as one word
+        words = [str];
       }
+    }
+
+    // If no words found, just return the (trimmed) string as-is
+    if (words.length === 0) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    // Build the abbreviation
+    // 1) First letter of the first word
+    let abbreviation = words[0].charAt(0);
+
+    // 2) Append the first consonant (non-vowel) that follows in the first word
+    const vowels = "aeiouAEIOU";
+    for (let i = 1; i < words[0].length; i++) {
+      if (!vowels.includes(words[0][i])) {
+        abbreviation += words[0][i];
+        break;
+      }
+    }
+
+    // 3) If there's a second word, add its first letter;
+    // otherwise, if the first word has >= 3 letters, add the third letter
+    if (words.length > 1) {
+      abbreviation += words[1].charAt(0);
+    } else {
+      if (words[0].length >= 3) {
+        abbreviation += words[0].charAt(2);
+      }
+    }
+
+    // Capitalize and append "500"
+    return abbreviation.charAt(0).toUpperCase() + abbreviation.slice(1) + "500";
   }
+}
+
+
+fetchLotteryBasicParams(1);
+
 });
+

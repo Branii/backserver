@@ -278,9 +278,9 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function updateLottery($maxPrizeAmountPerBet,$maxAmtPerIssue, $maxWinPerPersonPerIssue,$minBetAmtPerIssue,$lockTimeForClsing, $game_type_id)
+    public function updateLottery($maxPrizeAmountPerBet,$maxAmtPerIssue, $maxWinPerPersonPerIssue,$minBetAmtPerIssue,$lockTimeForClsing,$sortingWeight, $lotteryType,$game_type_id)
     {
-        $this->view('exec/lottery_basic_params', ['maxPrizeAmountPerBet' => $maxPrizeAmountPerBet,'maxAmtPerIssue' => $maxAmtPerIssue,'maxWinPerPersonPerIssue' => $maxWinPerPersonPerIssue, 'minBetAmtPerIssue' => $minBetAmtPerIssue,'lockTimeForClsing' => $lockTimeForClsing,'game_type_id' => $game_type_id,'flag' => 'updateLottery']);
+        $this->view('exec/lottery_basic_params', ['maxPrizeAmountPerBet' => $maxPrizeAmountPerBet,'maxAmtPerIssue' => $maxAmtPerIssue,'maxWinPerPersonPerIssue' => $maxWinPerPersonPerIssue, 'minBetAmtPerIssue' => $minBetAmtPerIssue,'lockTimeForClsing' => $lockTimeForClsing,'sortingWeight' => $sortingWeight,'lottery_type' => $lotteryType,'game_type_id' => $game_type_id,'flag' => 'updateLottery']);
         $this->view->render();
     }
     public function updateLotteryStatus($game_type_id,$status)
