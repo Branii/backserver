@@ -486,21 +486,31 @@ $(() => {
       },
       success: function (response) {
         console.log(response);
-        return;
         response = JSON.parse(response);
+        console.log(response);
         const data = response.data;
         if (response.status === "error") {
           showToast("Error", "Lottery Data Successfully Updated.","error");
           return;
         }
   
+        if(response.swapped.length > 0){
+          const firstID = response.swapped[0];
+          const secondID = response.swapped[1];
+          const firstSortingWeight = $(`#td-sorting-weight-${firstID}`).text();
+          const secondSortingWeight = $(`#td-sorting-weight-${secondID}`).text();
+          $(`#td-sorting-weight-${firstID}`).text(secondSortingWeight);
+          $(`#td-sorting-weight-${secondID}`).text(firstSortingWeight);
+        }else{
+          $(`#td-sorting-weight-${lotteryID}`).text(sortingWeight);
+        }
        
        $(`#td-mx-prize-${lotteryID}`).text(maxPrizeAmount);
        $(`#td-mx-win-${lotteryID}`).text(maxWinPerPersonPerIssue);
        $(`#td-mx-amt-${lotteryID}`).text(maxBetAmountPerIssue);
        $(`#td-mn-amt-${lotteryID}`).text(minBetAmountPerIssue);
        $(`#td-clsing-${lotteryID}`).text(lockTimeForClosingBet);
-       $(`#td-sorting-weight-${lotteryID}`).text(sortingWeight);
+      
        $('.tclose').click();
        showToast("Success", "Lottery Data Successfully Updated.","info");
       },

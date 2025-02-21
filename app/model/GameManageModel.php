@@ -140,12 +140,12 @@ class GameManageModel extends MEDOOHelper
 
             // return [":maximum_prize_per_bet" => $maxPrizeAmountPerBet, ':maximum_amount_per_issue' => $maxAmtPerIssue,':maximum_win_per_issue' => $maxWinPerPersonPerIssue, ':minimum_amount_per_issue' => $minBetAmtPerIssue, ':closing_time' => $lockTimeForClsing, ':game_type_id' => $game_type_id ];
         $database = parent::openLink();
+        $swaped_game_ids = [];
         $stmt = $database->query("SELECT sort_weight FROM lottery_type WHERE lt_id=:lt_id",[':lt_id' => $lottery_type]);
         $data = $stmt->fetch(PDO::FETCH_OBJ);
         $lottery_type_sort_weight = $data->sort_weight;
         $lottery_type_sort_weight =  json_decode($lottery_type_sort_weight,true);
         $sorting_weight_flipped   = array_flip($lottery_type_sort_weight);
-        // echo "Entered here";
        
         if(empty($sorting_weight_flipped) || !in_array((int) $sortingWeight,$lottery_type_sort_weight)){
             $lottery_type_sort_weight[$game_type_id] = $sortingWeight;
@@ -155,20 +155,24 @@ class GameManageModel extends MEDOOHelper
             if(!$res){
                 return ['status' => "error", 'data' => "Duplicated Sorting Weight"];
             }
+
+            $swaped_game_ids = $res; 
         }
             
         $sorting_weight = $database->query("UPDATE lottery_type SET sort_weight = :sorting_weight  WHERE lottery_type.lt_id = :lottery_id
             ",[":sorting_weight" => json_encode($lottery_type_sort_weight), ':lottery_id' => (int) $lottery_type ]);
-        // $stmt = $database->query("UPDATE game_type SET maximum_prize_per_bet = :maximum_prize_per_bet,maximum_win_per_issue = :maximum_win_per_issue,maximum_amount_per_issue = :maximum_amount_per_issue, minimum_amount_per_issue = :minimum_amount_per_issue , closing_time =:closing_time  WHERE game_type.gt_id = :game_type_id
-        //     ",[":maximum_prize_per_bet" => (int) $maxPrizeAmountPerBet, ':maximum_amount_per_issue' => (int) $maxAmtPerIssue,':maximum_win_per_issue' => (int) $maxWinPerPersonPerIssue, ':minimum_amount_per_issue' => (int) $minBetAmtPerIssue, ':closing_time' => (int) $lockTimeForClsing, ':game_type_id' => (int) $game_type_id ]);
+
+
+        $stmt = $database->query("UPDATE game_type SET maximum_prize_per_bet = :maximum_prize_per_bet,maximum_win_per_issue = :maximum_win_per_issue,maximum_amount_per_issue = :maximum_amount_per_issue, minimum_amount_per_issue = :minimum_amount_per_issue , closing_time =:closing_time  WHERE game_type.gt_id = :game_type_id
+            ",[":maximum_prize_per_bet" => (int) $maxPrizeAmountPerBet, ':maximum_amount_per_issue' => (int) $maxAmtPerIssue,':maximum_win_per_issue' => (int) $maxWinPerPersonPerIssue, ':minimum_amount_per_issue' => (int) $minBetAmtPerIssue, ':closing_time' => (int) $lockTimeForClsing, ':game_type_id' => (int) $game_type_id ]); 
      
 
 
-        return ['status' => "success", 'data' => $stmt->rowCount()];
+        return ['status' => "success", 'data' => $stmt->rowCount(),"swapped" => $swaped_game_ids, "sorting_weight" => $sorting_weight->rowCount()];
 
     }catch(Exception $e){
 
-        return ['status' => "success", 'data' => "Internal Server Error.". $e->getMessage()];
+        return ['status' => "success", 'data' => "Internal Server Error."];
     }
 
     }
@@ -286,7 +290,7 @@ class GameManageModel extends MEDOOHelper
   
         $array[$element1] = $element1NewWeight;
         $array[$element2] = $element1OldWeight;
-        return true; // Successful swap
+        return [$element1, $element2]; // Successful swap
 
     }catch(Exception $e){
         echo $e->getMessage();
