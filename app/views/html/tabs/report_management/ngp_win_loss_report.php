@@ -284,19 +284,19 @@ li.name-items:hover {
 }
 
 .ngp-table-wrapperWl {
-        overflow: hidden;
-        /* Hide the default scrollbar */
-        white-space: nowrap;
-        max-width: 100%;
-        /* Adjust based on your needs */
-        margin-bottom: 10px;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 10px;
-        background: rgb(38, 57, 77) 0px 20px 30px -10px;
-        /* Ensure it doesn't interfere with content */
-        z-index: 10;
+    overflow: hidden;
+    /* Hide the default scrollbar */
+    white-space: nowrap;
+    max-width: 100%;
+    /* Adjust based on your needs */
+    margin-bottom: 10px;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: rgb(38, 57, 77) 0px 20px 30px -10px;
+    /* Ensure it doesn't interfere with content */
+    z-index: 10;
     }
 
 

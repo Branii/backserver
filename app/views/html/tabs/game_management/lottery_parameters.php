@@ -208,16 +208,16 @@
         <select name="order_type" id="allGameNamesLottery" class="form-control form-select  lotteryTypes " style ="width:90%;">
 
         </select>
-        <select name="order_type" class="form-control form-select  " id="allmodels"
+        <select name="order_type" class="form-control form-select" style= "margin-left:15px" id="allmodels"
         data-bs-placeholder="Select Type">
         <option value="">-<?= $translator['Game Model']; ?>-</option>
         <option value="standard"><?= $translator['Standard']; ?></option>
         <option value="twosides"><?= $translator['Two Sides']; ?></option>
-        <option value="3"> <?= $translator['Long Dragon']; ?></option>
-        <option value="4"><?= $translator['Board Games']; ?></option>
-        <option value="6"><?= $translator['Road Bet']; ?></option>
-        <option value="5"><?= $translator['Fantan']; ?></option>
-        <option value="7"><?= $translator['Many Tables']; ?></option>
+        <option value="longdragon"> <?= $translator['Long Dragon']; ?></option>
+        <option value="boardgames"><?= $translator['Board Games']; ?></option>
+        <option value="roadbet"><?= $translator['Road Bet']; ?></option>
+        <option value="fantan"><?= $translator['Fantan']; ?></option>
+        <option value="manytables"><?= $translator['Many Tables']; ?></option>
           </select>
 
         <!-- <input type="date" class="form-control queryholder startdate" id="drawfrom"/>

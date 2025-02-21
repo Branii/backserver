@@ -76,7 +76,6 @@ $(function () {
         $("#maskbanks").LoadingOverlay("hide");
         $("#bankcardContainer").html(bankcarddata(data.data));
         const totalPages = Math.ceil(data.data[0].total_records / pageLimit);
-        console.log(data);
         // // Render pagination
         renderPaginationlist(totalPages, pagebankcard, pageLimit,(newpage) => fetchbankcard(newpage));
          document.getElementById("paging_infobankcard").innerHTML = 'Page ' + pagebankcard + ' of ' + totalPages + ' pages'
@@ -237,9 +236,7 @@ $.ajax({
          $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
       },
       success: function(response){
-          console.log(response);
           response  = JSON.parse(response);
-          console.log(response);
           if(response.status === "error"){
               $("#bankcardContainer").html(`<tr class="no-resultslist"><td colspan="13">Error: ${response.data}</td></tr>`); 
               return
@@ -272,7 +269,6 @@ $.ajax({
   
 
   } catch (error) {
-    console.log(error);
     showToast("Error","Client Script exception, please contact admin", "error");
   }
 
@@ -357,7 +353,6 @@ const  fetchBankTypes = (query) =>{
   });
 
   } catch (error) {
-    console.log(error);
     showToast("Error", "Request could not be completed, please try again.","error");
 }
 

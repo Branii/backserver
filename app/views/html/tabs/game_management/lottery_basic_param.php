@@ -79,21 +79,7 @@
 
     }
 
-    .table-wrapper {
-        overflow: hidden;
-        /* Hide the default scrollbar */
-        white-space: nowrap;
-        max-width: 100%;
-        /* Adjust based on your needs */
-        margin-bottom: 10px;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 10px;
-        background: rgb(38, 57, 77) 0px 20px 30px -10px;
-        /* Ensure it doesn't interfere with content */
-        z-index: 10;
-    }
+
 
     .queryholder {
         width: 19%;
@@ -166,6 +152,29 @@
         /* Darker blue on hover */
     }
 
+    .table-wrapperbaic {
+        overflow: hidden;
+        /* Hide the default scrollbar */
+        white-space: nowrap;
+        max-width: 100%;
+        /* Adjust based on your needs */
+        margin-bottom: 10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: rgb(38, 57, 77) 0px 20px 30px -10px;
+        /* Ensure it doesn't interfere with content */
+        z-index: 10;
+    }
+
+    .sticky-headrowDraws {
+    position: relative;
+    bottom: 1px;
+    background-color: red;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+
     .left-element {
         position: relative;
         bottom: 8px;
@@ -179,16 +188,14 @@
         border: none;
     }
 
-    .tbl-header {
+    .lb-tbl-header {
         position: sticky;
         top: 0;
     }
 
-    .sticky-headerDraws {
-        position: relative;
-        bottom: 1px;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-    }
+
+
+ 
 
     .pins {
         padding: 5px;
@@ -202,6 +209,50 @@
         background: white !important;
         
 } */
+
+
+   /* Custom Scrollbar for Webkit Browsers */
+   .table-wrapperbaic::-webkit-scrollbar {
+        width: 5px;
+        /* Slimmer scrollbar width */
+        height: 5px;
+        /* Slimmer scrollbar height for horizontal scrolling */
+    }
+
+    .table-wrapperbaic::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        /* Lighter background for track */
+        border-radius: 5px;
+    }
+
+    .table-wrapperbaic::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        /* Blue color for thumb */
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .table-wrapperbaic::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+        /* Darker blue on hover */
+    }
+
+    .table-wrapperbaic {
+        overflow: hidden;
+        /* Hide the default scrollbar */
+        white-space: nowrap;
+        max-width: 100%;
+        /* Adjust based on your needs */
+        margin-bottom: 10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: rgb(38, 57, 77) 0px 20px 30px -10px;
+        /* Ensure it doesn't interfere with content */
+        z-index: 10;
+    }
+
 </style>
 
 <div id="lb-edit" class="modal fade " tabindex="-1" style="display: none;" aria-modal="true" role="dialog">
@@ -345,7 +396,7 @@
     <div class="card-body p-4">
         <div class="table-responsive mb-4 border rounded-1 table-wrapper table-wrapperbaic" id="maskkk" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
-                <thead class="text-dark fs-4 tbl-header">
+                <thead class="text-dark fs-4 lb-tbl-header">
                     <tr class="headrowDraws">
                         <!-- <th>
               <h6 class="fs-4 fw-semibold mb-0">Lottery Type</h6>
