@@ -82,14 +82,17 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function getSpecificDraws($gameId, $datefrom, $dateto, $pageNumber, $limit){
+    public function getSpecificDraws($gameId,$issue_number,$status, $start_date, $end_date, $pageNumber, $limit){
+
         $this->view('exec/game_management',[
         'page'=>$pageNumber,
         'limit'=>$limit, 
-        'flag'=> 'getSpecificDraws',
+        'flag'=> 'getDraws',
+        'status' => $status,
         'gameId'=>$gameId,
-        'datefrom'=>$datefrom,
-        'dateto'=>$dateto
+        'start_date'=>$start_date,
+        'end_date'=>$end_date,
+        'issue_number' => $issue_number
     ]);
     $this->view->render();
     }
@@ -275,10 +278,22 @@ class adminController extends Controller {
         $this->view->render();
     }
 
+    public function updateLottery($maxPrizeAmountPerBet,$maxAmtPerIssue, $maxWinPerPersonPerIssue,$minBetAmtPerIssue,$lockTimeForClsing,$sortingWeight, $lotteryType,$game_type_id)
+    {
+        $this->view('exec/lottery_basic_params', ['maxPrizeAmountPerBet' => $maxPrizeAmountPerBet,'maxAmtPerIssue' => $maxAmtPerIssue,'maxWinPerPersonPerIssue' => $maxWinPerPersonPerIssue, 'minBetAmtPerIssue' => $minBetAmtPerIssue,'lockTimeForClsing' => $lockTimeForClsing,'sortingWeight' => $sortingWeight,'lottery_type' => $lotteryType,'game_type_id' => $game_type_id,'flag' => 'updateLottery']);
+        $this->view->render();
+    }
+    public function updateLotteryStatus($game_type_id,$status)
+    {
+        $this->view('exec/lottery_basic_params', ['status' => $status,'game_type_id' => $game_type_id,'flag' => 'updateLotteryStatus']);
+        $this->view->render();
+    }
+
 
     // -- Lottery Draw Records ------------------------
     public function fetch_lottery_basic_params($lottery_id,$page)
     {
+    
         $this->view('exec/lottery_basic_params', ['lottery_id' => $lottery_id,'page' => $page,'flag' => 'fetch-lottery-basic-params']);
         $this->view->render();
     }
@@ -547,6 +562,23 @@ class adminController extends Controller {
         ]);
         $this->view->render();
     }
+
+      function updateoddstotalbets($lotterId,$gamemodel,$oddpercent,$newodds,$totalbetpercent,$newtotalbet){
+        $this->view('exec/game_management',[
+            'flag' => 'updateoddstotalbets',
+            'gameId' => $lotterId,
+            'models' =>$gamemodel,
+            'oddpercent' => $oddpercent,
+            'newodds' => $newodds, 
+            'totalbetpercent' =>$totalbetpercent,
+             'newtotalbet' => $newtotalbet,
+         
+
+        ]);
+        $this->view->render();
+    }
+
+    
 
  
 

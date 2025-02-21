@@ -641,7 +641,14 @@ return [
 'Lottery Odds' =>'Lottery Odds',
 'Total Bets' =>'Total Bets',
 'Play Method' => 'Play Method',
-'Current Total Bets' => 'Current Total Bets',
+'Standard' => 'Standard',
+'Two Sides' =>'Two Sides',
+'Long Dragon' =>'Long Dragon',
+'Board Games' =>'Board Games',
+'Road Bet' =>'Road Bet',
+'Fantan' =>'Fantan',
+'Many Tables' =>'Many Tables',
+'Total Bets Control' =>'Total Bets Control',
 
 // (Lottery Play Parameters)
 'Lottery Play Parameters' =>'Lottery Play Parameters',

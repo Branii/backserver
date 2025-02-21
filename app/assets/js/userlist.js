@@ -450,6 +450,7 @@ $(function () {
         });
     }
 
+    
     $(".playeruserlist").click(function () {
         let direction = $(this).val();
         const tableWrapper = $(".table-wrapperuserlist");
