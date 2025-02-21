@@ -980,6 +980,19 @@ const transformInput = (str) => {
 
 
 fetchLotteryBasicParams(1);
+function tableScrolluserListsquota() {
+  const tableContainerUsersquota = document.querySelector(".table-wrapperbaic");
+  const headerRowUserListsquota = document.querySelector(".headrowDraws");
 
+  tableContainerUsersquota.addEventListener("scroll", function () {
+      if (tableContainerUsersquota.scrollTop > 0) {
+          headerRowUserListsquota.classList.add("sticky-headrowDraws");
+      } else {
+          headerRowUserListsquota.classList.remove("sticky-headrowDraws");
+      }
+  });
+}
+
+tableScrolluserListsquota();
 });
 
