@@ -192,115 +192,6 @@
   border-bottom: solid 1px rgb(110,129,146,0.1);
 }
 
-/* From Uiverse.io by Subaashbala */ 
-/* The switch - the box around the slider */
-.switch {
-  font-size: 17px;
-  position: relative;
-  display: inline-block;
-  width: 5em;
-  z-index:0;
-  height: 2.25em;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #eee;
-  outline: 1px solid #f3f8fe;
-  box-shadow: 0 4px 5px #f3f8fe inset, 0 4px 5px #c8d5e6;
-  transition: 0.4s;
-  border-radius: 30px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "off";
-  font-size: 0.85em;
-  color: #d2d6d8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 2em;
-  min-width: 2em;
-  border-radius: 20px;
-  left: 0.35em;
-  bottom: 0.3em;
-  background-color: red;
-  outline: 2px solid #d2d6d8;
-  transition: 0.4s;
-}
-
-.switch input:checked + .slider:before {
-  content: "on";
-  background-color: green;
-  color: white;
-  transform: translateX(3.1em);
-}
-
-/* From Uiverse.io by satisshTechie */ 
-.PB-range-slider {
-  -webkit-appearance: none;
-  width: 50%;
-  height: 4px;
-  border-radius: 5px;
-  background: #D5DBE1;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-
-.PB-range-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background-color: #000000;
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
-}
-
-.PB-range-slider::-webkit-slider-thumb:hover {
-  box-shadow: 0px 0px 0px 8px rgba(0, 0, 0, 0.16);
-  transition: 0.3s ease-in-out;
-}
-
-.PB-range-slider::-moz-range-thumb {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background-color: #000000;
-  cursor: pointer;
-}
-
-.PB-range-slider-div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 1rem;
-  border-radius: 6px;
-  border: 1px solid #C6CACE;
-  box-shadow: 0px 1px 2px 0px #1F1E241F;
-}
-
-.PB-range-slidervalue {
-  font-weight: 600;
-}
 
 </style>
 
@@ -314,9 +205,20 @@
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-        <select name="order_type" id="allGameNamesLottery" class="form-control form-select  lotteryTypes" style ="width:90%;">
+        <select name="order_type" id="allGameNamesLottery" class="form-control form-select  lotteryTypes " style ="width:90%;">
 
         </select>
+        <select name="order_type" class="form-control form-select  " id="allmodels"
+        data-bs-placeholder="Select Type">
+        <option value="">-<?= $translator['Game Model']; ?>-</option>
+        <option value="standard"><?= $translator['Standard']; ?></option>
+        <option value="twosides"><?= $translator['Two Sides']; ?></option>
+        <option value="3"> <?= $translator['Long Dragon']; ?></option>
+        <option value="4"><?= $translator['Board Games']; ?></option>
+        <option value="6"><?= $translator['Road Bet']; ?></option>
+        <option value="5"><?= $translator['Fantan']; ?></option>
+        <option value="7"><?= $translator['Many Tables']; ?></option>
+          </select>
 
         <!-- <input type="date" class="form-control queryholder startdate" id="drawfrom"/>
 
@@ -342,7 +244,7 @@
         <button type="button" class="btn bg-white-subtle" value="right">
          ::
         </button>
-        <button type="button" class="btn bg-white-subtle  refreshdraws" value="right" aria-label="Refresh"
+        <button type="button" class="btn bg-white-subtle  refreshdrawskk" value="right" aria-label="Refresh"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
           <i class='bx bx-refresh' style="font-size:20px"></i>
         </button>
@@ -355,152 +257,49 @@
     </span>
 
   </div>
-
   <div class="card-body p-4">
-    <div class="table-responsive mb-4 border rounded-1 table-wrapper table-wrapperDraws" id="maskkk" style="height:530px;overflow-y:scroll;">
-      <div class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
-        <div class="text-dark fs-4 tbl-header">
-        
-        <div class="surface">
-          <div class="mock-browser">
-            <div class="chrome-tabs" id="tabheadParams"  style="--tab-content-margin: 9px;">
-              <div class="chrome-tabs-content ten" style="position:relative;z-index:9999">
-       
-              </div>
-              <div class="chrome-tabs-bottom-bar"></div>
-              <!-- Styles to prevent flash after JS initialization -->
-            </div>
-            <!-- <div class="chrome-tabs-optional-shadow-below-bottom-bar"></div> -->
-          </div>
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperlistlinks" id="maskrfeferal" style="height:530px;overflow-y:scroll;">
+            <table class="table text-nowrap mb-0 align-middle table-bordered">
+                <thead class="text-dark fs-4 tbl-headerlinks">
+                    <tr class="headrowlinks">
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Play Group']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Games']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Odds']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets Control']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets']; ?></h6>
+                        </th>
+                       
+                        
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="game_name_container">
+
+                    <tr class="no-resultslist">
+                        <td colspan="9">
+                            <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
         </div>
-        </div> 
-        <div id="dataContainerDraws" class="tbl-content">
-
-          <div class="no-results chrome__tabb">
-              <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
-          </div>
-
-          <div class="chrome__tabb standard_content"> 
-            <table class="table table-bordered"> 
-               <tr>
-                 <th><?= $translator['Game Type']; ?></th>
-                 <th><?= $translator['Play Group']; ?></th>
-                 <th><?= $translator['Lottery Games']; ?></th>
-                 <th><?= $translator['Lottery Odds']; ?></th>
-                 <th><?= $translator['Play Method']; ?></th>
-                 <th><?= $translator['Play Method']; ?></th>
-                 <th><?= $translator['Total Bets']; ?></th>
-                 <th><?= $translator['Current Total Bets']; ?></th>
-               </tr>
-               <tbody class="game_name_container">
-
-               </tbody>
-            </table>
-          </div>
-          <div class="chrome__tabb twoside_content">
-          <table class="table table-bordered"> 
-               <tr>
-                 <th>Game Play Group</th>
-                 <th>Play Group</th>
-                 <th>Lottery Games</th>
-                 <th>Lottery Odds</th>
-                 <th>Play Method</th>
-                 <th>Total Bets</th>
-               </tr>
-               <tbody class="twosides_container">
-
-               </tbody>
-            </table>
-          </div>
-          <div class="chrome__tabb longdragon_content"> 
-          <table class="table table-bordered"> 
-               <tr>
-                 <th>Game Play Group</th>
-                 <th>Play Group</th>
-                 <th>Lottery Games</th>
-                 <th>Lottery Odds</th>
-                 <th>Play Method</th>
-                 <th>Total Bets</th>
-               </tr>
-               <tbody class="longdragon_container">
-
-               </tbody>
-            </table>
-          </div>
-          <div class="chrome__tabb boardgame_content"> 
-          <table class="table table-bordered"> 
-               <tr>
-                 <th>Game Play Group</th>
-                 <th>Play Group</th>
-                 <th>Lottery Games</th>
-                 <th>Lottery Odds</th>
-                 <th>Play Method</th>
-                 <th>Total Bets</th>
-               </tr>
-               <tbody class="boardgames_container">
-
-               </tbody>
-            </table>
-          </div>
-          <div class="chrome__tabb roadbet_content"> 
-          <table class="table table-bordered"> 
-               <tr>
-                 <th>Game Play Group</th>
-                 <th>Play Group</th>
-                 <th>Lottery Games</th>
-                 <th>Lottery Odds</th>
-                 <th>Play Method</th>
-                 <th>Total Bets</th>
-               </tr>
-               <tbody class="roadbet_container">
-
-               </tbody>
-            </table>
-          </div>
-          <div class="chrome__tabb fantan_content">
-          <table class="table table-bordered"> 
-               <tr>
-                 <th>Game Play Group</th>
-                 <th>Play Group</th>
-                 <th>Lottery Games</th>
-                 <th>Lottery Odds</th>
-                 <th>Play Method</th>
-                 <th>Total Bets</th>
-               </tr>
-               <tbody class="fantan_container">
-
-               </tbody>
-            </table>
-          </div>
-          <!-- <div class="chrome__tabb manytable_content"> 
-          <table class="table"> 
-               <tr>
-                 <th>Game Play Group</th>
-                 <th>Play Group</th>
-                 <th>Lottery Games</th>
-                 <th>Lottery Odds</th>
-                 <th>Play Method</th>
-                 <th>Total Bets</th>
-               </tr>
-               <tbody class="standard_container">
-
-               </tbody>
-            </table>
-          </div> -->
-
-        </div>
-      </div>
     </div>
-
-
-
-
-
-    </div>
-
-
-  </div>
-  
+<!--   
   <div class="px-4 py-3 border-top pager">
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
@@ -530,9 +329,9 @@
 
     <span class="top-right-btn"  aria-label="Page navigation example">
     <select class="left-element form-control numrows" style="font-size:12px">
-            <!-- <option value="5" class="fromnumrows">5</option>
+            <option value="5" class="fromnumrows">5</option>
             <option value="10">10</option>
-            <option value="20">20</option> -->
+            <option value="20">20</option>
             <option value="50">50</option>
             <option value="100">100</option>
             <option value="200">200</option>
@@ -541,7 +340,7 @@
       <span id="paginationDraws" class="right-element"> </span>
     </span>
 
-  </div>
+  </div> -->
 
 </div>
 

@@ -1,523 +1,325 @@
 $(function () {
-  var el = document.querySelector("#tabheadParams");
-  var chromeTabsParams = new ChromeTabs();
-  chromeTabsParams.init(el);
+  // var el = document.querySelector("#tabheadParams");
+  // var chromeTabsParams = new ChromeTabs();
+  // chromeTabsParams.init(el);
 
-  TabArray = [];
-  TabMap = new Map();
-  let contentEl;
-  el.addEventListener("activeTabChange", ({ detail }) =>
-    onTabChanged(detail.tabEl)
-  );
-  el.addEventListener("tabAdd", ({ detail }) => setcurr(detail.tabEl));
-  el.addEventListener("tabRemove", ({ detail }) => closeTab(detail.tabEl));
+  // TabArray = [];
+  // TabMap = new Map();
+  // let contentEl;
+  // el.addEventListener("activeTabChange", ({ detail }) => onTabChanged(detail.tabEl));
+  // el.addEventListener("tabAdd", ({ detail }) => setcurr(detail.tabEl));
+  // el.addEventListener("tabRemove", ({ detail }) => closeTab(detail.tabEl));
 
   function showToast(title, message, type) {
-    $.toast({
-      position: "bottom-right",
-      title: title,
-      message: message,
-      type: type,
-      duration: 3000, // auto-dismiss after 3s
-    });
+      $.toast({
+          position: "bottom-right",
+          title: title,
+          message: message,
+          type: type,
+          duration: 3000, // auto-dismiss after 3s
+      });
   }
 
-  const lotteryParamTable = (data) => { 
-    let html = "";
-    data.forEach((item) => {
-    
-      html += `
-                    <tr class="trow">
-                        <td>${item.gameplay_name}</td>
-                        <td>${item.group_type}</td>
-                        <td>${item.name}</td>
-                        <td><input type='text' class='form-control oddsone' value='${item.modified_odds}'/>
-                        <input type="range" class="rangeSliderone" min="0" max="100" value="100">
-                          <span class="rangeValue">100%</span>
-                        </td>
-                        <td> <label class="switch gameplaybtn"><input type="checkbox" value ="${item.state}" style="z-index:999"/> <span class="slider"></span></label></td>
-                     
-                         <td>
-                          <input type="text" hidden data='${item.modified_totalbet}' value='${item.modified_totalbet}' min="0" max="10000" step="0.1" class="odds-input" id="oddsInput" />
-                      
-                            <br>
-                          <!-- Range Slider -->
-                          <input type="range" value="10" min="0" max="10" step="1" class="odds-slider" id="oddsSlider" />
-                            <span class="percentDisplay">100%</span> 
-                         </td>
-                          
-                         <td>${item.modified_totalbet}</td>
-                    
-                          <td><input type='text' class='form-control finalval' value='${item.modified_totalbet}' disabled></td>
-                    </tr>
-                `;
-    });
-    return html;
+  const lotteryParamTable = (data) => {
+
+      let html = "";
+      data.forEach((item) => {
+
+          html += `
+          <tr class="trow">
+              <td>${item.gameplay_name}</td>
+              <td>${item.group_type}</td>
+              <td>${item.name}</td>
+
+             
+                <td>
+                <input type="text" class="form-control oddsone" value="${item.modified_odds}" data-original="${item.modified_odds}" readonly>
+                <input type="range" class="rangeSliderone" min="0" max="100" value="100">
+                <span class="rangeValue">100%</span>
+                </td>
+                <td>
+                <input type="text" class="form-control oddsoness" value="${item.modified_totalbet}" data-original="${item.modified_totalbet}" readonly>
+                <input type="range" class="rangeSlideroness" min="0" max="100" value="100">
+                <span id="rangeValues">100%</span>
+                </td>
+                <td>
+                <input type="checkbox" class="resetCheckbox"> Reset to Original Value
+                </td>
+               
+      
+                  <td> <button type="button" class="btn btn-light updatethis saveBtn" value ='${item.gn_id}' datas= '${item.model}' >Save</button></td>
+          </tr>
+      `;
+      });
+      return html;
   };
 
-  const renderLotteryParams = (data, container) => {
-    var html = lotteryParamTable(data);
-    $("." + container + '_container').html(html);
+  const renderLotteryParams = (data) => {
+      var html = lotteryParamTable(data);
+      $('#game_name_container').html(html);
+      $(document).trigger("dataLoaded");
+   
   };
-
-  let currentPage = 1;
-  let pageLimit = 50;
-  let sibling = "";
 
   async function getAllGamesLottery() {
-    try {
-      const response = await fetch(`../admin/getAllGamesLottery`);
-      const data = await response.json();
-      // console.log(data);
-      let html = "";
-      html += `<option>Select Game</option>`;
-      data.forEach((item) => {
-        html += `<option value='${item.lt_id}'>${item.name}</option>`;
-      });
-      $(".lotteryTypes").html(html);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+      try {
+          const response = await fetch(`../admin/getAllGamesLottery`);
+          const data = await response.json();
+         //  console.log(data);
+          let html = "";
+          html += `<option>Select Game</option>`;
+          data.forEach((item) => {
+              html += `<option value='${item.lt_id}'>${item.name}</option>`;
+          });
+          $(".lotteryTypes").html(html);
+      } catch (error) {
+          console.error("Error fetching data:", error);
+      }
   }
   getAllGamesLottery();
 
-
-
   function setcurr(elem) {
-    let contentEl = $(elem).find(".chrome-tab-holder").text().trim();
-    TabMap.set(contentEl, elem);
+      let contentEl = $(elem).find(".chrome-tab-holder").text().trim();
+      TabMap.set(contentEl, elem);
   }
 
   function addTabStyle(contentEl, elem) {
-    TabMap.set(contentEl, elem);
-    $(".chrome-tab-drag-handle").removeClass("chromclass");
-    $(elem).find(".chrome-tab-drag-handle").addClass("chromclass");
+      TabMap.set(contentEl, elem);
+      $(".chrome-tab-drag-handle").removeClass("chromclass");
+      $(elem).find(".chrome-tab-drag-handle").addClass("chromclass");
   }
 
   function onTabChanged(elem) {
-    let tabContent = $(elem).find(".chrome-tab-holder").text().trim();
-    $(".chrome-tab-drag-handle").removeClass("chromclass");
-    $(elem).find(".chrome-tab-drag-handle").addClass("chromclass");
-    $(".chrome__tabb").hide();
-    $("." + tabContent).show();
-    applyCustomScrollbarsToTabs();
+      let tabContent = $(elem).find(".chrome-tab-holder").text().trim();
+      $(".chrome-tab-drag-handle").removeClass("chromclass");
+      $(elem).find(".chrome-tab-drag-handle").addClass("chromclass");
+      $(".chrome__tabb").hide();
+      $("." + tabContent).show();
+      applyCustomScrollbarsToTabs();
   }
 
-  async function getLotteryGames(lotterId,tables){
-    try {
-      const response = await fetch(`../admin/getLotteryGames/${lotterId}/${tables}`);
-      const data = await response.json();
-      // //
-      // console.log(response);
-      // return
-      Object.entries(data).forEach(([key, value]) => {
-       // console.log(`${key}: ${value}`);
-        renderLotteryParams(value, key)
-      });
-
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+  async function getLotteryGames(lotterId, models) {
+      try {
+          const response = await fetch(`../admin/getLotteryGames/${lotterId}/${models}`);
+          const data = await response.json();
+          // //
+        //  console.log(response);
+          renderLotteryParams(data.bonus);
+          // return
+          //Object.entries(data).forEach(([key, value]) => {
+           //    console.log(`${key}: ${value}`);
+             // renderLotteryParams(data);
+       //   });
+      } catch (error) {
+          console.error("Error fetching data:", error);
+      }
   }
 
   $(document).on("click", ".executegetparams", function () {
-    let lotteryId = $("#allGameNamesLottery").val();
+      let lotteryId = $("#allGameNamesLottery").val();
+      let models = $("#allmodels").val();
 
-    const gameModelMap = {
-      1: {
-        title: "5D",
-        content: [
-          "standard_content",
-          "twoside_content",
-          "longdragon_content",
-          "boardgame_content",
-          "roadbet_content",
-          "fantan_content",
-          "manytable_content"
-        ],
-        tabs: [
-          "Standard",
-          "Two Side",
-          "Long Dragon",
-          "Board Games",
-          "Road Bet",
-          "Fantan",
-          "Many Tables"
-        ],
-        tables: [
-          "game_name",
-          "twosides",
-          "longdragon",
-          "boardgames",
-          "roadbet",
-          "fantan"
-        ]
-      },
-      2: {
-        title: "5D",
-        content: [
-          "standard_content",
-          "twoside_content",
-          "longdragon_content",
-          "boardgame_content",
-          "roadbet_content",
-          "fantan_content",
-          "manytable_content"
-        ],
-        tabs: [
-          "Standard",
-          "Two Side",
-          "Long Dragon",
-          "Board Games",
-          "Road Bet",
-          "Fantan",
-          "Many Tables"
-        ],
-        tables: [
-          "game_name",
-          "twosides",
-          "longdragon",
-          "boardgames",
-          "roadbet",
-          "fantan"
-        ]
-      },
-      3: {
-        title: "5D",
-        content: [
-          "standard_content",
-          "twoside_content",
-          "longdragon_content",
-          "boardgame_content",
-          "roadbet_content",
-          "fantan_content",
-          "manytable_content"
-        ],
-        tabs: [
-          "Standard",
-          "Two Side",
-          "Long Dragon",
-          "Board Games",
-          "Road Bet",
-          "Fantan",
-          "Many Tables"
-        ],
-        tables: [
-          "game_name",
-          "twosides",
-          "longdragon",
-          "boardgames",
-          "roadbet",
-          "fantan"
-        ]
-      },
-      5: {
-        title: "5D",
-        content: [
-          "standard_content",
-          "twoside_content",
-          "longdragon_content",
-          "boardgame_content",
-          "roadbet_content",
-          "fantan_content",
-          "manytable_content"
-        ],
-        tabs: [
-          "Standard",
-          "Two Side",
-          "Long Dragon",
-          "Board Games",
-          "Road Bet",
-          "Fantan",
-          "Many Tables"
-        ],
-        tables: [
-          "game_name",
-          "twosides",
-          "longdragon",
-          "boardgames",
-          "roadbet",
-          "fantan"
-        ]
-      },
-      6: {
-        title: "5D",
-        content: [
-          "standard_content",
-          "twoside_content",
-          "longdragon_content",
-          "boardgame_content",
-          "roadbet_content",
-          "fantan_content",
-          "manytable_content"
-        ],
-        tabs: [
-          "Standard",
-          "Two Side",
-          "Long Dragon",
-          "Board Games",
-          "Road Bet",
-          "Fantan",
-          "Many Tables"
-        ],
-        tables: [
-          "game_name",
-          "twosides",
-          "longdragon",
-          "boardgames",
-          "roadbet",
-          "fantan"
-        ]
-      },
-      8: {
-        title: "5D",
-        content: [
-          "standard_content",
-          "twoside_content",
-          "longdragon_content",
-          "boardgame_content",
-          "roadbet_content",
-          "fantan_content",
-          "manytable_content"
-        ],
-        tabs: [
-          "Standard",
-          "Two Side",
-          "Long Dragon",
-          "Board Games",
-          "Road Bet",
-          "Fantan",
-          "Many Tables"
-        ],
-        tables: [
-          "game_name",
-          "twosides",
-          "longdragon",
-          "boardgames",
-          "roadbet",
-          "fantan"
-        ]
-      },
-      10: {
-        title: "5D",
-        content: [
-          "standard_content",
-          "twoside_content",
-          "longdragon_content",
-          "boardgame_content",
-          "roadbet_content",
-          "fantan_content",
-          "manytable_content"
-        ],
-        tabs: [
-          "Standard",
-          "Two Side",
-          "Long Dragon",
-          "Board Games",
-          "Road Bet",
-          "Fantan",
-          "Many Tables"
-        ],
-        tables: [
-          "game_name",
-          "twosides",
-          "longdragon",
-          "boardgames",
-          "roadbet",
-          "fantan"
-        ]
-      }
-    };
-    const gameTables = gameModelMap[lotteryId]['tables']
-    const jsonString = JSON.stringify(gameTables);
-    getLotteryGames(lotteryId,JSON.stringify(gameTables))
-    $(".chrome__tabb").hide();
-    //console.log(chromeTabsParams);
-
-    //console.log(chromeTabsParams);
-
-    //   chromeTabsParams.addTab({
-    //     title: "tabName",
-    //     favicon: false,
-    //     //content: tabContent,
-    //  });
-
-    //console.log("object");
-    // TabMap.clear()
-    // TabMap.forEach((elem) =>{
-    //   chromeTabsParams.removeTab()
-    // })
-
-
-
-    $(".ten").children().remove();
-    TabMap.clear()
-    gameModelMap[lotteryId]["tabs"].forEach((tabName, index) => {
-      chromeTabsParams.addTab({
-        title: `${tabName}`, // Using the index in the title
-        favicon: false,
-        content: gameModelMap[lotteryId]["content"][index], // Adding the index to make the content unique
-      });
-    });
-
-    // //console.log(TabMap);
-    chromeTabsParams.setCurrentTab(TabMap.get("standard_content"));
-    $(".standard_content").show();
-
-    //console.log(TabMap)
-   
-    //console.log(gameModelMap[lotterId]['tabs']);
+      getLotteryGames(lotteryId,models);
+ 
   });
-
-
-
-
 
   //max slide
+  $(document).ready(function() {
+    // Update first slider values per row
+  //   $(document).on("input", ".rangeSliderone", function() {
+  //     let row = $(this).closest("tr");
+  //     let percentage = $(this).val();
+  //     row.find(".rangeValue").text(percentage + "%");
 
+  //     let originalValues = JSON.parse(row.find(".oddsone").attr("data-original-values"));
+  //     let updatedValues = originalValues.map(value => Math.round((value * percentage) / 100));
 
-  $(document).on('input','.odds-input', function() {
-    let inputValue = parseFloat($(this).val());
-    let maxValueDefault = $(this).closest("tr").find(".odds-input").attr('data')
-    if (inputValue > maxValueDefault) {
-    $(this).val(maxValueDefault);  // Set the input value to maxValue if exceeded
-       }
-    // Update the slider position based on the input value
-    let percentage = (inputValue / maxValue) * 100;
-    let sliderValue = (percentage / 100) * 10; // Map percentage to slider range (0 to 10)
-    $('.odds-slider').val(sliderValue);
-  });
-
-  // When the slider changes, update the input field
-  $(document).on('input','.odds-slider', function() {
-    let sliderValue = parseFloat($(this).val());
-    let maxValueDefault = $(this).closest("tr").find(".odds-input").attr('data')
-    let maxValue = 0
-    maxValue = maxValueDefault
-
-    let percentage = (sliderValue / 10) * 100; // Map slider value to percentage
-    let inputValue = (percentage / 100) * maxValue; // Calculate the value based on the max value
-   
-    $(this).closest("tr").find(".odds-input").val(inputValue)
-    $(this).closest("tr").find(".finalval").val(inputValue)
-    $(this).closest("tr").find('.percentDisplay').text(`${Math.round(percentage)}%`);
-    $(this).closest("tr").find('.computedValue').text(`Computed Value: ${Math.round(inputValue)}`);
-    // console.log(maxValueDefault)
-    
-  });
-
-
-  // let oddsElement;
-  // let rangeValue;
-  // let originalValues;
-  
-  // $(document).on('input', '.rangeSliderone', function() {
-  //     // Find the closest row and the necessary elements
-  //     oddsElement = $(this).closest("tr").find(".oddsone");
-  //     rangeValue = $(this).closest("tr").find(".rangeValue");
-      
-  //     // Get the original values when the input is triggered
-  //     originalValues = getOriginalValues(oddsElement);
-  
-  //     // Update the values
-  //     updateValues($(this)); // Pass the slider element to the function
+  //     row.find(".oddsone").val(`[${updatedValues.join(", ")}]`);
   // });
-  
-  // // Safely parse the values
-  // function getOriginalValues(oddsElement) {
-  //     try {
-  //         // Parse the value as JSON
-  //         let values = JSON.parse(oddsElement.val());
-  //         // Ensure it's an array of numbers
-  //         if (Array.isArray(values) && values.every(num => !isNaN(num))) {
-  //             return values;
-  //         } else {
-  //             console.error("Invalid value format");
-  //             return [];
-  //         }
-  //     } catch (e) {
-  //         console.error("Failed to parse value:", e);
-  //         return [];
-  //     }
-  // }
-  
-  // // Function to update values based on the percentage
-  // function updateValues(slider) {
-  //     const percentage = slider.val();
-  //     rangeValue.text(percentage + "%");  // Update the range value display
-  
-  //     if (originalValues.length > 0) {
-  //         let scaledValues;
-  //         if (percentage === "0") {
-  //             // If the percentage is 0, set to original values or set a fallback
-  //             scaledValues = originalValues; // Use original values for 0% (or you could set to something else)
-  //         } else {
-  //             // Scale each individual value in the array
-  //             scaledValues = originalValues.map(value => (value * percentage / 100).toFixed(0));
-  //         }
-  //         oddsElement.val(`[${scaledValues.join(", ")}]`);
-  //         console.log(`[${scaledValues.join(", ")}]`)
-  //     } else {
-  //         oddsElement.val('[]');
-  //     }
-  // }
-  
- let oddsElement;
-let rangeValue;
-let originalValues;
 
-$(document).on('input', '.rangeSliderone', function() {
-    // Find the closest row and the necessary elements
-    oddsElement = $(this).closest("tr").find(".oddsone");
-    rangeValue = $(this).closest("tr").find(".rangeValue");
+  //   // Update second slider value per row
+  //   $(document).on("input", ".rangeSlideroness", function() {
+  //     let row = $(this).closest("tr");
+  //     let percentage = $(this).val();
+  //     row.find(".rangeValues").text(percentage + "%");
 
-    // Get the original values when the input is triggered
-    originalValues = getOriginalValues(oddsElement);
+  //     // Convert to number before performing calculations
+  //     let originalValue = Number(row.find(".oddsoness").attr("data-original-value"));
+  //     let updatedValue = Math.round((originalValue * percentage) / 100);
 
-    // Update the values based on the slider percentage
-    updateValues($(this)); // Pass the slider element to the function
+  //     row.find(".oddsoness").val(updatedValue);
+  // });
+
+//   $(document).on("input", ".rangeSliderone, .rangeSlideroness", function () {
+//     let row = $(this).closest("tr"); // Get the closest table row
+//     let percentageOne = row.find(".rangeSliderone").val(); // First slider value
+//     let percentageTwo = row.find(".rangeSlideroness").val(); // Second slider value
+
+//     let originalValuesOne = JSON.parse(row.find(".oddsone").attr("data-original")); // Get original array values
+//     let originalValueTwo = parseFloat(row.find(".oddsoness").attr("data-original")); // Get original value
+
+//     let scaledValuesOne, scaledValueTwo;
+
+//     // Check if first slider is at 100%, reset to original values
+//     if (percentageOne === "100") {
+//         scaledValuesOne = [...originalValuesOne];
+//     } else {
+//         scaledValuesOne = originalValuesOne.map(value => Math.round((value * percentageOne) / 100));
+//     }
+    
+//     row.find(".oddsone").val(JSON.stringify(scaledValuesOne)); // Update input
+//     row.find(".rangeValue").text(percentageOne + "%");
+
+//     // Check if second slider is at 100%, reset to original value
+//     if (percentageTwo === "100") {
+//         scaledValueTwo = originalValueTwo;
+//     } else {
+//         scaledValueTwo = Math.round((originalValueTwo * percentageTwo) / 100);
+//     }
+    
+//     row.find(".oddsoness").val(scaledValueTwo); // Update input
+//     row.find("#rangeValues").text(percentageTwo + "%");
+
+//     // Store updated values
+//     row.attr("data-updated-percentage-one", percentageOne);
+//     row.attr("data-updated-percentage-two", percentageTwo);
+//     row.attr("data-updated-values-one", JSON.stringify(scaledValuesOne));
+//     row.attr("data-updated-value-two", scaledValueTwo);
+// });
+
+$(document).on("input", ".rangeSliderone, .rangeSlideroness", function () {
+  let row = $(this).closest("tr"); // Get the closest table row
+  let percentageOne = parseFloat(row.find(".rangeSliderone").val()); // First slider value
+  let percentageTwo = parseFloat(row.find(".rangeSlideroness").val()); // Second slider value
+
+  let originalValuesOne = JSON.parse(row.find(".oddsone").attr("data-original")); // Get original array values
+  let originalValueTwo = parseFloat(row.find(".oddsoness").attr("data-original")); // Get original value
+
+  let scaledValuesOne, scaledValueTwo;
+
+  // If first slider is at 100%, reset to original values; otherwise, scale
+  scaledValuesOne = (percentageOne === 100) 
+      ? [...originalValuesOne] 
+      : originalValuesOne.map(value => Math.round((value * percentageOne) / 100));
+
+  row.find(".oddsone").val(JSON.stringify(scaledValuesOne)); // Update input field
+  row.find(".rangeValue").text(percentageOne + "%");
+
+  // If second slider is at 100%, reset to original value; otherwise, scale
+  scaledValueTwo = (percentageTwo === 100) 
+      ? originalValueTwo 
+      : Math.round((originalValueTwo * percentageTwo) / 100);
+
+  row.find(".oddsoness").val(scaledValueTwo); // Update input field
+  row.find(".rangeValues").text(percentageTwo + "%");
+
+  // Store updated values for reference
+  row.attr({
+      "data-updated-percentage-one": percentageOne,
+      "data-updated-percentage-two": percentageTwo,
+      "data-updated-values-one": JSON.stringify(scaledValuesOne),
+      "data-updated-value-two": scaledValueTwo
+  });
 });
 
-// Safely parse the values from .oddsone input
-function getOriginalValues(oddsElement) {
-    try {
-        // Parse the value as JSON
-        let values = JSON.parse(oddsElement.val());
-        // Ensure it's an array of numbers
-        if (Array.isArray(values) && values.every(num => !isNaN(num))) {
-            return values;
-        } else {
-            console.error("Invalid value format");
-            return [];
+
+    // Reset checkbox functionality
+    $(document).on("change", ".resetCheckbox", function() {
+        let row = $(this).closest("tr");
+        let isChecked = $(this).is(":checked");
+
+        row.find(".rangeSlideroness").prop("disabled", !isChecked);
+
+        if (!isChecked) {
+            row.find(".rangeSlideroness").val(100);
+            row.find(".rangeValues").text("100%");
+            row.find(".oddsoness").val(row.find(".oddsoness").attr("data-original-value") || row.find(".oddsoness").val());
         }
-    } catch (e) {
-        console.error("Failed to parse value:", e);
-        return [];
-    }
+    });
+
+    // Save button functionality
+    $(document).on("click", ".saveBtn", function () {
+      let row = $(this).closest("tr");
+  
+      let percentageOne = row.attr("data-updated-percentage-one") || "100";
+      let percentageTwo = row.attr("data-updated-percentage-two") || "100";
+  
+      let scaledValuesOne = JSON.parse(row.attr("data-updated-values-one") || row.find(".oddsone").attr("data-original"));
+      let scaledValueTwo = parseFloat(row.attr("data-updated-value-two") || row.find(".oddsoness").attr("data-original"));
+  
+      let gametypeId = $(this).val();
+      let gamemodel = $(this).attr("datas");
+  
+      console.log("Saving:", { percentageOne, scaledValuesOne, percentageTwo, scaledValueTwo, gametypeId, gamemodel });
+  
+      updateoddstotalbets(gametypeId, gamemodel, percentageOne, scaledValuesOne, percentageTwo, scaledValueTwo);
+  });
+
+});
+
+  
+async function updateoddstotalbets(gametypeId, gamemodel, percentageOne, scaledValuesOne, percentageTwo, scaledValueTwo) {
+  try {
+      const response = await fetch(`../admin/updateoddstotalbets/${gametypeId}/${gamemodel}/${percentageOne}/${JSON.stringify(scaledValuesOne)}/${percentageTwo}/${scaledValueTwo}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+          console.log("Update successful!", data.updatedData);
+
+          let row = $(`tr`).find(`[value='${gametypeId}']`).closest("tr");
+          let updatedData = data.updatedData; // Assuming this is the returned data
+
+          row.find(".oddsone").val(updatedData.modified_odds);
+          row.find(".oddsoness").val(updatedData.modified_totalbet);
+          row.find(".rangeSliderone").val(updatedData.oddspercentage);
+          row.find(".rangeSlideroness").val(updatedData.totalbetpercentage);
+          row.find(".rangeValue").text(updatedData.oddspercentage + "%");
+          row.find(".rangeValues").text(updatedData.totalbetpercentage + "%");
+      } else {
+          console.warn("Update failed:", data.message);
+      }
+  } catch (error) {
+      console.error("Error updating values:", error);
+  }
 }
 
-// Function to update values based on the slider percentage
-function updateValues(slider) {
-    const percentage = slider.val();
-    rangeValue.text(percentage + "%");  // Update the range value display
+//   function fetchValues() {
+//     $.ajax({
+//         url: "../admin/getLotteryGames/${lotterId}/${models}",
+//         method: "GET",
+//         success: function (response) {
+//             let data = JSON.parse(response);
 
-    if (originalValues.length > 0) {
-        let scaledValues;
+//             $("tr").each(function () {
+//                 let row = $(this);
+//                 let gametypeId = row.find(".saveBtn").val();
 
-        // If the slider is at 0%, reset the values to the original ones
-        if (percentage === "0") {
-            scaledValues = originalValues;  // Set to original values when slider is at 0%
-        } else {
-            // Scale each individual value in the array based on the percentage
-            scaledValues = originalValues.map(value => (value * percentage / 100).toFixed(0));
-        }
+//                 let rowData = data.find(item => item.gametypeId == gametypeId);
+//                 if (!rowData) return;
 
-        // Update the .oddsone input field with the scaled values
-        oddsElement.val(`[${scaledValues.join(", ")}]`);
-    } else {
-        oddsElement.val('[]');
-    }
-}
+//                 // Set fetched values
+//                 row.find(".oddsone").val(rowData.scaledValuesOne);
+//                 row.find(".oddsoness").val(rowData.scaledValueTwo);
+
+//                 // Set sliders to their correct percentage
+//                 row.find(".rangeSliderone").val(rowData.percentageOne);
+//                 row.find(".rangeSlideroness").val(rowData.percentageTwo);
+
+//                 // Update displayed percentage text
+//                 row.find(".rangeValue").text(rowData.percentageOne + "%");
+//                 row.find(".rangeValues").text(rowData.percentageTwo + "%");
+//             });
+//         }
+//     });
+// }
 
 
 });

@@ -548,6 +548,23 @@ class adminController extends Controller {
         $this->view->render();
     }
 
+      function updateoddstotalbets($lotterId,$gamemodel,$oddpercent,$newodds,$totalbetpercent,$newtotalbet){
+        $this->view('exec/game_management',[
+            'flag' => 'updateoddstotalbets',
+            'gameId' => $lotterId,
+            'models' =>$gamemodel,
+            'oddpercent' => $oddpercent,
+            'newodds' => $newodds, 
+            'totalbetpercent' =>$totalbetpercent,
+             'newtotalbet' => $newtotalbet,
+         
+
+        ]);
+        $this->view->render();
+    }
+
+    
+
  
 
     //languages

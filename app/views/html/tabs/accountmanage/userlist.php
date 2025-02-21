@@ -936,7 +936,7 @@ section#tooltipp p {
 
                     <div class="d-md-flex align-items-center">
                         <div class="form-check">
-                            <label class="form-check-label" for="sf2">Verify before submit</label>
+                            <!-- <label class="form-check-label" for="sf2">Verify before submit</label> -->
                         </div>
                         <div class="mt-3 mt-md-0 ms-auto">
                             <button type="button" class="btn hstack gap-6 updatequotabtn"

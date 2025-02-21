@@ -304,83 +304,97 @@ $(document).ready(function() {
     });
 });
 </script> -->
-<table>
-  <thead>
-    <tr>
-      <th>Odds</th>
-      <th>Slider</th>
-      <th>Percentage</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <input type='text' class='form-control oddsone' value='[11, 20, 30]' readonly>
-      </td>
-      <td>
-        <input type="range" class="rangeSlider" value="100" min="0" max="100" step="1">
-      </td>
-      <td>
-        <span class="rangeValue">100%</span>
-      </td>
-    </tr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switch Controlled Percentage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .table { width: 60%; margin: 20px auto; text-align: center; }
+        .form-check-input { width: 50px; margin-left: 10px; }
+    </style>
+</head>
+<body>
 
+<table class="table table-bordered">
     <tr>
-      <td>
-        <input type='text' class='form-control oddsone' value='[15, 25, 35]' readonly>
-      </td>
-      <td>
-        <input type="range" class="rangeSlider" value="100" min="0" max="100" step="1">
-      </td>
-      <td>
-        <span class="rangeValue">100%</span>
-      </td>
+        <th>Toggle</th>
+        <th>Percentage</th>
+        <th>Value</th>
     </tr>
-
-    <!-- Add more rows as needed -->
-  </tbody>
+    <tr>
+    <td>
+                  <div class="form-check form-switch mb-0">
+                  <input class="form-check-input toggle-switch" style="width:40px;margin:auto"type="checkbox" role="switch" checked
+                  >
+                  </div>
+                </td>
+            
+                <td>
+                <input type="text" class="form-control finalval" value='10000' data-original-value="10000" disabled/>
+                <input type="range" value="100" min="0" max="100" step="1" class="odds-slider" id="oddsSlider" data-id="1"/>
+                  <span class="percentDisplay" style="margin-left:10px">100%</span> 
+                </td>
+    </tr>
 </table>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function() {
-    // Initialize for each rangeSlider
-    $(".rangeSlider").each(function() {
-      const rangeSlider = $(this);
-      const oddsElement = rangeSlider.closest("tr").find(".oddsone");
-      const rangeValue = rangeSlider.closest("tr").find(".rangeValue");
-      let originalValues = [];
+$(document).ready(function () {
+  $('.finalval').each(function () {
+      let row = $(this).closest('tr');
+      let rowIndex = row.index();
+      let savedState = JSON.parse(localStorage.getItem(`row-${rowIndex}`));
 
-      // Safely parse the values
-      try {
-        originalValues = JSON.parse(oddsElement.val());
-        if (!Array.isArray(originalValues) || originalValues.some(num => isNaN(num))) {
-          throw new Error("Invalid value format");
-        }
-      } catch (e) {
-        console.error("Failed to parse value:", e);
-        return;
+      if (savedState) {
+          row.find('.toggle-switch').prop('checked', savedState.switchState);
+          row.find('.odds-slider').val(savedState.switchState ? savedState.percentage : 100); // Reset to 100% if switch is off
+          row.find('.percentDisplay').text(`${savedState.switchState ? savedState.percentage : 100}%`);
+          row.find('.finalval').val(savedState.finalValue);
+
+          // Disable slider if switch was OFF
+          row.find('.odds-slider').prop('disabled', !savedState.switchState);
+      } else {
+          // Store original value in data attribute only when no saved state exists
+          $(this).attr('data-original-value', $(this).val());
       }
-
-      // Function to update values based on the percentage
-      function updateValues() {
-        const percentage = rangeSlider.val();
-        rangeValue.text(percentage + "%");
-
-        if (originalValues.length > 0) {
-          // Scale each individual value in the array
-          const scaledValues = originalValues.map(value => (value * percentage / 100));
-          oddsElement.val(`[${scaledValues.join(", ")}]`);
-        } else {
-          oddsElement.val('[]');
-        }
-      }
-
-      // Bind the input event to update values on slider change
-      rangeSlider.on("input", updateValues);
-
-      // Initial load
-      updateValues();
-    });
   });
+});
+
+$(document).on('input change', '.odds-slider, .toggle-switch', function () {
+  let row = $(this).closest('tr');
+  let rowIndex = row.index();
+  let maxValue = parseFloat(row.find('.finalval').attr('data-original-value')) || 1000; 
+  let switchState = row.find('.toggle-switch').is(':checked');
+
+  if (!switchState) {
+      // ✅ Switch OFF → Reset everything
+      row.find('.odds-slider').val(100); // Reset slider to 100%
+      row.find('.percentDisplay').text(`100%`);
+      row.find('.finalval').val(maxValue);
+      row.find('.odds-slider').prop('disabled', true);
+  } else {
+      // ✅ Switch ON → Use slider percentage
+      let percentage = parseFloat(row.find('.odds-slider').val());
+      let computedValue = (percentage / 100) * maxValue;
+
+      if (percentage === 0) computedValue = 0; // Ensure 0% results in value = 0
+
+      row.find('.percentDisplay').text(`${Math.round(percentage)}%`);
+      row.find('.finalval').val(Math.round(computedValue));
+      row.find('.odds-slider').prop('disabled', false);
+  }
+
+  // Save state for only this row
+  localStorage.setItem(`row-${rowIndex}`, JSON.stringify({
+      switchState: switchState,
+      percentage: switchState ? parseFloat(row.find('.odds-slider').val()) : 100, // Save 100% if switch off
+      finalValue: switchState ? Math.round(row.find('.finalval').val()) : maxValue
+  }));
+});
 </script>
+
+</body>
+</html>
