@@ -33,6 +33,7 @@ $(function () {
                  data-updated-percentage-one
                 <td>
                 <input type="text" class="form-control oddsone" value="${item.modified_odds}" data-original="${item.odds}" readonly>
+                    <br>
                 <input type="range" class="rangeSliderone" min="0" max="100" value="${item.oddspercentage}">
                 <span class="rangeValue" style="margin-left:10px">${item.oddspercentage}%</span>
                 </td>
@@ -44,6 +45,7 @@ $(function () {
 
                 <td>
                 <input type="text" class="form-control oddsoness" value="${item.modified_totalbet}" data-original="${item.total_bets}" readonly>
+                    <br>
                 <input type="range" class="rangeSlideroness" min="0" max="100" value="${item.totalbetpercentage}">
                 <span class="rangeValues" style="margin-left:10px">${item.totalbetpercentage}%</span>
                 </td>
