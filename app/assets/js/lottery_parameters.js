@@ -223,4 +223,19 @@ $(function () {
       }
   }
 
+  function tableScrollBonus() {
+    const tableContainerBonus = document.querySelector(".table-wrapperbonus");
+    const headerRowBonus = document.querySelector(".headrowbonus");
+
+    tableContainerBonus.addEventListener("scroll", function () {
+        if (tableContainerBonus.scrollTop > 0) {
+            headerRowBonus.classList.add("sticky-headerbonus");
+        } else {
+            headerRowBonus.classList.remove("sticky-headerbonus");
+        }
+    });
+}
+
+tableScrollBonus()
+
 });
