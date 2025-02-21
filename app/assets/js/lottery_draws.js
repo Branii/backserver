@@ -68,7 +68,7 @@ $(function(){
       const startDate    = $("#ltd-start-date").val();
       const endDate      = $("#ltd-end-date").val();
 
-      console.log(startDate,endDate);
+
       try {
         $.ajax({
           url:`../admin/getSpecificDraws/${gameID}/${issueNumber}/${status}/${startDate}/${endDate}/${currentPage}/${pageLimit}`,
@@ -78,7 +78,6 @@ $(function(){
 
           },
           success: function(response){
-              console.log(response);
               response  = JSON.parse(response);
               if(response.status === 'error'){
                 showToast("Error", response.data, "error");
@@ -90,7 +89,6 @@ $(function(){
                 return;
               }
               const data = response.data;
-              console.log(data);
               renderDrawTable(data);
               $("#maskkk").LoadingOverlay("hide")
               const totalPages = Math.ceil(data[0].total_records / pageLimit);
@@ -99,7 +97,7 @@ $(function(){
               "Page " + currentPage + " of " + totalPages + " pages";
           },
           error: function (xhr,status,error){
-            console.log(error);
+            showToast("Error", "Request Error, please contact admin",'error');
           },
           complete: function (){
             $($(element).find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx-check-double");

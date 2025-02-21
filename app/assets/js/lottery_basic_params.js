@@ -485,9 +485,7 @@ $(() => {
         $("#lottery-draw-loader").css({ display: "flex" });
       },
       success: function (response) {
-        console.log(response);
         response = JSON.parse(response);
-        console.log(response);
         const data = response.data;
         if (response.status === "error") {
           showToast("Error", "Lottery Data Successfully Updated.","error");
@@ -518,7 +516,6 @@ $(() => {
         $(".dataholder").html(
           "<tr><td colspan='12' style='text-align:center;'>An error occured, please try again later.</td></tr>"
         );
-        console.log("An error occured: " + status + " - " + error);
       },
       complete: function () {
         $("#lottery-draw-loader").css({ display: "none" });
@@ -537,7 +534,6 @@ $(() => {
         $("#lottery-draw-loader").css({ display: "flex" });
       },
       success: function (response) {
-        console.log(response);
         response = JSON.parse(response);
         const data = response.data;
         if (response.status === "error") {
@@ -559,7 +555,6 @@ $(() => {
         $(".dataholder").html(
           "<tr><td colspan='12' style='text-align:center;'>An error occured, please try again later.</td></tr>"
         );
-        console.log("An error occured: " + status + " - " + error);
       },
       complete: function () {
         $("#lottery-draw-loader").css({ display: "none" });
@@ -603,13 +598,10 @@ $(() => {
   // Handle dropdown item selection
   $(document).on("click", ".lb-refreshlist", function () {
     $("#lottery").val(0);
-    fetchLotteryBasicParams(1);
+    fetchLotteryBasicParams(1,this);
   });
 
 
-  $(document).on('click','.toggle-lottery',function(){
-        console.log($("#lb-id-holder").val());
-  });
 
   $(document).on("click", ".fetch-lotter-basic-records", function () {
     // const lottery_id = $("#lottery").val();
@@ -654,7 +646,7 @@ $(() => {
     //     $("#lottery-draw-loader").css({ display: "none" });
     //   },
     // });
-    fetchLotteryBasicParams(1);
+    fetchLotteryBasicParams(1,this);
 
   });
 
@@ -772,18 +764,18 @@ $(() => {
 
 
 const pageLimit = 20;
-const fetchLotteryBasicParams = (page) => {
+const fetchLotteryBasicParams = (page,element) => {
   const lottery_id = $("#lottery").val();
   $.ajax({
     url: `../admin/fetch_lottery_basic_params/${lottery_id}/${page}`,
     type: "POST",
     beforeSend: function () {
-      $("#lottery-draw-loader").css({ display: "flex" });
+
+      $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
     },
     success: function (response) {
     //  console.log("LOTTERY DRAW RECORDS: ", response);
       response = JSON.parse(response);
-     console.log(response);
       const data = response.data;
       
       if (data.length === 0) {
@@ -803,16 +795,16 @@ const fetchLotteryBasicParams = (page) => {
      // console.log(rowsMarkup);
       $("#lot-basic-dtholder").html(rowsMarkup);
       const totalPages = Math.ceil(response.totalCount / 20);
-      renderPaginationlist(totalPages,page,pageLimit,(newpage) => fetchLotteryBasicParams(newpage));
+      renderPaginationlist(totalPages,page,pageLimit,(newpage,element) => fetchLotteryBasicParams(newpage,element));
     },
     error: function (res, status, error) {
       $(".dataholder").html(
         "<tr><td colspan='12' style='text-align:center;'>An error occured, please try again later.</td></tr>"
       );
-      console.log("An error occured: " + status + " - " + error);
+
     },
     complete: function () {
-      $("#lottery-draw-loader").css({ display: "none" });
+      $($(element).find("i")[0]).addClass("bx-check-double").removeClass("bx-loader bx-spin");
     },
   });
 };
