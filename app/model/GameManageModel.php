@@ -318,7 +318,7 @@ class GameManageModel extends MEDOOHelper
         $data = [];
 
         foreach($result as $key => $value){
-            $data[] = ['lottery_type' => $value->name, 'lottery_code' => $value->game_group , 'issue_number' => $value->period , 'winning_numbers' => implode(',',json_decode($value->draw_number)), 'total_bet_amount' => $value->sumTotalAmount ?? 0 , 'total_win_amount' => $value->total_won_amount ?? 0, 'draw_time' => $value->time_added, 'sales_deadline' => $value->my_closing, 'actual_draw_time' => $value->time_added, 'settlement_completion_time' => $value->settlement_completion_time ?? 0,'status' => $value->draw_status, 'total_records' => $value->total_records] ;
+            $data[] = ['lottery_type' => $value->name, 'lottery_code' => $value->game_group , 'issue_number' => $value->period , 'winning_numbers' => implode(',',json_decode($value->draw_number)), 'total_bet_amount' => $value->sumTotalAmount ?? 0 , 'total_win_amount' => $value->total_won_amount ?? 0, 'draw_time' => str_replace(' ','/',$value->time_added), 'sales_deadline' => str_replace(' ','/',$value->my_closing), 'actual_draw_time' => str_replace(' ','/',$value->time_added), 'settlement_completion_time' => str_replace(' ','/',$value->settlement_completion_time ?? 0) ,'status' => $value->draw_status, 'total_records' => $value->total_records] ;
         }
         return ['status' => 'success','data' => $data];
     }
