@@ -341,8 +341,8 @@ $(function () {
     const betstatus = $('.betstatus').val();
     const startdates = $('.startdates').val();
     const enddates = $('.enddates').val();
-    console.log(uidd)
-    console.log(enddates)
+    // console.log(uidd)
+    // console.log(enddates)
 
     filterbetdatas(uidd,betOrderID,gametype,betsate,betstatus,startdates,enddates,currentPagebet,pageLimit)
 

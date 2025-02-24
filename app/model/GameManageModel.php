@@ -39,14 +39,19 @@ class GameManageModel extends MEDOOHelper
     {
         $bigData = [];
 
-        if (in_array($lotteryId, [1, 2]) && in_array($gamemodel, ['standard', 'twosides'])) {
+        if (in_array($lotteryId, [1,2,3,5,6,8,10]) && in_array($gamemodel, ['standard', 'twosides','longdragon','boardgames','roadbet'])) {
             $tableMap = [
                 'standard'  => 'game_name',
                 'twosides'  => 'twosides',
+                'longdragon'  => 'longdragon',
+                'boardgames'  => 'boardgames',
+                'roadbet'  => 'roadbet',
+                'fantan'  => 'fantan',
+                'manytables'  => 'manytables'
             ];
             $tableName = $tableMap[$gamemodel];
             $sql = "SELECT gn_id, name, modified_odds, group_type, modified_totalbet, gameplay_name, total_bets,model,
-            oddspercentage,totalbetpercentage
+                          oddspercentage,totalbetpercentage,odds,total_bets
                     FROM {$tableName} WHERE lottery_type = :lotteryId";
         
             $data = parent::query($sql, ['lotteryId' => $lotteryId]);
@@ -70,10 +75,15 @@ class GameManageModel extends MEDOOHelper
     public static function UpdateOddsTotalbets($gameId,$gamemodel,$newodds,$oddpercent,$newtotalbet,$totalbetpercent)
     {
       
-        if ( in_array($gamemodel, ['standard', 'twosides'])) {
+        if ( in_array($gamemodel, ['standard', 'twosides','longdragon','boardgames','roadbet'])) {
             $tableMap = [
                 'standard'  => 'game_name',
                 'twosides'  => 'twosides',
+                'longdragon'  => 'longdragon',
+                'boardgames'  => 'boardgames',
+                'roadbet'  => 'roadbet',
+                'fantan'  => 'fantan',
+                'manytables'  => 'manytables'
             ];
             $tableName = $tableMap[$gamemodel];
             $sql = "UPDATE {$tableName} 
