@@ -122,8 +122,11 @@ $(function () {
         let models = $("#allmodels").val();
         // console.log(lotteryId, models);
 
-        getLotteryGames(lotteryId, models);
-    });
+      if(models == "twosides") return;
+
+      getLotteryGames(lotteryId,models);
+ 
+  });
 
     //max slide
     //  $(document).ready(function() {

@@ -266,6 +266,72 @@ input:checked + .slider:after {
 
 /*--------- END --------*/
 
+
+.lbp-gamegroup-wrapper {
+  margin: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #c6cad2;
+}
+
+.lbp-gamegroup-title {
+  display: flex;
+  align-items: center;
+  padding: 16px 0px;
+}
+.lbp-center {
+  margin: 0px auto;
+}
+
+.lbp-gameitem-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: .8rem;
+  width: 105%;
+  padding: 0px;
+  margin: 0px;
+}
+
+
+.lbp-gameitem-parent{
+  width: 31%;
+  background: #f3f3f3;
+  display: flex;
+  padding: 10px;
+  border-radius: 10px;
+  padding-left: 20px;
+  justify-content: space-evenly;
+  margin-right: 20px;
+  align-items: center;
+}
+
+.lbp-gameitem-name {
+
+  /* margin-right: 50px; */
+  color: #333;
+  font-weight: 500;
+
+}
+
+.lbp-gameitem-input{
+  background-color: #fff;
+  margin-right: 10px;
+  padding: 8px;
+}
+
+.update-gamegroup:hover{
+    /* border: solid 1px #2a3547; */
+    color: #ccc !important;
+    background: #2a3547 !important;
+}
+
+.update-gamegroup{
+    border: solid 1px #ccc;
+    color: #2a3547 !important;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -276,7 +342,7 @@ input:checked + .slider:after {
 
   <div class="px-4 py-3 border-bottom pager1">
     <span class="top-left-btn">
-      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
+      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:173%">
 
         <select name="order_type" id="allGameNamesLottery" class="form-control form-select  lotteryTypes " style ="width:90%;">
 
@@ -291,6 +357,11 @@ input:checked + .slider:after {
         <option value="roadbet"><?= $translator['Road Bet']; ?></option>
         <option value="fantan"><?= $translator['Fantan']; ?></option>
         <option value="manytables"><?= $translator['Many Tables']; ?></option> -->
+          </select>
+
+
+          <select name="order_type" class="form-control form-select" style= "margin-left:15px; display: none;" id="game_groups">
+       
           </select>
 
         <!-- <input type="date" class="form-control queryholder startdate" id="drawfrom"/>
@@ -321,7 +392,7 @@ input:checked + .slider:after {
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
           <i class='bx bx-refresh' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle executegetparams" value="end" aria-label="Execute"
+        <button type="button" class="btn bg-white-subtle executegetparams" id="lbp_search" value="end" aria-label="Execute"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
           <i class='bx bx-check-double loader' style="font-size:20px"></i>
         </button>
@@ -356,6 +427,47 @@ input:checked + .slider:after {
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Game Status']; ?></h6>
                         </th>
+                        
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="game_name_container">
+
+                    <tr class="no-resultslist">
+                        <td colspan="9">
+                            <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus" id="lbp_twosides" style="height:530px;overflow-y:scroll;display:none;">
+            <table class="table text-nowrap mb-0 align-middle table-bordered" style="display:none;">
+                <thead class="text-dark fs-4 tbl-headerbonus">
+                    <tr class="headrowbonus">
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?> Two Sides headed </h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Play Group']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Games']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Odds']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets Control']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets']; ?></h6>
+                        </th>
+                       
                         
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>

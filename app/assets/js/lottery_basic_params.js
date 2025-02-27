@@ -561,6 +561,8 @@ $(() => {
       },
     });
 
+
+    
   });
 
   $(document).on('click','.gameon,.gameoff',function(){
@@ -708,7 +710,7 @@ $(() => {
       )}" alt="lottery icon" width="40"></td>
       <td id="td-sorting-weight-${data.id}">${data.sort_weight[data.id] ?? 0}</td>
       <td>${data.lottery_type}</td>
-      <td>${transformInput(data.lottery_name)}</td>
+      <td>System</td>
       <td></td>
       <td>${transformInput(data.lottery_name)}</td>
       <td id="td-mx-prize-${data.id}">${data.max_prize_per_bet}</td>
