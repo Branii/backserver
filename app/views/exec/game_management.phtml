@@ -46,11 +46,29 @@ if ($flag == "updateoddstotalbets") {
     $oddpercent = isset($this->viewData['oddpercent']) ? $this->viewData['oddpercent'] : '';
     $newtotalbet =isset($this->viewData['newtotalbet']) ? $this->viewData['newtotalbet'] : '';
     $totalbetpercent =isset($this->viewData['totalbetpercent']) ? $this->viewData['totalbetpercent'] : '';
-      $newodds = array_map('floatval', explode(',', $newodds));
-      $newodds =   json_encode($newodds);
-    // $decodedUrl = urldecode($tableData);
-    // $tables = json_decode($decodedUrl);
+    $newodds = array_map('floatval', explode(',', $newodds));
+    $newodds =   json_encode($newodds);
+   
    $result = (new GameManageModel())->UpdateOddsTotalbets($gameId,$gamemodel,$newodds,$oddpercent,$newtotalbet,$totalbetpercent);
+    echo json_encode($result);
+}
+
+if ($flag == "resettotalbet") {
+    $gameId = isset($this->viewData['gameId']) ? $this->viewData['gameId'] : '';
+    $gamemodel = isset($this->viewData['models']) ? $this->viewData['models'] : '';
+    $newtotalbet =isset($this->viewData['newtotalbet']) ? $this->viewData['newtotalbet'] : '';
+    $totalbetpercent =isset($this->viewData['totalbetpercent']) ? $this->viewData['totalbetpercent'] : '';
+   
+   $result = (new GameManageModel())->ResetTotalbets($gameId,$gamemodel,$newtotalbet,$totalbetpercent);
+    echo json_encode($result);
+}
+
+if ($flag == "updategamestatus") {
+    $gameId = isset($this->viewData['gameId']) ? $this->viewData['gameId'] : '';
+    $gamemodel = isset($this->viewData['models']) ? $this->viewData['models'] : '';
+    $gametate =isset($this->viewData['gametate']) ? $this->viewData['gametate'] : '';
+   
+    $result = (new GameManageModel())->UpdateGameStatus($gameId,$gamemodel,$gametate);
     echo json_encode($result);
 }
 

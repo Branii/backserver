@@ -649,6 +649,7 @@ return [
 'Fantan' =>'Fantan',
 'Many Tables' =>'Many Tables',
 'Total Bets Control' =>'Total Bets Control',
+'Game Status' =>'Game Status',
 
 // (Lottery Play Parameters)
 'Lottery Play Parameters' =>'Lottery Play Parameters',

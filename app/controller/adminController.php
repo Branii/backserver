@@ -578,6 +578,27 @@ class adminController extends Controller {
         $this->view->render();
     }
 
+    function resettotalbet($lotterId,$gamemodel,$totalbetpercent,$newtotalbet){
+        $this->view('exec/game_management',[
+            'flag' => 'resettotalbet',
+            'gameId' => $lotterId,
+            'models' =>$gamemodel,
+            'totalbetpercent' =>$totalbetpercent,
+            'newtotalbet' => $newtotalbet 
+        ]);
+        $this->view->render();
+    }
+    
+    function updategamestatus($lotterId,$gamemodel,$gametate){
+        $this->view('exec/game_management',[
+            'flag' => 'updategamestatus',
+            'gameId' => $lotterId,
+            'models' =>$gamemodel,
+            'gametate' =>$gametate,
+         
+        ]);
+        $this->view->render();
+    }
     
 
  

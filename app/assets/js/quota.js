@@ -56,7 +56,7 @@ $(function () {
     }
   }
 
-  fetchquota(currentPagequota);
+  fetchquota(currentPagequota,pageLimit);
 
 
   $(".refreshquota").click(function () {
@@ -65,7 +65,8 @@ $(function () {
       background: "rgb(90,106,133,0.1)",
       size: 3,
     });
-    fetchquota(currentPagequota)
+  
+    fetchquota(currentPagequota,pageLimit);
   });
 
  
@@ -121,7 +122,8 @@ $(function () {
                 function(response) {
                   if(response){
                     showToast("Success","quota updated successfully","success")
-                    fetchquota(currentPagequota);
+                  
+                  fetchquota(currentPagequota,pageLimit);
                   }
                 });
                 // const data = await response.json();
@@ -141,8 +143,8 @@ $(function () {
           // Check if the input is valid
           if (isNaN(datarebate)) {
               // Input is not a number
-              //renderquota([]); // Reset or clear results
-              fetchquota(currentPagequota)
+              //renderquota([]); // Reset or clear results   
+           fetchquota(currentPagequota,pageLimit);
               let html = `
               <tr class="no-results" >
                   <td colspan="9">

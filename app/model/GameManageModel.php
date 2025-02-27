@@ -1,7 +1,5 @@
 <?php
 
-
-
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     // Throw an Exception with the error message and details
     throw new \Exception("$errstr in $errfile on line $errline", $errno);
@@ -37,7 +35,7 @@ class GameManageModel extends MEDOOHelper
 
     public static function getLotteryGamesById(string $lotteryId, $gamemodel)
     {
-        $bigData = [];
+       // $bigData = [];
 
         if (in_array($lotteryId, [1,2,3,5,6,8,10]) && in_array($gamemodel, ['standard', 'twosides','longdragon','boardgames','roadbet'])) {
             $tableMap = [
@@ -50,7 +48,7 @@ class GameManageModel extends MEDOOHelper
                 'manytables'  => 'manytables'
             ];
             $tableName = $tableMap[$gamemodel];
-            $sql = "SELECT gn_id, name, modified_odds, group_type, modified_totalbet, gameplay_name, total_bets,model,
+            $sql = "SELECT gn_id, name, state,modified_odds, group_type, modified_totalbet, gameplay_name, total_bets,model,
                           oddspercentage,totalbetpercentage,odds,total_bets
                     FROM {$tableName} WHERE lottery_type = :lotteryId";
         
@@ -69,7 +67,7 @@ class GameManageModel extends MEDOOHelper
       //  return  $bigData;
     }
 
-    //public static 
+
    
 
     public static function UpdateOddsTotalbets($gameId,$gamemodel,$newodds,$oddpercent,$newtotalbet,$totalbetpercent)
@@ -93,31 +91,98 @@ class GameManageModel extends MEDOOHelper
                 totalbetpercentage = :totalbetpercentage
               WHERE gn_id = :gn_id";
 
-    try {
-        $data = parent::query($sql, [
-            'modified_odds'        => $newodds,
-            'oddspercentage'       => $oddpercent,
-            'modified_totalbet'    => $newtotalbet,
-            'totalbetpercentage'   => $totalbetpercent,
-            'gn_id'         => $gameId
-        ]);
+        try {
+            $data = parent::query($sql, [
+                'modified_odds'        => $newodds,
+                'oddspercentage'       => $oddpercent,
+                'modified_totalbet'    => $newtotalbet,
+                'totalbetpercentage'   => $totalbetpercent,
+                'gn_id'         => $gameId
+            ]);
 
-        if($data > 1){
-           $data = self::getLotteryGamesById($gameId, $gamemodel);
+            if($data > 1){
+            $data = self::getLotteryGamesById($gameId, $gamemodel);
+            }
+
+            return ['success' => true, 'message' => 'Update successful'];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => 'Database update failed', 'error' => $e->getMessage()];
         }
-
-      
-
-        return ['success' => true, 'message' => 'Update successful', 'data' => $data];
-    } catch (Exception $e) {
-        return ['success' => false, 'message' => 'Database update failed', 'error' => $e->getMessage()];
-    }
-        }
+            }
     
      
     }
     
 
+    public static function ResetTotalbets($gameId,$gamemodel,$newtotalbet,$totalbetpercent)
+    {
+      
+        if ( in_array($gamemodel, ['standard', 'twosides','longdragon','boardgames','roadbet'])) {
+            $tableMap = [
+                'standard'  => 'game_name',
+                'twosides'  => 'twosides',
+                'longdragon'  => 'longdragon',
+                'boardgames'  => 'boardgames',
+                'roadbet'  => 'roadbet',
+                'fantan'  => 'fantan',
+                'manytables'  => 'manytables'
+            ];
+            $tableName = $tableMap[$gamemodel];
+            $sql = "UPDATE {$tableName} SET  modified_totalbet = :modified_totalbet,totalbetpercentage = :totalbetpercentage WHERE gn_id = :gn_id";
+
+        try {
+            $data = parent::query($sql, [
+                'modified_totalbet'    => $newtotalbet,
+                'totalbetpercentage'   => $totalbetpercent,
+                'gn_id'         => $gameId
+            ]);
+
+            if($data > 1){
+            $data = self::getLotteryGamesById($gameId, $gamemodel);
+            }
+
+            return ['success' => true, 'message' => 'Update successful'];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => 'Database update failed', 'error' => $e->getMessage()];
+        }
+            }
+    
+     
+    }
+
+    public static function UpdateGameStatus($gameId,$gamemodel,$gametate)
+    {
+      
+        if ( in_array($gamemodel, ['standard', 'twosides','longdragon','boardgames','roadbet'])) {
+            $tableMap = [
+                'standard'  => 'game_name',
+                'twosides'  => 'twosides',
+                'longdragon'  => 'longdragon',
+                'boardgames'  => 'boardgames',
+                'roadbet'  => 'roadbet',
+                'fantan'  => 'fantan',
+                'manytables'  => 'manytables'
+            ];
+            $tableName = $tableMap[$gamemodel];
+           // $sql = "UPDATE {$tableName}  SET  state = :state WHERE gn_id = :gn_id";
+            $updated = parent::query("UPDATE {$tableName} SET  state = :state WHERE gn_id = :gn_id",
+                [  "state" => $gametate,  "gn_id" => $gameId]
+            );
+                if($updated > 1){
+                //     $sql = "SELECT state FROM {$tableName} WHERE gn_id = :gn_id";
+                return ['success' => true, 'state' => $gametate];
+                //    $data = parent::query($sql, ['gn_id' => $gameId]);
+                //    return $data;
+                }
+       
+        
+            }
+    
+     
+    }
+
+    
+    
 
 
     public static function filterGameDraws($page, $limit, $gameId, $datefrom, $dateto)
