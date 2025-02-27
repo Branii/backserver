@@ -119,6 +119,8 @@ $(function () {
       let lotteryId = $("#allGameNamesLottery").val();
       let models = $("#allmodels").val();
 
+      if(models == "twosides") return;
+
       getLotteryGames(lotteryId,models);
  
   });

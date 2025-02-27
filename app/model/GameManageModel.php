@@ -200,6 +200,57 @@ class GameManageModel extends MEDOOHelper
     }
 
     }
+
+
+    
+
+    public static function fetchBonusTwoSides($lottery_id,$game_group_name)
+    {
+
+        try{
+
+          
+        $database = parent::openLink();
+        $table_name = "twosides_group";
+        $sql = "SELECT {$table_name}.odds_group_id AS odds_group_id, {$table_name}.game_play_id, {$table_name}.label AS label, {$table_name}.odds AS odds, {$table_name}.rebate AS rebate, {$table_name}.profit AS profit , twosides.gn_id AS twosides_gn_id, twosides.name AS twosides_name FROM {$table_name} JOIN twosides ON {$table_name}.game_play_id = twosides.gn_id JOIN game_group ON game_group.gp_id = twosides.game_group WHERE game_group.name = :game_group_name AND game_group.lottery_type =:lottery_type";
+        $params = [":lottery_type" => $lottery_id, ":game_group_name" => $game_group_name];
+        $data = $database->query($sql, $params)->fetchAll(PDO::FETCH_OBJ);
+        return ['status' => "success", 'data' => $data];
+
+    }catch(Exception $e){
+
+        return ['status' => "success", 'data' => "Internal Server Error.".$e->getMessage()];
+    }
+
+    }
+    public static function updateGameGroupData($data)
+    {
+
+        try{
+
+          
+        $sql = "";
+        $database = parent::openLink();
+        $table_name = "twosides_group";
+        foreach($data as $odds_group_id => $info){
+        $sql .= "UPDATE {$table_name} SET odds=:odds_{$odds_group_id} , max_bet_amt=:max_bet_amt_{$odds_group_id}, max_total_bet_amt=:max_total_bet_amt_{$odds_group_id} WHERE odds_group_id=:odds_group_id_{$odds_group_id}:";
+        $params[":odds_{$odds_group_id}"] = $info["odds"]; 
+        $params[":max_bet_amt_{$odds_group_id}"] = $info["max_amt"]; 
+        $params[":max_total_bet_amt_{$odds_group_id}"] = $info["max_tot_amt"]; 
+
+        }
+        $data = $database->query($sql, $params);
+        return ['status' => "success", 'data' => $data->rowCount()];
+
+    }catch(Exception $e){
+
+        return ['status' => "success", 'data' => "Internal Server Error.".$e->getMessage()];
+    }
+
+    }
+
+
+
     public static function updateLotteryData($maxPrizeAmountPerBet,$maxAmtPerIssue, $maxWinPerPersonPerIssue,$minBetAmtPerIssue,$lockTimeForClsing,$sortingWeight,$lottery_type,$game_type_id): array {
         try{
 
@@ -244,6 +295,7 @@ class GameManageModel extends MEDOOHelper
     }
 
     }
+
     public static function updateLotteryStatus($game_type_id,$status): array {
         try{
         $status = ["gameon" => 1 , "gameoff" => -1][$status];

@@ -561,6 +561,8 @@ $(() => {
       },
     });
 
+
+    
   });
 
   $(document).on('click','.gameon,.gameoff',function(){

@@ -348,6 +348,21 @@ class adminController extends Controller {
         $this->view->render();
     }
 
+    
+    public function  updateGameGroupData($data)
+    {
+        $this->view('exec/lottery_bonus_parameters', ["data"=>$data,'flag' => 'updateGameGroupData']);
+        $this->view->render();
+    }
+
+
+    public function  fetchBonusTwoSides($lotteryID,$lotteryGameGroup)
+    {
+
+        $this->view('exec/lottery_bonus_parameters', ["lottery_type"=>$lotteryID,"game_group" => $lotteryGameGroup,"flag" => "fetchBonusTwoSides"]);
+        $this->view->render();
+    }
+
     public function  getuserrebate($uid)
     {
         $this->view('exec/account_manage', ['uid' => $uid, 'flag' => 'getuserrebate']);
