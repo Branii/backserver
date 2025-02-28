@@ -279,6 +279,7 @@ class FinancialManageModel extends MEDOOHelper
             'transaction_type' => $desposittype,
             'order_id' => $depositid,
             'status' => 1,
+            'rebate_level' => $uid,
         ];
 
         return  $inserdata = parent::insert("transaction", $params);

@@ -170,6 +170,7 @@ $(function () {
             console.error("Error fetching data:", error);
         }
     }
+    fetchTrasaction(currentPage, pageLimit);
 
     function renderPagination(totalPages, currentPage, pageLimit, callback) {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
@@ -212,7 +213,7 @@ $(function () {
         });
     }
 
-    fetchTrasaction(currentPage, pageLimit);
+  
 
     $(".playertrans").click(function () {
         let direction = $(this).val();
