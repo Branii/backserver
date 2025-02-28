@@ -319,81 +319,40 @@ $(document).ready(function() {
 </head>
 <body>
 
-<table class="table table-bordered">
-    <tr>
-        <th>Toggle</th>
-        <th>Percentage</th>
-        <th>Value</th>
-    </tr>
-    <tr>
-    <td>
-                  <div class="form-check form-switch mb-0">
-                  <input class="form-check-input toggle-switch" style="width:40px;margin:auto"type="checkbox" role="switch" checked
-                  >
-                  </div>
-                </td>
-            
-                <td>
-                <input type="text" class="form-control finalval" value='10000' data-original-value="10000" disabled/>
-                <input type="range" value="100" min="0" max="100" step="1" class="odds-slider" id="oddsSlider" data-id="1"/>
-                  <span class="percentDisplay" style="margin-left:10px">100%</span> 
-                </td>
-    </tr>
-</table>
+<!-- First Dropdown -->
+<select id="gameDropdown1">
+    <option value="1">Game 1</option>
+    <option value="2">Game 2</option>
+    <option value="3">Game 3</option>
+</select>
+
+<!-- Second Dropdown (to be dynamically updated) -->
+<select id="gameDropdown2">
+    <option>Select an option</option>
+</select>
 
 <script>
-$(document).ready(function () {
-  $('.finalval').each(function () {
-      let row = $(this).closest('tr');
-      let rowIndex = row.index();
-      let savedState = JSON.parse(localStorage.getItem(`row-${rowIndex}`));
+$(document).on("change", "#gameDropdown1", function() {
+    let selectedValue = $(this).val(); // Get selected value
 
-      if (savedState) {
-          row.find('.toggle-switch').prop('checked', savedState.switchState);
-          row.find('.odds-slider').val(savedState.switchState ? savedState.percentage : 100); // Reset to 100% if switch is off
-          row.find('.percentDisplay').text(`${savedState.switchState ? savedState.percentage : 100}%`);
-          row.find('.finalval').val(savedState.finalValue);
+    // Define mapping for each option in the first dropdown
+    let optionsMap = {
+        "1": ["Standard", "Twosides", "Logdragion"],
+        "2": ["Long", "Fourside", "Logdragn"],
+        "3": ["Option A", "Option B", "Option C"] // Example for third option
+    };
 
-          // Disable slider if switch was OFF
-          row.find('.odds-slider').prop('disabled', !savedState.switchState);
-      } else {
-          // Store original value in data attribute only when no saved state exists
-          $(this).attr('data-original-value', $(this).val());
-      }
-  });
+    let options = optionsMap[selectedValue] || []; // Get corresponding options or empty
+
+    // Populate second dropdown
+    let secondDropdown = $("#gameDropdown2");
+    secondDropdown.empty(); // Clear existing options
+
+    $.each(options, function(index, value) {
+        secondDropdown.append(new Option(value, value.toLowerCase())); // Add new options
+    });
 });
 
-$(document).on('input change', '.odds-slider, .toggle-switch', function () {
-  let row = $(this).closest('tr');
-  let rowIndex = row.index();
-  let maxValue = parseFloat(row.find('.finalval').attr('data-original-value')) || 1000; 
-  let switchState = row.find('.toggle-switch').is(':checked');
-
-  if (!switchState) {
-      // ✅ Switch OFF → Reset everything
-      row.find('.odds-slider').val(100); // Reset slider to 100%
-      row.find('.percentDisplay').text(`100%`);
-      row.find('.finalval').val(maxValue);
-      row.find('.odds-slider').prop('disabled', true);
-  } else {
-      // ✅ Switch ON → Use slider percentage
-      let percentage = parseFloat(row.find('.odds-slider').val());
-      let computedValue = (percentage / 100) * maxValue;
-
-      if (percentage === 0) computedValue = 0; // Ensure 0% results in value = 0
-
-      row.find('.percentDisplay').text(`${Math.round(percentage)}%`);
-      row.find('.finalval').val(Math.round(computedValue));
-      row.find('.odds-slider').prop('disabled', false);
-  }
-
-  // Save state for only this row
-  localStorage.setItem(`row-${rowIndex}`, JSON.stringify({
-      switchState: switchState,
-      percentage: switchState ? parseFloat(row.find('.odds-slider').val()) : 100, // Save 100% if switch off
-      finalValue: switchState ? Math.round(row.find('.finalval').val()) : maxValue
-  }));
-});
 </script>
 
 </body>

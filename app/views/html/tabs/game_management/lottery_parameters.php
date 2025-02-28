@@ -90,7 +90,7 @@
     height: 10px;
     background: rgb(38, 57, 77) 0px 20px 30px -10px;
     /* Ensure it doesn't interfere with content */
-    z-index: 10;
+   
   }
 
   .queryholder {
@@ -179,12 +179,14 @@
 .tbl-headerbonus {
   position: sticky;
   top: 0;
+  z-index: 9;
 }
 
 .sticky-headerbonus {
   position: relative;
   bottom:1px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+ 
 }
 
 .pins{
@@ -192,6 +194,77 @@
   border-bottom: solid 1px rgb(110,129,146,0.1);
 }
 
+/* From Uiverse.io by victoryamaykin */ 
+.switch {
+ position: relative;
+ display: inline-block;
+ width: 120px;
+ height: 34px;
+}
+
+.switch input {
+ display: none;
+}
+
+.slider {
+ position: absolute;
+ cursor: pointer;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background-color:rgb(211, 8, 8);
+ -webkit-transition: .4s;
+ transition: .4s;
+ border-radius: 34px;
+
+}
+
+.slider:before {
+ position: absolute;
+ content: "";
+ height: 26px;
+ width: 26px;
+ left: 4px;
+ bottom: 4px;
+ background-color: white;
+ -webkit-transition: .4s;
+ transition: .4s;
+ border-radius: 50%;
+}
+
+input:checked + .slider {
+ background-color:rgb(6, 173, 48);
+}
+
+input:focus + .slider {
+ box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+ -webkit-transform: translateX(26px);
+ -ms-transform: translateX(26px);
+ transform: translateX(85px);
+}
+
+/*------ ADDED CSS ---------*/
+.slider:after {
+ content: 'INACTIVE';
+ color: white;
+ display: block;
+ position: absolute;
+ transform: translate(-50%,-50%);
+ top: 50%;
+ left: 50%;
+ font-size: 10px;
+ font-family: Verdana, sans-serif;
+}
+
+input:checked + .slider:after {
+ content: 'ACTIVE';
+}
+
+/*--------- END --------*/
 
 
 .lbp-gamegroup-wrapper {
@@ -274,16 +347,16 @@
         <select name="order_type" id="allGameNamesLottery" class="form-control form-select  lotteryTypes " style ="width:90%;">
 
         </select>
-        <select name="order_type" class="form-control form-select" style= "margin-left:15px" id="allmodels"
+        <select name="order_type" class="form-control form-select"  style= "margin-left:15px" id="allmodels"
         data-bs-placeholder="Select Type">
-        <option value="">-<?= $translator['Game Model']; ?>-</option>
+        <!-- <option value="">-<?= $translator['Game Model']; ?>-</option>
         <option value="standard"><?= $translator['Standard']; ?></option>
         <option value="twosides"><?= $translator['Two Sides']; ?></option>
         <option value="longdragon"> <?= $translator['Long Dragon']; ?></option>
         <option value="boardgames"><?= $translator['Board Games']; ?></option>
         <option value="roadbet"><?= $translator['Road Bet']; ?></option>
         <option value="fantan"><?= $translator['Fantan']; ?></option>
-        <option value="manytables"><?= $translator['Many Tables']; ?></option>
+        <option value="manytables"><?= $translator['Many Tables']; ?></option> -->
           </select>
 
 
@@ -351,7 +424,9 @@
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets']; ?></h6>
                         </th>
-                       
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Game Status']; ?></h6>
+                        </th>
                         
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
