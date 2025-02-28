@@ -33,10 +33,9 @@ if ($flag == "fetchBonusTwoSides") {
    
     $results = GameManageModel::updateGameGroupData($data);
     if($results['status'] === "error") return ['status' => "error", 'data' => "Internal Server Error."];
-    // print_r($results);
-    echo json_encode($results, JSON_UNESCAPED_UNICODE);
-    // echo json_last_error_msg();
-    return;
+
+    // echo json_encode($results, JSON_UNESCAPED_UNICODE);
+    // return;
     }catch(Exception $e){
 
       return ["status" => "error", "data" => "Internal Server Error."];
@@ -44,4 +43,4 @@ if ($flag == "fetchBonusTwoSides") {
 }
 
 
-echo json_encode([]);
+echo json_encode($results);

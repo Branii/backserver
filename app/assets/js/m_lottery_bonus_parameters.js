@@ -19,14 +19,14 @@ $(() =>{
         const gameItems =  $($($(this).parents(".lbp-gamegroup-wrapper")[0]).find(".lbp-gameitem-wrapper")[0]).find(".lbp-gameitem-parent");
         let data = [];
         for (let index = 0; index < gameItems.length; index++) {
-            const element = gameItems[index];
+          const element      = gameItems[index];
           const labelid      = $(element).attr("id").split("-")[1];
-          console.log($(`lbp-odds-${labelid}`));
-         const odds         = $(`#lbp-odds-${labelid}`).val();
-         const maxAmt       = $(`#lbp-max-amt-${labelid}`).val();
-         const maxTotAmt    = $(`#lbp-max-tot-amt-${labelid}`).val();
+          const odds         = $(`#lbp-odds-${labelid}`).val();
+          const maxAmt       = $(`#lbp-max-amt-${labelid}`).val();
+          const maxTotAmt    = $(`#lbp-max-tot-amt-${labelid}`).val();
           data.push({labelid: labelid,odds: odds,max_amt: maxAmt, max_tot_amt: maxTotAmt});
         }
+
 
 
         data = JSON.stringify(data);
@@ -41,29 +41,18 @@ $(() =>{
               showToast("Error", "Sorry the lottery selected is not yet ready.", "error");
               return;
             }
-            console.log(response);
-            return;
-            console.log(response[lotteryType]);
-            response = response[lotteryType];
-            const gameGroup = response[lotteryGameGroup];
-            $("#maskrfeferal").html(twosidesUI(gameGroup))
-
            
-           
-
-            return;
             if (response.status === "error") {
               showToast("Error", "Lottery Data Successfully Updated.","error");
               return;
             }
     
             if(data == 0){
-              showToast("Error", "This lottery has already being " + (status === "gameon" ? " Turned On " : " Turned Off "),"error");
-              $('.lb-tclose').click();
+              showToast("Error", "Nothing to update","error");
               return;
             }
-      
-           $("#lbp_twosides").html(twoSidesModelMarkup(data));
+
+            showToast("Success", "Lottery Bonus Parameter Successfully updated.", 'success');
           },
           error: function (res, status, error) {
             $(".dataholder").html(
@@ -92,7 +81,8 @@ $(() =>{
 
         $.ajax({
             // url: `../admin/fetchBonusTwoSides/${lotteryType}/${lotteryGameGroup}`,
-            url: `http://192.168.1.51/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`,
+            // url: `http://192.168.1.51/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`,
+            url: `http://localhost/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`,
             type: "GET",
             beforeSend: function () {
                 $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -375,58 +365,7 @@ const twosidesUIItem = (element) => `<div class="lbp-gameitem-parent" id="gameit
 const twosidesUIItemFixedPlace = (element) => `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
   <span class="lbp-gameitem-name" style="width:6.5rem;">${element.label}</span>
   <div style="width: 22rem;display:flex;">
-  <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}">
+  <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}">
   
-<input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" ><input type="text" class="form-control lbp-gameitem-input" placeholder="Tot. Max. amt"></div></div>`;
+<input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ><input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div>`;
 
-
-// <div style="
-//     margin: 1rem;
-//     padding: 1rem;
-//     border-radius: 10px;
-//     border: 1px solid #c6cad2;
-// ">
-//  <div style="
-//     /* background-color: aliceblue; */
-//     display: flex;
-//     align-items: center;
-//     padding: 16px 0px;
-// "><span style="
-//     margin: 0px auto;
-// ">Sum Of Top Two</span></div>
-//     <div style="
-//     /* padding: 10px; */
-//     display: flex;
-//     /* justify-content: space-between; */
-//     flex-wrap: wrap;
-//     row-gap: .8rem;
-// ">
-            
-//         <div style="
-//     width: 30%;
-//     background: #f3f3f3;
-//     display: flex;
-//     padding: 10px;
-//     border-radius: 10px;
-//     padding-left: 20px;
-//     justify-content: space-evenly;
-//     margin-right: 20px;
-//     align-items: center;
-// ">
-//     <span style="
-//     margin-right: 50px;
-//     color: #333;
-//     font-weight: 500;
-// ">Big</span>
-//     <input type="text" id="transuser" class="form-control" placeholder="odds" style="
-//     background-color: #fff;
-//     margin-right: 10px;
-// ">
-    
-// <input type="text" id="transuser" class="form-control" placeholder="odds" style="
-//     background-color: #fff;
-//     margin-right: 10px;
-// "><input type="text" id="transuser" class="form-control" placeholder="odds" style="
-//     background-color: #fff;
-//     margin-right: 10px;
-// "></div></div></div>
