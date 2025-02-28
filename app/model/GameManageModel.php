@@ -208,8 +208,6 @@ class GameManageModel extends MEDOOHelper
     {
 
         try{
-
-          
         $database = parent::openLink();
         $table_name = "twosides_group";
         $sql = "SELECT {$table_name}.odds_group_id AS odds_group_id, {$table_name}.game_play_id, {$table_name}.label AS label, {$table_name}.odds AS odds, {$table_name}.rebate AS rebate, {$table_name}.profit AS profit , twosides.gn_id AS twosides_gn_id, twosides.name AS twosides_name FROM {$table_name} JOIN twosides ON {$table_name}.game_play_id = twosides.gn_id JOIN game_group ON game_group.gp_id = twosides.game_group WHERE game_group.name = :game_group_name AND game_group.lottery_type =:lottery_type";
@@ -233,12 +231,18 @@ class GameManageModel extends MEDOOHelper
         $database = parent::openLink();
         $table_name = "twosides_group";
         foreach($data as $odds_group_id => $info){
-        $sql .= "UPDATE {$table_name} SET odds=:odds_{$odds_group_id} , max_bet_amt=:max_bet_amt_{$odds_group_id}, max_total_bet_amt=:max_total_bet_amt_{$odds_group_id} WHERE odds_group_id=:odds_group_id_{$odds_group_id}:";
-        $params[":odds_{$odds_group_id}"] = $info["odds"]; 
-        $params[":max_bet_amt_{$odds_group_id}"] = $info["max_amt"]; 
-        $params[":max_total_bet_amt_{$odds_group_id}"] = $info["max_tot_amt"]; 
+        if(empty($odds_group_id)) continue;
+        $params[":odds_{$odds_group_id}"] =empty($info["odds"]) ? 0 : $info["odds"]; 
+        $params[":max_bet_amt_{$odds_group_id}"] = empty($info["max_amt"]) ? 0 : $info["max_amt"]; 
+        $params[":max_total_bet_amt_{$odds_group_id}"] = empty($info["max_tot_amt"]) ? 0 : $info["max_tot_amt"]; 
+        $params[":odds_group_id_{$odds_group_id}"] = $odds_group_id; 
+        $sql .= "UPDATE {$table_name} SET test_odds=:odds_{$odds_group_id} , max_bet_amount=:max_bet_amt_{$odds_group_id}, total_max_bet_amount=:max_total_bet_amt_{$odds_group_id} WHERE odds_group_id=:odds_group_id_{$odds_group_id};";
+       
 
         }
+
+        echo print_r($params);
+        return [];
         $data = $database->query($sql, $params);
         return ['status' => "success", 'data' => $data->rowCount()];
 

@@ -351,6 +351,7 @@ class adminController extends Controller {
     
     public function  updateGameGroupData($data)
     {
+
         $this->view('exec/lottery_bonus_parameters', ["data"=>$data,'flag' => 'updateGameGroupData']);
         $this->view->render();
     }

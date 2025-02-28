@@ -34,13 +34,15 @@ $(() =>{
           url: `../admin/updateGameGroupData/${data}`,
           type: "GET",
           beforeSend: function () {
-              $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+              // $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
           },
           success: function (response) {
             if(response === "Game id not found!!"){
               showToast("Error", "Sorry the lottery selected is not yet ready.", "error");
               return;
             }
+            console.log(response);
+            return;
             console.log(response[lotteryType]);
             response = response[lotteryType];
             const gameGroup = response[lotteryGameGroup];
@@ -69,7 +71,7 @@ $(() =>{
             );
           },
           complete: function () {
-              $($(element).find("i")[0]).addClass("bx-check-double").removeClass("bx-loader bx-spin");
+              // $($(element).find("i")[0]).addClass("bx-check-double").removeClass("bx-loader bx-spin");
           },
         });
     
@@ -103,7 +105,8 @@ $(() =>{
               console.log(response[lotteryType]);
               response = response[lotteryType];
               const gameGroup = response[lotteryGameGroup];
-              $("#maskrfeferal").html(twosidesUI(gameGroup))
+              // $("#maskrfeferal").html(twosidesUI(gameGroup))
+              $("#lbp_twosides").html(twosidesUI(gameGroup))
 
              
              
@@ -154,8 +157,13 @@ $(() =>{
           });
           $("#game_groups").html(html);
           $("#game_groups").show();
+          $("#maskrfeferal").hide();
+          $("#lbp_twosides").show();
+
         }else{
            $("#game_groups").hide();
+           $("#maskrfeferal").show();
+           $("#lbp_twosides").hide();
         }
            
 
@@ -362,7 +370,7 @@ const twosidesUIItem = (element) => `<div class="lbp-gameitem-parent" id="gameit
   <div style="width: 22rem;display:flex;">
   <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}">
   
-<input type="text"  class="form-control lbp-gameitem-input" id="lbp-max-amt-${element.labelid}" placeholder="Max. amt" ><input type="text" class="form-control lbp-gameitem-input" id="lbp-max-tot-amt-${element.labelid}" placeholder="Tot. Max. amt"></div></div>`;
+<input type="text"  class="form-control lbp-gameitem-input" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" placeholder="Max. amt" ><input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" id="lbp-max-tot-amt-${element.labelid}" placeholder="Tot. Max. amt"></div></div>`;
 
 const twosidesUIItemFixedPlace = (element) => `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
   <span class="lbp-gameitem-name" style="width:6.5rem;">${element.label}</span>

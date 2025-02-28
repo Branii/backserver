@@ -28,8 +28,10 @@ if ($flag == "fetchBonusTwoSides") {
 
     try{
     $data = isset($this->viewData['data']) ? $this->viewData['data'] : "";
+    $data = urldecode($data);
     $data = json_decode($data,true);
-    $results = GameManageModel::fetchBonusTwoSides($lottery_type,urldecode($lottery_game_group));
+   
+    $results = GameManageModel::updateGameGroupData($data);
     if($results['status'] === "error") return ['status' => "error", 'data' => "Internal Server Error."];
     // print_r($results);
     echo json_encode($results, JSON_UNESCAPED_UNICODE);
