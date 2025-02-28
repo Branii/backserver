@@ -79,7 +79,7 @@ $(() =>{
         // $("#lbp_twosides").show();
         const element = this;
 
-        $.ajax({
+        $.ajax({ 
             // url: `../admin/fetchBonusTwoSides/${lotteryType}/${lotteryGameGroup}`,
             // url: `http://192.168.1.51/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`,
             url: `http://localhost/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`,
