@@ -202,8 +202,8 @@ class FinancialManageModel extends MEDOOHelper
     {
         $trans_oderId = bin2hex(random_bytes(4));
          $depositid  =  'DEPO' . $trans_oderId ;
-         $manualusername = "manual deposit";
-         $manualemail    = "manualdeposit@gmail.com";
+         $manualusername = "Enzerhub";
+         $manualemail    = "enzerhub@gmail.com";
          $params = [
             'user_id' =>  $uid,
             'user_name' => $manualusername,
@@ -218,8 +218,6 @@ class FinancialManageModel extends MEDOOHelper
             'status' =>'success',
             'approved_by' => $username,
             'desposit_channel' => '1',
-        
-     
         ];
         return  $inserdata = parent::insert("deposit_new", $params);
     
@@ -229,7 +227,7 @@ class FinancialManageModel extends MEDOOHelper
     public static function insertIntoWithrawManage($uid, $amount,$username)
     {
             $manualusername = "Enzerhub";
-            $manualemail = "manualdeposit@gmail.com";
+            $manualemail = "enzerhub@gmail.com";
             $currentDateTime = date('Y-m-d H:i:s');
             $currentTime = date('H:i:s');
             $currentDate = date('Y-m-d');
@@ -281,6 +279,7 @@ class FinancialManageModel extends MEDOOHelper
             'transaction_type' => $desposittype,
             'order_id' => $depositid,
             'status' => 1,
+            'rebate_level' => $uid,
         ];
 
         return  $inserdata = parent::insert("transaction", $params);

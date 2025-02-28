@@ -1,0 +1,47 @@
+<?php
+
+
+
+    $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+    // $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
+    // $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 10; // Ensure valid limit 
+    $results = [];
+
+
+if ($flag == "fetchBonusTwoSides") {
+
+    try{
+    $lottery_type       = isset($this->viewData['lottery_type']) ? max((int) $this->viewData['lottery_type'],0) : 0;
+    $lottery_game_group = isset($this->viewData['game_group']) ? $this->viewData['game_group'] : "";
+    if(empty($lottery_type)) return ["status" => "error", "Invalid lottery selection."];
+    $results = GameManageModel::fetchBonusTwoSides($lottery_type,urldecode($lottery_game_group));
+    if($results['status'] === "error") return ['status' => "error", 'data' => "Internal Server Error."];
+    // print_r($results);
+    echo json_encode($results, JSON_UNESCAPED_UNICODE);
+    // echo json_last_error_msg();
+    return;
+    }catch(Exception $e){
+
+      return ["status" => "error", "data" => "Internal Server Error."];
+    }
+}else if ($flag == "updateGameGroupData") {
+
+    try{
+    $data = isset($this->viewData['data']) ? $this->viewData['data'] : "";
+    $data = urldecode($data);
+    $data = json_decode($data,true);
+   
+    $results = GameManageModel::updateGameGroupData($data);
+    if($results['status'] === "error") return ['status' => "error", 'data' => "Internal Server Error."];
+    // print_r($results);
+    echo json_encode($results, JSON_UNESCAPED_UNICODE);
+    // echo json_last_error_msg();
+    return;
+    }catch(Exception $e){
+
+      return ["status" => "error", "data" => "Internal Server Error."];
+    }
+}
+
+
+echo json_encode([]);

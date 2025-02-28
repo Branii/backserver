@@ -90,7 +90,7 @@
     height: 10px;
     background: rgb(38, 57, 77) 0px 20px 30px -10px;
     /* Ensure it doesn't interfere with content */
-    z-index: 10;
+   
   }
 
   .queryholder {
@@ -179,12 +179,14 @@
 .tbl-headerbonus {
   position: sticky;
   top: 0;
+  z-index: 9;
 }
 
 .sticky-headerbonus {
   position: relative;
   bottom:1px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+ 
 }
 
 .pins{
@@ -192,6 +194,143 @@
   border-bottom: solid 1px rgb(110,129,146,0.1);
 }
 
+/* From Uiverse.io by victoryamaykin */ 
+.switch {
+ position: relative;
+ display: inline-block;
+ width: 120px;
+ height: 34px;
+}
+
+.switch input {
+ display: none;
+}
+
+.slider {
+ position: absolute;
+ cursor: pointer;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background-color:rgb(211, 8, 8);
+ -webkit-transition: .4s;
+ transition: .4s;
+ border-radius: 34px;
+
+}
+
+.slider:before {
+ position: absolute;
+ content: "";
+ height: 26px;
+ width: 26px;
+ left: 4px;
+ bottom: 4px;
+ background-color: white;
+ -webkit-transition: .4s;
+ transition: .4s;
+ border-radius: 50%;
+}
+
+input:checked + .slider {
+ background-color:rgb(6, 173, 48);
+}
+
+input:focus + .slider {
+ box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+ -webkit-transform: translateX(26px);
+ -ms-transform: translateX(26px);
+ transform: translateX(85px);
+}
+
+/*------ ADDED CSS ---------*/
+.slider:after {
+ content: 'INACTIVE';
+ color: white;
+ display: block;
+ position: absolute;
+ transform: translate(-50%,-50%);
+ top: 50%;
+ left: 50%;
+ font-size: 10px;
+ font-family: Verdana, sans-serif;
+}
+
+input:checked + .slider:after {
+ content: 'ACTIVE';
+}
+
+/*--------- END --------*/
+
+
+.lbp-gamegroup-wrapper {
+  margin: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #c6cad2;
+}
+
+.lbp-gamegroup-title {
+  display: flex;
+  align-items: center;
+  padding: 16px 0px;
+}
+.lbp-center {
+  margin: 0px auto;
+}
+
+.lbp-gameitem-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: .8rem;
+  width: 105%;
+  padding: 0px;
+  margin: 0px;
+}
+
+
+.lbp-gameitem-parent{
+  width: 31%;
+  background: #f3f3f3;
+  display: flex;
+  padding: 10px;
+  border-radius: 10px;
+  padding-left: 20px;
+  justify-content: space-evenly;
+  margin-right: 20px;
+  align-items: center;
+}
+
+.lbp-gameitem-name {
+
+  /* margin-right: 50px; */
+  color: #333;
+  font-weight: 500;
+
+}
+
+.lbp-gameitem-input{
+  background-color: #fff;
+  margin-right: 10px;
+  padding: 8px;
+}
+
+.update-gamegroup:hover{
+    /* border: solid 1px #2a3547; */
+    color: #ccc !important;
+    background: #2a3547 !important;
+}
+
+.update-gamegroup{
+    border: solid 1px #ccc;
+    color: #2a3547 !important;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
 
 </style>
 
@@ -203,21 +342,26 @@
 
   <div class="px-4 py-3 border-bottom pager1">
     <span class="top-left-btn">
-      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
+      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:173%">
 
         <select name="order_type" id="allGameNamesLottery" class="form-control form-select  lotteryTypes " style ="width:90%;">
 
         </select>
-        <select name="order_type" class="form-control form-select" style= "margin-left:15px" id="allmodels"
+        <select name="order_type" class="form-control form-select"  style= "margin-left:15px" id="allmodels"
         data-bs-placeholder="Select Type">
-        <option value="">-<?= $translator['Game Model']; ?>-</option>
+        <!-- <option value="">-<?= $translator['Game Model']; ?>-</option>
         <option value="standard"><?= $translator['Standard']; ?></option>
         <option value="twosides"><?= $translator['Two Sides']; ?></option>
         <option value="longdragon"> <?= $translator['Long Dragon']; ?></option>
         <option value="boardgames"><?= $translator['Board Games']; ?></option>
         <option value="roadbet"><?= $translator['Road Bet']; ?></option>
         <option value="fantan"><?= $translator['Fantan']; ?></option>
-        <option value="manytables"><?= $translator['Many Tables']; ?></option>
+        <option value="manytables"><?= $translator['Many Tables']; ?></option> -->
+          </select>
+
+
+          <select name="order_type" class="form-control form-select" style= "margin-left:15px; display: none;" id="game_groups">
+       
           </select>
 
         <!-- <input type="date" class="form-control queryholder startdate" id="drawfrom"/>
@@ -248,7 +392,7 @@
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
           <i class='bx bx-refresh' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle executegetparams" value="end" aria-label="Execute"
+        <button type="button" class="btn bg-white-subtle executegetparams" id="lbp_search" value="end" aria-label="Execute"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
           <i class='bx bx-check-double loader' style="font-size:20px"></i>
         </button>
@@ -264,6 +408,49 @@
                     <tr class="headrowbonus">
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Play Group']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Games']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Odds']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets Control']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Game Status']; ?></h6>
+                        </th>
+                        
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="game_name_container">
+
+                    <tr class="no-resultslist">
+                        <td colspan="9">
+                            <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus" id="lbp_twosides" style="height:530px;overflow-y:scroll;display:none;">
+            <table class="table text-nowrap mb-0 align-middle table-bordered" style="display:none;">
+                <thead class="text-dark fs-4 tbl-headerbonus">
+                    <tr class="headrowbonus">
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?> Two Sides headed </h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Play Group']; ?></h6>
