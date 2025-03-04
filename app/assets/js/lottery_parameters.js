@@ -25,10 +25,10 @@ $(function () {
         data.forEach((item) => {
             let isChecked = item.state === "active" ? "checked" : "";
             html += `
-          <tr class="trow">
-              <td>${item.gameplay_name}</td>
-              <td>${item.group_type}</td>
-              <td>${item.name}</td>
+            <tr class="trow">
+               <td>${item.gameplay_name}</td>
+               <td>${item.group_type}</td>
+               <td>${item.name}</td>
                  data-updated-percentage-one
                 <td>
                 <input type="text" class="form-control oddsone" value="${item.modified_odds}" data-original="${item.odds}" readonly>
@@ -40,7 +40,7 @@ $(function () {
                 <div class="form-check form-switch mb-0">
                 <input class="form-check-input resetCheckbox" style="width:40px;margin:auto"type="checkbox" value ='${item.gn_id}' datas= '${item.model}' role="switch" checked/>
                 </div>
-
+               
                 </td>
 
                 <td>
@@ -58,7 +58,7 @@ $(function () {
                 </td>
          
                 <td> <button type="button" class="btn btn-light updatethis saveBtn" value ='${item.gn_id}' datas= '${item.model}' >Save</button></td>
-          </tr>
+             </tr>
       `;
         });
         return html;

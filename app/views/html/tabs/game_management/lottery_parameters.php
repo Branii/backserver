@@ -332,6 +332,8 @@ input:checked + .slider:after {
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">

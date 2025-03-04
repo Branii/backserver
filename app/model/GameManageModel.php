@@ -30,7 +30,9 @@ class GameManageModel extends MEDOOHelper
 
     public static function getAllGamesLottery()
     {
-        return parent::selectAll('lottery_type', ['lt_id', 'name']);
+      return  $data = parent::query("SELECT lt_id,name FROM lottery_type WHERE  lt_id != 9 ");
+     // return parent::selectAll('lottery_type', ['lt_id', 'name'], "lt_id != 9");
+
     }
 
     public static function getLotteryGamesById(string $lotteryId, $gamemodel)
