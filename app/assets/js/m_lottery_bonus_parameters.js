@@ -460,8 +460,30 @@ const broadBetParentMarkup = (markup,title = "",gameID,state) => {
     <div class="mt-3 mt-md-0 ms-auto" style="margin: 0px !important;"><button type="button" class="btn hstack gap-6  update-gamegroup" >Update</button></div></div></div><div class="lbp-gameitem-wrapper">${markup}</div></div>`
 };
 
-const twosidesUIItem = (element) => `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
-  <span class="lbp-gameitem-name" style="width:6.5rem;">${isNumber(element.label) && (($("#allGameNamesLottery").val() == 6) || ($("#allGameNamesLottery").val() == 5  && $("#game_groups").val() == "2 No. Combo")) &&  element.label < 10 ? `0${element.label}` : ( isNumber(element.label) && (($("#allGameNamesLottery").val() == 5  && $("#game_groups").val() == "3 No. Combo")) &&  element.label < 10 ? `00${element.label}` : (element.label < 99 && element.label > 9 && $("#game_groups").val() != "2 No. Combo" ? `0${element.label}` : element.label))}</span>
+const twosidesUIItem = (element) => { 
+  
+  // 1. Define your conditions in code (optional but cleaner)
+const condition1 = isNumber(element.label) && ( $("#allGameNamesLottery").val() == 6 || ( $("#allGameNamesLottery").val() == 5 && $("#game_groups").val() == "2 No. Combo") ) && element.label < 10;
+
+const condition2 = isNumber(element.label) && ( $("#allGameNamesLottery").val() == 5 && $("#game_groups").val() == "3 No. Combo") && element.label < 10;
+
+const condition3 = element.label < 100 && element.label > 9 && $("#game_groups").val() != "2 No. Combo" && $("#allGameNamesLottery").val() == 5 ;
+
+// 2. Use if / else if / else
+let displayedValue;
+if (condition1) {
+  console.log(element.key,element.label);
+displayedValue = `0${element.label}`;
+} else if (condition2) {
+displayedValue = `00${element.label}`;
+} else if (condition3) {
+displayedValue = `0${element.label}`;
+} else {
+displayedValue = element.label;
+}
+
+  return `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
+  <span class="lbp-gameitem-name" style="width:6.5rem;">${displayedValue}</span>
   <div style="width: 22rem;display:flex;">
   <div class="lpd-gameitem-wrapper"><span style="">odds</span>
   <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
@@ -472,7 +494,7 @@ const twosidesUIItem = (element) => `<div class="lbp-gameitem-parent" id="gameit
 <div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
 <input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div></div>`;
 
-
+}
 
 
 
