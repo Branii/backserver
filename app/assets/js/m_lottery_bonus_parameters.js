@@ -461,7 +461,7 @@ const broadBetParentMarkup = (markup,title = "",gameID,state) => {
 };
 
 const twosidesUIItem = (element) => `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
-  <span class="lbp-gameitem-name" style="width:6.5rem;">${isNumber(element.label) && $("#allGameNamesLottery").val() == 6 &&  element.label < 10 ? `0${element.label}` : element.label}</span>
+  <span class="lbp-gameitem-name" style="width:6.5rem;">${isNumber(element.label) && (($("#allGameNamesLottery").val() == 6) || ($("#allGameNamesLottery").val() == 5  && $("#game_groups").val() == "2 No. Combo")) &&  element.label < 10 ? `0${element.label}` : ( isNumber(element.label) && (($("#allGameNamesLottery").val() == 5  && $("#game_groups").val() == "3 No. Combo")) &&  element.label < 10 ? `00${element.label}` : (element.label < 99 && element.label > 9 && $("#game_groups").val() != "2 No. Combo" ? `0${element.label}` : element.label))}</span>
   <div style="width: 22rem;display:flex;">
   <div class="lpd-gameitem-wrapper"><span style="">odds</span>
   <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
