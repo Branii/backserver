@@ -265,6 +265,7 @@ class FinancialManageModel extends MEDOOHelper
         }
         
         $params = [
+            
             'uid' =>  $uid,
             'partner_uid' => 1,
             'order_type' => $desposittype,
