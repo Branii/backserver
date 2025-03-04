@@ -343,6 +343,108 @@ input:checked + .slider:after {
   font-size: 0.8rem;
 }
 
+
+.lpd-switch{
+    position: relative;
+    display: inline-block;
+    width: 120px;
+    height: 34px;
+}
+
+.lpd-form-check-input[type=checkbox] {
+    border-radius: .25em;
+}
+
+.lpd-switch input {
+    display: none;
+}
+
+.lpd-form-check-input {
+    --bs-form-check-bg: transparent;
+    flex-shrink: 0;
+    width: 1.313em;
+    height: 1.313em;
+    margin-top: .0935em;
+    vertical-align: top;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--bs-form-check-bg);
+    background-image: var(--bs-form-check-bg-image);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 1.25px solid #dfe5ef;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+
+.lpd-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(211, 8, 8);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+input:checked + .lpd-slider {
+    background-color: rgb(6, 173, 48);
+}
+
+.lpd-form-check-input:checked[type=checkbox] {
+    --bs-form-check-bg-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e);
+}
+
+.lpd-form-check-input:checked {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+.lpd-form-check-input[type=checkbox] {
+    border-radius: .25em;
+}
+.lpd-switch input {
+    display: none;
+}
+
+
+input:checked + .lpd-slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(85px);
+}
+.lpd-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .lpd-slider:after {
+    content: 'ACTIVE';
+}
+.lpd-slider:after {
+    content: 'INACTIVE';
+    color: white;
+    display: block;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    font-size: 10px;
+    font-family: Verdana, sans-serif;
+}
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
