@@ -461,19 +461,7 @@ const broadBetParentMarkup = (markup,title = "",gameID,state) => {
 };
 
 const twosidesUIItem = (element) => `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
-  <span class="lbp-gameitem-name" style="width:6.5rem;">${element.label}</span>
-  <div style="width: 22rem;display:flex;">
-  <div class="lpd-gameitem-wrapper"><span style="">odds</span>
-  <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
-  
-<div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
-<input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ></div>
-
-<div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
-<input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div></div>`;
-
-const twosidesUIMiscellaneous = (element) => `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
-  <span class="lbp-gameitem-name" style="width:6.5rem;">${element.label}</span>
+  <span class="lbp-gameitem-name" style="width:6.5rem;">${isNumber(element.label) && $("#allGameNamesLottery").val() == 6 &&  element.label < 10 ? `0${element.label}` : element.label}</span>
   <div style="width: 22rem;display:flex;">
   <div class="lpd-gameitem-wrapper"><span style="">odds</span>
   <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
@@ -485,19 +473,10 @@ const twosidesUIMiscellaneous = (element) => `<div class="lbp-gameitem-parent" i
 <input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div></div>`;
 
 
-const twosidesUIItemFixedPlace = (element) => `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
-  <span class="lbp-gameitem-name" style="width:6.5rem;">${element.label}</span>
-  <div style="width: 22rem;display:flex;">
-  <div class="lpd-gameitem-wrapper"><span style="">odds</span>
-  <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
-  
-<div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
-<input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ></div>
-
-<div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
-<input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div></div>`;
 
 
+
+const  isNumber  = (value)  => typeof value === "number" && !Number.isNaN(value);
 
 {/* <div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span> */}
     {/* <input type="text" class="form-control lbp-gameitem-input" placeholder="Odds" value="2.23350" id="lbp-odds-952"></div> */}
