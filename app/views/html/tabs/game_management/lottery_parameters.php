@@ -316,8 +316,8 @@ input:checked + .slider:after {
 
 .lbp-gameitem-input{
   background-color: #fff;
-  margin-right: 10px;
   padding: 8px;
+  text-align: center;
 }
 
 .update-gamegroup:hover{
@@ -332,7 +332,16 @@ input:checked + .slider:after {
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.lpd-gameitem-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+}
 
+.lpd-gameitem-wrapper span {
+  font-size: 0.8rem;
+}
 
 </style>
 
