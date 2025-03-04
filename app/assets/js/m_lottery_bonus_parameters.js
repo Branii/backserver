@@ -81,8 +81,8 @@ $(() =>{
 
         $.ajax({ 
             // url: `../admin/fetchBonusTwoSides/${lotteryType}/${lotteryGameGroup}`,
-            // url: `http://192.168.1.51/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`,
-            url: `http://localhost/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`,
+            url: `http://192.168.1.51/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`,
+            // url: `http:///chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`,
             type: "GET",
             beforeSend: function () {
                 $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -284,31 +284,60 @@ const gameGroupsNameV2 =  {
 const twosidesUI = (data) => {
 
   let markup = "";
+
   let fixedPlaceMarkup = "";
   if(data.names === undefined && data.name === undefined){
-    data.data.forEach((element)=>{
-      if(element.key === "FixedPlace"){
-        fixedPlaceMarkup += twosidesUIItemFixedPlace(element);
-      }else{
-        markup += twosidesUIItem(element);
+    let innerMarkup = "";
+    let gameID = "";
+    const lottery = $("#allGameNamesLottery").val();
+    let title = "";
+     data.data.forEach((element,index)=>{
+     let key;
+   
+      if(lottery == 1){
+       key = element.gameid;
+      }else if(lottery == 8 ){
+        key = element.key;
+      }else if(lottery == 6){
+        key = element.key;
+       
       }
-     //
+         if(index == 0){
+        gameID = key;
+        if(lottery == 6){
+          title = key;
+        }
+      }
+      if(gameID == key){
+        innerMarkup += twosidesUIItem(element);
+        if(lottery == 6){
+          title = key;
+        }
+      }else {
+        markup += broadBetParentMarkup(innerMarkup,title);
+        gameID = key;
+        innerMarkup = twosidesUIItem(element);
+      }
+     if((data.data.length - 1) === index){
+        markup += broadBetParentMarkup(innerMarkup,title);
+     }
+      
+     
+     
+    
+    //   if(element.key === "FixedPlace"){
+    //     fixedPlaceMarkup += twosidesUIItemFixedPlace(element);
+    //   }else if(element.gameid === 203 || element.gameid === 204){
+    //     twosidesUIMiscellaneous(element);
+    //   }else{
+    //     markup += twosidesUIItem(element);
+    //   }
     });
-    return broadBetParentMarkup(markup) + fixedPlaceParentMarkup(fixedPlaceMarkup);
+    // twosidesUIItem(element);
+    
+    return markup;
+    // return broadBetParentMarkup(markup) + fixedPlaceParentMarkup(fixedPlaceMarkup);
   }
-
-
-  // const gamesSubNames  = data.names != undefined ? data.names : data.name;
-  // markup = "";
-  // gamesSubNames.forEach((subName) => {
-  //   let innerMarkup = "";
-  //   data[subName].data.forEach((element)=>{
-  //     innerMarkup += twosidesUIItem(element);
-  //   });
-  //   markup += broadBetParentMarkup(innerMarkup,subName);
-  // });
-
-  // return markup;
 
 
   const gamesSubNames  = data.names != undefined ? data.names : data.name;
@@ -345,27 +374,78 @@ const broadBetParentMarkup = (markup,title = "") => {
   if(markup.length === 0) return "";
   // title = title.length === 0 ? "" : `<div class="lbp-gamegroup-title"><span class="lbp-center">${title}</span></div>`;
   title = title.length === 0 ? "" : `<span class="lbp-center">${title}</span>`;
- return `<div class="lbp-gamegroup-wrapper"> <div class="lbp-gamegroup-title">${title}<div class="mt-3 mt-md-0 ms-auto" style="margin: 0px !important;"><button type="button" class="btn hstack gap-6  update-gamegroup" >Update</button></div></div><div class="lbp-gameitem-wrapper">${markup}</div></div>`
+ return `<div class="lbp-gamegroup-wrapper"> <div class="lbp-gamegroup-title">${title}<div class="" style="
+    display: flex;
+    width: 13.5rem;
+    align-self: end;
+    position: relative;
+    left: ${title.length == 0 ? "71.5rem" : "0rem"} ;
+">
+    <label class="switch" style="
+    margin-right: 0.8rem;
+"><input type="checkbox" class="form-check-input" datas="standard" role="switch" checked="">
+                    <span class="slider"></span>
+                    </label>
+    <div class="mt-3 mt-md-0 ms-auto" style="margin: 0px !important;"><button type="button" class="btn hstack gap-6  update-gamegroup" >Update</button></div></div></div><div class="lbp-gameitem-wrapper">${markup}</div></div>`
 };
 
 
 const fixedPlaceParentMarkup = (markup,title = "") => {
   if(markup.length === 0) return "";
   title = title.length === 0 ? "" : `<span class="lbp-center">${title}</span>`;
-  return `<div class="lbp-gamegroup-wrapper"><div class="lbp-gamegroup-title">${title}<div class="mt-3 mt-md-0 ms-auto" style="margin: 0px !important;"><button type="button" class="btn hstack gap-6  update-gamegroup" >Update</button></div></div><div class="lbp-gameitem-wrapper">${markup}</div></div>`;
+  return `<div class="lbp-gamegroup-wrapper"><div class="lbp-gamegroup-title">${title}<div class="" style="
+    display: flex;
+    width: 13.5rem;
+    align-self: end;
+    position: relative;
+    left: ${title.length == 0 ? "71.5rem" : "0rem"} ;
+">
+    <label class="switch" style="
+    margin-right: 0.8rem;
+"><input type="checkbox" class="form-check-input" datas="standard" role="switch" checked="">
+                    <span class="slider"></span>
+                    </label>
+    <div class="mt-3 mt-md-0 ms-auto" style="margin: 0px !important;"><button type="button" class="btn hstack gap-6  update-gamegroup" >Update</button></div></div></div><div class="lbp-gameitem-wrapper">${markup}</div></div>`;
 };
 
 const twosidesUIItem = (element) => `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
   <span class="lbp-gameitem-name" style="width:6.5rem;">${element.label}</span>
   <div style="width: 22rem;display:flex;">
-  <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}">
+  <div class="lpd-gameitem-wrapper"><span style="">odds</span>
+  <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
   
-<input type="text"  class="form-control lbp-gameitem-input" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" placeholder="Max. amt" ><input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" id="lbp-max-tot-amt-${element.labelid}" placeholder="Tot. Max. amt"></div></div>`;
+<div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
+<input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ></div>
+
+<div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
+<input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div></div>`;
+
+const twosidesUIMiscellaneous = (element) => `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
+  <span class="lbp-gameitem-name" style="width:6.5rem;">${element.label}</span>
+  <div style="width: 22rem;display:flex;">
+  <div class="lpd-gameitem-wrapper"><span style="">odds</span>
+  <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
+  
+<div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
+<input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ></div>
+
+<div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
+<input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div></div>`;
+
 
 const twosidesUIItemFixedPlace = (element) => `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
   <span class="lbp-gameitem-name" style="width:6.5rem;">${element.label}</span>
   <div style="width: 22rem;display:flex;">
-  <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}">
+  <div class="lpd-gameitem-wrapper"><span style="">odds</span>
+  <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
   
-<input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ><input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div>`;
+<div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
+<input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ></div>
 
+<div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
+<input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div></div>`;
+
+
+
+{/* <div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span> */}
+    {/* <input type="text" class="form-control lbp-gameitem-input" placeholder="Odds" value="2.23350" id="lbp-odds-952"></div> */}
