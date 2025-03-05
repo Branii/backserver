@@ -75,14 +75,17 @@ $(() =>{
         const lotteryModel = $("#allmodels").val();
         const lotteryGameGroup = $("#game_groups").val();
         if(lotteryModel == undefined || lotteryType == undefined || lotteryGameGroup == undefined) return;
-        // $("#maskrfeferal").hide();
-        // $("#lbp_twosides").show();
         const element = this;
 
+        let url = "";
+        if(lotteryModel === "twosides"){
+           url = `http://192.168.1.51/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`;
+        }else if(lotteryModel === "boardgames"){
+          url = "";
+        }
+
         $.ajax({ 
-            // url: `../admin/fetchBonusTwoSides/${lotteryType}/${lotteryGameGroup}`,
-            url: `http://192.168.1.51/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`,
-            // url: `http:///chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`,
+            url: ,
             type: "GET",
             beforeSend: function () {
                 $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -95,25 +98,7 @@ $(() =>{
               console.log(response[lotteryType]);
               response = response[lotteryType];
               const gameGroup = response[lotteryGameGroup];
-              // $("#maskrfeferal").html(twosidesUI(gameGroup))
-              $("#lbp_twosides").html(twosidesUI(gameGroup))
-
-             
-             
-
-              return;
-              if (response.status === "error") {
-                showToast("Error", "Lottery Data Successfully Updated.","error");
-                return;
-              }
-      
-              if(data == 0){
-                showToast("Error", "This lottery has already being " + (status === "gameon" ? " Turned On " : " Turned Off "),"error");
-                $('.lb-tclose').click();
-                return;
-              }
-        
-             $("#lbp_twosides").html(twoSidesModelMarkup(data));
+              $("#lbp_twosides").html(twosidesUI(gameGroup));
             },
             error: function (res, status, error) {
               $(".dataholder").html(
@@ -135,55 +120,36 @@ $(() =>{
 
       $(document).on('change', '.lpd-update-lottery',function(){
 
-        const labelid = $($(this).parents(".lpd-update-lottery")[0]).val();
-        console.log(labelid);
-        // $("#maskrfeferal").hide();
-        // $("#lbp_twosides").show();
+        const gameID = $(this).attr("id").split("-")[2];
         const element = this;
-
-        return;
-
         $.ajax({ 
-            // url: `../admin/fetchBonusTwoSides/${lotteryType}/${lotteryGameGroup}`,
-            type: "GET",
+            url: `../admin/toggleTwosidesLotteryState/${gameID}`,
+            type: "POST",
             beforeSend: function () {
                 $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
             },
             success: function (response) {
-              if(response === "Game id not found!!"){
-                showToast("Error", "Sorry the lottery selected is not yet ready.", "error");
+              response = JSON.parse(response);
+              if(response.status === "error"){
+                $(element).prop("checked", !$(element).prop("checked"));
+                showToast("Error", response.data, "error");
                 return;
               }
-              console.log(response[lotteryType]);
-              response = response[lotteryType];
-              const gameGroup = response[lotteryGameGroup];
-              // $("#maskrfeferal").html(twosidesUI(gameGroup))
-              $("#lbp_twosides").html(twosidesUI(gameGroup))
 
-             
-             
+              if(response.data == 0){
+                $(element).prop("checked", !$(element).prop("checked"));
+                showToast("Error", "Update unsuccessfull, please try again later.", "error");
+                return
+              }
 
-              return;
-              if (response.status === "error") {
-                showToast("Error", "Lottery Data Successfully Updated.","error");
-                return;
-              }
-      
-              if(data == 0){
-                showToast("Error", "This lottery has already being " + (status === "gameon" ? " Turned On " : " Turned Off "),"error");
-                $('.lb-tclose').click();
-                return;
-              }
-        
-             $("#lbp_twosides").html(twoSidesModelMarkup(data));
+              showToast("Success", "Lottery Data updated successfully.", "success");
+
             },
             error: function (res, status, error) {
-              $(".dataholder").html(
-                "<tr><td colspan='12' style='text-align:center;'>An error occured, please try again later.</td></tr>"
-              );
+              showToast("Error", "Request error, please try again later.", "error");
             },
             complete: function () {
-                $($(element).find("i")[0]).addClass("bx-check-double").removeClass("bx-loader bx-spin");
+             
             },
           });
       
@@ -213,6 +179,8 @@ $(() =>{
           $("#maskrfeferal").hide();
           $("#lbp_twosides").show();
 
+        }else if(lotteryModel === "boardgames"){
+           
         }else{
            $("#game_groups").hide();
            $("#maskrfeferal").show();
@@ -347,8 +315,6 @@ const gameGroupsNameV2 =  {
 const twosidesUI = (data) => {
 
   let markup = "";
-
-  let fixedPlaceMarkup = "";
   if(data.names === undefined && data.name === undefined){
     let innerMarkup = "";
     let gameID = "";
@@ -358,16 +324,21 @@ const twosidesUI = (data) => {
     let title = "";
     let key = "";
     let state = "";
+    let gameGroupID = "";
      data.data.forEach((element,index)=>{
-    
+      if(element.key.trim() != "P/F" ){
+
+      
       key = element.gameid;
-      state = element.state;
       if((lottery == 8  && gameGroup == "Row No.") || (lottery == 6 && gameGroup == "Pick") || (lottery == 8  && gameGroup == "Specific No.") ){
         key = element.key.trim();
 
       }
+      
          if(index == 0){
         gameID = key;
+        gameGroupID = element.gameid;
+        state = element.state;
         if((lottery == 6 && gameGroup == "Pick") ||  (lottery == 8  && gameGroup == "Specific No.") ){
           title = key;
         }
@@ -378,30 +349,18 @@ const twosidesUI = (data) => {
           title = key;
         }
       }else {
-        markup += broadBetParentMarkup(innerMarkup,title,element.gameid,state);
+        markup += broadBetParentMarkup(innerMarkup,title,gameGroupID,state);
         gameID = key;
         innerMarkup = twosidesUIItem(element);
+        gameGroupID = element.gameid;
+        state = element.state;
       }
      if((data.data.length - 1) === index){
-
-        markup += broadBetParentMarkup(innerMarkup,title,element.gameid,state);
+        markup += broadBetParentMarkup(innerMarkup,title,gameGroupID,state);
      }
-      
-     
-     
-    
-    //   if(element.key === "FixedPlace"){
-    //     fixedPlaceMarkup += twosidesUIItemFixedPlace(element);
-    //   }else if(element.gameid === 203 || element.gameid === 204){
-    //     twosidesUIMiscellaneous(element);
-    //   }else{
-    //     markup += twosidesUIItem(element);
-    //   }
+    }
     });
-    // twosidesUIItem(element);
-    
     return markup;
-    // return broadBetParentMarkup(markup) + fixedPlaceParentMarkup(fixedPlaceMarkup);
   }
 
 
@@ -457,7 +416,7 @@ const broadBetParentMarkup = (markup,title = "",gameID,state) => {
 "><input type="checkbox" class="lpd-form-check-input lpd-update-lottery" id="lpd-gameid-${gameID}" datas="standard" role="switch" ${state == "active" ? "checked" : ""} >
                     <span class="lpd-slider"></span>
                     </label>
-    <div class="mt-3 mt-md-0 ms-auto" style="margin: 0px !important;"><button type="button" class="btn hstack gap-6  update-gamegroup" >Update</button></div></div></div><div class="lbp-gameitem-wrapper">${markup}</div></div>`
+    <div class="mt-3 mt-md-0 ms-auto" style="margin: 0px !important;"><button type="button" class="btn hstack gap-6  update-gamegroup" >Save</button></div></div></div><div class="lbp-gameitem-wrapper">${markup}</div></div>`
 };
 
 const twosidesUIItem = (element) => { 
@@ -488,7 +447,7 @@ displayedValue = element.label;
   <div class="lpd-gameitem-wrapper"><span style="">odds</span>
   <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
   
-<div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
+<div class="lpd-gameitem-wrapper"><span style="">Bet Amt</span>
 <input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ></div>
 
 <div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
