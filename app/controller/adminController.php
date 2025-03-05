@@ -356,6 +356,12 @@ class adminController extends Controller {
         $this->view->render();
     }
 
+    public function  toggleTwosidesLotteryState($gameID)
+    {
+        $this->view('exec/lottery_bonus_parameters', ["gameID"=> $gameID,'flag' => 'toggleTwosidesLotteryState']);
+        $this->view->render();
+    }
+
 
     public function  fetchBonusTwoSides($lotteryID,$lotteryGameGroup)
     {

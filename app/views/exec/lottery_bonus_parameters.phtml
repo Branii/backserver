@@ -40,7 +40,18 @@ if ($flag == "fetchBonusTwoSides") {
 
       return ["status" => "error", "data" => "Internal Server Error."];
     }
-}
 
+}else if ($flag == "toggleTwosidesLotteryState") {
+
+    try{
+    $gameID = isset($this->viewData['gameID']) ? $this->viewData['gameID'] : "";
+    $results = GameManageModel::toggleTwosidesLotteryState($gameID);
+    if($results['status'] === "error") return ['status' => "error", 'data' => "Internal Server Error."];
+
+    }catch(Exception $e){
+
+      return ["status" => "error", "data" => "Internal Server Error."];
+    }
+}
 
 echo json_encode($results);

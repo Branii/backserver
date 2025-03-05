@@ -314,6 +314,25 @@ class GameManageModel extends MEDOOHelper
 
     }
 
+    public static function toggleTwosidesLotteryState($gameID)
+    {
+
+        try{
+        $sql = "";
+        $database = parent::openLink();
+        $table_name = "twosides";
+        $sql .= "UPDATE {$table_name} SET state = CASE WHEN state = 'active' THEN 'inactive' WHEN state = 'inactive' THEN 'active' ELSE state END WHERE gn_id=:gn_id;";
+        
+        $data = $database->query($sql, [":gn_id" => $gameID]);
+        return ['status' => "success", 'data' => $data->rowCount()];
+
+    }catch(Exception $e){
+
+        return ['status' => "success", 'data' => "Internal Server Error.".$e->getMessage()];
+    }
+
+    }
+
 
 
     public static function updateLotteryData($maxPrizeAmountPerBet,$maxAmtPerIssue, $maxWinPerPersonPerIssue,$minBetAmtPerIssue,$lockTimeForClsing,$sortingWeight,$lottery_type,$game_type_id): array {

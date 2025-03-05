@@ -432,10 +432,10 @@ input:checked + .lpd-slider:before {
 }
 
 input:checked + .lpd-slider:after {
-    content: 'ACTIVE';
+    content: 'ON';
 }
 .lpd-slider:after {
-    content: 'INACTIVE';
+    content: 'OFF';
     color: white;
     display: block;
     position: absolute;
