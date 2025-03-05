@@ -249,7 +249,7 @@ input:checked + .slider:before {
 
 /*------ ADDED CSS ---------*/
 .slider:after {
- content: 'INACTIVE';
+ content: 'OFF';
  color: white;
  display: block;
  position: absolute;
@@ -261,7 +261,7 @@ input:checked + .slider:before {
 }
 
 input:checked + .slider:after {
- content: 'ACTIVE';
+ content: 'ON';
 }
 
 /*--------- END --------*/
