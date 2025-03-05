@@ -122,7 +122,7 @@ $(function () {
         let models = $("#allmodels").val();
         // console.log(lotteryId, models);
 
-      if(models == "twosides") return;
+      if(models == "twosides" || models === "boardgames") return;
 
       getLotteryGames(lotteryId,models);
  
