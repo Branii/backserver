@@ -445,6 +445,64 @@ input:checked + .lpd-slider:after {
     font-size: 10px;
     font-family: Verdana, sans-serif;
 }
+
+/* From Uiverse.io by Subaashbala */ 
+/* The switch - the box around the slider */
+.switches {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 5em;
+  height: 2.25em;
+}
+
+/* Hide default HTML checkbox */
+.switches input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider1 {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e7eff9;
+  outline: 1px solid #f3f8fe;
+  box-shadow: 0 4px 5px #f3f8fe inset, 0 4px 5px #c8d5e6;
+  transition: 0.4s;
+  border-radius: 30px;
+}
+
+.slider1:before {
+  position: absolute;
+  content: "off";
+  font-size: 0.85em;
+  color: #d2d6d8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 2em;
+  min-width: 2em;
+  border-radius: 20px;
+  left: 0.35em;
+  bottom: 0.3em;
+  background-color: red;
+  outline: 2px solid #d2d6d8;
+  transition: 0.4s;
+}
+
+.switches input:checked + .slider1:before {
+  content: "on";
+  background-color: green;
+  color: white;
+  transform: translateX(3.1em);
+}
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
