@@ -34,6 +34,7 @@ $(function () {
                <td>${item.name}</td>
                  data-updated-percentage-one
                 <td>
+              
                 <input type="text" class="form-control oddsone" value="${item.modified_odds}" data-original="${item.odds}" readonly>
                  <br>
                 <input type="range" class="rangeSliderone" min="0" max="100" value="${item.oddspercentage}">
@@ -50,7 +51,7 @@ $(function () {
                 <td>
                 <input type="text" class="form-control oddsoness" value="${item.modified_totalbet}" data-original="${item.total_bets}" readonly>
                 <br>
-                <input type="range" class="rangeSlideroness" min="0" max="100" value="${item.totalbetpercentage}"  ${disableslider}/>
+                <input type="range" class="rangeSlideroness" min="0" step ="0.1" max="100" value="${item.totalbetpercentage}"  ${disableslider}/>
                 <span class="rangeValues" style="margin-left:10px">${item.totalbetpercentage}%</span>
                 </td>
 
@@ -173,8 +174,8 @@ $(function () {
         row.attr("data-updated-percentage-two", percentageTwo);
         row.attr("data-updated-values-one", JSON.stringify(scaledValuesOne));
         row.attr("data-updated-value-two", scaledValueTwo);
-        /// console.log(row.attr("data-updated-value-two"))
-        // console.log(row.attr("data-updated-percentage-two"))
+        // console.log(row.attr("ata-updated-values-one"))
+         console.log(row.attr("data-updated-value-two"))
     });
 
     // Reset checkbox functionality
@@ -201,9 +202,7 @@ $(function () {
         }
     });
 
-    // $(document).ready(function() {
-    //     $(".resetCheckbox").trigger("change");
-    // });
+ 
     async function resettotalbet(gametypeId, gamemodel, toatalbetValue, rangeSliderValue) {
         try {
             const response = await fetch(`../admin/resettotalbet/${gametypeId}/${gamemodel}/${toatalbetValue}/${rangeSliderValue}`);
@@ -244,7 +243,7 @@ $(function () {
             const data = await response.json();
             if (data) {
                 showToast("Success", "updated succesfully", "success");
-                getLotteryGames(gametypeId, gamemodel);
+                // getLotteryGames(gametypeId, gamemodel);
             }
         } catch (error) {
             console.error("Error fetching data:", error);
