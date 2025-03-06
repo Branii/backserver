@@ -72,7 +72,8 @@ $(() =>{
     $(document).on('click', '#lbp_search',function(){
 
       const lotteryType      = $('#allGameNamesLottery').val();
-      let lotteryText        = $("#allGameNamesLottery option:selected").text().toLowerCase();
+      let lotteryTextCaps        = $("#allGameNamesLottery option:selected").text();
+      let lotteryText        = $("#allGameNamesLottery option:selected").text().toLowerCase()
       const lotteryModel     = $("#allmodels").val();
       const lotteryGameGroup = $("#game_groups").val();
       // if(lotteryModel == undefined || lotteryType == undefined || lotteryGameGroup == undefined) return;
@@ -98,29 +99,36 @@ $(() =>{
               return;
             }
             if(lotteryModel === "twosides"){
-              console.log(response[lotteryType]);
+              // console.log(response[lotteryType]);
               response = response[lotteryType];
               const gameGroup = response[lotteryGameGroup];
               $("#lbp_twosides").html(twosidesUI(gameGroup));
             }else if(lotteryModel === "boardgames"){
+             lotteryText = lotteryTextCaps === "Mark6" || lotteryTextCaps === "Happy8" ? lotteryTextCaps : lotteryText;
+              // console.log(lotteryText);
+              // console.log(response)
              response = response[lotteryText];
+              // console.log(response);
              const gameGroups = boardGamesGameGroups[lotteryText];
-              console.log(gameGroups);
-              return;
+              // console.log(gameGroups);
+           
               const groupNames = Object.keys(gameGroups);
+              console.log(groupNames);
+              // console.log(response);
               let markup = "";
-              groupNames.foreach((groupName) => {
-                let data = boardGamesGameGroups[groupName];
-                let markup = "";
-                if(data.length > 0){
-
-                  
-                  
+              groupNames.forEach((groupName) => {
+                let gameNames = gameGroups[groupName];
+                if(gameNames.length > 0){
+                     gameNames.forEach((gameName) =>{
+                  markup += boardGamesMarkup(response[groupName][gameName],gameName);
+                 }); 
                 }else{
-                 
-                 markup = boardGamesMarkup(data,groupName);
+                  markup += boardGamesMarkup(response[groupName],groupName);
+              
                 }
+               
               });
+              // console.log(markup);
               $("#lbp_boardgames").html(markup);
             }
           
@@ -205,7 +213,6 @@ $(() =>{
         $("#lbp_twosides").show();
 
       }else if(lotteryModel === "boardgames"){
-        $("#game_groups").show();
         $("#lbp_boardgames").show();
       }else if(lotteryModel === "standard"){
          $("#game_groups").hide();
@@ -310,7 +317,6 @@ if(data.names === undefined && data.name === undefined){
   let gameID = "";
   const lottery = $("#allGameNamesLottery").val();
   const gameGroup = $("#game_groups").val();
-  console.log("Lottery: ",lottery);
   let title = "";
   let key = "";
   let state = "";
@@ -418,7 +424,7 @@ const condition3 = element.label < 100 && element.label > 9 && $("#game_groups")
 // 2. Use if / else if / else
 let displayedValue;
 if (condition1) {
-console.log(element.key,element.label);
+// console.log(element.key,element.label);
 displayedValue = `0${element.label}`;
 } else if (condition2) {
 displayedValue = `00${element.label}`;
@@ -445,24 +451,27 @@ return `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
 
 const boardGamesMarkup = (games = [],title = "") => {
 let markup = "";
+let gamesIDs = []; 
+let state = "";
 games.forEach((element) => {
-
-   markup += `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
-<span class="lbp-gameitem-name" style="width:6.5rem;">${element.label}</span>
+    gamesIDs.push(element.gameId);
+    state = element.state;
+   markup += `<div class="lbp-gameitem-parent" id="gameitem-${element.gameId}">
+<span class="lbp-gameitem-name" style="width:6.5rem;">${element.name}</span>
 <div style="width: 22rem;display:flex;">
 <div class="lpd-gameitem-wrapper"><span style="">odds</span>
-<input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
+<input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-boargames-odds-${element.gameId}"></div>
 
 <div class="lpd-gameitem-wrapper"><span style="">Bet Amt</span>
-<input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="" id="lbp-max-amt-${element.labelid}" ></div>
+<input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-boardgames-max-amt-${element.gameId}" ></div>
 
 <div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
-<input type="text" class="form-control lbp-gameitem-input" value="" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div></div>`;
+<input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-boardgames-max-tot-amt-${element.gameId}"></div></div></div>`;
   
 });
 
+return broadBetParentMarkup(markup,title,gamesIDs.join(","),state);
 
-return broadBetParentMarkup(markup);
 };
 
 const  isNumber  = (value)  => typeof value === "number" && !Number.isNaN(value);
