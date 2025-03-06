@@ -309,51 +309,67 @@ $(document).ready(function() {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Switch Controlled Percentage</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        .table { width: 60%; margin: 20px auto; text-align: center; }
-        .form-check-input { width: 50px; margin-left: 10px; }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Styled Table</title>
 </head>
-<body>
-
-<!-- First Dropdown -->
-<select id="gameDropdown1">
-    <option value="1">Game 1</option>
-    <option value="2">Game 2</option>
-    <option value="3">Game 3</option>
-</select>
-
-<!-- Second Dropdown (to be dynamically updated) -->
-<select id="gameDropdown2">
-    <option>Select an option</option>
-</select>
-
-<script>
-$(document).on("change", "#gameDropdown1", function() {
-    let selectedValue = $(this).val(); // Get selected value
-
-    // Define mapping for each option in the first dropdown
-    let optionsMap = {
-        "1": ["Standard", "Twosides", "Logdragion"],
-        "2": ["Long", "Fourside", "Logdragn"],
-        "3": ["Option A", "Option B", "Option C"] // Example for third option
-    };
-
-    let options = optionsMap[selectedValue] || []; // Get corresponding options or empty
-
-    // Populate second dropdown
-    let secondDropdown = $("#gameDropdown2");
-    secondDropdown.empty(); // Clear existing options
-
-    $.each(options, function(index, value) {
-        secondDropdown.append(new Option(value, value.toLowerCase())); // Add new options
-    });
-});
-
-</script>
-
+<body class="p-6 bg-gray-100">
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-300">
+            <thead>
+                <tr class="bg-gray-200 text-gray-700">
+                    <th class="p-3 border">Game Category</th>
+                    <th class="p-3 border">Game Group</th>
+                    <th class="p-3 border">Game</th>
+                    <th class="p-3 border">Prize Level</th>
+                    <th class="p-3 border">Standard Odds</th>
+                    <th class="p-3 border">Bonus Range</th>
+                    <th class="p-3 border">Game Toggle</th>
+                    <th class="p-3 border">Bet Toggle</th>
+                    <th class="p-3 border">Bet Percentage</th>
+                    <th class="p-3 border">Max Bet</th>
+                    <th class="p-3 border">Bet Value</th>
+                    <th class="p-3 border">Series Multiplier</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center border">
+                    <td class="p-2 border">Three Star</td>
+                    <td class="p-2 border">Direct Selection</td>
+                    <td class="p-2 border">
+                        <input type="radio" name="game1" class="w-5 h-5">
+                    </td>
+                    <td class="p-2 border">1000</td>
+                    <td class="p-2 border">
+                        <input type="range" class="w-20" value="100">
+                        <span>100%</span>
+                    </td>
+                    <td class="p-2 border">1000</td>
+                    <td class="p-2 border">
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer" checked>
+                            <div class="w-10 h-5 bg-gray-300 peer-checked:bg-green-500 rounded-full"></div>
+                        </label>
+                    </td>
+                    <td class="p-2 border">
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer" checked>
+                            <div class="w-10 h-5 bg-gray-300 peer-checked:bg-green-500 rounded-full"></div>
+                        </label>
+                    </td>
+                    <td class="p-2 border">
+                        <input type="range" class="w-20" value="80"> <span>80%</span>
+                    </td>
+                    <td class="p-2 border">1000</td>
+                    <td class="p-2 border">800</td>
+                    <td class="p-2 border">
+                        <button class="px-3 py-1 bg-gray-300 rounded">Big/Small</button>
+                        <button class="px-3 py-1 bg-orange-400 text-white rounded">Pole</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
+
+

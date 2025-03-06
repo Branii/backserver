@@ -24,6 +24,9 @@ $(function () {
         let html = "";
         data.forEach((item) => {
             let isChecked = item.state === "active" ? "checked" : "";
+            let isCheck = item.totalbetpercentage === "100" ? "" : "checked";
+             let disableslider = item.totalbetpercentage === "100" ? "disabled" : "";
+           
             html += `
             <tr class="trow">
                <td>${item.gameplay_name}</td>
@@ -37,12 +40,8 @@ $(function () {
                 <span class="rangeValue" style="margin-left:10px">${item.oddspercentage}%</span>
                 </td>
                 <td>
-                <div class="form-check form-switch mb-0">
-                <input class="form-check-input resetCheckbox" style="width:40px;margin:auto"type="checkbox" value ='${item.gn_id}' datas= '${item.model}' role="switch" checked/>
-                </div>
-                <!-- From Uiverse.io by Subaashbala --> 
-                <label class="switches resetCheckbox">
-                <input type="checkbox" class="resetCheckbox" value ='${item.gn_id}' datas= '${item.model}'/>
+                <label class="switches">
+                <input type="checkbox" class="resetCheckbox" value ='${item.gn_id}' datas= '${item.model}' ${isCheck}/>
                 <span class="slider1"></span>
                 </label>
 
@@ -51,7 +50,7 @@ $(function () {
                 <td>
                 <input type="text" class="form-control oddsoness" value="${item.modified_totalbet}" data-original="${item.total_bets}" readonly>
                 <br>
-                <input type="range" class="rangeSlideroness" min="0" max="100" value="${item.totalbetpercentage}">
+                <input type="range" class="rangeSlideroness" min="0" max="100" value="${item.totalbetpercentage}"  ${disableslider}/>
                 <span class="rangeValues" style="margin-left:10px">${item.totalbetpercentage}%</span>
                 </td>
 
