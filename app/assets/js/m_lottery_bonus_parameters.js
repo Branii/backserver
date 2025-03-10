@@ -81,10 +81,10 @@ $(() =>{
 
       let url = "";
       if(lotteryModel === "twosides"){
-         url = `http://192.168.1.51/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`;
+         url = `https://winsstarts.com/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`;
       }else if(lotteryModel === "boardgames"){
         if(lotteryText === "11x5") lotteryText = "eleven5";
-        url = `http://192.168.1.51/chairman_test/api/v1/limvo/boardgame_games/${lotteryText}`;
+        url = `https://winsstarts.com/chairman_test/api/v1/limvo/boardgame_games/${lotteryText}`;
       }
 
       $.ajax({ 

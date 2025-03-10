@@ -134,7 +134,7 @@ $(function () {
   });
 
     //max slide
-    //  $(document).ready(function() {
+
 
     $(document).on("input", ".rangeSliderone, .rangeSlideroness", function () {
         let row = $(this).closest("tr"); // Get the closest table row
@@ -235,7 +235,7 @@ $(function () {
         //getLotteryGames(gametypeId, gamemodel)
     });
 
-    //});
+  
 
     async function updateoddstotalbets(gametypeId, gamemodel, percentageOne, scaledValuesOne, percentageTwo, scaledValueTwo) {
         try {
