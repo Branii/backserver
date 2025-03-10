@@ -32,11 +32,12 @@ $(function () {
     const gamemodel = {
       1: "Standard",
       2: "Two Sides",
-      3: "Long Dragon",
-      4: "Many Tables ",
-      5: "Board Games",
-      6: "Road Bets",
-      7: "Fantan"
+      3: "Road Bets",
+      4: "Long Dragon",
+      5: "Many Tables ",
+      6: "Board Games",
+      7: "Fantan",
+      8: "Trend"
     };
 
     const betstatus = {
