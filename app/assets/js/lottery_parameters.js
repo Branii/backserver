@@ -24,29 +24,34 @@ $(function () {
         let html = "";
         data.forEach((item) => {
             let isChecked = item.state === "active" ? "checked" : "";
+            let isCheck = item.totalbetpercentage === "100" ? "" : "checked";
+             let disableslider = item.totalbetpercentage === "100" ? "disabled" : "";
+           
             html += `
-          <tr class="trow">
-              <td>${item.gameplay_name}</td>
-              <td>${item.group_type}</td>
-              <td>${item.name}</td>
+            <tr class="trow">
+               <td>${item.gameplay_name}</td>
+               <td>${item.group_type}</td>
+               <td>${item.name}</td>
                  data-updated-percentage-one
                 <td>
+              
                 <input type="text" class="form-control oddsone" value="${item.modified_odds}" data-original="${item.odds}" readonly>
                  <br>
                 <input type="range" class="rangeSliderone" min="0" max="100" value="${item.oddspercentage}">
                 <span class="rangeValue" style="margin-left:10px">${item.oddspercentage}%</span>
                 </td>
                 <td>
-                <div class="form-check form-switch mb-0">
-                <input class="form-check-input resetCheckbox" style="width:40px;margin:auto"type="checkbox" value ='${item.gn_id}' datas= '${item.model}' role="switch" checked/>
-                </div>
+                <label class="switches">
+                <input type="checkbox" class="resetCheckbox" value ='${item.gn_id}' datas= '${item.model}' ${isCheck}/>
+                <span class="slider1"></span>
+                </label>
 
                 </td>
 
                 <td>
                 <input type="text" class="form-control oddsoness" value="${item.modified_totalbet}" data-original="${item.total_bets}" readonly>
                 <br>
-                <input type="range" class="rangeSlideroness" min="0" max="100" value="${item.totalbetpercentage}">
+                <input type="range" class="rangeSlideroness" min="0" step ="0.1" max="100" value="${item.totalbetpercentage}"  ${disableslider}/>
                 <span class="rangeValues" style="margin-left:10px">${item.totalbetpercentage}%</span>
                 </td>
 
@@ -58,7 +63,7 @@ $(function () {
                 </td>
          
                 <td> <button type="button" class="btn btn-light updatethis saveBtn" value ='${item.gn_id}' datas= '${item.model}' >Save</button></td>
-          </tr>
+             </tr>
       `;
         });
         return html;
@@ -122,14 +127,14 @@ $(function () {
         let models = $("#allmodels").val();
         // console.log(lotteryId, models);
 
-      if(models == "twosides") return;
+      if(models == "twosides" || models === "boardgames") return;
 
       getLotteryGames(lotteryId,models);
  
   });
 
     //max slide
-    //  $(document).ready(function() {
+
 
     $(document).on("input", ".rangeSliderone, .rangeSlideroness", function () {
         let row = $(this).closest("tr"); // Get the closest table row
@@ -169,8 +174,8 @@ $(function () {
         row.attr("data-updated-percentage-two", percentageTwo);
         row.attr("data-updated-values-one", JSON.stringify(scaledValuesOne));
         row.attr("data-updated-value-two", scaledValueTwo);
-        /// console.log(row.attr("data-updated-value-two"))
-        // console.log(row.attr("data-updated-percentage-two"))
+        // console.log(row.attr("ata-updated-values-one"))
+         console.log(row.attr("data-updated-value-two"))
     });
 
     // Reset checkbox functionality
@@ -197,9 +202,7 @@ $(function () {
         }
     });
 
-    // $(document).ready(function() {
-    //     $(".resetCheckbox").trigger("change");
-    // });
+ 
     async function resettotalbet(gametypeId, gamemodel, toatalbetValue, rangeSliderValue) {
         try {
             const response = await fetch(`../admin/resettotalbet/${gametypeId}/${gamemodel}/${toatalbetValue}/${rangeSliderValue}`);
@@ -232,7 +235,7 @@ $(function () {
         //getLotteryGames(gametypeId, gamemodel)
     });
 
-    //});
+  
 
     async function updateoddstotalbets(gametypeId, gamemodel, percentageOne, scaledValuesOne, percentageTwo, scaledValueTwo) {
         try {
@@ -240,7 +243,7 @@ $(function () {
             const data = await response.json();
             if (data) {
                 showToast("Success", "updated succesfully", "success");
-                getLotteryGames(gametypeId, gamemodel);
+                // getLotteryGames(gametypeId, gamemodel);
             }
         } catch (error) {
             console.error("Error fetching data:", error);

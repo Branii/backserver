@@ -249,7 +249,7 @@ input:checked + .slider:before {
 
 /*------ ADDED CSS ---------*/
 .slider:after {
- content: 'INACTIVE';
+ content: 'OFF';
  color: white;
  display: block;
  position: absolute;
@@ -261,7 +261,7 @@ input:checked + .slider:before {
 }
 
 input:checked + .slider:after {
- content: 'ACTIVE';
+ content: 'ON';
 }
 
 /*--------- END --------*/
@@ -316,8 +316,8 @@ input:checked + .slider:after {
 
 .lbp-gameitem-input{
   background-color: #fff;
-  margin-right: 10px;
   padding: 8px;
+  text-align: center;
 }
 
 .update-gamegroup:hover{
@@ -330,6 +330,177 @@ input:checked + .slider:after {
     border: solid 1px #ccc;
     color: #2a3547 !important;
   transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.lpd-gameitem-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.lpd-gameitem-wrapper span {
+  font-size: 0.8rem;
+}
+
+
+.lpd-switch{
+    position: relative;
+    display: inline-block;
+    width: 120px;
+    height: 34px;
+}
+
+.lpd-form-check-input[type=checkbox] {
+    border-radius: .25em;
+}
+
+.lpd-switch input {
+    display: none;
+}
+
+.lpd-form-check-input {
+    --bs-form-check-bg: transparent;
+    flex-shrink: 0;
+    width: 1.313em;
+    height: 1.313em;
+    margin-top: .0935em;
+    vertical-align: top;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--bs-form-check-bg);
+    background-image: var(--bs-form-check-bg-image);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 1.25px solid #dfe5ef;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+
+.lpd-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(211, 8, 8);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+input:checked + .lpd-slider {
+    background-color: rgb(6, 173, 48);
+}
+
+.lpd-form-check-input:checked[type=checkbox] {
+    --bs-form-check-bg-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e);
+}
+
+.lpd-form-check-input:checked {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+.lpd-form-check-input[type=checkbox] {
+    border-radius: .25em;
+}
+.lpd-switch input {
+    display: none;
+}
+
+
+input:checked + .lpd-slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(85px);
+}
+.lpd-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .lpd-slider:after {
+    content: 'ON';
+}
+.lpd-slider:after {
+    content: 'OFF';
+    color: white;
+    display: block;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    font-size: 10px;
+    font-family: Verdana, sans-serif;
+}
+
+/* From Uiverse.io by Subaashbala */ 
+/* The switch - the box around the slider */
+.switches {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 5em;
+  height: 2.25em;
+}
+
+/* Hide default HTML checkbox */
+.switches input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider1 {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e7eff9;
+  outline: 1px solid #f3f8fe;
+  box-shadow: 0 4px 5px #f3f8fe inset, 0 4px 5px #c8d5e6;
+  transition: 0.4s;
+  border-radius: 30px;
+}
+
+.slider1:before {
+  position: absolute;
+  content: "off";
+  font-size: 0.85em;
+  color: #d2d6d8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 2em;
+  min-width: 2em;
+  border-radius: 20px;
+  left: 0.35em;
+  bottom: 0.3em;
+  background-color: red;
+  outline: 2px solid #d2d6d8;
+  transition: 0.4s;
+}
+
+.switches input:checked + .slider1:before {
+  content: "on";
+  background-color: green;
+  color: white;
+  transform: translateX(3.1em);
 }
 
 </style>
@@ -402,7 +573,7 @@ input:checked + .slider:after {
 
   </div>
   <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus" id="maskrfeferal" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="maskrfeferal" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">
@@ -445,7 +616,48 @@ input:checked + .slider:after {
             </table>
         </div>
 
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus" id="lbp_twosides" style="height:530px;overflow-y:scroll;display:none;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_twosides" style="height:530px;overflow-y:scroll;display:none;">
+            <table class="table text-nowrap mb-0 align-middle table-bordered" style="display:none;">
+                <thead class="text-dark fs-4 tbl-headerbonus">
+                    <tr class="headrowbonus">
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?> Two Sides headed </h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Play Group']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Games']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Odds']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets Control']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets']; ?></h6>
+                        </th>
+                       
+                        
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="game_name_container">
+
+                    <tr class="no-resultslist">
+                        <td colspan="9">
+                            <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_boardgames" style="height:530px;overflow-y:scroll;display:none;">
             <table class="table text-nowrap mb-0 align-middle table-bordered" style="display:none;">
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">

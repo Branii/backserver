@@ -30,7 +30,9 @@ class GameManageModel extends MEDOOHelper
 
     public static function getAllGamesLottery()
     {
-        return parent::selectAll('lottery_type', ['lt_id', 'name']);
+      return  $data = parent::query("SELECT lt_id,name FROM lottery_type WHERE  lt_id != 9 ");
+     // return parent::selectAll('lottery_type', ['lt_id', 'name'], "lt_id != 9");
+
     }
 
     public static function getLotteryGamesById(string $lotteryId, $gamemodel)
@@ -303,6 +305,25 @@ class GameManageModel extends MEDOOHelper
         $sql .= "UPDATE {$table_name} SET test_odds=:odds_{$odds_group_id} , max_bet_amount=:max_bet_amt_{$odds_group_id}, total_max_bet_amount=:max_total_bet_amt_{$odds_group_id} WHERE odds_group_id=:odds_group_id_{$odds_group_id};";
         }
         $data = $database->query($sql, $params);
+        return ['status' => "success", 'data' => $data->rowCount()];
+
+    }catch(Exception $e){
+
+        return ['status' => "success", 'data' => "Internal Server Error.".$e->getMessage()];
+    }
+
+    }
+
+    public static function toggleTwosidesLotteryState($gameID)
+    {
+
+        try{
+        $sql = "";
+        $database = parent::openLink();
+        $table_name = "twosides";
+        $sql .= "UPDATE {$table_name} SET state = CASE WHEN state = 'active' THEN 'inactive' WHEN state = 'inactive' THEN 'active' ELSE state END WHERE gn_id=:gn_id;";
+        
+        $data = $database->query($sql, [":gn_id" => $gameID]);
         return ['status' => "success", 'data' => $data->rowCount()];
 
     }catch(Exception $e){
