@@ -595,19 +595,33 @@ let oddsMarkup = "";
 games.forEach((element) => {
     gamesIDs.push(element.gameId);
     state = element.state;
-    oddsMarkup = lottery == "fast3" && title == "GuessNumber" ?  `<textarea type="text" cols="26" rows="3"  class="form-control lbp-gameitem-input" placeholder="Odds" id="lbp-boargames-odds-${element.gameId}">${element.odds}</textarea></div>` : `<input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-boargames-odds-${element.gameId}"></div>`;
-    
-   markup += `<div class="lbp-gameitem-parent" id="gameitem-${element.gameId}">
-<span class="lbp-gameitem-name" style="width:6.5rem;">${lottery === "eleven5" ? `${groupName}-${element.name}` : element.name}</span>
-<div style="width: 22rem;display:flex;">
-<div class="lpd-gameitem-wrapper"><span style="">odds</span>
-${oddsMarkup}
+    if(lottery == "fast3" && title == "GuessNumber" ){
+      markup += `<div class="lbp-gameitem-parent" id="gameitem-${element.gameId}" style="width: 47%;">
+      <span class="lbp-gameitem-name" style="width: 6.5rem;margin-right: 5px;">${element.name}</span>
+      <div style="width: 36rem;display:flex;">
+      <div class="lpd-gameitem-wrapper" style="width: 25rem;margin-right: 5px;"><span style="">odds</span>
+      <textarea type="text" class="form-control lbp-gameitem-input" rows="20" placeholder="Odds" id="lbp-odds-${element.gameId}" style="height: 132px; text-align: left;" col="30">${element.odds}</textarea></div>
+      
+      <div class="lpd-gameitem-wrapper" style="margin-right: 5px;"><span style="">Bet Amt</span>
+      <input type="text" class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.gameId}"></div>
+      
+      <div class="lpd-gameitem-wrapper" style=""><span style="">Tot. Bet Amt</span>
+      <input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.gameId}"></div></div></div>`;
+    }else{
 
-<div class="lpd-gameitem-wrapper"><span style="">Bet Amt</span>
-<input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-boardgames-max-amt-${element.gameId}" ></div>
+      markup += `<div class="lbp-gameitem-parent" id="gameitem-${element.gameId}">
+      <span class="lbp-gameitem-name" style="width:6.5rem;">${lottery === "eleven5" ? `${groupName}-${element.name}` : element.name}</span>
+      <div style="width: 22rem;display:flex;">
+      <div class="lpd-gameitem-wrapper"><span style="">odds</span>
+      <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-boargames-odds-${element.gameId}"></div>
+      
+      <div class="lpd-gameitem-wrapper"><span style="">Bet Amt</span>
+      <input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-boardgames-max-amt-${element.gameId}" ></div>
+      
+      <div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
+      <input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-boardgames-max-tot-amt-${element.gameId}"></div></div></div>`;
 
-<div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
-<input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-boardgames-max-tot-amt-${element.gameId}"></div></div></div>`;
+    }  
   
 });
 
