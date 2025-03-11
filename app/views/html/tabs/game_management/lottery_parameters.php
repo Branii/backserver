@@ -697,6 +697,50 @@ input:checked + .lpd-slider:after {
                 </tbody>
             </table>
         </div>
+
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_fantan" style="height:530px;overflow-y:scroll;display:none;">
+            <table class="table text-nowrap mb-0 align-middle table-bordered" style="display:none;">
+                <thead class="text-dark fs-4 tbl-headerbonus">
+                    <tr class="headrowbonus">
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?> Two Sides headed </h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Play Group']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Games']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Odds']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets Control']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets']; ?></h6>
+                        </th>
+                       
+                        
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="game_name_container">
+
+                    <tr class="no-resultslist">
+                        <td colspan="9">
+                            <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+
+
     </div>
 <!--   
   <div class="px-4 py-3 border-top pager">
