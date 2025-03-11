@@ -81,14 +81,12 @@ $(() =>{
 
       let url = "";
       if(lotteryModel === "twosides"){
-         url = `https://157.173.97.174/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`;
+         url = `http://192.168.1.51/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`;
       }else if(lotteryModel === "boardgames"){
         if(lotteryText === "11x5") lotteryText = "eleven5";
-
         url = `http://192.168.1.51/chairman_test/api/v1/limvo/boardgame_games/${lotteryText}`;
       }else if(lotteryModel === "fantan"){
         url = `http://192.168.1.51/chairman_test/api/v1/limvo/fantangames`;
-
       }
 
       $.ajax({ 
@@ -138,12 +136,39 @@ $(() =>{
               $("#lbp_boardgames").html(markup);
             }else if(lotteryModel === "fantan"){
               console.log(response);
-              lotteryText = lotteryText === "5d" || lotteryText === "pk10" ? lotteryText : lotteryTextCaps;
+    lotteryText = lotteryText === "5d" || lotteryText === "pk10" ? lotteryText : lotteryTextCaps;
+              if(lotteryText === "FAST3") lotteryText = "Fast3";
               response = response[lotteryText];
+              console.log(response,lotteryText);
               const gameGroup = response[lotteryGameGroup];
               console.log(gameGroup);
-             
+              if(lotteryText === "Fast3"){
+                 let title = "";
+    let innerMarkup = "";
+    let gameID = [];
+    let state = "";
+    gameGroup.forEach((element) => {
+      gameID.push(element.gameId);
+      state = element.state;
+      innerMarkup += `<div class="lbp-gameitem-parent" id="gameitem-${element.gameId}">
+      <span class="lbp-gameitem-name" style="width:6.5rem;">${element.name}</span>
+      <div style="width: 22rem;display:flex;">
+      <div class="lpd-gameitem-wrapper"><span style="">odds</span>
+      <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
+      
+      <div class="lpd-gameitem-wrapper"><span style="">Bet Amt</span>
+      <input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ></div>
+      
+      <div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
+      <input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div></div>`;
+      
+    });
+    innerMarkup = broadBetParentMarkup(innerMarkup,"",gameID.join(","),state);
+               $("#lbp_fantan").html(innerMarkup);
+                return;
+              }
               $("#lbp_fantan").html(fantanUI(gameGroup));
+              return;
               return;
               // FantanGameGroupsName;
              lotteryText = lotteryText === "5d" || lotteryText === "pk10" ? lotteryText : lotteryTextCaps;
