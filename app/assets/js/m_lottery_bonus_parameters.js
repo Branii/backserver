@@ -407,10 +407,24 @@ const fantanUI = (gameGroup) => {
     let innerMarkup = "";
     let gameID = [];
     let state = "";
+  
     gameData.forEach((element) => {
       gameID.push(element.gameId);
       state = element.state;
-      innerMarkup += `<div class="lbp-gameitem-parent" id="gameitem-${element.gameId}">
+      if(gameName === "Sweet Roses" || gameName === "happy8mainColor"){
+         innerMarkup += `<div class="lbp-gameitem-parent" id="gameitem-${element.gameId}" style="width: 47%;">
+      <span class="lbp-gameitem-name" style="width: 6.5rem;margin-right: 5px;">${element.name}</span>
+      <div style="width: 36rem;display:flex;">
+      <div class="lpd-gameitem-wrapper" style="width: 23rem;margin-right: 5px;"><span style="">odds</span>
+      <textarea type="text" class="form-control lbp-gameitem-input" rows="20" placeholder="Odds" id="lbp-odds-${element.gameId}" style="height: 132px; text-align: left;" col="30">${element.odds}</textarea></div>
+      
+      <div class="lpd-gameitem-wrapper" style="margin-right: 5px;"><span style="">Bet Amt</span>
+      <input type="text" class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.gameId}"></div>
+      
+      <div class="lpd-gameitem-wrapper" style=""><span style="">Tot. Bet Amt</span>
+      <input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.gameId}"></div></div></div>`;
+      }else{
+        innerMarkup += `<div class="lbp-gameitem-parent" id="gameitem-${element.gameId}">
       <span class="lbp-gameitem-name" style="width:6.5rem;">${element.name}</span>
       <div style="width: 22rem;display:flex;">
       <div class="lpd-gameitem-wrapper"><span style="">odds</span>
@@ -421,6 +435,9 @@ const fantanUI = (gameGroup) => {
       
       <div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
       <input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div></div>`;
+      }
+
+      
       
     });
     markup += broadBetParentMarkup(innerMarkup,gameName,gameID.join(","),state);
