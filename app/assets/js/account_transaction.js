@@ -78,7 +78,7 @@ $(function () {
            //console.log(value)
 
             let test = value !== translator["Bet Selection"] && langMap[value] ? langMap[value] : translator["Bet Selection"];
-            console.log(test , " => " ,value )
+        
             
             if (value == test) {
                 html += `
