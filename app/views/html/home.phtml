@@ -2,14 +2,15 @@
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
-isset($_SESSION['lang']) ? $_SESSION['lang'] : $_SESSION['lang'] = 'en';
+if (!isset($_SESSION['lang'])) {
+  $_SESSION['lang'] = 'en'; // Default language
+}
 $lang = $_SESSION['lang'];
 $translator = include "tabs/lang/{$lang}.php";
-//  print_r($lang);
+
 !(new Controller)->isUserLoggedIn() ? header("location:../") : "";
 $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
 $fullname = (new Controller)->getUsername($adminEmail);
-// echo $fullname['full_name'];
 
 ?>
 <!DOCTYPE html>

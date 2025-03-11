@@ -251,13 +251,13 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
                 <input type="text" id="transuser" class="form-control queryholdertransaction usernames transuser"
-                    placeholder="Search Username" />
+                    placeholder="<?= $translator['Search Username']; ?>" />
                 <input name="usernames" type="hidden" class="" />
                 <select class="form-control useraccount" size="5" style="display: none;" id="userAccountDropdown">
                     <!-- Options will be populated dynamically -->
                 </select>
                 <input type="text" class="form-control queryholdertransaction clearitem" id="transactionId"
-                    aria-describedby="name" placeholder="Search Transaction ID" />
+                    aria-describedby="name" placeholder="<?= $translator['Search Transaction ID']; ?>" />
 
                 <select name="order_type" class="form-control form-select queryholdertransaction " id="ordertypetrans"
                     data-bs-placeholder="Select Type">
@@ -299,11 +299,11 @@
                     ::
                 </button>
                 <button type="button" class="btn bg-white-subtle accountrefresh" value="right" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="<?= $translator['Refresh']; ?>">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle executetrans" value="end" aria-label="Execute"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="<?= $translator['Execute']; ?>">
                     <i class="bx bx-check-double loadertrans" style="font-size: 20px;"></i>
                 </button>
             </div>
@@ -355,9 +355,15 @@
                                 alt="Logo-Dark" />
                         </td>
                     </tr>
+
+                
                 </tbody>
+                
             </table>
+           
         </div>
+        
+
     </div>
     <div class="px-4 py-3 border-top pager">
         <span class="top-left-btn">
@@ -485,6 +491,6 @@
     <!-- /.modal-dialog -->
 </div>
 
-<script id="translations" type="application/json">
+<script class="translations" type="application/json">
 <?= json_encode($translator); ?>
 </script>

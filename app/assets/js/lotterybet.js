@@ -9,12 +9,6 @@ $(function () {
       duration: 3000, // auto-dismiss after 3s
     });
   }
-  function formatBalance(balance) {
-    if (balance % 1 !== 0 && balance.toString().split(".")[1].length > 2) {
-        return Number(balance).toFixed(4);
-    }
-    return Number(balance).toFixed(4);
-  }
   function formatMoney(money) { 
     let moneyStr = String(money); 
     if (moneyStr.includes(".")) { 
@@ -27,40 +21,44 @@ $(function () {
     return moneyStr; 
 }
 
+//const translator = JSON.parse(document.getElementById("translation-container").getAttribute("data-translations"));
+const translatorScript = document.querySelector(".translations"); // Get the script tag
+const translator = JSON.parse(translatorScript.textContent); 
   const Lottery = (data) => {
     let htmls = "";
+    //translator["Deposit"]
     const gamemodel = {
-      1: "Standard",
-      2: "Two Sides",
-      3: "Road Bets",
-      4: "Long Dragon",
-      5: "Many Tables ",
-      6: "Board Games",
-      7: "Fantan",
-      8: "Trend"
+      1:translator["Standard"],
+      2: translator["Two Sides"],
+      3: translator["Road Bets"],
+      4: translator["Long Dragon"],
+      5: translator["Many Tables"],
+      6: translator["Board Games"],
+      7: translator["Fantan"],
+      8: translator["Trend"]
     };
 
     const betstatus = {
-      2: "Win",
-      3: "Loss",
-      5: "Pending",
-      6: "Void",
-      7: "Refund",
+      2: translator["Win"],
+      3: translator["Loss"],
+      5: translator["Pending"],
+      6: translator["Void"],
+      7: translator["Refund"],
     };
     const states = {
-      1: "Settled",
-      2: "Unsettled",
-      4: "Cancelled",
-      7: "Refund",
-      8: "Delete",
+      1: translator["Settled"],
+      2: translator["Unsettled"],
+      4: translator["Cancelled"],
+      7: translator["Refund"],
+      8:translator["Delete"] ,
     };
 
     const status = {
-      2: { title: "Win", color: "#4CAF50" }, // Green
-      3: { title: "Loss", color: "#E91E63" }, // Red
-      5: { title: "Pending", color: "#9E9E9E" }, // Grey
-      6: { title: "Void", color: "#F44336" },
-      7: { title: "Refund", color: "#03A9F4" }, // Light Blue
+      2: { title: translator["Win"], color: "#4CAF50" }, // Green
+      3: { title: translator["Loss"], color: "#E91E63" }, // Red
+      5: { title: translator["Pending"], color: "#9E9E9E" }, // Grey
+      6: { title: translator["Void"], color: "#F44336" },
+      7: { title:translator["Refund"], color: "#03A9F4" }, // Light Blue
     
   };
 
@@ -76,7 +74,7 @@ $(function () {
                         <td>${item.bet_code}</td>
                         <td>${username}</td>
                         <td>${item.draw_period}</td>
-                        <td>${item.game_type}</td>
+                        <td>${translator[item.game_type]}</td>
                           <td>${gamemodel[item.game_model]}</td>
                         <td>${item.game_label}</td>
                         <td>${item.bet_date + " / " + item.bet_time}</td>
