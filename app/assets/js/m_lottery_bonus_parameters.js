@@ -416,11 +416,9 @@ const fantanUI = (gameGroup) => {
       <span class="lbp-gameitem-name" style="width: 6.5rem;margin-right: 5px;">${element.name}</span>
       <div style="width: 36rem;display:flex;">
       <div class="lpd-gameitem-wrapper" style="width: 23rem;margin-right: 5px;"><span style="">odds</span>
-      <textarea type="text" class="form-control lbp-gameitem-input" rows="20" placeholder="Odds" id="lbp-odds-${element.gameId}" style="height: 132px; text-align: left;" col="30">${element.odds}</textarea></div>
-      
+      <textarea type="text" class="form-control lbp-gameitem-input" rows="20" placeholder="Odds" id="lbp-odds-${element.gameId}" style="height: 132px; text-align: left;" col="30">${element.modified_odds}</textarea></div>
       <div class="lpd-gameitem-wrapper" style="margin-right: 5px;"><span style="">Bet Amt</span>
       <input type="text" class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.gameId}"></div>
-      
       <div class="lpd-gameitem-wrapper" style=""><span style="">Tot. Bet Amt</span>
       <input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.gameId}"></div></div></div>`;
       }else{
@@ -428,11 +426,9 @@ const fantanUI = (gameGroup) => {
       <span class="lbp-gameitem-name" style="width:6.5rem;">${element.name}</span>
       <div style="width: 22rem;display:flex;">
       <div class="lpd-gameitem-wrapper"><span style="">odds</span>
-      <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
-      
+      <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.modified_odds}" id="lbp-odds-${element.labelid}"></div>
       <div class="lpd-gameitem-wrapper"><span style="">Bet Amt</span>
-      <input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ></div>
-      
+      <input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ></div>  
       <div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
       <input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div></div>`;
       }
@@ -576,7 +572,7 @@ return `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
 <span class="lbp-gameitem-name" style="width:6.5rem;">${displayedValue}</span>
 <div style="width: 22rem;display:flex;">
 <div class="lpd-gameitem-wrapper"><span style="">odds</span>
-<input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
+<input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.modified_odds}" id="lbp-odds-${element.labelid}"></div>
 
 <div class="lpd-gameitem-wrapper"><span style="">Bet Amt</span>
 <input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ></div>
@@ -600,7 +596,7 @@ games.forEach((element) => {
       <span class="lbp-gameitem-name" style="width: 6.5rem;margin-right: 5px;">${element.name}</span>
       <div style="width: 36rem;display:flex;">
       <div class="lpd-gameitem-wrapper" style="width: 25rem;margin-right: 5px;"><span style="">odds</span>
-      <textarea type="text" class="form-control lbp-gameitem-input" rows="20" placeholder="Odds" id="lbp-odds-${element.gameId}" style="height: 132px; text-align: left;" col="30">${element.odds}</textarea></div>
+      <textarea type="text" class="form-control lbp-gameitem-input" rows="20" placeholder="Odds" id="lbp-odds-${element.gameId}" style="height: 132px; text-align: left;" col="30">${element.modified_odds}</textarea></div>
       
       <div class="lpd-gameitem-wrapper" style="margin-right: 5px;"><span style="">Bet Amt</span>
       <input type="text" class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.gameId}"></div>
