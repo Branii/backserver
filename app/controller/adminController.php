@@ -623,8 +623,27 @@ class adminController extends Controller {
     }
     
 
- 
+   //annoucement
+    function annoucement($messagetype,$messagetitle,$usernames,$description,$sendby){
+    //  ${messagetype}/${messagetitle}/${usernames}/${description}/${sendby}`,
+        $this->view('exec/annoucement_management',[
+            'flag' => 'message',
+            'messagetype' => $messagetype,
+            'messagetitle' =>$messagetitle,
+            'usernames' =>$usernames,
+            'description' => $description,
+            'sendby' =>$sendby
+        
+        ]);
+        $this->view->render();
+    }
+    public function fetchmessage($pageNumber, $limit)
+    {
+        $this->view('exec/annoucement_management', ['page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchmessage']);
+        $this->view->render();
+    }
 
+//fetchmessage
     //languages
 
      public function changelang(string $lang){

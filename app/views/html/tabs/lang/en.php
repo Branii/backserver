@@ -723,7 +723,14 @@ return [
 //（Announcements and Notifications）
 'Announcements and Notifications'=>'Announcements and Notifications',
 //(Announcement Management)
-'Announcement Management' => 'Announcement Management',
+'System Announcement' => 'System Announcement',
+'Annoucement List' =>'Annoucement List',
+'Title' =>'Title',
+'Content' =>'Content',
+'DateTime' =>'DateTime',
+'Created By' =>'Created By',
+'Active' =>'Active',
+
 //(Player Inbox Messages)
 'Player Inbox Messages' => 'Player Inbox Messages',
 
