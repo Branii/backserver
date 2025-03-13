@@ -99,7 +99,7 @@ const translator = JSON.parse(translatorScript.textContent);
     Object.entries(data).forEach(([key, value]) => {
 
       let test = value !== translator["Bet Selection"] && langMap[value] ? langMap[value] : translator["Bet Selection"];
-         
+
       if (value == test) {
            htmlbet += `
             <td>${value}</td>
@@ -119,7 +119,7 @@ const translator = JSON.parse(translatorScript.textContent);
 
       }
    
-      
+    
     });
     return htmlbet;
   };
