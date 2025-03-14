@@ -81,12 +81,13 @@ $(() =>{
 
       let url = "";
       if(lotteryModel === "twosides"){
-         url = `http://192.168.1.51/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`;
+      //  https://157.173.97.174
+         url = `https://157.173.97.174/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`;
       }else if(lotteryModel === "boardgames"){
         if(lotteryText === "11x5") lotteryText = "eleven5";
-        url = `http://192.168.1.51/chairman_test/api/v1/limvo/boardgame_games/${lotteryText}`;
+        url = `https://157.173.97.174/chairman_test/api/v1/limvo/boardgame_games/${lotteryText}`;
       }else if(lotteryModel === "fantan"){
-        url = `http://192.168.1.51/chairman_test/api/v1/limvo/fantangames`;
+        url = `https://157.173.97.174/chairman_test/api/v1/limvo/fantangames`;
       }
 
       $.ajax({ 
