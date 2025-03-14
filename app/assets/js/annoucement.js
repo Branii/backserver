@@ -35,7 +35,7 @@ $(function () {
         html += `
                       <tr>
                         <td>${item.title}</td>
-                        <td>${item.content}</td>
+                        <td style ="max-width: 300px;word-wrap: break-word;overflow-wrap: break-word; white-space: normal;">${item.content}</td>
                         <td>${item.created_at}</td>
                         <td>${item.type}</td>
                         <td>${item.audience}</td> 
