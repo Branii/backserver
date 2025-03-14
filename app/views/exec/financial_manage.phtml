@@ -47,11 +47,11 @@ if ($flag == "filterfinance") {
            'totalPages' => ceil($result['total'] / $limit),
        ]);
       }
-    }
+}
 
 
 
-    if ($flag == "addmoney") {
+if ($flag == "addmoney") {
 
     $depositetype = isset($this->viewData['depositetype']) ? (int) $this->viewData['depositetype'] : "";
     $uid = isset($this->viewData['uid']) ? (int) $this->viewData['uid'] :"";
