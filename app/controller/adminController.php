@@ -623,7 +623,49 @@ class adminController extends Controller {
     }
     
 
- 
+   //annoucement
+    function annoucement($messagetype,$messagetitle,$usernames,$description,$sendby){
+        $this->view('exec/annoucement_management',[
+            'flag' => 'message',
+            'messagetype' => $messagetype,
+            'messagetitle' =>$messagetitle,
+            'usernames' =>$usernames,
+            'description' => $description,
+            'sendby' =>$sendby
+        
+        ]);
+        $this->view->render();
+    }
+
+    public function fetchmessage($pageNumber, $limit)
+    {
+        $this->view('exec/annoucement_management', ['page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchmessage']);
+        $this->view->render();
+    }
+
+    public function deleteannoucement($messageid)
+    {
+        $this->view('exec/annoucement_management', ['messageid' => $messageid,'flag' => 'deleteannoucement']);
+        $this->view->render();
+    }
+
+    public function filtermessage($username,$messagestype,$startdepo,$enddepo,$page,$pageLimit)
+   // filtermessage(username,messagestype,startfmessage,endmessage,currentPage,pageLimit) 
+    {
+        $this->view('exec/annoucement_management', [
+        'username' => $username,
+        'messagestype' => $messagestype,
+        'startdate' => $startdepo,
+        'enddate' => $enddepo,
+        'page' => $page,
+        'limit' => $pageLimit,
+        'flag' => 'filtermessage'
+    ]);
+        $this->view->render();
+
+    }
+   
+    
 
     //languages
 

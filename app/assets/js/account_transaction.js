@@ -21,9 +21,10 @@ $(function () {
         return moneyStr;
     }
 
-    const translator = JSON.parse(document.getElementById("translation-container").getAttribute("data-translations"));
-    // console.log(translations)
-
+    // const translator = JSON.parse(document.getElementsByClassName("translation-container").getAttribute("data-translations"));
+    // // console.log(translations)
+    const translatorScript = document.querySelector(".translations"); // Get the script tag
+    const translator = JSON.parse(translatorScript.textContent); 
     const AccountTransactions = (data) => {
         let html = "";
 
@@ -62,6 +63,8 @@ $(function () {
                         <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> ${completes}</td>
                         <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
                       </tr>
+                       
+
                   `;
         });
 
@@ -72,10 +75,15 @@ $(function () {
         let html = ""; // Initialize the HTML string
 
         Object.entries(transactiondata).forEach(([key, value]) => {
-            if (value === "Bet Selection") {
+           //console.log(value)
+
+            let test = value !== translator["Bet Selection"] && langMap[value] ? langMap[value] : translator["Bet Selection"];
+        
+            
+            if (value == test) {
                 html += `
                    <td>${value}</td>
-                  <td class="${key === "user_selection" ? "bet_userSelec" : ""}">
+                  <td class="">
                      <textarea class="form-control" readonly style="height:75px;">${obj[key]}</textarea>
                   </td>`;
             } else {
@@ -93,59 +101,38 @@ $(function () {
 
         return html; // Return the generated HTML
     };
-    const firstRow = {
-        'bet_code': 'Bet Order ID:',
-        'draw_period': 'Issue Number:',
-        'bet_time': 'Bet Time:',
-        'bet_number': 'Total Bet:',
-         'unit_stake': 'Unit Stake:',
-         'multiplier': 'Multiplier:',
-         'bet_amount': 'Total Bet Amount:',
-         'win_bonus': 'Win Amount:',
-         'rebate_amount': 'Rebate Amount',
-         'num_wins': 'Number of wins:',
-         'draw_number': 'Draw Results:',
-      }
-    
-      const secondRow = {
-        'reg_type': 'Username:',
-        'ip_address': 'IP:',
-        'game_type': 'Lottery Type:',
-        'game_label': 'Game Label:',
-        'bettype': 'Bet Type:',
-        'game_model': 'Game Model',
-        'closing_time': 'Closing Time:',
-        'opening_time': 'Draw Time:', 
-        'bet_status': 'Bet Status:',
-        'user_selection': 'Bet Selection',
-       
-       }
-    // const firstRow = {
-    //     bet_code: `${translator["Bet Order ID"]}:`,
-    //     draw_period: `${translator["Issue Number"]}:`,
-    //     bet_time: `${translator["Bet Time"]}:`,
-    //     bet_number: `${translator["Total Bets"]}:`,
-    //     unit_stake: `${translator["Unit Stake"]}:`,
-    //     multiplier: `${translator["Multiplier"]}:`,
-    //     bet_amount: `${translator["Total Bet Amount"]}:`,
-    //     win_bonus: `  ${translator["Win Amount"]}:`,
-    //     rebate_amount: `${translator["Rebate Amount"]}:`,
-    //     num_wins: `${translator["Number of Wins"]}:`,
-    //     draw_number: `${translator["Draw Results"]}:`,
-    // };
 
-    // const secondRow = {
-    //     reg_type: `${translator["Username"]}:`,
-    //     ip_address: `${translator["IP"]}:`,
-    //     game_type: `${translator["Lottery Type"]}:`,
-    //     game_label: `${translator["Game Label"]}:`,
-    //     bettype: `${translator["Bet Type"]}:`,
-    //     game_model: `${translator["Game Model"]}:`,
-    //     closing_time: `${translator["Closing Time"]}:`,
-    //     opening_time: `${translator["Draw Time"]}:`,
-    //     bet_status: `${translator["Bet Status"]}:`,
-    //     user_selection: `${translator["Bet Selection"]}:`,
-    // };
+    const langMap = {
+        '投注选择:' :'Bet Selection',
+    }
+    
+    const firstRow = {
+        bet_code: `${translator["Bet Order ID"]}`,
+        draw_period: `${translator["Issue Number"]}`,
+        bet_time: `${translator["Bet Time"]}`,
+        bet_number: `${translator["Total Bets"]}`,
+        unit_stake: `${translator["Unit Stake"]}`,
+        multiplier: `${translator["Multiplier"]}`,
+        bet_amount: `${translator["Total Bet Amount"]}`,
+        win_bonus: `  ${translator["Win Amount"]}`,
+        rebate_amount: `${translator["Rebate Amount"]}`,
+        num_wins: `${translator["Number of Wins"]}`,
+        draw_number: `${translator["Draw Results"]}`,
+    };
+
+    const secondRow = {
+        reg_type: `${translator["Username"]}`,
+        ip_address: `${translator["IP"]}`,
+        game_type: `${translator["Lottery Type"]}`,
+        game_label: `${translator["Game Label"]}`,
+        bettype: `${translator["Bet Type"]}`,
+        game_model: `${translator["Game Model"]}`,
+        closing_time: `${translator["Closing Time"]}`,
+        opening_time: `${translator["Draw Time"]}`,
+        bet_status: `${translator["Bet Status"]}`,
+        user_selection: `${translator["Bet Selection"]}`,
+        //'user_selection': 'Bet Selection'
+    };
 
     const render = (data) => {
         var html = AccountTransactions(data);

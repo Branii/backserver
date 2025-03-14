@@ -1,7 +1,7 @@
 <?php
 
 return [
-    // 'Searchs Username' =>'搜索用户名',
+
     'permissionAlert' => '用户未设置权限',
     'permissionMess' => '请联系系统管理员',
     'signout' => '退出',
@@ -43,6 +43,11 @@ return [
     'Page' =>'标签',
     'Pages' => '页数',
     'Of' => '之',
+    'Search Transaction ID' =>'搜索交易 ID',
+    'Search Username' =>'搜索用户名',
+    'Refresh' =>'刷新',
+    'Execute'=>'执行',
+    'Search Bet Order ID' =>'搜索投注订单 ID',
 
 
     //'Withdrawal Review' => '提款审核',
@@ -131,6 +136,15 @@ return [
     'Game Model' =>'游戏模型',
     'Game Label' =>'游戏标签',
     'Closing Time' => '结束时间',
+    'Standard' => '标准',
+    'Fantan' => '番摊',
+    'Trend' =>'趋势',
+    'Board Games'=>'棋盘游戏',
+    'Many Tables' =>'多张桌子',
+    'Long Dragon' =>'长龙',
+    'Road Bets' => '道路投注',
+    'Two Sides' =>'双边模式',
+
 
     //Tracking management 
     "Track Records" => '追号管理',
@@ -639,6 +653,8 @@ return [
     'Total Bets' =>'总投注',
     'Play Method' => '玩法 ',
     'Current Total Bets' => '当前总投注',
+    'Total Bets Control' =>'总投注控制',
+    'Game Status' =>'游戏状态',
 
     // (Lottery Play Parameters)
     'Lottery Play Parameters' => '彩票玩法参数',

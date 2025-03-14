@@ -292,6 +292,7 @@ class GameManageModel extends MEDOOHelper
     {
 
         try{
+
         $sql = "";
         $database = parent::openLink();
         $table_name = "twosides_group";
@@ -302,7 +303,7 @@ class GameManageModel extends MEDOOHelper
         $params[":max_bet_amt_{$odds_group_id}"] = empty($info["max_amt"]) ? 0 : (int) $info["max_amt"]; 
         $params[":max_total_bet_amt_{$odds_group_id}"] = empty($info["max_tot_amt"]) ? 0 : (int) $info["max_tot_amt"]; 
         $params[":odds_group_id_{$odds_group_id}"] = (int) $odds_group_id; 
-        $sql .= "UPDATE {$table_name} SET test_odds=:odds_{$odds_group_id} , max_bet_amount=:max_bet_amt_{$odds_group_id}, total_max_bet_amount=:max_total_bet_amt_{$odds_group_id} WHERE odds_group_id=:odds_group_id_{$odds_group_id};";
+        $sql .= "UPDATE {$table_name} SET modified_odds=:odds_{$odds_group_id} , max_bet_amount=:max_bet_amt_{$odds_group_id}, total_max_bet_amount=:max_total_bet_amt_{$odds_group_id} WHERE odds_group_id=:odds_group_id_{$odds_group_id};";
         }
         $data = $database->query($sql, $params);
         return ['status' => "success", 'data' => $data->rowCount()];

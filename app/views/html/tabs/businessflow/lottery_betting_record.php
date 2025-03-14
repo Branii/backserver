@@ -330,9 +330,9 @@
         <form action="" class="betform">
             <span class="top-left-btn">
                 <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                    <input type="text" id="myInput" class="form-control queryholderbet usernames" placeholder="Search usernames" />
+                    <input type="text" id="myInput" class="form-control queryholderbet usernames" placeholder="<?= $translator['Search Username']; ?>" />
                     <input name="usernames" type="hidden" class="userIdbet" />
-                    <input type="text" id="lot-betID" class="form-control queryholderbet search-betID" placeholder="Search Bet Order ID" />
+                    <input type="text" id="lot-betID" class="form-control queryholderbet search-betID" placeholder="<?= $translator['Search Bet Order ID']; ?>" />
                     <select class="form-control userDropdownb" size="5" style="display: none;" id="userlotteryDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>

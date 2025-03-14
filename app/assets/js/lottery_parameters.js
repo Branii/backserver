@@ -127,7 +127,7 @@ $(function () {
         let models = $("#allmodels").val();
         // console.log(lotteryId, models);
 
-      if(models == "twosides" || models === "boardgames") return;
+      if(models == "twosides" || models === "boardgames" || models === "fantan") return;
 
       getLotteryGames(lotteryId,models);
  

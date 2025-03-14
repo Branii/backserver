@@ -81,10 +81,13 @@ $(() =>{
 
       let url = "";
       if(lotteryModel === "twosides"){
+      //  https://157.173.97.174
          url = `https://157.173.97.174/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`;
       }else if(lotteryModel === "boardgames"){
         if(lotteryText === "11x5") lotteryText = "eleven5";
         url = `https://157.173.97.174/chairman_test/api/v1/limvo/boardgame_games/${lotteryText}`;
+      }else if(lotteryModel === "fantan"){
+        url = `https://157.173.97.174/chairman_test/api/v1/limvo/fantangames`;
       }
 
       $.ajax({ 
@@ -94,6 +97,7 @@ $(() =>{
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
           },
           success: function (response) {
+           
             if(response === "Game id not found!!"){
               showToast("Error", "Sorry the lottery selected is not yet ready.", "error");
               return;
@@ -104,6 +108,7 @@ $(() =>{
               const gameGroup = response[lotteryGameGroup];
               $("#lbp_twosides").html(twosidesUI(gameGroup));
             }else if(lotteryModel === "boardgames"){
+
              lotteryText = lotteryTextCaps === "Mark6" || lotteryTextCaps === "Happy8" ? lotteryTextCaps : lotteryText;
               // console.log(lotteryText);
               // console.log(response)
@@ -120,16 +125,74 @@ $(() =>{
                 let gameNames = gameGroups[groupName];
                 if(gameNames.length > 0){
                      gameNames.forEach((gameName) =>{
-                  markup += boardGamesMarkup(response[groupName][gameName],gameName);
+                  markup += boardGamesMarkup(response[groupName][gameName],gameName,lotteryText,groupName);
                  }); 
                 }else{
-                  markup += boardGamesMarkup(response[groupName],groupName);
+                  markup += boardGamesMarkup(response[groupName],groupName,lotteryText,groupName);
               
                 }
                
               });
               // console.log(markup);
               $("#lbp_boardgames").html(markup);
+            }else if(lotteryModel === "fantan"){
+              console.log(response);
+    lotteryText = lotteryText === "5d" || lotteryText === "pk10" ? lotteryText : lotteryTextCaps;
+              if(lotteryText === "FAST3") lotteryText = "Fast3";
+              response = response[lotteryText];
+              console.log(response,lotteryText);
+              const gameGroup = response[lotteryGameGroup];
+              console.log(gameGroup);
+              if(lotteryText === "Fast3"){
+                 let title = "";
+    let innerMarkup = "";
+    let gameID = [];
+    let state = "";
+    gameGroup.forEach((element) => {
+      gameID.push(element.gameId);
+      state = element.state;
+      innerMarkup += `<div class="lbp-gameitem-parent" id="gameitem-${element.gameId}">
+      <span class="lbp-gameitem-name" style="width:6.5rem;">${element.name}</span>
+      <div style="width: 22rem;display:flex;">
+      <div class="lpd-gameitem-wrapper"><span style="">odds</span>
+      <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
+      
+      <div class="lpd-gameitem-wrapper"><span style="">Bet Amt</span>
+      <input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ></div>
+      
+      <div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
+      <input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div></div>`;
+      
+    });
+    innerMarkup = broadBetParentMarkup(innerMarkup,"",gameID.join(","),state);
+               $("#lbp_fantan").html(innerMarkup);
+                return;
+              }
+              $("#lbp_fantan").html(fantanUI(gameGroup));
+              return;
+              return;
+              // FantanGameGroupsName;
+             lotteryText = lotteryText === "5d" || lotteryText === "pk10" ? lotteryText : lotteryTextCaps;
+             response = response[lotteryText];
+             const gameGroups = FantanGameGroupsName[parseInt(lotteryType)];
+             const groupNames = Object.keys(gameGroups);
+              console.log(groupNames);
+              // console.log(response);
+              let markup = "";
+              groupNames.forEach((groupName) => {
+                let gameNames = gameGroups[groupName];
+                console.log(gameNames);
+                if(gameNames.length > 0){
+                     gameNames.forEach((gameName) =>{
+                  markup += boardGamesMarkup(response[groupName][gameName],gameName,lotteryText,groupName);
+                 }); 
+                }else{
+                  markup += boardGamesMarkup(response[groupName],groupName,lotteryText,groupName);
+                }
+               
+              });
+              // console.log(markup);
+              $("#lbp_fantan").html(markup);
             }
           
           },
@@ -217,6 +280,18 @@ $(() =>{
       }else if(lotteryModel === "standard"){
          $("#game_groups").hide();
          $("#maskrfeferal").show();
+      }else if(lotteryModel === "fantan"){
+        const lotteryType = $("#allGameNamesLottery").val();
+        let html = "";
+        const lotteryData = FantanGameGroupsName[parseInt(lotteryType)];
+        const gameGroups  = Object.keys(lotteryData);
+        if(gameGroups === undefined) return ;
+        gameGroups.forEach((element,index) => {
+           html += `<option value="${element}"> ${SanitizedFantanGameGroupsName[lotteryType][index]}</option>`;
+        });
+        $("#game_groups").html(html);
+        $("#game_groups").show();
+         $("#lbp_fantan").show();
       }
          
 
@@ -296,17 +371,77 @@ const gameGroupsName =  {
 10: ["2sides", "Ball No"],
 }
 
+const FantanGameGroupsName =  {
+  1: {"and" : ["And Value"], "fantan1" : ["Pass","Positive","Three Doors"],"fantan2" : ["fived_fantanHorn","fived_fantanHorn1","fived_fantanHorn2","fived_fantanHorn3","fived_fantanHorn4"],"main" : ["Dragon Tiger Fight","Sum of 5 digits","Sweet Roses"], "position" : ["Dragon Tiger Fight","Sum Of Five Digits"],"sum_of" : ["Dragon Tiger Fight","Sum Of One Digits"]},
+  2: {"fantan1" : ["fantan1Pass","fantan1Position","fantan1three"], "fantan2" : ["pk10_fantan2","pk10_fantan2Horn" ,"pk10_fantan2Horn1", "pk10_fantan2Horn2", "pk10_fantan2Horn3",], "main" : ["Mainbsoe","Mainbsoe1","mainnumber"], "position" : ["Position","Position1"]},
+  3: {"fast3main" : [],"fast3misc" : [],"fast3short" : [],},
+  8: {"main" : ["Mark6Animals","Mark6Bsoe"], "specialcode" : ["Mark6Numbers"]},
+  10: {"fantan1" : ["Happy8Fantan1Pass","Happy8Fantan1Positive","Happy8Fantan1Three"], "fantan2" : ["Happy8Horn","Happy8Horn1","Happy8Horn2","Happy8Horn3","Happy8Horn4"], "main" : ["happy8mainBSOE","happy8mainColor","happy8mainElement"]},
+  }
+  
+
+  const SanitizedFantanGameGroupsName =  {
+    1: ["And" , "Fantan 1"  ,"Fantan 2"  ,"Main" , "Position" , "Sum Of" ],
+    2: ["Fantan 1" , "Fantan 2" , "Main" , "Position" ],
+    3: ["Fast3 Main" ,"Fast3 Misc" ,"Fast3 Short" ],
+    8: ["Main" , "Special Code"],
+    10: ["Fantan 1" , "Fantan 2" , "Main"],
+    }
+    
+
 
 const boardGamesGameGroups =  {
 "5d": {"Baccarat" : ["Baccarat"] , "Bull":["Bull","BullBSOE","DTT","Maximum","Minimum"], "Stud" : ["Stud","StudFirstThree","StudFirstTwo","StudLastThree","StudMiddleThree"]},
 "pk10": {"CrownAsia":[],"GuessWinner" :[],"GuessWinner" :[],"MaximumValue" : [],"MinimunValue" : [],"Speed" : []},
 "fast3":  {"combo": ["AnyTripples"], "one": ["FBSOE","Point"],"two": ["AnyTripple","AnyTwo","GuessNumber","OnePair"]},
-"eleven5":  {"Tab one" : ["ElevenBSOE","ElevenBull","ElevenDTT","ElevenMax","ElevenMin"]},
+"eleven5":  {"Tab one" : ["ElevenBSOE","ElevenBull","ElevenDTT","ElevenMax","ElevenMin"], "Tab two" : ["ElevenDisc","ElevenGuessMiddle","ElevenGuessum","UpperLower"]},
 "Mark6": {"Tab One" : ["ColorWave","GuessNumbers","MBSOE"],"Tab Two" : ["ElementSeven"]},
-"Happy8": {"BSOE" : [], "BSOE1" : [],"HappyElements" : []},
-
+"Happy8": {"BSOE" : [], "BSOE1" : [],"HappyElements" : []}
 }
 
+
+const fantanUI = (gameGroup) => {
+  let markup = "";
+  for(gameName in gameGroup){
+    const gameData  = gameGroup[gameName];
+    let title = "";
+    let innerMarkup = "";
+    let gameID = [];
+    let state = "";
+  
+    gameData.forEach((element) => {
+      gameID.push(element.gameId);
+      state = element.state;
+      if(gameName === "Sweet Roses" || gameName === "happy8mainColor"){
+         innerMarkup += `<div class="lbp-gameitem-parent" id="gameitem-${element.gameId}" style="width: 47%;">
+      <span class="lbp-gameitem-name" style="width: 6.5rem;margin-right: 5px;">${element.name}</span>
+      <div style="width: 36rem;display:flex;">
+      <div class="lpd-gameitem-wrapper" style="width: 23rem;margin-right: 5px;"><span style="">odds</span>
+      <textarea type="text" class="form-control lbp-gameitem-input" rows="20" placeholder="Odds" id="lbp-odds-${element.gameId}" style="height: 132px; text-align: left;" col="30">${element.modified_odds}</textarea></div>
+      <div class="lpd-gameitem-wrapper" style="margin-right: 5px;"><span style="">Bet Amt</span>
+      <input type="text" class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.gameId}"></div>
+      <div class="lpd-gameitem-wrapper" style=""><span style="">Tot. Bet Amt</span>
+      <input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.gameId}"></div></div></div>`;
+      }else{
+        innerMarkup += `<div class="lbp-gameitem-parent" id="gameitem-${element.gameId}">
+      <span class="lbp-gameitem-name" style="width:6.5rem;">${element.name}</span>
+      <div style="width: 22rem;display:flex;">
+      <div class="lpd-gameitem-wrapper"><span style="">odds</span>
+      <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.modified_odds}" id="lbp-odds-${element.labelid}"></div>
+      <div class="lpd-gameitem-wrapper"><span style="">Bet Amt</span>
+      <input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ></div>  
+      <div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
+      <input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.labelid}"></div></div></div>`;
+      }
+
+      
+      
+    });
+    markup += broadBetParentMarkup(innerMarkup,gameName,gameID.join(","),state);
+  }
+
+ return markup;
+}
 
 
 const twosidesUI = (data) => {
@@ -438,7 +573,7 @@ return `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
 <span class="lbp-gameitem-name" style="width:6.5rem;">${displayedValue}</span>
 <div style="width: 22rem;display:flex;">
 <div class="lpd-gameitem-wrapper"><span style="">odds</span>
-<input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-odds-${element.labelid}"></div>
+<input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.modified_odds}" id="lbp-odds-${element.labelid}"></div>
 
 <div class="lpd-gameitem-wrapper"><span style="">Bet Amt</span>
 <input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.labelid}" ></div>
@@ -449,24 +584,41 @@ return `<div class="lbp-gameitem-parent" id="gameitem-${element.labelid}">
 }
 
 
-const boardGamesMarkup = (games = [],title = "") => {
+const boardGamesMarkup = (games = [],title = "",lottery = "",groupName) => {
 let markup = "";
 let gamesIDs = []; 
 let state = "";
+let oddsMarkup = "";
 games.forEach((element) => {
     gamesIDs.push(element.gameId);
     state = element.state;
-   markup += `<div class="lbp-gameitem-parent" id="gameitem-${element.gameId}">
-<span class="lbp-gameitem-name" style="width:6.5rem;">${element.name}</span>
-<div style="width: 22rem;display:flex;">
-<div class="lpd-gameitem-wrapper"><span style="">odds</span>
-<input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-boargames-odds-${element.gameId}"></div>
+    if(lottery == "fast3" && title == "GuessNumber" ){
+      markup += `<div class="lbp-gameitem-parent" id="gameitem-${element.gameId}" style="width: 47%;">
+      <span class="lbp-gameitem-name" style="width: 6.5rem;margin-right: 5px;">${element.name}</span>
+      <div style="width: 36rem;display:flex;">
+      <div class="lpd-gameitem-wrapper" style="width: 25rem;margin-right: 5px;"><span style="">odds</span>
+      <textarea type="text" class="form-control lbp-gameitem-input" rows="20" placeholder="Odds" id="lbp-odds-${element.gameId}" style="height: 132px; text-align: left;" col="30">${element.modified_odds}</textarea></div>
+      
+      <div class="lpd-gameitem-wrapper" style="margin-right: 5px;"><span style="">Bet Amt</span>
+      <input type="text" class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-max-amt-${element.gameId}"></div>
+      
+      <div class="lpd-gameitem-wrapper" style=""><span style="">Tot. Bet Amt</span>
+      <input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-max-tot-amt-${element.gameId}"></div></div></div>`;
+    }else{
 
-<div class="lpd-gameitem-wrapper"><span style="">Bet Amt</span>
-<input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-boardgames-max-amt-${element.gameId}" ></div>
+      markup += `<div class="lbp-gameitem-parent" id="gameitem-${element.gameId}">
+      <span class="lbp-gameitem-name" style="width:6.5rem;">${lottery === "eleven5" ? `${groupName}-${element.name}` : element.name}</span>
+      <div style="width: 22rem;display:flex;">
+      <div class="lpd-gameitem-wrapper"><span style="">odds</span>
+      <input type="text"  class="form-control lbp-gameitem-input" placeholder="Odds" value="${element.odds}" id="lbp-boargames-odds-${element.gameId}"></div>
+      
+      <div class="lpd-gameitem-wrapper"><span style="">Bet Amt</span>
+      <input type="text"  class="form-control lbp-gameitem-input" placeholder="Max. amt" value="${element.max_bet_amount}" id="lbp-boardgames-max-amt-${element.gameId}" ></div>
+      
+      <div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
+      <input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-boardgames-max-tot-amt-${element.gameId}"></div></div></div>`;
 
-<div class="lpd-gameitem-wrapper"><span style="">Tot. Bet Amt</span>
-<input type="text" class="form-control lbp-gameitem-input" value="${element.total_max_bet_amount}" placeholder="Tot. Max. amt" id="lbp-boardgames-max-tot-amt-${element.gameId}"></div></div></div>`;
+    }  
   
 });
 
@@ -475,3 +627,32 @@ return broadBetParentMarkup(markup,title,gamesIDs.join(","),state);
 };
 
 const  isNumber  = (value)  => typeof value === "number" && !Number.isNaN(value);
+
+
+// <div class="lpd-gameitem-wrapper"><span style="">odds</span>
+// <div style="
+//     display: flex;
+//     flex-direction: column;
+//     row-gap: 5px;
+// "><div style="
+//     display: flex;
+//     vertical-align: middle;
+//     align-items: center;
+// "><span style="
+//     width: fit-content;
+//     margin-right: 5px;
+// "> 1 </span><input type="text" class="form-control lbp-gameitem-input" placeholder="Odds" value="[{'1':2.22223,'2':3.33334,'3':4.44445}]" id="lbp-boargames-odds-300"></div><div style="
+//     display: flex;
+//     vertical-align: middle;
+//     align-items: center;
+// "><span style="
+//     width: fit-content;
+//     margin-right: 5px;
+// "> 1 </span><input type="text" class="form-control lbp-gameitem-input" placeholder="Odds" value="[{'1':2.22223,'2':3.33334,'3':4.44445}]" id="lbp-boargames-odds-300"></div><div style="
+//     display: flex;
+//     vertical-align: middle;
+//     align-items: center;
+// "><span style="
+//     width: fit-content;
+//     margin-right: 5px;
+// "> 1 </span><input type="text" class="form-control lbp-gameitem-input" placeholder="Odds" value="[{'1':2.22223,'2':3.33334,'3':4.44445}]" id="lbp-boargames-odds-300"></div></div></div>

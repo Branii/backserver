@@ -1,0 +1,89 @@
+<?php
+
+
+$flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+
+
+if($flag == "fetchmessage"){
+
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $result = (new AnnouncementModel())->FetchAnnoucement($page, $limit) ?? [];
+
+    echo json_encode([
+        'messages' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
+
+
+if ($flag == "message") {
+
+$messagetype = isset($this->viewData['messagetype']) ? ($this->viewData['messagetype']) : "";
+$messagetitle =  htmlspecialchars( urldecode(isset($this->viewData['messagetitle']))) ?  urldecode(($this->viewData['messagetitle'])) : "";
+$usernames = isset($this->viewData['usernames']) ? ($this->viewData['usernames']) : "";
+$description =  urldecode(isset($this->viewData['description'])) ?  urldecode(($this->viewData['description'])) : "";
+$sendby = urldecode(isset($this->viewData['sendby'])) ? urldecode(($this->viewData['sendby'])) : "";
+// $targetUser = ($messagetype === "General" && empty($usernames)) ? "All users" : "";
+
+if(empty($usernames)){
+    if (in_array($messagetype, ["general", "personal"])) {
+        $targetUser = ($messagetype === "general" ) ? 'All Users' :"" ;
+        echo AnnouncementModel::GeneralMessage($messagetitle,$description,$sendby,$messagetype,$targetUser,$uid=0);
+        
+    }
+}else{
+    $userData = (new AnnouncementModel())->getUsernameById($usernames);
+    if ($userData['reg_type'] == 'username') {
+        $username = $userData['username'];
+    } elseif ($userData['reg_type'] == 'contact') {
+        $username = $userData['contact'];
+    } else {
+        $username = $userData['email'];
+    }
+    if (in_array($messagetype, ["general", "personal"])) {
+        $targetUser = ($messagetype === "personal") ? $username : '';
+        echo AnnouncementModel::GeneralMessage($messagetitle,$description,$sendby,$messagetype,$targetUser,$usernames);
+      
+    }
+    
+}
+
+
+}
+if($flag == "deleteannoucement"){
+
+    $messageid = isset($this->viewData['messageid']) ? (int) $this->viewData['messageid'] : "";
+    echo  (new AnnouncementModel())->DeleteAnnoucement($messageid);
+
+}
+
+
+if ($flag == "filtermessage") {
+
+    $username = isset($this->viewData['username']) ?  $this->viewData['username'] : "";
+    // $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
+    $messagetype = isset($this->viewData['messagestype']) ?  $this->viewData['messagestype'] : "";
+    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
+    $enddate = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+
+    $subquery = (new AnnouncementModel())->Messagesubquery($username,$messagetype,$startdate,$enddate) ?? [];
+    $result = (new AnnouncementModel())->FilterMessageData($subquery,$page,$limit) ?? [];
+
+       echo json_encode([
+           'message' => $result['data'],
+           'totalPages' => ceil($result['total'] / $limit),
+       ]);
+      
+}
+
+
+
+
+
+
+
+
+

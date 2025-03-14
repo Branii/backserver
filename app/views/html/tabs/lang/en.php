@@ -42,8 +42,9 @@ return [
 'Pages' =>'Page',
 'Of' => 'Of',
 'Bet Lost' =>'Bet Lost',
-// 'Search usernames' => 'Search usernames',
-// 'Transaction ID'=> 'Transaction ID',
+'Refresh' => 'Refresh',
+'Execute'=>'Execute',
+'Search Bet Order ID'=> 'Search Bet Order ID',
 
 //'Withdrawal Review' => 'Withdrawal Review',
 'Withdrawal Review' => 'Withdrawal Review',
@@ -129,6 +130,14 @@ return [
 'Game Model' =>'Game Model',
 'Game Label'=>'Game Label',
 'Closing Time'=>'Closing Time',
+'Standard' => 'Standard',
+'Fantan' => 'Fantan',
+'Trend' =>'Trend',
+'Board Games'=>'Board Games',
+'Many Tables' =>'Many Tables',
+'Long Dragon' =>'Long Dragon',
+'Road Bets' => 'Road Bets',
+'Two Sides' =>'Two Sides',
 
  //track 
 'Track Records' => 'Track Records',
@@ -334,8 +343,8 @@ return [
 
 //Platform Fee Deposit
 'Rebate Records' => 'Rebate Records',
-// 'Searchs Username' =>'Search Username',
-// 'Searchs Transaction ID' =>'Search Transaction ID',
+ 'Search Username' =>'Search Username',
+ 'Search Transaction ID' =>'Search Transaction ID',
 
 
 
@@ -714,7 +723,14 @@ return [
 //（Announcements and Notifications）
 'Announcements and Notifications'=>'Announcements and Notifications',
 //(Announcement Management)
-'Announcement Management' => 'Announcement Management',
+'System Announcement' => 'System Announcement',
+'Annoucement List' =>'Annoucement List',
+'Title' =>'Title',
+'Content' =>'Content',
+'DateTime' =>'DateTime',
+'Created By' =>'Created By',
+'Active' =>'Active',
+
 //(Player Inbox Messages)
 'Player Inbox Messages' => 'Player Inbox Messages',
 
