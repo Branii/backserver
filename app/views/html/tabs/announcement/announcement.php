@@ -269,25 +269,25 @@
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                <input type="text" id="financeDropdownc" class="form-control queryholderlistt usernames"
+                <input type="text" id="financeDropdownl" class="form-control queryholderlistt usernames"
                     placeholder="Search usernames" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
-                <select class="form-control financeDropdownc" size="5" style="display: none;" id="userfinaceDropdownsc">
+                <select class="form-control financeDropdown" size="5" style="display: none;" id="userfinaceDropdownsl">
                     <!-- Options will be populated dynamically -->
                 </select>
 
-                <select name="betsate" class="form-control form-select queryholderlistt financetype"
+                <select name="betsate" class="form-control form-select queryholderlistt messagestype"
                     data-bs-placeholder="Select Type">
                     <option value="">-Message Type-</option>
-                    <option value="general">General</option>
-                    <option value="user">User-Specific</option>
+                    <option value="general">Annoucememnt</option>
+                    <option value="personal">Notification</option>
                  
                 </select>
 
-                <input name="startdate" type="date" class="form-control queryholderlistt startfinances"
+                <input name="startdate" type="date" class="form-control queryholderlistt startfmessage"
                     placeholder="Name" />
 
-                <input name="enddate" type="date" class="form-control queryholderlistt endfinances"
+                <input name="enddate" type="date" class="form-control queryholderlistt endmessage"
                     placeholder="Name" />
             </div>
             <!-- <div class="input-group mb-3">
@@ -312,7 +312,7 @@
                     aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle executefinance" value="end" aria-label="Execute"
+                <button type="button" class="btn bg-white-subtle executemessage" value="end" aria-label="Execute"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                     <i class="bx bx-check-double loaderfinanccs" style="font-size: 20px;"></i>
                 </button>
@@ -393,7 +393,7 @@
             <span id="paging_infofmessage" style="color: #aaa;">---</span>
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
-            <select class="left-element form-control numrowsfinance" style="font-size: 12px;">
+            <select class="left-element form-control numrowsmesage" style="font-size: 12px;">
                 <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
@@ -430,10 +430,10 @@
                     <!-- Rebate Field -->
                     <div class="form-floating mb-3">
                         <select name="deposit" class="form-select form-control borders border-infos messagetype">
-                        <option value="General">General Announcement (All Users)</option>
+                        <option value="general">General Announcement (All Users)</option>
                         <!-- <option value="vip">VIP Users Only</option> -->
                         <!-- <option value="new">Newly Registered Users Only</option> -->
-                        <option value="Personal">User-Specific Announcement</option>
+                        <option value="personal">User-Specific Announcement</option>
                         </select>
                         <label>
                             <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>

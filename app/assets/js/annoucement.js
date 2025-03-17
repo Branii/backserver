@@ -28,18 +28,36 @@ $(function () {
         // let total_income = item.deposit_withdrawal_type == 1 ? `+${item.deposit_and_withdrawal_amount}` :
         // item.deposit_withdrawal_type == 4 ? `-${item.deposit_and_withdrawal_amount}` : 0;
 
-        //   let types = item.deposit_withdrawal_type == 1 ? 'Deposit' :
+           let messagetype =  (item.type == "general") ? "Announcement" : "Notification";
         //   item.deposit_withdrawal_type == 4 ? 'Withdrawal' : '';
         //   let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
 
         html += `
                       <tr>
                         <td>${item.title}</td>
-                        <td>${item.content}</td>
+                        <td style ="max-width: 300px;word-wrap: break-word;overflow-wrap: break-word; white-space: normal;">${item.content}</td>
                         <td>${item.created_at}</td>
-                        <td>${item.type}</td>
+                        <td>${messagetype}</td>
                         <td>${item.audience}</td> 
-                        <td>${item.send_by}</td>                
+                        <td>${item.send_by}</td>     
+                        <td>
+                          
+                      <div class="dropdown">
+                            <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                              <i class='bx bx-dots-vertical-rounded'></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+                            
+                              <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" datas ="${item.msg_id}"> 
+                                <i class="bx bx-edit fs-5" ></i>Edit
+                              </a>
+                              
+                                <a class="dropdown-item deletemessage cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="${item.msg_id}">
+                                <i class="bx bx-trash fs-5"></i>Delete
+                              </a>
+                            </div>
+                          </div>
+                      </td>           
                       </tr>
                   `;
       });
@@ -74,9 +92,9 @@ $(function () {
 
     function renderfinacePaginations(totalPages, currentPage, pageLimit, callback) {
       const createPageLink = (i, label = i, disabled = false, active = false) =>
-          `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+      `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
         <a class='page-link' href='#' data-page='${i}'>${label}</a>
-    </li>`;
+      </li>`;
       let pagLink = `<ul class='pagination justify-content-end'>`;
 
       // Previous Button
@@ -96,7 +114,6 @@ $(function () {
       pagLink += "</ul>";
 
       document.getElementById("paginationmessage").innerHTML = pagLink;
-
       // Add click event listeners
       document.querySelectorAll("#paginationmessage .page-link").forEach((link) => {
           link.addEventListener("click", function (e) {
@@ -127,17 +144,16 @@ $(function () {
   
     //search function
 
-    async function filterfinances(username, financetype, startfinance, endfinance, currentPage, pageLimit) {
-      $.post(
-        `../admin/filterfinance/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
+    async function  filtermessage(username,messagestype,startfmessage,endmessage,currentPage,pageLimit) {
+      $.post( `../admin/filtermessage/${username}/${messagestype}/${startfmessage}/${endmessage}/${currentPage}/${pageLimit}`,
         function (response) {
           try {
             const data = JSON.parse(response);
               console.log(data)
-            //  return
-            $(".loaderfinance").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-            if (data.finances.length < 1) {
-              $("#financeContainer").html(`
+           //   return
+            $(".loaderfinanccs").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+            if (data.message.length < 1) {
+              $("#messagecontainer").html(`
                 <tr class="no-results">
                   <td colspan="9">
                     <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
@@ -146,11 +162,11 @@ $(function () {
               `);
               return;
             }
-            $("#maskfinance").LoadingOverlay("hide");
-             renderfinaces(data.finances);
+            $("#maskfinances").LoadingOverlay("hide");
+            rendermessage(data.message);
           // Render pagination
-          renderfinacePaginations(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterfinances(username, financetype, startfinance, endfinance, newPage, pageLimit));
-          document.getElementById("paging_infofinance").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+          renderfinacePaginations(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) =>  filtermessage(username,messagestype,startfmessage,endmessage,newPage,pageLimit));
+          document.getElementById("paging_infofmessage").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
     
           } catch (error) {
             console.error("Error parsing JSON response:", error);
@@ -164,26 +180,26 @@ $(function () {
       });
     }
 
-    // $(document).on('click', '.executefinance', function () {
+     $(document).on('click', '.executemessage', function () {
     
-    //   if ($("#financeDropdown").val() == "" && $(".financetype").val() == "" && $(".startfinances").val() == "" ) {
-    //     // $("#danger-finance").modal("show");
-    //     showToast("Heads up!!","Select one or more data fields to filter","info")
-    //     return;
-    // }
+      if ($("#financeDropdownl").val() == "" && $(".messagestype").val() == "" && $(".startfmessage").val() == "" ) {
+        // $("#danger-finance").modal("show");
+        showToast("Heads up!!","Select one or more data fields to filter","info")
+        return;
+    }
   
-    //   const financetype = $(".financetype").val();
-    //   const username = $("#financeDropdown").val();
-    //   const startfinance = $(".startfinances").val();
-    //   const endfinance = $(".endfinances").val();
-    //    //console.log(endfinance)
-    //   // return
+      const messagestype = $(".messagestype").val();
+      const username = $("#financeDropdownl").val();
+      const startfmessage = $(".startfmessage").val();
+      const endmessage = $(".endmessage").val();
+      console.log(username+messagestype+startfmessage+endmessage)
+    //   return
    
-    //  filterfinance(username,financetype,startfinance,endfinance,currentPage,pageLimit)
+    filtermessage(username,messagestype,startfmessage,endmessage,currentPage,pageLimit)
     //   // Show loader
-    //   $(".loaderfinance").removeClass('bx-check-double').addClass('bx-loader bx-spin');
+       $(".loaderfinanccs").removeClass('bx-check-double').addClass('bx-loader bx-spin');
   
-    // });
+     });
   
 
       
@@ -271,52 +287,68 @@ $(function () {
         });
     }
 
-    $('.messagetype').on('change', function () {
-      if ($(this).val() === 'Personal') {
-          $('#financeinputl').parent().show();  // Show username search input
+     $('.messagetype').on('change', function () {
+      if ($(this).val() === 'personal') {
+          $('#financeinputl').parent().show(); 
       } else {
-          $('#financeinputl').parent().hide();  // Hide username search input
+          $('#financeinputl').parent().hide(); 
           $(".userIdFieldss, #financeinputl").val(''); 
       }
      }).trigger('change'); 
 
-    //add money
+    //add annoucement
     $(document).on("click", ".sendmessagebtn", function () {
       // const financeinputl = $("#financeinputl").val()
       const messagetype = $(".messagetype").val()
       const messagetitle = $("#note-has-title").val()
       const usernames = $(".userIdFieldss").val();
-      const description = $("#description").val();
+      const description = encodeURIComponent($("#description").val());
       const sendby = $(".sendby").val()
-      console.log(usernames + "" + messagetype +""+messagetitle +""+description+""+sendby)
-     // return
+   //  console.log(usernames + "" + messagetype +""+messagetitle +""+description+""+sendby)
+      //return
        if (messagetitle === "" || description === "" || sendby === "") {
          showToast("Heads up!!", "All field are required", "info");
          return false;
         }
-        
-      // $("#addfinancemodal").modal("hide");  
+
+      // $("#addfinancemodal").modal("hide"); 
+      $("#announcementemodal").modal("hide");  
         $(".userIdFieldss, #note-has-title,#description,#financeinputl").val(''); 
        $(".loaderfinancc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
        $.post(`../admin/annoucement/${messagetype}/${messagetitle}/${usernames}/${description}/${sendby}`,
         function (response) {
          // console.log(response.success);
-          console.log(response)
+         // console.log(response)
            if (response) {
-             $(".loaderfinancc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send")
-      
+             $(".loaderfinancc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send")  
              showToast("Success", response, "success");
-             //fetchfinance(currentPage,pageLimit);
-          //   // Clear input fields
-          
+             fetchmessage(currentPage,pageLimit)
            } else {
-             showToast("Heads up!!","transaction failed", "info");
+             showToast("Heads up!!","failed", "info");
            }
         }
       );
     });
     
+   //delete message
 
+   
+    $(document).on('click','.deletemessage',function(){
+      const messageid =  $(this).attr("datas");
+     // console.log(messageid);
+      $.post(`../admin/deleteannoucement/${messageid}`,
+        function (response) {
+         // console.log(response.success);
+          //console.log(response)
+           if (response) {
+             showToast("Success", response, "success");
+             fetchmessage(currentPage,pageLimit)        
+           } else {
+             showToast("Heads up!!","failed", "info");
+           }
+        }
+      );
+    })
 
     //modal 
     
@@ -327,7 +359,7 @@ $(function () {
     let debounceTimeouts = null;
     $(document).ready(function () {
         // Event listener for keyup on #myInput
-        $(document).on('keyup', '#financeDropdown', function () {
+        $(document).on('keyup', '#financeDropdownl', function () {
             const query = $(this).val().trim();
     
             // Only trigger if input is more than 2 characters
@@ -346,20 +378,20 @@ $(function () {
             const selectedUsername = selectedOption.data('username');
     
             if (selectedUserId) {
-                $('#financeDropdown').val(selectedUsername);
+                $('#financeDropdownl').val(selectedUsername);
                 $('.userIdfinance').val(selectedUserId);
                 $('.financeDropdown').hide();
             }
         });
 
        $(document).on("click", function (e) {
-          const $dropdownbet = $("#userfinaceDropdowns");
-          if (!$(e.target).closest("#financeDropdown, #userfinaceDropdowns").length) {
+          const $dropdownbet = $("#userfinaceDropdownsl");
+          if (!$(e.target).closest("#financeDropdownl, #userfinaceDropdownsl").length) {
               $dropdownbet.hide();
           }
       });
         // Handle manual input clearing
-        $(document).on('input', '#financeDropdown', function () {
+        $(document).on('input', '#financeDropdownl', function () {
             if (!$(this).val()) {
                 $('.userIdfinance').val(''); // Reset user ID if input is cleared
             }
@@ -412,6 +444,8 @@ $(function () {
       const numrows = $(this).val();
       fetchfinance(currentPage,numrows)
      });
+
+
 
 
     function tableScrollFinancess() {

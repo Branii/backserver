@@ -44,6 +44,89 @@ class AnnouncementModel extends MEDOOHelper
        return $data;
     }
  
-  
+    public static function DeleteAnnoucement($messageid)
+    {
+ 
+      $params = ['messageid' => $messageid]; // Correct parameter key
+      $data = parent::query("DELETE FROM notices WHERE msg_id = :messageid", $params);
+      return $data ? "Message could not be deleted. Please try again." : "Message deleted successfully.";
+       
+    }
+
+    public static function Messagesubquery($username,$messagetype,$startdate,$enddate)
+    {
+
+        $filterConditions = [];
+
+        if (!empty($username)) {
+            $filterConditions[] = "audience= '$username'";
+        }
+
+        if (!empty($messagetype)) {
+            $filterConditions[] = "type = '$messagetype'";
+        }
+     
+
+        if (!empty($startdate) && !empty($enddate)) {
+            $filterConditions[] = "DATE(created_at) BETWEEN '$startdate' AND '$enddate'";
+        } elseif (!empty($startdate)) {
+            $filterConditions[] = "DATE(created_at) = '$startdate'";
+        } elseif (!empty($enddate)) {
+            $filterConditions[] = "DATE(created_at) = '$enddate'";
+        }
+
+        if (!empty($filterConditions)) {
+            $subQuery = implode(' AND ', $filterConditions);
+        }
+        // Add ordering and limit to the query
+       // $subQuery .= "ORDER BY created_at DESC";
+
+        return $subQuery;
+    }
+
+
+   
+    public static function FilterMessageData($subquery, $page, $limit)
+    {
+        try {
+            // Calculate the starting point for pagination
+            $startpoint = ($page - 1) * $limit;
+       
+            $sql = " SELECT *  FROM notices WHERE $subquery LIMIT :offset, :limit";
+        
+            // SQL query for counting total records
+            $countSql1 = "
+                SELECT 
+                    COUNT(*) AS total_results
+                FROM 
+                    notices
+                WHERE $subquery
+            ";
+        
+            // Prepare and execute the main query with parameterized inputs
+            $data = parent::query($sql, [ 'offset' => $startpoint, 'limit' => $limit ]);
+        
+            // Execute the count query
+            $totalRecords = parent::query($countSql1);
+            $totalRecords = $totalRecords[0]['total_results'];
+        
+            // Return the data and total record count
+            return [
+                'data' => $data,
+                'total' => $totalRecords
+            ];
+        
+        } catch (Exception $e) {
+            // Log the error message for debugging purposes
+            error_log("Error executing query: " . $e->getMessage());
+        
+            // Optionally, return an empty set or error response
+            return [
+                'data' => [],
+                'total' => 0,
+                'error' => "Error executing query: " . $e->getMessage()
+            ];
+        }
+    }
 
 }
