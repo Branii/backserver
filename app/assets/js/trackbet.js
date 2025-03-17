@@ -310,7 +310,7 @@ $(function () {
 
             const data = await response.json(); // Parse JSON response
             // console.log(data);
-            let html = `<option value="" class="" selected>-Lottery Type-</option>`;
+            let html = `<option value="">${translator['Lottery Type']}</option>`;
             data.forEach((lottery) => {
                 html += `<option value="${lottery.gt_id}" class="">${lottery.name}</option>`;
             });
@@ -347,7 +347,7 @@ $(function () {
                     3: translator["Loss"],
                     5: translator["Pending"],
                     6: translator["Void"],
-                    7: "Refund",
+                    7: translator["Refund"],
                 };
                 row.innerHTML = `
                 <td>${item.draw_number || "N/A"}</td>     

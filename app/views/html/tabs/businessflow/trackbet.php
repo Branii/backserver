@@ -352,15 +352,15 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-                <input type="text" id="trackinput" class="form-control queryholderlist usernames" placeholder="Search usernames" />
+                <input type="text" id="trackinput" class="form-control queryholderlist usernames" placeholder="<?= $translator['Search Username']; ?>" />
                     <input name="usernames" type="hidden" class="userIdbet" />
                     <select class="form-control trackdown" size="5" style="display: none;" id="usertrackDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>
-                    <input name="usernames"  class="form-control queryholderlist clearitem"  id="trackcode" placeholder="Search Track Id"/>
+                    <input name="usernames"  class="form-control queryholderlist clearitem"  id="trackcode" placeholder="<?=$translator['Search Track Id']?>"/>
                  <select name="recharge" class="form-control form-select queryholderlist trackstatus"
                     data-bs-placeholder="Select Type">
-                    <option value="">-Track Status-</option>
+                    <option value="">-<?=$translator['Track Status']?>-</option>
                     <option value="1"><?= $translator['Running'];?></option>
                     <option value="2"><?= $translator['Self Stop Track'];?></option>
                     <option value="3"><?= $translator['Completed'];?></option>
@@ -562,15 +562,15 @@
         </form>
     <hr>
         <table class="table table-hover table-bordered text-nowrap mb-0" id="track">
-					<thead>
-						<tr>
+					<thead class="">
+						<tr class="">
 							<!-- <th class="font-weight-normal">#</th> -->
-							<th class="font-weight-normal">Draw Result</th>
-							<th class="font-weight-normal">Issue Number</th>
-							<th class="font-weight-normal">Multiplier</th>
-							<th class="font-weight-normal">Bet Amount</th>
-							<th class="font-weight-normal">Progress</th>
-							<th class="font-weight-normal">Track status</th>
+							<th class="font-weight-normal"><?=$translator['Draw Results']?></th>
+							<th class="font-weight-normal"><?=$translator['Issue Number']?></th>
+							<th class="font-weight-normal"><?=$translator['Multiplier']?></th>
+							<th class="font-weight-normal"><?=$translator['Bet Amount']?></th>
+							<th class="font-weight-normal"><?=$translator['Progress']?></th>
+							<th class="font-weight-normal"><?=$translator['Track Status']?></th>
 
 						</tr>
 					</thead>

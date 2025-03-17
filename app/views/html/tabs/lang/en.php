@@ -157,8 +157,10 @@ return [
 'Stop If Not Win'=>'Stop If Not Win',
 'Completed' => 'Completed',
 'Running' =>'Running',
-'No rule' =>'No rule',
+'no_rule' =>'no_rule',
 'stop_if_win'=>'stop_if_win',
+'stop_if_not_win'=>'stop_if_not_win',
+'Search Track Id'=>'Search Track Id',
 
 //Live Game Records
 'Live Game Records' =>'Live Game Records',
@@ -692,6 +694,7 @@ return [
 'System Lottery' => 'System Lottery',
 'All Games' => 'All Games',
 'Action' => 'Action',
+'Progress' =>'Progress',
 
 
 // (SMS API account）	

@@ -336,7 +336,7 @@ $(function () {
 
           const data = await response.json(); // Parse JSON response
           // console.log(data);
-          let html = `<option value="" >Lottery Type</option>`;
+          let html = `<option value="">${translator['Lottery Type']}</option>`;
           data.forEach((lottery) => {
               html += `<option value="${lottery.gt_id}">${lottery.name}</option>`;
           });

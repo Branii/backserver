@@ -144,6 +144,7 @@ return [
     'Long Dragon' =>'长龙',
     'Road Bets' => '道路投注',
     'Two Sides' =>'双边模式',
+    'Progress' =>'进度',
 
 
     //Tracking management 
@@ -167,9 +168,10 @@ return [
     'Stop If Win'=>'如果赢了就停止',
     'Stop If Not Win'=>'未中奖则停止',
     'Running' =>'运行',
-    'No rule' =>'没有规则',
+    'no_rule' =>'没有规则',
     'stop_if_win' =>'如果赢了就停止',
     'stop_if_not_win'=>'未中奖则停止',
+    'Search Track Id'=>'搜索跟踪 ID',
 
 
 
