@@ -294,6 +294,7 @@ $(function () {
          showToast("Heads up!!", "All field are required", "info");
          return false;
         }
+        
       // $("#addfinancemodal").modal("hide");  
         $(".userIdFieldss, #note-has-title,#description,#financeinputl").val(''); 
        $(".loaderfinancc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
