@@ -167,6 +167,9 @@ return [
     'Stop If Win'=>'如果赢了就停止',
     'Stop If Not Win'=>'未中奖则停止',
     'Running' =>'运行',
+    'No rule' =>'没有规则',
+    'stop_if_win' =>'如果赢了就停止',
+    'stop_if_not_win'=>'未中奖则停止',
 
 
 
@@ -360,7 +363,7 @@ return [
     'Report Management' => '报表管理',
 
     //Win/Loss Report
-    'Win/Loss Report' => '输赢报表',
+    'GPP Win/Loss Report' => 'GPP 输赢报表',
     'Username' => '用户名',
     'Relationship' => '关系',
     'Number of Bettors' => '投注人数',
@@ -374,6 +377,8 @@ return [
     'Total Win Amount' => '中奖金额',
     'Win/Loss' => '输赢',
     'Action' => '操作',
+
+    'NGP Win/Loss Report' => 'NGP 输赢报表',
 
     //#(Operational Report)运营报表
    // 审核/日志报告 (Audit / Log Report)
@@ -717,8 +722,16 @@ return [
     'Announcements and Notifications' => '公告通知',
     //(Announcement Management)
     'Announcement Management' => '公告管理',
+    'System Announcement' => '系统公告',
+    'Annoucement List' =>'公告列表',
+    'Title' =>'标题',
+    'Content' =>'内容',
+    'DateTime' =>'日期时间',
+    'Created By' =>'创建者',
+    'Active' =>'活跃',
     //(Player Inbox Messages)
     'Player Inbox Messages' => '玩家站内信',
+    'Backup & Restore List'=>'备份与恢复列表',
 
     //games 
     'Royal 5' => '皇家5',

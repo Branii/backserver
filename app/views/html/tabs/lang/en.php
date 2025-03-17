@@ -39,7 +39,7 @@ return [
 'Rebates' => 'Rebates',
 "Server Time"  => "Server Time",
 'Page'=> 'Page',
-'Pages' =>'Page',
+'Pages' =>'Pages',
 'Of' => 'Of',
 'Bet Lost' =>'Bet Lost',
 'Refresh' => 'Refresh',
@@ -157,6 +157,8 @@ return [
 'Stop If Not Win'=>'Stop If Not Win',
 'Completed' => 'Completed',
 'Running' =>'Running',
+'No rule' =>'No rule',
+'stop_if_win'=>'stop_if_win',
 
 //Live Game Records
 'Live Game Records' =>'Live Game Records',

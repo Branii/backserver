@@ -77,10 +77,11 @@ if ($flag == "getTransactionBet") {
     $transactionId = isset($this->viewData['transactionId']) ? $this->viewData['transactionId'] : null;
 
     $data = explode("_", $transactionId);
-    if ($data[2] == 1 || $data[2] == 4 || $data[2] == 9 || $data[2] == 10) {
-        $result = (new BusinessFlowModel())->ViewRedEvenlopes($data[0])[0];
+    $validTypes = [1, 4, 9, 10];
+    if (in_array($data[2], $validTypes)) {
+        $fetchredevelope = (new BusinessFlowModel())->ViewRedEvenlopes($data[0])[0];
         $fetchdeposit = (new BusinessFlowModel())->ViewDeposite($data[0])[0];
-        $userData = (new BusinessFlowModel())->getUsernameById($result['uid']);
+        $userData = (new BusinessFlowModel())->getUsernameById($fetchredevelope['uid']);
         if ($userData['reg_type'] == 'username') {
             $username = $userData['username'];
         } elseif ($userData['reg_type'] == 'contact') {
@@ -89,7 +90,7 @@ if ($flag == "getTransactionBet") {
             $username = $userData['email'];
         }
         $response = [
-            'redEnvelope' => $result,
+            'redEnvelope' => $fetchredevelope,
             'deposit' => $fetchdeposit,
             'usernames' => $username,
         ];
@@ -120,10 +121,10 @@ if ($flag == "getTransactionBet") {
     $result['rebate_amount'] = empty($result['rebate_amount']) ? "0" : $result['rebate_amount'];
     $result['game_type'] = $lotteryname;
     $result['reg_type'] = $username;
-    $result['opening_time'] = str_replace(" ", " / ", $close_and_opentimes['opening_time'] ?? 'Pending');
-    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? 'Pending';
+    $result['opening_time'] = str_replace(" ", " / ", $close_and_opentimes['opening_time'] ?? $translator['Pending']);
+    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? $translator['Pending'];
     $result['game_model'] = isset($gamemodel[$result['game_model']]) ? $gamemodel[$result['game_model']] : 'unknown';
-    $result['draw_number'] = $result['draw_number'] ?? 'Pending';
+    $result['draw_number'] = $result['draw_number'] ?? $translator['Pending'];
 
     echo json_encode($result);
 }
@@ -187,15 +188,15 @@ if ($flag == "viewBetstake") {
     $result['reg_type'] = $username;
     $result['bet_amount'] = $result['bet_amount'];
     $result['rebate_amount'] = empty($result['rebate_amount']) ? "0" : $result['rebate_amount'];
-    $result['opening_time'] = str_replace(" ", " / ", $close_and_opentimes['opening_time'] ?? 'Pending');
-    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? 'Pending';
-    $result['bettype'] = $result['bettype'] == 2 ? 'Track' : ($result['bettype'] == 1 ? $translator['Bet'] : '');
+    $result['opening_time'] = str_replace(" ", " / ", $close_and_opentimes['opening_time'] ?? $translator['Pending']);
+    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? $translator['Pending'];
+    $result['bettype'] = $result['bettype'] == 2 ? $translator['Track'] : ($result['bettype'] == 1 ? $translator['Bet'] : '');
     $result['bet_status'] = isset($betStatusMap[$result['bet_status']]) ? $betStatusMap[$result['bet_status']] : 'unknown';
     $result['game_model'] = isset($gamemodel[$result['game_model']]) ? $gamemodel[$result['game_model']] : 'unknown';
     $result['state'] = isset($betState[$result['state']]) ? $betState[$result['state']] : 'unknown';
     $result['game_type'] = $lotteryname;
     $result['bet_odds'] = $betodds;
-    $result['draw_number'] = $result['draw_number'] ?? 'Pending';
+    $result['draw_number'] = $result['draw_number'] ?? $translator['Pending'];
 
     echo json_encode($result);
 }
@@ -277,22 +278,23 @@ if ($flag == 'getTrackbet') {
     // // Assign the determined value to the reg_type field
 
     $lotteryname = (new BusinessFlowModel())->getLottery($result['game_type'])['name'];
-    $betStatusMap = [2 => 'Win', 3 => 'Lost', 5 => 'Pending', 6 => 'Bet Cancelled', 7 => 'Refund'];
+    // $betStatusMap = [2 => 'Win', 3 => 'Lost', 5 => 'Pending', 6 => 'Bet Cancelled', 7 => 'Refund'];
+    $betStatusMap = [2 => $translator['Win'], 3 => $translator['Lost'], 5 => $translator['Pending'], 6 => $translator['Bet Cancelled'], 7 => $translator['Refund']];
     $betState = [1 => 'Settled ', 2 => 'Unsettled ', 4 => 'Bet Cancelled', 7 => 'Refund'];
     $gamemodel = [1 => $translator['Standard'], 2 => $translator['Two Sides'], 4 => $translator['Long Dragon'], 5 => $translator['Many Tables'], 6 => $translator['Board Games'], 3 => $translator['Long Dragon'], 7 =>$translator['Fantan'],8 => $translator['Trend']];
     // $datta = json_decode($result['bet_odds'], true); // Decode JSON
     // $betodds = reset($datta) * $result['multiplier'] * $result['unit_stake'];
-    $result['opening_time'] = str_replace(" ", " / ", $close_and_opentimes['opening_time'] ?? 'Pending');
-    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? 'Pending';
+    $result['opening_time'] = str_replace(" ", " / ", $close_and_opentimes['opening_time'] ?? $translator['Pending']);
+    $result['closing_time'] = $close_and_opentimes['closing_time'] ?? $translator['Pending'];
     $result['reg_type'] = ucfirst(trim($username));
     $result['bet_amount'] = $result['bet_amount'];
     $result['rebate_amount'] = empty($result['rebate_amount']) ? "0" : $result['rebate_amount'];
-    $result['bettype'] = $result['bettype'] == 2 ? 'Track' : ($result['bettype'] == 1 ? 'Bet' : '');
+    $result['bettype'] = $result['bettype'] == 2 ? $translator['Track']  : ($result['bettype'] == 1 ? $translator['Bet'] : '');
     $result['bet_status'] = isset($betStatusMap[$result['bet_status']]) ? $betStatusMap[$result['bet_status']] : 'unknown';
     $result['state'] = isset($betState[$result['state']]) ? $betState[$result['state']] : 'unknown';
     $result['game_type'] = $lotteryname;
     $result['game_model'] = isset($gamemodel[$result['game_model']]) ? $gamemodel[$result['game_model']] : 'unknown';
-    $result['draw_number'] = $result['draw_number'] ?? 'Pending';
+    $result['draw_number'] = $result['draw_number'] ?? $translator['Pending'];
     // $result['bet_odds'] = $betodds;
 
     echo json_encode($result);
@@ -304,11 +306,5 @@ if ($flag == 'getTracktokenbet') {
     $betTable = (new BusinessFlowModel())->getTables()[$data[1]]['bet_table'];
     $drawTable = (new BusinessFlowModel())->getTables()[$data[1]]['draw_table'];
     $result = (new BusinessFlowModel())->getTrackData($betTable, $data[0]) ?? [];
-    foreach ($result as &$item) {
-        $trackData = (new BusinessFlowModel())->getTrackStatus($item['token']); // Fetch status and rule
-        // $item['trackstatus'] = $trackData['track_status']; // Add status to the result
-        $item['trackrule'] = $trackData[0]['track_rule']; // Add rule to the result
-    }
-
     echo json_encode($result);
 }
