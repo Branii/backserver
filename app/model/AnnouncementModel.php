@@ -33,7 +33,7 @@ class AnnouncementModel extends MEDOOHelper
             'content' =>$content,
             'send_by' => $sendby,
             'created_at'=>  date("Y-m-d / H:i:s"),
-            'status' =>$status,
+            'ms_status' =>$status,
             'ms_type'=> $messagetype,
             'audience' =>$targetUser,
             'uid' =>$uidsJson
