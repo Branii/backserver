@@ -34,7 +34,7 @@ if(empty($usernames)){
         
     }elseif($messagetype === "users"){
     
-       $userUids = AnnouncementModel::UserUid();
+         $userUids = AnnouncementModel::UserUid();
          $targetUser = 'Specific Users';
         echo json_encode(AnnouncementModel::GeneralMessage($messagetitle,$description,$sendby,$messagetype,$targetUser, $userUids)) ;    
  

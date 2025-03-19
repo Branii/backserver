@@ -28,7 +28,7 @@ $(function () {
         // let total_income = item.deposit_withdrawal_type == 1 ? `+${item.deposit_and_withdrawal_amount}` :
         // item.deposit_withdrawal_type == 4 ? `-${item.deposit_and_withdrawal_amount}` : 0;
 
-           let messagetype =  (item.ms_type == "general") ? "Announcement" : "Notification";
+           let messagetype =  (item.ms_type == "general") ? "Announcement" : (item.ms_type == "personal")? "Notification" : (item.ms_type == "users")? "Notification" : "";
         //   item.deposit_withdrawal_type == 4 ? 'Withdrawal' : '';
         //   let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
 

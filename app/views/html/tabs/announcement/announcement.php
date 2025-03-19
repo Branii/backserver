@@ -431,7 +431,7 @@
                     <div class="form-floating mb-3">
                         <select name="deposit" class="form-select form-control borders border-infos messagetype">
                         <option value="general">General Announcement (All Users)</option>
-                        <option value="users">VIP Users Only</option>
+                        <!-- <option value="personal">VIP Users Only</option> -->
                         <!-- <option value="new">Newly Registered Users Only</option> -->
                         <option value="personal">User-Specific Announcement</option>
                         </select>
