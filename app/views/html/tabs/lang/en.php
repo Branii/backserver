@@ -39,7 +39,7 @@ return [
 'Rebates' => 'Rebates',
 "Server Time"  => "Server Time",
 'Page'=> 'Page',
-'Pages' =>'Page',
+'Pages' =>'Pages',
 'Of' => 'Of',
 'Bet Lost' =>'Bet Lost',
 'Refresh' => 'Refresh',
@@ -157,6 +157,10 @@ return [
 'Stop If Not Win'=>'Stop If Not Win',
 'Completed' => 'Completed',
 'Running' =>'Running',
+'no_rule' =>'no_rule',
+'stop_if_win'=>'stop_if_win',
+'stop_if_not_win'=>'stop_if_not_win',
+'Search Track Id'=>'Search Track Id',
 
 //Live Game Records
 'Live Game Records' =>'Live Game Records',
@@ -690,6 +694,7 @@ return [
 'System Lottery' => 'System Lottery',
 'All Games' => 'All Games',
 'Action' => 'Action',
+'Progress' =>'Progress',
 
 
 // (SMS API account）	
@@ -730,6 +735,8 @@ return [
 'DateTime' =>'DateTime',
 'Created By' =>'Created By',
 'Active' =>'Active',
+
+'User Notification' =>'User Notification',
 
 //(Player Inbox Messages)
 'Player Inbox Messages' => 'Player Inbox Messages',

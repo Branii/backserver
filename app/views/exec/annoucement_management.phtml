@@ -8,7 +8,7 @@ if($flag == "fetchmessage"){
 
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $result = (new AnnouncementModel())->FetchAnnoucement($page, $limit) ?? [];
+    $result = AnnouncementModel::FetchAnnoucement($page, $limit) ?? [];
 
     echo json_encode([
         'messages' => $result['data'],
@@ -28,10 +28,19 @@ $sendby = urldecode(isset($this->viewData['sendby'])) ? urldecode(($this->viewDa
 
 if(empty($usernames)){
     if (in_array($messagetype, ["general", "personal"])) {
+
         $targetUser = ($messagetype === "general" ) ? 'All Users' :"" ;
         echo AnnouncementModel::GeneralMessage($messagetitle,$description,$sendby,$messagetype,$targetUser,$uid=0);
         
-    }
+    }elseif($messagetype === "users"){
+    
+         $userUids = AnnouncementModel::UserUid();
+         $targetUser = 'Specific Users';
+        echo json_encode(AnnouncementModel::GeneralMessage($messagetitle,$description,$sendby,$messagetype,$targetUser, $userUids)) ;    
+ 
+        }
+      
+    
 }else{
     $userData = (new AnnouncementModel())->getUsernameById($usernames);
     if ($userData['reg_type'] == 'username') {
@@ -43,7 +52,8 @@ if(empty($usernames)){
     }
     if (in_array($messagetype, ["general", "personal"])) {
         $targetUser = ($messagetype === "personal") ? $username : '';
-        echo AnnouncementModel::GeneralMessage($messagetitle,$description,$sendby,$messagetype,$targetUser,$usernames);
+         echo AnnouncementModel::GeneralMessage($messagetitle,$description,$sendby,$messagetype,$targetUser,$usernames);
+      //AnnouncementModel ::;
       
     }
     

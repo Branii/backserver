@@ -487,7 +487,7 @@
 
                     <div class="form-floating mb-3">
                         <input name="agentname" type="text" class="form-control border approved"
-                            placeholder="Approved by" value="<?php echo $fullname['full_name']; ?>" />
+                            placeholder="Approved by" value="<?php echo $fullname['full_name']; ?>" readonly/>
                         <label>
                             <!-- <i class="bx bx-message me-2 fs-4 text-infod"></i> -->
                             <span class="border-start ps-3"><?=$translator['Approved By']; ?></span>

@@ -131,7 +131,6 @@ $(function () {
         opening_time: `${translator["Draw Time"]}`,
         bet_status: `${translator["Bet Status"]}`,
         user_selection: `${translator["Bet Selection"]}`,
-        //'user_selection': 'Bet Selection'
     };
 
     const render = (data) => {
@@ -285,7 +284,7 @@ $(function () {
 
             // Render pagination
             renderPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterTrasaction(transusername, transactionId, ordertypetrans, startdatrans, enddatetrans, newPage, pageLimit));
-            document.getElementById("paging_info").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            document.getElementById("paging_info").innerHTML = `${translator["Page"]} ${page} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -316,7 +315,7 @@ $(function () {
             deposit_withdrawal_types,
             deposit_amount: formatMoney(transactiondata.deposit.deposit_and_withdrawal_amount),
             recharge_balance: formatMoney(transactiondata.deposit.recharge_balance_in_advance),
-            deposit_time: transactiondata.deposit.date_created + " " + transactiondata.deposit.deposit_and_withdrawal_time,
+            deposit_time: transactiondata.deposit.date_created + " / " + transactiondata.deposit.deposit_and_withdrawal_time,
             // required_coding_amount: transactiondata.deposit.required_coding_amount || "N/A",
             remark: transactiondata.deposit.remark || "N/A",
         };

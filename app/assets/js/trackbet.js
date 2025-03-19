@@ -3,34 +3,34 @@ $(function () {
     ////////////// LOTTERY BETTING-//////////
     function showToast(title, message, type) {
         $.toast({
-          position: "bottom-right",
-          title: title,
-          message: message,
-          type: type,
-          duration: 3000, // auto-dismiss after 3s
+            position: "bottom-right",
+            title: title,
+            message: message,
+            type: type,
+            duration: 3000, // auto-dismiss after 3s
         });
-      }
-      function formatMoney(money) { 
-        let moneyStr = String(money); 
-        if (moneyStr.includes(".")) { 
-            let parts = moneyStr.split("."); 
-            if (parts[1].length > 2) { 
-                parts[1] = parts[1].substring(0, 4); 
-            } 
-            moneyStr = parts.join(".").replace(/\.?0+$/, ""); 
-        } 
-        return moneyStr; 
+    }
+    function formatMoney(money) {
+        let moneyStr = String(money);
+        if (moneyStr.includes(".")) {
+            let parts = moneyStr.split(".");
+            if (parts[1].length > 2) {
+                parts[1] = parts[1].substring(0, 4);
+            }
+            moneyStr = parts.join(".").replace(/\.?0+$/, "");
+        }
+        return moneyStr;
     }
 
     const formatText = (text) => {
         return text
-          .split('_') // Split the string into parts based on underscores
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
-          .join(' '); // Join the parts back with spaces
-      };
-      
-    //   const result = formatText('stop_if_not_win');
-    //   console.log(result); // Output: Stop If Win
+            .split("_") // Split the string into parts based on underscores
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+            .join(" "); // Join the parts back with spaces
+    };
+
+    const translatorScript = document.querySelector(".translations"); // Get the script tag
+    const translator = JSON.parse(translatorScript.textContent);
     const Trackbetdata = (data) => {
         let htmls = "";
         const bettype = {
@@ -39,11 +39,11 @@ $(function () {
         };
 
         const trackstatus = {
-            1: "Running",
-            2: "Self Stop Track",
-            3: "Completed",
-            4: "Stop If Win",
-            5: "Stop If Not Win",
+            1: translator["Running"],
+            2: translator["Self Stop Track"],
+            3: translator["Completed"],
+            4: translator["Stop If Win"],
+            5: translator["Stop If Not Win"],
         };
         const states = {
             1: "Settled",
@@ -57,17 +57,16 @@ $(function () {
             htmls += `
                     <tr>
                         <td>${item.track_token}</td>
-                       <td>${typeof username === "string" || typeof username === "number" 
-                        ? String(username).charAt(0).toUpperCase() + String(username).slice(1): "N/A"}</td>
+                        <td>${username}</td>
                         <td>${item.game_type}</td>
                         <td>${item.start_draw}</td>
                         <td>${item.tracked + "/" + item.total_bets}</td>
                         <td>${formatMoney(item.done_amount) + "/" + formatMoney(item.total_amount)}</td>                  
                         <td>${trackstatus[item.track_status]}</td>
                         <td>${formatMoney(item.win_amount)}</td>
-                       <td>${formatText(item.track_rule)}</td>
-                       <td>${item.server_date + " / " + item.server_time}</td>
-                      <td><i value='${item.track_token}_${item.game_type_id}' class='bx bx-info-circle trackinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
+                        <td>${translator[item.track_rule]}</td>
+                        <td>${item.server_date + " / " + item.server_time}</td>
+                        <td><i value='${item.track_token}_${item.game_type_id}' class='bx bx-info-circle trackinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
                        
                         
                         
@@ -80,66 +79,66 @@ $(function () {
     const Showtrackbet = (data, obj) => {
         let htmlbet = "";
         Object.entries(data).forEach(([key, value]) => {
-            //  console.log(`${key}: ${value}`);
+            let test = value !== translator["Bet Selection"] && langMap[value] ? langMap[value] : translator["Bet Selection"];
 
-           
-      if(value === "Bet Selection"){
-        htmlbet += `
-         <td>${value}</td>
-          <td class="${key === "user_selection" ? "bet_userSelection" : ""}">
-              <textarea class="form-control"   readonly style="height: 75px;">${obj[key]}</textarea>
-           </td>`
-   }else{
-     htmlbet += `
-         <tr>
+            if (value == test) {
+                 htmlbet += `
+                  <td>${value}</td>
+                   <td class="${key === "user_selection" ? "bet_userSelection" : ""}">
+                    <textarea class="form-control"   readonly style="height: 75px;">${obj[key]}</textarea>
+                    </td>`
+            } else {
+                htmlbet += `
+           <tr>
            <td>${value}</td>
            <td class="${key === "user_selection" ? "bet_userSelection" : ""}" 
              ${key === "user_selection" ? `title="${obj[key]}"` : ""}>
-             ${key === "win_bonus" || key === "bet_amount" ||key ==="rebate_amount" ? `${formatMoney(obj[key])}` : `${obj[key]}`}
+             ${key === "win_bonus" || key === "bet_amount" || key === "rebate_amount" ? `${formatMoney(obj[key])}` : `${obj[key]}`}
             </td>
          </tr>
          `;
-
-   }
-
+            }
         });
         return htmlbet;
     };
 
+    const langMap = {
+        '投注选择:' :'Bet Selection',
+    }
+    
     const firstRowtrack = {
-    'bet_code': 'Bet Order ID:',
-    'draw_period': 'Issue Number:',
-    'bet_time': 'Bet Time:',
-    'bet_number': 'Total Bet:',
-     'unit_stake': 'Unit Stake:',
-     'multiplier': 'Multiplier:',
-     'bet_amount': 'Total Bet Amount:',
-     'win_bonus': 'Win Amount:',
-     'rebate_amount': 'Rebate Amount',
-     'num_wins': 'Number of wins:',
-     'draw_number': 'Draw Results:',
+        bet_code:    `${translator["Bet Order ID"]}`,
+        draw_period: `${translator["Issue Number"]}`,
+        bet_time:    `${translator["Bet Time"]}`,
+        bet_number:  `${translator["Total Bets"]}`,
+        unit_stake:  `${translator["Unit Stake"]}`,
+        multiplier:  `${translator["Multiplier"]}`,
+        bet_amount:  `${translator["Total Bet Amount"]}`,
+        win_bonus:   `${translator["Win Amount"]}`,
+        rebate_amount:`${translator["Rebate Amount"]}`,
+        num_wins:     `${translator["Number of Wins"]}`,
+        draw_number:  `${translator["Draw Results"]}`,
     };
-
+    
     const secondRowtrack = {
-    'reg_type': 'Username:',
-    'ip_address': 'IP:',
-    'game_type': 'Lottery Type:',
-    'game_label': 'Game Label:',
-    'bettype': 'Bet Type:',
-    'game_model': 'Game Model',
-    'closing_time': 'Closing Time:',
-    'opening_time': 'Draw Time:', 
-    'bet_status': 'Bet Status:',
-    'user_selection': 'Bet Selection',
+        reg_type:   `${translator["Username"]}`,
+        ip_address: `${translator["IP"]}`,
+        game_type:  `${translator["Lottery Type"]}`,
+        game_label: `${translator["Game Label"]}`,
+        bettype:    `${translator["Bet Type"]}`,
+        game_model: `${translator["Game Model"]}`,
+        closing_time:`${translator["Closing Time"]}`,
+        opening_time:`${translator["Draw Time"]}`,
+        bet_status:  `${translator["Bet Status"]}`,
+        user_selection: `${translator["Bet Selection"]}`,
+
     };
+     
 
     const rendertrack = (data) => {
         var htmls = Trackbetdata(data);
         $("#trackdataContainer").html(htmls);
     };
-
-    //   let currentPagetracktrack = 1;
-    //   let pageLimit = 10;
 
     let currentPagetrack = 1;
     let pageLimit = 20;
@@ -154,13 +153,13 @@ $(function () {
 
             // Render pagination
             renderPaginationtrack(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchtrackdata(newPage, pageLimit));
-            document.getElementById("paging_infotrack").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+            document.getElementById("paging_infotrack").innerHTML = `${translator["Page"]} ${page} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     }
 
-    async function filterTrack(usernames, trackstatus,trackcode, tracklotery, startdatetrack, enddatetrack, currentPagetrack, pageLimit) {
+    async function filterTrack(usernames, trackstatus, trackcode, tracklotery, startdatetrack, enddatetrack, currentPagetrack, pageLimit) {
         try {
             const response = await fetch(`../admin/filterTrackdata/${usernames}/${trackstatus}/${trackcode}/${tracklotery}/${startdatetrack}/${enddatetrack}/${currentPagetrack}/${pageLimit}`);
 
@@ -189,8 +188,8 @@ $(function () {
             rendertrack(data.trackfilter);
 
             // Render pagination
-            renderPaginationtrack(data.totalPages, currentPagetrack, pageLimit, (newPage, pageLimit) => filterTrack(usernames, trackstatus, trackcode,tracklotery, startdatetrack, enddatetrack, newPage, pageLimit));
-            document.getElementById("paging_infotrack").innerHTML = "Page " + currentPagetrack + " of " + data.totalPages + " pages";
+            renderPaginationtrack(data.totalPages, currentPagetrack, pageLimit, (newPage, pageLimit) => filterTrack(usernames, trackstatus, trackcode, tracklotery, startdatetrack, enddatetrack, newPage, pageLimit));
+            document.getElementById("paging_infotrack").innerHTML = `${translator["Page"]} ${page} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -237,16 +236,14 @@ $(function () {
         });
     }
 
-    fetchtrackdata(currentPagetrack, pageLimit);
+     fetchtrackdata(currentPagetrack, pageLimit);
 
     $(".playertrack").click(function () {
         let direction = $(this).val();
         const tableWrapper = $(".table-wrappertrack");
         const tableWrappers = document.querySelector(".table-wrappertrack");
         const scrollAmount = 1000; // Adjust as needed
-        const scrollOptions = {
-            behavior: "smooth",
-        };
+        const scrollOptions = { behavior: "smooth" };
         if (tableWrapper.length) {
             switch (direction) {
                 case "trackleft":
@@ -268,6 +265,7 @@ $(function () {
             }
         }
     });
+    
 
     $(".refreshtrack").click(function () {
         $(".queryholderlist").val("");
@@ -288,10 +286,8 @@ $(function () {
     });
 
     $(".executetrack").click(function () {
-        if ($("#trackinput").val() == "" && $(".trackstatus").val() == "" && $(".tracklotery").val() == ""
-          && $(".startdatetrack").val() == "" && $("#trackcode").val() =="") {
-            //$("#dangertrack").modal("show");
-            showToast("Heads up!!","Select one or more data fields to filter","info")
+        if ($("#trackinput").val() == "" && $(".trackstatus").val() == "" && $(".tracklotery").val() == "" && $(".startdatetrack").val() == "" && $("#trackcode").val() == "") {
+            showToast("Heads up!!", "Select one or more data fields to filter", "info");
             return;
         }
         const usernames = $("#trackinput").val();
@@ -300,8 +296,8 @@ $(function () {
         const trackcode = $("#trackcode").val();
         const startdatetrack = $(".startdatetrack").val();
         const enddatetrack = $(".enddatetrack").val();
-        console.log(trackcode);
-        filterTrack(usernames, trackstatus, tracklotery, trackcode,startdatetrack, enddatetrack, currentPagetrack, pageLimit);
+
+        filterTrack(usernames, trackstatus, tracklotery, trackcode, startdatetrack, enddatetrack, currentPagetrack, pageLimit);
         $(".loadertrack").remove("bx bx-check-double").addClass("bx bx-loader bx-spin");
     });
 
@@ -314,7 +310,7 @@ $(function () {
 
             const data = await response.json(); // Parse JSON response
             // console.log(data);
-            let html = `<option value="" class="" selected>-Lottery Type-</option>`;
+            let html = `<option value="">${translator['Lottery Type']}</option>`;
             data.forEach((lottery) => {
                 html += `<option value="${lottery.gt_id}" class="">${lottery.name}</option>`;
             });
@@ -326,7 +322,7 @@ $(function () {
     }
     fetchLotteryname();
 
-    $(document).on("click", ".trackinfo", function () {
+    $(document).on("click", ".trackinfo", function () {       
         $("#viewtrackmodal").modal("show");
         const tracktoken = $(this).attr("value");
         console.log(tracktoken);
@@ -347,19 +343,19 @@ $(function () {
                 const row = document.createElement("tr");
 
                 const betstatus = {
-                    2: "Win",
-                    3: "Loss",
-                    5: "Pending",
-                    6: "Void",
-                    7: "Refund",
+                    2: translator["Win"],
+                    3: translator["Loss"],
+                    5: translator["Pending"],
+                    6: translator["Void"],
+                    7: translator["Refund"],
                 };
                 row.innerHTML = `
-                <td>${item.draw_number || "N/A"}</td>        <!-- Draw Result -->
-                <td>${item.draw_period || "N/A"}</td>       <!-- Issue Number -->
-                <td>${item.multiplier || "N/A"}</td>        <!-- Multiplier -->
-                <td>${item.bet_amount || "N/A"}</td>        <!-- Bet Amount -->
-                <td>${item.trackrule || "N/A"}</td>          <!-- Progress -->
-                <td>${betstatus[item.bet_status] || "N/A"}</td>        <!-- Track Status -->
+                <td>${item.draw_number || "N/A"}</td>     
+                <td>${item.draw_period || "N/A"}</td> 
+                <td>${item.multiplier || "N/A"}</td>       
+                <td>${item.bet_amount || "N/A"}</td> 
+                <td>${item.trackrule || "N/A"}</td>
+                <td>${betstatus[item.bet_status] || "N/A"}</td>    
             `;
                 // Append the row to the table body
                 tableBody.appendChild(row);
@@ -413,6 +409,7 @@ $(function () {
                 $(".trackdown").hide();
             }
         });
+
         $(document).on("click", function (e) {
             const $dropdownbet = $("#usertrackDropdown");
             if (!$(e.target).closest("#trackinput, #usertrackDropdown").length) {
@@ -481,9 +478,7 @@ $(function () {
     }
     tableScrolltrack();
 
-
     $(".clearitem").on("dblclick", function () {
         $(this).val(""); // Clears the input field
     });
-    
 });
