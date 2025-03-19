@@ -130,13 +130,12 @@ class FinancialManageModel extends MEDOOHelper
     public static function addMoneyData($desposittype, $uid, $amount,$username,$review)
     {
 
-
+       //return  $amount;
         $trans_oderId = bin2hex(random_bytes(4));
         $depositid  = ($desposittype == 1) ? 'DEPO' . $trans_oderId : 'WITHD' . $trans_oderId;
-
+        
 
         // $usernames = $uid ?? [];
-        $success = false; // Initialize a success fla
 
         // foreach ($usernames as $username) {
         $Data = self::getUserDataByUsername($uid)[0];
@@ -146,8 +145,8 @@ class FinancialManageModel extends MEDOOHelper
             $recharge_balance = (float) $Data['balance'] + (float) $amount;
         } else {
             // Check if the withdrawal amount exceeds the available balance
-            if ((float) $amount > (float) $Data['balance']) {
-                echo "Insufficient balance for user:";
+            if ( $amount >  $Data['balance']) {
+                return "Insufficient balance";
                 exit;
                 //  continue; // Skip this iteration if balance is insufficient
             }
@@ -156,6 +155,7 @@ class FinancialManageModel extends MEDOOHelper
             $recharge_balance = (float) $Data['balance'] - (float)$amount;
         }
 
+        $success = false; // Initialize a success fla
         
         if ($desposittype == 1) {
             if (
@@ -179,7 +179,7 @@ class FinancialManageModel extends MEDOOHelper
             }
         }
         
-        return $success ? "success" : "no changes made";
+        return $success ? "transaction success" : "transaction failed";
     }
 
     public static function insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance)
