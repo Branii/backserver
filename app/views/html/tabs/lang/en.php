@@ -736,6 +736,8 @@ return [
 'Created By' =>'Created By',
 'Active' =>'Active',
 
+'User Notification' =>'User Notification',
+
 //(Player Inbox Messages)
 'Player Inbox Messages' => 'Player Inbox Messages',
 

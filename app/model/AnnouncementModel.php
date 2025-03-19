@@ -22,12 +22,13 @@ class AnnouncementModel extends MEDOOHelper
     public static function GeneralMessage($title ,$content,$sendby,$messagetype,$targetUser,$uid) {
        $dates = date('Y:m:d');
        $status = "Active";
-        //$data = [$uid];
-        if (!is_array($uid)) {
-            $uid = [$uid];
-        }
 
-        $uidsJson = json_encode($uid);
+       if (!is_array($uid)) {
+        $uid = [$uid]; // Convert single ID to an array
+     }
+
+
+       // $uidsJson = json_encode($uid);
         $params = [
             'title' =>$title,
             'content' =>$content,
@@ -36,7 +37,7 @@ class AnnouncementModel extends MEDOOHelper
             'ms_status' =>$status,
             'ms_type'=> $messagetype,
             'audience' =>$targetUser,
-            'uid' =>$uidsJson
+            'uid' =>$uid
         ];
          $insertData = parent::insert("notices", $params);
          if ($insertData) {
