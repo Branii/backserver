@@ -28,7 +28,7 @@ $(function () {
         // let total_income = item.deposit_withdrawal_type == 1 ? `+${item.deposit_and_withdrawal_amount}` :
         // item.deposit_withdrawal_type == 4 ? `-${item.deposit_and_withdrawal_amount}` : 0;
 
-           let messagetype =  (item.type == "general") ? "Announcement" : "Notification";
+           let messagetype =  (item.ms_type == "general") ? "Announcement" : "Notification";
         //   item.deposit_withdrawal_type == 4 ? 'Withdrawal' : '';
         //   let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
 
@@ -192,6 +192,7 @@ $(function () {
       const username = $("#financeDropdownl").val();
       const startfmessage = $(".startfmessage").val();
       const endmessage = $(".endmessage").val();
+
       console.log(username+messagestype+startfmessage+endmessage)
     //   return
    
@@ -304,7 +305,7 @@ $(function () {
       const usernames = $(".userIdFieldss").val();
       const description = encodeURIComponent($("#description").val());
       const sendby = $(".sendby").val()
-   //  console.log(usernames + "" + messagetype +""+messagetitle +""+description+""+sendby)
+     console.log(usernames + "" + messagetype +""+messagetitle +""+description+""+sendby)
       //return
        if (messagetitle === "" || description === "" || sendby === "") {
          showToast("Heads up!!", "All field are required", "info");

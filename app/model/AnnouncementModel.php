@@ -3,7 +3,10 @@
 class AnnouncementModel extends MEDOOHelper
 {
 
-
+    // $query = "SELECT u.*, p.profile_info 
+    // FROM users u
+    // JOIN user_profiles p ON u.uid = p.uid
+    // WHERE u.uid IN ($uidList)";
 
     public static function FetchAnnoucement($page, $limit): array
     {
@@ -16,23 +19,36 @@ class AnnouncementModel extends MEDOOHelper
        return ['data' => $data, 'total' => $totalRecords,];
     }
 
-    public static function GeneralMessage($title ,$content,$sendby,$messagetype,$targetUser,$usernames) {
+    public static function GeneralMessage($title ,$content,$sendby,$messagetype,$targetUser,$uid) {
        $dates = date('Y:m:d');
        $status = "Active";
-      // $status = "Active";
+        //$data = [$uid];
+        if (!is_array($uid)) {
+            $uid = [$uid];
+        }
+
+        $uidsJson = json_encode($uid);
         $params = [
             'title' =>$title,
             'content' =>$content,
             'send_by' => $sendby,
             'created_at'=>  date("Y-m-d / H:i:s"),
             'status' =>$status,
-            'type'=> $messagetype,
+            'ms_type'=> $messagetype,
             'audience' =>$targetUser,
-            'uid' =>$usernames
+            'uid' =>$uidsJson
         ];
          $insertData = parent::insert("notices", $params);
          if ($insertData) {
+            $msg_id = parent::query("SELECT ms_type,msg_id FROM notices ORDER BY msg_id DESC LIMIT 1")[0];
+            if ($msg_id['ms_type'] == "general") {
+                return "Message sent successfully.";
+            }
+            if (!empty($uid)) {
+                self::createNotice($msg_id['msg_id'], $uid);
+            }
             return "Message sent successfully.";
+         
         } else {
             return "Message could not be sent. Please try again.";
         }
@@ -42,6 +58,28 @@ class AnnouncementModel extends MEDOOHelper
     {
        $data = parent::query("SELECT username,email,contact,reg_type,uid FROM users_test WHERE uid = :uid", ['uid' => $userId])[0];
        return $data;
+    }
+    public static function UserUid()
+    {
+        $data = parent::query("SELECT uid FROM users_test WHERE login_count > 0");
+        $uids = array_column($data, 'uid');
+        return $uids;
+    
+    }
+    
+
+    public static function createNotice($msg_id, $userIds = []) {
+  
+        if (!is_array($userIds)) {
+            $userIds = [$userIds]; 
+        }
+    
+        $values = implode(',', array_map(fn($id) => "($msg_id, $id)", $userIds));
+        // Execute a single insert query for all users
+        $insertData = parent::query("INSERT INTO notice_users (notice_id, user_id) VALUES $values");
+        return $insertData ? "Message sent successfully." : "Message could not be sent. Please try again.";
+    
+       
     }
  
     public static function DeleteAnnoucement($messageid)
@@ -63,7 +101,7 @@ class AnnouncementModel extends MEDOOHelper
         }
 
         if (!empty($messagetype)) {
-            $filterConditions[] = "type = '$messagetype'";
+            $filterConditions[] = "ms_type = '$messagetype'";
         }
      
 
@@ -79,7 +117,7 @@ class AnnouncementModel extends MEDOOHelper
             $subQuery = implode(' AND ', $filterConditions);
         }
         // Add ordering and limit to the query
-       // $subQuery .= "ORDER BY created_at DESC";
+        $subQuery .= "ORDER BY created_at DESC";
 
         return $subQuery;
     }
@@ -119,11 +157,9 @@ class AnnouncementModel extends MEDOOHelper
         } catch (Exception $e) {
             // Log the error message for debugging purposes
             error_log("Error executing query: " . $e->getMessage());
-        
-            // Optionally, return an empty set or error response
             return [
                 'data' => [],
-                'total' => 0,
+               'total' => 0,
                 'error' => "Error executing query: " . $e->getMessage()
             ];
         }

@@ -322,7 +322,7 @@ $(function () {
     }
     fetchLotteryname();
 
-    $(document).on("click", ".trackinfo", function () {
+    $(document).on("click", ".trackinfo", function () {       
         $("#viewtrackmodal").modal("show");
         const tracktoken = $(this).attr("value");
         console.log(tracktoken);
