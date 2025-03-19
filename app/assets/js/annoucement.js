@@ -317,8 +317,6 @@ $(function () {
        $(".loaderfinancc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
        $.post(`../admin/annoucement/${messagetype}/${messagetitle}/${usernames}/${description}/${sendby}`,
         function (response) {
-         // console.log(response.success);
-         // console.log(response)
            if (response) {
              $(".loaderfinancc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send")  
              showToast("Success", response, "success");
