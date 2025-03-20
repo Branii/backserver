@@ -26,8 +26,13 @@ class AnnouncementModel extends MEDOOHelper
        if (!is_array($uid)) {
         $uid = [$uid]; // Convert single ID to an array
      }
-
-
+        //    if ($messagetype == "general") {
+            // $totalRecords = parent::count('users_test');
+            
+            // } else {
+            //     $totalRecords = 1; 
+            // }
+       // $uidsJson = is_array($uid) ? json_encode($uid) : $uid;
        // $uidsJson = json_encode($uid);
         $params = [
             'title' =>$title,
@@ -38,6 +43,7 @@ class AnnouncementModel extends MEDOOHelper
             'ms_type'=> $messagetype,
             'audience' =>$targetUser,
             'uid' =>$uid
+            // 'ms_count' =>$totalRecords
         ];
          $insertData = parent::insert("notices", $params);
          if ($insertData) {
@@ -70,16 +76,42 @@ class AnnouncementModel extends MEDOOHelper
     
 
     public static function createNotice($msg_id, $userIds = []) {
-  
         if (!is_array($userIds)) {
             $userIds = [$userIds]; 
         }
-    
-        $values = implode(',', array_map(fn($id) => "($msg_id, $id)", $userIds));
-        // Execute a single insert query for all users
-        $insertData = parent::query("INSERT INTO notice_users (notice_id, user_id) VALUES $values");
-        return $insertData ? "Message sent successfully." : "Message could not be sent. Please try again.";
-    
+        
+        $userIdList = implode(',', $userIds);
+      
+        $result = parent::query("SELECT username, email, contact, reg_type, uid FROM users_test WHERE uid IN ($userIdList)");
+        
+        $userData = [];
+        foreach ($result as $data) {
+            // Determine the correct username based on reg_type
+            if ($data['reg_type'] == 'username') {
+                $username = $data['username'];
+            } elseif ($data['reg_type'] == 'contact') {
+                $username = $data['contact'];
+            } else {
+                $username = $data['email'];
+            }
+        
+            $id = $data['uid'];
+            
+            // Make sure username is properly quoted
+            $userData[] = "($msg_id, $id, '" .($username). "')";
+        }
+        
+        // Ensure there are values to insert
+        if (!empty($userData)) {
+            $values = implode(',', $userData);
+        
+            // Insert into notice_users
+            $insertData = parent::query("INSERT INTO notice_users (notice_id, user_id, username) VALUES $values");
+        
+            return $insertData ? "Message sent successfully." : "Message could not be sent. Please try again.";
+        } else {
+            return "No valid users found.";
+        }
        
     }
  
@@ -128,42 +160,45 @@ class AnnouncementModel extends MEDOOHelper
     public static function FilterMessageData($subquery, $page, $limit)
     {
         try {
-            // Calculate the starting point for pagination
+      
             $startpoint = ($page - 1) * $limit;
-       
             $sql = " SELECT *  FROM notices WHERE $subquery LIMIT :offset, :limit";
-        
-            // SQL query for counting total records
-            $countSql1 = "
-                SELECT 
-                    COUNT(*) AS total_results
-                FROM 
-                    notices
-                WHERE $subquery
-            ";
-        
-            // Prepare and execute the main query with parameterized inputs
             $data = parent::query($sql, [ 'offset' => $startpoint, 'limit' => $limit ]);
+
+            $countSql1 = " SELECT COUNT(*) AS total_results FROM notices WHERE $subquery";
         
             // Execute the count query
             $totalRecords = parent::query($countSql1);
             $totalRecords = $totalRecords[0]['total_results'];
         
-            // Return the data and total record count
-            return [
-                'data' => $data,
-                'total' => $totalRecords
+            return [ 'data' => $data, 'total' => $totalRecords
             ];
         
         } catch (Exception $e) {
             // Log the error message for debugging purposes
             error_log("Error executing query: " . $e->getMessage());
-            return [
-                'data' => [],
-               'total' => 0,
-                'error' => "Error executing query: " . $e->getMessage()
-            ];
+           
         }
     }
+
+    public static function EditMessageData($mgid)
+    { 
+       // $params = ['mgid' => $mgid];
+        $sql =("SELECT msg_id,title,content FROM notices WHERE msg_id = :mgid");
+        $data = parent::query($sql,[ 'mgid' => $mgid]);
+        return $data;
+    }
+
+    public static function UpdateMessageData($msgtilte,$msgcontent,$mgid)
+    { 
+       // $params = ['mgid' => $mgid];
+        $sql =("UPDATE notices SET title =:title, content=:content  WHERE msg_id = :mgid");
+        $data = parent::query($sql,['title' => $msgtilte ,'content' => $msgcontent,'mgid' => $mgid]);
+        return $data ? "Message could not be updated. Please try again." : "Message updated successfully.";
+ 
+    }
+
+    
+    
 
 }
