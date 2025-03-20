@@ -82,12 +82,12 @@ $(() =>{
       let url = "";
       if(lotteryModel === "twosides"){
       //  https://157.173.97.174
-         url = `https://157.173.97.174/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`;
+         url = `https://winsstarts.com/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`;
       }else if(lotteryModel === "boardgames"){
         if(lotteryText === "11x5") lotteryText = "eleven5";
-        url = `https://157.173.97.174/chairman_test/api/v1/limvo/boardgame_games/${lotteryText}`;
+        url = `https://winsstarts.com/chairman_test/api/v1/limvo/boardgame_games/${lotteryText}`;
       }else if(lotteryModel === "fantan"){
-        url = `https://157.173.97.174/chairman_test/api/v1/limvo/fantangames`;
+        url = `https://winsstarts.com/chairman_test/api/v1/limvo/fantangames`;
       }
 
       $.ajax({ 
