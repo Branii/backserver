@@ -14,6 +14,8 @@ $(() =>{
           duration: 3000, // auto-dismiss after 3s
         });
       }
+      const translatorScript = document.querySelector(".translations"); // Get the script tag
+      const translator = JSON.parse(translatorScript.textContent);
     
 //     const fetchUsersWinLoss = (lottery_id = "all",startDate = "all", endDate ="all",page = 1, limit = 10, generatePages = true) => {
 
@@ -117,7 +119,7 @@ $(() =>{
                 type: "POST",
                 success: function(data){
                      data = JSON.parse(data);
-                     let html = `<option value="all">${translator['Lottery Type']}</option>`;
+                     let html = `<option value="">${translator['Lottery Type']}</option>`;
                     data.forEach((lottery) => {
                         html += `<option value="${lottery.gt_id}">${lottery.name}</option>`;
                     });
