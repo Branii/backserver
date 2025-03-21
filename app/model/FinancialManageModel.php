@@ -322,11 +322,11 @@ class FinancialManageModel extends MEDOOHelper
         }
 
         if (!empty($startdate) && !empty($enddate)) {
-            $filterConditions[] = "date_created BETWEEN '$startdate' AND '$enddate'";
+            $filterConditions[] = "Date(date_created) BETWEEN '$startdate' AND '$enddate'";
         } elseif (!empty($startdate)) {
-            $filterConditions[] = "date_created = '$startdate'";
+            $filterConditions[] = "Date(date_created) = '$startdate'";
         } elseif (!empty($enddate)) {
-            $filterConditions[] = "date_created = '$enddate'";
+            $filterConditions[] = "Date(date_created) = '$enddate'";
         }
 
         if (!empty($filterConditions)) {
