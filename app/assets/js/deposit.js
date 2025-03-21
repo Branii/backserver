@@ -34,18 +34,19 @@ $(function () {
        
       data.forEach((item) => {
         let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
-          let formatedates =  item.date_created.replace(" ", " / ")
+           let formatedates =  item.date_created.replace(" ", " / ")
+         
+        
           html += `
                       <tr>
                           <td>${item.payment_reference}</td>
-                           <td>${username}
-                          </td>
+                          <td>${username}</td>
                           <td>VIP</td>
                           <td>${states[item.desposit_channel]? states[item.desposit_channel]: "N/A"}</td>
                           <td>${formatMoney(item.amount_paid)}</td>
                           <td>${formatMoney(item.charges)}</td>
                           <td>${formatMoney(item.amount_recieved)}</td>
-                          <td>${formatedates}</td>
+                          <td>${ item.date_created.replace(" ", " / ")}</td>
                           <td>${item.provider ? item.provider: "N/A"}</td>
                           <td>${item.user_mobile}</td>
                           <td>${item.status.charAt(0).toUpperCase() + item.status.slice(1)}</td>
