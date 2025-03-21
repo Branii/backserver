@@ -119,7 +119,7 @@ $(() =>{
                 type: "POST",
                 success: function(data){
                      data = JSON.parse(data);
-                     let html = `<option value="all">Lottery Type</option>`;
+                     let html = `<option value="">${translator['Lottery Type']}</option>`;
                     data.forEach((lottery) => {
                         html += `<option value="${lottery.gt_id}">${lottery.name}</option>`;
                     });

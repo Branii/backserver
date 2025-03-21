@@ -15,7 +15,8 @@ $(() =>{
         });
       }
 
-
+      const translatorScript = document.querySelector(".translations"); // Get the script tag
+      const translator = JSON.parse(translatorScript.textContent);
    const searchUserWinLoss = () => {
 
       const data = new URLSearchParams({username: username, lottery:lottery_id , start_date: start_date, end_date: end_date}).toString();
@@ -68,7 +69,7 @@ $(() =>{
                 type: "POST",
                 success: function(data){
                      data = JSON.parse(data);
-                    let html1 = `<option value="all">Lottery Type</option>`;
+                    let html1 = `<option value="all">${translator['Lottery Type']}</option>`;
                     data.forEach((lottery) => {
                         html1 += `<option value="${lottery.gt_id}">${lottery.name}</option>`;
                     });
