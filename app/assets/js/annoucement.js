@@ -350,12 +350,12 @@ $(function () {
       const msgtitle = $("#note-has-titles").val();
       const msgcontent = encodeURIComponent($("#descriptions").val());
       const updatemsgid = $("#updatemsgid").val();
-      console.log(msgtitle + msgcontent + updatemsgid);
+     // console.log(msgtitle + msgcontent + updatemsgid);
       $(".loaderfinanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
       $("#editmessage").modal("hide");
       $.post(`../admin/updateannoucement/${msgtitle}/${msgcontent}/${updatemsgid}`, function (response) {
           $(".loaderfinanup").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
-          console.log(response);
+        //  console.log(response);
           if (response) {
               showToast("Success", response, "success");
               fetchmessage(currentPage, pageLimit);

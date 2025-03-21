@@ -487,7 +487,7 @@ $(function () {
       6: { title: "Withdrawal Records", content: "Withdrawal" },
       7: { title: "Finance Fund Changes", content: "Finance" },
 
-      8: { title: "Win/Loss Report", content: "Win" },
+      8: { title: "GPP Win/Loss Report", content: "Win" },
 
       9: { title: "User List", content: "Userlist" },
       10: { title: "User Logs", content: "Userlogs" },
@@ -503,19 +503,24 @@ $(function () {
       16: { title: "Lottery Bonus Parameters", content: "lotterybonus" },
 
       17: { title: "Administrator List", content: "administrator_list" },
-      18: { title: "Backup & Recovery", content: "backup_recovery" },
+      18: { title: "Backup & Recovery", content: "bacrecovery" },
+      19: { title: "NGP Win/Loss Report", content: "backup_recovery" },
+      20: { title: "Annoucement List", content: "annouce" },
+      21: { title: "User Notification", content: "usernoti" },
+      
     };
 
     const sidebarMain = {
       1: { category: "Business flow", items: [1, 2, 3, 4] }, 
       2: { category: "Financial Management", items: [5, 6, 7] },
-      3: { category: "Report Management", items: [8] },
+      3: { category: "Report Management", items: [8,19] },
       4: { category: "User Management", items: [9, 10] },
       5: { category: "Promotion Management", items: [11] },
       6: { category: "User Bank Management", items: [12] },
       7: { category: "Game Management", items: [14,15,16] },
       8: { category: "Agent Management", items: [13] },
-      9: { category: "System Management", items: [17, 18] }
+      9: { category: "System Management", items: [17, 18] },
+      10: { category: "System Announcement", items: [20, 21] }
     };
   
     let html = "";
