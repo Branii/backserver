@@ -100,6 +100,7 @@ class AnnouncementModel extends MEDOOHelper
             $values = implode(',', $userData);
 
             $insertData = parent::query("INSERT INTO notice_users (msg_id, user_id, username) VALUES $values");
+        
 
             return $insertData ? "Message sent successfully." : "Message could not be sent. Please try again.";
         } else {
