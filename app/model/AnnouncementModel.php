@@ -32,8 +32,8 @@ class AnnouncementModel extends MEDOOHelper
         // $uidsJson = is_array($uid) ? json_encode($uid) : $uid;
         // $uidsJson = json_encode($uid);
         $params = [
-            'title' => $title,
-            'content' => $content,
+            'subject' => $title,
+            'message' => $content,
             'send_by' => $sendby,
             'created_at' => date("Y-m-d / H:i:s"),
             'ms_status' => $status,
@@ -100,6 +100,7 @@ class AnnouncementModel extends MEDOOHelper
             $values = implode(',', $userData);
 
             $insertData = parent::query("INSERT INTO notice_users (msg_id, user_id, username) VALUES $values");
+        
 
             return $insertData ? "Message sent successfully." : "Message could not be sent. Please try again.";
         } else {
