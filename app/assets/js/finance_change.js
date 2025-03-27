@@ -293,15 +293,16 @@ $(function () {
       $(".loaderfinanc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
       $.post(`../admin/addmoney/${depositype}/${usernames}/${amount}/${approvedby}/${review}`,
         function (response) {
+          console.log(response)
           if (response) {
             $(".loaderfinanc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send")
            
-            showToast("Success", "transaction perform success", "success");
+            showToast("Success", response, "success");
             fetchfinance(currentPage,pageLimit);
             // Clear input fields
           
           } else {
-            showToast("Heads up!!","transaction failed", "info");
+            showToast("Heads up!!",response, "info");
           }
         }
       );

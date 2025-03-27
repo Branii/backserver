@@ -263,7 +263,7 @@
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0"><?= $translator['Annoucement List']; ?></h4>
+        <h4 class="card-title mb-0"><?= $translator['Announcement List']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
@@ -393,7 +393,7 @@
             <span id="paging_infofmessage" style="color: #aaa;">---</span>
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
-            <select class="left-element form-control numrowsmesage" style="font-size: 12px;">
+            <select class="left-element form-control numrowsnotfy" style="font-size: 12px;">
                 <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
@@ -431,7 +431,7 @@
                     <div class="form-floating mb-3">
                         <select name="deposit" class="form-select form-control borders border-infos messagetype">
                         <option value="general">General Announcement (All Users)</option>
-                        <option value="users">VIP Users Only</option>
+                        <!-- <option value="users">VIP Users Only</option> -->
                         <!-- <option value="new">Newly Registered Users Only</option> -->
                         <option value="personal">User-Specific Announcement</option>
                         </select>
@@ -499,6 +499,82 @@
                             <button type="button" class="btn hstack gap-6 sendmessagebtn" style="border: solid 1px #ccc;"
                                 data-bss-dismiss="modal" aria-label="Close">
                                 <i class="bx bx-send loaderfinancc"></i>
+                                <?=$translator['Submit']; ?>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+<div id="editmessage" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- Modal Header -->
+                <div class="text-center mt-2 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div> Edit Annoucement</div>
+                        <div><i class="bx bx-message-square-x tclose"
+                                style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
+                                aria-label="Close"></i></div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form>
+                    <!-- Username Field -->
+                     <input type= "text" id="updatemsgid" hidden/>
+                 
+                    <!-- <div class="form-floating mb-3">
+                        <select name="deposit" class="form-select form-control borders border-infos depositt">
+                            <option value="1">All Users</option>
+                            <option value="2">VIP Users</option>
+                            <option value="3">New Users</option>
+                        </select>
+                        <label>
+                            <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
+                            <span class="border-start ps-3">Audience</span>
+                        </label>
+                    </div> -->
+
+                     <div class="col-md-12 mb-3">
+                            <div class="note-title">
+                              <label class="form-label">Title</label>
+                              <input type="text" id="note-has-titles" class="form-control" minlength="25" placeholder="Title" />
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="note-description">
+                              <label class="form-label">Description</label>
+                              <textarea id="descriptions" class="form-control" minlength="60" placeholder="Description" rows="3"></textarea>
+                            </div>
+                          </div>
+                       <br>
+                    <div class="form-floating mb-3">
+                        <input name="agentname" type="text" class="form-control border sendby "
+                            placeholder="Approved by" value="<?php echo $fullname['full_name']; ?>" readonly/>
+                        <label>
+                            <!-- <i class="bx bx-message me-2 fs-4 text-infod"></i> -->
+                            <span class="border-start ps-3"><?=$translator['Approved By']; ?></span>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-md-flex align-items-center">
+                        <div class="form-check">
+                            <!-- <input type="checkbox" class="form-check-input" id="sf2" value="check" /> -->
+                            <!-- <label class="form-check-label" for="sf2"><?=$translator['Verify before submit']; ?></label> -->
+                        </div>
+                        <div class="mt-3 mt-md-0 ms-auto">
+                            <button type="button" class="btn hstack gap-6 updatemessagebtn" style="border: solid 1px #ccc;"
+                                data-bss-dismiss="modal" aria-label="Close">
+                                <i class="bx bx-send loaderfinanup"></i>
                                 <?=$translator['Submit']; ?>
                             </button>
                         </div>

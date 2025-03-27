@@ -34,7 +34,7 @@ if(empty($usernames)){
         
     }elseif($messagetype === "users"){
     
-       $userUids = AnnouncementModel::UserUid();
+         $userUids = AnnouncementModel::UserUid();
          $targetUser = 'Specific Users';
         echo json_encode(AnnouncementModel::GeneralMessage($messagetitle,$description,$sendby,$messagetype,$targetUser, $userUids)) ;    
  
@@ -42,7 +42,7 @@ if(empty($usernames)){
       
     
 }else{
-    $userData = (new AnnouncementModel())->getUsernameById($usernames);
+    $userData =  AnnouncementModel::getUsernameById($usernames);
     if ($userData['reg_type'] == 'username') {
         $username = $userData['username'];
     } elseif ($userData['reg_type'] == 'contact') {
@@ -88,6 +88,28 @@ if ($flag == "filtermessage") {
        ]);
       
 }
+
+
+if ($flag == "editannoucement") {
+
+    $msgid = isset($this->viewData['msgid']) ?  $this->viewData['msgid'] : "";
+    $result =  AnnouncementModel::EditMessageData($msgid);
+    echo json_encode($result);
+
+     
+}
+if ($flag == "updateannoucement") {
+
+    $msgtitle =  urldecode(isset($this->viewData['msgtitle'])) ?   urldecode($this->viewData['msgtitle']) : "";
+    $msgcontent = urldecode( isset($this->viewData['msgcontent'])) ?   urldecode($this->viewData['msgcontent']) : "";
+    $msgid = isset($this->viewData['msgid']) ?  $this->viewData['msgid'] : "";
+    $result =  AnnouncementModel::UpdateMessageData($msgtitle,$msgcontent,$msgid);
+    echo json_encode($result);
+
+     
+}
+
+
 
 
 

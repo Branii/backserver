@@ -411,9 +411,9 @@ $(function () {
 
     function renderPaginationlist(totalPages, currentPage, pageLimit, callback) {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
-            `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
-      <a class='page-link' href='#' data-page='${i}'>${label}</a>
-  </li>`;
+        `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+         <a class='page-link' href='#' data-page='${i}'>${label}</a>
+        </li>`;
         let pagLink = `<ul class='pagination justify-content-end'>`;
 
         // Previous Button
@@ -450,7 +450,6 @@ $(function () {
         });
     }
 
-    
     $(".playeruserlist").click(function () {
         let direction = $(this).val();
         const tableWrapper = $(".table-wrapperuserlist");
@@ -953,15 +952,7 @@ $(function () {
                   <td>${item.nickname}</td>
                   <td>VIP</td>
                  <td class="show-user-rel ${item.agent_level === "*****" ? "no-agent" : ""}" data-user-id="${item.uid}" style="cursor:pointer;">
-               ${
-                   item.account_type == 1
-                       ? "Customer"
-                       : item.account_type == 2
-                       ? "Top Agent"
-                       : subsLookups[item.uid] < 2
-                       ? agentNicknamesLookups[item.agent_id] + " > " + username
-                       : agentNicknamesLookups[item.agent_id] + " ... " + username 
-               }
+               ${item.account_type == 1 ? "Customer" : item.account_type == 2 ? "Top Agent" : subsLookups[item.uid] < 2 ? agentNicknamesLookups[item.agent_id] + " > " + username : agentNicknamesLookups[item.agent_id] + " ... " + username}
               </td>
                   <td>${subsLookup[item.uid] ?? 0} </td>
                   <td>${formatMoney(item.balance)}</td> 
@@ -1681,20 +1672,19 @@ $(function () {
         }
     });
 
-      $('.showpass').click(function() {
-        var passwordField = $('#agentpassword');
-        var toggleIcon = $('.showpass');
-        
-        // Check if the type is password and toggle between text and password
-        if (passwordField.attr('type') === 'password') {
-          passwordField.attr('type', 'text'); // Change input to text (show password)
-          toggleIcon.removeClass('bx-show').addClass('bx-hide'); // Change icon to "hide"
-        } else {
-          passwordField.attr('type', 'password'); // Change input to password (hide password)
-          toggleIcon.removeClass('bx-hide').addClass('bx-show'); // Change icon to "show"
-        }
-      });
+    $(".showpass").click(function () {
+        var passwordField = $("#agentpassword");
+        var toggleIcon = $(".showpass");
 
+        // Check if the type is password and toggle between text and password
+        if (passwordField.attr("type") === "password") {
+            passwordField.attr("type", "text"); // Change input to text (show password)
+            toggleIcon.removeClass("bx-show").addClass("bx-hide"); // Change icon to "hide"
+        } else {
+            passwordField.attr("type", "password"); // Change input to password (hide password)
+            toggleIcon.removeClass("bx-hide").addClass("bx-show"); // Change icon to "show"
+        }
+    });
 });
 
 const lotteriesMarkup = (lottery, blockedLotteries) => {
@@ -1702,20 +1692,20 @@ const lotteriesMarkup = (lottery, blockedLotteries) => {
     const status = blockedLotteries.includes(`${lotteryID}`) ? "Disabled" : "Active";
     const checkedState = status == "Active" ? "checked" : "";
     return `<tr>
-                 <td><b class="lottery-name"> ${lottery.name}</b></td>
-                 <td><span class="lottery-status">${status}</span></td>
-                 <td><input class="form-check-input toggle-lot" type="checkbox" value="${lotteryID}" id="flexCheckDefault" ${checkedState}></td>
-             </tr>`;
+            <td><span class="lottery-name"> ${lottery.name}</span></td>
+            <td><span class="lottery-status">${status}</span></td>
+            <td><input class="form-check-input toggle-lot" type="checkbox" value="${lotteryID}" id="flexCheckDefault" ${checkedState}></td>
+            </tr>`;
 };
 const userIpsMarkup = (data) => {
     const checkedState = data.ip_state === "allowed" ? "checked" : "";
     const ipState = data.ip_state === "allowed" ? "Allowed" : "Blocked";
     return `<tr>
-                 <td><b class="">${data.ip} </b></td>
-                 <td><span class="lottery-status">${data.login_date} / ${data.login_time}</span></td>
-                 <td><span class="">${ipState}</span></td>
-                 <td><input class="form-check-input toggle-ip-state" type="checkbox" value="${data.ulog_id}" id="flexCheckDefault" ${checkedState}></td>
-                                </tr>`;
+            <td><b class="">${data.ip} </b></td>
+            <td><span class="lottery-status">${data.login_date} / ${data.login_time}</span></td>
+            <td><span class="">${ipState}</span></td>
+            <td><input class="form-check-input toggle-ip-state" type="checkbox" value="${data.ulog_id}" id="flexCheckDefault" ${checkedState}></td>
+            </tr>`;
 };
 const showDialog = (btnID) => {
     const modalElement = $("#" + btnID);

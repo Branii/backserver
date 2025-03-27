@@ -1,104 +1,97 @@
 $(function () {
-
   function showToast(title, message, type) {
-    $.toast({
-        position: "bottom-right",
-        title: title,
-        message: message,
-        type: type,
-        duration: 3000, // auto-dismiss after 3s
-    });
-}
+      $.toast({
+          position: "bottom-right",
+          title: title,
+          message: message,
+          type: type,
+          duration: 3000, // auto-dismiss after 3s
+      });
+  }
 
-    const UserlogsData = (data) => { 
-    
+  const UserlogsData = (data) => {
       let html = "";
-     
-    data.forEach((item) => {
-    
-       //   const ipInfo = fetchIpInfo(item.ip);
 
-        // // Extract city from IP information or use a fallback
-       //  const city = ipInfo?.geoplugin_city || 'Unknown';
-         let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-        html += `
-                    <tr>
-                        <td>${typeof username === "string" || typeof username === "number" 
-                        ? String(username).charAt(0).toUpperCase() + String(username).slice(1): "N/A"}</td>
-                        <td>${item.login_date + ' / ' + item.login_time}</td>
-                        <td>${item.ip}</td>
-                        <td></td>
-                        <td>${item.browser_info.substring(0, 12)}</td>
-                        <td>${item.device_info.substring(0, 15)}</td>
-                        <td>${item.app_version}</td>
-                    </tr>
-                `;
+      data.forEach((item) => {
+          //   const ipInfo = fetchIpInfo(item.ip);
+
+          // // Extract city from IP information or use a fallback
+          //  const city = ipInfo?.geoplugin_city || 'Unknown';
+          let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+          html += `
+                  <tr>
+                      <td>${typeof username === "string" || typeof username === "number" ? String(username).charAt(0).toUpperCase() + String(username).slice(1) : "N/A"}</td>
+                      <td>${item.login_date + " / " + item.login_time}</td>
+                      <td>${item.ip}</td>
+                      <td></td>
+                      <td>${item.browser_info.substring(0, 12)}</td>
+                      <td>${item.device_info.substring(0, 15)}</td>
+                      <td>${item.app_version}</td>
+                  </tr>
+              `;
       });
       return html;
-    };
+  };
 
-    const renderuserlogs= (data) => {
+  const renderuserlogs = (data) => {
       var html = UserlogsData(data);
       $("#userlogsContainer").html(html);
-    };
-  
-    let currentPage = 1;
-    let pageLimit = 20;
+  };
 
-    async function fetchUserlogs(page,pageLimit) {
+  let currentPage = 1;
+  let pageLimit = 20;
+
+  async function fetchUserlogs(page, pageLimit) {
       try {
-        const response = await fetch(`../admin/userlogsdata/${page}/${pageLimit}`);
-        const data = await response.json();
-      //  console.log(response);   
-      
-        $("#masklogs").LoadingOverlay("hide")
-        renderuserlogs(data.userlogs);
-        renderuserlogPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlogs(newPage, pageLimit));
-        document.getElementById("paging_infologs").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+          const response = await fetch(`../admin/userlogsdata/${page}/${pageLimit}`);
+          const data = await response.json();
+          //  console.log(response);
+
+          $("#masklogs").LoadingOverlay("hide");
+          renderuserlogs(data.userlogs);
+          renderuserlogPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlogs(newPage, pageLimit));
+          document.getElementById("paging_infologs").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
       } catch (error) {
-        console.error("Error fetching data:", error);
+          console.error("Error fetching data:", error);
       }
-    }
+  }
 
-    fetchUserlogs(currentPage,pageLimit);
-  
-    async function filterUserlogs(usernamelog, startdatelog, enddatelog,currentPage,pageLimit) {
+  fetchUserlogs(currentPage, pageLimit);
+
+  async function filterUserlogs(usernamelog, startdatelog, enddatelog, currentPage, pageLimit) {
       try {
-        const response = await fetch(`../admin/filterUserlogs/${usernamelog}/${startdatelog}/${enddatelog}/${currentPage}/${pageLimit}`);
-         const data = await response.json();
-            console.log(response)
+          const response = await fetch(`../admin/filterUserlogs/${usernamelog}/${startdatelog}/${enddatelog}/${currentPage}/${pageLimit}`);
+          const data = await response.json();
+          console.log(response);
           //  return
-      
-        $(".loaderlog").removeClass('bx bx-loader bx-spin').addClass('bx bx-check-double');
-        if (data.userloggs.length < 1) {
-          let html = `
-              <tr class="no-results" >
-              <td colspan="9">
-                   <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-              </td>
-           </tr>`
-          $("#userlogsContainer").html(html);
-          return
-        }
-        $("#masklogs").LoadingOverlay("hide")
-        renderuserlogs(data.userloggs);
-  
-        // Render pagination
-        renderuserlogPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterUserlogs(usernamelog, startdatelog, enddatelog,newPage,pageLimit));
+
+          $(".loaderlog").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+          if (data.userloggs.length < 1) {
+              let html = `
+            <tr class="no-results" >
+            <td colspan="9">
+                 <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+            </td>
+         </tr>`;
+              $("#userlogsContainer").html(html);
+              return;
+          }
+          $("#masklogs").LoadingOverlay("hide");
+          renderuserlogs(data.userloggs);
+
+          // Render pagination
+          renderuserlogPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterUserlogs(usernamelog, startdatelog, enddatelog, newPage, pageLimit));
           document.getElementById("paging_infologs").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
-    
       } catch (error) {
-        console.error("Error fetching data:", error);
+          console.error("Error fetching data:", error);
       }
-    }
+  }
 
-  
-
-    function renderuserlogPagination(totalPages, currentPage, pageLimit, callback) {
+  function renderuserlogPagination(totalPages, currentPage, pageLimit, callback) {
       const createPageLink = (i, label = i, disabled = false, active = false) =>
           `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
-        <a class='page-link' href='#' data-page='${i}'>${label}</a>
-    </li>`;
+      <a class='page-link' href='#' data-page='${i}'>${label}</a>
+  </li>`;
       let pagLink = `<ul class='pagination justify-content-end'>`;
 
       // Previous Button
@@ -135,53 +128,46 @@ $(function () {
       });
   }
 
-  
-  
-    $(".playerlogs").click(function () {
-  
+  $(".playerlogs").click(function () {
       let direction = $(this).val();
       const tableWrapper = $(".table-wrapperlogs");
       const tableWrappers = document.querySelector(".table-wrapperlogs");
       const scrollAmount = 1000; // Adjust as needed
       const scrollOptions = {
-        behavior: 'smooth',
+          behavior: "smooth",
       };
       if (tableWrapper.length) {
-  
-        switch (direction) {
-          case 'leftlogs':
-            tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
-            break;
-          case 'rightlogs':
-            tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
-            break;
-          case 'startlogs':
-            // Scroll to the absolute start (leftmost position)
-            tableWrapper.animate({ scrollLeft: 0 }, 'slow');
-            break;
-          case 'endlogs':
-            const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
-            tableWrapper.animate({ scrollLeft: maxScrollLeft }, 'slow');
-            break;
-          default:
-            break;
-        }
-  
-  
+          switch (direction) {
+              case "leftlogs":
+                  tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
+                  break;
+              case "rightlogs":
+                  tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
+                  break;
+              case "startlogs":
+                  // Scroll to the absolute start (leftmost position)
+                  tableWrapper.animate({ scrollLeft: 0 }, "slow");
+                  break;
+              case "endlogs":
+                  const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
+                  tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
+                  break;
+              default:
+                  break;
+          }
       }
-    })
-  
-    $(".refreshlogs").click(function () {
-      $(".queryholderlogs").val("")
-      $("#masklogs").LoadingOverlay("show", {
-        background: "rgb(90,106,133,0.1)",
-        size: 3
-      });
-      fetchUserlogs(currentPage,pageLimit);
-    })
-  
+  });
 
-    $(".numrowslog").change(function () {
+  $(".refreshlogs").click(function () {
+      $(".queryholderlogs").val("");
+      $("#masklogs").LoadingOverlay("show", {
+          background: "rgb(90,106,133,0.1)",
+          size: 3,
+      });
+      fetchUserlogs(currentPage, pageLimit);
+  });
+
+  $(".numrowslog").change(function () {
       $("#masklogs").LoadingOverlay("show", {
           background: "rgb(90,106,133,0.1)",
           size: 3,
@@ -190,30 +176,25 @@ $(function () {
       fetchUserlogs(currentPage, numrow);
   });
 
-
-  
-    $(document).on('click', '.executeuserlogs', function () {
-  
+  $(document).on("click", ".executeuserlogs", function () {
       if ($("#userloginput").val() == "" && $(".startdatelog").val() == "") {
-        showToast("Heads up!!", "Select one or more data fields to filter", "info");
-        return
+          showToast("Heads up!!", "Select one or more data fields to filter", "info");
+          return;
       }
-      const usernamelog =  $("#userloginput").val();
-      const startdatelog = $(".startdatelog").val()
-      const enddatelog = $(".enddatelog").val()
-      console.log(usernamelog)
-      $(".loaderlog").removeClass('bx-check-double').addClass('bx-loader bx-spin');
+      const usernamelog = $("#userloginput").val();
+      const startdatelog = $(".startdatelog").val();
+      const enddatelog = $(".enddatelog").val();
+      console.log(usernamelog);
+      $(".loaderlog").removeClass("bx-check-double").addClass("bx-loader bx-spin");
       setTimeout(() => {
-        filterUserlogs(usernamelog, startdatelog, enddatelog,currentPage,pageLimit);
+          filterUserlogs(usernamelog, startdatelog, enddatelog, currentPage, pageLimit);
       }, 100);
-    })
-  
-  
-    $(document).on('click', function () {
+  });
+
+  $(document).on("click", function () {
       $(".queryholderxxx").hide();
-    });
-  
-   
+  });
+
   let debounceTimeoutlogs = null;
 
   $(document).ready(function () {
@@ -244,13 +225,12 @@ $(function () {
           }
       });
 
-
       $(document).on("click", function (e) {
-        const $dropdown = $("#userfinaceuserlogs");
-        if (!$(e.target).closest("#userloginput, #userfinaceuserlogs").length) {
-            $dropdown.hide();
-        }
-    });
+          const $dropdown = $("#userfinaceuserlogs");
+          if (!$(e.target).closest("#userloginput, #userfinaceuserlogs").length) {
+              $dropdown.hide();
+          }
+      });
       // Handle manual input clearing
       $(document).on("input", "#userloginput", function () {
           if (!$(this).val()) {
@@ -297,10 +277,9 @@ $(function () {
       });
   }
 
-  
-    function tableScrollUserLogs() {
-      const tableContainerUserLogs= document.querySelector(".table-wrapperuserlogs");
-      const headerRowUserLogs= document.querySelector(".userlogheadrow");
+  function tableScrollUserLogs() {
+      const tableContainerUserLogs = document.querySelector(".table-wrapperuserlogs");
+      const headerRowUserLogs = document.querySelector(".userlogheadrow");
 
       tableContainerUserLogs.addEventListener("scroll", function () {
           if (tableContainerUserLogs.scrollTop > 0) {
@@ -309,29 +288,25 @@ $(function () {
               headerRowUserLogs.classList.remove("sticky-userloghead");
           }
       });
-   }
-   tableScrollUserLogs();
-    // function getIpLocation(ip = "157.173.97.174:443") {
-//   const url = ip ? `http://www.geoplugin.net/json.gp?ip=${ip}` : "http://www.geoplugin.net/json.gp";
-  
-//   $.getJSON(url, function(data) {
-//       console.log("IP Address: " + data.geoplugin_request);
-//       console.log("City: " + data.geoplugin_city);
-//       console.log("Region: " + data.geoplugin_region);
-//       console.log("Country: " + data.geoplugin_countryName);
-//   }).fail(function() {
-//       console.error("Failed to fetch location data.");
-//   });
-// }
+  }
+  tableScrollUserLogs();
+  // function getIpLocation(ip = "157.173.97.174:443") {
+  //   const url = ip ? `http://www.geoplugin.net/json.gp?ip=${ip}` : "http://www.geoplugin.net/json.gp";
 
-// // Usage Example:
-// // Get location of visitor's IP
-//   getIpLocation(); 
+  //   $.getJSON(url, function(data) {
+  //       console.log("IP Address: " + data.geoplugin_request);
+  //       console.log("City: " + data.geoplugin_city);
+  //       console.log("Region: " + data.geoplugin_region);
+  //       console.log("Country: " + data.geoplugin_countryName);
+  //   }).fail(function() {
+  //       console.error("Failed to fetch location data.");
+  //   });
+  // }
 
-// // Get location of a specific IP
-// // getIpLocation("8.8.8.8");
+  // // Usage Example:
+  // // Get location of visitor's IP
+  //   getIpLocation();
 
-
-
-
-  });
+  // // Get location of a specific IP
+  // // getIpLocation("8.8.8.8");
+});

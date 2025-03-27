@@ -347,7 +347,7 @@ li.name-items:hover {
         <select name="lotteryname" class="form-control form-select  wl-selectlottery" id="wl-selectlottery" data-bs-placeholder="Select Type"> 
 
         </select>
-                    </div>
+        </div>
 
         <input type="date" name="startdate" class="form-control startdate"  placeholder="Name" id="wl-startdate" style="width: 50%;"/>
 

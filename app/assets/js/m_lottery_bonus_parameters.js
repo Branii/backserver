@@ -72,7 +72,7 @@ $(() =>{
     $(document).on('click', '#lbp_search',async function()  {
 
       const lotteryType      = $('#allGameNamesLottery').val();
-      let lotteryTextCaps        = $("#allGameNamesLottery option:selected").text();
+      let lotteryTextCaps    = $("#allGameNamesLottery option:selected").text();
       let lotteryText        = $("#allGameNamesLottery option:selected").text().toLowerCase()
       const lotteryModel     = $("#allmodels").val();
       const lotteryGameGroup = $("#game_groups").val();
