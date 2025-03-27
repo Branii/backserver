@@ -32,8 +32,8 @@ class AnnouncementModel extends MEDOOHelper
         // $uidsJson = is_array($uid) ? json_encode($uid) : $uid;
         // $uidsJson = json_encode($uid);
         $params = [
-            'title' => $title,
-            'content' => $content,
+            'subject' => $title,
+            'message' => $content,
             'send_by' => $sendby,
             'created_at' => date("Y-m-d / H:i:s"),
             'ms_status' => $status,

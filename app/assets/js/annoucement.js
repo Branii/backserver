@@ -33,8 +33,8 @@ $(function () {
 
           html += `
                     <tr>
-                      <td>${item.title}</td>
-                      <td style ="max-width: 300px;word-wrap: break-word;overflow-wrap: break-word; white-space: normal;">${item.content}</td>
+                      <td>${item.subject}</td>
+                      <td style ="max-width: 300px;word-wrap: break-word;overflow-wrap: break-word; white-space: normal;">${item.message}</td>
                       <td>${item.created_at}</td>
                       <td>${messagetype}</td>
                       <td>${item.audience}</td> 
