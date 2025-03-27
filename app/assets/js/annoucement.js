@@ -43,12 +43,12 @@ $(function () {
                         <td>
                           
                       <div class="dropdown">
-                            <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <a class="dropdown-toggles " href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                               <i class='bx bx-dots-vertical-rounded'></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
                             
-                              <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" datas ="${item.msg_id}"> 
+                              <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 editmessage" href="javascript:void(0);" datas ="${item.msg_id}"> 
                                 <i class="bx bx-edit fs-5" ></i>Edit
                               </a>
                               
@@ -143,7 +143,6 @@ $(function () {
   
   
     //search function
-
     async function  filtermessage(username,messagestype,startfmessage,endmessage,currentPage,pageLimit) {
       $.post( `../admin/filtermessage/${username}/${messagestype}/${startfmessage}/${endmessage}/${currentPage}/${pageLimit}`,
         function (response) {
@@ -330,9 +329,7 @@ $(function () {
     });
     
    //delete message
-
-   
-    $(document).on('click','.deletemessage',function(){
+  $(document).on('click','.deletemessage',function(){
       const messageid =  $(this).attr("datas");
      // console.log(messageid);
       $.post(`../admin/deleteannoucement/${messageid}`,
@@ -347,6 +344,17 @@ $(function () {
            }
         }
       );
+    });
+
+     //edit message
+    $(document).on('click','.editmessage',function(){
+      const element = $(this).parents("tr")[0];
+      const title = $($(element).find("td")[0]).text();
+      const content = $($(element).find("td")[1]).text();
+      console.log(title, content);
+      $("#note-has-title").val(title);
+      $("#description").text(content);
+      $("#announcementemodal").modal("show");  
     })
 
     //modal 

@@ -69,7 +69,7 @@ $(() =>{
 
    });
 
-    $(document).on('click', '#lbp_search',function(){
+    $(document).on('click', '#lbp_search',async function()  {
 
       const lotteryType      = $('#allGameNamesLottery').val();
       let lotteryTextCaps        = $("#allGameNamesLottery option:selected").text();
@@ -82,13 +82,17 @@ $(() =>{
       let url = "";
       if(lotteryModel === "twosides"){
       //  https://157.173.97.174
-         url = `https://157.173.97.174/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`;
+         url = `https://winsstarts.com/chairman_test/api/v1/limvo/twosides?lottery_type_id=${lotteryType}`;
       }else if(lotteryModel === "boardgames"){
         if(lotteryText === "11x5") lotteryText = "eleven5";
-        url = `https://157.173.97.174/chairman_test/api/v1/limvo/boardgame_games/${lotteryText}`;
+        url = `https://winsstarts.com/chairman_test/api/v1/limvo/boardgame_games/${lotteryText}`;
       }else if(lotteryModel === "fantan"){
-        url = `https://157.173.97.174/chairman_test/api/v1/limvo/fantangames`;
+        url = `https://winsstarts.com/chairman_test/api/v1/limvo/fantangames`;
       }
+
+      // $($(this).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+      // let response = await fetch(url,{method : "GET"});
+      // response     = await response.json();
 
       $.ajax({ 
           url: url,
@@ -97,7 +101,6 @@ $(() =>{
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
           },
           success: function (response) {
-           
             if(response === "Game id not found!!"){
               showToast("Error", "Sorry the lottery selected is not yet ready.", "error");
               return;
