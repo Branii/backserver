@@ -10,6 +10,7 @@ $translator = include "tabs/lang/{$lang}.php";
 
 !(new Controller)->isUserLoggedIn() ? header("location:../") : "";
 $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
+
 $fullname = (new Controller)->getUsername($adminEmail);
 
 ?>
@@ -213,7 +214,8 @@ $fullname = (new Controller)->getUsername($adminEmail);
          color: var(--text-color);
          cursor: pointer;
          } */
-  </style>
+
+</style>
 </head>
 
 <body>

@@ -725,7 +725,7 @@ return [
     //(Announcement Management)
     'Announcement Management' => '公告管理',
     'System Announcement' => '系统公告',
-    'Annoucement List' =>'公告列表',
+    'Announcement List' =>'公告列表',
     'Title' =>'标题',
     'Content' =>'内容',
     'DateTime' =>'日期时间',
