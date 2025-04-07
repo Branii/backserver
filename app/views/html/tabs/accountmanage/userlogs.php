@@ -230,7 +230,7 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-              <input type="text" id="userloginput" class="form-control  queryholderlogs" placeholder="Search usernames" />
+              <input type="text" id="userloginput" class="form-control  queryholderlogs" placeholder="<?= $translator['Search usernames']; ?>" />
                 <input name="usernames" type="hidden" class="userIdfinancexcx" />
                 <select class="form-control userlogdropdown" size="5" style="display: none;" id="userfinaceuserlogs">
               

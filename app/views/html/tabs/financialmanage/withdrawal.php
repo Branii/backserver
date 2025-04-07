@@ -205,26 +205,30 @@
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 165%;">
-                <input type="text" id="mytrans" class="form-control widrl-queryholdertrans widrl-username mytrans" placeholder="Search usernames">
+                <input type="text" id="mytrans" class="form-control widrl-queryholdertrans widrl-username mytrans" placeholder="<?= $translator['Search usernames']; ?>">
                 <input name="usernames" type="hidden"  id="widrl-userID" class="userIdtrans widrl-queryholdertrans">
                 <select class="form-control trackdown" size="5" style="display: none; width: 11%;background:#fff;" id="users-options-wrapper" ></select>
-                <input type="text" class="form-control widrl-queryholdertrans orderid" id="widrl-ID" aria-describedby="name" placeholder="Search Withdrawal ID">
+                <input type="text" class="form-control widrl-queryholdertrans orderid" id="widrl-ID" aria-describedby="name" placeholder=" <?= $translator['Search Withdrawal ID']; ?>">
 
                 <div class="custom-dropdown" style="width: 12%; margin-right: 5px;">
                     <select name="lotteryname" id="widrl-channels" class="form-control form-select queryholderlist tracklotery " data-bs-placeholder="Select Type">
-                        <option value="0">Withdrawal Channels</option>
-                        <option value="3">Momo</option>
-                        <option value="2">Bank</option>
-                        <option value="5">Crypto</option>
-                        <option value="4">Manual</option>
+                        <option value="0"><?= $translator['Withdrawal Channels']; ?></option>
+                        <option value="3"><?= $translator['Momo']; ?></option>
+                        <option value="2"><?= $translator['Bank']; ?></option>
+                        <option value="5"><?= $translator['Crypto']; ?></option>
+                        <option value="4"><?= $translator['Manual']; ?></option>
                     </select>
                  </div>
                 <div class="custom-dropdown" style="width: 11%; margin-right: 5px;">
                     <select name="lotteryname" id="widrl-status" class="form-control form-select queryholderlist tracklotery " data-bs-placeholder="Select Type">
-                        <option value="0">Status</option>
+                        <!-- <option value="0">Status</option>
                         <option value="1">Pending</option>
                         <option value="2">Success</option>
-                        <option value="3">Failed</option>
+                        <option value="3">Failed</option> -->
+                        <option value="0">-<?= $translator['Status']; ?>-</option>
+                    <option value="1"><?= $translator['Pending']; ?></option>
+                    <option value="2"><?= $translator['Success']; ?></option>
+                    <option value="3"><?= $translator['Failed']; ?></option>
                     </select>
                  </div>
 

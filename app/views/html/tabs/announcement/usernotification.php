@@ -140,27 +140,27 @@
 }
 
 /* Custom Scrollbar for Webkit Browsers */
-.table-wrapperfinance::-webkit-scrollbar {
+.table-wrapperfinances::-webkit-scrollbar {
     width: 5px;
     /* Slimmer scrollbar width */
     height: 5px;
     /* Slimmer scrollbar height for horizontal scrolling */
 }
 
-.table-wrapperfinance::-webkit-scrollbar-track {
+.table-wrapperfinances::-webkit-scrollbar-track {
     background: #f1f1f1;
     /* Lighter background for track */
     border-radius: 5px;
 }
 
-.table-wrapperfinance::-webkit-scrollbar-thumb {
+.table-wrapperfinances::-webkit-scrollbar-thumb {
     background-color: #ccc;
     /* Blue color for thumb */
     border-radius: 10px;
     cursor: pointer;
 }
 
-.table-wrapperfinance::-webkit-scrollbar-thumb:hover {
+.table-wrapperfinances::-webkit-scrollbar-thumb:hover {
     background-color: #aaa;
     /* Darker blue on hover */
 }
@@ -238,12 +238,12 @@
 }
 
 
-.tbl-financehead {
+.tbl-financeheads {
     position: sticky;
     top: 0;
 }
 
-.sticky-financehead {
+.sticky-financeheads {
     position: relative;
     bottom: 1px;
     background-color: red;
@@ -263,33 +263,37 @@
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0"><?= $translator['Finance Fund Changes']; ?></h4>
+        <h4 class="card-title mb-0"><?= $translator['User Notification']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                <input type="text" id="financeDropdown" class="form-control queryholderlistt usernames"
+                <input type="text" id="financeDropdownl" class="form-control queryholderlistt usernames"
                     placeholder="<?= $translator['Search usernames']; ?>" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
-                <select class="form-control financeDropdown" size="5" style="display: none;" id="userfinaceDropdowns">
+                <select class="form-control financeDropdown" size="5" style="display: none;" id="userfinaceDropdownsl">
                     <!-- Options will be populated dynamically -->
                 </select>
 
-                <select name="betsate" class="form-control form-select queryholderlistt financetype"
+                <select name="betsate" class="form-control form-select queryholderlistt messagestype"
                     data-bs-placeholder="Select Type">
-                    <option value="">-<?= $translator['Transaction Type']; ?>-</option>
-                    <option value="1"><?= $translator['Deposit']; ?></option>
-                    <option value="4"><?= $translator['Withdrawal']; ?></option>
+                    <option value="">-<?= $translator['Message Type']; ?>-</option>
+                    <option value="general"><?= $translator['Annoucememnt']; ?></option>
+                    <option value="personal"><?= $translator['Notification']; ?></option>
+                 
                 </select>
 
-                <input name="startdate" type="date" class="form-control queryholderlistt startfinances"
+                <input name="startdate" type="date" class="form-control queryholderlistt startfmessage"
                     placeholder="Name" />
 
-                <input name="enddate" type="date" class="form-control queryholderlistt endfinances"
+                <input name="enddate" type="date" class="form-control queryholderlistt endmessage"
                     placeholder="Name" />
             </div>
-          
+            <!-- <div class="input-group mb-3">
+				<span class="input-group-text" id="basic-addon12" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
+				<input type="text" class="form-control queryholder userrebate" placeholder="Enter Rebate (%)" aria-label="Username" aria-describedby="basic-addon1" />
+			</div> -->
         </span>
         <span class="toplist-center" aria-label=" navigation example">
             <!--enter is free-->
@@ -298,56 +302,59 @@
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
                 <!-- <i ' ></i> -->
-                <button type="button" class="btn bg-white-subtle showmodal" value="right" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle messagemodal" value="right" aria-label="Refresh"
                     aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top"
-                    data-bs-title="Add Deposit/Withdrawal">
+                    data-bs-title="Add Message">
                     <i class="bx bx-plus" style="font-size: 20px;"></i>
                 </button>
 
-                <button type="button" class="btn bg-white-subtle player refreshfiance" value="right"
+                <button type="button" class="btn bg-white-subtle player refreshmessage" value="right"
                     aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle executefinance" value="end" aria-label="Execute"
+                <button type="button" class="btn bg-white-subtle executemessage" value="end" aria-label="Execute"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                    <i class="bx bx-check-double loaderfinance" style="font-size: 20px;"></i>
+                    <i class="bx bx-check-double loaderfinanccs" style="font-size: 20px;"></i>
                 </button>
-               
+                <!-- <button type="button" class="btn bg-white-subtle executedeposit" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                    <i class="bx bx-check-double loaderdeposit" style="font-size: 20px;"></i>
+                </button> -->
             </div>
         </span>
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperfinance" id="maskfinance"
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperfinances" id="maskfinances"
             style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
-                <thead class="text-dark fs-4 tbl-financehead">
-                    <tr class="financeheadrow">
-                        <th>
+                <thead class="text-dark fs-4 tbl-financeheads">
+                    <tr class="financeheadrows">
+                    <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Level']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Title']; ?></h6>
                         </th>
+
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit/Withdrawal Type']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Content']; ?></h6>
                         </th>
+
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Amount']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['DateTime']; ?></h6>
                         </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Time']; ?></h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Reviews']; ?></h6>
-                        </th>
+
+                   
                       
+                      
+                       
+                        
+                        <!-- <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
+                        </th> -->
                     </tr>
                 </thead>
-                <tbody id="financeContainer">
+                <tbody id="notificationcontainer">
                     <tr class="no-resultslist">
                         <td colspan="9">
                             <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo"
@@ -377,16 +384,16 @@
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
-            <span id="paging_infofinance" style="color: #aaa;">---</span>
+            <span id="paging_infofmessage" style="color: #aaa;">---</span>
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
-            <select class="left-element form-control numrowsfinance" style="font-size: 12px;">
+            <select class="left-element form-control numrowsnotfy" style="font-size: 12px;">
                 <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
                 <option value="500">500</option>
             </select>
-            <span class="toplist-right" id="paginationfiance" aria-label="Page navigation example">
+            <span class="toplist-right" id="paginationmessage" aria-label="Page navigation example">
                 <!--Dynamic pagination-->
             </span>
 
@@ -395,85 +402,3 @@
     </div>
 </div>
 
-
-<!-- Modal -->
-<div id="addfinancemodal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <div class="modal-body">
-                <!-- Modal Header -->
-                <div class="text-center mt-2 mb-4">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div><?= $translator['Deposit/Withrawal']; ?></div>
-                        <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
-                    </div>
-                </div>
-
-                <!-- Form -->
-                <form>
-                    <!-- Username Field -->
-                    <!-- Rebate Field -->
-                    <div class="form-floating mb-3">
-                        <select name="deposit" class="form-select form-control borders border-infos depositt">
-                            <option value="1"><?= $translator['Deposit']; ?></option>
-                            <option value="4"><?= $translator['Withdrawal']; ?></option>
-                        </select>
-                        <label>
-                            <!-- <i class="bx bx-list-ul me-2 fs-4 text-infos"></i> -->
-                            <span class="border-start ps-3"><?=$translator['Deposit/Withdrawal Type']; ?></span>
-                        </label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input type="text" id="financeinput" class="form-control" placeholder="Search usernames" />
-                        <input type="hidden" class="userIdFields" />
-                        <select name="usernames" class="form-control financeDropdowns" size="5" style="display: none;" id="userfinaceDropdown">
-                            <!-- Options will be populated dynamically -->
-                        </select>
-
-                        <label>
-                            <i class="bx bx-user me-2 fs-4 text-infod"></i>
-                            <span class="border-start ps-3"><?=$translator['Username']; ?></span>
-                        </label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input name="agentname" type="text" class="form-control border amount" placeholder="Username" />
-                        <label>
-                            <i class="bx bx-money me-2 fs-4 text-infod"></i>
-                            <span class="border-start ps-3"><?=$translator['Amount']; ?></span>
-                        </label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input name="agentname" type="text" class="form-control border review" placeholder="Username" />
-                        <label>
-                            <i class="bx bx-message me-2 fs-4 text-infod"></i>
-                            <span class="border-start ps-3"><?=$translator['Reviews']; ?></span>
-                        </label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input name="agentname" type="text" class="form-control border approved" placeholder="Approved by" value="<?php echo $fullname['full_name']; ?>" readonly />
-                        <label>
-                            <!-- <i class="bx bx-message me-2 fs-4 text-infod"></i> -->
-                            <span class="border-start ps-3"><?=$translator['Approved By']; ?></span>
-                        </label>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <div class="d-md-flex align-items-center">
-                        <div class="form-check"></div>
-                        <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 addmoneybtn" style="border: solid 1px #ccc;" data-bss-dismiss="modal" aria-label="Close">
-                                <i class="bx bx-send loaderfinanc"></i>
-                                <?=$translator['Submit']; ?>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- /.modal-dialog -->
-</div>

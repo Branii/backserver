@@ -877,7 +877,136 @@ return [
 // Withdrawal Records: Muniru
 
 'Approved By'  => "Approved By",
-'Withdrawal Channel' => 'Withdrawal Channel'
+'Withdrawal Channel' => 'Withdrawal Channel',
+
+//Place holders for inputs
+'Search usernames' => 'Search usernames',
+'Enter Deposit ID' => 'Enter Deposit ID',
+'Momo' => 'Momo',
+'Crypto' => 'Crypto',
+'Bank Transfer' => 'Bank Transfer',
+'Manual Deposit' => 'Manual Deposit',
+'Search Withdrawal ID' => 'Search Withdrawal ID',
+'Withdrawal Channels' => 'Withdrawal Channels',
+'Bank' => 'Bank',
+'Manual' => 'Manual',
+'GGP Win/Loss Report' => 'GGP Win/Loss Report',
+'Active/Total Subs' => 'Active/Total Subs',
+
+'NGP Win/Loss Report' => 'NGP Win/Loss Report',
+'Promotions & Bonuses' => 'Promotions & Bonuses',
+
+'Fees' => 'Fees',
+'Recharge Level' => 'Recharge Level',
+'Block User' => 'Block User',
+'Password' => 'Password',
+'Add Agent' => 'Add Agent',
+'Search Bank Type' => 'Search Bank Type',
+'Search Card Number' => 'Search Card Number',
+'In Force' => 'In Force',
+'Not Active' => 'Not Active',
+'Terminated' => 'Terminated',
+'Open' => 'Open',
+'Closed' => 'Closed',
+'Settling' => 'Settling',
+'Search Issue Number' => 'Search Issue Number',
+'Select Type' => 'Select Type',
+'Update all quota' => 'Update all quota',
+'Save' => 'Save',
+'Discard' => 'Discard',
+'Avatar' => 'Avatar',
+'Full Name' => 'Full Name',
+'Initials' => 'Initials',
+'Email Address' => 'Email Address',
+'Mobile Number' => 'Mobile Number',
+'Activity Role' => 'Activity Role',
+'Account Status' => 'Account Status',
+'Mobile Contact' => 'Mobile Contact',
+'Email Address' => 'Email address',
+'User Role' => 'User Role',
+'New Administrator' => 'New Administrator',
+'Super Admin' => 'Super Admin',
+'Admin' => 'Admin',
+'Moderator' => 'Moderator',
+'Verify before submit' => 'Verify before submit',
+'Submit' => 'Submit',
+'Content Manager' => 'Content Manager',
+'Support Staff' => 'Support Staff',
+'Finance Manager' => 'Finance Manager',
+'Agent Manager' => 'Agent Manager',
+'Auditor' => 'Auditor',
+'Limited Access Admin' => 'Limited Access Admin',
+
+'System backups and recovery' => 'System backups and recovery',
+'Backup Status' => 'Backup Status',
+'Backup Time'=>'Backup Time',
+
+'Backup Date' => 'Backup Date',
+
+'Encryption Type' => 'Encryption Type',
+'Backup Size' => 'Backup Size',
+'Backup Path' => 'Backup Path',
+
+'Backup Type' => 'Backup Type',
+
+'Backup Name' => 'Backup Name',
+
+'Ico' => 'Ico',
+'Id' => 'Id',
+'Message Type'=>'Message Type',
+'All User/Personal'=>'All User/Personal',
+'Annoucememnt'=>'Annoucememnt',
+'Notification'=>'Notification',
+'Add User'=>'Add User',    
+'Change Password'=>'Change Password',  
+'Welcome to Limvo'=>'Welcome to Limvo',
+'Back Office Admin'=>'Back Office Admin',
+'Manage User Account'=>'Manage User Account',
+'Personal Details'=>'Personal Details',
+'Full Name'=>'Full Name',
+'Contact'=>'Contact',
+'Whatsapp'=>'Whatsapp',
+'Account Type'=>'Account Type',
+'Username'=>'Username',
+'Annoucement'=>'Annoucement',
+'General Announcement (All Users)'=>'General Announcement (All Users)',
+'User-Specific Announcement'=>'User-Specific Announcement',
+'Annoucement Type'=>'Annoucement Type',
+'Edit Annoucement'=>'Edit Annoucement',
+'Forbidden to Withdraw'=>'Forbidden to Withdraw',
+'Forbidden to Deposit'=>'Forbidden to Deposit',
+'Forbidden to Log In'=>'Forbidden to Log In',
+'Suspend Betting'=>'Suspend Betting',
+'Enable to Run'=>'Enable to Run',
+'Rebate (%)'=>'Rebate (%)',
+'Remarks'=>'Remarks',
+'Deposit Limit'=>'Deposit Limit',
+'Withdrawal Limit'=>'Withdrawal Limit',
+
+'Daily Betting'=>'Daily Betting',
+
+'Total Limit'=>'Total Limit',
+'Security'=>'Security',
+'Account Binding'=>'Account Binding',
+'Withdrawal Password'=>'Withdrawal Password',
+'Login Password'=>'Login Password',
+
+'Account Security'=>'Account Security',
+'Deactivate User '=>'Deactivate User ',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -218,7 +218,7 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-              <input type="text" id="linkinput" class="form-control queryholderlogss " placeholder="Search usernames" />
+              <input type="text" id="linkinput" class="form-control queryholderlogss " placeholder="<?= $translator['Search usernames']; ?>" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
                 <select class="form-control linkDropdown" size="5" style="display: none;" id="linkinputdowns">
                     <!-- Options will be populated dynamically -->

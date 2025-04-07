@@ -237,10 +237,12 @@
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                <input type="text" id="Depositinput" class="form-control queryholderdeposit userdeposit" placeholder="Search usernames" />
+                <input type="text" id="Depositinput" class="form-control queryholderdeposit userdeposit" placeholder="<?= $translator['Search usernames']; ?>" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
-                <select class="form-control DepositDropdown" size="5" style="display: none;" id="userfinaceDepo"> </select>
-                <input type="text" class="form-control queryholderdeposit depositids" id="nametextss" aria-describedby="name" placeholder="Enter Deposit ID" />
+                <select class="form-control DepositDropdown" size="5" style="display: none;" id="userfinaceDepo">
+              
+                </select>
+                <input type="text" class="form-control queryholderdeposit depositids" id="nametextss" aria-describedby="name" placeholder="<?= $translator['Enter Deposit ID']; ?>" />
 
                 <select name="betsate" class="form-control form-select queryholderdeposit depositchanel" data-bs-placeholder="Select Type">
                     <option value="">-<?= $translator['Deposit Channel']; ?>-</option>
