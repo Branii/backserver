@@ -729,7 +729,7 @@ return [
 'Announcements and Notifications'=>'Announcements and Notifications',
 //(Announcement Management)
 'System Announcement' => 'System Announcement',
-'Annoucement List' =>'Annoucement List',
+'Announcement List' =>'Announcement List',
 'Title' =>'Title',
 'Content' =>'Content',
 'DateTime' =>'DateTime',
@@ -744,6 +744,11 @@ return [
 'Backup & Restore List' =>'Backup & Restore List',
 //Admin ID - 管理员ID
 
+
+//payment platform
+
+"Payment Platform" => "Payment Platform",
+'Add Payment Platform'=>'Add Payment Platform',
 
 //games
 '1kball 5D 1m' =>'1kball 5D 1m',

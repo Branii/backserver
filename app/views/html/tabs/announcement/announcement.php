@@ -263,7 +263,7 @@
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0"><?= $translator['Annoucement List']; ?></h4>
+        <h4 class="card-title mb-0"><?= $translator['Announcement List']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
