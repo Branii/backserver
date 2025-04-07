@@ -330,7 +330,7 @@ li.name-items:hover {
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">NGP Win/Loss Report</h4>
+        <h4 class="card-title mb-0"><?= $translator['NGP Win/Loss Report']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist1">
@@ -340,7 +340,7 @@ li.name-items:hover {
           
                 <div style="width: 65%;">
           
- <input name="usernamelist" class="queryholderlist form-control bring-forward" id="ngp-wl-username" data-user-id="" placeholder="Username" autocomplete="off" style="width:97%;"> <div class="ngp-usr-res-wrapper" style="width: 26.5%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="ngp-user-list-wrapper"></ul> </div></div>
+ <input name="usernamelist" class="queryholderlist form-control bring-forward" id="ngp-wl-username" data-user-id="" placeholder="<?= $translator['Username']; ?>" autocomplete="off" style="width:97%;"> <div class="ngp-usr-res-wrapper" style="width: 26.5%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="ngp-user-list-wrapper"></ul> </div></div>
 
         
         <div class="custom-dropdown" style="width: 57%; margin-right: 5px;">
@@ -397,43 +397,43 @@ li.name-items:hover {
                 <thead class="text-dark fs-4 tbl-headersUser">
                     <tr class="userlistheadrow">
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Username</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Number of Bettors</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Number of Bettors']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Number of Bet Tickets</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Number of Bet Tickets']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Rebate%</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Rebate%']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Total Bet Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bet Amount']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Total Rebate Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Rebate Amount']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Total Valid Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Valid Amount']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Total Win Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Win Amount']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Promotions & Bonuses</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Promotions & Bonuses']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Fees</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Fees']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Refund</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Refund']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Win/Loss</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win/Loss']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Active/Total Subs</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Active/Total Subs']; ?></h6>
                         </th>
                     </tr>
                 </thead>

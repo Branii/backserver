@@ -519,7 +519,7 @@ input:checked + .lpd-slider:after {
 
         </select>
         <select name="order_type" class="form-control form-select"  style= "margin-left:15px" id="allmodels"
-        data-bs-placeholder="Select Type">
+        data-bs-placeholder="Select Type<?= $translator['Game Model']; ?>">
         <!-- <option value="">-<?= $translator['Game Model']; ?>-</option>
         <option value="standard"><?= $translator['Standard']; ?></option>
         <option value="twosides"><?= $translator['Two Sides']; ?></option>

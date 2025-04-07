@@ -203,20 +203,20 @@
     <span class="top-left-btn">
     <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:156%;">
 
-      <select name="order_type" id="allGameNames" class="form-control form-select queryholder ordertype" data-bs-placeholder="Select Type" style="width: 15%;">
+      <select name="order_type" id="allGameNames" class="form-control form-select queryholder ordertype" data-bs-placeholder="<?= $translator['Select Type']; ?>" style="width: 15%;">
       <option value="1">Royal 5</option>
       </select>
 <div style="width: 15%;">
-    <input name="issuenumber" class="queryholderlist form-control bring-forward" id="ltd-issuenumber" placeholder="Search Issue Number" autocomplete="off" style="width:97%;"> </div>
+    <input name="issuenumber" class="queryholderlist form-control bring-forward" id="ltd-issuenumber" placeholder="<?= $translator['Search Issue Number']; ?>" autocomplete="off" style="width:97%;"> </div>
 
 
 
   <select name="status" id="ltd-status" class="form-control form-select queryholder" data-bs-placeholder="Select Status" style="width: 15%;">
-    <option value="0">-- Status --</option>
-    <option value="1">Open</option>
-    <option value="2">Closed</option>
-    <option value="waiting">Settling</option>
-    <option value="done">Settled</option>
+    <option value="0">-- <?= $translator['Status']; ?> --</option>
+    <option value="1"><?= $translator['Open']; ?></option>
+    <option value="2"><?= $translator['Closed']; ?></option>
+    <option value="waiting"><?= $translator['Settling']; ?></option>
+    <option value="done"><?= $translator['Settled']; ?></option>
 
 </select>
 
@@ -263,10 +263,10 @@
         <thead class="text-dark fs-4 tbl-header">
           <tr class="headrowDraws">
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Lottery Type</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Type']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Lottery Code</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Code']; ?></h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Issue Number']; ?></h6>
@@ -281,19 +281,19 @@
               <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win Amount']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Draw Time</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Draw Time']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Sales Deadline</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Sales Deadline']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Actual Draw Time</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Actual Draw Time']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Settlement Completion Time</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Settlement Completion Time']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Status</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
             </th>
             
           </tr>

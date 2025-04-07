@@ -57,8 +57,10 @@
     border-radius: 5px;
     cursor: pointer;
     display: flex;
-    justify-content: space-between; /* Optional: Adds space between elements */
-    align-items: center; /* Optional: Vertically centers the elements */
+    justify-content: space-between;
+    /* Optional: Adds space between elements */
+    align-items: center;
+    /* Optional: Vertically centers the elements */
   }
 
   .topp-right {
@@ -73,11 +75,11 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
- 
+
 
   }
 
-  .table-wrapperBackup{
+  .table-wrapperBackup {
     overflow: hidden;
     /* Hide the default scrollbar */
     white-space: nowrap;
@@ -164,55 +166,56 @@
     background-color: #aaa;
     /* Darker blue on hover */
   }
+
   .left-element {
-  position: relative;
-  bottom:8px;
-  height: 35px;
-  background-color: #fff;
-  margin-right: 5px;
-}
+    position: relative;
+    bottom: 8px;
+    height: 35px;
+    background-color: #fff;
+    margin-right: 5px;
+  }
 
-.active > .page-link{
-  background-color: orangered !important;
-  border:none;
-}
-.tbl-headerBackup {
-  position: sticky;
-  top: 0;
-}
+  .active>.page-link {
+    background-color: orangered !important;
+    border: none;
+  }
 
-.sticky-headerBackup{
-  position: relative;
-  bottom:1px;
-  background-color: red;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-}
+  .tbl-headerBackup {
+    position: sticky;
+    top: 0;
+  }
 
-.pins{
-  padding:5px;
-  border-bottom: solid 1px rgb(110,129,146,0.1);
-}
+  .sticky-headerBackup {
+    position: relative;
+    bottom: 1px;
+    background-color: red;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  }
 
-.ini{
-  font-size: 16px;
-  border: solid 1px #eee;
-  background-color: #ddd;
-}
+  .pins {
+    padding: 5px;
+    border-bottom: solid 1px rgb(110, 129, 146, 0.1);
+  }
 
-.slected{
-  border:solid 2px orangered
-}
+  .ini {
+    font-size: 16px;
+    border: solid 1px #eee;
+    background-color: #ddd;
+  }
 
-.daterangepicker{
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px  !important;
-}
+  .slected {
+    border: solid 2px orangered
+  }
 
+  .daterangepicker {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px !important;
+  }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0">System backups and recovery</h4>
+    <h4 class="card-title mb-0"><?= $translator['System backups and recovery']; ?></h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pager1">
@@ -220,10 +223,10 @@
       <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
 
-          <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
-                    <input type="text" class="form-control linkedCalendars queryholder" placeholder="Search ..." aria-label="Username" aria-describedby="basic-addon1" />
-                  </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
+          <input type="text" class="form-control linkedCalendars queryholder" placeholder="Search ..." aria-label="Username" aria-describedby="basic-addon1" />
+        </div>
 
 
 
@@ -234,8 +237,7 @@
     </span>
     <span class="topp-right" id="paginations" aria-label="Page navigation example">
 
-      <div class="btn-group mb-2" role="group" aria-label="Basic example"
-        style="border:solid 1px #eee;color:#bbb;background-color:#fff">
+      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border:solid 1px #eee;color:#bbb;background-color:#fff">
         <button type="button" class="btn bg-white-subtle " value="right" aria-label="Refresh"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PDF">
           <i class='bx bx-file' style="font-size:20px"></i>
@@ -244,7 +246,7 @@
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="XLS">
           <i class='bx bx-file-blank' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle" value="right" >
+        <button type="button" class="btn bg-white-subtle" value="right">
           ::
         </button>
         <button type="button" class="btn bg-white-subtle refreshh" value="right" aria-label="Refresh"
@@ -267,41 +269,41 @@
         <thead class="text-dark fs-4 tbl-headerBackup">
           <tr class="headrowBackup">
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">#Id</h6>
+              <h6 class="fs-4 fw-semibold mb-0">#<?= $translator['Id']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Ico</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Ico']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Backup Name</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Backup Name']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Backup Type</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Backup Type']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Backup Path</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Backup Path']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Backup Size</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Backup Size']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Encryption Type</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Encryption Type']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Backup Date</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Backup Date']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Backu Time</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Backup Time']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Backup Status</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Backup Status']; ?></h6>
             </th>
-      
+
             <th>
               <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
             </th>
           </tr>
-        </thead> 
+        </thead>
         <tbody id="dataContainerBackup" class="tbl-contentbackup">
 
           <tr class="no-resultsAdmin">
@@ -338,17 +340,17 @@
 
     </span>
 
-   
-    <span class="top-right-btn"  aria-label="Page navigation example">
-    <select class="left-element form-control numrowsbackup" style="font-size:12px">
-            <!-- <option value="5" class="fromnumrows">5</option>
+
+    <span class="top-right-btn" aria-label="Page navigation example">
+      <select class="left-element form-control numrowsbackup" style="font-size:12px">
+        <!-- <option value="5" class="fromnumrows">5</option>
             <option value="10">10</option>
             <option value="20">20</option> -->
-            <option value="50">50</option>
-            <option value="100">100</option>
-            <option value="200">200</option>
-            <option value="500">500</option>
-     </select>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="500">500</option>
+      </select>
       <span id="paginationBackup" class="right-element"> </span>
     </span>
 
@@ -379,129 +381,128 @@
 
 <!-- sample modal content -->
 <div id="add-newx" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
-<div class="modal-dialog modal-dialog-scrollable modal-lg">
-<div class="modal-content" style="padding:20px">
-<div class="d-flex justify-content-between">
-            <div>New Administrator</div>
-            <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
-          </div><p></p>
-          <div class="">
-              <!-- start Info Border with Icons -->
-              <div class="cardd">
-                <div class="card-body">
-                  <form id="adminsx">
-                    <div class="form-floating mb-3 d-flex row justify-content-center">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content" style="padding:20px">
+      <div class="d-flex justify-content-between">
+        <div>New Administrator</div>
+        <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
+      </div>
+      <p></p>
+      <div class="">
+        <!-- start Info Border with Icons -->
+        <div class="cardd">
+          <div class="card-body">
+            <form id="adminsx">
+              <div class="form-floating mb-3 d-flex row justify-content-center">
 
-                      <div class="d-flex align-items-center">
-                          <a href="javascript:void(0)">
-                            <img src="http://localhost/admin/app/assets/images/profile/user-1.jpg" value="user-1.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
-                            <i class='bx bxs-check-circle ava' style="font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;" ></i>
-                          </a>
-                          <a href="javascript:void(0)">
-                            <img src="http://localhost/admin/app/assets/images/profile/user-2.jpg" value="user-2.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
-                            <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;" ></i>
-                          </a>
-                          <a href="javascript:void(0)">
-                            <img src="http://localhost/admin/app/assets/images/profile/user-3.jpg" value="user-3.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
-                            <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;" ></i>
-                          </a>
-                          <a href="javascript:void(0)">
-                            <img src="http://localhost/admin/app/assets/images/profile/user-4.jpg" value="user-4.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
-                            <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;" ></i>
-                          </a>
-                          <a href="javascript:void(0)">
-                            <img src="http://localhost/admin/app/assets/images/profile/user-5.jpg" value="user-5.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
-                            <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;" ></i>
-                          </a>
-                          <a href="javascript:void(0)">
-                            <img src="http://localhost/admin/app/assets/images/profile/user-6.jpg" value="user-6.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
-                            <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;" ></i>
-                          </a>
-                          <a href="javascript:void(0)">
-                            <img src="http://localhost/admin/app/assets/images/profile/user-7.jpg" value="user-7.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
-                            <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;" ></i>
-                          </a>
-                          <a href="javascript:void(0)">
-                            <img src="http://localhost/admin/app/assets/images/profile/user-8.jpg" value="user-8.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
-                            <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;" ></i>
-                          </a>
-                          <a href="javascript:void(0)">
-                            <img src="http://localhost/admin/app/assets/images/profile/user-9.jpg" value="user-9.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
-                            <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;" ></i>
-                          </a>
-                          <a href="javascript:void(0)">
-                            <img src="http://localhost/admin/app/assets/images/profile/user-10.jpg" value="user-10.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
-                            <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;" ></i>
-                          </a>
-                        </div>
-                      
-                    </div>
-                    <div class="form-floating mb-3" hidden>
-                      <input type="text" class="form-control profile_picture" name="profile_picture" value="user-1.jpg"/>
-                    </div>
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control fullname" name="full_name" placeholder="Username" autocomplete="new-username"/>
-                      <label>
-                        <!-- <i class="ti ti-mail me-2 fs-4 text-info"></i> -->
-                        <span class="border-start ps-3">Full Name</span>
-                      </label>
-                    </div>
-                    <div class="form-floating mb-3" >
-                      <input type="email" class="form-control fullemail" name="email" placeholder="Email" autocomplete="new-username"/>
-                      <label>
-                        <!-- <i class="ti ti-mail me-2 fs-4 text-info"></i> -->
-                        <span class="border-start ps-3">Email address</span>
-                      </label>
-                    </div>
+                <div class="d-flex align-items-center">
+                  <a href="javascript:void(0)">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-1.jpg" value="user-1.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <i class='bx bxs-check-circle ava' style="font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
+                  </a>
+                  <a href="javascript:void(0)">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-2.jpg" value="user-2.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
+                  </a>
+                  <a href="javascript:void(0)">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-3.jpg" value="user-3.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
+                  </a>
+                  <a href="javascript:void(0)">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-4.jpg" value="user-4.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
+                  </a>
+                  <a href="javascript:void(0)">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-5.jpg" value="user-5.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
+                  </a>
+                  <a href="javascript:void(0)">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-6.jpg" value="user-6.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
+                  </a>
+                  <a href="javascript:void(0)">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-7.jpg" value="user-7.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
+                  </a>
+                  <a href="javascript:void(0)">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-8.jpg" value="user-8.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
+                  </a>
+                  <a href="javascript:void(0)">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-9.jpg" value="user-9.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
+                  </a>
+                  <a href="javascript:void(0)">
+                    <img src="http://localhost/admin/app/assets/images/profile/user-10.jpg" value="user-10.jpg" class="rounded-circle me-n2 card-hover border border-2 border-white upp" width="50" height="50">
+                    <i class='bx bxs-check-circle ava' style="display:none;font-size: 20px;position:relative;top:20px;left:-8px;z-index:9999;"></i>
+                  </a>
+                </div>
 
-                    <div class="form-floating mb-3" >
-                      <input type="email" class="form-control fullcontact" name="phone_number" placeholder="Email" autocomplete="new-username"/>
-                      <label>
-                        <!-- <i class="ti ti-mail me-2 fs-4 text-info"></i> -->
-                        <span class="border-start ps-3">Mobile Contact</span>
-                      </label>
-                    </div>
+              </div>
+              <div class="form-floating mb-3" hidden>
+                <input type="text" class="form-control profile_picture" name="profile_picture" value="user-1.jpg" />
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control fullname" name="full_name" placeholder="Username" autocomplete="new-username" />
+                <label>
+                  <!-- <i class="ti ti-mail me-2 fs-4 text-info"></i> -->
+                  <span class="border-start ps-3">Full Name</span>
+                </label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control fullemail" name="email" placeholder="Email" autocomplete="new-username" />
+                <label>
+                  <!-- <i class="ti ti-mail me-2 fs-4 text-info"></i> -->
+                  <span class="border-start ps-3">Email address</span>
+                </label>
+              </div>
 
-                    <div class="form-floating mb-3" >
-                    <select id="user-roles" class="form-select fullrole" name="role">
-                      <option value="super_admin">Super Admin</option>
-                      <option value="admin">Admin</option>
-                      <option value="moderator">Moderator</option>
-                      <option value="content_manager">Content Manager</option>
-                      <option value="support_staff">Support Staff</option>
-                      <option value="finance_manager">Finance Manager</option>
-                      <option value="agent_manager">Agent Manager</option>
-                      <option value="auditor">Auditor</option>
-                      <option value="limited">Limited Access Admin</option>
-                    </select>
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control fullcontact" name="phone_number" placeholder="Email" autocomplete="new-username" />
+                <label>
+                  <!-- <i class="ti ti-mail me-2 fs-4 text-info"></i> -->
+                  <span class="border-start ps-3">Mobile Contact</span>
+                </label>
+              </div>
 
-                      <label>
-                        <!-- <i class="ti ti-mail me-2 fs-4 text-info"></i> -->
-                        <span class="border-start ps-3">User Role</span>
-                      </label>
-                    </div>
-                   
+              <div class="form-floating mb-3">
+                <select id="user-roles" class="form-select fullrole" name="role">
+                  <option value="super_admin">Super Admin</option>
+                  <option value="admin">Admin</option>
+                  <option value="moderator">Moderator</option>
+                  <option value="content_manager">Content Manager</option>
+                  <option value="support_staff">Support Staff</option>
+                  <option value="finance_manager">Finance Manager</option>
+                  <option value="agent_manager">Agent Manager</option>
+                  <option value="auditor">Auditor</option>
+                  <option value="limited">Limited Access Admin</option>
+                </select>
 
-                    <div class="d-md-flex align-items-center">
-                      <div class="form-check">
-                        <!-- <input type="checkbox" class="form-check-input" id="sf2" value="check" /> -->
-                        <label class="form-check-label" for="sf2">Verify before submit</label>
-                      </div>
-                      <div class="mt-3 mt-md-0 ms-auto">
-                        <button type="submit" class="btn hstack gap-6 fullsubmit" style="border:solid 1px #ccc">
-                          <i class="ti ti-send me-2 fs-4"></i>
-                          Submit
-                        </button>
-                      </div>
-                    </div>
-                  </form>
+                <label>
+                  <!-- <i class="ti ti-mail me-2 fs-4 text-info"></i> -->
+                  <span class="border-start ps-3">User Role</span>
+                </label>
+              </div>
+
+
+              <div class="d-md-flex align-items-center">
+                <div class="form-check">
+                  <!-- <input type="checkbox" class="form-check-input" id="sf2" value="check" /> -->
+                  <label class="form-check-label" for="sf2">Verify before submit</label>
+                </div>
+                <div class="mt-3 mt-md-0 ms-auto">
+                  <button type="submit" class="btn hstack gap-6 fullsubmit" style="border:solid 1px #ccc">
+                    <i class="ti ti-send me-2 fs-4"></i>
+                    Submit
+                  </button>
                 </div>
               </div>
-              <!-- end Info Border with Icons -->
-            </div>
+            </form>
+          </div>
+        </div>
+        <!-- end Info Border with Icons -->
+      </div>
 
+    </div>
+  </div>
 </div>
-</div>
-</div>
-                     
-

@@ -689,6 +689,21 @@ class adminController extends Controller {
     
     
 
+   
+//for user notification
+public function fetchusernotification($pageNumber, $limit)
+{
+    $this->view('exec/annoucement_management', [
+        'flag' => 'viewnotification',
+        'page' => $pageNumber,
+        'limit' => $limit
+    ]);
+    $this->view->render();
+}
+
+
+    
+
     //languages
 
      public function changelang(string $lang){

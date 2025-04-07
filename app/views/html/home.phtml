@@ -222,8 +222,8 @@ $fullname = (new Controller)->getUsername($adminEmail);
     <div class="toast-body hstack align-items-start gap-6">
       <i class="ti ti-alert-circle fs-6"></i>
       <div>
-        <h5 class="text-white fs-3 mb-1">Welcome to Limvo</h5>
-        <h6 class="text-white fs-2 mb-0">Back Office Admin</h6>
+        <h5 class="text-white fs-3 mb-1"><?= $translator['Welcome to Limvo']; ?></h5>
+        <h6 class="text-white fs-2 mb-0"><?= $translator['Back Office Admin']; ?></h6>
       </div>
       <button type="button" class="btn-close btn-close-white fs-2 m-0 ms-auto shadow-none" data-bs-dismiss="toast"
         aria-label="Close"></button>
@@ -282,15 +282,15 @@ $fullname = (new Controller)->getUsername($adminEmail);
                     style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1"
                       href="javascript:void(0);">
-                      <i class='bx bx-user-check'></i>Add User
+                      <i class='bx bx-user-check'></i><?= $translator['Add User']; ?>
                     </a>
                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1"
                       href="javascript:void(0);">
-                      <i class='bx bx-pencil'></i>Change Password
+                      <i class='bx bx-pencil'></i><?= $translator['Change Password']; ?>
                     </a>
                     <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1"
                       href="javascript:void(0);">
-                      <i class="bx bx-trash fs-5"></i>Delete
+                      <i class="bx bx-trash fs-5"></i><?= $translator['Delete']; ?>
                     </a>
                   </div>
                 </div>
@@ -483,6 +483,11 @@ $fullname = (new Controller)->getUsername($adminEmail);
             <?php include "tabs/announcement/announcement.php" ?>
           </div>
 
+          <div class="chrome__tab unotification">
+            <?php include "tabs/announcement/usernotification.php" ?>
+          </div>
+
+
 
         
 
@@ -540,6 +545,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
     <script src="<?php echo BASE_URL; ?>assets/js/lang.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/m_lottery_bonus_parameters.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/annoucement.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/usernotification.js"></script>
     
     <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.init.js"></script>

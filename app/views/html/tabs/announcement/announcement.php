@@ -270,7 +270,7 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
                 <input type="text" id="financeDropdownl" class="form-control queryholderlistt usernames"
-                    placeholder="Search usernames" />
+                    placeholder=" <?= $translator['Search usernames']; ?>" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
                 <select class="form-control financeDropdown" size="5" style="display: none;" id="userfinaceDropdownsl">
                     <!-- Options will be populated dynamically -->
@@ -278,9 +278,9 @@
 
                 <select name="betsate" class="form-control form-select queryholderlistt messagestype"
                     data-bs-placeholder="Select Type">
-                    <option value="">-Message Type-</option>
-                    <option value="general">Annoucememnt</option>
-                    <option value="personal">Notification</option>
+                    <option value="">-<?= $translator['Message Type']; ?>-</option>
+                    <option value="general"><?= $translator['Annoucememnt']; ?></option>
+                    <option value="personal"><?= $translator['Notification']; ?></option>
                  
                 </select>
 
@@ -342,11 +342,11 @@
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Message Type</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Message Type']; ?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">All User/Personal</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['All User/Personal']; ?></h6>
                         </th>
                       
                       
@@ -417,7 +417,7 @@
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div>Annoucement</div>
+                        <div><?= $translator['Annoucement']; ?></div>
                         <div><i class="bx bx-message-square-x tclose"
                                 style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
                                 aria-label="Close"></i></div>
@@ -430,19 +430,19 @@
                     <!-- Rebate Field -->
                     <div class="form-floating mb-3">
                         <select name="deposit" class="form-select form-control borders border-infos messagetype">
-                        <option value="general">General Announcement (All Users)</option>
+                        <option value="general"><?= $translator['General Announcement (All Users)']; ?></option>
                         <!-- <option value="users">VIP Users Only</option> -->
                         <!-- <option value="new">Newly Registered Users Only</option> -->
-                        <option value="personal">User-Specific Announcement</option>
+                        <option value="personal"><?= $translator['User-Specific Announcement']; ?></option>
                         </select>
                         <label>
                             <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
-                            <span class="border-start ps-3">Annoucement Type</span>
+                            <span class="border-start ps-3"><?= $translator['Annoucement Type']; ?></span>
                         </label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" id="financeinputl" class="form-control" placeholder="Search usernames" />
+                        <input type="text" id="financeinputl" class="form-control" placeholder="<?= $translator['Search usernames']; ?>" />
                         <input type="hidden" class="userIdFieldss" />
                         <select name="usernames" class="form-control financeDropdowns" size="5" style="display: none;"
                             id="userfinaceDropdownl">
@@ -470,13 +470,13 @@
                      <div class="col-md-12 mb-3">
                             <div class="note-title">
                               <!-- <label class="form-label">Note Title</label> -->
-                              <input type="text" id="note-has-title" class="form-control" minlength="25" placeholder="Title" />
+                              <input type="text" id="note-has-title" class="form-control" minlength="25" placeholder="<?=$translator['Title']; ?>" />
                             </div>
                           </div>
                           <div class="col-md-12">
                             <div class="note-description">
                               <!-- <label class="form-label">Note Description</label> -->
-                              <textarea id="description" class="form-control" minlength="60" placeholder="Description" rows="3"></textarea>
+                              <textarea id="description" class="form-control" minlength="60" placeholder="<?=$translator['Description']; ?>" rows="3"></textarea>
                             </div>
                           </div>
                     
@@ -519,7 +519,7 @@
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div> Edit Annoucement</div>
+                        <div> <?=$translator['Edit Annoucement']; ?></div>
                         <div><i class="bx bx-message-square-x tclose"
                                 style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
                                 aria-label="Close"></i></div>
@@ -545,13 +545,13 @@
 
                      <div class="col-md-12 mb-3">
                             <div class="note-title">
-                              <label class="form-label">Title</label>
+                              <label class="form-label"><?=$translator['Title']; ?></label>
                               <input type="text" id="note-has-titles" class="form-control" minlength="25" placeholder="Title" />
                             </div>
                           </div>
                           <div class="col-md-12">
                             <div class="note-description">
-                              <label class="form-label">Description</label>
+                              <label class="form-label"><?=$translator['Description']; ?></label>
                               <textarea id="descriptions" class="form-control" minlength="60" placeholder="Description" rows="3"></textarea>
                             </div>
                           </div>
