@@ -451,10 +451,12 @@ const  fetchbetUser = (query) =>{
                  if(user.contact != undefined && user.contact != "") return user.contact;
             };
             response = typeof response === 'string' ? JSON.parse(response) : response;
+
             for (let index = 0; index < response.length; index++) {
                 const user = response[index];
-                const username = getDisplayName(user);
-                optionsHtml += `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
+                const username = user[user.regtype];
+                
+                optionsHtml += username === undefined ?  `<li class="name-items"> No Data Found.</li>`  : `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
             }
             $('#user-list-wrapper').html(optionsHtml);
             $(".usr-res-wrapper").show();

@@ -1,0 +1,90 @@
+<?php
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+    // Throw an Exception with the error message and details
+    throw new \Exception("$errstr in $errfile on line $errline", $errno);
+});
+// declare(strict_types=1);
+// header('Content-Type: application/json');
+
+
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
+
+
+$adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
+$fullname   = (new Controller)->getUsername($adminEmail);
+
+$flag  = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+$page  = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
+$limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
+
+$results = [];
+
+if ($flag == "fetchPaymentPlatformsForPartner") {
+    $results = PaymentPlatformModel::fetchPaymentPlatformsForPartner($page,$limit);   
+}else if($flag == "fetchpaymentplatforms"){
+    $results = PaymentPlatformModel::fetchPaymentPlatforms();
+}else if($flag == "searchPaymentPlatform"){
+    $platformName = isset($this->viewData['platformName']) ? $this->viewData['platformName'] : "";
+    $currency     = isset($this->viewData['currency']) ? $this->viewData['currency']         : "";
+    $status       = isset($this->viewData['status']) ? $this->viewData['status']             : "";
+    $startDate    = isset($this->viewData['startDate']) ? $this->viewData['startDate']       : "";
+    $endDate      = isset($this->viewData['endDate']) ? $this->viewData['endDate']           : "";
+    $results      = PaymentPlatformModel::searchPaymentPlatform(["platformID" => $platformName,"currency" => $currency,"status" => $status,"startDate" => $startDate,"endDate" => $endDate,"page" => $page, "limit" => $limit]);
+
+}else if($flag == "addNewPaymentPlaftorm"){
+   
+    $paymentType    = isset($this->viewData['paymentType']) ? $this->viewData['paymentType'] : "";
+    $paymentTypeName    = isset($this->viewData['paymentTypeName']) ? $this->viewData['paymentTypeName'] : "";
+    $currency       = isset($this->viewData['currency']) ? $this->viewData['currency']         : "";
+    $status         = isset($this->viewData['status']) ? $this->viewData['status']             : "";
+    $fee            = isset($this->viewData['fee']) ? $this->viewData['fee']       : "";
+    $maxAmount      = isset($this->viewData['maxAmount']) ? max($this->viewData['maxAmount'],0) : 0;
+    $minAmount      = isset($this->viewData['minAmount']) ? $this->viewData['minAmount']         : 0           ;
+    $siteUrl        = isset($this->viewData['siteUrl']) ? $this->viewData['siteUrl']           : "";
+    $adminSiteUrl   = isset($this->viewData['adminSiteUrl']) ? $this->viewData['adminSiteUrl']           : "";
+    $info           = isset($this->viewData['info']) ? $this->viewData['info']         : 0           ;
+    $priority       = isset($this->viewData['priority']) ? $this->viewData['priority']           : "";
+    $countries      = isset($this->viewData['countries']) ? $this->viewData['countries']           : "";
+    $currentDate    = date("Y-m-d / H:i:s");
+
+    // echo json_encode(["payment_type_id" => trim($paymentType),"name" => trim($paymentTypeName),"status" => $status,"created_by" => trim($fullname["full_name"]),"date_created" => trim($currentDate),"currency" => trim($currency),"fee" => trim($fee),"site_url" => trim($siteUrl), "admin_site_url" => trim($adminSiteUrl),"last_update" => trim($currentDate),"last_update_by" => trim($fullname["full_name"]),"min_amount" => trim($minAmount),"max_amount" => trim($maxAmount),"info" => $info,"priority" => $priority,"countries" => serialize(urldecode($countries))]);
+    // return;
+    $results        = PaymentPlatformModel::addNewPaymentPlaftorm(["payment_type_id" => trim($paymentType),"name" => trim($paymentTypeName),"status" => $status,"created_by" => trim($fullname["full_name"]),"date_created" => trim($currentDate),"currency" => trim($currency),"fee" => trim($fee),"site_url" => trim($siteUrl), "admin_site_url" => trim($adminSiteUrl),"last_update" => trim($currentDate),"last_update_by" => trim($fullname["full_name"]),"min_amount" => trim($minAmount),"max_amount" => trim($maxAmount),"info" => urldecode($info),"priority" => $priority,"countries" => urldecode($countries)]);
+
+
+
+
+}else if($flag == "editPaymentPlaftorm"){
+   
+    $paymentType    = isset($this->viewData['paymentType']) ? $this->viewData['paymentType'] : "";
+    $paymentTypeName    = isset($this->viewData['paymentTypeName']) ? $this->viewData['paymentTypeName'] : "";
+    $currency       = isset($this->viewData['currency']) ? $this->viewData['currency']         : "";
+    $status         = isset($this->viewData['status']) ? $this->viewData['status']             : "";
+    $fee            = isset($this->viewData['fee']) ? $this->viewData['fee']       : "";
+    $maxAmount      = isset($this->viewData['maxAmount']) ? $this->viewData['maxAmount'] : 0;
+    $minAmount      = isset($this->viewData['minAmount']) ? $this->viewData['minAmount']         : 0           ;
+    $siteUrl        = isset($this->viewData['siteUrl']) ? $this->viewData['siteUrl']           : "";
+    $adminSiteUrl   = isset($this->viewData['adminSiteUrl']) ? $this->viewData['adminSiteUrl']           : "";
+    $info           = isset($this->viewData['info']) ? $this->viewData['info']         : 0           ;
+    $priority       = isset($this->viewData['priority']) ? $this->viewData['priority']           : "";
+    $countries      = isset($this->viewData['countries']) ? $this->viewData['countries']           : "";
+    $currentDate    = date("Y-m-d / H:i:s");
+    
+    $results        = PaymentPlatformModel::editPaymentPlaftorm(["payment_type_id" => trim($paymentType),"status" => trim($status),"currency" => trim($currency),"fee" => trim($fee),"site_url" => trim($siteUrl), "admin_site_url" => trim($adminSiteUrl),"last_update" => $currentDate,"last_update_by" => $fullname["full_name"],"min_amount" => $minAmount,"max_amount" => $maxAmount,"info" => urldecode($info),"priority" => $priority,"countries" => urldecode($countries)]);
+
+}
+
+
+else if($flag == "searchPlatformNames"){
+    $platformName      = isset($this->viewData['platformName']) ? $this->viewData['platformName'] : "";
+    $results      = PaymentPlatformModel::searchPlatformNames( $platformName);
+}else if($flag == "fetchDifferentCurrency"){
+    $results      = PaymentPlatformModel::fetchDifferentCurrency();
+}
+
+
+
+
+echo json_encode(value: $results);

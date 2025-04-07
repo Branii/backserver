@@ -178,6 +178,14 @@ class adminController extends Controller {
         $this->view('exec/businessflow',['username'=>$username,'flag' => 'searchusername']);
         $this->view->render();
     }
+    public function searchPlatformNames($platformName){
+        $this->view('exec/payment_platform',['platformName'=>$platformName,'flag' => 'searchPlatformNames']);
+        $this->view->render();
+    }
+    public function fetchDifferentCurrency(){
+        $this->view('exec/payment_platform',['flag' => 'fetchDifferentCurrency']);
+        $this->view->render();
+    }
     public function searchBankTypes($bank_type){
         // echo $bank_type;
         $this->view('exec/userbank_manage',['bank_type'=> urldecode($bank_type),'flag' => 'search-bank-name']);
@@ -351,14 +359,42 @@ class adminController extends Controller {
     
     public function  updateGameGroupData($data)
     {
-
         $this->view('exec/lottery_bonus_parameters', ["data"=>$data,'flag' => 'updateGameGroupData']);
         $this->view->render();
     }
 
+    public function  fetchPaymentPlatformsForPartner($page , $limit)
+    {  
+        $this->view('exec/payment_platform', ["page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatformsForPartner']);
+        $this->view->render();
+    }
+    public function  fetchPaymentPlatforms($page , $limit)
+    {  
+
+        $this->view('exec/payment_platform', ['flag' => 'fetchpaymentplatforms']);
+        $this->view->render();
+    }
+
     public function  toggleTwosidesLotteryState($gameID)
-    {
+    {   
         $this->view('exec/lottery_bonus_parameters', ["gameID"=> $gameID,'flag' => 'toggleTwosidesLotteryState']);
+        $this->view->render();
+    }
+    public function  searchPaymentPlatform($platformName,$currency,$status,$startDate,$endDate,$page,$limit)
+    {   
+        $this->view('exec/payment_platform', ["platformName"=> $platformName,"currency" => $currency,"status" => $status,"startDate" => $startDate,"endDate" => $endDate,"page" => $page, "limit" => $limit,'flag' => 'searchPaymentPlatform']);
+        $this->view->render();
+    }
+    public function  addNewPaymentPlaftorm($paymentType,$paymentTypeName,$currency,$status,$fee,$maxAmount,$minAmount,$siteUrl,$adminSiteUrl,$info,$priority,$countries)
+    {   
+
+
+        $this->view('exec/payment_platform', ["paymentType"=> $paymentType,"paymentTypeName" => $paymentTypeName,"currency" => $currency,"status" => $status,"fee" => $fee,"maxAmount" => $maxAmount,"minAmount" => $minAmount, "siteUrl" => $siteUrl,"adminSiteUrl" => $adminSiteUrl,"info" => $info,"priority" => $priority,"countries" => $countries,'flag' => 'addNewPaymentPlaftorm']);
+        $this->view->render();
+    }
+    public function  editPaymentPlaftorm($paymentType,$paymentTypeName,$currency,$status,$fee,$maxAmount,$minAmount,$siteUrl,$adminSiteUrl,$info,$priority,$countries)
+    {   
+        $this->view('exec/payment_platform', ["paymentType"=> $paymentType,"paymentTypeName" => $paymentTypeName,"currency" => $currency,"status" => $status,"fee" => $fee,"maxAmount" => $maxAmount,"minAmount" => $minAmount, "siteUrl" => $siteUrl,"adminSiteUrl" => $adminSiteUrl,"info" => $info,"priority" => $priority,"countries" => $countries,'flag' => 'editPaymentPlaftorm']);
         $this->view->render();
     }
 

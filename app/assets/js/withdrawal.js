@@ -369,8 +369,9 @@ $(function () {
               }
               for (let index = 0; index < response.length; index++) {
                   const user = response[index];
-                  const username = getDisplayName(user);
-                  optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${username}">${username}</option>`;
+                  const username = user[user.regtype];
+
+                  optionsHtml += username === undefined ?  `<li class="optionlist"> No Data Found.</li>`  :  `<option class="optionlist" value="${user.uid}" data-username="${username}">${username}</option>`;
               }
               //  console.log(optionsHtml);
               $("#users-options-wrapper").html(optionsHtml);

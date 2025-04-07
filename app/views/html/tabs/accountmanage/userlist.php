@@ -1222,9 +1222,7 @@ section#tooltipp p {
                                             placeholder="Name" />
                                     </div>
                                 </span>
-                                <span class="toplist-center" aria-label=" navigation example">
-                                    <!--enter is free-->
-                                </span>
+                                <span class="toplist-center" aria-label=" navigation example"></span>
                                 <span class="topplist-right" id="paginations" aria-label="Page navigation example">
                                     <div class="btn-group mb-2" role="group" aria-label="Basic example"
                                         style="border: solid 1px #eee; color: #bbb; background-color: #fff;">

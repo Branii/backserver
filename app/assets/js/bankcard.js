@@ -296,8 +296,8 @@ const  fetchUsers = (query) =>{
           }
           for (let index = 0; index < response.length; index++) {
               const user = response[index];
-              const username = getDisplayName(user);
-              optionsHtml += `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
+              const username =user[user.regtype];
+              optionsHtml += username === undefine ?  : `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
           }
           $('#bl-names-wrapper').html(optionsHtml);
           $(".bl-users-wrapper").show();

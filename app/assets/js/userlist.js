@@ -525,6 +525,7 @@ $(function () {
                 $dropdown.hide();
             }
         });
+        
         // Handle manual input clearing
         $(document).on("input", "#selectuserlist", function () {
             if (!$(this).val()) {
