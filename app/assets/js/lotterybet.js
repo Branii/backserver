@@ -75,13 +75,13 @@ $(function () {
                       <td>${gamemodel[item.game_model]}</td>
                       <td>${item.game_label}</td>
                       <td>${item.bet_date + " / " + item.bet_time}</td>
-                       <td>${item.server_date + " / " + item.server_time}</td>
+                      <td>${item.server_date + " / " + item.server_time}</td>
                       <td>${item.unit_stake}</td>
                       <td>${item.multiplier}</td>
                       <td>${formatMoney(item.bet_amount)}</td>
                       <td>${formatMoney(item.win_bonus)}</td>
-                       <td><i class='bx bxs-circle' style='color:${status[item.bet_status].color};font-size:8px;margin-right:5px;'></i>${status[item.bet_status].title}</td>
-                      <td>${states[item.state]}</td>
+                      <td><i class='bx bxs-circle' style='color:${status[item.bet_status].color};font-size:8px;margin-right:5px;'></i>${status[item.bet_status].title}</td>
+                      <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${states[item.state]}</span></td>
                       <td><i value='${item.bet_code}_${item.gt_id}' class='bx bx-info-circle viewbets' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
                      
                   </tr>

@@ -54,6 +54,7 @@ $(function () {
 
         data.forEach((item) => {
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+            let trackrule = item.track_rule == "no_rule" ? "No Rule" : item.track_rule == "stop_if_not_win" ? "Stop If Not Win" : item.track_rule == "stop_if_win" ? "Stop If Win" : "";
             htmls += `
                     <tr>
                         <td>${item.track_token}</td>
@@ -64,7 +65,7 @@ $(function () {
                         <td>${formatMoney(item.done_amount) + "/" + formatMoney(item.total_amount)}</td>                  
                         <td>${trackstatus[item.track_status]}</td>
                         <td>${formatMoney(item.win_amount)}</td>
-                        <td>${translator[item.track_rule]}</td>
+                        <td>${trackrule}</td>
                         <td>${item.server_date + " / " + item.server_time}</td>
                         <td><i value='${item.track_token}_${item.game_type_id}' class='bx bx-info-circle trackinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
                        
@@ -175,11 +176,11 @@ $(function () {
             $(".loadertrack").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             if (data.trackfilter.length < 1) {
                 let html = `
-            <tr class="no-results">
-                <td colspan="9">
-                    <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-                </td>
-            </tr>`;
+                <tr class="no-results">
+                    <td colspan="9">
+                        <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                    </td>
+                </tr>`;
                 $("#masktrack").LoadingOverlay("hide");
                 $("#trackdataContainer").html(html);
                 return;
@@ -349,12 +350,19 @@ $(function () {
                     6: translator["Void"],
                     7: translator["Refund"],
                 };
+
+                const states = {
+                    1: "Settled",
+                    2: "Unsettled",
+                    4: "Cancelled",
+                    7: translator["Refund"]
+                };
                 row.innerHTML = `
                 <td>${item.draw_number || "N/A"}</td>     
                 <td>${item.draw_period || "N/A"}</td> 
                 <td>${item.multiplier || "N/A"}</td>       
                 <td>${item.bet_amount || "N/A"}</td> 
-                <td>${item.trackrule || "N/A"}</td>
+                <td>${states[item.state]|| "N/A"}</td>
                 <td>${betstatus[item.bet_status] || "N/A"}</td>    
             `;
                 // Append the row to the table body

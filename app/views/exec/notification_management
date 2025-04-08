@@ -1,0 +1,14 @@
+<?php
+$flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+
+if ($flag == "viewnotification") {
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $result = AnnouncementModel::FetchNotification($page, $limit) ?? [];
+
+    echo json_encode([
+        'messages' => $result['data'],  // Correct key
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
+?>

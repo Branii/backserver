@@ -35,7 +35,7 @@ $(function () {
   };
 
   let currentPage = 1;
-  let pageLimit = 5;
+  let pageLimit = 20;
 
   async function fetchUserlinks(page, pageLimit) {
       try {

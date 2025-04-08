@@ -11,8 +11,6 @@ class BusinessFlowModel extends MEDOOHelper
          ['offset' => $startpoint, 'limit' => $limit]
       );
       $totalRecords = parent::count('transaction');
-      // $totalCount = parent::query( "SELECT COUNT(trans_id) AS total FROM transaction")[0];
-      // $totalRecords =$totalCount['total'];
       $trasationIds = array_column($data, 'order_id');
       return ['data' => $data, 'total' => $totalRecords, 'transactionIds' => $trasationIds];
    }
@@ -48,8 +46,6 @@ class BusinessFlowModel extends MEDOOHelper
       }
 
       $subQuery .= "ORDER BY transaction.trans_id DESC";
-
-      // Return the final subquery
       return $subQuery;
    }
 
@@ -115,17 +111,7 @@ class BusinessFlowModel extends MEDOOHelper
             ['key' => $key]
       );
       return $data;
-      // $data = parent::query(
-      //    "SELECT uid FROM users_test WHERE 
-      //       uid = :uid 
-      //       OR email = :email 
-      //       OR username = :username 
-      //       OR contact = :contact
-      //       OR nickname = :nickname",
-
-      //    ['uid' => $key, 'email' => $key, 'username' => $key, 'contact' => $key, 'nickname' => $key]
-      // );
-      // return $data;
+      
    }
    public static function getUserIdByMixedValued(string $mixedValue)
    {
@@ -295,7 +281,6 @@ class BusinessFlowModel extends MEDOOHelper
       // $dataStmt->execute();
       $dataStmt->execute($subquery['params']);
 
-      // Return the response as a JSON
       return [
          'data' => $dataStmt->fetchAll(PDO::FETCH_ASSOC),
          'total' => $totalRecords,
@@ -401,7 +386,6 @@ class BusinessFlowModel extends MEDOOHelper
       $totalRecords = parent::count('trackbet');
       return ['data' => $data, 'total' => $totalRecords];
    }
-
 
    //filtertrack
    public static function FilterSubQuery($username, $trackstatus, $tracklotery,$trackcode, $enddate, $startdate)

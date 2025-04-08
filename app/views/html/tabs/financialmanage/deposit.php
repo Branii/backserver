@@ -91,7 +91,7 @@
     .queryholderdeposit {
         width: 30%;
         margin-right: 5px;
-        background-color: #FFF;
+        background-color: #fff;
     }
 
     /* .queryholderlinks {
@@ -137,7 +137,6 @@
     .no-resultslist img {
         position: relative;
         top: 100px;
-
     }
 
     /* Custom Scrollbar for Webkit Browsers */
@@ -178,18 +177,18 @@
     }
 
     .tbl-depositheader {
-    position: sticky;
-    top: 0;
-  }
+        position: sticky;
+        top: 0;
+    }
 
-  .sticky-depositheader {
-    position: relative;
-    bottom: 1px;
-    background-color: red;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-  }
+    .sticky-depositheader {
+        position: relative;
+        bottom: 1px;
+        background-color: red;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    }
 
-  .DepositDropdown {
+    .DepositDropdown {
         width: 19%;
         position: absolute;
         background-color: #fff;
@@ -228,11 +227,9 @@
         background: #aaa;
         /* Darker handle color on hover */
     }
-
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
-
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Deposit Record']; ?></h4>
     </div>
@@ -240,14 +237,14 @@
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                <input type="text" id="Depositinput" class="form-control queryholderdeposit userdeposit" placeholder="Search usernames" />
+                <input type="text" id="Depositinput" class="form-control queryholderdeposit userdeposit" placeholder="<?= $translator['Search usernames']; ?>" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
                 <select class="form-control DepositDropdown" size="5" style="display: none;" id="userfinaceDepo">
               
                 </select>
-                <input type="text" class="form-control queryholderdeposit depositids" id="nametextss" aria-describedby="name" placeholder="Enter Deposit ID" />
+                <input type="text" class="form-control queryholderdeposit depositids" id="nametextss" aria-describedby="name" placeholder="<?= $translator['Enter Deposit ID']; ?>" />
 
-                <select name="betsate" class="form-control form-select queryholderdeposit depositchanel"  data-bs-placeholder="Select Type">
+                <select name="betsate" class="form-control form-select queryholderdeposit depositchanel" data-bs-placeholder="Select Type">
                     <option value="">-<?= $translator['Deposit Channel']; ?>-</option>
                     <option value="3"><?= $translator['Momo']; ?></option>
                     <option value="5"><?= $translator['Crypto']; ?></option>
@@ -255,19 +252,17 @@
                     <option value="1"><?= $translator['Manual Deposit']; ?></option>
                 </select>
 
-                <select name="betsate" class="form-control form-select queryholderdeposit depositstatus"  data-bs-placeholder="Select Type">
+                <select name="betsate" class="form-control form-select queryholderdeposit depositstatus" data-bs-placeholder="Select Type">
                     <option value="">-<?= $translator['Status']; ?>-</option>
                     <option value="pending"><?= $translator['Pending']; ?></option>
                     <option value="success"><?= $translator['Success']; ?></option>
                     <option value="failed"><?= $translator['Failed']; ?></option>
-                    
                 </select>
 
                 <input name="startdate" type="date" class="form-control queryholderdeposit startdepo" aria-describedby="name" placeholder="Name" />
 
                 <input name="enddate" type="date" class="form-control queryholderdeposit enddepo" aria-describedby="name" placeholder="Name" />
             </div>
-            
         </span>
         <span class="toplist-center" aria-label=" navigation example">
             <!--enter is free-->
@@ -290,11 +285,10 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperdeposit" id="maskDeposit" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperdeposit" id="maskDeposit" style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4 tbl-depositheader">
-                    <tr class ="depositheaderrow">
-
+                    <tr class="depositheaderrow">
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit ID']; ?></h6>
                         </th>
@@ -304,19 +298,19 @@
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Level']; ?></h6>
                         </th>
-						<th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit Channel']; ?></h6>
                         </th>
-						<th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit Amount']; ?></h6>
                         </th>
-						<th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Fee']; ?></h6>
                         </th>
-						<th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Actual Amount Received']; ?></h6>
                         </th>
-						<th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit Time']; ?></h6>
                         </th>
                         <th>
@@ -339,29 +333,26 @@
                     </tr>
                 </thead>
                 <tbody id="DepositContainer">
-
                     <tr class="no-resultslist">
                         <td colspan="9">
                             <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
                         </td>
                     </tr>
-
                 </tbody>
             </table>
         </div>
     </div>
     <div class="px-4 py-3 border-top pagerlist">
         <span class="toplist-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example"
-                style="border:solid 1px #eee;color:#bbb;background-color:#fff">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
                 <!-- <button type="button" class="btn bg-white-subtle playerdeposit" value="startd">
                     <i class='bx bx-chevrons-left' style="font-size:20px"></i>
                 </button> -->
                 <button type="button" class="btn bg-white-subtle playerdeposit" value="leftd">
-                    <i class='bx bx-chevron-left' style="font-size:20px"></i>
+                    <i class="bx bx-chevron-left" style="font-size: 20px;"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle playerdeposit" value="rightd">
-                    <i class='bx bx-chevron-right' style="font-size:20px"></i>
+                    <i class="bx bx-chevron-right" style="font-size: 20px;"></i>
                 </button>
                 <!-- <button type="button" class="btn bg-white-subtle playerdeposit" value="endd">
                     <i class='bx bx-chevrons-right' style="font-size:20px"></i>
@@ -369,9 +360,7 @@
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
-
-            <span id="paging_infodeposit" style="color:#aaa">---</span>
-
+            <span id="paging_infodeposit" style="color: #aaa;">---</span>
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowsdeposit" style="font-size: 12px;">
@@ -381,71 +370,8 @@
                 <option value="500">500</option>
             </select>
             <span class="toplist-right" id="paginationdeposits" aria-label="Page navigation example">
-            <!--Dynamic pagination-->
-           </span>
-           
+                <!--Dynamic pagination-->
+            </span>
         </span>
-      
-
-    </div>
-
-</div>
-
-<div class="modal fade" id="danger-deposits" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content modal-filled " style="background-color:#F9F9F9">
-            <div class="modal-body p-4">
-                <div class="text-center text-danger">
-                    <i class="ti ti-hexagon-letter-x fs-7"></i>
-                    <h4 class="mt-2">Oh snap!</h4>
-                    <p class="mt-3" style="color:#aaa">
-                        All fields are required!
-                        Select one or more data fields to filter.
-                    </p>
-                    <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color:#ddd">
-                        Okay
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="addContactModavo" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-flex align-items-center">
-                <div>  <h5><?= $translator['deposit']; ?></h5></div>
-                <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' ></i></div>
-            </div>
-            <div class="modal-body">
-                <div class="add-contact-box">
-                    <div class="add-contact-content">
-                        <form id="add[ContactModalTitle">
-                             
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mb-3 contact-location">
-                                        <input type="text" id="c--deposit" class="form-control" placeholder="Update all deposit" />
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="d-flex gap-6 m-0">
-                    <!-- <button id="btn-add" class="btn btn-light">Add</button> -->
-                    <button id="btn-setalldeposit[" class="btn btn-light" data-bs-dismiss="modal">Save</button>
-                    <button class="btn bg-danger-subtle text-danger" data-bs-dismiss="modal"> Discard
-                    </button>
-                </div>
-
-            </div>
-        </div>
     </div>
 </div>

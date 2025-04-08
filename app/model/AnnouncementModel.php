@@ -179,4 +179,31 @@ class AnnouncementModel extends MEDOOHelper
         $data = parent::query($sql, ['title' => $msgtilte, 'content' => $msgcontent, 'mgid' => $mgid]);
         return $data ? "Message could not be updated. Please try again." : "Message updated successfully.";
     }
+
+
+    ///Notification data
+
+    
+
+    public static function FetchNotification($page, $limit): array
+    {
+        $startpoint = $page * $limit - $limit;
+    
+        $query = "
+            SELECT nu.msg_id, nu.username, n.title, n.content, n.created_at
+            FROM notice_users AS nu
+            JOIN notices AS n ON nu.msg_id = n.msg_id
+            ORDER BY nu.msg_id DESC
+            LIMIT :offset, :limit
+            
+        ";
+    
+        $data = parent::query($query, ['offset' => $startpoint, 'limit' => $limit]);
+        $totalRecords = parent::count('notice_users');
+    
+        return ['data' => $data, 'total' => $totalRecords];
+    }
+    
+
+
 }
