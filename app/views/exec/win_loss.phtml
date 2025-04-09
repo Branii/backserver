@@ -39,25 +39,11 @@ if ($flag == "users-win-loss") {
         return true;
     }
 
-
-//     echo $user_id;
-//     $subs = DataReportModel::fetchFullHierarchyV2($user_id);
-//    echo json_encode($subs);
-//     return;
     $user_res = DataReportModel::filterWinLossRecordsForUser($user_id,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date]);
     echo json_encode($user_res);
 
     return ;      
-    // $user = $user_res["data"];
-    // $bet_tables = $lottery_id == "all" ?  BusinessFlowModel::getAllGameIds() : BusinessFlowModel::getAllGameIdsWithCondition(['game_type' => $lottery_id]);
-    // if (empty($user)) {
-    //     echo json_encode([]);
-    // } else {
-        
-    //     echo json_encode(computeUserAndSubsStats([$user], $bet_tables, ["lottery_id" => $lottery_id, 'datecreated' => $start_date, 'enddate' => $end_date]));
-    // }
-    // return;
-    // if (!empty($lottery_name)) $results = (new DataReportModel())->FiltertLotteryNames();
+   
 } else if ($flag === "get-top-agents") {
   
     // get the filter parameters
@@ -90,41 +76,7 @@ if ($flag == "users-win-loss") {
     echo json_encode(['status' => "success",'data' => $results]);
 
     return;
-    // $lottery_id = $this->viewData['lottery_id'];
-    // $start_date = $this->viewData['start_date'];
-    // $end_date   = $this->viewData['end_date'];
-    // $page       = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1;
-    // $limit      = 10;
-    // $results =   $userData   = ["lottery_id" => $lottery_id, 'datecreated' => $start_date, 'enddate' => $end_date];
-
-
-
-    
-    // $user_res = DataReportModel::filterWinLossRecordsForUser($user_id,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date]);
-
-    // echo json_encode($user_res);
-
-    // $filter_res = DataReportModel::filter_only_top_agents($userData, intval($page));
-
-    // $bet_tables = $lottery_id == "all" ?  BusinessFlowModel::getAllGameIds() : BusinessFlowModel::getAllGameIdsWithCondition(['game_type' => $lottery_id]);
-
-    // if (empty($filter_res)) {
-    //     $results = [];
-    // } else {
-    //     $results = [];
-    //     foreach ($filter_res  as $data) {
-
-    //         $summed_results = [];
-
-    //         $total_tickets_info     = DataReportModel::filterGetBetTicketsNum($data->uid, $bet_tables, $userData);
-    //         $total_valid_amount     = DataReportModel::filter_total_valid_amount($data->uid, $bet_tables, $userData);
-    //         $num_bettors            = DataReportModel::num_bettors($data->uid, $bet_tables, $userData);
-    //         $view_btn               = $data->account_type == 1 || ($total_tickets_info['num_subs'] == 0) ? "" : "<button class='btn tag' data-bs-target='#' data-bs-toggle='' id='get-subs-btn'>Subs</button>";
-    //         $view_btn               = $data->account_type == 1 ? "" : "<i class='bx bxs-user-account' style='font-size:20px'></i>";
-    //         $relationship           =  $data->account_type == 2 ? "<button class='btn tag'> Top Agent </button>" : "<button class='btn tag user-rel' data-bs-target='#user-details-modal' data-bs-toggle='modal'> " .  (trim($data->agent_name) === "*****" ? "" : ($data->agent_sub_count <= 1 ? "{$data->agent_name}>$data->username" : "{$data->agent_name}>$data->username...")) . " </button>";
-    //         $results[] = ['uid' => $data->uid, 'account_type' => $data->account_type, 'username' => $data->username, 'rel' => $relationship, 'num_bettors' => $num_bettors, 'num_bet_tickets' => $total_tickets_info['num_bet_tickets'], 'user_rebate' => $data->rebate, 'total_bet_amount' => $total_tickets_info['total_bet_amount'], 'total_rebate_amount' => $total_tickets_info['total_rebate_amount'], 'total_valid_amount' => $total_valid_amount, 'total_win_amount' =>  $total_tickets_info['total_win_amount'], 'win_loss' => ($total_tickets_info['total_rebate_amount'] + $total_tickets_info['total_win_amount']) - $total_valid_amount, 'view_btn' => $view_btn, 'num_top_agents' => $total_tickets_info['num_top_agents']];
-    //     }
-    // }
+   
 } else if ($flag == "get-user-details") {
 
     $user_id    = $this->viewData['user_id'];
@@ -144,24 +96,6 @@ if ($flag == "users-win-loss") {
 
 
 
-    // $user_id = isset($this->viewData['user_id']) ? (int)$this->viewData['user_id'] : "";
-
-    // $lottery_id = $this->viewData['lottery_id'];
-    // $start_date = $this->viewData['start_date'];
-    // $end_date   = $this->viewData['end_date'];
-    // $page       = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1;
-    // $limit      = 10;
-    // $results =   $userData   = ["user_id" => $user_id, "lottery_id" => $lottery_id, 'datecreated' => $start_date, 'enddate' => $end_date];
-
-
-    // $user = DataReportModel::fetchUser($user_id);
-    // $bet_tables =  $lottery_id == "all" ?  BusinessFlowModel::getAllGameIds() : BusinessFlowModel::getAllGameIdsWithCondition(['game_type' => $lottery_id]);
-
-    // if (empty($user)) {
-    //     //$results = [];
-    // } else {
-    //     $results   = DataReportModel::getBetTicketsNumForUser($user, $bet_tables, $userData);
-    // }
 } else if ($flag == "get-active-subs") {
 
     
@@ -195,46 +129,6 @@ if ($flag == "users-win-loss") {
  
      return;
 
-    // $lottery_id     = $this->viewData['lottery'];
-    // $start_date     = $this->viewData['start_date'];
-    // $end_date       = $this->viewData['end_date'];
-    // $user_id        = isset($this->viewData['user_id'])    ? max((int)$this->viewData['user_id'], 1) : 1;
-    // $page           = isset($this->viewData['page'])       ? max((int)$this->viewData['page'], 1) : 1;
-    // $limit          = 10;
-    // $userData       = ["user_id" => $user_id, "lottery_id" => $lottery_id, 'datecreated' => $start_date, 'enddate' => $end_date, 'page' => $page, 'limit' => $limit];
-
-    // $results = $userData;
-
-    // if (isset($_POST["get_rel"])) {
-        // $results = DataReportModel::fetch_user_rel($user_id);
-    //     echo json_encode($results);
-    //     return;
-    // }
-    // $all_users = DataReportModel::allSubs($user_id);
-
-    // if (empty($all_users)) {
-    //     echo json_encode([]);
-    //     return;
-    // }
-
-    // $num_subs =  $all_users[0]->num_subs;
-
-    // $user  = DataReportModel::fetchUser($user_id);
-
-    // $bet_tables = $lottery_id == "all" ?  BusinessFlowModel::getAllGameIds() : BusinessFlowModel::getAllGameIdsWithCondition(['game_type' => $lottery_id]);
-    // if (empty($all_users) && empty($user)) {
-    //     echo json_encode([]);
-    // } else {
-
-    //     $users = [];
-
-        // foreach ($all_users as $user) {
-        // $users = DataReportModel::filter_fetch_users_for_win_loss_report($all_users, $page);
-
-        // echo json_encode(['response' => computeUserAndSubsStats($users, $bet_tables, $userData), 'numSubs' => $num_subs]);
-        // $total_tickets_info   = DataReport::getBetTicketsNumForTeam($all_users, $bet_tables,$userData);
-        // echo json_encode($total_tickets_info);
-    // }
 }else if($flag === "get-all-subs"){
 
       // get the filter parameters

@@ -13,10 +13,10 @@ $(function () {
       let html = "";
 
       data.forEach((item) => {
-          const username = item.username == "*****" ? item.email : item.username || item.contact;
+        let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
           html += `
                   <tr>
-                      <td>${item.agent_name}</td>
+                      <td>${username}</td>
                       <td class='link-offset-1 text-decoration-underline'>${item.register_link}</td>
                       <td>${item.rebate}</td>
                       <td>${item.register_count + " / " + item.quota_used}</td>
@@ -41,8 +41,6 @@ $(function () {
       try {
           const response = await fetch(`../admin/userlinkdata/${page}/${pageLimit}`);
           const data = await response.json();
-          // console.log(response);
-          // return
           $("#maskreferal").LoadingOverlay("hide");
           renderuserlinks(data.userlinks);
           renderfinacesPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlinks(newPage, pageLimit));

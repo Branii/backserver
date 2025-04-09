@@ -210,6 +210,7 @@ class FinancialManageModel extends MEDOOHelper
             'payment_reference' => $depositid,
             'provider' => 'MTN',
             'status' => 'success',
+            'charges' => '0',
             'approved_by' => $username,
             'desposit_channel' => '1',
         ];

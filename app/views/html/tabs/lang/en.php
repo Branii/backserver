@@ -737,6 +737,10 @@ return [
 'Active' =>'Active',
 
 'User Notification' =>'User Notification',
+'Message Status' =>'Message Status',
+'Read' =>'Read',
+'Unread' =>'Unread',
+'Message Duration' =>'Message Duration',
 
 //(Player Inbox Messages)
 'Player Inbox Messages' => 'Player Inbox Messages',

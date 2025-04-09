@@ -246,9 +246,26 @@ try {
 //     'count' => $total // Total count of records
 // ]);
 
+// Set the timezone for the server (Berlin time)
+$berlinTimeZone = new DateTimeZone('Europe/Berlin');
+$serverDate = new DateTime('now', $berlinTimeZone);  // Get the current server time
+$serverDateFormatted = $serverDate->format('Y-m-d / H:i:s');  // Format it
+
+// Set the timezone for the local machine (e.g., UTC or any timezone)
+$localTimeZone = new DateTimeZone('UTC');  // Adjust this to your local timezone
+$localDate = new DateTime('now', $localTimeZone);  // Get the current local time
+$localDateFormatted = $localDate->format('Y-m-d / H:i:s');  // Format it
+
+// Output both times
+echo "Server Time (Berlin): " . $serverDateFormatted . "<br>";
+echo "Local Time (UTC): " . $localDateFormatted . "<br>";
+
+// Calculate the difference between the two
+$interval = $serverDate->diff($localDate);
+echo "Time difference: " . $interval->format('%d days, %h hours, %i minutes') . "<br>";
  
 ?>
-<!-- <input type="range" id="rangeSlider" min="0" max="100" value="100">
+<input type="range" id="rangeSlider" min="0" max="100" value="100">
 <span id="rangeValue">100%</span>
 
 <input type="text" id="valueList" class="form-control" readonly>
@@ -273,8 +290,24 @@ try {
             $("#rangeValue").text(percentage + "%");
             updateValues(percentage);
         });
+
+
+    static String getTimeDifferenceFromNow(DateTime dateTime) {
+    Duration difference = DateTime.now().difference(dateTime);
+    if (difference.inSeconds < 5) {
+      return "Just now";
+    } else if (difference.inMinutes < 1) {
+      return "${difference.inSeconds}s ago";
+    } else if (difference.inHours < 1) {
+      return "${difference.inMinutes}m ago";
+    } else if (difference.inHours < 24) {
+      return "${difference.inHours}h ago";
+    } else {
+      return "${difference.inDays}d ago";
+    }
+  }
     });
-</script> -->
+</script>
 
 <!-- 
 <input type='text' class='form-control oddsone' value='[10, 20, 30]' readonly>
@@ -304,72 +337,4 @@ $(document).ready(function() {
     });
 });
 </script> -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Styled Table</title>
-</head>
-<body class="p-6 bg-gray-100">
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-300">
-            <thead>
-                <tr class="bg-gray-200 text-gray-700">
-                    <th class="p-3 border">Game Category</th>
-                    <th class="p-3 border">Game Group</th>
-                    <th class="p-3 border">Game</th>
-                    <th class="p-3 border">Prize Level</th>
-                    <th class="p-3 border">Standard Odds</th>
-                    <th class="p-3 border">Bonus Range</th>
-                    <th class="p-3 border">Game Toggle</th>
-                    <th class="p-3 border">Bet Toggle</th>
-                    <th class="p-3 border">Bet Percentage</th>
-                    <th class="p-3 border">Max Bet</th>
-                    <th class="p-3 border">Bet Value</th>
-                    <th class="p-3 border">Series Multiplier</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="text-center border">
-                    <td class="p-2 border">Three Star</td>
-                    <td class="p-2 border">Direct Selection</td>
-                    <td class="p-2 border">
-                        <input type="radio" name="game1" class="w-5 h-5">
-                    </td>
-                    <td class="p-2 border">1000</td>
-                    <td class="p-2 border">
-                        <input type="range" class="w-20" value="100">
-                        <span>100%</span>
-                    </td>
-                    <td class="p-2 border">1000</td>
-                    <td class="p-2 border">
-                        <label class="inline-flex items-center cursor-pointer">
-                            <input type="checkbox" class="sr-only peer" checked>
-                            <div class="w-10 h-5 bg-gray-300 peer-checked:bg-green-500 rounded-full"></div>
-                        </label>
-                    </td>
-                    <td class="p-2 border">
-                        <label class="inline-flex items-center cursor-pointer">
-                            <input type="checkbox" class="sr-only peer" checked>
-                            <div class="w-10 h-5 bg-gray-300 peer-checked:bg-green-500 rounded-full"></div>
-                        </label>
-                    </td>
-                    <td class="p-2 border">
-                        <input type="range" class="w-20" value="80"> <span>80%</span>
-                    </td>
-                    <td class="p-2 border">1000</td>
-                    <td class="p-2 border">800</td>
-                    <td class="p-2 border">
-                        <button class="px-3 py-1 bg-gray-300 rounded">Big/Small</button>
-                        <button class="px-3 py-1 bg-orange-400 text-white rounded">Pole</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
-
 

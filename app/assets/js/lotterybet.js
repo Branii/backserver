@@ -83,7 +83,6 @@ $(function () {
                       <td><i class='bx bxs-circle' style='color:${status[item.bet_status].color};font-size:8px;margin-right:5px;'></i>${status[item.bet_status].title}</td>
                       <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${states[item.state]}</span></td>
                       <td><i value='${item.bet_code}_${item.gt_id}' class='bx bx-info-circle viewbets' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
-                     
                   </tr>
               `;
       });
@@ -156,23 +155,20 @@ $(function () {
   let pageLimit = 20;
 
   // Fetch lottery bet data
-  async function fetchLotteryBet(currentPagebet) {
+  async function fetchLotteryBet(currentPagebet,pageLimit) {
       try {
           const response = await fetch(`../admin/lotterydata/${currentPagebet}/${pageLimit}`);
           const data = await response.json();
-
           $("#maskbet").LoadingOverlay("hide");
-          const totalPages = data.totalPages;
           renderlottery(data.lotterybet);
-          renderbetPagination(totalPages, currentPagebet, (page) => fetchLotteryBet(page, pageLimit)); // Pass callback
-          document.getElementById("paging_infobet").innerHTML = `${translator["Page"]} ${currentPagebet} ${translator["Of"]} ${totalPages} ${translator["Page"]}`;
+          renderbetPagination(data.totalPages, currentPagebet, (currentPagebet) => fetchLotteryBet(currentPagebet, pageLimit)); // Pass callback
+          document.getElementById("paging_infobet").innerHTML = `${translator["Page"]} ${currentPagebet} ${translator["Of"]} ${data.totalPages} ${translator["Page"]}`;
       } catch (error) {
-          //   console.error("Error fetching data:", error);
+            console.error("Error fetching data:", error);
       }
   }
 
   fetchLotteryBet(currentPagebet, pageLimit);
-  // Render pagination dynamically
   function renderbetPagination(totalPages, currentPagebet, callback) {
       let pagLink = `<ul class='pagination justify-content-end'>`;
 
@@ -225,7 +221,6 @@ $(function () {
           });
       });
   }
-
   // Filter and fetch lottery bet data
   async function filterbetdatas(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit) {
       $.post(`../admin/filterbetdata/${uidd}/${betOrderID}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`).done(function (response) {
@@ -251,10 +246,9 @@ $(function () {
               }
               $("#maskbet").LoadingOverlay("hide");
               renderlottery(data.filterbet);
-              renderbetPagination(data.totalPages, currentPagebet, (page) => {filterbetdatas(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, page, pageLimit);
-              }); // Pass callback
+              renderbetPagination(data.totalPages,currentPagebet, (page) => {filterbetdatas(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, page, pageLimit);}); // Pass callback
 
-              document.getElementById("paging_infobet").innerHTML =`${translator["Page"]} ${currentPagebet} ${translator["Of"]} ${totalPages} ${translator["Page"]}`
+              document.getElementById("paging_infobet").innerHTML =`${translator["Page"]} ${currentPagebet} ${translator["Of"]} ${data.totalPages} ${translator["Page"]}`
           } catch (error) {
               console.error("Error parsing JSON response:", error);
               $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
@@ -333,14 +327,11 @@ $(function () {
           if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
           }
-
           const data = await response.json(); // Parse JSON response
-          // console.log(data);
           let html = `<option value="">${translator['Lottery Type']}</option>`;
           data.forEach((lottery) => {
               html += `<option value="${lottery.gt_id}">${lottery.name}</option>`;
           });
-
           $(".selectlottery").html(html);
       } catch (error) {
           console.error("Error fetching data:", error);
@@ -426,7 +417,6 @@ $(function () {
           }
       });
   });
-
   // Function to fetch and display users
   function fetchbetUser(query) {
       $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {

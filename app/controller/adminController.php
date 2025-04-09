@@ -624,13 +624,15 @@ class adminController extends Controller {
     
 
    //annoucement
-    function annoucement($messagetype,$messagetitle,$usernames,$description,$sendby){
+    function createannoucement($messagetype,$messagetitle,$usernames,$description,$startdate,$enddate,$sendby){
         $this->view('exec/annoucement_management',[
             'flag' => 'message',
             'messagetype' => $messagetype,
             'messagetitle' =>$messagetitle,
             'usernames' =>$usernames,
             'description' => $description,
+            'startdate' =>$startdate,
+            'enddate' =>$enddate,
             'sendby' =>$sendby
         
         ]);
@@ -661,7 +663,6 @@ class adminController extends Controller {
             'flag' => 'filtermessage'
         ]);
         $this->view->render();
-
     }
 
     public function editannoucement($msgid)
@@ -671,7 +672,6 @@ class adminController extends Controller {
                 'flag' => 'editannoucement'
             ]);
             $this->view->render();
-
     }
 
     public function updateannoucement($msgtitle,$msgcontent,$msgid)
@@ -683,12 +683,9 @@ class adminController extends Controller {
                 'flag' => 'updateannoucement'
             ]);
             $this->view->render();
-
     }
     
     
-    
-
    
 //for user notification
 public function fetchusernotification($pageNumber, $limit)
@@ -700,6 +697,22 @@ public function fetchusernotification($pageNumber, $limit)
     ]);
     $this->view->render();
 }
+
+
+public function filteruserNotifys($username,$messagestype,$startdepo,$enddepo,$page,$pageLimit)
+{
+        $this->view('exec/annoucement_management', [
+        'username' => $username,
+        'messagestype' => $messagestype,
+        'startdate' => $startdepo,
+        'enddate' => $enddepo,
+        'page' => $page,
+        'limit' => $pageLimit,
+        'flag' => 'filterusernotfys'
+    ]);
+    $this->view->render();
+}
+
 
 
     

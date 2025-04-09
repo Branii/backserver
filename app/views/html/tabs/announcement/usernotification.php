@@ -140,58 +140,34 @@
 }
 
 /* Custom Scrollbar for Webkit Browsers */
-.table-wrapperfinances::-webkit-scrollbar {
+.table-wrapperusernoti::-webkit-scrollbar {
     width: 5px;
     /* Slimmer scrollbar width */
     height: 5px;
     /* Slimmer scrollbar height for horizontal scrolling */
 }
 
-.table-wrapperfinances::-webkit-scrollbar-track {
+.table-wrapperusernoti::-webkit-scrollbar-track {
     background: #f1f1f1;
     /* Lighter background for track */
     border-radius: 5px;
 }
 
-.table-wrapperfinances::-webkit-scrollbar-thumb {
+.table-wrapperusernoti::-webkit-scrollbar-thumb {
     background-color: #ccc;
     /* Blue color for thumb */
     border-radius: 10px;
     cursor: pointer;
 }
 
-.table-wrapperfinances::-webkit-scrollbar-thumb:hover {
+.table-wrapperusernoti::-webkit-scrollbar-thumb:hover {
     background-color: #aaa;
     /* Darker blue on hover */
 }
 
-.editable {
-    /* cursor: pointer; */
-    background-color: #f9f9f9;
-}
 
-.editable:focus {
-    outline: 1px solid #ccc;
-    background-color: #fff;
-    /* Optional: Make it stand out */
-}
 
-.financeDropdowns {
-    /* width: 23%; */
-    position: absolute;
-    background-color: #fff;
-    color: #aaa;
-    max-height: 300px;
-    overflow-y: scroll;
-    border-radius: 5px;
-    padding: 10px;
-    top: 90%;
-    z-index: 9999;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    display: none;
-}
-
-.financeDropdown {
+.notfyDropdown {
     width: 24%;
     position: absolute;
     background-color: #fff;
@@ -206,47 +182,46 @@
     display: none;
 }
 
-.queryholderlistt {
-    width: 29%;
-    margin-right: 5px;
+.queryholdernotfys {
+    width: 25%;
+    margin-right: 10px;
     background-color: #fff;
 }
 
 /* Style for the scrollbar */
-.financeDropdown::-webkit-scrollbar {
+.notfyDropdown::-webkit-scrollbar {
     width: 3px;
     /* Width of the scrollbar */
 }
 
-.financeDropdown::-webkit-scrollbar-track {
+.notfyDropdown::-webkit-scrollbar-track {
     background: #f0f0f0;
     /* Background of the scrollbar track */
     border-radius: 5px;
     /* Rounded corners */
 }
 
-.financeDropdown::-webkit-scrollbar-thumb {
+.notfyDropdown::-webkit-scrollbar-thumb {
     background: #ccc;
     /* Color of the scrollbar handle */
     border-radius: 5px;
     /* Rounded corners */
 }
 
-.financeDropdown::-webkit-scrollbar-thumb:hover {
+.notfyDropdown::-webkit-scrollbar-thumb:hover {
     background: #aaa;
     /* Darker handle color on hover */
 }
 
 
-.tbl-financeheads {
+.tbl-usernotiheads {
     position: sticky;
     top: 0;
 }
 
-.sticky-financeheads {
+.sticky-usernotiheads {
     position: relative;
     bottom: 1px;
-    background-color: red;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 }
 
@@ -268,32 +243,26 @@
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                <input type="text" id="financeDropdownl" class="form-control queryholderlistt usernames"
+             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px; width: auto;">
+                <input type="text" id="usernotifys" class="form-control queryholdernotfys usernames"
                     placeholder="<?= $translator['Search usernames']; ?>" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
-                <select class="form-control financeDropdown" size="5" style="display: none;" id="userfinaceDropdownsl">
+                <select class="form-control notfyDropdown" size="5" style="display: none;" id="usernotfy">
                     <!-- Options will be populated dynamically -->
                 </select>
 
-                <select name="betsate" class="form-control form-select queryholderlistt messagestype"
+                <select name="betsate" class="form-control form-select queryholdernotfys messagesread"
                     data-bs-placeholder="Select Type">
-                    <option value="">-<?= $translator['Message Type']; ?>-</option>
-                    <option value="general"><?= $translator['Annoucememnt']; ?></option>
-                    <option value="personal"><?= $translator['Notification']; ?></option>
-                 
+                    <option value="">-<?= $translator['Message Status']; ?>-</option>
+                    <option value="read"><?= $translator['Read']; ?></option>
+                    <option value="unread"><?= $translator['Unread']; ?></option>
                 </select>
 
-                <input name="startdate" type="date" class="form-control queryholderlistt startfmessage"
-                    placeholder="Name" />
+                <input name="startdate" type="date" class="form-control queryholdernotfys startnotfys"placeholder="Name" />
 
-                <input name="enddate" type="date" class="form-control queryholderlistt endmessage"
-                    placeholder="Name" />
-            </div>
-            <!-- <div class="input-group mb-3">
-				<span class="input-group-text" id="basic-addon12" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
-				<input type="text" class="form-control queryholder userrebate" placeholder="Enter Rebate (%)" aria-label="Username" aria-describedby="basic-addon1" />
-			</div> -->
+                <input name="enddate" type="date" class="form-control queryholdernotfys endnotfys" placeholder="Name" />
+              </div>
+           
         </span>
         <span class="toplist-center" aria-label=" navigation example">
             <!--enter is free-->
@@ -301,20 +270,14 @@
         <span class="topplist-right" id="paginations" aria-label="Page navigation example">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-                <!-- <i ' ></i> -->
-                <button type="button" class="btn bg-white-subtle messagemodal" value="right" aria-label="Refresh"
-                    aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top"
-                    data-bs-title="Add Message">
-                    <i class="bx bx-plus" style="font-size: 20px;"></i>
-                </button>
-
-                <button type="button" class="btn bg-white-subtle player refreshmessage" value="right"
+            
+                <button type="button" class="btn bg-white-subtle player refresusernoti" value="right"
                     aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle executemessage" value="end" aria-label="Execute"
+                <button type="button" class="btn bg-white-subtle executenoti" value="end" aria-label="Execute"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                    <i class="bx bx-check-double loaderfinanccs" style="font-size: 20px;"></i>
+                    <i class="bx bx-check-double loadernotfys" style="font-size: 20px;"></i>
                 </button>
                 <!-- <button type="button" class="btn bg-white-subtle executedeposit" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                     <i class="bx bx-check-double loaderdeposit" style="font-size: 20px;"></i>
@@ -324,13 +287,13 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperfinances" id="maskfinances"
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperusernoti" id="maskusernoti"
             style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
-                <thead class="text-dark fs-4 tbl-financeheads">
-                    <tr class="financeheadrows">
-                    <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
+                <thead class="text-dark fs-4 tbl-usernotiheads">
+                    <tr class="usernotiheadrows">
+                        <th>
+                        <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Title']; ?></h6>
@@ -344,11 +307,10 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['DateTime']; ?></h6>
                         </th>
 
-                   
-                      
-                      
-                       
-                        
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
+                        </th>
+
                         <!-- <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
                         </th> -->
@@ -384,16 +346,16 @@
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
-            <span id="paging_infofmessage" style="color: #aaa;">---</span>
+            <span id="paging_infonoti" style="color: #aaa;">---</span>
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
-            <select class="left-element form-control numrowsnotfy" style="font-size: 12px;">
+            <select class="left-element form-control numrowsnotfys" style="font-size: 12px;">
                 <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
                 <option value="500">500</option>
             </select>
-            <span class="toplist-right" id="paginationmessage" aria-label="Page navigation example">
+            <span class="toplist-right" id="paginationnoti" aria-label="Page navigation example">
                 <!--Dynamic pagination-->
             </span>
 

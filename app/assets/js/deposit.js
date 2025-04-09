@@ -314,7 +314,7 @@ $(function () {
                         displayValues = 'no data found ...';
                         regnames = 'no data found ...';  // Show no data found
                     }
-                    optionsHtml += `<option class="optlpionlist" value="${user.uid}" data-username="${regnames}">${displayValues}</option>`;
+                    optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regnames}">${displayValues}</option>`;
                 });
     
                 $('.DepositDropdown').html(optionsHtml).show();
@@ -328,7 +328,6 @@ $(function () {
         });
     }
     
-
     function tableScrollDeposit() {
       const tableContainerDeposit= document.querySelector(".table-wrapperdeposit");
       const headerRowDeposit= document.querySelector(".depositheaderrow");

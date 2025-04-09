@@ -176,22 +176,22 @@
     /* Optional: Make it stand out */
 }
 
-.financeDropdowns {
-    /* width: 23%; */
+.financeDropdownu {
+    width: 100%;
     position: absolute;
     background-color: #fff;
     color: #aaa;
-    max-height: 300px;
+    /* max-height: 500px; */
     overflow-y: scroll;
     border-radius: 5px;
     padding: 10px;
     top: 90%;
-    z-index: 9999;
+    /* z-index: 9999; */
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     display: none;
 }
 
-.financeDropdown {
+.annoucementDropdown {
     width: 24%;
     position: absolute;
     background-color: #fff;
@@ -213,26 +213,26 @@
 }
 
 /* Style for the scrollbar */
-.financeDropdown::-webkit-scrollbar {
+.annoucementDropdown::-webkit-scrollbar {
     width: 3px;
     /* Width of the scrollbar */
 }
 
-.financeDropdown::-webkit-scrollbar-track {
+.annoucementDropdown::-webkit-scrollbar-track {
     background: #f0f0f0;
     /* Background of the scrollbar track */
     border-radius: 5px;
     /* Rounded corners */
 }
 
-.financeDropdown::-webkit-scrollbar-thumb {
+.annoucementDropdown::-webkit-scrollbar-thumb {
     background: #ccc;
     /* Color of the scrollbar handle */
     border-radius: 5px;
     /* Rounded corners */
 }
 
-.financeDropdown::-webkit-scrollbar-thumb:hover {
+.annoucementDropdown::-webkit-scrollbar-thumb:hover {
     background: #aaa;
     /* Darker handle color on hover */
 }
@@ -269,11 +269,12 @@
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                <input type="text" id="financeDropdownl" class="form-control queryholderlistt usernames"
+                <input type="text" id="financeDropdownnotify" class="form-control queryholderlistt usernames"
                     placeholder=" <?= $translator['Search usernames']; ?>" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
-                <select class="form-control financeDropdown" size="5" style="display: none;" id="userfinaceDropdownsl">
+                <select class="form-control annoucementDropdown" size="5" style="display: none;" id="userfinaceDropdownnotify">
                     <!-- Options will be populated dynamically -->
+                    
                 </select>
 
                 <select name="betsate" class="form-control form-select queryholderlistt messagestype"
@@ -340,6 +341,11 @@
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['DateTime']; ?></h6>
                         </th>
+
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Message Duration']; ?></h6>
+                        </th>
+
 
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Message Type']; ?></h6>
@@ -418,9 +424,7 @@
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div><?= $translator['Annoucement']; ?></div>
-                        <div><i class="bx bx-message-square-x tclose"
-                                style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
-                                aria-label="Close"></i></div>
+                        <div><i class="bx bx-message-square-x tclose"style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
                     </div>
                 </div>
 
@@ -431,9 +435,9 @@
                     <div class="form-floating mb-3">
                         <select name="deposit" class="form-select form-control borders border-infos messagetype">
                         <option value="general"><?= $translator['General Announcement (All Users)']; ?></option>
-                        <!-- <option value="users">VIP Users Only</option> -->
-                        <!-- <option value="new">Newly Registered Users Only</option> -->
+                        <option value="new_users">Newly Registered Users Only</option>
                         <option value="personal"><?= $translator['User-Specific Announcement']; ?></option>
+                        <option value="vipusers">VIP Users Only</option>
                         </select>
                         <label>
                             <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
@@ -442,9 +446,9 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" id="financeinputl" class="form-control" placeholder="<?= $translator['Search usernames']; ?>" />
+                        <input type="text" id="financeinputnot" class="form-control" placeholder="<?= $translator['Search usernames']; ?>" />
                         <input type="hidden" class="userIdFieldss" />
-                        <select name="usernames" class="form-control financeDropdowns" size="5" style="display: none;"
+                        <select name="usernames" class="form-control financeDropdownu" size="5" style="display: none;"
                             id="userfinaceDropdownl">
                             <!-- Options will be populated dynamically -->
                         </select>
@@ -455,19 +459,25 @@
                         </label>
                     </div>
 
-                    <!-- <div class="form-floating mb-3">
-                        <select name="deposit" class="form-select form-control borders border-infos depositt">
-                            <option value="1">All Users</option>
-                            <option value="2">VIP Users</option>
-                            <option value="3">New Users</option>
+                    <div class="input-group mb-3">
+                    <span class="input-group-text" id="" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bxs-calendar' style="font-size:18px;"></i></span>
+                    <input type="date" class="form-control notistartdate" placeholder="Search ..." id="combinedatess" aria-describedby="basic-addon1" />
+                    <input type="date" class="form-control notienddates" placeholder="Search ..." id="combinedates" aria-describedby="basic-addon1" />
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <select name="deposit" class="form-select form-control borders border-infos vipusers">
+                            <option value="1">VIP 1</option>
+                            <option value="2">VIP 2</option>
+                            <option value="3">VIP 3</option>
                         </select>
                         <label>
                             <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
                             <span class="border-start ps-3">Audience</span>
                         </label>
-                    </div> -->
+                      </div>
 
-                     <div class="col-md-12 mb-3">
+                         <div class="col-md-12 mb-3">
                             <div class="note-title">
                               <!-- <label class="form-label">Note Title</label> -->
                               <input type="text" id="note-has-title" class="form-control" minlength="25" placeholder="<?=$translator['Title']; ?>" />
@@ -478,8 +488,8 @@
                               <!-- <label class="form-label">Note Description</label> -->
                               <textarea id="description" class="form-control" minlength="60" placeholder="<?=$translator['Description']; ?>" rows="3"></textarea>
                             </div>
-                          </div>
-                    
+                      </div>
+                       <p></p>
                     <div class="form-floating mb-3">
                         <input name="agentname" type="text" class="form-control border sendby "
                             placeholder="Approved by" value="<?php echo $fullname['full_name']; ?>" readonly/>

@@ -94,20 +94,7 @@
         background-color: #fff;
     }
 
-    /* .queryholderlinks {
-        width: 33%;
-        position: absolute;
-        background-color: #fff;
-        color: #aaa;
-        max-height: 300px;
-        overflow-y: scroll;
-        border-radius: 5px;
-        padding: 10px;
-        top: 90%;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-        display: none;
-    } */
-
+   
     .optionlink {
         text-align: left;
         border-bottom: solid 1px #eee;
@@ -189,14 +176,14 @@
     }
 
     .DepositDropdown {
-        width: 19%;
+        width: 16%;
         position: absolute;
         background-color: #fff;
         color: #aaa;
         max-height: 300px;
         overflow-y: scroll;
         border-radius: 5px;
-        padding: 10px;
+        padding: 5px;
         top: 90%;
         z-index: 9999;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;

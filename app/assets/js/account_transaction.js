@@ -21,9 +21,7 @@ $(function () {
         return moneyStr;
     }
 
-    // const translator = JSON.parse(document.getElementsByClassName("translation-container").getAttribute("data-translations"));
-    // // console.log(translations)
-    const translatorScript = document.querySelector(".translations"); // Get the script tag
+    const translatorScript = document.querySelector(".translations"); 
     const translator = JSON.parse(translatorScript.textContent); 
     const AccountTransactions = (data) => {
         let html = "";
@@ -145,10 +143,10 @@ $(function () {
         try {
             const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
             const data = await response.json();
-
+              //console.log(data)
+             // return
             $("#mask").LoadingOverlay("hide");
             render(data.transaction);
-
             // Render pagination
             renderPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchTrasaction(newPage, pageLimit));
             document.getElementById("paging_info").innerHTML = `${translator["Page"]} ${page} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
@@ -198,8 +196,6 @@ $(function () {
             });
         });
     }
-
-  
 
     $(".playertrans").click(function () {
         let direction = $(this).val();
@@ -265,7 +261,8 @@ $(function () {
         try {
             const response = await fetch(`../admin/filtertransactions/${transusername}/${transactionId}/${ordertypetrans}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
             const data = await response.json();
-            ///console.log(response);
+            console.log(response);
+          //  return
 
             $(".loadertrans").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             if (data.transactions.length < 1) {
@@ -282,9 +279,9 @@ $(function () {
             $("#mask").LoadingOverlay("hide");
             render(data.transactions);
 
-            // Render pagination
+            // Render pagination"Page " + currentPage + " of " + data.totalPages + " pages"
             renderPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterTrasaction(transusername, transactionId, ordertypetrans, startdatrans, enddatetrans, newPage, pageLimit));
-            document.getElementById("paging_info").innerHTML = `${translator["Page"]} ${page} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
+            document.getElementById("paging_info").innerHTML = `${translator["Page"]} ${currentPage} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -462,7 +459,6 @@ $(function () {
     });
 
     //search the for username
-
     let debounceTimeout = null;
     let isPastings = false;
 
@@ -523,7 +519,6 @@ $(function () {
         //     $dropdown.hide();
         // });
     });
-
     // Function to fetch and display users
     function fetchbetUser(query) {
         let optionsHtml = "";
@@ -574,4 +569,5 @@ $(function () {
             $(self).val($(self).val().replace(/^\s+/, ""));
         }, 0);
     });
+
 });

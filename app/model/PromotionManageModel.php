@@ -10,9 +10,14 @@ class PromotionManageModel extends MEDOOHelper
     {
         $startpoint = ($page * $limit) - $limit;
         $data = parent::query(
-            "SELECT * FROM referral_link  ORDER BY refid  DESC LIMIT :offset, :limit",
+            "SELECT referral_link.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.username, 'N/A') AS username FROM referral_link   
+             LEFT JOIN users_test ON users_test.uid= referral_link.agent_id  ORDER BY refid DESC LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
-        );
+         );
+        // $data = parent::query(
+        //     "SELECT * FROM referral_link  ORDER BY refid  DESC LIMIT :offset, :limit",
+        //     ['offset' => $startpoint, 'limit' => $limit]
+        // );
 
         $totalRecords  = parent::count('referral_link');
         return ['data' => $data, 'total' => $totalRecords];
