@@ -69,7 +69,7 @@ $(() =>{
 
    });
 
-    $(document).on('click', '#lbp_search',function(){
+    $(document).on('click', '#lbp_search',async function()  {
 
       const lotteryType      = $('#allGameNamesLottery').val();
       let lotteryTextCaps    = $("#allGameNamesLottery option:selected").text();
@@ -90,6 +90,10 @@ $(() =>{
         url = `https://winsstarts.com/chairman_test/api/v1/limvo/fantangames`;
       }
 
+      // $($(this).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+      // let response = await fetch(url,{method : "GET"});
+      // response     = await response.json();
+
       $.ajax({ 
           url: url,
           type: "GET",
@@ -97,7 +101,6 @@ $(() =>{
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
           },
           success: function (response) {
-           
             if(response === "Game id not found!!"){
               showToast("Error", "Sorry the lottery selected is not yet ready.", "error");
               return;

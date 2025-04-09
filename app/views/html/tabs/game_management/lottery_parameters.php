@@ -616,7 +616,7 @@ input:checked + .lpd-slider:after {
             </table>
         </div>
 
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_twosides" style="height:530px;overflow-y:scroll;display:none;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_twosides" style="height:750px;overflow-y:scroll;display:none;">
             <table class="table text-nowrap mb-0 align-middle table-bordered" style="display:none;">
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">
@@ -657,7 +657,7 @@ input:checked + .lpd-slider:after {
             </table>
         </div>
 
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_boardgames" style="height:530px;overflow-y:scroll;display:none;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_boardgames" style="height:750px;overflow-y:scroll;display:none;">
             <table class="table text-nowrap mb-0 align-middle table-bordered" style="display:none;">
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">
@@ -698,7 +698,7 @@ input:checked + .lpd-slider:after {
             </table>
         </div>
 
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_fantan" style="height:530px;overflow-y:scroll;display:none;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_fantan" style="height:750px;overflow-y:scroll;display:none;">
             <table class="table text-nowrap mb-0 align-middle table-bordered" style="display:none;">
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">
