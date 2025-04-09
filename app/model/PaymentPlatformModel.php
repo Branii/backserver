@@ -95,7 +95,11 @@ class PaymentPlatformModel extends MedooOrm{
         $row_count = $stmt->rowCount();
         return ["status" => "success", "data" => $row_count,"id" => parent::openLink()->id()];
     }catch(Exception $e){
-        return self::response("Internal Server Error.".$e->getMessage(),false,);
+
+        if($e->getCode() == 23000){
+            return ["status" => "error", "data" => $searchData['name']." payments already added."];
+        }
+        return self::response("Internal Server Error.".$e->getCode(),false,);
     }
     }
     public static function editPaymentPlaftorm($searchData = []): Mixed{

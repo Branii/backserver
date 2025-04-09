@@ -65,6 +65,8 @@ $(() =>{
         const encodedAdminSiteUrl = encodeURIComponent(adminSiteUrl).replace(/%2F/g, '%252F');
         const encodedCountries = encodeURIComponent(countries);
 
+
+         
         $.post(`../admin/editPaymentPlaftorm/${paymentType}/${paymentTypeName}/${currency}/${status}/${fee}/${maxAmount}/${minAmount}/${siteUrl}/${adminSiteUrl}/${info}/${priority}/${encodedCountries}`, function (response) {
             try {
                 
@@ -80,7 +82,7 @@ $(() =>{
                     return;
                 }
 
-                showToast("Success","Payment Platform successfully updated.","info");
+                showToast("Success","Payment Platform successfully updated.","success");
                 fetchpaymentplatformsForPartner();
                 $(".tclose").click();
                 $("#pp-payment-type-edit").val("");
@@ -113,6 +115,21 @@ $(() =>{
             $("#editPaymentPlatform").css("display","none");
             $("#addNewPaymentPlatform").removeClass("show");
             $("#addNewPaymentPlatform").css("display","none");
+
+
+
+            // clear all the fields for adding the payment platform
+            $("#pp-payment-type").val("");
+            $("#pp-currency").val("");
+            $("#pp-status").val("active");
+            $("#pp-fee").val("");
+            $("#pp-max-amount").val("");
+            $("#pp-min-amount").val("");
+            $("#pp-site-url").val("");
+            $("#pp-admin-site-url").val("");
+            $(".country-input").prop("checked",false);
+            $("#pp-info").val("");
+            $("#pp-priority").val("");
         });
         $(document).on("click",".search-payment-platform",function(){
             searchPaymentPlatforms();
@@ -280,6 +297,21 @@ $(() =>{
         const info            = $("#pp-info").val();
         const priority        = $("#pp-priority").val();
         const countries       = [];
+
+
+        // if(paymentType == undefined || paymentTypeName == undefined || currency == undefined || status == undefined ){
+
+        //     showToast("Error", "Please fill all the required fields.", "error");
+        //     return
+        // }
+        
+        // if(paymentType.length == 0 || paymentTypeName.length == 0 || currency.length == 0  || status.length == 0 ){
+
+        //     showToast("Error", "Please fill all the required fields.", "error");
+        //     return
+        // }
+
+
         $("#pp-countries-list").find("tr td input:checked").closest("tr").find(".pp-lottery-name").each(function() { countries.push($(this).text()); });
         const encodedSiteUrl = encodeURIComponent(siteUrl).replace(/%2F/g, '%252F');
         const encodedAdminSiteUrl = encodeURIComponent(adminSiteUrl).replace(/%2F/g, '%252F');
@@ -300,7 +332,7 @@ $(() =>{
                     return;
                 }
 
-                showToast("Success","New payment platform successfully added.","info");
+                showToast("Success","New payment platform successfully added.","success");
                 $(".tclose").click();
                 $("#pp-payment-type").val("");
                 $("#pp-currency").val("");
@@ -336,10 +368,7 @@ $(() =>{
 
                 $("#pp-dtholder").prepend(html);
                 
-       
-                
-                
-             } catch (error) {
+            } catch (error) {
                 console.error("Error parsing response: ", error);
                 $('.userDropdown').hide();
             }

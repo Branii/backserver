@@ -12,6 +12,68 @@ if(session_status() == PHP_SESSION_NONE){
 }
 
 
+$currencyCodes = [
+    // A
+    'AED','AFN','ALL','AMD','ANG','AOA','ARS','AUD','AWG','AZN',
+    // B
+    'BAM','BBD','BDT','BGN','BHD','BIF','BMD','BND','BOB','BOV',
+    'BRL','BSD','BTN','BWP','BYN','BZD',
+    // C
+    'CAD','CDF','CHE','CHF','CHW','CLF','CLP','CNY','COP','COU',
+    'CRC','CUC','CUP','CVE','CZK',
+    // D
+    'DJF','DKK','DOP','DZD',
+    // E
+    'EGP','ERN','ETB','EUR',
+    // F
+    'FJD','FKP',
+    // G
+    'GBP','GEL','GHS','GIP','GMD','GNF','GTQ','GYD',
+    // H
+    'HKD','HNL','HRK','HTG','HUF',
+    // I
+    'IDR','ILS','INR','IQD','IRR','ISK',
+    // J
+    'JMD','JOD','JPY',
+    // K
+    'KES','KGS','KHR','KMF','KPW','KRW','KWD','KYD','KZT',
+    // L
+    'LAK','LBP','LKR','LRD','LSL','LYD',
+    // M
+    'MAD','MDL','MGA','MKD','MMK','MNT','MOP','MRU','MUR','MVR',
+    'MWK','MXN','MXV','MYR','MZN',
+    // N
+    'NAD','NGN','NIO','NOK','NPR','NZD',
+    // O
+    'OMR',
+    // P
+    'PAB','PEN','PGK','PHP','PKR','PLN','PYG',
+    // Q
+    'QAR',
+    // R
+    'RON','RSD','RUB','RWF',
+    // S
+    'SAR','SBD','SCR','SDG','SEK','SGD','SHP','SLL','SOS','SRD',
+    'SSP','STN','SVC','SYP','SZL',
+    // T
+    'THB','TJS','TMT','TND','TOP','TRY','TTD','TWD','TZS',
+    // U
+    'UAH','UGX','USD','USN','UYI','UYU','UYW','UZS',
+    // V
+    'VED','VES','VND','VUV',
+    // W
+    'WST',
+    // X (special codes / precious metals, etc.)
+    'XAF','XAG','XAU','XBA','XBB','XBC','XBD','XCD','XDR','XOF',
+    'XPD','XPF','XPT','XSU','XTS','XUA','XXX',
+    // Y
+    'YER',
+    // Z
+    'ZAR','ZMW','ZWL'
+];
+
+
+
 $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
 $fullname   = (new Controller)->getUsername($adminEmail);
 
@@ -35,6 +97,9 @@ if ($flag == "fetchPaymentPlatformsForPartner") {
 
 }else if($flag == "addNewPaymentPlaftorm"){
    
+    try{
+
+   
     $paymentType    = isset($this->viewData['paymentType']) ? $this->viewData['paymentType'] : "";
     $paymentTypeName    = isset($this->viewData['paymentTypeName']) ? $this->viewData['paymentTypeName'] : "";
     $currency       = isset($this->viewData['currency']) ? $this->viewData['currency']         : "";
@@ -49,12 +114,30 @@ if ($flag == "fetchPaymentPlatformsForPartner") {
     $countries      = isset($this->viewData['countries']) ? $this->viewData['countries']           : "";
     $currentDate    = date("Y-m-d / H:i:s");
 
+
+    if(!in_array($currency,$currencyCodes)){
+
+        echo json_encode(["status" => "error", "data" => "Invalid request, please try again later."]);
+        return;
+    }
+
+    if(empty($paymentType) || empty($paymentTypeName) || empty($currency) || empty($status)){
+
+        echo json_encode(["status" => "error", "data" => "Please fill the required fields."]);
+        return ;
+    }
+
+
+
     // echo json_encode(["payment_type_id" => trim($paymentType),"name" => trim($paymentTypeName),"status" => $status,"created_by" => trim($fullname["full_name"]),"date_created" => trim($currentDate),"currency" => trim($currency),"fee" => trim($fee),"site_url" => trim($siteUrl), "admin_site_url" => trim($adminSiteUrl),"last_update" => trim($currentDate),"last_update_by" => trim($fullname["full_name"]),"min_amount" => trim($minAmount),"max_amount" => trim($maxAmount),"info" => $info,"priority" => $priority,"countries" => serialize(urldecode($countries))]);
     // return;
     $results        = PaymentPlatformModel::addNewPaymentPlaftorm(["payment_type_id" => trim($paymentType),"name" => trim($paymentTypeName),"status" => $status,"created_by" => trim($fullname["full_name"]),"date_created" => trim($currentDate),"currency" => trim($currency),"fee" => trim($fee),"site_url" => trim($siteUrl), "admin_site_url" => trim($adminSiteUrl),"last_update" => trim($currentDate),"last_update_by" => trim($fullname["full_name"]),"min_amount" => trim($minAmount),"max_amount" => trim($maxAmount),"info" => urldecode($info),"priority" => $priority,"countries" => urldecode($countries)]);
 
 
-
+}catch(Exception $e){
+    $results  = ["status"=> "error", "data" => $e->getMessage()];
+      
+}
 
 }else if($flag == "editPaymentPlaftorm"){
    
@@ -72,6 +155,19 @@ if ($flag == "fetchPaymentPlatformsForPartner") {
     $countries      = isset($this->viewData['countries']) ? $this->viewData['countries']           : "";
     $currentDate    = date("Y-m-d / H:i:s");
     
+
+    if(!in_array($currency,$$currencyCodes)){
+
+        echo json_encode(["status" => "error", "data" => "Invalid request, please try again later."]);
+        return;
+    }
+
+    if(empty($paymentType) || empty($paymentTypeName) || empty($currency) || empty($status)){
+
+        echo json_encode(["status" => "error", "data" => "Please fill the required fields."]);
+        return ;
+    }
+
     $results        = PaymentPlatformModel::editPaymentPlaftorm(["payment_type_id" => trim($paymentType),"status" => trim($status),"currency" => trim($currency),"fee" => trim($fee),"site_url" => trim($siteUrl), "admin_site_url" => trim($adminSiteUrl),"last_update" => $currentDate,"last_update_by" => $fullname["full_name"],"min_amount" => $minAmount,"max_amount" => $maxAmount,"info" => urldecode($info),"priority" => $priority,"countries" => urldecode($countries)]);
 
 }
@@ -88,3 +184,5 @@ else if($flag == "searchPlatformNames"){
 
 
 echo json_encode(value: $results);
+
+

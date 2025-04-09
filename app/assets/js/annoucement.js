@@ -47,30 +47,13 @@ $(function () {
                           </a>
                           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
                           
-<<<<<<< HEAD
-                      <div class="dropdown">
-                            <a class="dropdown-toggles " href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                              <i class='bx bx-dots-vertical-rounded'></i>
-=======
                             <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 editmsg" href="javascript:void(0);" datas ="${item.msg_id}"> 
                               <i class="bx bx-edit fs-5" ></i>Edit
->>>>>>> 9fc5283ac231c88e79c73563391f6648c0e61307
                             </a>
                             
-<<<<<<< HEAD
-                              <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 editmessage" href="javascript:void(0);" datas ="${item.msg_id}"> 
-                                <i class="bx bx-edit fs-5" ></i>Edit
-                              </a>
-                              
-                                <a class="dropdown-item deletemessage cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="${item.msg_id}">
-                                <i class="bx bx-trash fs-5"></i>Delete
-                              </a>
-                            </div>
-=======
                               <a class="dropdown-item deletemessage cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="${item.msg_id}">
                               <i class="bx bx-trash fs-5"></i>Delete
                             </a>
->>>>>>> 9fc5283ac231c88e79c73563391f6648c0e61307
                           </div>
                         </div>
                     </td>           

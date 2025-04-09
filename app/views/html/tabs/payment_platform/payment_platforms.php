@@ -446,17 +446,17 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="userName" class="form-label">Partner</label>
+                                        <label for="userName" class="form-label">Partner (<span style="color: #a01616;">*</span>)</label>
                                         <input type="text" class="form-control" id="pp-contact" placeholder="Enzerhub" disabled="">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="pp-currency" class="form-label">Currency</label>
+                                        <label for="pp-currency" class="form-label">Currency (<span style="color: #a01616;">*</span>)</label>
                                         <select id="pp-currency" class="form-select currency-list"></select>
                                     </div>
                                     
                                     
                                    <div class="mb-3">
-                                        <label for="pp-status" class="form-label">Status</label>
+                                        <label for="pp-status" class="form-label">Status (<span style="color: #a01616;">*</span>)</label>
                                         <select id="pp-status" class="form-select">
                                             <option value="active">Active</option>
                                             <option value="hidden">Hidden</option>
@@ -468,10 +468,10 @@
                                     
                                     
                                     <div class="mb-3">
-                                        <label for="pp-payment-type" class="form-label">Payment Type</label>
+                                        <label for="pp-payment-type" class="form-label">Payment Type (<span style="color: #a01616;">*</span>)</label>
                                         <select id="pp-payment-type" class="form-select pp-payment-types"></select>
                                     </div><div class="mb-3">
-                                        <label for="pp-fee" class="form-label">Fee (%)</label>
+                                        <label for="pp-fee" class="form-label">Fee (%) (<span style="color: #a01616;">*</span>)</label>
                                         <input type="text" class="form-control" id="pp-fee" placeholder="Fee (%)">
                                     </div>
                                 <div class="mb-3">
@@ -1331,17 +1331,17 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="userName" class="form-label">Partner</label>
+                                        <label for="userName" class="form-label">Partner (<span style="color: #a01616;">*</span>)</label>
                                         <input type="text" class="form-control" id="pp-contact" placeholder="Enzerhub" disabled="">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="pp-currency-edit" class="form-label">Currency</label>
+                                        <label for="pp-currency-edit" class="form-label">Currency (<span style="color: #a01616;">*</span>)</label>
                                         <select id="pp-currency-edit" class="form-select currency-list"></select>
                                     </div>
                                     
                                     
                                    <div class="mb-3">
-                                        <label for="pp-status-edit" class="form-label">Status</label>
+                                        <label for="pp-status-edit" class="form-label">Status (<span style="color: #a01616;">*</span>)</label>
                                         <select id="pp-status-edit" class="form-select">
                                             <option value="active">Active</option>
                                             <option value="hidden">Hidden</option>
@@ -1353,10 +1353,10 @@
                                     
                                     
                                     <div class="mb-3">
-                                        <label for="pp-payment-type-edit" class="form-label">Payment Type</label>
+                                        <label for="pp-payment-type-edit" class="form-label">Payment Type (<span style="color: #a01616;">*</span>)</label>
                                         <select id="pp-payment-type-edit" class="form-select pp-payment-types"></select>
                                     </div><div class="mb-3">
-                                        <label for="pp-fee-edit" class="form-label">Fee (%)</label>
+                                        <label for="pp-fee-edit" class="form-label">Fee (%) (<span style="color: #a01616;">*</span>)</label>
                                         <input type="text" class="form-control" id="pp-fee-edit" placeholder="Fee (%)">
                                     </div>
                                 <div class="mb-3">
