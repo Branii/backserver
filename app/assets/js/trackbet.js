@@ -63,14 +63,11 @@ $(function () {
                         <td>${item.start_draw}</td>
                         <td>${item.tracked + "/" + item.total_bets}</td>
                         <td>${formatMoney(item.done_amount) + "/" + formatMoney(item.total_amount)}</td>                  
-                        <td>${trackstatus[item.track_status]}</td>
                         <td>${formatMoney(item.win_amount)}</td>
                         <td>${trackrule}</td>
                         <td>${item.server_date + " / " + item.server_time}</td>
+                        <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${trackstatus[item.track_status]}</span></td>
                         <td><i value='${item.track_token}_${item.game_type_id}' class='bx bx-info-circle trackinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
-                       
-                        
-                        
                     </tr>
                 `;
         });
@@ -132,7 +129,6 @@ $(function () {
         opening_time:`${translator["Draw Time"]}`,
         bet_status:  `${translator["Bet Status"]}`,
         user_selection: `${translator["Bet Selection"]}`,
-
     };
      
 
@@ -148,10 +144,9 @@ $(function () {
         try {
             const response = await fetch(`../admin/trackdata/${page}/${pageLimit}`);
             const data = await response.json();
-
+    
             $("#masktrack").LoadingOverlay("hide");
             rendertrack(data.trackbet);
-
             // Render pagination
             renderPaginationtrack(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchtrackdata(newPage, pageLimit));
             document.getElementById("paging_infotrack").innerHTML = `${translator["Page"]} ${page} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
@@ -172,7 +167,6 @@ $(function () {
             }
 
             ///console.log(response);
-
             $(".loadertrack").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             if (data.trackfilter.length < 1) {
                 let html = `
@@ -390,7 +384,6 @@ $(function () {
     }
 
     let debounceTimeout = null;
-
     $(document).ready(function () {
         // Event listener for keyup on #myInput
         $(document).on("keyup", "#trackinput", function () {
@@ -485,6 +478,20 @@ $(function () {
         });
     }
     tableScrolltrack();
+
+    function tableScrolltracker() {
+        const tableContainerTracker = document.querySelector(".trackertable");
+        const headerRowTrack = document.querySelector(".trackerheasrow");
+
+        tableContainerTracker.addEventListener("scroll", function () {
+            if (tableContainerTracker.scrollTop > 0) {
+                headerRowTracker.classList.add("sticky-trackerhead");
+            } else {
+                headerRowTracker.classList.remove("sticky-trackerhead");
+            }
+        });
+    }
+    tableScrolltracker();
 
     $(".clearitem").on("dblclick", function () {
         $(this).val(""); // Clears the input field

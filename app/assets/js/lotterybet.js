@@ -98,7 +98,7 @@ $(function () {
               htmlbet += `
           <td>${value}</td>
            <td class="${key === "user_selection" ? "bet_userSelection" : ""}">
-            <textarea class="form-control"   readonly style="height: 75px;">${obj[key]}</textarea>
+            <textarea class="form-control" readonly style="height: 75px;">${obj[key]}</textarea>
             </td>`;
           } else {
               htmlbet += `
@@ -115,7 +115,7 @@ $(function () {
       return htmlbet;
   };
   const langMap = {
-      "投注选择:": "Bet Selection",
+     "投注选择:": "Bet Selection",
   };
 
   const firstRowbet = {

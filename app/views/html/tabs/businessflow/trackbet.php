@@ -206,7 +206,7 @@
     }
 
 
-    .tbl-trackhead {
+ .tbl-trackhead {
     position: sticky;
     top: 0;
   }
@@ -217,7 +217,18 @@
     background-color: red;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   }
+  .trackerhead {
+    position: sticky;
+    top: 0;
+  }
 
+  .sticky-trackerhead {
+    position: relative;
+    bottom: 1px;
+    background-color: red;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  }
+  
   .trackdown {
         width: 19%;
         position: absolute;
@@ -436,9 +447,7 @@
                   <th>
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Amount/Total Bet Amount']; ?></h6>
                   </th>
-                  <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Status']; ?></h6>
-                  </th>
+                 
                   <th>
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win/Loss']; ?></h6>
                   </th>
@@ -446,7 +455,10 @@
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Rule']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['DateTime']; ?></h6>
+                  </th>
+                  <th>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Status']; ?></h6>
                   </th>
                 
                     <th>
@@ -560,10 +572,10 @@
 
           </div>
         </form>
-    <hr>
-        <table class="table table-hover table-bordered text-nowrap mb-0" id="track">
-					<thead class="">
-						<tr class="">
+      <hr>
+        <table class="table table-hover table-bordered text-nowrap mb-0 trackertable" id="track">
+					<thead class="trackerhead">
+						<tr class="trackerheasrow">
 							<!-- <th class="font-weight-normal">#</th> -->
 							<th class="font-weight-normal"><?=$translator['Draw Results']?></th>
 							<th class="font-weight-normal"><?=$translator['Issue Number']?></th>
@@ -577,7 +589,6 @@
 					<tbody id='trackbetTableBody'>
 
 					</tbody>
-
 					<!-- <td></td>
 					<tr>
 						<td colspan="3"></td>

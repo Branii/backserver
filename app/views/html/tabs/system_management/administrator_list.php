@@ -319,18 +319,18 @@
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
         style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-        <button type="button" class="btn bg-white-subtle player" value="start">
+        <!-- <button type="button" class="btn bg-white-subtle player" value="start">
           <i class='bx bx-chevrons-left' style="font-size:20px"></i>
-        </button>
+        </button> -->
         <button type="button" class="btn bg-white-subtle player" value="left">
           <i class='bx bx-chevron-left' style="font-size:20px"></i>
         </button>
         <button type="button" class="btn bg-white-subtle player" value="right">
           <i class='bx bx-chevron-right' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle player" value="end">
+        <!-- <button type="button" class="btn bg-white-subtle player" value="end">
           <i class='bx bx-chevrons-right' style="font-size:20px"></i>
-        </button>
+        </button> -->
       </div>
     </span>
     <span class="top-center" aria-label=" navigation example">
@@ -490,7 +490,7 @@
               <div class="d-md-flex align-items-center">
                 <div class="form-check">
                   <!-- <input type="checkbox" class="form-check-input" id="sf2" value="check" /> -->
-                  <label class="form-check-label" for="sf2"><?= $translator['Verify before submit']; ?></label>
+                  <!-- <label class="form-check-label" for="sf2"><?= $translator['Verify before submit']; ?></label> -->
                 </div>
                 <div class="mt-3 mt-md-0 ms-auto">
                   <button type="submit" class="btn hstack gap-6 fullsubmit" style="border:solid 1px #ccc">

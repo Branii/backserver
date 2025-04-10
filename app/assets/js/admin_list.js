@@ -507,6 +507,10 @@ $(function () {
       19: { title: "NGP Win/Loss Report", content: "backup_recovery" },
       20: { title: "Annoucement List", content: "annouce" },
       21: { title: "User Notification", content: "usernoti" },
+      22: { title: "Add Payment Platform", content: "annouces" },
+      23: { title: "BensonGames", content: "usernotis" },
+      24: { title: "EbenGames", content: "annoucea" },
+      // 21: { title: "User Notification", content: "usernoti" },
       
     };
 
@@ -520,7 +524,9 @@ $(function () {
       7: { category: "Game Management", items: [14,15,16] },
       8: { category: "Agent Management", items: [13] },
       9: { category: "System Management", items: [17, 18] },
-      10: { category: "System Announcement", items: [20, 21] }
+      10: { category: "System Announcement", items: [20, 21] },
+      11: { category: "Payment Platform", items: [22] },
+      12: { category: "Partner Management", items: [23,24] }
     };
   
     let html = "";

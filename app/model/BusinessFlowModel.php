@@ -170,7 +170,6 @@ class BusinessFlowModel extends MEDOOHelper
    public static function getAllUserBetByUserId($uid, $betOrderID, $gametype, $betstate, $betstatus, $enddate, $startdate, $page, $limit)
    {
       $offset = ($page - 1) * $limit;
-
       $pdo = (new Database())->openLink();
       $pdo->exec("SET SESSION group_concat_max_len = 1000000");
 
@@ -199,10 +198,10 @@ class BusinessFlowModel extends MEDOOHelper
 
       // Prepare to fetch paginated data
       $dataStmt = $pdo->prepare("$mergedQuery LIMIT $limit OFFSET $offset");
-      // $dataStmt->execute();
       $dataStmt->execute($subquery['params']);
+      $data =  $dataStmt->fetchAll(PDO::FETCH_ASSOC);
 
-      return ['data' => $dataStmt->fetchAll(PDO::FETCH_ASSOC), 'total' => $totalRecords];
+      return ['data' =>$data, 'total' => $totalRecords];
    }
 
    public static function filterBetData($uid, $betOrderID, $gametype, $betstate, $betstatus, $enddate, $startdate)
@@ -247,11 +246,7 @@ class BusinessFlowModel extends MEDOOHelper
       }
 
       $whereClause = !empty($filterConditions) ? 'WHERE ' . implode(' AND ', $filterConditions) : '';
-
-      return [
-         'query' => $whereClause,
-         'params' => $params,
-      ];
+      return [ 'query' => $whereClause,'params' => $params];
    }
 
    public static function fetchLotteryname(): array
@@ -297,8 +292,10 @@ class BusinessFlowModel extends MEDOOHelper
    {
       $startpoint = $page * $limit - $limit;
       $data = parent::query(
-         "SELECT trackbet.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.username, 'N/A') AS username FROM trackbet   
-           LEFT  JOIN users_test ON users_test.uid = trackbet.user_id  ORDER BY track_id DESC LIMIT :offset, :limit",
+         "SELECT trackbet.track_id,trackbet.track_rule,trackbet.track_token,trackbet.game_type_id,trackbet.start_draw,trackbet.game_type,
+                 trackbet.tracked,trackbet.total_bets,trackbet.done_amount,trackbet.total_amount,trackbet.track_status,trackbet.win_amount,
+                 trackbet.server_date,trackbet.server_time,users_test.email,users_test.contact,users_test.reg_type,users_test.username  FROM trackbet   
+         INNER JOIN users_test ON users_test.uid = trackbet.user_id ORDER BY trackbet.track_id DESC LIMIT :offset, :limit",
          ['offset' => $startpoint, 'limit' => $limit]
       );
       $totalRecords = parent::count('trackbet');
@@ -350,27 +347,14 @@ class BusinessFlowModel extends MEDOOHelper
       $startpoint = ($page - 1) * $limit;
 
             $sql = "
-            SELECT 
-               trackbet.*, 
-               users_test.email AS email, 
-               users_test.reg_type,
-               users_test.username AS username, 
-               users_test.contact
-            FROM trackbet
-            LEFT JOIN users_test ON users_test.uid = trackbet.user_id
-            WHERE $subQuery
-            LIMIT :offset, :limit
-      ";
+              SELECT trackbet.track_id,trackbet.track_rule,trackbet.track_token,trackbet.game_type_id,trackbet.start_draw,trackbet.game_type,
+                 trackbet.tracked,trackbet.total_bets,trackbet.done_amount,trackbet.total_amount,trackbet.track_status,trackbet.win_amount,
+                 trackbet.server_date,trackbet.server_time,users_test.email,users_test.contact,users_test.reg_type,users_test.username  FROM trackbet   
+             INNER JOIN users_test ON users_test.uid = trackbet.user_id 
+             WHERE $subQuery LIMIT :offset, :limit
+          ";
 
-      // Define the query to count total records
-      $countSqls = "
-                SELECT 
-                    COUNT(*) AS total_counts
-                FROM 
-                    trackbet
-                WHERE 
-                    $subQuery
-            ";
+      $countSqls = "SELECT COUNT(*) AS total_counts FROM trackbet WHERE $subQuery";
 
       // Execute the main SQL query
       $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);

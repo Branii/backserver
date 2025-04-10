@@ -724,6 +724,7 @@ return [
 'System Backup And Recovery'=>'System Backup And Recovery',
 //(Admin Operation Logs)
 'Admin Operation Logs' => 'Admin Operation Logs',
+"Email address" =>"mail address",
 
 //（Announcements and Notifications）
 'Announcements and Notifications'=>'Announcements and Notifications',
@@ -753,6 +754,9 @@ return [
 
 "Payment Platform" => "Payment Platform",
 'Add Payment Platform'=>'Add Payment Platform',
+"Partner Management"  =>"Partner Management",
+"Benson Games" =>"Benson Games",
+"Eben Games" =>"Eben Games",
 
 //games
 '1kball 5D 1m' =>'1kball 5D 1m',
