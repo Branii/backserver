@@ -508,8 +508,7 @@ $(function () {
       20: { title: "Annoucement List", content: "annouce" },
       21: { title: "User Notification", content: "usernoti" },
       22: { title: "Add Payment Platform", content: "annouces" },
-      23: { title: "BensonGames", content: "usernotis" },
-      24: { title: "EbenGames", content: "annoucea" },
+      23: { title: "Partners", content: "Partners" }
       // 21: { title: "User Notification", content: "usernoti" },
       
     };

@@ -182,6 +182,14 @@ class adminController extends Controller {
         $this->view('exec/payment_platform',['platformName'=>$platformName,'flag' => 'searchPlatformNames']);
         $this->view->render();
     }
+    
+    public function searchPartnersNames($partnerName){
+        
+        $this->view('exec/partners',['partnerName'=> $partnerName,'flag' => 'searchPartnersNames']);
+        $this->view->render();
+    }
+
+
     public function fetchDifferentCurrency(){
         $this->view('exec/payment_platform',['flag' => 'fetchDifferentCurrency']);
         $this->view->render();

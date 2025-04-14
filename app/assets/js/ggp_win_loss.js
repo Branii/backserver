@@ -195,9 +195,9 @@ let debounceTimeout = null;
         let startDate = $("#wl-startdate").val();
         let endDate   = $("#wl-enddate").val();
         const element = this;
-        if(lotteryID != undefined){
-            if(lotteryID.length == 0) return;
-        }
+        // if(lotteryID != undefined){
+        //     if(lotteryID.length == 0) return;
+        // }
 
         if(userID.length === 0){
             showToast("No User selected","Select atleast one User.","info");
@@ -207,6 +207,8 @@ let debounceTimeout = null;
         lotteryID = lotteryID == undefined ?  "all" : lotteryID;
         startDate = startDate.length != 0 ? startDate : "all";
         endDate   = endDate.length != 0 ? endDate : "all";
+
+
 
         $.ajax({
             url: `../admin/searchWinLossUser/${userID}/${lotteryID}/${startDate}/${endDate}/`,

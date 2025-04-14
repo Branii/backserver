@@ -502,7 +502,7 @@
                                         <input type="text" class="form-control" id="pp-max-amount" placeholder="Max. Amount">
                                     </div>
                                 <div class="mb-3">
-         <label for="pp-site-url" class="form-label">Countries</label>
+         <label for="pp-site-url" class="form-label">Countries <i class='bx bxs-minus-circle'></i></label>
     <div class="modal-body scrollable-container">
                         <div style="overflow: scroll;height: 256px;">
                             <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
@@ -1387,7 +1387,7 @@
                                         <input type="text" class="form-control" id="pp-max-amount-edit" placeholder="Max. Amount">
                                     </div>
                                 <div class="mb-3">
-         <label for="pp-countries-edit" class="form-label">Countries</label>
+         <label for="pp-countries-edit" class="form-label">Countries <i class='bx bxs-minus-circle'></i></label>
     <div class="modal-body scrollable-container">
                         <div style="overflow: scroll;height: 256px;">
                             <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
