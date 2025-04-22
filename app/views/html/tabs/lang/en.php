@@ -769,8 +769,8 @@ return [
 "Payment Platform" => "Payment Platform",
 'Add Payment Platform'=>'Add Payment Platform',
 "Partner Management"  =>"Partner Management",
-"Benson Games" =>"Benson Games",
-"Eben Games" =>"Eben Games",
+"Partners" =>"Partners",
+
 
 //games
 '1kball 5D 1m' =>'1kball 5D 1m',

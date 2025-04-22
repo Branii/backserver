@@ -269,6 +269,14 @@ if ($flag == "filterpayments") {
 // }else if($flag == "fetchDifferentCurrency"){
 //     $results      = PaymentPlatformModel::fetchDifferentCurrency();
 // }
+else if($flag == "searchPlatformNames"){
+    
+    $platformName      = isset($this->viewData['platformName']) ? $this->viewData['platformName'] : "";
+    $db_id                = 2;
+    $results      = PaymentPlatformModel::searchPlatformNames($db_id, $platformName);
+}else if($flag == "fetchDifferentCurrency"){
+    $results      = PaymentPlatformModel::fetchDifferentCurrency();
+}
 
 
 

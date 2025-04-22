@@ -122,27 +122,31 @@ class PaymentPlatformModel extends MEDOOHelper{
 
 
 
-    // public static function searchPlatformNames($platformName): Mixed{
-    //     $query = trim($platformName); // Clean the input
-    //     $query = parent::openLink()->query(
-    //      "SELECT * FROM currency WHERE name LIKE :search AND currency_type='fiat' LIMIT 50", ['search' => "%$query%"]);
-    //     $data = $query->fetchAll(PDO::FETCH_OBJ);
-    //     return $data;
+    public static function searchPlatformNames($platformName): Mixed{
+        $query = trim($platformName); // Clean the input
+        $query = parent::openLink()->query(
+         "SELECT * FROM currency WHERE name LIKE :search AND currency_type='fiat' LIMIT 50", ['search' => "%$query%"]);
+        $data = $query->fetchAll(PDO::FETCH_OBJ);
+        return $data;
 
     // }
     // public static function fetchDifferentCurrency(): Mixed{
     //     try{
 
        
-    //     $query = parent::openLink()->query(
-    //      "SELECT DISTINCT currency FROM `currency`");
-    //     $data = $query->fetchAll(PDO::FETCH_OBJ);
-    //     return $data;
-    //     }catch(Exception $e){
-    //         return self::response("Internal Server Error.".$e->getMessage(),false,);
-    //     }
+        $query = trim($platformName); 
 
-    // }
+        // return $db_id;
+        
+        $query = parent::openLink($db_id)->query(
+         "SELECT * FROM currency WHERE name LIKE :search AND currency_type='fiat' LIMIT 50", ['search' => "%$query%"]);
+        $data = $query->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    }catch(Exception $e){
+        return self::response("Internal Server Error.".$e->getMessage(),false,);
+    }
+
+    }
   
 
 

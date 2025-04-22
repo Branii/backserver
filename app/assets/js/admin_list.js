@@ -510,6 +510,7 @@ $(function () {
       22: { title: "Add Payment Platform", content: "annouces" },
       23: { title: "BensonGames", content: "usernotis" },
       24: { title: "User Overview", content: "overview" },
+      23: { title: "Partners", content: "Partners" }
       // 21: { title: "User Notification", content: "usernoti" },
       
     };

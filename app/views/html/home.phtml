@@ -503,8 +503,14 @@ $fullname = (new Controller)->getUsername($adminEmail);
           </div>
 
 
-         
+          <div class="chrome__tab unotification">
+            <?php include "tabs/announcement/usernotification.php" ?>
+          </div>
 
+
+          <div class="chrome__tab partners">
+            <?php include "tabs/partners/partners.php" ?>
+          </div>
         </div>
       </div>
       <script>
@@ -557,10 +563,12 @@ $fullname = (new Controller)->getUsername($adminEmail);
     <script src="<?php echo BASE_URL; ?>assets/js/lang.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/m_lottery_bonus_parameters.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/annoucement.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/partners.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/payment_platforms.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/usernotification.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/useroverview.js"></script>
     
+   
 
     
     <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
