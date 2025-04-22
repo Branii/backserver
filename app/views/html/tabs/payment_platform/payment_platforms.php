@@ -277,8 +277,6 @@
           <input name="resultsList" class="queryholderlist form-control bring-forward" id="platformNames" data-user-id="" placeholder="Platform Names" autocomplete="off" style="width: 98%;"> <div class="pp-names-wrapper ngp-usr-res-wrapper" style="width: 20.5%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="pp-names-list-wrapper"></ul> </div>
           <input name="usernames" type="hidden" id="selectedID" value="">
         </div>
-                
-                
 
                 <select name="betsate" id="platformCurrency" class="form-control form-select queryholderlistt messagestype currency-list" data-bs-placeholder="Select Type">
                     <option value="">-Currency-</option>
@@ -1390,14 +1388,12 @@
          <label for="pp-countries-edit" class="form-label">Countries <i class='bx bxs-minus-circle'></i></label>
     <div class="modal-body scrollable-container">
                         <div style="overflow: scroll;height: 256px;">
-                            <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
-                             <tbody class="pp-payment-countries-edit" id="edit-countries-tbody"></tbody>   
-
-        </table>
+                            <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable"><tbody class="pp-payment-countries-edit" id="edit-countries-tbody"></tbody></table>
              </div>
                     </div>
                                         
-                                    </div></div>
+                                    </div>
+                                  </div>
                             </div>
                         <div class="d-flex justify-content-end gap-2">
                                 <button type="button" class="btn btn-primary" id="editPaymentPlatformBtn">Save</button>

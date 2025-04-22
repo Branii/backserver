@@ -47,7 +47,9 @@ $(() =>{
 
     });
 
-        $(document).on("click","#editPaymentPlatformBtn",function(){
+   
+
+    $(document).on("click","#editPaymentPlatformBtn",function(){
             const paymentType = $("#pp-payment-type-edit").val();
         const paymentTypeName = $("#pp-payment-type-edit option:selected").attr("data-name");
         const currency    = $("#pp-currency-edit").val();
@@ -447,7 +449,11 @@ const  searchPlatformNames = (query) =>{
                 optionsHtml += `<li class="name-items pp-name-items" data-cid="${platformData.cid}" data-name="${platformData.name}">${platformData.name}</li>`;
             }
             $('#pp-names-list-wrapper').html(optionsHtml);
-            $(".pp-names-wrapper").show();
+            if(response.length > 0){
+                $(".pp-names-wrapper").show();
+            }else{
+                $(".pp-names-wrapper").hide(); 
+            }
          } catch (error) {
             console.error("Error parsing response: ", error);
             $('.userDropdown').hide();

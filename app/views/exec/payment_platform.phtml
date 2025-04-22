@@ -174,8 +174,10 @@ if ($flag == "fetchPaymentPlatformsForPartner") {
 
 
 else if($flag == "searchPlatformNames"){
+    
     $platformName      = isset($this->viewData['platformName']) ? $this->viewData['platformName'] : "";
-    $results      = PaymentPlatformModel::searchPlatformNames( $platformName);
+    $db_id                = 2;
+    $results      = PaymentPlatformModel::searchPlatformNames($db_id, $platformName);
 }else if($flag == "fetchDifferentCurrency"){
     $results      = PaymentPlatformModel::fetchDifferentCurrency();
 }

@@ -376,10 +376,21 @@ class adminController extends Controller {
         $this->view('exec/payment_platform', ["page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatformsForPartner']);
         $this->view->render();
     }
+    public function  fetchPartners($page , $limit)
+    {  
+        $this->view('exec/partners', ["page" => $page, "limit" => $limit,'flag' => 'fetch_partners']);
+        $this->view->render();
+    }
     public function  fetchPaymentPlatforms($page , $limit)
     {  
 
-        $this->view('exec/payment_platform', ['flag' => 'fetchpaymentplatforms']);
+        $this->view('exec/payment_platforms', ['flag' => 'fetchpaymentplatforms']);
+        $this->view->render();
+    }
+    public function  fetchPartnersNames($page , $limit)
+    {  
+
+        $this->view('exec/partners', ['flag' => 'fetchPartnersNames']);
         $this->view->render();
     }
 
@@ -393,13 +404,29 @@ class adminController extends Controller {
         $this->view('exec/payment_platform', ["platformName"=> $platformName,"currency" => $currency,"status" => $status,"startDate" => $startDate,"endDate" => $endDate,"page" => $page, "limit" => $limit,'flag' => 'searchPaymentPlatform']);
         $this->view->render();
     }
+
+
+    public function  searchPartners($partnerName,$state,$startDate,$endDate,$page,$limit)
+    { 
+        $this->view('exec/partners', ["partnerName"=> $partnerName,"state" => $state,"startDate" => $startDate,"endDate" => $endDate,"page" => $page, "limit" => $limit,'flag' => 'searchPartners']);
+        $this->view->render();
+    }
     public function  addNewPaymentPlaftorm($paymentType,$paymentTypeName,$currency,$status,$fee,$maxAmount,$minAmount,$siteUrl,$adminSiteUrl,$info,$priority,$countries)
     {   
-
-
         $this->view('exec/payment_platform', ["paymentType"=> $paymentType,"paymentTypeName" => $paymentTypeName,"currency" => $currency,"status" => $status,"fee" => $fee,"maxAmount" => $maxAmount,"minAmount" => $minAmount, "siteUrl" => $siteUrl,"adminSiteUrl" => $adminSiteUrl,"info" => $info,"priority" => $priority,"countries" => $countries,'flag' => 'addNewPaymentPlaftorm']);
         $this->view->render();
     }
+
+    public function  addNewPartner($partnerName,$currency,$encodedSiteUrl,$encodedAdminSiteUrl)
+    {       
+        
+
+        $this->view('exec/partners', ["partner_name"=> $partnerName,"currency" => $currency,"site_url" => $encodedSiteUrl,"admin_site_url" => $encodedAdminSiteUrl,'flag' => 'addNewPartner']);
+        $this->view->render();
+    }
+
+
+
     public function  editPaymentPlaftorm($paymentType,$paymentTypeName,$currency,$status,$fee,$maxAmount,$minAmount,$siteUrl,$adminSiteUrl,$info,$priority,$countries)
     {   
         $this->view('exec/payment_platform', ["paymentType"=> $paymentType,"paymentTypeName" => $paymentTypeName,"currency" => $currency,"status" => $status,"fee" => $fee,"maxAmount" => $maxAmount,"minAmount" => $minAmount, "siteUrl" => $siteUrl,"adminSiteUrl" => $adminSiteUrl,"info" => $info,"priority" => $priority,"countries" => $countries,'flag' => 'editPaymentPlaftorm']);
@@ -460,6 +487,11 @@ class adminController extends Controller {
     public function manageUser($userID,  $lotteryID,$flag)
     {
         $this->view('exec/account_manage', ['user_id' => $userID,'ulog_id' => $lotteryID,'lottery_id' => $lotteryID,"flag" => $flag]);
+        $this->view->render();
+    }
+    public function fetchLotteries($flag)
+    {
+        $this->view('exec/partners', ["flag" => $flag]);
         $this->view->render();
     }
 

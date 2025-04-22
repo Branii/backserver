@@ -195,9 +195,6 @@ let debounceTimeout = null;
         let startDate = $("#wl-startdate").val();
         let endDate   = $("#wl-enddate").val();
         const element = this;
-        // if(lotteryID != undefined){
-        //     if(lotteryID.length == 0) return;
-        // }
 
         if(userID.length === 0){
             showToast("No User selected","Select atleast one User.","info");
