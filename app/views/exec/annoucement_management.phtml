@@ -108,8 +108,6 @@ if ($flag == "updateannoucement") {
     echo json_encode($result);
 }
 
-
-
 if ($flag == "viewnotification") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;

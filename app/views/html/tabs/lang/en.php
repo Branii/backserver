@@ -446,6 +446,20 @@ return [
  'Turnover Requirement' => 'Turnover Requirement',
  'Current Number of Users' => 'Current Number of Users',
  'Action' => 'Action',
+
+ 'User Overview' =>"User Overview",
+ "Active Users" => "Active Users",
+ "New Users" =>"New Users",
+ "Inactive Users" =>"Inactive Users",
+ 'Team Size' => 'Team Size',
+ 'Effective Users' =>'Effective Users',
+ 'Recharge' => 'Recharge',
+ 'Rebate Activity'=>'Rebate Activity',
+ 'New Profit'=>'New Profit',
+ 'Team Balance'=>'Team Balance',
+ 'Cancel' =>'Cancel',
+
+ 'Payment Type' =>'Payment Type',
  
 
  //promotion managememt

@@ -190,7 +190,7 @@ $(function () {
                       <td>VIP</td>
                      <td>
                   <span class="tooltipp" style="">${subordinate}
-                      <span class="tooltipp-text">${formattedSubordinates}</span>
+                  <span class="tooltipp-text">${formattedSubordinates}</span>
                   </span>
                   </td>
                       <td>${item.sub_count} </td>

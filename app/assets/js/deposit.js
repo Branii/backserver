@@ -19,15 +19,13 @@ $(function () {
           moneyStr = parts.join(".").replace(/\.?0+$/, ""); 
       } 
       return moneyStr; 
-  }
-      const states = {
-        1: "Manual Deposit",
-        2: "Bank Transfer",
-        3: "Momo",
-        5: "Crypto",
-      };
-
-
+    }
+    const states = {
+      1: "Manual Deposit",
+      2: "Bank Transfer",
+      3: "Momo",
+      5: "Crypto",
+    };
     const Depositdata = (data) => { 
     
         let html = "";
@@ -56,8 +54,7 @@ $(function () {
                   `;
         });
         return html;
-      };
-  
+    };
     const renderdeposit = (data) => {
       var html = Depositdata(data);
       $("#DepositContainer").html(html);
@@ -66,7 +63,6 @@ $(function () {
     let currentPage = 1;
     let pageLimit = 20;
  
-    
     async function fetchDeposit(page,pageLimit) {
       try {
         const response = await fetch(
@@ -86,82 +82,80 @@ $(function () {
     fetchDeposit(currentPage,pageLimit)
 
     function renderdepositPagination(totalPages, currentPage, pageLimit, callback) {
-      const createPageLink = (i, label = i, disabled = false, active = false) =>
-          `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
-              <a class='page-link' href='#' data-page='${i}'>${label}</a>
-          </li>`;
-      let pagLink = `<ul class='pagination justify-content-end'>`;
-  
-      // Previous Button
-      pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
-  
-      // Page numbers with ellipsis
-      for (let i = 1; i <= totalPages; i++) {
-          if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
-              pagLink += createPageLink(i, i, false, i === currentPage);
-          } else if (i === currentPage - 3 || i === currentPage + 3) {
-              pagLink += createPageLink(i, "...", true);
-          }
-      }
-  
-      // Next Button
-      pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
-      pagLink += "</ul>";
-  
-      document.getElementById("paginationdeposits").innerHTML = pagLink;
-  
-      // Add click event listeners
-      document.querySelectorAll("#paginationdeposits .page-link").forEach((link) => {
-          link.addEventListener("click", function (e) {
-              e.preventDefault();
-              const newPage = +this.getAttribute("data-page");
-              if (newPage > 0 && newPage <= totalPages) {
-                  currentPage = newPage; // Update currentPage when a page link is clicked
-                  $("#maskDeposit").LoadingOverlay("show", {
-                      background: "rgb(90,106,133,0.1)",
-                      size: 3,
-                  });
-                  callback(newPage, pageLimit); // Call fetchDeposit with the new page and pageLimit
-              }
-          });
-      });
-  }
-  async function filterdeposit(username,depositchanel,depositid,stautsdeposit,startdepo,enddepo,currentPage,pageLimit) {
-    try {
-        const response = await fetch(`../admin/filterdeposits/${username}/${depositchanel}/${depositid}/${stautsdeposit}/${startdepo}/${enddepo}/${currentPage}/${pageLimit}`);
-
-        const data = await response.json();
-        if (data.response == "error") {
-            showToast("Alert", "User does not exist", "info");
-            $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-            return;
+        const createPageLink = (i, label = i, disabled = false, active = false) =>
+            `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+                <a class='page-link' href='#' data-page='${i}'>${label}</a>
+            </li>`;
+        let pagLink = `<ul class='pagination justify-content-end'>`;
+    
+        // Previous Button
+        pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
+    
+        // Page numbers with ellipsis
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+                pagLink += createPageLink(i, i, false, i === currentPage);
+            } else if (i === currentPage - 3 || i === currentPage + 3) {
+                pagLink += createPageLink(i, "...", true);
+            }
         }
-
-        console.log(data);
-
-        $(".loaderdeposit").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-        if (data.deposits.length < 1) {
-            let html = `
-        <tr class="no-results">
-            <td colspan="9">
-                <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-            </td>
-        </tr>`;
-            $("#maskDeposit").LoadingOverlay("hide");
-            $("#DepositContainer").html(html);
-            return;
-        }
-        $("#maskDeposit").LoadingOverlay("hide");
-        renderdeposit(data.deposits);
-        renderdepositPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterdeposit(username,depositchanel,depositid,stautsdeposit,startdepo,enddepo,newPage,pageLimit));
-        document.getElementById("paging_infodeposit").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
-    } catch (error) {
-        console.error("Error fetching data:", error);
+    
+        // Next Button
+        pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
+        pagLink += "</ul>";
+    
+        document.getElementById("paginationdeposits").innerHTML = pagLink;
+    
+        // Add click event listeners
+        document.querySelectorAll("#paginationdeposits .page-link").forEach((link) => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const newPage = +this.getAttribute("data-page");
+                if (newPage > 0 && newPage <= totalPages) {
+                    currentPage = newPage; // Update currentPage when a page link is clicked
+                    $("#maskDeposit").LoadingOverlay("show", {
+                        background: "rgb(90,106,133,0.1)",
+                        size: 3,
+                    });
+                    callback(newPage, pageLimit); // Call fetchDeposit with the new page and pageLimit
+                }
+            });
+        });
     }
-  }
+    async function filterdeposit(username,depositchanel,depositid,stautsdeposit,startdepo,enddepo,currentPage,pageLimit) {
+      try {
+          const response = await fetch(`../admin/filterdeposits/${username}/${depositchanel}/${depositid}/${stautsdeposit}/${startdepo}/${enddepo}/${currentPage}/${pageLimit}`);
+
+          const data = await response.json();
+          if (data.response == "error") {
+              showToast("Alert", "User does not exist", "info");
+              $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+              return;
+          }
+
+          console.log(data);
+
+          $(".loaderdeposit").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+          if (data.deposits.length < 1) {
+              let html = `
+          <tr class="no-results">
+              <td colspan="9">
+                  <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+              </td>
+          </tr>`;
+              $("#maskDeposit").LoadingOverlay("hide");
+              $("#DepositContainer").html(html);
+              return;
+          }
+          $("#maskDeposit").LoadingOverlay("hide");
+          renderdeposit(data.deposits);
+          renderdepositPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterdeposit(username,depositchanel,depositid,stautsdeposit,startdepo,enddepo,newPage,pageLimit));
+          document.getElementById("paging_infodeposit").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+      } catch (error) {
+          console.error("Error fetching data:", error);
+      }
+    }
   
-
-
     $(".refreshdeposit").click(function () {
       $(".queryholderdeposit").val("");
       $("#maskDeposit").LoadingOverlay("show", {
@@ -171,7 +165,6 @@ $(function () {
       fetchDeposit(currentPage,pageLimit)
     });
   
-
     $(".playerdeposit").click(function () {
       let direction = $(this).val();
       const tableWrapper = $(".table-wrapperdeposit");
@@ -203,8 +196,6 @@ $(function () {
       }
     });
   
-   
-
     $(document).on('click', '.executedeposit', function () {
     
       if ($("#Depositinput").val() == "" && $(".startdepo").val() == "" && $(".depositchanel").val() == ""
@@ -229,9 +220,7 @@ $(function () {
   
     });
   
-  
     // Function to fetch and display users
-     
     let debounceTimeout = null;
     let isPasting = false; 
     $(document).ready(function () {
@@ -339,8 +328,8 @@ $(function () {
               headerRowDeposit.classList.remove("sticky-depositheader");
           }
       });
-   }
-   tableScrollDeposit();
+    }
+    tableScrollDeposit();
 
     $(".numrowsdeposit").change(function () {
         $("#maskDeposit").LoadingOverlay("show", {
@@ -349,18 +338,18 @@ $(function () {
           });
         const depositrows = $(this).val();
         fetchDeposit(currentPage,depositrows)
-      });
+    });
 
-      $('#nametextss').on('dblclick', function () {
-        $(this).val(''); // Clears the input field
-      });
-    
-      $(".userdeposit").on("input paste", function () {
-        const self = this;
-        setTimeout(() => {
-          // Trim leading spaces
-          $(self).val($(self).val().replace(/^\s+/, ""));
-        }, 0);
-      });
-  });
+    $('#nametextss').on('dblclick', function () {
+      $(this).val(''); // Clears the input field
+    });
+  
+    $(".userdeposit").on("input paste", function () {
+      const self = this;
+      setTimeout(() => {
+        // Trim leading spaces
+        $(self).val($(self).val().replace(/^\s+/, ""));
+      }, 0);
+    });
+});
   

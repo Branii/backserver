@@ -175,7 +175,6 @@ $(function () {
         showToast("Heads up!!","Select one or more data fields to filter","info")
         return;
     }
-  
       const financetype = $(".financetype").val();
       const username = $("#financeDropdown").val();
       const startfinance = $(".startfinances").val();

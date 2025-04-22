@@ -273,8 +273,12 @@
                     <option value="9"><?= $translator['Sending Red Envelope']; ?></option>
                     <option value="10"><?= $translator['Red Envelope Receive']; ?></option>
                     <option value="11"><?= $translator['Bet Refund']; ?></option>
+                </select>
+
+                <select name="lotteryname" class="form-control form-select queryholdertransaction selectpartner"> 
 
                 </select>
+           
                 <input type="date" class="form-control queryholdertransaction" id="startdatrans" aria-describedby="name"
                     placeholder="Name" />
                 <input type="date" class="form-control queryholdertransaction" id="enddatetrans" aria-describedby="name"
@@ -320,6 +324,10 @@
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
+                        </th>
+
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Partner Name</h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Type']; ?></h6>
