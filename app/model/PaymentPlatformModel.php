@@ -131,7 +131,7 @@ class PaymentPlatformModel extends MEDOOHelper{
 
     // }
     // public static function fetchDifferentCurrency(): Mixed{
-    //     try{
+     try{
 
        
         $query = trim($platformName); 
@@ -145,8 +145,8 @@ class PaymentPlatformModel extends MEDOOHelper{
     }catch(Exception $e){
         return self::response("Internal Server Error.".$e->getMessage(),false,);
     }
-
-    }
+  }
+    
   
 
 
@@ -237,8 +237,7 @@ class PaymentPlatformModel extends MEDOOHelper{
         return $subQuery;
     }
 
-    public static function FilterPlatformData($subquery, $page, $limit)
-    {
+    public static function FilterPlatformData($subquery, $page, $limit){
         try {
              $startpoint = ($page - 1) * $limit;
               $sql = "
@@ -262,5 +261,4 @@ class PaymentPlatformModel extends MEDOOHelper{
             error_log("Error executing query: " . $e->getMessage());
         }
     }
-
 }
