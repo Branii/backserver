@@ -226,9 +226,9 @@ class adminController extends Controller {
     }
 
     # withdrawl Records
-    public function searchWidrlRecords($userID,$widrlID, $widrlChannels,$widrlStatus,$widrlStartDate,$widrlEndDate,$page,$limit){
+    public function searchWidrlRecords($partnerID,$userID,$widrlID, $widrlChannels,$widrlStatus,$widrlStartDate,$widrlEndDate,$page,$limit){
         
-        $this->view('exec/withdrawal_records',['user_id'=> $userID, 'widrl_id' => $widrlID, 'widrl_channels' => $widrlChannels, 'widrl_status' => $widrlStatus, 'widrl_start_date' => $widrlStartDate, 'widrl_end_date' => $widrlEndDate, 'page' => $page,'limit' => $limit, 'flag' => 'filter_records' ]);
+        $this->view('exec/withdrawal_records',['partner_id' => $partnerID,'user_id'=> $userID, 'widrl_id' => $widrlID, 'widrl_channels' => $widrlChannels, 'widrl_status' => $widrlStatus, 'widrl_start_date' => $widrlStartDate, 'widrl_end_date' => $widrlEndDate, 'page' => $page,'limit' => $limit, 'flag' => 'filter_records' ]);
         $this->view->render();
     }
 
@@ -617,9 +617,9 @@ class adminController extends Controller {
      //NOTE -
     //////////////Withdrawal Records -//////////
     // 
-    public function fetchwithdraw($pageNumber, $limit)
+    public function fetchwithdraw($partnerID,$pageNumber, $limit)
     {
-        $this->view('exec/financial_manage', ['page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchwithdraw']);
+        $this->view('exec/financial_manage', ['partner_id' => $partnerID,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchwithdraw']);
         $this->view->render();
     }
 

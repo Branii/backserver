@@ -253,6 +253,10 @@
         z-index: 10;
     }
 
+    .arr {
+        color: #909aa9;
+        margin: 0px 1rem;
+    }
 </style>
 
 <div id="lb-edit" class="modal fade " tabindex="-1" style="display: none;" aria-modal="true" role="dialog">
@@ -349,7 +353,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0"><?= $translator['Lottery Basic Parameters']; ?></h4>
+        <h4 class="card-title mb-0"><span class="partner-name"> </span><span class="arr"> / </span><?= $translator['Lottery Basic Parameters']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist1">

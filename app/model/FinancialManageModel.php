@@ -388,12 +388,16 @@ class FinancialManageModel extends MEDOOHelper
     //NOTE -
     //////////////Withdrawal Records -//////////
     //
-    public static function WithrawalDataRecords($page = 1, $limit = 10): array
+    public static function WithrawalDataRecords($partnerID = 0,$page = 1, $limit = 10): array
     {
         try {
             $startpoint = ($page - 1) * $limit;
             $table_name = "withdrawal_manage";
-            $data = parent::query("SELECT *,(SELECT COUNT(*) FROM {$table_name}) AS total_records FROM withdrawal_manage ORDER BY withdrawalid DESC LIMIT :offset, :limit", ['offset' => $startpoint, 'limit' => $limit]);
+            $db = parent::openLink($partnerID);
+            // $data = parent::query("SELECT *,(SELECT COUNT(*) FROM {$table_name}) AS total_records FROM withdrawal_manage ORDER BY withdrawalid DESC LIMIT :offset, :limit", ['offset' => $startpoint, 'limit' => $limit]);
+            $stmt = $db->query("SELECT *,(SELECT COUNT(*) FROM {$table_name}) AS total_records FROM withdrawal_manage ORDER BY withdrawalid DESC LIMIT :offset, :limit", ['offset' => $startpoint, 'limit' => $limit]);
+
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return ["status" => "success", 'data' => $data];
         } catch (Exception $e) {
             return ["status" => "error", 'data' => "Internal Server Error."];
@@ -405,12 +409,12 @@ class FinancialManageModel extends MEDOOHelper
 
     // Muniru
 
-    public static function filterWidrlRecords($userData, $page = 1, $limit = 10): array
+    public static function filterWidrlRecords($partnerID,$userData, $page = 1, $limit = 10): array
     {
         try {
             $offset = ($page - 1) * $limit;
             $table_name = "withdrawal_manage";
-            $db = parent::getLink();
+            $db = parent::openLink($partnerID);
 
             $where_clause = "";
             $params = ['offset' => (int) $offset, 'limit' => (int) $limit];

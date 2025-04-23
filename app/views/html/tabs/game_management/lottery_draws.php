@@ -191,12 +191,17 @@
   padding:5px;
   border-bottom: solid 1px rgb(110,129,146,0.1);
 }
+
+.arr {
+      color: #909aa9;
+      margin: 0px 1rem;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0">Lottery draw records</h4>
+    <h4 class="card-title mb-0"><span class="partner-name"> </span><span class="arr"> / </span>Lottery draw records</h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pager1">

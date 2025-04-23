@@ -210,12 +210,17 @@
   .daterangepicker {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px !important;
   }
+
+  .arr {
+    color: #909aa9;
+    margin: 0px 1rem;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0"><?= $translator['System backups and recovery']; ?></h4>
+    <h4 class="card-title mb-0"><span class="partner-name"> </span><span class="arr"> / </span><?= $translator['System backups and recovery']; ?></h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pager1">

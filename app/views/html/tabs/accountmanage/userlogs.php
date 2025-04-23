@@ -218,12 +218,17 @@
         /* Darker handle color on hover */
     }
 
+    .arr {
+        color: #909aa9;
+        margin: 0px 1rem;
+    }
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0"><?= $translator['User Logs']; ?></h4>
+        <h4 class="card-title mb-0"><span class="partner-name"> </span><span class="arr"> / </span><?= $translator['User Logs']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">

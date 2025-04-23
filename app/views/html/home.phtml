@@ -214,13 +214,21 @@ $fullname = (new Controller)->getUsername($adminEmail);
          color: var(--text-color);
          cursor: pointer;
          } */
+   .arr {
+        color: #2a3547;
+        margin: 0px 1rem;
+    }
 
+    .pn-wrapper {
+      background-color:  #fffefe ;
+    }
 </style>
 </head>
 
 <body>
   <div class="toast toast-onload align-items-center text-bg-primary border-0" role="alert" aria-live="assertive"
     aria-atomic="true">
+    <input type="hidden" value="" id="partner-holder">
     <div class="toast-body hstack align-items-start gap-6">
       <i class="ti ti-alert-circle fs-6"></i>
       <div>

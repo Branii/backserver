@@ -116,9 +116,10 @@ if ($flag == "filterdeposit") {
 
 if ($flag == "fetchwithdraw") {
 
+    $partnerID = isset($this->viewData['partner_id']) ? (int) $this->viewData['partner_id'] : 0;
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 10;
-    $result = (new FinancialManageModel())->WithrawalDataRecords($page) ?? [];
+    $result = (new FinancialManageModel())->WithrawalDataRecords($partnerID,$page) ?? [];
     echo json_encode($result);
 }
 
