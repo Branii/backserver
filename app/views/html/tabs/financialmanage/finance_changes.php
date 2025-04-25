@@ -269,25 +269,24 @@
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                <input type="text" id="financeDropdown" class="form-control queryholderlistt usernames"
+                 <input type="text" id="financeDropdown" class="form-control queryholderlistt usernames"
                     placeholder="<?= $translator['Search usernames']; ?>" />
-                <input name="usernames" type="hidden" class="userIdfinance" />
-                <select class="form-control financeDropdown" size="5" style="display: none;" id="userfinaceDropdowns">
+                 <input name="usernames" type="hidden" class="userIdfinance" />
+                 <select class="form-control financeDropdown" size="5" style="display: none;" id="userfinaceDropdowns">
                     <!-- Options will be populated dynamically -->
-                </select>
+                 </select>
 
-                <select name="betsate" class="form-control form-select queryholderlistt financetype"
+                 <select name="betsate" class="form-control form-select queryholderlistt financetype"
                     data-bs-placeholder="Select Type">
                     <option value="">-<?= $translator['Transaction Type']; ?>-</option>
                     <option value="1"><?= $translator['Deposit']; ?></option>
                     <option value="4"><?= $translator['Withdrawal']; ?></option>
-                </select>
+                 </select>
+                 <select name="lotteryname" class="form-control form-select queryholderlistt selectpartner"> 
 
-                <input name="startdate" type="date" class="form-control queryholderlistt startfinances"
-                    placeholder="Name" />
-
-                <input name="enddate" type="date" class="form-control queryholderlistt endfinances"
-                    placeholder="Name" />
+                 </select>
+                 <input name="startdate" type="date" class="form-control queryholderlistt startfinances" placeholder="Name" />
+                 <input name="enddate" type="date" class="form-control queryholderlistt endfinances" placeholder="Name" />
             </div>
           
         </span>

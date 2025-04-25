@@ -369,7 +369,7 @@
                         <!-- Options will be populated dynamically -->
                     </select>
                     <input name="usernames"  class="form-control queryholderlist clearitem"  id="trackcode" placeholder="<?=$translator['Search Track Id']?>"/>
-                 <select name="recharge" class="form-control form-select queryholderlist trackstatus"
+                   <select name="recharge" class="form-control form-select queryholderlist trackstatus"
                     data-bs-placeholder="Select Type">
                     <option value="">-<?=$translator['Track Status']?>-</option>
                     <option value="1"><?= $translator['Running'];?></option>
@@ -377,15 +377,15 @@
                     <option value="3"><?= $translator['Completed'];?></option>
                     <option value="4"><?= $translator['Stop If Win'];?></option>
                     <option value="5"><?= $translator['Stop If Not Win'];?></option>
-                  </select>
+                   </select>
 
-                <div class="custom-dropdown">
-                    <select name="lotteryname" class="form-control form-select queryholderlist tracklotery selectlottery" data-bs-placeholder="Select Type"> </select>
-                 </div>
+                    <select name="lotteryname" class="form-control form-select queryholderlist tracklotery selectlottery" data-bs-placeholder="Select Type">
 
-                 <select name="lotteryname" class="form-control form-select queryholderbet selectpartner"> 
+                    </select>
 
-                </select>
+                   <select name="lotteryname" class="form-control form-select queryholderlist selectpartner"> 
+
+                   </select>
 
                 <input type="date" class="form-control queryholderlist startdatetrack"  aria-describedby="name"
                     placeholder="Name" />

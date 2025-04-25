@@ -245,7 +245,10 @@
                     <option value="success"><?= $translator['Success']; ?></option>
                     <option value="failed"><?= $translator['Failed']; ?></option>
                 </select>
+                <select name="lotteryname" class="form-control form-select queryholderdeposit selectpartner"> 
 
+                </select>
+ 
                 <input name="startdate" type="date" class="form-control queryholderdeposit startdepo" aria-describedby="name" placeholder="Name" />
 
                 <input name="enddate" type="date" class="form-control queryholderdeposit enddepo" aria-describedby="name" placeholder="Name" />

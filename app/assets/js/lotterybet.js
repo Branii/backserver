@@ -231,7 +231,7 @@ $(function () {
                   $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
                   return;
               }
-              console.log(response);
+    
               $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
               if (data.filterbet.length < 1) {
                   let html = `
