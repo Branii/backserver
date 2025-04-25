@@ -17,7 +17,7 @@ class BusinessFlowModel extends MEDOOHelper
       $trasationIds = array_column($data, 'order_id');
       return ['data' => $data, 'total' => $totalRecords, 'transactionIds' => $trasationIds];
    }
-   public static function FilterTrsansactionDataSubQuery($username, $orderid,$ordertype,$patneruid, $startdate, $enddate)
+   public static function FilterTransactionDataSubQuery($username, $orderid,$ordertype,$patneruid, $startdate, $enddate)
    {
       $filterConditions = [];
 
@@ -53,21 +53,29 @@ class BusinessFlowModel extends MEDOOHelper
       $subQuery .= "ORDER BY transaction.trans_id DESC";
       return $subQuery;
    }
-   public static function FilterTrsansactionData($subQuery, $page, $limit)
+   public static function FilterTransactionData($subQuery, $page, $limit)
    {
       $startpoint = $page * $limit - $limit;
-      $sql = "SELECT transaction.trans_id,transaction.account_change,transaction.balance,transaction.dateTime,
-               transaction.game_type,transaction.order_id,transaction.order_type,transaction.date_created,
-               users_test.email,users_test.contact,users_test.reg_type,users_test.username,partners_v1.name 
-             FROM transaction  INNER JOIN partners_v1 ON partners_v1.partner_id = transaction.partner_uid
-             INNER JOIN users_test ON users_test.uid = transaction.uid WHERE $subQuery LIMIT :offset, :limit";
-       
-      $countSql = "SELECT COUNT(*) AS total_count FROM  transaction WHERE $subQuery";
-      $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
-      $totalRecords = parent::query($countSql);
-      $totalRecords = $totalRecords[0]['total_count'];
-      $lastQuery = MedooOrm::openLink()->log();
-      return ['data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery[0]];
+     
+               $sql = "SELECT transaction.trans_id, transaction.account_change, transaction.balance, transaction.dateTime,
+               transaction.game_type, transaction.order_id, transaction.order_type, transaction.date_created,
+               users_test.email, users_test.contact, users_test.reg_type, users_test.username,
+               partners_v1.name 
+            FROM transaction
+            INNER JOIN partners_v1 ON partners_v1.partner_id = transaction.partner_uid
+            INNER JOIN users_test ON users_test.uid = transaction.uid
+            WHERE $subQuery
+            LIMIT :offset, :limit";
+
+            $data = parent::query($sql, ['offset' => $startpoint,'limit' => $limit]);
+
+            $countSql = "SELECT COUNT(*) AS total_count FROM transaction WHERE $subQuery";
+            $totalRecord = parent::query($countSql);
+            $totalRecords = $totalRecord[0]['total_count'] ?? 0;
+
+            // Retrieve last executed SQL
+          //  $lastQuery = MedooOrm::openLink()->log();
+            return ['data' => $data,'total' => $totalRecords];
    }
    public static function filterusername(string $username)
    {

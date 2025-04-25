@@ -552,6 +552,7 @@ return [
 
 //(Payment interface settings)
 'User Payout Records'=>'User Payout Records',
+'User Payment Method' =>"User Payment Method",
 
 
 //game policy

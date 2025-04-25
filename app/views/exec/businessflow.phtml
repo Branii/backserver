@@ -128,13 +128,11 @@ if ($flag == "filtertransactions") {
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
     $username = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : $uid;
-    $sunquery = (new BusinessFlowModel())->FilterTrsansactionDataSubQuery($username, $orderid, $ordertype,$partneruid, $startdate, $enddate);
-    $result   = (new BusinessFlowModel())->FilterTrsansactionData($sunquery, $page, $limit) ?? [];
-
+    $sunquery = (new BusinessFlowModel())->FilterTransactionDataSubQuery($username, $orderid, $ordertype,$partneruid, $startdate, $enddate);
+    $result   = (new BusinessFlowModel())->FilterTransactionData($sunquery, $page, $limit) ?? [];
     $response = [
-        'response' => "success",
         'transactions' => $result['data'] ?? [],
-        'totalPages' => !empty($result['total']) ? ceil($result['total'] / $limit) : 0,
+        'totalPages' => ceil($result['total'] / $limit),
     ];
 
     echo json_encode($response);

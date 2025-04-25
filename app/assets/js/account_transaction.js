@@ -62,8 +62,6 @@ $(function () {
                         <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${completes}</span></td>
                         <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
                       </tr>
-                       
-
                   `;
         });
 
@@ -200,8 +198,8 @@ $(function () {
 
     $(".playertrans").click(function () {
         let direction = $(this).val();
-        const tableWrapper = $(".table-wrapper");
-        const tableWrappers = document.querySelector(".table-wrapper");
+        const tableWrapper = $(".table-wrapperaccount");
+        const tableWrappers = document.querySelector(".table-wrapperaccount");
         const scrollAmount = 1000; // Adjust as needed
         const scrollOptions = {
             behavior: "smooth",
@@ -252,7 +250,7 @@ $(function () {
         const partneruid = $(".selectpartner").val();
         const startdatrans = $("#startdatrans").val();
         const enddatetrans = $("#enddatetrans").val();
-          console.log(partneruid);
+       //   console.log(partneruid);
         //  return
      
         $(".loadertrans").removeClass("bx-check-double").addClass("bx-loader bx-spin");

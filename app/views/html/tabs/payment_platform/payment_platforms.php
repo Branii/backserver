@@ -431,7 +431,7 @@
                             <option value="momo">Mobile Money</option>
                             <option value="bank">Bank</option>
                             <option value="crypto">Crypto</option>
-                            <option value="hidden">Hidden</option>
+                         
                         </select>
                         <label>
                             <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
@@ -451,6 +451,7 @@
                             <option value="">-Select Status-</option>
                             <option value="active">Active</option>
                             <option value="inactive">Inactive</option>
+                            <option value="hidden">Hidden</option>
                         </select>
                         <label>
                             <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
