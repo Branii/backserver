@@ -408,14 +408,10 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab home">
             <?php include "tabs/home.php" ?>
           </div>
+           <!--Business Flow management-->
           <div class="chrome__tab account_transaction">
             <?php include "tabs/businessflow/account_transaction.php" ?>
           </div>
-
-          <div class="chrome__tab  lottery_basic_params">
-            <?php include "tabs/game_management/lottery_basic_param.php" ?>
-          </div>
-
 
           <div class="chrome__tab game_getting_statistics">
             <?php include "tabs/businessflow/game_getting_statistics.php" ?>
@@ -429,6 +425,8 @@ $fullname = (new Controller)->getUsername($adminEmail);
             <?php include "tabs/businessflow/trackbet.php" ?>
           </div>
 
+
+         <!--financial management-->
           <div class="chrome__tab Deposit">
             <?php include "tabs/financialmanage/deposit.php" ?>
           </div>
@@ -440,7 +438,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab Withdrawal">
             <?php include "tabs/financialmanage/withdrawal.php" ?>
           </div>
-
+             <!--User management-->
           <div class="chrome__tab Userlogs">
             <?php include "tabs/accountmanage/userlogs.php" ?>
           </div>
@@ -449,10 +447,16 @@ $fullname = (new Controller)->getUsername($adminEmail);
             <?php include "tabs/accountmanage/userlist.php" ?>
           </div>
 
+          <div class="chrome__tab useroverview">
+            <?php include "tabs/accountmanage/useroverview.php" ?>
+          </div>
+
+           <!--Promotion management-->
           <div class="chrome__tab Invitation">
             <?php include "tabs/promotionmanage/invitation_referallink.php" ?>
           </div>
 
+          <!--Agent management-->
           <div class="chrome__tab quota">
             <?php include "tabs/agentmanage/quota.php" ?>
           </div>
@@ -483,17 +487,25 @@ $fullname = (new Controller)->getUsername($adminEmail);
              <!--game management-->
              <div class="chrome__tab  lottery_parameters">
             <?php include "tabs/game_management/lottery_parameters.php" ?>
-          </div>
+           </div>
 
           <div class="chrome__tab  lottery_draw">
             <?php include "tabs/game_management/lottery_draws.php" ?>
           </div>
 
+          <div class="chrome__tab  lottery_basic_params">
+            <?php include "tabs/game_management/lottery_basic_param.php" ?>
+          </div>
+
+           <!--announcement-->
           <div class="chrome__tab announcement">
             <?php include "tabs/announcement/announcement.php" ?>
           </div>
+          <div class="chrome__tab unotification">
+            <?php include "tabs/announcement/usernotification.php" ?>
+          </div>
 
-
+              <!--paymentplstform-->
           <div class="chrome__tab payment_platform">
             <?php include "tabs/payment_platform/payment_platforms.php" ?>
           </div>
@@ -562,6 +574,8 @@ $fullname = (new Controller)->getUsername($adminEmail);
     <script src="<?php echo BASE_URL; ?>assets/js/partners.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/payment_platforms.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/usernotification.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/useroverview.js"></script>
+    
    
 
     
@@ -591,7 +605,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
 
 
       document.addEventListener('DOMContentLoaded', function() {
-        const tableContainer = document.querySelector('.table-wrapper');
+        const tableContainer = document.querySelector('.table-wrapperaccount');
         const headerRow = document.querySelector('.accheaderrow');
 
         tableContainer.addEventListener('scroll', function() {

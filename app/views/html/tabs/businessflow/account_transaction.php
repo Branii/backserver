@@ -77,7 +77,7 @@
         cursor: pointer;
     }
 
-    .table-wrapper {
+    .table-wrapperaccount {
         overflow: hidden;
         /* Hide the default scrollbar */
         white-space: nowrap;
@@ -138,27 +138,27 @@
     }
 
     /* Custom Scrollbar for Webkit Browsers */
-    .table-wrapper::-webkit-scrollbar {
+    .table-wrapperaccount::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
         /* Slimmer scrollbar height for horizontal scrolling */
     }
 
-    .table-wrapper::-webkit-scrollbar-track {
+    .table-wrapperaccount::-webkit-scrollbar-track {
         background: #f1f1f1;
         /* Lighter background for track */
         border-radius: 5px;
     }
 
-    .table-wrapper::-webkit-scrollbar-thumb {
+    .table-wrapperaccount::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .table-wrapper::-webkit-scrollbar-thumb:hover {
+    .table-wrapperaccount::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
         /* Darker blue on hover */
     }
@@ -278,8 +278,12 @@
                     <option value="9"><?= $translator['Sending Red Envelope']; ?></option>
                     <option value="10"><?= $translator['Red Envelope Receive']; ?></option>
                     <option value="11"><?= $translator['Bet Refund']; ?></option>
+                </select>
+
+                <select name="lotteryname" class="form-control form-select queryholdertransaction selectpartner"> 
 
                 </select>
+           
                 <input type="date" class="form-control queryholdertransaction" id="startdatrans" aria-describedby="name"
                     placeholder="Name" />
                 <input type="date" class="form-control queryholdertransaction" id="enddatetrans" aria-describedby="name"
@@ -315,7 +319,7 @@
         </span>
     </div>
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapper" id="mask"
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperaccount" id="mask"
             style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
                 <thead class="text-dark fs-4 tbl-header">
@@ -325,6 +329,10 @@
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
+                        </th>
+
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Partner Name</h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Type']; ?></h6>
@@ -377,10 +385,10 @@
                 <!-- <button type="button" class="btn bg-white-subtle player" value="start">
                     <i class="bx bx-chevrons-left" style="font-size: 20px;"></i>
                 </button> -->
-                <button type="button" class="btn bg-white-subtle player" value="left">
+                <button type="button" class="btn bg-white-subtle playertrans" value="lefttrans">
                     <i class="bx bx-chevron-left" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle player" value="right">
+                <button type="button" class="btn bg-white-subtle playertrans" value="righttrans">
                     <i class="bx bx-chevron-right" style="font-size: 20px;"></i>
                 </button>
                 <!-- <button type="button" class="btn bg-white-subtle player" value="end">

@@ -122,11 +122,12 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function filtertransactions($username,$orderid,$ordertype,$startdate,$enddate,$pageNumber,$limit){
+    public function filtertransactions($username,$orderid,$ordertype,$partneruid,$startdate,$enddate,$pageNumber,$limit){
         $this->view('exec/businessflow',[
             'username' => $username,
             'orderid' => $orderid,
             'ordertype' => $ordertype,
+            'partneruid'=>$partneruid,
             'startdate' => $startdate,
             'enddate' => $enddate, 
             'flag' => 'filtertransactions',
@@ -263,7 +264,10 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-
+    public function  fetchPartnername(){
+        $this->view('exec/businessflow',[ 'flag' => 'partnernames']);
+        $this->view->render();
+    }
     
 
    //
@@ -376,6 +380,7 @@ class adminController extends Controller {
         $this->view('exec/payment_platform', ["page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatformsForPartner']);
         $this->view->render();
     }
+
     public function  fetchPartners($page , $limit)
     {  
         $this->view('exec/partners', ["page" => $page, "limit" => $limit,'flag' => 'fetch_partners']);
@@ -512,9 +517,17 @@ class adminController extends Controller {
         $this->view('exec/account_manage', ['user_id' => $userID,'depositLimit' => $depositLimit ,'withdrawalLimit' => $withdrawalLimit,'rebate' => $rebate,"state" => $state, "dailyBettingTotalLimit" => $dailyBettingLimit,'flag' => 'updateUserData',]);
         $this->view->render();
     }
-    
-    
-  
+
+      //NOTE -
+    ////////////// USER OvERVIEW -//////////
+
+    public function userviewdata()
+    {
+        $this->view('exec/account_manage', ['flag' => 'userviewdata']);
+        $this->view->render();
+     }
+
+
       //NOTE -
     //////////////INVITATION & REFERAL LINK -//////////
     public function userlinkdata($pageNumber, $limit)
@@ -761,37 +774,84 @@ class adminController extends Controller {
             $this->view->render();
     }
     
-    
+        //for user notification
+        public function fetchusernotification($pageNumber, $limit)
+        {
+            $this->view('exec/annoucement_management', [
+                'flag' => 'viewnotification',
+                'page' => $pageNumber,
+                'limit' => $limit
+            ]);
+            $this->view->render();
+        }
+
+        public function filteruserNotifys($username,$messagestype,$startdepo,$enddepo,$page,$pageLimit)
+        {
+                $this->view('exec/annoucement_management', [
+                'username' => $username,
+                'messagestype' => $messagestype,
+                'startdate' => $startdepo,
+                'enddate' => $enddepo,
+                'page' => $page,
+                'limit' => $pageLimit,
+                'flag' => 'filterusernotfys'
+            ]);
+            $this->view->render();
+        }
+
+
+         //Payment Platform
+        public function fetchPaymentPlatform($page ,$limit){  
+            $this->view('exec/payment_platform', ["page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
+            $this->view->render();
+         }
+
+        public function addnewpayment(){  
+            $this->view('exec/payment_platform',['flag' => 'addpayment']);
+            $this->view->render();
+        }
+
+        public function deletepayment($payid)
+        {
+            $this->view('exec/payment_platform', ['payid' => $payid,'flag' => 'deletepayment']);
+            $this->view->render();
+        }
+
+        
+        public function editpayment($payid)
+        {
+            $this->view('exec/payment_platform', ['payid' => $payid,'flag' => 'editpayment']);
+            $this->view->render();
+        }
    
-//for user notification
-public function fetchusernotification($pageNumber, $limit)
-{
-    $this->view('exec/annoucement_management', [
-        'flag' => 'viewnotification',
-        'page' => $pageNumber,
-        'limit' => $limit
-    ]);
-    $this->view->render();
-}
+        public function updateplatform($typecurrency,$maxiamounts,$minamount,$statecurrent,$paymentids)
+        {
+                $this->view('exec/payment_platform', [
+                    'typecurrency' => $typecurrency,
+                    'maxiamounts' => $maxiamounts,
+                    'minamount' => $minamount,
+                    'statecurrent' => $statecurrent,
+                    'paymentids' => $paymentids,
+                    'flag' => 'updateplatform'
+                ]);
+                $this->view->render();
+        }
+
+        public function filterpayments($curencytypes,$stautspayment,$startdepo,$enddepo,$page,$pageLimit)
+        {
+                $this->view('exec/payment_platform', [
+                'curencytypes' => $curencytypes,
+                'stautspayment' => $stautspayment,
+                'startdate' => $startdepo,
+                'enddate' => $enddepo,
+                'page' => $page,
+                'limit' => $pageLimit,
+                'flag' => 'filterpayments'
+            ]);
+            $this->view->render();
+        }
 
 
-public function filteruserNotifys($username,$messagestype,$startdepo,$enddepo,$page,$pageLimit)
-{
-        $this->view('exec/annoucement_management', [
-        'username' => $username,
-        'messagestype' => $messagestype,
-        'startdate' => $startdepo,
-        'enddate' => $enddepo,
-        'page' => $page,
-        'limit' => $pageLimit,
-        'flag' => 'filterusernotfys'
-    ]);
-    $this->view->render();
-}
-
-
-
-    
 
     //languages
 

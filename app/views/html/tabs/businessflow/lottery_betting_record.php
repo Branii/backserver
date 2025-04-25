@@ -371,6 +371,10 @@
                         <option value="7"><?= $translator['Refund']; ?></option>
                     </select>
 
+                    <select name="lotteryname" class="form-control form-select queryholderbet selectpartner"> 
+
+                     </select>
+
                     <input name="startdate" type="date" class="form-control queryholderbet startdates" aria-describedby="name" placeholder="Name" />
 
                     <input name="enddate" type="date" class="form-control queryholderbet enddates" aria-describedby="name" placeholder="Name" />

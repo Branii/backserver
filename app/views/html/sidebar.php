@@ -8,11 +8,8 @@ $partners = $definedPermissions["partners"];
 foreach ($userPermissions as $sidebar => $menu): ?>
     <div class="accordion-item accord-item">
         <div class="accordion-header" onclick="toggleAccordion(this)">
-            <span style="margin-left:15px">
-                <?= $definedPermissions['title'][$sidebar]['icon'] ?>
-                <span style="font-size:16px">
-                    <?= $translator[$definedPermissions['title'][$sidebar]['title']] ?>
-                </span>
+            <span style="margin-left:15px"><?= $definedPermissions['title'][$sidebar]['icon'] ?>
+              <span style="font-size:16px"><?= $translator[$definedPermissions['title'][$sidebar]['title']] ?></span>
             </span>
         </div>
         <div class="accordion-content">

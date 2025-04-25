@@ -35,7 +35,7 @@ $(function () {
   let currentPage = 1;
   let pageLimit = 25;
 
-  async function fetchusernotification(page) {
+  async function fetchusernotification(page,pageLimit) {
       try {
           const response = await fetch(`../admin/fetchusernotification/${partnerID}/${page}/${pageLimit}`);
           const data = await response.json();
@@ -112,7 +112,7 @@ $(function () {
         const messagestype = $(".messagesread").val();
         const startnotfys = $(".startnotfys").val();
         const endnotfys = $(".endnotfys").val();
-        console.log(username,messagestype,startnotfys,endnotfys);
+        // console.log(username,messagestype,startnotfys,endnotfys);
         filterUserNotifys(username, messagestype, startnotfys, endnotfys, currentPage, pageLimit)
    })
 

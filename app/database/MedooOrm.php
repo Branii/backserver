@@ -6,7 +6,7 @@ class MedooOrm {
 
     private static $connection;
 
-    protected static $DB_NAME_MAP = [1 => "eben_lottery_test" , 2 => "lottery_test"];
+    protected static $DB_NAME_MAP = [1 => "eben_lottery_test" , 2 => "lottery_test",];
     public function __construct() {
         self::$connection = new Medoo([
             "type"=> $_ENV['DB_TYPE'],

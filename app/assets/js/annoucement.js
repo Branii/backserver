@@ -256,15 +256,15 @@ $(function () {
 
     //delete message
     $(document).on("click", ".deletemessage", function () {
-    const messageid = $(this).attr("datas");
-    $.post(`../admin/deleteannoucement/${messageid}`, function (response) {
-    if (response) {
-        showToast("Success", response, "success");
-        fetchmessage(currentPage, pageLimit);
-    } else {
-        showToast("Heads up!!", "failed", "info");
-    }
-    });
+        const messageid = $(this).attr("datas");
+        $.post(`../admin/deleteannoucement/${messageid}`, function (response) {
+        if (response) {
+            showToast("Success", response, "success");
+            fetchmessage(currentPage, pageLimit);
+        } else {
+            showToast("Heads up!!", "failed", "info");
+        }
+        });
     });
 
     //edit message
@@ -280,20 +280,20 @@ $(function () {
     });
 
     $(document).on("click", ".updatemessagebtn", function () {
-    const msgtitle = $("#note-has-titles").val();
-    const msgcontent = encodeURIComponent($("#descriptions").val());
-    const updatemsgid = $("#updatemsgid").val();
-    $(".loaderfinanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
-    $("#editmessage").modal("hide");
-    $.post(`../admin/updateannoucement/${msgtitle}/${msgcontent}/${updatemsgid}`, function (response) {
-    $(".loaderfinanup").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
-    if (response) {
-        showToast("Success", response, "success");
-        fetchmessage(currentPage, pageLimit);
-    } else {
-        showToast("Heads up!!", response, "info");
-    }
-    });
+        const msgtitle = $("#note-has-titles").val();
+        const msgcontent = encodeURIComponent($("#descriptions").val());
+        const updatemsgid = $("#updatemsgid").val();
+        $(".loaderfinanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
+        $("#editmessage").modal("hide");
+        $.post(`../admin/updateannoucement/${msgtitle}/${msgcontent}/${updatemsgid}`, function (response) {
+        $(".loaderfinanup").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+        if (response) {
+            showToast("Success", response, "success");
+            fetchmessage(currentPage, pageLimit);
+        } else {
+            showToast("Heads up!!", response, "info");
+        }
+        });
     });
 
     //modal
