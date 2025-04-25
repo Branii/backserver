@@ -1,5 +1,6 @@
 $(function(){
 
+  const partnerID = $("#partner-holder").attr("data-partner-id");
   function showToast(title, message, type) {
       $.toast({
         position: "bottom-right",
@@ -46,7 +47,7 @@ $(function(){
 
   async function getAllGames() {
       try {
-        const response = await fetch(`../admin/getAllgames`);
+        const response = await fetch(`../admin/getAllgames/${partnerID}`);
         const data = await response.json();
         let html = ""
         html += ``
@@ -71,7 +72,7 @@ $(function(){
 
       try {
         $.ajax({
-          url:`../admin/getSpecificDraws/${gameID}/${issueNumber}/${status}/${startDate}/${endDate}/${currentPage}/${pageLimit}`,
+          url:`../admin/getSpecificDraws/${partnerID}/${gameID}/${issueNumber}/${status}/${startDate}/${endDate}/${currentPage}/${pageLimit}`,
           type: "POST",
           beforeSend: function(){
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

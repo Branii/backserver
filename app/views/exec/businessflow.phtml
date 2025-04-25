@@ -190,7 +190,8 @@ if ($flag == "viewBetstake") {
 }
 
 if ($flag == "fetchLotteryname") {
-    $result = (new BusinessFlowModel())->fetchLotteryname();
+    $partnerID = isset($this->viewData['partner_id']) ? $this->viewData['partner_id'] : '';
+    $result = (new BusinessFlowModel())->fetchLotteryname($partnerID);
     echo json_encode($result);
 }
 

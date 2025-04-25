@@ -154,8 +154,8 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function fetchLotteryname(){
-        $this->view('exec/businessflow',['flag' => 'fetchLotteryname']);
+    public function fetchLotteryname($partnerID){
+        $this->view('exec/businessflow',['partner_id' => $partnerID,'flag' => 'fetchLotteryname']);
         $this->view->render();
     }
  

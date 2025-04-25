@@ -1,4 +1,6 @@
 $(function () {
+
+    const partnerID = $("#partner-holder").attr("data-partner-id");
   function showToast(title, message, type) {
       $.toast({
           position: "bottom-right",
@@ -35,7 +37,7 @@ $(function () {
 
   async function fetchusernotification(page) {
       try {
-          const response = await fetch(`../admin/fetchusernotification/${page}/${pageLimit}`);
+          const response = await fetch(`../admin/fetchusernotification/${partnerID}/${page}/${pageLimit}`);
           const data = await response.json();
           //console.log(response);
           //  return
@@ -115,7 +117,7 @@ $(function () {
    })
 
    async function filterUserNotifys(username, messagestype, startnotfys, endnotfys, currentPage, pageLimit) {
-    $.post(`../admin/filteruserNotifys/${username}/${messagestype}/${startnotfys}/${endnotfys}/${currentPage}/${pageLimit}`, 
+    $.post(`../admin/filteruserNotifys/${partnerID}/${username}/${messagestype}/${startnotfys}/${endnotfys}/${currentPage}/${pageLimit}`, 
         function (response) {
         try {
         const data = JSON.parse(response);

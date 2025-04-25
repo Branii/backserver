@@ -1,4 +1,5 @@
 $(function () {
+    const partnerID = $("#partner-holder").attr("data-partner-id");
   function tableScrollWithdraw() {
       const tableContainerFinanceWidrl = document.querySelector(".table-wrapperwithdraw");
       const headerRowFinanceWidrl = document.querySelector(".tbl-row-widrl");
@@ -58,7 +59,7 @@ $(function () {
 
   async function fetchwithdraw(pagewithdraw) {
       try {
-          const partnerID = $("#partner-holder").attr("data-partner-id");
+         
           let response = await fetch(`../admin/fetchwithdraw/${partnerID}/${pagewithdraw}/${pageLimit}`);
           response = await response.json();
           if (response.status === "error") {

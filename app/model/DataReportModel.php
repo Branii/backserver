@@ -12,12 +12,12 @@ class DataReportModel extends MedooOrm
 {
 
 
-    public static function fetch_users_win_loss_report(int $currentPage = 1,$limit = 10, String $orderColumn = "uid"):array{
+    public static function fetch_users_win_loss_report($partnerID,int $currentPage = 1,$limit = 10, String $orderColumn = "uid"):array{
       
         try{
         $table_name = "users_test";
         $offset = ($currentPage - 1) * 10;
-        $db = parent::getLink();
+        $db = parent::openLink($partnerID);
         $stmt = $db->query(
             "SELECT *,(SELECT COUNT(*) FROM {$table_name}) AS num_users FROM {$table_name} ORDER BY {$orderColumn} DESC LIMIT :offset, :limit",
             [
@@ -36,9 +36,9 @@ class DataReportModel extends MedooOrm
    
     }
 
-    public static function FiltertLotteryNames($lottery_name = ""): Mixed{
+    public static function FiltertLotteryNames($partnerID,$lottery_name = ""): Mixed{
 
-        $res = parent::openLink()->query("SELECT gt_id,name  FROM game_type WHERE name LIKE :search ORDER BY  CASE 
+        $res = parent::openLink($partnerID)->query("SELECT gt_id,name  FROM game_type WHERE name LIKE :search ORDER BY  CASE 
                 WHEN name LIKE :startsWith THEN 1  -- Prioritize lottery names that start with the search term
                 ELSE 2                                -- Other matches come next
                 END, lottery_type ASC LIMIT 50", [
@@ -78,11 +78,11 @@ class DataReportModel extends MedooOrm
     }
     }
 
-    public static function fetchUserByID($user_id):array{
+    public static function fetchUserByID($partnerID,$user_id):array{
 
         try{
             $table_name = "users_test";
-            $service = parent::getLink();
+            $service = parent::openLink($partnerID);
             $sql     = "SELECT * FROM {$table_name} WHERE uid=:uid";
             $data =  $service->query( $sql, [":uid" => intval($user_id)] )->fetchAll(PDO::FETCH_OBJ);
             return self::response($data);
@@ -92,11 +92,11 @@ class DataReportModel extends MedooOrm
 
     }
 
-    public static function filterWinLossRecordsForUser($user_id,$filters = [],bool $isForOnlyUser = false,bool $addAgent = true){
+    public static function filterWinLossRecordsForUser($partnerID,$user_id,$filters = [],bool $isForOnlyUser = false,bool $addAgent = true){
         try{
 
         $table_name = "transaction";
-        $user_and_subs =  !$isForOnlyUser ? self::fetchFullHierarchyV2($user_id,) : self::fetchUserByID($user_id);
+        $user_and_subs =  !$isForOnlyUser ? self::fetchFullHierarchyV2($partnerID,$user_id,) : self::fetchUserByID( $partnerID,$user_id);
 
         if($user_and_subs["status"] === "error") return $user_and_subs;
         $place_holders = [];
@@ -165,7 +165,7 @@ class DataReportModel extends MedooOrm
           
 
            
-       $service = parent::getLink();
+       $service = parent::openLink($partnerID);
        if(!$isForOnlyUser){
            unset($subs_uids[array_search($user_id,$subs_uids)]);
        } 
@@ -217,10 +217,10 @@ class DataReportModel extends MedooOrm
 
    
 
-public static function allSubs($agent_id, int $currentPage = 1, int $limit = 10, bool $addAgent = false) {
+public static function allSubs($partnerID,$agent_id, int $currentPage = 1, int $limit = 10, bool $addAgent = false) {
     try{
         $table_name = "users_test";
-        $db = parent::getLink();
+        $db = parent::openLink($partnerID);
         $offset = ($currentPage - 1) * $limit;
         $include_agent = $addAgent ? " || uid=:agent_id " : " AND uid !=:agent_id " ;
         // Construct raw SQL query
@@ -305,12 +305,12 @@ public static function fetchFullHierarchy($agent_id) {
         }
         }
 
-    public static function fetchFullHierarchyV2($agent_id) {
+    public static function fetchFullHierarchyV2($partnerID,$agent_id) {
         try{
 
 
 
-            $db = parent::getLink();
+            $db = parent::openLink($partnerID);
 
 
             // Construct query for all active bettors
@@ -371,9 +371,9 @@ public static function fetchFullHierarchy($agent_id) {
 
 
 
-    public static function fetch_top_agents($currentPage = 1, $limit = 10 , string $tblid = "uid"):array {
+    public static function fetch_top_agents($partnerID,$currentPage = 1, $limit = 10 , string $tblid = "uid"):array {
         try{
-            $database = parent::getLink();
+            $database = parent::openLink($partnerID);
 
             // Pagination setup
             $offset = ($currentPage - 1) * $limit;
@@ -537,7 +537,7 @@ public static function fetchFullHierarchy($agent_id) {
         return    self::response("Internal Server Error",false);
         }
     }
-public static function filterGetBetTicketsNum($user_id, $bet_tables, $userData)
+public static function filterGetBetTicketsNum($partnerID,$user_id, $bet_tables, $userData)
     {
 
         try{
@@ -575,7 +575,7 @@ public static function filterGetBetTicketsNum($user_id, $bet_tables, $userData)
                 $params[':end_date']   = $end;
             }
 
-            $database = parent::openLink();
+            $database = parent::openLink($partnerID);
 
             $query = "
         SELECT 
@@ -640,7 +640,7 @@ public static function filterGetBetTicketsNum($user_id, $bet_tables, $userData)
     }
 
 
-public static function v2($user_id,$bet_tables,$userData):array{
+public static function v2($partnerID,$user_id,$bet_tables,$userData):array{
 
     try{
         $params = [
@@ -724,7 +724,7 @@ public static function v2($user_id,$bet_tables,$userData):array{
         ) AS aggregated_results;
     ";
 
-    $database = parent::openLink();
+    $database = parent::openLink($partnerID);
     $results = $database->query($finalQuery, $params)->fetch(PDO::FETCH_ASSOC);
 
     $res =  [
@@ -747,7 +747,7 @@ public static function v2($user_id,$bet_tables,$userData):array{
 
     }
 
-    public static function filter_total_valid_amount_v2($user_id,$bet_tables,$userData):array{
+    public static function filter_total_valid_amount_v2($partnerID,$user_id,$bet_tables,$userData):array{
         try{
 
             $betTableConditions = array_map(function($betTable_array) use ($user_id, $userData) {
@@ -789,8 +789,8 @@ public static function v2($user_id,$bet_tables,$userData):array{
                 ];
             }, $bet_tables);
         
-            $summedResults = array_map(function($betTableQuery) {
-                $database = parent::openLink();
+            $summedResults = array_map(function($betTableQuery) use ($partnerID) {
+                $database = parent::openLink($partnerID);
                 $results = $database->query($betTableQuery['query'], $betTableQuery['params'])->fetch(PDO::FETCH_ASSOC);
                 return ($results) ? ($results['sba'] + $results['tba']) : 0;
             }, $betTableConditions);
@@ -803,7 +803,7 @@ public static function v2($user_id,$bet_tables,$userData):array{
             return self::response("Interval Server Error",false);
         }
     }
-    public static function filter_total_valid_amount($user_id, $bet_tables, $userData)
+    public static function filter_total_valid_amount($partnerID,$user_id, $bet_tables, $userData)
     {
 
         try {
@@ -833,7 +833,7 @@ public static function v2($user_id,$bet_tables,$userData):array{
                 }
             }
 
-            $database = parent::openLink();
+            $database = parent::openLink($partnerID);
 
            
             // Execute query using Medoo's query method

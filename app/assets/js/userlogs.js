@@ -1,4 +1,6 @@
 $(function () {
+
+    const partnerID = $("#partner-holder").attr("data-partner-id");
   function showToast(title, message, type) {
       $.toast({
           position: "bottom-right",
@@ -43,7 +45,7 @@ $(function () {
 
   async function fetchUserlogs(page, pageLimit) {
       try {
-          const response = await fetch(`../admin/userlogsdata/${page}/${pageLimit}`);
+          const response = await fetch(`../admin/userlogsdata/${partnerID}/${page}/${pageLimit}`);
           const data = await response.json();
           //  console.log(response);
 
@@ -60,7 +62,7 @@ $(function () {
 
   async function filterUserlogs(usernamelog, startdatelog, enddatelog, currentPage, pageLimit) {
       try {
-          const response = await fetch(`../admin/filterUserlogs/${usernamelog}/${startdatelog}/${enddatelog}/${currentPage}/${pageLimit}`);
+          const response = await fetch(`../admin/filterUserlogs/${partnerID}/${usernamelog}/${startdatelog}/${enddatelog}/${currentPage}/${pageLimit}`);
           const data = await response.json();
           console.log(response);
           //  return
@@ -243,7 +245,7 @@ $(function () {
   function fetchUserslogs(query) {
       let optionsHtml = "";
 
-      $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+      $.post(`../admin/Searchusername/${partnerID}/${encodeURIComponent(query)}`, function (response) {
           try {
               response = typeof response === "string" ? JSON.parse(response) : response;
               response.forEach((user) => {

@@ -15,8 +15,8 @@ class MEDOOHelper extends MedooOrm{
         return $req->fetch(PDO::FETCH_ASSOC);;
     }
 
-    public static function selectAll($table, $columns, $where = []) {
-        $req = parent::openLink()->select($table, $columns, $where);
+    public static function selectAll($partnerID,$table, $columns, $where = []) {
+        $req = parent::openLink($partnerID)->select($table, $columns, $where);
         return $req;
     }
     public static function selectAllOrderBy($table, $columns, $order = []) {

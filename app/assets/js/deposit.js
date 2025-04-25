@@ -70,7 +70,7 @@ $(function () {
     async function fetchDeposit(page,pageLimit) {
       try {
         const response = await fetch(
-          `../admin/fetchDeposit/${page}/${pageLimit}`
+          `../admin/fetchDeposit/${partnerID}/${page}/${pageLimit}`
         );
         const data = await response.json();
     
@@ -128,7 +128,7 @@ $(function () {
   }
   async function filterdeposit(username,depositchanel,depositid,stautsdeposit,startdepo,enddepo,currentPage,pageLimit) {
     try {
-        const response = await fetch(`../admin/filterdeposits/${username}/${depositchanel}/${depositid}/${stautsdeposit}/${startdepo}/${enddepo}/${currentPage}/${pageLimit}`);
+        const response = await fetch(`../admin/filterdeposits/${partnerID}/${username}/${depositchanel}/${depositid}/${stautsdeposit}/${startdepo}/${enddepo}/${currentPage}/${pageLimit}`);
 
         const data = await response.json();
         if (data.response == "error") {
@@ -293,7 +293,7 @@ $(function () {
     function fetchUsers(query) {
         let optionsHtml = '';
     
-        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+        $.post(`../admin/Searchusername/${partnerID}/${encodeURIComponent(query)}`, function (response) {
             try {
                 response = typeof response === 'string' ? JSON.parse(response) : response;
                 response.forEach(user => {

@@ -131,9 +131,9 @@ class BusinessFlowModel extends MEDOOHelper
    //NOTE -
    ////////////// LOTTERY BETTING-//////////
 
-   public static function getAllGameIds(): array
+   public static function getAllGameIds($partnerID): array
    {
-      $res = parent::selectAll("gamestable_map", ["bet_table", "game_type"]);
+      $res = parent::selectAll($partnerID,"gamestable_map", ["bet_table", "game_type"]);
       return $res;
    }
 

@@ -1,4 +1,7 @@
 $(function () {
+
+
+    const partnerID = $("#partner-holder").attr("data-partner-id");
     function showToast(title, message, type) {
         $.toast({
             position: "bottom-right",
@@ -141,7 +144,7 @@ $(function () {
 
     async function fetchTrasaction(page, pageLimit) {
         try {
-            const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
+            const response = await fetch(`../admin/transactiondata/${partnerID}/${page}/${pageLimit}`);
             const data = await response.json();
               //console.log(data)
              // return
@@ -259,7 +262,7 @@ $(function () {
 
     async function filterTrasaction(transusername, transactionId, ordertypetrans, startdatrans, enddatetrans, currentPage, pageLimit) {
         try {
-            const response = await fetch(`../admin/filtertransactions/${transusername}/${transactionId}/${ordertypetrans}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
+            const response = await fetch(`../admin/${partnerID}/filtertransactions/${transusername}/${transactionId}/${ordertypetrans}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
             const data = await response.json();
             console.log(response);
           //  return
@@ -410,7 +413,7 @@ $(function () {
 
     async function fetchTrasactionBet(transactionId) {
         try {
-            const response = await fetch(`../admin/getTransactionBet/${transactionId}`);
+            const response = await fetch(`../admin/${partnerID}/getTransactionBet/${transactionId}`);
             const transactiondata = await response.json();
             if (transactiondata.deposit) {
                 populatedepositeTable(transactiondata);
@@ -523,7 +526,7 @@ $(function () {
     function fetchbetUser(query) {
         let optionsHtml = "";
 
-        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+        $.post(`../admin/${partnerID}/Searchusername/${encodeURIComponent(query)}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
 

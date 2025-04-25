@@ -1,5 +1,5 @@
 $(() =>{
-
+   
 
 
     $(document).on("click","#ptns-addPartnerBtn",function(){

@@ -39,7 +39,7 @@ $(function () {
 
   async function fetchUserlinks(page, pageLimit) {
       try {
-          const response = await fetch(`../admin/userlinkdata/${page}/${pageLimit}`);
+          const response = await fetch(`../admin/userlinkdata/${partnerID}/${page}/${pageLimit}`);
           const data = await response.json();
           $("#maskreferal").LoadingOverlay("hide");
           renderuserlinks(data.userlinks);
@@ -52,7 +52,7 @@ $(function () {
 
   async function filterUserlinks(username, linkstart, linkenddate, currentPage, pageLimit) {
       try {
-          const response = await fetch(`../admin/filterUserlinks/${username}/${linkstart}/${linkenddate}/${currentPage}/${pageLimit}`);
+          const response = await fetch(`../admin/filterUserlinks/${partnerID}/${username}/${linkstart}/${linkenddate}/${currentPage}/${pageLimit}`);
           const data = await response.json();
           // console.log(response)
           //  return
@@ -221,7 +221,7 @@ $(function () {
   function fetchUserlink(query) {
       let optionsHtml = "";
 
-      $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+      $.post(`../admin/Searchusername/${partnerID}/${encodeURIComponent(query)}`, function (response) {
           try {
               response = typeof response === "string" ? JSON.parse(response) : response;
 
