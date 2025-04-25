@@ -152,10 +152,7 @@ class UserManageModel extends MEDOOHelper
             $subQuery = implode(' AND ', $filterConditions);
         }
 
-        // Add ordering and limit to the query (you can also parameterize order if needed)
         $subQuery .= " ORDER BY created_at DESC";
-
-        // Return the final subquery
         return $subQuery;
     }
 
@@ -1021,20 +1018,12 @@ class UserManageModel extends MEDOOHelper
         LIMIT :offset, :limit
         ";
 
-        $countSql = "
-                SELECT 
-                    COUNT(*) AS total_count
-                FROM 
-                    user_logs
-            WHERE
-                $subQuery
-                ";
-
+        $countSql = " SELECT COUNT(*) AS total_count FROM user_logs WHERE $subQuery";
         $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
         $totalRecords = parent::query($countSql);
         $totalRecords = $totalRecords[0]['total_count'];
-        $lastQuery = MedooOrm::openLink()->log();
-        return ['data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery[0]];
+        //$lastQuery = MedooOrm::openLink()->log();
+        return ['data' => $data, 'total' => $totalRecords];
     }
 
     public static function FilterUserlogsDataSubQuery($username, $startdate, $enddate)
@@ -1070,41 +1059,5 @@ class UserManageModel extends MEDOOHelper
         return $data = json_decode($rebatelist, true);
         //return   $datareverse = array_reverse($data);
     }
-
-    //user over view
-
-    // 
-    public static function FetchUserOverViewData()
-    {
-        // $data = parent::query(
-        //     "SELECT
-        //         (SELECT COUNT(*) FROM users_test) AS total_users,
-        //         (SELECT COUNT(*) FROM users_test WHERE last_login >= NOW() - INTERVAL 1 DAY) AS active_users,
-        //         (SELECT COUNT(*) FROM users_test WHERE created_at >= NOW() - INTERVAL 7 DAY) AS new_users_week,
-        //         (SELECT COUNT(*) FROM users_test WHERE last_login < NOW() - INTERVAL 30 DAY) AS inactive_users"
-        // );
-
-        //  return ['data' => $data[0]];
-             // Calculate the starting point for pagination
-             $startpoint = $page * $limit - $limit;
-             $sql = "
-             SELECT 
-                 uid, username,email,contact, agent_name, balance, recharge_level, user_state, 
-                 last_login, rebate, created_at, agent_id,account_type,reg_type,nickname  
-             FROM users_test
-             WHERE account_type = 2
-             ORDER BY uid DESC
-             LIMIT :startpoint, :limit
-           ";
-     
-             $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
-             // Count the total records with the same filter (for pagination)
-             $totalRecords = parent::count("users_test");
-     
-             // Return the paginated data along with the total record count
-             return ['data' => $data, 'total' => $totalRecords];
-         
-    }
-    
 
 }

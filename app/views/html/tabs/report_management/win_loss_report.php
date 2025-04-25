@@ -91,7 +91,7 @@
     .queryholderlist {
         width: 19%;
         margin-right: 5px;
-        background-color: #FFF;
+        background-color: #fff;
     }
 
     .queryholderxx {
@@ -137,7 +137,6 @@
     .no-resultslist img {
         position: relative;
         top: 100px;
-
     }
 
     /* Custom Scrollbar for Webkit Browsers */
@@ -223,67 +222,66 @@
     .send-back {
         position: absolute !important;
         z-index: 0 !important;
-        width: 18.5% ;
-
+        width: 18.5%;
     }
     li.name-items:first-child {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-}
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
 
-li.name-items {
-    color: #5a6a85;
-    padding: 9px 12px;
-}
-li.name-items:last-child {
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
-.usr-res-wrapper {
-    position: absolute;
-    width: 17%;
-    border-radius: 5px;
-    max-height: fit-content;
-    background: #fff;
-    border: 1px solid #dfe5ef;
-    display:none;
-    z-index: 10;
+    li.name-items {
+        color: #5a6a85;
+        padding: 9px 12px;
+    }
+    li.name-items:last-child {
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+    .usr-res-wrapper {
+        position: absolute;
+        width: 17%;
+        border-radius: 5px;
+        max-height: fit-content;
+        background: #fff;
+        border: 1px solid #dfe5ef;
+        display: none;
+        z-index: 10;
+    }
+    li.name-items:hover {
+        background: #0c2f6b !important;
+        color: #fff;
+    }
 
-}
-li.name-items:hover {
-    background: #0c2f6b !important;
-    color: #fff;
-}
+    .lot-res-wrapper {
+        z-index: 6;
+        position: absolute;
+        background: white;
+        width: 17.6%;
+    }
+    .startdate,
+    .enddate {
+        width: 19%;
+    }
 
-.lot-res-wrapper {
-    z-index: 6;
-    position: absolute;
-    background: white;
-    width: 17.6%;
-}
-.startdate , .enddate {
-    width: 19%;
-}
+    .startdate {
+        margin-right: 5px;
+    }
 
-.startdate {
-    margin-right: 5px;
-}
+    .get-subs-btn {
+        cursor: pointer;
+    }
 
-.get-subs-btn {
-    cursor: pointer;
-}
+    .btn-disabled {
+        opacity: 0.5;
+    }
+    .btn {
+        color: #03122b !important;
+    }
+    #wl-empty-td:hover {
+        background: #fff;
+    }
 
-.btn-disabled {
-    opacity: 0.5;
-}
-.btn {
-    color: #03122b !important;
-}
-#wl-empty-td:hover{
- background: #fff;
-}
-
-.table-wrapperWl {
+    .table-wrapperWl {
         overflow: hidden;
         /* Hide the default scrollbar */
         white-space: nowrap;
@@ -299,9 +297,8 @@ li.name-items:hover {
         z-index: 10;
     }
 
-
- /* Custom Scrollbar for Webkit Browsers */
- .table-wrapperWl::-webkit-scrollbar {
+    /* Custom Scrollbar for Webkit Browsers */
+    .table-wrapperWl::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
@@ -328,71 +325,53 @@ li.name-items:hover {
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
-
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['GGP Win/Loss Report']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist1">
         <span class="top-left-btn">
-            <div  class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:120%;">
-
-          
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 120%;">
                 <div style="width: 65%;">
-          
- <input name="usernamelist" class="queryholderlist form-control bring-forward" id="wl-username" data-user-id="" placeholder="<?= $translator['Username']; ?>" autocomplete="off" style="width:97%;"> <div class="usr-res-wrapper" style="width: 26.5%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="user-list-wrapper"></ul> </div></div>
+                    <input name="usernamelist" class="queryholderlist form-control bring-forward" id="wl-username" data-user-id="" placeholder="<?= $translator['Username']; ?>" autocomplete="off" style="width: 97%;" />
+                    <div class="usr-res-wrapper" style="width: 26.5%;"><ul style="max-height: 403px; margin: 0px; overflow-y: auto;" id="user-list-wrapper"></ul></div>
+                </div>
 
-        
-        <div class="custom-dropdown" style="width: 57%; margin-right: 5px;">
-        <select name="lotteryname" class="form-control form-select  wl-selectlottery" id="wl-selectlottery" data-bs-placeholder="Select Type"> 
+                <div class="custom-dropdown" style="width: 57%; margin-right: 5px;">
+                    <select name="lotteryname" class="form-control form-select wl-selectlottery" id="wl-selectlottery" data-bs-placeholder="Select Type"> </select>
+                </div>
+                <select name="lotteryname" class="form-control form-select queryholderlogss selectpartner"> </select>
+                <input type="date" name="startdate" class="form-control startdate" placeholder="Name" id="wl-startdate" style="width: 50%;" />
 
-        </select>
-        </div>
-
-        <input type="date" name="startdate" class="form-control startdate"  placeholder="Name" id="wl-startdate" style="width: 50%;"/>
-
-        <input type="date" name="enddate" class="form-control enddate" placeholder="Name" id="wl-enddate" style="width: 50%;"/>
-  
-
-
+                <input type="date" name="enddate" class="form-control enddate" placeholder="Name" id="wl-enddate" style="width: 50%;" />
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
             <!--enter is free-->
         </span>
         <span class="topplist-right" id="paginations" aria-label="Page navigation example">
-
-            <div class="btn-group mb-2" role="group" aria-label="Basic example"
-                style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle player go-back" value="" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Back">
-                    <i class='bx bxs-chevron-left-circle'></i>
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                <button type="button" class="btn bg-white-subtle player go-back" value="" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Back">
+                    <i class="bx bxs-chevron-left-circle"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle player fetch-user-details" value="" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="User Detail">
-                    <i class='bx bxs-user-detail'></i>
+                <button type="button" class="btn bg-white-subtle player fetch-user-details" value="" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="User Detail">
+                    <i class="bx bxs-user-detail"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle player fetch-top-agents" value="" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Top Agents">
-                    <i class='bx bxs-user-account'></i>
+                <button type="button" class="btn bg-white-subtle player fetch-top-agents" value="" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Top Agents">
+                    <i class="bx bxs-user-account"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle player wl-refreshlist" value="" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
-                    <i class='bx bx-refresh' style="font-size:20px"></i>
+                <button type="button" class="btn bg-white-subtle player wl-refreshlist" value="" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                    <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle fetch-user-win-loss" value="" aria-label="Search"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Search">
-                    <i class='bx bx-check-double loaderlist' style="font-size:20px"></i>
+                <button type="button" class="btn bg-white-subtle fetch-user-win-loss" value="" aria-label="Search" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Search">
+                    <i class="bx bx-check-double loaderlist" style="font-size: 20px;"></i>
                 </button>
-
             </div>
-
         </span>
-
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperWl" id="wl-tbl-wrapper" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperWl" id="wl-tbl-wrapper" style="height: 530px; overflow-y: scroll;">
             <table id="wl-tbl" class="table text-nowrap mb-0 align-middle table-bordered table-hover">
                 <thead class="text-dark fs-4 tbl-headersUser">
                     <tr class="userlistheadrow">
@@ -429,33 +408,28 @@ li.name-items:hover {
                     </tr>
                 </thead>
                 <tbody id="winLossDtholder" class="tbl-content">
-
                     <tr class="no-resultslist">
                         <td colspan="13">
-                        <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
+                            <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
                         </td>
                     </tr>
-
                 </tbody>
             </table>
         </div>
     </div>
     <div class="px-4 py-3 border-top pagerlist">
         <span class="toplist-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example"
-                style="border:solid 1px #eee;color:#bbb;background-color:#fff">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
                 <button type="button" class="btn bg-white-subtle playerWinLoss" value="wl-leftlist">
-                    <i class='bx bx-chevron-left' style="font-size:20px"></i>
+                    <i class="bx bx-chevron-left" style="font-size: 20px;"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle playerWinLoss" value="wl-rightlist">
-                    <i class='bx bx-chevron-right' style="font-size:20px"></i>
+                    <i class="bx bx-chevron-right" style="font-size: 20px;"></i>
                 </button>
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
-
-            <span id="paging_infowl" style="color:#aaa">---</span>
-
+            <span id="paging_infowl" style="color: #aaa;">---</span>
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowstrans" id="wl-numrowstans" style="font-size: 12px;">
@@ -469,23 +443,20 @@ li.name-items:hover {
         <!-- <span class="toplist-right" id="wl-pagination-wrapper" aria-label="Page navigation example">
 
         </span> -->
-
     </div>
-
 </div>
 
 <div class="modal fade" id="dangerlist" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
     <div class="modal-dialog modal-sm">
-        <div class="modal-content modal-filled " style="background-color:#F9F9F9">
+        <div class="modal-content modal-filled" style="background-color: #f9f9f9;">
             <div class="modal-body p-4">
                 <div class="text-center text-danger">
                     <i class="ti ti-hexagon-letter-x fs-7"></i>
                     <h4 class="mt-2">Oh snap!</h4>
-                    <p class="mt-3" style="color:#aaa">
-                        All fields are required!
-                        Select one or more data fields to filter.
+                    <p class="mt-3" style="color: #aaa;">
+                        All fields are required! Select one or more data fields to filter.
                     </p>
-                    <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color:#ddd">
+                    <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color: #ddd;">
                         Okay
                     </button>
                 </div>
@@ -503,20 +474,18 @@ li.name-items:hover {
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>Add Agent</div>
-                        <i class="bx bx-message-square-x listclose" style="color:#868c87;font-size:25px;cursor:pointer;"></i>
+                        <i class="bx bx-message-square-x listclose" style="color: #868c87; font-size: 25px; cursor: pointer;"></i>
                     </div>
                 </div>
 
                 <!-- Form -->
                 <form id="agentformy">
-
-
                     <!-- Username Field -->
                     <div class="form-floating mb-3">
-                        <input name="agentname" type="text" class="form-control border " placeholder="Username" />
+                        <input name="agentname" type="text" class="form-control border" placeholder="Username" />
                         <label>
                             <i class="bx bx-user me-2 fs-4 text-infod"></i>
-                            <span class="border-start  ps-3">Username</span>
+                            <span class="border-start ps-3">Username</span>
                         </label>
                     </div>
 
@@ -525,7 +494,7 @@ li.name-items:hover {
                         <input name="agentemail" type="email" class="form-control border border-infos" placeholder="Email" />
                         <label>
                             <i class="bx bx-envelope me-2 fs-4 text-infod"></i>
-                            <span class="border-start  ps-3">Email address</span>
+                            <span class="border-start ps-3">Email address</span>
                         </label>
                     </div>
 
@@ -534,7 +503,7 @@ li.name-items:hover {
                         <input name="agentpassword" type="password" class="form-control border border-infs" placeholder="Password" />
                         <label>
                             <i class="bx bx-lock me-2 fs-4 text-infoss"></i>
-                            <span class="border-start  ps-3">Password</span>
+                            <span class="border-start ps-3">Password</span>
                         </label>
                     </div>
 
@@ -543,7 +512,7 @@ li.name-items:hover {
                         <input name="agentpassword1" type="password" class="form-control border border-infos" placeholder="Confirm Password" />
                         <label>
                             <i class="bx bx-lock me-2 fs-4 text-infos"></i>
-                            <span class="border-start  ps-3">Confirm Password</span>
+                            <span class="border-start ps-3">Confirm Password</span>
                         </label>
                     </div>
 
@@ -555,7 +524,7 @@ li.name-items:hover {
                         </select>
                         <label>
                             <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
-                            <span class="border-start  ps-3">Rebate</span>
+                            <span class="border-start ps-3">Rebate</span>
                         </label>
                     </div>
 
@@ -566,13 +535,12 @@ li.name-items:hover {
                             <label class="form-check-label" for="sf2">Verify before submit</label>
                         </div>
                         <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 btnaddagent" style="border:solid 1px #ccc">
+                            <button type="button" class="btn hstack gap-6 btnaddagent" style="border: solid 1px #ccc;">
                                 <i class="bx bx-send loaders"></i>
                                 Submit
                             </button>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -581,16 +549,16 @@ li.name-items:hover {
 </div>
 
 <div id="signup" class="modal fade" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog  modal-dialog-scrollable modal-lg ">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Manage User Account</h5>
-                <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;'></i></div>
+                <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;"></i></div>
             </div>
             <div class="scrollable-container">
                 <!-- User Profile Picture -->
                 <div class="text-center mb-4">
-                    <img src="<?php echo BASE_URL; ?>assets/images/profile/user-1.jpg" class="rounded-circle" width="120" height="120" alt="Profile Image">
+                    <img src="<?php echo BASE_URL; ?>assets/images/profile/user-1.jpg" class="rounded-circle" width="120" height="120" alt="Profile Image" />
                 </div>
 
                 <!-- Personal Details Section -->
@@ -602,7 +570,7 @@ li.name-items:hover {
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label for="userName" class="form-label">Your Name</label>
-                                        <input type="text" class="form-control" id="userrName" placeholder="Mathew Anderson">
+                                        <input type="text" class="form-control" id="userrName" placeholder="Mathew Anderson" />
                                     </div>
                                     <div class="mb-3">
                                         <label for="userLocation" class="form-label">Location</label>
@@ -615,13 +583,13 @@ li.name-items:hover {
                                     </div>
                                     <div class="mb-3">
                                         <label for="userEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="userrEmail" placeholder="info@modernize.com">
+                                        <input type="email" class="form-control" id="userrEmail" placeholder="info@modernize.com" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label for="storeName" class="form-label">Store Name</label>
-                                        <input type="text" class="form-control" id="storeNarme" placeholder="Maxima Studio">
+                                        <input type="text" class="form-control" id="storeNarme" placeholder="Maxima Studio" />
                                     </div>
                                     <div class="mb-3">
                                         <label for="userCurrency" class="form-label">Currency</label>
@@ -634,13 +602,13 @@ li.name-items:hover {
                                     </div>
                                     <div class="mb-3">
                                         <label for="userPhone" class="form-label">Phone</label>
-                                        <input type="text" class="form-control" id="userrPhone" placeholder="+91 12345 65478">
+                                        <input type="text" class="form-control" id="userrPhone" placeholder="+91 12345 65478" />
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label for="userAddress" class="form-label">Address</label>
-                                        <input type="text" class="form-control" id="userAdrdress" placeholder="814 Howard Street, 120065, India">
+                                        <input type="text" class="form-control" id="userAdrdress" placeholder="814 Howard Street, 120065, India" />
                                     </div>
                                 </div>
                             </div>
@@ -657,7 +625,7 @@ li.name-items:hover {
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label for="accountName" class="form-label">Your Name</label>
-                                        <input type="text" class="form-control" id="accountNamea" placeholder="">
+                                        <input type="text" class="form-control" id="accountNamea" placeholder="" />
                                     </div>
                                     <div class="mb-3">
                                         <label for="accountLocation" class="form-label">Location</label>
@@ -670,13 +638,13 @@ li.name-items:hover {
                                     </div>
                                     <div class="mb-3">
                                         <label for="accountEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="accountEmaila" placeholder="">
+                                        <input type="email" class="form-control" id="accountEmaila" placeholder="" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label for="accountStoreName" class="form-label">Store Name</label>
-                                        <input type="text" class="form-control" id="accountStoreNamea" placeholder="">
+                                        <input type="text" class="form-control" id="accountStoreNamea" placeholder="" />
                                     </div>
                                     <div class="mb-3">
                                         <label for="accountCurrency" class="form-label">Currency</label>
@@ -689,13 +657,13 @@ li.name-items:hover {
                                     </div>
                                     <div class="mb-3">
                                         <label for="accountPhone" class="form-label">Phone</label>
-                                        <input type="text" class="form-control" id="accountPhonea" placeholder="">
+                                        <input type="text" class="form-control" id="accountPhonea" placeholder="" />
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label for="accountAddress" class="form-label">Address</label>
-                                        <input type="text" class="form-control" id="accountAddressa" placeholder="">
+                                        <input type="text" class="form-control" id="accountAddressa" placeholder="" />
                                     </div>
                                 </div>
                             </div>
@@ -719,13 +687,13 @@ li.name-items:hover {
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="text-infos">Quota</h5>
-                        <i class="bx bx-message-square-x listclose" style="color:#868c87;font-size:25px;cursor:pointer;"></i>
+                        <i class="bx bx-message-square-x listclose" style="color: #868c87; font-size: 25px; cursor: pointer;"></i>
                     </div>
                 </div>
 
                 <!-- Form -->
                 <form>
-                    <input type="text" class="form-control userquotaid" hidden>
+                    <input type="text" class="form-control userquotaid" hidden />
                     <div class="modal-body scrollable-container">
                         <div style="overflow: hidden;">
                             <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
@@ -748,7 +716,7 @@ li.name-items:hover {
                             <label class="form-check-label" for="sf2">Verify before submit</label>
                         </div>
                         <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 updatequotabtn" style="border:solid 1px #ccc">
+                            <button type="button" class="btn hstack gap-6 updatequotabtn" style="border: solid 1px #ccc;">
                                 <i class="bx bx-send loaderquota"></i>
                                 Submit
                             </button>
@@ -760,5 +728,3 @@ li.name-items:hover {
     </div>
     <!-- /.modal-dialog -->
 </div>
-
-

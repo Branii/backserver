@@ -354,7 +354,7 @@
 
     <div class="px-4 py-3 border-bottom pagerlist1">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:150%;">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:110%;">
 
 
                 <select name="betsate" class="form-control form-select queryholderlistt depositestate " data-bs-placeholder="Select Type" id="lottery" style="width: 70%;">
@@ -369,6 +369,10 @@
                     <option value="10" id="lt_10" name="lottery_type">Happy</option>
 
                 </select>
+
+                <select name="lotteryname" class="form-control form-select queryholderlistt selectpartner" style="width: 70%;"> 
+
+               </select>
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
@@ -398,12 +402,7 @@
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
                 <thead class="text-dark fs-4 lb-tbl-header">
                     <tr class="headrowDraws">
-                        <!-- <th>
-              <h6 class="fs-4 fw-semibold mb-0">Lottery Type</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Lottery Alias</h6>
-            </th> -->
+                      
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['ID']; ?></h6>
                         </th>

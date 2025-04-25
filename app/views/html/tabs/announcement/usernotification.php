@@ -257,6 +257,9 @@
                     <option value="read"><?= $translator['Read']; ?></option>
                     <option value="unread"><?= $translator['Unread']; ?></option>
                 </select>
+                <select name="lotteryname" class="form-control form-select queryholdernotfys selectpartner"> 
+
+                 </select>
 
                 <input name="startdate" type="date" class="form-control queryholdernotfys startnotfys"placeholder="Name" />
 

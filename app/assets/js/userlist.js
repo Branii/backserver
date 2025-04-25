@@ -865,7 +865,7 @@ $(function () {
     };
 
     const UserlistDataV2 = (response) => {
-        // console.log(response);
+         console.log(response);
         let html = "";
         const status = {
             1: "Enable", // Green
