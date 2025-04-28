@@ -201,7 +201,7 @@
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0"><span class="partner-name"> </span><span class="arr"> / </span>Lottery draw records</h4>
+    <h4 class="card-title mb-0">Lottery draw records</h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pager1">

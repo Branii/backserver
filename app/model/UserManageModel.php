@@ -54,20 +54,21 @@ class UserManageModel extends MEDOOHelper
 
         return ['data' => $data, 'total' => $totalRecords];
     }
-    public static function countUserLogs($uid)
-    {
-        $logCount = parent::count("user_logs", '*', ["uid" => $uid]);
+    public static function countUserLogs($partnerID,$uid)
+    {   
+        $logCount = parent::openLink($partnerID)->count("user_logs", '*', ["uid" => $uid]);
+        // $logCount = parent::count("user_logs", '*', ["uid" => $uid]);
         return $logCount ?: null;
     }
 
-    public static function getDirectReferrals($agent_id)
+    public static function getDirectReferrals($partnerID,$agent_id)
     {
-        $total = parent::count("users_test", "*", ["agent_id" => $agent_id]);
+        $total = parent::getLink($partnerID)->count("users_test", "*", ["agent_id" => $agent_id]);
         return $total > 2 ? '...' : '->';
     }
-    public static function getSubordinate($agent_id)
+    public static function getSubordinate($partnerID,$agent_id)
     {
-        return $data = parent::query("SELECT nickname FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
+        return $data = parent::openLink($partnerID)->query("SELECT nickname FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
     }
 
     public static function getUserIdByMixedValued(array $mixedValue)
@@ -93,13 +94,14 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function Fetchsubordinates($uid)
+    public static function Fetchsubordinates($partnerID,$uid)
     {
+        $totalCount = parent::openLink($partnerID)->count("users_test", "*", ["AND" => ["agent_id" => $uid, "account_type" => 3, "uid[!]" => $uid]]);
         $totalCount = parent::count("users_test", "*", ["AND" => ["agent_id" => $uid, "account_type" => 3, "uid[!]" => $uid]]);
         return $totalCount;
     }
 
-    public static function Filteruserlist($subQuery, $page, $limit)
+    public static function Filteruserlist($partnerID,$subQuery, $page, $limit)
     {
         $startpoint = ($page - 1) * $limit;
 
@@ -115,12 +117,12 @@ class UserManageModel extends MEDOOHelper
             WHERE
                 $subQuery
                 ";
-
-        $data = parent::query($sql);
+        $db = parent::openLink($partnerID);
+        $data = $db->query($sql);
         foreach ($data as &$row) {
-            $row['logincount'] = self::countUserLogs($row['uid']);
+            $row['logincount'] = self::countUserLogs($partnerID,$row['uid']);
         }
-        $totalRecords = parent::query($countSql);
+        $totalRecords = $db->query($countSql)->fetchAll(PDO::FETCH_ASSOC);
         $totalRecords = $totalRecords[0]['total_count'];
         $lastQuery = MedooOrm::openLink()->log();
         return ['data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery[0]];
@@ -198,10 +200,10 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function fetch_users_login_count(array $user_ids): array
+    public static function fetch_users_login_count($partnerID,array $user_ids): array
     {
         try {
-            $db = parent::getLink();
+            $db = parent::openLink($partnerID);
             $placeholders = [];
             $params = [];
             foreach ($user_ids as $user_id) {
@@ -217,10 +219,10 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function count_subs(array $agent_ids): array
+    public static function count_subs($partnerID,array $agent_ids): array
     {
         try {
-            $db = parent::getLink();
+            $db = parent::openLink($partnerID);
             $placeholders = [];
             $params = [];
             foreach ($agent_ids as $agent_id) {
@@ -277,10 +279,10 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function filter_user(array $filters = []): array
+    public static function filter_user($partnerID,array $filters = []): array
     {
         try {
-            $database = parent::getLink();
+            $database = parent::openLink($partnerID);
 
             // Add binding parameters
             $params = [":uid" => $filters["uid"]];
@@ -372,17 +374,17 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function searchUserData($filters): array
+    public static function searchUserData($partnerID,$filters): array
     {
         try {
-            $top_agents = self::filter_user($filters);
+            $top_agents = self::filter_user($partnerID,$filters);
             if (empty($top_agents["data"])) {
                 return ["status" => "success", "data" => []];
             }
             $top_agents = $top_agents["data"];
             $uids = array_column($top_agents, 'uid');
-            $login_counts = self::fetch_users_login_count($uids);
-            $subs_count = self::count_subs($uids);
+            $login_counts = self::fetch_users_login_count($partnerID,$uids);
+            $subs_count = self::count_subs($partnerID,$uids);
 
             return ["status" => "success", "data" => $top_agents, "login_counts" => $login_counts, "direct_subs_count" => $subs_count];
         } catch (Exception $e) {
@@ -409,10 +411,10 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function fetchUsersData(array $filters = [], $page = 1, $limit): array
+    public static function fetchUsersData($partnerID,array $filters = [], $page = 1, $limit): array
     {
         try {
-            $db = parent::getLink();
+            $db = parent::openLink($partnerID);
             // Pagination setup
             $offset = ($page - 1) * $limit;
             // Add binding parameters
@@ -834,12 +836,12 @@ class UserManageModel extends MEDOOHelper
         return $subQuery;
     }
 
- public static function AddAgentData($datas)
+ public static function AddAgentData($partnerID,$datas)
  {
         try {
-            $inserAgentdata = parent::insert("users_test", $datas);
+            $inserAgentdata = parent::insert($partnerID,"users_test", $datas);
             if ($inserAgentdata) {
-                self::UpdateAgentTable($datas);
+                self::UpdateAgentTable($partnerID,$datas);
                 return "Success";
             } else {
                 return "Failed";
@@ -849,7 +851,7 @@ class UserManageModel extends MEDOOHelper
         }
  }
 
-    public static function FetchTopAgentData($page, $limit): array
+    public static function FetchTopAgentData($partnerID,$page, $limit): array
     {
         // Calculate the starting point for pagination
         $startpoint = $page * $limit - $limit;
@@ -863,9 +865,9 @@ class UserManageModel extends MEDOOHelper
         LIMIT :startpoint, :limit
       ";
 
-        $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+        $data = parent::openLink($partnerID)->query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
         // Count the total records with the same filter (for pagination)
-        $totalRecords = parent::count("users_test");
+        $totalRecords = parent::count($partnerID,"users_test");
 
         // Return the paginated data along with the total record count
         return ['data' => $data, 'total' => $totalRecords];
@@ -894,7 +896,7 @@ class UserManageModel extends MEDOOHelper
         return $Agentdata = parent::insert("agents", $data);
     }
 
-    public static function validateRegister($datas)
+    public static function validateRegister($partnerID,$datas)
     {
         $errors = [];
         $emailexist = self::checkEmailExist(trim($datas['agentname']));
@@ -955,14 +957,14 @@ class UserManageModel extends MEDOOHelper
         return $errors;
     }
 
-    public static function FetchRebateData()
+    public static function FetchRebateData($partnerID)
     {
-        return $res = parent::selectAll("rebate", ["rebate"], ["ORDER" => ["rebate_id" => "ASC"]]);
+        return $res = parent::selectAll($partnerID,"rebate", ["rebate"], ["ORDER" => ["rebate_id" => "ASC"]]);
     }
 
-    public static function fetchquotaData($userrebate)
+    public static function fetchquotaData($partnerID,$userrebate)
     {
-        $data = parent::query("SELECT odds_group, rebate, quota, counts FROM rebate WHERE rebate <= :rebate", ['rebate' => $userrebate]);
+        $data = parent::openLink($partnerID)->query("SELECT odds_group, rebate, quota, counts FROM rebate WHERE rebate <= :rebate", ['rebate' => $userrebate]);
         return $serializedData = json_encode($data);
     }
 
@@ -985,7 +987,7 @@ class UserManageModel extends MEDOOHelper
     //NOTE -
 
     ////////////// USERLIST LOGS -//////////
-    public static function FetchUserlogsData($page, $limit): array
+    public static function FetchUserlogsData($partnerID,$page, $limit): array
     {
         $startpoint = $page * $limit - $limit;
         $sql = "
@@ -1000,8 +1002,8 @@ class UserManageModel extends MEDOOHelper
      ";
 
         // Execute the query with pagination parameters
-        $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
-        $totalRecords = parent::count('user_logs');
+        $data = parent::openLink($partnerID)->query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+        $totalRecords = parent::count($partnerID,'user_logs');
         return ['data' => $data, 'total' => $totalRecords];
     }
 
@@ -1040,7 +1042,7 @@ class UserManageModel extends MEDOOHelper
     public static function FilterUserlogsDataSubQuery($username, $startdate, $enddate)
     {
         $filterConditions = [];
-
+   
         // Build filter conditions
         if (!empty($username)) {
             $filterConditions[] = "user_logs.uid = '$username'";
@@ -1086,6 +1088,8 @@ class UserManageModel extends MEDOOHelper
 
         //  return ['data' => $data[0]];
              // Calculate the starting point for pagination
+             $page = 1;
+             $limit = 20;
              $startpoint = $page * $limit - $limit;
              $sql = "
              SELECT 

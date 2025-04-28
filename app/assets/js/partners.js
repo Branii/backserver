@@ -398,29 +398,7 @@ $(() =>{
                                 <a class="dropdown-item ptns-currency-settings cursor-pointer d-flex align-items-center gap-1 acountbtn" href="javascript:void(0);"data-uid="">
                                     <i class="bx bx-money fs-5"></i>Currency Settings
                                 </a>
-                                    <a class="dropdown-item ptns-language-settings cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                                    <i class='bx bx-blanket' ></i>Language Settings
-                                </a> <a class="dropdown-item ptns-product-limits cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                                    <i class='bx bxl-product-hunt' ></i>Product Limits
-                                </a>
-                                    <a class="dropdown-item ptns-payment-limits cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                                    <i class="bx bx-trash fs-5"></i>Payment Limits
-                                </a>
-                                    <a class="dropdown-item  ptns-complimentary-point-rates cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                                    <i class="bx bx-git-merge"></i>Complimentary point Rates
-                                </a>
-                                </a>
-                                    <a class="dropdown-item  ptns-payment-info cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                                    <i class='bx bx-info-circle' ></i>Payment Info
-                                </a>
-                                </a>
-                                    <a class="dropdown-item  ptns-web-site-settings cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                                    <i class='bx bx-globe' ></i>Web Site Settings
-                                </a>
-                                </a>
-                                    <a class="dropdown-item ptns-keys cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                                    <box-icon name='buoy'></box-icon>Keys
-                                </a>
+                                   
                                 </div>
                             </div>
                 </td>
@@ -792,32 +770,10 @@ const partnersMarkup = (data) => {
                         <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 ptns-product-settings" data-agent-id="" href="javascript:void(0);"data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-product-settings-modal" data-uid=""> 
                         <i class='bx bx-git-merge'></i>Product Settings
                     </a>
-                    <a class="dropdown-item ptns-currency-settings cursor-pointer d-flex align-items-center gap-1 acountbtn" href="javascript:void(0);"data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-currency-settings-modal" data-uid="">
+                    <a class="dropdown-item ptns-currency-settings cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-currency-settings-modal" data-uid="">
                         <i class="bx bx-money fs-5"></i>Currency Settings
                     </a> 
-                        <a class="dropdown-item ptns-language-settings cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-languages-settings-modal" data-uid="">
-                        <i class='bx bx-blanket' ></i>Language Settings
-                    </a> <a class="dropdown-item ptns-product-limits cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                        <i class='bx bxl-product-hunt' ></i>Product Limits
-                    </a>
-                        <a class="dropdown-item ptns-payment-limits cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                        <i class="bx bx-trash fs-5"></i>Payment Limits
-                    </a> 
-                        <a class="dropdown-item  ptns-complimentary-point-rates cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                        <i class="bx bx-git-merge"></i>Complimentary point Rates
-                    </a>
-                    </a>
-                        <a class="dropdown-item  ptns-payment-info cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-paymennt-info-modal" >
-                        <i class='bx bx-info-circle' ></i>Payment Info
-                    </a>
-                    </a>
-                        <a class="dropdown-item  ptns-web-site-settings cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                        <i class='bx bx-globe' ></i>Web Site Settings
-                    </a>
-                    </a>
-                        <a class="dropdown-item ptns-keys cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                        <box-icon name='buoy'></box-icon>Keys
-                    </a>
+                       
                     </div>
                    </div>
                 </td>

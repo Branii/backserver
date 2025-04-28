@@ -77,14 +77,15 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function getAllgames(){
-        $this->view('exec/game_management',['flag' => 'getAllgames']);
+    public function getAllgames($partnerID){
+        $this->view('exec/game_management',["partner_id" => $partnerID,'flag' => 'getAllgames']);
         $this->view->render();
     }
 
-    public function getSpecificDraws($gameId,$issue_number,$status, $start_date, $end_date, $pageNumber, $limit){
+    public function getSpecificDraws($partnerID,$gameId,$issue_number,$status, $start_date, $end_date, $pageNumber, $limit){
 
         $this->view('exec/game_management',[
+        'partner_id' => $partnerID,
         'page'=>$pageNumber,
         'limit'=>$limit, 
         'flag'=> 'getDraws',
@@ -106,24 +107,25 @@ class adminController extends Controller {
 
     // side bar datas adminLogs
 
-    public function transactiondata($pageNumber,$limit){
-        $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'transactiondata']);
+    public function transactiondata($partnerID,$pageNumber,$limit){
+        $this->view('exec/businessflow',['partner_id' => $partnerID,'page'=>$pageNumber,'limit'=>$limit, 'flag' => 'transactiondata']);
         $this->view->render();
     }
 
-    public function gamebetdata($pageNumber,$limit){
-        $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'gamebetdata']);
+    public function gamebetdata($partnerID,$pageNumber,$limit){
+        $this->view('exec/businessflow',['partner_id' => $partnerID,'page'=>$pageNumber,'limit'=>$limit, 'flag' => 'gamebetdata']);
         $this->view->render();
     }
 
-    public function filterusername($username)
+    public function filterusername($partnerID,$username)
     {
-        $this->view('exec/businessflow', ['username' => $username, 'flag' => 'filterusername']);
+        $this->view('exec/businessflow', ['partner_id' => $partnerID,'username' => $username, 'flag' => 'filterusername']);
         $this->view->render();
     }
 
-    public function filtertransactions($username,$orderid,$ordertype,$partneruid,$startdate,$enddate,$pageNumber,$limit){
+    public function filtertransactions($partnerID,$username,$orderid,$ordertype,$partneruid,$startdate,$enddate,$pageNumber,$limit){
         $this->view('exec/businessflow',[
+            'partner_id'=> $partnerID,
             'username' => $username,
             'orderid' => $orderid,
             'ordertype' => $ordertype,
@@ -137,21 +139,21 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function getTransactionBet($transactionId){
-        $this->view('exec/businessflow',['transactionId'=>$transactionId, 'flag' => 'getTransactionBet']);
+    public function getTransactionBet($partnerID,$transactionId){
+        $this->view('exec/businessflow',['partner_id' => $partnerID,'transactionId'=>$transactionId, 'flag' => 'getTransactionBet']);
         $this->view->render();
     }
 
    //NOTE -
     //////////////LOTTERY BETS -//////////
 
-    public function lotterydata($pageNumber,$limit){
-        $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'lotterydata']);
+    public function lotterydata($partnerID,$pageNumber,$limit){
+        $this->view('exec/businessflow',['partern_id' => $partnerID,'page'=>$pageNumber,'limit'=>$limit, 'flag' => 'lotterydata']);
         $this->view->render();
     }
 
-    public function viewBetstake($becode){
-        $this->view('exec/businessflow',['betcode'=>$becode,'flag' => 'viewBetstake']);
+    public function viewBetstake($partnerID,$becode){
+        $this->view('exec/businessflow',['partner_id' => $partnerID,'betcode'=>$becode,'flag' => 'viewBetstake']);
         $this->view->render();
     }
 
@@ -160,8 +162,9 @@ class adminController extends Controller {
         $this->view->render();
     }
  
-    public function filterbetdata($uid,$betOrderID,$gametype,$betstate,$betstatus,$startdate,$enddate,$page,$limit){
+    public function filterbetdata($partnerID,$uid,$betOrderID,$gametype,$betstate,$betstatus,$startdate,$enddate,$page,$limit){
         $this->view('exec/businessflow',[
+        'partner_id' => $partnerID,
         'uid'=>$uid,
         'betOrderID' => $betOrderID,
         'gametype'=>$gametype,
@@ -175,54 +178,54 @@ class adminController extends Controller {
         $this->view->render();
     }
     
-    public function searchusername($username){
-        $this->view('exec/businessflow',['username'=>$username,'flag' => 'searchusername']);
+    public function searchusername($partnerID,$username){
+        $this->view('exec/businessflow',['partner_id' => $partnerID,'username'=>$username,'flag' => 'searchusername']);
         $this->view->render();
     }
-    public function searchPlatformNames($platformName){
-        $this->view('exec/payment_platform',['platformName'=>$platformName,'flag' => 'searchPlatformNames']);
+    public function searchPlatformNames($partnerID,$platformName){
+        $this->view('exec/payment_platform',['partner_id' => $partnerID,'platformName'=>$platformName,'flag' => 'searchPlatformNames']);
         $this->view->render();
     }
     
-    public function searchPartnersNames($partnerName){
+    public function searchPartnersNames($partnerID,$partnerName){
         
-        $this->view('exec/partners',['partnerName'=> $partnerName,'flag' => 'searchPartnersNames']);
+        $this->view('exec/partners',['partner_id' => $partnerID,'partnerName'=> $partnerName,'flag' => 'searchPartnersNames']);
         $this->view->render();
     }
 
 
-    public function fetchDifferentCurrency(){
-        $this->view('exec/payment_platform',['flag' => 'fetchDifferentCurrency']);
+    public function fetchDifferentCurrency($partnerID){
+        $this->view('exec/payment_platform',['partner_id' => $partnerID,'flag' => 'fetchDifferentCurrency']);
         $this->view->render();
     }
-    public function searchBankTypes($bank_type){
+    public function searchBankTypes($partnerID,$bank_type){
         // echo $bank_type;
-        $this->view('exec/userbank_manage',['bank_type'=> urldecode($bank_type),'flag' => 'search-bank-name']);
+        $this->view('exec/userbank_manage',['partner_id' => $partnerID,'bank_type'=> urldecode($bank_type),'flag' => 'search-bank-name']);
         $this->view->render();
     }
 
 
     // --- MUNIRU ----
-    public function searchLotteryName($lottery_name){
-        $this->view('exec/win_loss',['lottery_name'=>$lottery_name,'flag' => 'filter-lotteries']);
+    public function searchLotteryName($partnerID,$lottery_name){
+        $this->view('exec/win_loss',['partner_id' => $partnerID,'lottery_name'=>$lottery_name,'flag' => 'filter-lotteries']);
         $this->view->render();
     }
-    public function searchWinLossUser($user_id,$lottery_id,$start_date,$end_date){
+    public function searchWinLossUser($partnerID,$user_id,$lottery_id,$start_date,$end_date){
    
-        $this->view('exec/win_loss',['user_id'=>$user_id,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'flag' => 'search-user-win-loss']);
+        $this->view('exec/win_loss',['partner_id' => $partnerID,'user_id'=>$user_id,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'flag' => 'search-user-win-loss']);
         $this->view->render();
     }
-    public function fetchTopAgents($lottery_id,$start_date,$end_date,$page,$limit){
+    public function fetchTopAgents($partnerID,$lottery_id,$start_date,$end_date,$page,$limit){
       
-        $this->view('exec/win_loss',['lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'page' => $page,'limit' => $limit,'flag' => 'get-top-agents']);
+        $this->view('exec/win_loss',['partner_id' => $partnerID,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'page' => $page,'limit' => $limit,'flag' => 'get-top-agents']);
         $this->view->render();
     }
-    public function fetchAgentSubs($agent_id,$lottery_id,$start_date,$end_date,$flag,$page,$limit){
-        $this->view('exec/win_loss',["agent_id" => $agent_id,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'page' => $page,'limit' => $limit,'flag' => $flag]);
+    public function fetchAgentSubs($partnerID,$agent_id,$lottery_id,$start_date,$end_date,$flag,$page,$limit){
+        $this->view('exec/win_loss',['partner_id' => $partnerID,"agent_id" => $agent_id,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'page' => $page,'limit' => $limit,'flag' => $flag]);
         $this->view->render();
     }
-    public function getUserDetails($user_id,$lottery_id,$start_date,$end_date,){
-        $this->view('exec/win_loss',['user_id' => $user_id,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'flag' => 'get-user-details']);
+    public function getUserDetails($partnerID,$user_id,$lottery_id,$start_date,$end_date,){
+        $this->view('exec/win_loss',['partner_id' => $partnerID,'user_id' => $user_id,'lottery_id' => $lottery_id,'start_date' => $start_date,'end_date' => $end_date,'flag' => 'get-user-details']);
         $this->view->render();
     }
 
@@ -237,13 +240,14 @@ class adminController extends Controller {
 
      //NOTE -
     //////////////TRACK BET DATA -//////////
-    public function trackdata($pageNumber,$limit){
-        $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'trackdatas']);
+    public function trackdata($partnerID,$pageNumber,$limit){
+        $this->view('exec/businessflow',['partner_id' => $partnerID,'page'=>$pageNumber,'limit'=>$limit, 'flag' => 'trackdatas']);
         $this->view->render();
     }
     
-    public function filterTrackdata($username,$trackstatus,$trackcode,$tracklotery,$startdate,$enddate,$page,$limit){
+    public function filterTrackdata($partnerID,$username,$trackstatus,$trackcode,$tracklotery,$startdate,$enddate,$page,$limit){
         $this->view('exec/businessflow',[
+        'partner_id' => $partnerID,
         'username'=>$username,
         'trackstatus'=>$trackstatus,
         'trackcode'=>$trackcode,
@@ -255,17 +259,17 @@ class adminController extends Controller {
         'flag' => 'filterTrack']);
         $this->view->render();
     }
-    public function  getTrackbet($tracktoken){
-        $this->view('exec/businessflow',['token'=>$tracktoken, 'flag' => 'getTrackbet']);
+    public function  getTrackbet($partnerID,$tracktoken){
+        $this->view('exec/businessflow',['partner_id' => $partnerID,'token'=>$tracktoken, 'flag' => 'getTrackbet']);
         $this->view->render();
     }
-    public function  getAllTokenbet($tracktoken){
-        $this->view('exec/businessflow',['token'=>$tracktoken, 'flag' => 'getTracktokenbet']);
+    public function  getAllTokenbet($partnerID,$tracktoken){
+        $this->view('exec/businessflow',['partner_id' => $partnerID,'token'=>$tracktoken, 'flag' => 'getTracktokenbet']);
         $this->view->render();
     }
 
-    public function  fetchPartnername(){
-        $this->view('exec/businessflow',[ 'flag' => 'partnernames']);
+    public function  fetchPartnername($partnerID){
+        $this->view('exec/businessflow',['partner_id' => $partnerID, 'flag' => 'partnernames']);
         $this->view->render();
     }
     
@@ -275,60 +279,61 @@ class adminController extends Controller {
   
 
     /// ----- WIN LOSS REPORT --------------------------------
-    public function users_win_loss($lottery_id, $start_date,$end_date, $page,$limit)
+    public function users_win_loss($partnerID,$lottery_id, $start_date,$end_date, $page,$limit)
     {
-        $this->view('exec/win_loss', ['lottery_id' => $lottery_id,'start_date' => $start_date, 'end_date' => $end_date, 'page' => $page,"limit"=> $limit, 'flag' => 'users-win-loss']);
+        $this->view('exec/win_loss', ['partner_id' => $partnerID,'lottery_id' => $lottery_id,'start_date' => $start_date, 'end_date' => $end_date, 'page' => $page,"limit"=> $limit, 'flag' => 'users-win-loss']);
         $this->view->render();
     }
-    public function get_top_agents($lottery_id, $start_date,$end_date,$page)
+    public function get_top_agents($partnerID,$lottery_id, $start_date,$end_date,$page)
     {
         
-        $this->view('exec/win_loss', ['lottery_id' => $lottery_id,'start_date' => $start_date, 'end_date' => $end_date,'page' => $page ,'flag' => 'get-top-agents']);
+        $this->view('exec/win_loss', ['partner_id' => $partnerID,'lottery_id' => $lottery_id,'start_date' => $start_date, 'end_date' => $end_date,'page' => $page ,'flag' => 'get-top-agents']);
         $this->view->render();
     }
-    public function get_subs($user_id,$lottery_id, $start_date,$end_date,$page)
+    public function get_subs($partnerID,$user_id,$lottery_id, $start_date,$end_date,$page)
     {
      
-        $this->view('exec/win_loss', ['user_id' => $user_id,'lottery' => $lottery_id,'start_date' => $start_date, 'end_date' => $end_date,'page' => $page ,'flag' => 'get-subs']);
+        $this->view('exec/win_loss', ['partner_id' => $partnerID,'user_id' => $user_id,'lottery' => $lottery_id,'start_date' => $start_date, 'end_date' => $end_date,'page' => $page ,'flag' => 'get-subs']);
         $this->view->render();
     }
-    public function get_user_details($user_id,$lottery_id, $start_date,$end_date,$page)
+    public function get_user_details($partnerID,$user_id,$lottery_id, $start_date,$end_date,$page)
     {
-        $this->view('exec/win_loss', ['user_id' => $user_id,'lottery' => $lottery_id,'start_date' => $start_date, 'end_date' => $end_date,'flag' => 'get-user-details']);
+        $this->view('exec/win_loss', ['partner_id' => $partnerID,'user_id' => $user_id,'lottery' => $lottery_id,'start_date' => $start_date, 'end_date' => $end_date,'flag' => 'get-user-details']);
         $this->view->render();
     }
 
-    public function updateLottery($maxPrizeAmountPerBet,$maxAmtPerIssue, $maxWinPerPersonPerIssue,$minBetAmtPerIssue,$lockTimeForClsing,$sortingWeight, $lotteryType,$game_type_id)
+    public function updateLottery($partnerID,$maxPrizeAmountPerBet,$maxAmtPerIssue, $maxWinPerPersonPerIssue,$minBetAmtPerIssue,$lockTimeForClsing,$sortingWeight, $lotteryType,$game_type_id)
     {
-        $this->view('exec/lottery_basic_params', ['maxPrizeAmountPerBet' => $maxPrizeAmountPerBet,'maxAmtPerIssue' => $maxAmtPerIssue,'maxWinPerPersonPerIssue' => $maxWinPerPersonPerIssue, 'minBetAmtPerIssue' => $minBetAmtPerIssue,'lockTimeForClsing' => $lockTimeForClsing,'sortingWeight' => $sortingWeight,'lottery_type' => $lotteryType,'game_type_id' => $game_type_id,'flag' => 'updateLottery']);
+        $this->view('exec/lottery_basic_params', ['partner_id' => $partnerID,'maxPrizeAmountPerBet' => $maxPrizeAmountPerBet,'maxAmtPerIssue' => $maxAmtPerIssue,'maxWinPerPersonPerIssue' => $maxWinPerPersonPerIssue, 'minBetAmtPerIssue' => $minBetAmtPerIssue,'lockTimeForClsing' => $lockTimeForClsing,'sortingWeight' => $sortingWeight,'lottery_type' => $lotteryType,'game_type_id' => $game_type_id,'flag' => 'updateLottery']);
         $this->view->render();
     }
-    public function updateLotteryStatus($game_type_id,$status)
+    public function updateLotteryStatus($partnerID,$game_type_id,$status)
     {
-        $this->view('exec/lottery_basic_params', ['status' => $status,'game_type_id' => $game_type_id,'flag' => 'updateLotteryStatus']);
+        $this->view('exec/lottery_basic_params', ['partner_id' => $partnerID,'status' => $status,'game_type_id' => $game_type_id,'flag' => 'updateLotteryStatus']);
         $this->view->render();
     }
 
 
     // -- Lottery Draw Records ------------------------
-    public function fetch_lottery_basic_params($lottery_id,$page)
+    public function fetch_lottery_basic_params($partnerID,$lottery_id,$page)
     {
     
-        $this->view('exec/lottery_basic_params', ['lottery_id' => $lottery_id,'page' => $page,'flag' => 'fetch-lottery-basic-params']);
+        $this->view('exec/lottery_basic_params', ['partner_id' => $partnerID,'lottery_id' => $lottery_id,'page' => $page,'flag' => 'fetch-lottery-basic-params']);
         $this->view->render();
     }
 
       //NOTE -
     ////////////// USERLIST LIST -//////////
-    public function userlistdata($uid,$recharge_level, $state, $start_date, $end_date,$pageNumber, $limit,$miscelleanous)
+    public function userlistdata($partnerID,$uid,$recharge_level, $state, $start_date, $end_date,$pageNumber, $limit,$miscelleanous)
     {
-        $this->view('exec/account_manage', ['uid' => $uid,'recharge_level' => $recharge_level,'state' => $state, 'startdate' => $start_date, 'enddate' => $end_date,'page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,'uid' => $uid,'recharge_level' => $recharge_level,'state' => $state, 'startdate' => $start_date, 'enddate' => $end_date,'page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
         $this->view->render();
     }
 
-    public function filteruserlist($pageNumber, $limit)
+    public function filteruserlist($partnerID,$pageNumber, $limit)
     {
         $this->view('exec/account_manage', [
+            'partner_id' => $pageNumber,
             'flag' => 'filteruserlist',
             'page' => $pageNumber,
             'limit' => $limit,
@@ -336,9 +341,10 @@ class adminController extends Controller {
         ]);
         $this->view->render();
     }
-    public function searchUserListData($username,$recharge_level, $states , $startdate , $enddate,$miscelleanous)
+    public function searchUserListData($partnerID,$username,$recharge_level, $states , $startdate , $enddate,$miscelleanous)
     {
         $this->view('exec/account_manage', [
+            'partner_id' => $partnerID,
             'uid' => $username,
             'recharge_level' => $recharge_level,
             'state' => $states,
@@ -350,111 +356,112 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function fetchRebatedata()
+    public function fetchRebatedata($partnerID)
     {
-        $this->view('exec/account_manage', ['flag' => 'fetchRebatedata']);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,'flag' => 'fetchRebatedata']);
         $this->view->render();
     }
 
-    public function  addAgent($data)
+    public function  addAgent($partnerID,$data)
     {
-        $this->view('exec/account_manage', ['data' => $data,'flag' => 'addAgent']);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,'data' => $data,'flag' => 'addAgent']);
         $this->view->render();
     }
 
-    public function  fetchTopAgent($recharge_level,$state,$start_date,$end_date,$page, $limit)
+    public function  fetchTopAgent($partnerID,$recharge_level,$state,$start_date,$end_date,$page, $limit)
     {
-        $this->view('exec/account_manage', ["recharge_level"=>$recharge_level,"state" => $state,"start_date" => $start_date,"end_date" => $end_date,'page' => $page, 'limit' => $limit,'flag' => 'fetchTopAgent']);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,"recharge_level"=>$recharge_level,"state" => $state,"start_date" => $start_date,"end_date" => $end_date,'page' => $page, 'limit' => $limit,'flag' => 'fetchTopAgent']);
         $this->view->render();
     }
 
     
-    public function  updateGameGroupData($data)
+    public function  updateGameGroupData($partnerID,$data)
     {
-        $this->view('exec/lottery_bonus_parameters', ["data"=>$data,'flag' => 'updateGameGroupData']);
+        $this->view('exec/lottery_bonus_parameters', ['partner_id' => $partnerID ,"data"=>$data,'flag' => 'updateGameGroupData']);
         $this->view->render();
     }
 
-    public function  fetchPaymentPlatformsForPartner($page , $limit)
+    public function  fetchPaymentPlatformsForPartner($partnerID,$page , $limit)
     {  
-        $this->view('exec/payment_platform', ["page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatformsForPartner']);
+        $this->view('exec/payment_platform', ['partner_id' => $partnerID,"page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatformsForPartner']);
         $this->view->render();
     }
 
-    public function  fetchPartners($page , $limit)
+    public function  fetchPartners($partnerID,$page , $limit)
     {  
-        $this->view('exec/partners', ["page" => $page, "limit" => $limit,'flag' => 'fetch_partners']);
+        $this->view('exec/partners', ['partner_id' => $partnerID,"page" => $page, "limit" => $limit,'flag' => 'fetch_partners']);
         $this->view->render();
     }
-    public function  fetchPaymentPlatforms($page , $limit)
-    {  
-
-        $this->view('exec/payment_platforms', ['flag' => 'fetchpaymentplatforms']);
-        $this->view->render();
-    }
-    public function  fetchPartnersNames($page , $limit)
+    public function  fetchPaymentPlatforms($partnerID,$page , $limit)
     {  
 
-        $this->view('exec/partners', ['flag' => 'fetchPartnersNames']);
+        $this->view('exec/payment_platforms', ['partner_id' => $partnerID ,'flag' => 'fetchpaymentplatforms']);
+        $this->view->render();
+    }
+    public function  fetchPartnersNames($partnerID,$page , $limit)
+    {  
+
+        $this->view('exec/partners', ['partner_id' => $partnerID,'flag' => 'fetchPartnersNames']);
         $this->view->render();
     }
 
-    public function  toggleTwosidesLotteryState($gameID)
+    public function  toggleTwosidesLotteryState($partnerID,$gameID)
     {   
-        $this->view('exec/lottery_bonus_parameters', ["gameID"=> $gameID,'flag' => 'toggleTwosidesLotteryState']);
+        $this->view('exec/lottery_bonus_parameters', ['partner_id' => $partnerID,"gameID"=> $gameID,'flag' => 'toggleTwosidesLotteryState']);
         $this->view->render();
     }
-    public function  searchPaymentPlatform($platformName,$currency,$status,$startDate,$endDate,$page,$limit)
+    public function  searchPaymentPlatform($partnerID,$platformName,$currency,$status,$startDate,$endDate,$page,$limit)
     {   
-        $this->view('exec/payment_platform', ["platformName"=> $platformName,"currency" => $currency,"status" => $status,"startDate" => $startDate,"endDate" => $endDate,"page" => $page, "limit" => $limit,'flag' => 'searchPaymentPlatform']);
+        $this->view('exec/payment_platform', ['partner_id' => $partnerID,"platformName"=> $platformName,"currency" => $currency,"status" => $status,"startDate" => $startDate,"endDate" => $endDate,"page" => $page, "limit" => $limit,'flag' => 'searchPaymentPlatform']);
         $this->view->render();
     }
 
 
-    public function  searchPartners($partnerName,$state,$startDate,$endDate,$page,$limit)
+    public function  searchPartners($partnerID,$partnerName,$state,$startDate,$endDate,$page,$limit)
     { 
-        $this->view('exec/partners', ["partnerName"=> $partnerName,"state" => $state,"startDate" => $startDate,"endDate" => $endDate,"page" => $page, "limit" => $limit,'flag' => 'searchPartners']);
+        $this->view('exec/partners', ['partner_id' => $partnerID,"partnerName"=> $partnerName,"state" => $state,"startDate" => $startDate,"endDate" => $endDate,"page" => $page, "limit" => $limit,'flag' => 'searchPartners']);
         $this->view->render();
     }
-    public function  addNewPaymentPlaftorm($paymentType,$paymentTypeName,$currency,$status,$fee,$maxAmount,$minAmount,$siteUrl,$adminSiteUrl,$info,$priority,$countries)
+    public function  addNewPaymentPlaftorm($partnerID,$paymentType,$paymentTypeName,$currency,$status,$fee,$maxAmount,$minAmount,$siteUrl,$adminSiteUrl,$info,$priority,$countries)
     {   
-        $this->view('exec/payment_platform', ["paymentType"=> $paymentType,"paymentTypeName" => $paymentTypeName,"currency" => $currency,"status" => $status,"fee" => $fee,"maxAmount" => $maxAmount,"minAmount" => $minAmount, "siteUrl" => $siteUrl,"adminSiteUrl" => $adminSiteUrl,"info" => $info,"priority" => $priority,"countries" => $countries,'flag' => 'addNewPaymentPlaftorm']);
+        $this->view('exec/payment_platform', ['partner_id' => $partnerID,"paymentType"=> $paymentType,"paymentTypeName" => $paymentTypeName,"currency" => $currency,"status" => $status,"fee" => $fee,"maxAmount" => $maxAmount,"minAmount" => $minAmount, "siteUrl" => $siteUrl,"adminSiteUrl" => $adminSiteUrl,"info" => $info,"priority" => $priority,"countries" => $countries,'flag' => 'addNewPaymentPlaftorm']);
         $this->view->render();
     }
 
-    public function  addNewPartner($partnerName,$currency,$encodedSiteUrl,$encodedAdminSiteUrl)
+    public function  addNewPartner($partnerID,$partnerName,$currency,$encodedSiteUrl,$encodedAdminSiteUrl)
     {       
         
 
-        $this->view('exec/partners', ["partner_name"=> $partnerName,"currency" => $currency,"site_url" => $encodedSiteUrl,"admin_site_url" => $encodedAdminSiteUrl,'flag' => 'addNewPartner']);
+        $this->view('exec/partners', ['partner_id' => $partnerID,"partner_name"=> $partnerName,"currency" => $currency,"site_url" => $encodedSiteUrl,"admin_site_url" => $encodedAdminSiteUrl,'flag' => 'addNewPartner']);
         $this->view->render();
     }
 
 
 
-    public function  editPaymentPlaftorm($paymentType,$paymentTypeName,$currency,$status,$fee,$maxAmount,$minAmount,$siteUrl,$adminSiteUrl,$info,$priority,$countries)
+    public function  editPaymentPlaftorm($partnerID,$paymentType,$paymentTypeName,$currency,$status,$fee,$maxAmount,$minAmount,$siteUrl,$adminSiteUrl,$info,$priority,$countries)
     {   
-        $this->view('exec/payment_platform', ["paymentType"=> $paymentType,"paymentTypeName" => $paymentTypeName,"currency" => $currency,"status" => $status,"fee" => $fee,"maxAmount" => $maxAmount,"minAmount" => $minAmount, "siteUrl" => $siteUrl,"adminSiteUrl" => $adminSiteUrl,"info" => $info,"priority" => $priority,"countries" => $countries,'flag' => 'editPaymentPlaftorm']);
+        $this->view('exec/payment_platform', ['partner_id' => $partnerID,"paymentType"=> $paymentType,"paymentTypeName" => $paymentTypeName,"currency" => $currency,"status" => $status,"fee" => $fee,"maxAmount" => $maxAmount,"minAmount" => $minAmount, "siteUrl" => $siteUrl,"adminSiteUrl" => $adminSiteUrl,"info" => $info,"priority" => $priority,"countries" => $countries,'flag' => 'editPaymentPlaftorm']);
         $this->view->render();
     }
 
 
-    public function  fetchBonusTwoSides($lotteryID,$lotteryGameGroup)
+    public function  fetchBonusTwoSides($partnerID,$lotteryID,$lotteryGameGroup)
     {
 
-        $this->view('exec/lottery_bonus_parameters', ["lottery_type"=>$lotteryID,"game_group" => $lotteryGameGroup,"flag" => "fetchBonusTwoSides"]);
+        $this->view('exec/lottery_bonus_parameters', ['partner_id' => $partnerID,"lottery_type"=>$lotteryID,"game_group" => $lotteryGameGroup,"flag" => "fetchBonusTwoSides"]);
         $this->view->render();
     }
 
-    public function  getuserrebate($uid)
+    public function  getuserrebate($partnerID,$uid)
     {
-        $this->view('exec/account_manage', ['uid' => $uid, 'flag' => 'getuserrebate']);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,'uid' => $uid, 'flag' => 'getuserrebate']);
         $this->view->render();
     }
 
-    public function updateUsedquota($uid,$bonus_group,$rebate_group,$quata_group,$count_group)
+    public function updateUsedquota($partnerID,$uid,$bonus_group,$rebate_group,$quata_group,$count_group)
     {
         $this->view('exec/account_manage',[
+        'partner_id' => $partnerID,
         'uid' => $uid, 'bonus'=>$bonus_group,
         'rebate'=>$rebate_group,'quota'=>$quata_group,
         'count'=>$count_group,
@@ -463,8 +470,9 @@ class adminController extends Controller {
        
     }
     
-    public function filterChangeAccount($uid,$ordertype,$startdate,$enddate,$pageNumber,$limit){
+    public function filterChangeAccount($partnerID,$uid,$ordertype,$startdate,$enddate,$pageNumber,$limit){
         $this->view('exec/account_manage',[
+            'partner_id' => $partnerID,
             'uid' => $uid,
             'ordertype' => $ordertype,'startdate' => $startdate,
             'enddate' => $enddate, 'flag' => 'filterchange',
@@ -477,68 +485,68 @@ class adminController extends Controller {
   
      //NOTE -
     ////////////// USERLIST LOGS -//////////
-    public function userlogsdata($pageNumber, $limit)
+    public function userlogsdata($partnerID,$pageNumber, $limit)
     {
-        $this->view('exec/account_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlogsdata']);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,'page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlogsdata']);
         $this->view->render();
      }
 
-    public function filterUserlogs($username,  $startdate, $enddate, $pageNumber, $limit)
+    public function filterUserlogs($partnerID,$username,  $startdate, $enddate, $pageNumber, $limit)
     {
-        $this->view('exec/account_manage', ['usernamelog' => $username,'startdate' => $startdate,
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,'usernamelog' => $username,'startdate' => $startdate,
         'enddate' => $enddate,'flag' => 'filterUserlogs','page' => $pageNumber,'limit' => $limit,]);
         $this->view->render();
     }
-    public function manageUser($userID,  $lotteryID,$flag)
+    public function manageUser($partnerID,$userID,  $lotteryID,$flag)
     {
-        $this->view('exec/account_manage', ['user_id' => $userID,'ulog_id' => $lotteryID,'lottery_id' => $lotteryID,"flag" => $flag]);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,'user_id' => $userID,'ulog_id' => $lotteryID,'lottery_id' => $lotteryID,"flag" => $flag]);
         $this->view->render();
     }
-    public function fetchLotteries($flag)
+    public function fetchLotteries($partnerID,$flag)
     {
-        $this->view('exec/partners', ["flag" => $flag]);
+        $this->view('exec/partners', ['partner_id' => $partnerID,"flag" => $flag]);
         $this->view->render();
     }
 
-    public function agent_subordinate($user_id,$pageNumber, $limit)
+    public function agent_subordinate($partnerID,$user_id,$pageNumber, $limit)
     {
-        $this->view('exec/account_manage', ['user_id' => $user_id ,'flag' => 'fetchsubagent','page' => $pageNumber, 'limit' => $limit,]);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,'user_id' => $user_id ,'flag' => 'fetchsubagent','page' => $pageNumber, 'limit' => $limit,]);
         $this->view->render();
     }
-    public function useraccountchange($uid,$pageNumber, $limit)
+    public function useraccountchange($partnerID,$uid,$pageNumber, $limit)
     {
-        $this->view('exec/account_manage', ['uid' => $uid ,'flag' => 'fetchaccountchange','page' => $pageNumber, 'limit' => $limit,]);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,'uid' => $uid ,'flag' => 'fetchaccountchange','page' => $pageNumber, 'limit' => $limit,]);
         $this->view->render();
     }
     
-    public function updateUserData($userID,$depositLimit, $withdrawalLimit, $rebate, $state,$dailyBettingLimit,$flag)
+    public function updateUserData($partnerID,$userID,$depositLimit, $withdrawalLimit, $rebate, $state,$dailyBettingLimit,$flag)
     {
 
-        $this->view('exec/account_manage', ['user_id' => $userID,'depositLimit' => $depositLimit ,'withdrawalLimit' => $withdrawalLimit,'rebate' => $rebate,"state" => $state, "dailyBettingTotalLimit" => $dailyBettingLimit,'flag' => 'updateUserData',]);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,'user_id' => $userID,'depositLimit' => $depositLimit ,'withdrawalLimit' => $withdrawalLimit,'rebate' => $rebate,"state" => $state, "dailyBettingTotalLimit" => $dailyBettingLimit,'flag' => 'updateUserData',]);
         $this->view->render();
     }
 
       //NOTE -
     ////////////// USER OvERVIEW -//////////
 
-    public function userviewdata()
+    public function userviewdata($partnerID)
     {
-        $this->view('exec/account_manage', ['flag' => 'userviewdata']);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,'flag' => 'userviewdata']);
         $this->view->render();
      }
 
 
       //NOTE -
     //////////////INVITATION & REFERAL LINK -//////////
-    public function userlinkdata($pageNumber, $limit)
+    public function userlinkdata($partnerID,$pageNumber, $limit)
     {
-        $this->view('exec/promotion_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlinkdata']);
+        $this->view('exec/promotion_manage', ['partner_id' => $partnerID,'page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlinkdata']);
         $this->view->render();
     }
 
-    public function  filterUserlinks($username,$startdate, $enddate, $pageNumber, $limit)
+    public function  filterUserlinks($partnerID,$username,$startdate, $enddate, $pageNumber, $limit)
     {
-        $this->view('exec/promotion_manage', ['username' => $username,'startdate' => $startdate,
+        $this->view('exec/promotion_manage', ['partner_id' => $partnerID,'username' => $username,'startdate' => $startdate,
         'enddate' => $enddate,'flag' => 'filterUserlinks','page' => $pageNumber,'limit' => $limit,]);
         $this->view->render();
     }
@@ -546,25 +554,25 @@ class adminController extends Controller {
       //NOTE -
     //////////////Quota Settings -//////////
     // 
-    public function fetchquota($pageNumber, $limit)
+    public function fetchquota($partnerID,$pageNumber, $limit)
     {
-        $this->view('exec/agentmanage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchquota']);
+        $this->view('exec/agentmanage', ['partner_id' => $partnerID,'page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchquota']);
         $this->view->render();
     }
-    public function updatequota($rebateid, $quota)
+    public function updatequota($partnerID,$rebateid, $quota)
     {
-        $this->view('exec/agentmanage', ['rebateid' => $rebateid, 'quota' => $quota, 'flag' => 'updatequota']);
+        $this->view('exec/agentmanage', ['partner_id' => $partnerID,'rebateid' => $rebateid, 'quota' => $quota, 'flag' => 'updatequota']);
         $this->view->render();
     }
-    public function UpdateAllquota($quota)
+    public function UpdateAllquota($partnerID,$quota)
     {
-        $this->view('exec/agentmanage', ['quota' => $quota, 'flag' => 'UpdateAllquota']);
+        $this->view('exec/agentmanage', ['partner_id' => $partnerID,'quota' => $quota, 'flag' => 'UpdateAllquota']);
         $this->view->render();
     }
 
-    public function filterRebate($rebate)
+    public function filterRebate($partnerID,$rebate)
     {
-        $this->view('exec/agentmanage', ['rebate' => $rebate, 'flag' => 'filterRebate']);
+        $this->view('exec/agentmanage', ['partner_id' => $partnerID,'rebate' => $rebate, 'flag' => 'filterRebate']);
         $this->view->render();
     }
 
@@ -573,21 +581,22 @@ class adminController extends Controller {
        //NOTE -
     //////////////Finance funds Records -//////////
     // 
-    public function fetchfinance($pageNumber, $limit)
+    public function fetchfinance($partnerID,$pageNumber, $limit)
     {
-        $this->view('exec/financial_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchfinance']);
+        $this->view('exec/financial_manage', ['partner_id' => $partnerID,'page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchfinance']);
         $this->view->render();
     }
-    public function addmoney($depositetype,$uid,$amount,$approvedby,$review)
+    public function addmoney($partnerID,$depositetype,$uid,$amount,$approvedby,$review)
     {
-        $this->view('exec/financial_manage', ['depositetype' => $depositetype,'uid'=>$uid,
+        $this->view('exec/financial_manage', ['partner_id' => $partnerID,'depositetype' => $depositetype,'uid'=>$uid,
         'amount' => $amount, 'approvedby' => $approvedby,'review'=>$review,'flag' => 'addmoney']);
         $this->view->render();
     }
 
-    public function filterfinance($uid,$depositestate,$startfinance,$endfinance,$page,$pageLimit)
+    public function filterfinance($partnerID,$uid,$depositestate,$startfinance,$endfinance,$page,$pageLimit)
     {
         $this->view('exec/financial_manage', [
+        'partner_id' => $partnerID,
         'uid' => $uid,
         'status' => $depositestate,
         'startdate' => $startfinance,
@@ -603,15 +612,16 @@ class adminController extends Controller {
         //NOTE -
     //////////////Deposit Records -//////////
     // 
-    public function fetchDeposit($pageNumber, $limit)
+    public function fetchDeposit($partnerID,$pageNumber, $limit)
     {
-        $this->view('exec/financial_manage', ['page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchDeposit']);
+        $this->view('exec/financial_manage', ['partner_id' => $partnerID,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchDeposit']);
         $this->view->render();
     }
 
-    public function filterdeposits($uid,$depositchanel,$depositid,$stautsdeposit,$startdepo,$enddepo,$page,$pageLimit)
+    public function filterdeposits($partnerID,$uid,$depositchanel,$depositid,$stautsdeposit,$startdepo,$enddepo,$page,$pageLimit)
     {
         $this->view('exec/financial_manage', [
+        'partner_id' => $partnerID,
         'uid' => $uid,
         'states' => $depositchanel,
         'depositid' => $depositid,
@@ -640,18 +650,18 @@ class adminController extends Controller {
      //NOTE -
     //////////////Bank Cardlist Records -//////////
     // 
-    public function   fetchbankcard($uid,$bank_type,$card_number,$status,$pageNumber, $limit,$miscelleanous)
+    public function   fetchbankcard($partnerID,$uid,$bank_type,$card_number,$status,$pageNumber, $limit,$miscelleanous)
     {
 
-        $this->view('exec/userbank_manage', ['uid' => $uid,'bank_type' => urldecode($bank_type),'card_number' => $card_number,'status' => $status,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchbankcard']);
+        $this->view('exec/userbank_manage', ['partner_id' =>$partnerID,'uid' => $uid,'bank_type' => urldecode($bank_type),'card_number' => $card_number,'status' => $status,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchbankcard']);
         $this->view->render();
     }
   
    //NOTE -
     //////////////lottery bounus Parameter -//////////
     // 
-    public function fetchgames(){
-        $this->view('exec/game_manage',['flag' => 'fetchgames']);
+    public function fetchgames($partnerID){
+        $this->view('exec/game_manage',['parter_id' => $partnerID,'flag' => 'fetchgames']);
         $this->view->render();
     }
 
@@ -660,13 +670,14 @@ class adminController extends Controller {
     //     $this->view->render();
     // }
 
-    public function getAllGamesLottery(){
-        $this->view('exec/game_management',['flag' => 'getAllGamesLottery']);
+    public function getAllGamesLottery($partnerID){
+        $this->view('exec/game_management',['partner_id' => $partnerID,'flag' => 'getAllGamesLottery']);
         $this->view->render();
     }
 
-    public function getLotteryGames(string $lotterId, string $tables){
+    public function getLotteryGames($partnerID,string $lotterId, string $tables){
         $this->view('exec/game_management',[
+            'partner_id' => $partnerID,
             'flag' => 'getLotteryGames',
             'gameId' => $lotterId,
             'tables' => $tables
@@ -674,8 +685,9 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-      function updateoddstotalbets($lotterId,$gamemodel,$oddpercent,$newodds,$totalbetpercent,$newtotalbet){
+      function updateoddstotalbets($partnerID,$lotterId,$gamemodel,$oddpercent,$newodds,$totalbetpercent,$newtotalbet){
         $this->view('exec/game_management',[
+            'partner_id' => $partnerID,
             'flag' => 'updateoddstotalbets',
             'gameId' => $lotterId,
             'models' =>$gamemodel,
@@ -689,8 +701,9 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    function resettotalbet($lotterId,$gamemodel,$totalbetpercent,$newtotalbet){
+    function resettotalbet($partnerID,$lotterId,$gamemodel,$totalbetpercent,$newtotalbet){
         $this->view('exec/game_management',[
+            'partner_id' => $partnerID,
             'flag' => 'resettotalbet',
             'gameId' => $lotterId,
             'models' =>$gamemodel,
@@ -700,8 +713,9 @@ class adminController extends Controller {
         $this->view->render();
     }
     
-    function updategamestatus($lotterId,$gamemodel,$gametate){
+    function updategamestatus($partnerID,$lotterId,$gamemodel,$gametate){
         $this->view('exec/game_management',[
+            'partner_id' => $partnerID,
             'flag' => 'updategamestatus',
             'gameId' => $lotterId,
             'models' =>$gamemodel,
@@ -713,8 +727,9 @@ class adminController extends Controller {
     
 
    //annoucement
-    function createannoucement($messagetype,$messagetitle,$usernames,$description,$startdate,$enddate,$sendby){
+    function createannoucement($partnerID,$messagetype,$messagetitle,$usernames,$description,$startdate,$enddate,$sendby){
         $this->view('exec/annoucement_management',[
+            'partner_id' => $partnerID,
             'flag' => 'message',
             'messagetype' => $messagetype,
             'messagetitle' =>$messagetitle,
@@ -728,21 +743,22 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function fetchmessage($pageNumber, $limit)
+    public function fetchmessage($partnerID,$pageNumber, $limit)
     {
-        $this->view('exec/annoucement_management', ['page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchmessage']);
+        $this->view('exec/annoucement_management', ['partner_id' => $partnerID,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchmessage']);
         $this->view->render();
     }
 
-    public function deleteannoucement($messageid)
+    public function deleteannoucement($partnerID,$messageid)
     {
-        $this->view('exec/annoucement_management', ['messageid' => $messageid,'flag' => 'deleteannoucement']);
+        $this->view('exec/annoucement_management', ['partner_id' => $partnerID,'messageid' => $messageid,'flag' => 'deleteannoucement']);
         $this->view->render();
     }
 
-    public function filtermessage($username,$messagestype,$startdepo,$enddepo,$page,$pageLimit)
+    public function filtermessage($partnerID,$username,$messagestype,$startdepo,$enddepo,$page,$pageLimit)
     {
             $this->view('exec/annoucement_management', [
+            'partner_id' => $partnerID,
             'username' => $username,
             'messagestype' => $messagestype,
             'startdate' => $startdepo,
@@ -754,18 +770,20 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function editannoucement($msgid)
+    public function editannoucement($partnerID,$msgid)
     {
             $this->view('exec/annoucement_management', [
+                'patner_id' => $partnerID,
                 'msgid' => $msgid,
                 'flag' => 'editannoucement'
             ]);
             $this->view->render();
     }
 
-    public function updateannoucement($msgtitle,$msgcontent,$msgid)
+    public function updateannoucement($partnerID,$msgtitle,$msgcontent,$msgid)
     {
             $this->view('exec/annoucement_management', [
+                'partner_id' => $partnerID,
                 'msgtitle' => $msgtitle,
                 'msgcontent' => $msgcontent,
                 'msgid' => $msgid,
@@ -775,9 +793,10 @@ class adminController extends Controller {
     }
     
         //for user notification
-        public function fetchusernotification($pageNumber, $limit)
+        public function fetchusernotification($partnerID,$pageNumber, $limit)
         {
             $this->view('exec/annoucement_management', [
+                'partner_id' => $partnerID,
                 'flag' => 'viewnotification',
                 'page' => $pageNumber,
                 'limit' => $limit
@@ -785,9 +804,10 @@ class adminController extends Controller {
             $this->view->render();
         }
 
-        public function filteruserNotifys($username,$messagestype,$startdepo,$enddepo,$page,$pageLimit)
+        public function filteruserNotifys($partnerID,$username,$messagestype,$startdepo,$enddepo,$page,$pageLimit)
         {
                 $this->view('exec/annoucement_management', [
+                'partner_id' => $partnerID,
                 'username' => $username,
                 'messagestype' => $messagestype,
                 'startdate' => $startdepo,
@@ -801,32 +821,33 @@ class adminController extends Controller {
 
 
          //Payment Platform
-        public function fetchPaymentPlatform($page ,$limit){  
-            $this->view('exec/payment_platform', ["page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
+        public function fetchPaymentPlatform($partnerID,$page ,$limit){  
+            $this->view('exec/payment_platform', ['partner_id' => $partnerID,"page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
             $this->view->render();
          }
 
-        public function addnewpayment(){  
-            $this->view('exec/payment_platform',['flag' => 'addpayment']);
+        public function addnewpayment($partnerID){  
+            $this->view('exec/payment_platform',['partner_id' => $partnerID,'flag' => 'addpayment']);
             $this->view->render();
         }
 
-        public function deletepayment($payid)
+        public function deletepayment($partnerID,$payid)
         {
-            $this->view('exec/payment_platform', ['payid' => $payid,'flag' => 'deletepayment']);
+            $this->view('exec/payment_platform', ['partner_id' => $partnerID,'payid' => $payid,'flag' => 'deletepayment']);
             $this->view->render();
         }
 
         
-        public function editpayment($payid)
+        public function editpayment($partnerID,$payid)
         {
-            $this->view('exec/payment_platform', ['payid' => $payid,'flag' => 'editpayment']);
+            $this->view('exec/payment_platform', ['partner_id' => $partnerID,'payid' => $payid,'flag' => 'editpayment']);
             $this->view->render();
         }
    
-        public function updateplatform($typecurrency,$maxiamounts,$minamount,$statecurrent,$paymentids)
+        public function updateplatform($partnerID,$typecurrency,$maxiamounts,$minamount,$statecurrent,$paymentids)
         {
                 $this->view('exec/payment_platform', [
+                    'partner_id' => $partnerID,
                     'typecurrency' => $typecurrency,
                     'maxiamounts' => $maxiamounts,
                     'minamount' => $minamount,
@@ -837,9 +858,10 @@ class adminController extends Controller {
                 $this->view->render();
         }
 
-        public function filterpayments($curencytypes,$stautspayment,$startdepo,$enddepo,$page,$pageLimit)
+        public function filterpayments($partnerID,$curencytypes,$stautspayment,$startdepo,$enddepo,$page,$pageLimit)
         {
                 $this->view('exec/payment_platform', [
+                'partner_id' => $partnerID,
                 'curencytypes' => $curencytypes,
                 'stautspayment' => $stautspayment,
                 'startdate' => $startdepo,
@@ -855,8 +877,8 @@ class adminController extends Controller {
 
     //languages
 
-     public function changelang(string $lang){
-        $this->view('exec/switchlang',['lang' => $lang]);
+     public function changelang($partnerID,string $lang){
+        $this->view('exec/switchlang',['partner_id' => $partnerID,'lang' => $lang]);
         $this->view->render();
     }
 

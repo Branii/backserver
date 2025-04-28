@@ -4,6 +4,7 @@
 // header('Content-Type: application/json');
 
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+$partnerID = isset($this->viewData['partner_id']) ? $this->viewData['partner_id'] : null;
 
 if ($flag == "userlistdata") {
     $page = isset($this->viewData['page']) ? max((int) $this->viewData['page'], 1) : 1; // Ensure valid page number
@@ -39,7 +40,7 @@ if ($flag === "searchUserlistData") {
         return;
     }
 
-    $res = UserManageModel::searchUserData(["uid" => $uid, "state" => $states, "recharge_level" => $recharge_level, "start_date" => $startdate, "end_date" => $enddate]);
+    $res = UserManageModel::searchUserData($partnerID,["uid" => $uid, "state" => $states, "recharge_level" => $recharge_level, "start_date" => $startdate, "end_date" => $enddate]);
     echo json_encode($res);
     return;
 }
@@ -47,7 +48,7 @@ if ($flag === "searchUserlistData") {
 if ($flag == "filteruserlist") {
     $uid = isset($this->viewData['username']) ? $this->viewData['username'] : '';
     $states = isset($this->viewData['states']) ? $this->viewData['states'] : '';
-    $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
+    $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($partnerID,$uid);
     $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
     $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
@@ -56,7 +57,7 @@ if ($flag == "filteruserlist") {
     if (!empty($usernameCheck) && $usernameCheck != null) {
         $username = $usernameCheck[0]['uid'];
         $sunquery = (new UserManageModel())->FilterUserlistDataSubQuery($username, $states, $startdate, $enddate);
-        $result = (new UserManageModel())->Filteruserlist($sunquery, $page, $limit) ?? [];
+        $result = (new UserManageModel())->Filteruserlist($partnerID,$sunquery, $page, $limit) ?? [];
         //  echo json_encode([
         //     // 'sql' => $result['sql'],
         //      'userlists' => $result,
@@ -64,7 +65,7 @@ if ($flag == "filteruserlist") {
         //  ]);
     } else {
         $sunquery = (new UserManageModel())->FilterUserlistDataSubQuery($uid, $states, $startdate, $enddate);
-        $result = (new UserManageModel())->Filteruserlist($sunquery, $page, $limit) ?? [];
+        $result = (new UserManageModel())->Filteruserlist($partnerID,$sunquery, $page, $limit) ?? [];
         //  echo json_encode([
         //     // 'sql' => $result['sql'],
         //      'userlists' => $result,
@@ -74,9 +75,9 @@ if ($flag == "filteruserlist") {
 
     $bigArr = [];
     foreach ($result['data'] as $data) {
-        $referals = (new UserManageModel())->getDirectReferrals($data['agent_id']);
-        $subor = (new UserManageModel())->getSubordinate($data['agent_id']);
-        $totalsubordinate = (new UserManageModel())->Fetchsubordinates($data['uid']);
+        $referals = (new UserManageModel())->getDirectReferrals($partnerID,$data['agent_id']);
+        $subor = (new UserManageModel())->getSubordinate($partnerID,$data['agent_id']);
+        $totalsubordinate = (new UserManageModel())->Fetchsubordinates($partnerID,$data['uid']);
 
         //    $relationship = '';
         $subordinates = '';
@@ -105,20 +106,20 @@ if ($flag == "filteruserlist") {
 }
 
 if ($flag == "fetchRebatedata") {
-    $result = (new UserManageModel())->FetchRebateData() ?? [];
+    $result = (new UserManageModel())->FetchRebateData($partnerID) ?? [];
     echo json_encode($result);
-}
+}   
 
 if ($flag == "addAgent") {
     $data = isset($this->viewData['data']) ? $this->viewData['data'] : '';
     // $data = urldecode($data);
     parse_str($data, $parsedData);
-    $result = (new UserManageModel())->validateRegister($parsedData) ?? [];
-    $rebatelist = (new UserManageModel())->fetchquotaData($parsedData['agentrebate']);
+    $result = (new UserManageModel())->validateRegister($partnerID,$parsedData) ?? [];
+    $rebatelist = (new UserManageModel())->fetchquotaData($partnerID,$parsedData['agentrebate']);
     if ($result == []) {
         $dateTime = date("Y-m-d H:i:s");
         $account_type = 2;
-        $rebatelist = (new UserManageModel())->fetchquotaData($parsedData['agentrebate']);
+        $rebatelist = (new UserManageModel())->fetchquotaData($partnerID,$parsedData['agentrebate']);
         $nickname = (new UserManageModel())->generateRandomNickname();
         $userstate = 1;
         $userstatus = 1;
@@ -163,7 +164,7 @@ if ($flag == "addAgent") {
             'auth_type' => "*****",
         ];
 
-        $result = (new UserManageModel())->AddAgentData($datas) ?? [];
+        $result = (new UserManageModel())->AddAgentData($partnerID,$datas) ?? [];
     }
 
     echo json_encode($result);
@@ -172,12 +173,12 @@ if ($flag == "addAgent") {
 if ($flag == "fetchTopAgentV1") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $result = (new UserManageModel())->FetchTopAgentData($page, $limit) ?? [];
+    $result = (new UserManageModel())->FetchTopAgentData($partnerID,$page, $limit) ?? [];
 
     $usersLists = [];
     foreach ($result['data'] as $data) {
         //  $userlogins = (new UserManageModel())->countUserLogs($data['uid']);
-        $totalsubordinate = (new UserManageModel())->Fetchsubordinates($data['uid']);
+        $totalsubordinate = (new UserManageModel())->Fetchsubordinates($partnerID,$data['uid']);
         $relationship = '';
         if ($data['account_type'] == 2) {
             $relationship = "Top Agent";
@@ -200,7 +201,7 @@ if ($flag == "fetchTopAgentV1") {
 if ($flag == "userlogsdata") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $result = (new UserManageModel())->FetchUserlogsData($page, $limit) ?? [];
+    $result = (new UserManageModel())->FetchUserlogsData($partnerID,$page, $limit) ?? [];
     echo json_encode([
         'userlogs' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit),

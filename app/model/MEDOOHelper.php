@@ -29,8 +29,8 @@ class MEDOOHelper extends MedooOrm{
         return $req;
     }
 
-    public static function insert($table,$data) {
-        parent::openLink()->insert($table, $data);
+    public static function insert($partnerID,$table,$data) {
+        parent::openLink($partnerID)->insert($table, $data);
         return parent::openLink()->id();
     }
     
@@ -44,8 +44,8 @@ class MEDOOHelper extends MedooOrm{
         return $req;
     }
 
-    public static function count($table, $columns = "*", $where = []) {
-        $count = parent::openLink()->count($table, $columns, $where);
+    public static function count($partnerID,$table, $columns = "*", $where = []) {
+        $count = parent::openLink($partnerID)->count($table, $columns, $where);
         return $count;
     }
 

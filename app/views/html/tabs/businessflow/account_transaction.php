@@ -250,7 +250,7 @@
 </style>
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0"><span class="partner-name"> </span><span class="arr"> / </span><?= $translator['Account Transaction Details']; ?></h4>
+        <h4 class="card-title mb-0"><?= $translator['Account Transaction Details']; ?></h4>
     </div>
     <div class="px-4 py-3 border-bottom pager1">
         <span class="top-left-btn">
