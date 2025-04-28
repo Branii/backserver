@@ -240,7 +240,9 @@
                 <select class="form-control userlogdropdown" size="5" style="display: none;" id="userfinaceuserlogs">
               
                 </select>
-                
+                <select name="lotteryname" class="form-control form-select queryholderlogs selectpartner"> 
+
+               </select>
                 <input type="date" class="form-control queryholderlogs startdatelog" id="namete" aria-describedby="name"
                     placeholder="Name" />
 

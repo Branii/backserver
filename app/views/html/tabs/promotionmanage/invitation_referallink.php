@@ -229,7 +229,9 @@
                     <!-- Options will be populated dynamically -->
                 </select>
 
-                
+                 <select name="lotteryname" class="form-control form-select queryholderlogss selectpartner"> 
+
+                 </select>
                  <input type="date" class="form-control queryholderlogss linkstart"  aria-describedby="name"
                     placeholder="Name" />
 

@@ -538,6 +538,9 @@ input:checked + .lpd-slider:after {
           <select name="order_type" class="form-control form-select" style= "margin-left:15px; display: none;" id="game_groups">
        
           </select>
+          <select name="lotteryname" class="form-control form-select  selectpartner" style= "margin-left:15px"> 
+
+         </select>
 
         <!-- <input type="date" class="form-control queryholder startdate" id="drawfrom"/>
 

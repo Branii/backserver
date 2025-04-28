@@ -235,6 +235,9 @@
                 <select class="form-control userlogdropdowns" size="5" style="display: none;" id="userfinaceuseroverview">
               
                 </select>
+                <select name="lotteryname" class="form-control form-select queryholderoverview selectpartner"> 
+
+                </select>
                 
                 <input type="date" class="form-control queryholderoverview startdateover" id="namete" aria-describedby="name" placeholder="Name" />
 

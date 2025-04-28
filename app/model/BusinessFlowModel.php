@@ -361,29 +361,31 @@ class BusinessFlowModel extends MEDOOHelper
 
    public static function FilterTrackData($subQuery, $page, $limit)
    {
-      $startpoint = ($page - 1) * $limit;
+    
+            $startpoint = ($page - 1) * $limit;
             $sql = "
-              SELECT trackbet.track_id,trackbet.track_rule,trackbet.track_token,trackbet.game_type_id,trackbet.start_draw,trackbet.game_type,
-                 trackbet.tracked,trackbet.total_bets,trackbet.done_amount,trackbet.total_amount,trackbet.track_status,trackbet.win_amount,
-                 trackbet.server_date,trackbet.server_time,users_test.email,users_test.contact,users_test.reg_type,users_test.username  FROM trackbet   
-             INNER JOIN users_test ON users_test.uid = trackbet.user_id 
-             WHERE $subQuery LIMIT :offset, :limit
-          ";
+               SELECT 
+                     trackbet.track_id, trackbet.track_rule, trackbet.track_token, trackbet.game_type_id, trackbet.start_draw,
+                     trackbet.game_type,trackbet.tracked,trackbet.total_bets,trackbet.done_amount,trackbet.total_amount, trackbet.track_status,
+                     trackbet.win_amount,
+                     trackbet.server_date,
+                     trackbet.server_time,
+                     users_test.email,
+                     users_test.contact,
+                     users_test.reg_type,
+                     users_test.username  
+               FROM trackbet   
+               INNER JOIN users_test ON users_test.uid = trackbet.user_id 
+               WHERE $subQuery
+               LIMIT :offset, :limit
+            ";
 
-      $countSqls = "SELECT COUNT(*) AS total_counts FROM trackbet WHERE $subQuery";
-
-      // Execute the main SQL query
-      $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
-
-      // Execute the count query
-      $totalRecordsResult = parent::query($countSqls);
-      $totalRecords = $totalRecordsResult[0]['total_counts'];
-
-      // Log the last executed query (for debugging purposes)
-      $lastQuery = MedooOrm::openLink()->log();
-
-      // Return the results
-      return [ 'data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery[0]];
+            $data = parent::query($sql, [':offset' => $startpoint,':limit' => $limit]);
+            $countSql = "SELECT COUNT(*) AS total_counts FROM trackbet WHERE $subQuery";
+            $totalRecordsResult = parent::query($countSql);
+            $totalRecords = $totalRecordsResult[0]['total_counts'] ?? 0;
+            //$lastQuery = MedooOrm::openLink()->log();
+            return ['data' => $data,'total' => $totalRecords];
    }
 
    public static function getTrackData($betTable, $tracktoken)

@@ -21,11 +21,6 @@ if ($flag == "userlistdata") {
     // $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
     // $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit
     // $result = (new UserManageModel())->FetchUserlistData($page, $limit);
-
-    //   echo json_encode([
-    //     'users' => $result['data'],
-    //     'totalPages' => ceil($result['total'] / $limit)
-    // ]);
 }
 
 if ($flag === "searchUserlistData") {
@@ -220,16 +215,13 @@ if ($flag == "filterUserlogs") {
         $sunquery = (new UserManageModel())->FilterUserlogsDataSubQuery($usernamelog, $startdate, $enddate);
         $result = (new UserManageModel())->Filteruserlogs($sunquery, $page, $limit) ?? [];
         echo json_encode([
-            'sql' => $result['sql'],
             'userloggs' => $result['data'],
             'totalPages' => ceil($result['total'] / $limit),
         ]);
     } else {
         $sunquery = (new UserManageModel())->FilterUserlogsDataSubQuery($username, $startdate, $enddate);
         $result = (new UserManageModel())->Filteruserlogs($sunquery, $page, $limit) ?? [];
-
         echo json_encode([
-            'sql' => $result['sql'],
             'userloggs' => $result['data'],
             'totalPages' => ceil($result['total'] / $limit),
         ]);
@@ -404,13 +396,3 @@ if ($flag == "filterchange") {
     ]);
 }
 
-//userviewdata
-if ($flag == "userviewdata") {
-    // $page = isset($this->viewData['page']) ? max((int) $this->viewData['page'], 1) : 1; // Ensure valid page number
-    // $limit = isset($this->viewData['limit']) ? max((int) $this->viewData['limit'], 1) : 20; // Ensure valid limit
-    $result = (new UserManageModel())->FetchUserOverViewData() ?? [];
-    echo json_encode([
-        'overview' => $result['data'],
-        // 'totalPages' => ceil($result['total'] / $limit),
-    ]);
-}
