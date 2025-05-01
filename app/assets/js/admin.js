@@ -16,6 +16,7 @@ $(function(){
         elem.addClass("bx-loader bx-spin").removeClass("bx-check-shieldn")
         setTimeout(() => {
             $.post(url,params,function(result){
+                console.log(result)
                 if(JSON.parse(result).type == 'success'){
                     elem.removeClass("bx-loader bx-spin").addClass("bx-check-shieldn")
                     showToast(translator["Success"],translator["Signin successful"],"success")
@@ -36,6 +37,8 @@ $(function(){
         let isEmpty = Object.values(params).some(param => param === "");
         !isEmpty ? request('admin/signin',params) : showToast(translator["Heads up!!"],translator["All fields are mandatory"],"info");
     })
+
+    
 
     $(".lang").on("change",function(){
         const language = $(this).val()

@@ -1,4 +1,5 @@
 <?php
+
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
@@ -10,6 +11,7 @@ $translator = include "tabs/lang/{$lang}.php";
 
 !(new Controller)->isUserLoggedIn() ? header("location:../") : "";
 $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
+
 
 $fullname = (new Controller)->getUsername($adminEmail);
 
@@ -261,44 +263,48 @@ $fullname = (new Controller)->getUsername($adminEmail);
             <!-- <button id="theme-toggle">🌓 Toggle Theme</button> -->
           </ul>
         </nav>
-        <div class="mb-1" style="background-color:redl;position: fixed;bottom: 0;left:0;">
-          <div class="p-3 mb-0 bg-white-subtle rounded mt-3" style="position:relative;background:#F9F9F9;border:solid 1px #eee">
-            <div class="hstack gap-3">
-              <div class="john-img">
-                <img
-                  src="<?php echo BASE_URL; ?>assets/images/profile/user-1.jpg"
-                  class="rounded-circle" width="40" height="40" alt="modernize-img" />
-              </div>
-              <div class="john-title">
-                <h6 class="mb-0 fs-4 fw-semibold" id="admin-name"><?php echo $fullname['full_name']; ?></h6>
-                <span class="fs-2"><?php echo $fullname['role']; ?></span>
-              </div>
-              <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
-                <div class="dropdown" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top"
-                  data-bs-title="Profile">
-                  <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <i class='bx bx-dots-vertical-rounded'></i>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"
-                    style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
-                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1"
-                      href="javascript:void(0);">
-                      <i class='bx bx-user-check'></i><?= $translator['Add User']; ?>
-                    </a>
-                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1"
-                      href="javascript:void(0);">
-                      <i class='bx bx-pencil'></i><?= $translator['Change Password']; ?>
-                    </a>
-                    <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1"
-                      href="javascript:void(0);">
-                      <i class="bx bx-trash fs-5"></i><?= $translator['Delete']; ?>
-                    </a>
-                  </div>
+
+        
+         <div class="mb-0" style="background-color:redl;position: fixed;bottom: 0;left:0;width:14.1%">
+            <div class="p-3 mb-0 bg-white-subtle rounded mt-3" style="position:relative;background:#F9F9F9;border:solid 1px #eee;">
+              <div class="hstack gap-3">
+                <div class="john-img">
+                  <img
+                    src="<?php echo BASE_URL; ?>assets/images/profile/user-1.jpg"
+                    class="rounded-circle" width="40" height="40" alt="modernize-img" />
                 </div>
-              </button>
+                <div class="john-title">
+                  <h6 class="mb-0 fs-4 fw-semibold" id="admin-name"><?php echo $fullname['full_name']; ?></h6>
+                  <span class="fs-2"><?php echo $fullname['role']; ?></span>
+                </div>
+                <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
+                  <div class="dropdown" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Profile">
+                    <!-- <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1"
+                      data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      <i class='bx bx-dots-vertical-rounded'></i>
+                    </a> -->
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"
+                      style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+                      <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1"
+                        href="javascript:void(0);">
+                        <i class='bx bx-user-check'></i><?= $translator['Add User']; ?>
+                      </a>
+                      <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1"
+                        href="javascript:void(0);">
+                        <i class='bx bx-pencil'></i><?= $translator['Change Password']; ?>
+                      </a>
+                      <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1"
+                        href="javascript:void(0);">
+                        <i class="bx bx-trash fs-5"></i><?= $translator['Delete']; ?>
+                      </a>
+                    </div>
+                  </div>
+                </button>
+               </div>
             </div>
-          </div>
+
+          
           <div class="btn-group bg-white-subtle rounded " role="group" style="width:100%;border:solid 1px #eee;color:#bbb;background-color:#F9F9F9">
             <button type="button" class="btn bg-white-subtle">
               <i class='bx bx-bell' style="font-size: 20px;"></i>
@@ -306,17 +312,13 @@ $fullname = (new Controller)->getUsername($adminEmail);
             <button type="button" class="btn bg-white-subtle ">
               <a href="../admin/signout"> <i class='bx bx-power-off' style="font-size: 20px;"></i> </a>
             </button>
-            <button type="button" class="btn bg-white-subtle ">
+            <!-- <button type="button" class="btn bg-white-subtle ">
               <i class='bx bx-history' style="font-size: 20px;"></i>
-            </button>
-            <button type="button" class="btn bg-white-subtle">
+            </button> -->
+            <button type="button" class="btn bg-white-subtle settingsbtn">
               <i class='bx bx-cog' style="font-size: 20px;"></i>
             </button>
-            <!-- Button with Tooltip -->
-            <!-- <button type="button" class="btn bg-white-subtle" data-bs-toggle="tooltip" data-bs-placement="top" title="Languages">
-                     <i class='bx bx-flag' style="font-size: 20px;"></i>
-                     </button> -->
-            <!-- Dropdown Menu -->
+            
             <div class="dropdown hover-dropdown">
               <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"
                 data-bs-toggle="tooltip" data-bs-placement="top" title="Languages">
@@ -339,12 +341,107 @@ $fullname = (new Controller)->getUsername($adminEmail);
             </div>
             <div id="translation-container" data-translations='<?= json_encode($translator); ?>'></div>
           </div>
+               
         </div>
+
+
+              
         <!-- ---------------------------------- -->
         <!-- Start Vertical Layout Sidebar -->
         <!-- ---------------------------------- -->
+
+
       </div>
     </aside>
+
+    
+    <div id="autho" class="modal fade" tabindex="-1"  aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center mt-2 mb-4">
+                        <div class="d-flex justify-content-between">
+                            <div>Account Settings</div>
+                            <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
+                        </div>
+                    </div>
+                </div>
+                  
+              <div class="card border shadow-none">
+                <div class="card-body p-4">
+                      <h4 class="card-title mb-3">Two-factor Authentication</h4>
+
+                      <div class="d-flex align-items-center justify-content-between pb-4" id="enable2fa">
+                      <p class="card-subtitle mb-0">
+                          Add an extra layer of security to your account by enabling two-factor authentication (2FA).
+                      </p>
+                      <button class="btn btn-primary" type="button">Enable</button>
+                      </div>
+
+                      <div class="d-flex align-items-center justify-content-between py-3 border-top">
+                      <div>
+                          <h5 class="fs-5 fw-semibold mb-1">Authentication App</h5>
+                          <p class="mb-0 text-muted">Use an app like Google Authenticator or Authy to generate secure codes.</p>
+                      </div>
+                      <button class="btn bg-primary-subtle text-primary setupauth" value="<?php echo $adminEmail ?>" type="button">Set up</button>
+                      </div>
+
+                      <div class="d-flex align-items-center justify-content-between py-3 border-top">
+                      <div>
+                          <h5 class="fs-5 fw-semibold mb-1">Change Password</h5>
+                          <p class="mb-0 text-muted">You can reset your default password</p>
+                      </div>
+                      <button class="btn bg-primary-subtle text-primary" type="button">Change</button>
+                      </div>
+
+                      <!-- <div class="d-flex align-items-center justify-content-between py-3 border-top"> -->
+                      <!-- <div>
+                          <h5 class="fs-5 fw-semibold mb-1">SMS Recovery</h5>
+                          <p class="mb-0 text-muted">Get recovery codes through your registered phone number.</p>
+                      </div> -->
+                      <!-- <button class="btn bg-primary-subtle text-primary" type="button">Set up</button> -->
+                      <!-- </div> -->
+                  </div>
+              </div>
+
+            </div>
+  
+          </div>
+    
+    </div>
+
+    <div id="authot" class="modal fade" tabindex="-1"  aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center mt-2 mb-4">
+                        <div class="d-flex justify-content-between">
+                            <div>Scan QRCode</div>
+                            <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
+                        </div>
+                    </div>
+                </div>
+                  
+                <div class="card border shadow-none">
+                  <div class="card-body p-4">
+                        <h4 class="card-title mb-3">Two-factor Authentication</h4>
+                        <div id="qr-container"style="position:relative; left:40%;">
+           
+                       </div>
+                      <!-- <input type="date" class="form-control notienddates" placeholder="Search ..." id="combinedates" aria-describedby="basic-addon1" /> -->
+                      
+                </div>
+
+            </div>
+  
+          </div>
+    
+      </div>
+
+
+
+    </div>
+
     <!--  Sidebar End -->
     <div class="page-wrapper">
       <div class="containe-fluid">
@@ -355,7 +452,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
                 <div class="chrome-tab" id="tabhead" active>
                   <div class="chrome-tab-dividers"></div>
                   <div class="chrome-tab-background">
-                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <svg version="1.1" xmlns="">
                       <defs>
                         <symbol id="chrome-tab-geometry-left" viewBox="0 0 214 36">
                           <path d="M17 0h197v36H0v-2c4.5 0 9-3.5 9-8V8c0-4.5 3.5-8 8-8z" />
@@ -380,9 +477,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
                     </svg>
                   </div>
                   <div class="chrome-tab-content">
-                    <div class="chrome-tab-favicon" style="
-                                 background-image: url('demo/images/google-favicon.ico');
-                                 "></div>
+                    <div class="chrome-tab-favicon" style=" background-image: url('demo/images/google-favicon.ico');"></div>
                     <div class="chrome-tab-title"><?= $translator['DASHBOARD']; ?></div>
                     <div class="chrome-tab-holder" hidden>home</div>
                     <div class="chrome-tab-drag-handle chromclass"></div>
@@ -396,6 +491,8 @@ $fullname = (new Controller)->getUsername($adminEmail);
             <!-- <div class="chrome-tabs-optional-shadow-below-bottom-bar"></div> -->
           </div>
         </div>
+
+        
         <div class="rowr" style="padding:0px;overflow-x:hidden;">
           <div class="chrome__tab home">
             <?php include "tabs/home.php" ?>
@@ -503,10 +600,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
           </div>
 
 
-          <div class="chrome__tab unotification">
-            <?php include "tabs/announcement/usernotification.php" ?>
-          </div>
-
+         
 
           <div class="chrome__tab partners">
             <?php include "tabs/partners/partners.php" ?>
@@ -567,6 +661,8 @@ $fullname = (new Controller)->getUsername($adminEmail);
     <script src="<?php echo BASE_URL; ?>assets/js/payment_platforms.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/usernotification.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/useroverview.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/googletwofa.js"></script>
+    
     
    
 
@@ -609,6 +705,9 @@ $fullname = (new Controller)->getUsername($adminEmail);
         });
 
       });
+
+    
+    
     </script>
 </body>
 

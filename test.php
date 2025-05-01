@@ -247,94 +247,80 @@ try {
 // ]);
 
 // Set the timezone for the server (Berlin time)
-$berlinTimeZone = new DateTimeZone('Europe/Berlin');
-$serverDate = new DateTime('now', $berlinTimeZone);  // Get the current server time
-$serverDateFormatted = $serverDate->format('Y-m-d / H:i:s');  // Format it
 
-// Set the timezone for the local machine (e.g., UTC or any timezone)
-$localTimeZone = new DateTimeZone('UTC');  // Adjust this to your local timezone
-$localDate = new DateTime('now', $localTimeZone);  // Get the current local time
-$localDateFormatted = $localDate->format('Y-m-d / H:i:s');  // Format it
-
-// Output both times
-echo "Server Time (Berlin): " . $serverDateFormatted . "<br>";
-echo "Local Time (UTC): " . $localDateFormatted . "<br>";
-
-// Calculate the difference between the two
-$interval = $serverDate->diff($localDate);
-echo "Time difference: " . $interval->format('%d days, %h hours, %i minutes') . "<br>";
- 
 ?>
-<input type="range" id="rangeSlider" min="0" max="100" value="100">
-<span id="rangeValue">100%</span>
-
-<input type="text" id="valueList" class="form-control" readonly>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        let originalValues = [10, 20, 30];
-        
-        // Function to update values based on the percentage
-        function updateValues(percentage) {
-            let scaledValues = originalValues.map(value => (value * percentage / 100));
-            $("#valueList").val(`[${scaledValues.join(", ")}]`);
-        }
-
-        // Initial load
-        updateValues(100);
-
-        // Update values on slider change
-        $("#rangeSlider").on("input", function() {
-            let percentage = $(this).val();
-            $("#rangeValue").text(percentage + "%");
-            updateValues(percentage);
-        });
-
-
-    static String getTimeDifferenceFromNow(DateTime dateTime) {
-    Duration difference = DateTime.now().difference(dateTime);
-    if (difference.inSeconds < 5) {
-      return "Just now";
-    } else if (difference.inMinutes < 1) {
-      return "${difference.inSeconds}s ago";
-    } else if (difference.inHours < 1) {
-      return "${difference.inMinutes}m ago";
-    } else if (difference.inHours < 24) {
-      return "${difference.inHours}h ago";
-    } else {
-      return "${difference.inDays}d ago";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Testnet Bitcoin Payment</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
     }
-  }
-    });
-</script>
-
-<!-- 
-<input type='text' class='form-control oddsone' value='[10, 20, 30]' readonly>
-<input type="range" id="rangeSliderone" min="0" max="100" value="100">
-<span id="rangeValue">100%</span>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    // Get the initial values from the input box
-    let originalValues = JSON.parse($(".oddsone").val());
-
-    // Function to update values based on the percentage
-    function updateValues(percentage) {
-        let scaledValues = originalValues.map(value => (value * percentage / 100).toFixed(0));
-        $(".oddsone").val(`[${scaledValues.join(", ")}]`);
+    #wallet-box {
+      margin: 20px auto;
+      width: 320px;
     }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      text-align: center;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #qrcode {
+      margin-top: 30px;
+      position: relative;
+      left: 42%;
+    }
+  </style>
+</head>
+<body>
 
-    // Initial load
-    updateValues(100);
+  <h2>Send or Scan to Pay (Testnet)</h2>
+  <p>Scan the QR code or copy the testnet wallet address below</p>
 
-    // Update values on slider change
-    $("#rangeSliderone").on("input", function() {
-        let percentage = $(this).val();
-        $("#rangeValue").text(percentage + "%");
-        updateValues(percentage);
-    });
-});
-</script> -->
+  <div id="wallet-box">
+    <input type="text" id="wallet-address" readonly>
+    <button onclick="copyWallet()">Copy Wallet Address</button>
+  </div>
+
+  <div id="qrcode">
+
+  </div>
+
+  <script>
+    // Replace this with your own Bitcoin testnet address
+    const walletAddress = "bc1q3dvptrtjvt9807875wvsnej2spvw07r9g8kwd7";
+
+    window.onload = function () {
+      document.getElementById("wallet-address").value = walletAddress;
+
+      new QRCode(document.getElementById("qrcode"), {
+        text: `bitcoin:${walletAddress}?amount=0.001`,
+        width: 256,
+        height: 256
+      });
+    };
+
+    function copyWallet() {
+      const input = document.getElementById("wallet-address");
+      input.select();
+      input.setSelectionRange(0, 99999); // Mobile
+      document.execCommand("copy");
+      alert("Wallet address copied!");
+    }
+  </script>
+
+</body>
+</html>
 

@@ -20,6 +20,7 @@ class Controller{
       return (new Model())->getUsername($fullname);
     }
 
+   
 
     public function getUserPermissions(string $email){
       $response = (new Model())->getUserPermissions($email);

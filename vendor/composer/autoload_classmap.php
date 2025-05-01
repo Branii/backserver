@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'AdminModel' => $baseDir . '/app/model/AdminModel.php',
     'AgentManageModel' => $baseDir . '/app/model/AgentManageModel.php',
+    'AnnouncementModel' => $baseDir . '/app/model/AnnouncementModel.php',
     'App' => $baseDir . '/app/core/App.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'BusinessFlowModel' => $baseDir . '/app/model/BusinessFlowModel.php',
@@ -21,6 +22,8 @@ return array(
     'MedooOrm' => $baseDir . '/app/database/MedooOrm.php',
     'Model' => $baseDir . '/app/model/Model.php',
     'PDOHelper' => $baseDir . '/app/model/PDOHelper.php',
+    'PartnersModel' => $baseDir . '/app/model/PartnersModel.php',
+    'PaymentPlatformModel' => $baseDir . '/app/model/PaymentPlatformModel.php',
     'PhpToken' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
     'PromotionManageModel' => $baseDir . '/app/model/PromotionManageModel.php',
     'Stringable' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',

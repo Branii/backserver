@@ -860,5 +860,12 @@ class adminController extends Controller {
         $this->view->render();
     }
 
+
+     //google authentication
+     public function activateotp($email){
+        $this->view('exec/googletwofa',['email'=>$email,'flag' => 'twofaenable']);
+        $this->view->render();
+    }
+
     
 }
