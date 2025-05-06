@@ -914,7 +914,8 @@ $(function () {
         data.forEach((item) => {
             //  // console.log(item)
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-
+            let timezone = item.timezone.split(" ");
+            timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
             let subordinate = "";
             if (item.account_type == 2) {
                 subordinate = "Top Agent";
@@ -959,6 +960,7 @@ $(function () {
                   <td>${formatMoney(item.balance)}</td> 
                   <td>${item.rebate}</td>
                   <td>${date + " / " + time}</td>
+                  <td>${timezone}</td>
                   <td>${dates + " / " + times}</td>
                   <td>${logsLookup[item.uid] ?? 0}</td>
                   <td id="usrl-state-${item.uid}">${status[item.user_state]}</td>
@@ -1004,28 +1006,6 @@ $(function () {
         });
         return html;
     };
-
-    // function fetchsubagent(userID,currentPage, pageLimit) {
-    //     $.post(`../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
-    //         function (response) {
-    //         try {
-    //            const data = JSON.parse(response);
-
-    //             //  return
-    //               $("#maskuserlist").LoadingOverlay("hide");
-
-    //               toggleBackButton();
-    //         } catch (error) {
-    //             console.error("Error parsing JSON response:", error);
-    //         } finally {
-    //            // $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-    //         }
-    //     }).fail(function (error) {
-    //         console.error("Error fetching data:", error);
-    //       //  $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-    //     });
-
-    // }
 
     function toggleBackButton() {
         if (navigationHistory.length > 1) {
@@ -1695,7 +1675,7 @@ const lotteriesMarkup = (lottery, blockedLotteries) => {
     return `<tr>
             <td><span class="lottery-name"> ${lottery.name}</span></td>
             <td><span class="lottery-status">${status}</span></td>
-            <td><input class="form-check-input toggle-lot" type="checkbox" value="${lotteryID}" id="flexCheckDefault" ${checkedState}></td>
+            <td><input class="form-check-input toggle-lot" type="checkbox" value="${lotteryID}" ${checkedState}></td>
             </tr>`;
 };
 const userIpsMarkup = (data) => {
@@ -1705,7 +1685,7 @@ const userIpsMarkup = (data) => {
             <td><b class="">${data.ip} </b></td>
             <td><span class="lottery-status">${data.login_date} / ${data.login_time}</span></td>
             <td><span class="">${ipState}</span></td>
-            <td><input class="form-check-input toggle-ip-state" type="checkbox" value="${data.ulog_id}" id="flexCheckDefault" ${checkedState}></td>
+            <td><input class="form-check-input toggle-ip-state" type="checkbox" value="${data.ulog_id}" ${checkedState}></td>
             </tr>`;
 };
 const showDialog = (btnID) => {

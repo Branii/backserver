@@ -243,12 +243,34 @@ class FinancialManageModel extends MEDOOHelper
             'review_completion_time' => $currentDateTime,
             'withdrawal_time' => $currentTime,
             'withdrawal_date' => $currentDate,
+            'withdrawal_timezone' => self::timezoneConverter(),
             'withdrawal_state' => '2',
             'review' => 'Done',
             'approved_by' => $username,
         ];
 
         return parent::insert("withdrawal_manage", $params);
+    }
+
+
+
+    public static function timezoneConverter(string $otherTzName = ""){
+        date_default_timezone_set("Africa/Accra");  
+        $serverZone = new DateTimeZone(date_default_timezone_get());
+        $otherTzName  = "Asia/Shanghai";
+        $otherZone  = new DateTimeZone($otherTzName);
+        $now        = new DateTime('now', $serverZone);
+    
+        $serverOffset = $serverZone->getOffset($now);
+        $otherOffset  = $otherZone->getOffset($now);
+        $diffSeconds  = $otherOffset - $serverOffset;
+    
+        $h = intdiv(abs($diffSeconds), 3600);
+        $m = abs(($diffSeconds % 3600) / 60);
+        $s = $diffSeconds >= 0 ? '+' : '-';
+    
+        return  $otherTzName."  ".sprintf('%s%02d', $s, $h, );
+        
     }
     public static function insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
     {

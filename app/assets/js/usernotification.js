@@ -10,14 +10,18 @@ $(function () {
   }
   const usernotiData = (data) => {
      let html = ""
+     console.log(data);
       data.forEach((item) => {
         const readstatus = item.read_status === 'read' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Read</span>'  : '<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-warning">Unread</span>'
-          html += `
+        let timezone = item.timezone.split(" ");
+        timezone = `${timezone}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
+        html += `
             <tr>
                 <td>${item.username}</td>
                 <td>${item.subject}</td>
                 <td style ="max-width: 300px;word-wrap: break-word;overflow-wrap: break-word; white-space: normal;">${item.message}</td>
                 <td>${item.created_at}</td> 
+                <td>${timezone}</td> 
                 <td> ${readstatus}</td>                               
             </tr>
             `;

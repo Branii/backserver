@@ -291,6 +291,9 @@
               <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Actual Draw Time']; ?></h6>
             </th>
             <th>
+              <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
+            </th>
+            <th>
               <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Settlement Completion Time']; ?></h6>
             </th>
             <th>

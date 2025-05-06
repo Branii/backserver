@@ -14,8 +14,11 @@ $(function(){
 
   const drawTables = (data) => {
       let html = "";
+      console.log(data);
       const status = {'done' : 'Settled', 'waiting' : 'Settling'};
       data.forEach((item) => {
+        let timezone = item.timezone.split(" ");
+        timezone = timezone[0] + `<span style="margin-left: 1rem;">${timezone[1]}</span>`;
         html += `<tr class="trow">
                       <td>${item.lottery_type}</td>
                       <td>${transformInputLd(item.lottery_code)}</td>
@@ -26,6 +29,7 @@ $(function(){
                       <td>${item.draw_time}</td>
                       <td>${item.sales_deadline}</td>
                       <td>${item.actual_draw_time}</td>
+                      <td>${timezone}</td>
                       <td>${item.settlement_completion_time}</td>
                       <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${status[item.status]}</span></td>
                   </tr>

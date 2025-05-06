@@ -174,7 +174,28 @@ class PartnersModel extends MedooOrm{
 
     }
   
+    public static function fetchAllBlockedPartnerPaymentPlatforms($partner_id){
+        
+     try{
+         $sql = "SELECT blocked_payment_platforms FROM  partners_v1 WHERE partner_id = :partner_id";
+         $stmt = parent::openLink()->query($sql, [":partner_id" => $partner_id]);
+         $data = $stmt->fetch(PDO::FETCH_ASSOC);
+       return ["status" => "success", "data" => $data];
+    }catch(Exception $e){
+        return ["status" => "error", "data" => "Internal Server Error.". $e->getMessage()];       
+    }
+    }
 
+    public static function fetchAllPaymentPlatforms(): array{
+        try{
+            $sql = "SELECT cid FROM  payment_platforms";
+            $stmt = parent::openLink()->query($sql);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          return ["status" => "success", "data" => $data];
+       }catch(Exception $e){
+           return ["status" => "error", "data" => "Internal Server Error."];       
+       }
+       }
 
     public static function response($data,$type = true) {  return ["status" => $type ? "success" : "error" , "data" => $data];  }
 }

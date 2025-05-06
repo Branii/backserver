@@ -3,15 +3,15 @@
 
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 
-if($flag == "fetchPaymentPlatform"){
-    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
-    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $result = PaymentPlatformModel::FetchPaymentPlatform($page, $limit) ?? [];
-    echo json_encode([
-        'payment' => $result['data'],  // Correct key
-        'totalPages' => ceil($result['total'] / $limit),
-    ]);
-}
+// if($flag == "fetchPaymentPlatform"){
+//     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+//     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+//     $result = PaymentPlatformModel::FetchPaymentPlatform($page, $limit) ?? [];
+//     echo json_encode([
+//         'payment' => $result['data'],  // Correct key
+//         'totalPages' => ceil($result['total'] / $limit),
+//     ]);
+// }
 
 if($flag == "addpayment"){
     $data = json_decode(file_get_contents("php://input"), true);
@@ -52,20 +52,54 @@ if($flag == "updateplatform"){
 //typecurrency,maxiamounts,minamount,statecurrent,paymentids
 
 if ($flag == "filterpayments") {
-    $curencytypes = isset($this->viewData['curencytypes']) ?  $this->viewData['curencytypes'] : "";
-    $stautspayment = isset($this->viewData['stautspayment']) ?  $this->viewData['stautspayment'] : "";
-    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
-    $enddate = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
-    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
-    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-     $subquery = PaymentPlatformModel::Platformsubquery($curencytypes,$stautspayment,$startdate,$enddate) ?? [];
-     $result   = PaymentPlatformModel::FilterPlatformData($subquery,$page,$limit) ?? [];
-    echo json_encode([
-        'payments' => $result['data'],
-        'totalPages' => ceil($result['total'] / $limit),
-    ]);
+    // $partner_id = isset($this->viewData['partner_id']) ?  $this->viewData['partner_id'] : "";
+    // $payment_platform_id = isset($this->viewData['payment_platform_id']) ?  $this->viewData['payment_platform_id'] : "";
+    // $result = PaymentPlatformModel::fetchAllBlockedPartnerPaymentPlatforms($curencytypes); 
+    // $partnerBlockedPaymentsPlatforms          = explode(",",$result['partnerBlockedPaymentsPlatforms']);
+    // $allPaymentPlatforms   = PaymentPlatformModel::fetchAllPaymentPlatforms()["cid"];
+    // $blocked_languages  = implode(',',array_diff($allPaymentPlatforms,$partnerBlockedPaymentsPlatforms));
+    
+    // $subquery = PaymentPlatformModel::Platformsubquery($curencytypes,$stautspayment,$startdate,$enddate) ?? [];
+    $currency_types  = isset($this->viewData['curency_type']) ?  $this->viewData['curency_type'] : "";
+    $status          = isset($this->viewData['status']) ?  $this->viewData['status'] : "";
+    $startdate       = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
+    $enddate         = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
+    $page            = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit           = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $results = PaymentPlatformModel::searchPaymentPlatform(["currency_type" => $currency_types,"status" => $status,  "startDate" => $startperiod,"endDate" => $enddate,], $page, $limit
+    );
+
+    echo json_encode($results);
+
+    // $result   = PaymentPlatformModel::FilterPlatformData($subquery,$blocked_partner_payment_platforms,$page,$limit) ?? [];
+    // echo json_encode([
+    //     'payments' => $result['data'],
+    //     'totalPages' => ceil($result['total'] / $limit),
+    // ]);
 }
 
+if($flag == "fetchPaymentPlatform"){
+
+    try{
+
+   
+
+    $currency_types  = isset($this->viewData['currency_types']) ?  $this->viewData['currency_types'] : "";
+    $status          = isset($this->viewData['status']) ?  $this->viewData['status'] : "";
+    $startdate       = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
+    $enddate         = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
+    $page            = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit           = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $results = [];
+    $results         = PaymentPlatformModel::searchPaymentPlatform(["currency_type" => $currency_types,"status" => $status,  "startDate" => $startdate,"endDate" => $enddate], $page, $limit
+    );
+
+    echo json_encode($results);
+}catch(Exception $e){
+    echo json_encode(["status" => "error", "data" => $e->getMessage()]);       
+}
+
+}
 
 
 

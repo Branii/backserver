@@ -603,6 +603,9 @@ section#tooltipp p {
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Creation Time']; ?></h6>
                         </th>
                         <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
+                        </th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Login']; ?></h6>
                         </th>
                         <th>
@@ -1262,7 +1265,7 @@ section#tooltipp p {
                                                 <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
                                             </th>
                                             <th>
-                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Stake Time']; ?>
+                                                <h6 class="fs-4 fw-semibold mb-0">Transaction Time
                                                 </h6>
                                             </th>
                                             <th>

@@ -198,7 +198,7 @@ class UserManageModel extends MEDOOHelper
     public static function fetch_users_login_count(array $user_ids): array
     {
         try {
-            $db = parent::getLink();
+            $db = parent::openLink();
             $placeholders = [];
             $params = [];
             foreach ($user_ids as $user_id) {
@@ -217,7 +217,7 @@ class UserManageModel extends MEDOOHelper
     public static function count_subs(array $agent_ids): array
     {
         try {
-            $db = parent::getLink();
+            $db = parent::openLink();
             $placeholders = [];
             $params = [];
             foreach ($agent_ids as $agent_id) {
@@ -236,7 +236,7 @@ class UserManageModel extends MEDOOHelper
     public static function fetch_agent_nickname(array $agent_ids): array
     {
         try {
-            $db = parent::getLink();
+            $db = parent::openLink();
             $placeholders = [];
             $params = [];
             foreach ($agent_ids as $key => $agent_id) {
@@ -409,7 +409,10 @@ class UserManageModel extends MEDOOHelper
     public static function fetchUsersData(array $filters = [], $page = 1, $limit): array
     {
         try {
-            $db = parent::getLink();
+
+            
+
+            $db = parent::openLink();
             // Pagination setup
             $offset = ($page - 1) * $limit;
             // Add binding parameters
@@ -446,12 +449,14 @@ class UserManageModel extends MEDOOHelper
                 $params[':end_date'] = $end;
             }
 
+            
             $whereClause = empty($whereClause) ? " " : " WHERE  {$whereClause} ";
 
             $sql = "SELECT *,(SELECT COUNT(*) FROM users_test {$whereClause}) AS total_records FROM users_test {$whereClause}  ORDER BY uid DESC LIMIT :offset, :limit";
             $stmt = $db->query($sql, $params);
             $data = $stmt->fetchAll(PDO::FETCH_OBJ);
 
+            
             $uids = array_column($data, 'uid');
             $agent_ids = array_column($data, 'agent_id');
             $login_counts = self::fetch_users_login_count($uids);

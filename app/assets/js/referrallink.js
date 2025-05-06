@@ -14,6 +14,8 @@ $(function () {
 
       data.forEach((item) => {
         let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+        let timezone = item.timezone.split(" ");
+        timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
           html += `
                   <tr>
                       <td>${username}</td>
@@ -21,6 +23,7 @@ $(function () {
                       <td>${item.rebate}</td>
                       <td>${item.register_count + " / " + item.quota_used}</td>
                        <td>${item.date_created + " / " + item.time_created}</td>
+                       <td>${timezone}</td>
                        <td>${item.remarks}</td>
                       
                   </tr>

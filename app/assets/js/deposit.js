@@ -32,7 +32,7 @@ $(function () {
        
       data.forEach((item) => {
         let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
-           let formatedates =  item.date_created.replace(" ", " / ")
+
          
         
           html += `
@@ -44,7 +44,7 @@ $(function () {
                           <td>${formatMoney(item.amount_paid)}</td>
                           <td>${formatMoney(item.charges)}</td>
                           <td>${formatMoney(item.amount_recieved)}</td>
-                          <td>${ item.date_created.replace(" ", " / ")}</td>
+                          <td>${item.date_created == undefined ? "" : item.date_created.replace(" ", " / ")}</td>
                           <td>${item.provider ? item.provider: "N/A"}</td>
                           <td>${item.user_mobile}</td>
                           <td>${item.status.charAt(0).toUpperCase() + item.status.slice(1)}</td>

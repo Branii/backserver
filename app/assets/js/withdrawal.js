@@ -26,7 +26,10 @@ $(function () {
       let html = "";
       const status = { 1: "Pending", 2: "Success", 3: "Failed" };
       const withdrawal_channel = { 3: "Momo", 5: "Crypto", 2: "Bank", 4: "Manual" }; // 3:momo 5:crypto 2:bank 4:manual
+      
       data.forEach((item) => {
+        let timezone = item.withdrawal_timezone.split(" ");
+        timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
           html += `
         <tr>
             <td>${item.withdrawal_id}</td>
@@ -40,6 +43,7 @@ $(function () {
             <td>${formatNumber(item.fee)}</td>
             <td>${formatNumber(item.actual_withdrawal_amount)}</td>
             <td>${item.withdrawal_application_time.replace(" ", "/")}</td>
+            <td>${timezone}</td>
             <td>${status[item.withdrawal_state]}</td>
             <td>${item.approved_by}</td>
         </tr>
@@ -66,13 +70,10 @@ $(function () {
           }
 
           const data = response.data;
-          // return
           $("#maskwithdraw").LoadingOverlay("hide");
-          //  console.log(data)
           renderwithdraw(data);
           const totalPages = Math.ceil(data[0].total_records / 10);
-
-          // // Render pagination
+          // Render pagination
           renderwithdrawPagination(totalPages, 1);
       } catch (error) {
           console.error("Error fetching data:", error);

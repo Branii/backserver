@@ -322,6 +322,7 @@ class adminController extends Controller {
     ////////////// USERLIST LIST -//////////
     public function userlistdata($uid,$recharge_level, $state, $start_date, $end_date,$pageNumber, $limit,$miscelleanous)
     {
+
         $this->view('exec/account_manage', ['uid' => $uid,'recharge_level' => $recharge_level,'state' => $state, 'startdate' => $start_date, 'enddate' => $end_date,'page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
         $this->view->render();
     }
@@ -427,6 +428,33 @@ class adminController extends Controller {
         
 
         $this->view('exec/partners', ["partner_name"=> $partnerName,"currency" => $currency,"site_url" => $encodedSiteUrl,"admin_site_url" => $encodedAdminSiteUrl,'flag' => 'addNewPartner']);
+        $this->view->render();
+    }
+
+    public function  editPartnerMainInfo($partnerID,$partnerName,$siteUrl,$adminSiteUrl,$clientMinAge,$verificationType,$unusedWithdrawalAmount,$priority,$state,$currency)
+    {       
+        
+
+        $this->view('exec/partners', ["partner_id" => $partnerID,"partner_name"=> $partnerName,"currency" => $currency,"site_url" => $siteUrl,"admin_site_url" => $adminSiteUrl,"client_min_age" => $clientMinAge,"verification_type" => $verificationType,"unused_withdrawal_amount" => $unusedWithdrawalAmount,"priority" => $priority,"state" => $state,'flag' => 'editPartnerMainInfo']);
+        $this->view->render();
+    }
+
+    public function  editPartnerLotteries($partnerID,$lotteries)
+    {       
+        $this->view('exec/partners', ["partner_id" => $partnerID,"lotteries"=> $lotteries,'flag' => 'editPartnerLotteries']);
+        $this->view->render();
+    }
+
+    public function  editPartnerCurrencySettings($partnerID,$currencies)
+    {       
+        $this->view('exec/partners', ["partner_id" => $partnerID,"currencies"=> $currencies,'flag' => 'editPartnerCurrencySettings']);
+        $this->view->render();
+    }
+
+    public function  editPartnerlanguagesSettings($partnerID,$languages)
+    {       
+
+        $this->view('exec/partners', ["partner_id" => $partnerID,"languages"=> $languages,'flag' => 'editPartnerlanguagesSettings']);
         $this->view->render();
     }
 
@@ -643,6 +671,8 @@ class adminController extends Controller {
     public function   fetchbankcard($uid,$bank_type,$card_number,$status,$pageNumber, $limit,$miscelleanous)
     {
 
+
+       
         $this->view('exec/userbank_manage', ['uid' => $uid,'bank_type' => urldecode($bank_type),'card_number' => $card_number,'status' => $status,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchbankcard']);
         $this->view->render();
     }
@@ -801,8 +831,8 @@ class adminController extends Controller {
 
 
          //Payment Platform
-        public function fetchPaymentPlatform($page ,$limit){  
-            $this->view('exec/payment_platform', ["page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
+        public function fetchPaymentPlatform($currency_types,$stautspayment,$startdepay,$enddepay,$page ,$limit){  
+            $this->view('exec/payment_platform', ["currency_types" => $currency_types,"status" => $stautspayment,"startdate" => $startdepay,"enddate"=> $enddepay,"page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
             $this->view->render();
          }
 
@@ -847,6 +877,23 @@ class adminController extends Controller {
                 'page' => $page,
                 'limit' => $pageLimit,
                 'flag' => 'filterpayments'
+            ]);
+            $this->view->render();
+        }
+
+        public function filterPartnerPaymentPlatforms($partnerID,$blocked_payment_platforms,$payment_platform_id,$currency_types,$status,$startDate,$endDate,$page,$limit)
+        {
+                $this->view('exec/partners', [
+                'partner_id' => $partnerID,
+                'blocked_payment_platforms' => $blocked_payment_platforms,
+                'payment_platform_id' => $payment_platform_id,
+                'currency_types' => $currency_types,
+                'status' => $status,
+                'startdate' => $startDate,
+                'enddate' => $endDate,
+                'page' => $page,
+                'limit' => $limit,
+                'flag' => 'filterPartnerPaymentPlatforms'
             ]);
             $this->view->render();
         }
