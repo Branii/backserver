@@ -1,5 +1,7 @@
 let partnersObjs = {};
 let validLotteries = [];
+let currentPage = 1;
+let pageLimit  = 20;
 $(() =>{
 
 
@@ -301,9 +303,6 @@ $(() =>{
         $(".pp-names-wrapper").hide();
       });
 
-
-
-
       const translatorScript = document.querySelector(".translations"); // Get the script tag
       const translator = JSON.parse(translatorScript.textContent);
    
@@ -603,7 +602,10 @@ $(() =>{
       
         $("#ptns-languages-list").html(languagesMarkup);
     });
-    $(document).on("click",".ptns-payment-settings", async function() {
+   
+
+    const filterPaymentPlatforms = async (page,limit) => {
+
         const partnerID = $("#data-holder").attr("data-row-id");
         const partner   = partnersObjs[partnerID];
         const paymentPlatformID = $("#data-holder").attr("data-payment-platform-id");
@@ -617,10 +619,12 @@ $(() =>{
         
                 const data = await response.json();
                 console.log(data);
-                return
-        
-                $(".loaderpay").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-                if (data.payments.length < 1) {
+                if(data.data.status === "error"){
+                    showToast("Error",data.data,"error");
+                    return;
+                }
+            
+                if (data.data.length < 1) {
                     let html = `
                 <tr class="no-results">
                     <td colspan="9">
@@ -628,21 +632,25 @@ $(() =>{
                     </td>
                 </tr>`;
                     $("#maskpayment").LoadingOverlay("hide");
-                    $("#paymentContainer").html(html);
+                    $("#ptns-payment-platforms-dtholder").html(html);
                     return;
                 }
                 $("#maskpayment").LoadingOverlay("hide");
-                renderpayment(data.payments);
-                renderpaymentPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterpayment(username,stautspayment,startdepay,enddepay,newPage,pageLimit));
+                $("#ptns-payment-platforms-dtholder").html(paymentdata(data.data));
+                const totalPages = Math.ceil(data.data[0].total_records / 20);
+                renderpaymentPagination(totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterPaymentPlatforms(newPage,pageLimit));
                 document.getElementById("paging_infopayment").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
-          
+    };
+
+
+    $(document).on("click",".ptns-payment-settings", async function() {
+       
+        filterPaymentPlatforms(1,20);
           
     });
-
-
 
 
     $(document).on('click',"#ptns-addNewPartnerBtn",function(){
@@ -958,7 +966,7 @@ $(".playerWinLoss").click(function(e){
   }
 
 
-  const populateCurrencies = () => {
+const populateCurrencies = () => {
     let tableHtml = "";
     currencyCodes.forEach(currency => {
         tableHtml += `<tr>
@@ -976,14 +984,6 @@ populateCurrencies();
 
 
 // --------------------------------------------------------------------
-
-
-
-
-     
-
-
-
 
 
 const renderPaginationPaymentPlatform = (elementID,totalPages, currentPage, ) => {
@@ -1027,31 +1027,55 @@ const renderPaginationPaymentPlatform = (elementID,totalPages, currentPage, ) =>
     });
 }
 
-
-const paymentsMarkup = (data) => {
-    console.log(data.countries);
-    const cid  = data.payment_type_id === undefined ? data.cid : data.payment_type_id;
+const paymentdata = (data) => { 
     
-    return `<tr id='cid-${cid}'>
-        <td> ${data.name} </td>
-        <td> ${data.currency} </td>
-        <td> ${data.site_url} </td>
-        <td> ${data.admin_site_url} </td>
-        <td> ${data.fee} </td>
-        <td> ${data.min_amount} </td>
-        <td> ${data.max_amount} </td>
-        <td> ${data.date_created} </td>
-        <td> ${data.created_by} </td>
-        <td> ${data.last_update} </td>
-        <td> ${data.last_update_by} </td>
-        <td> ${data.status == "active" ? "Active" : (data.status == "inactive" ? "Inactive" : "Hidden")} </td>
-        <td class="showEditModal" style="cursor:pointer;" ><i class='bx bx-edit-alt'></i> </td>
-        <td id="pp-info-${cid}" style="display:none;">${data.info}</td>
-        <td id="pp-priority-${cid}" style="display:none;">${data.priority}</td>
-        <td id="pp-countries-${cid}" style="display:none;">${data.countries}</td>
-            </tr>`
+    let html = "";
+   
+     data.forEach((item) => {
+      let timezone = item.timezone.split(" ");
+      timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
+      const status = item.status === 'active' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Active</span>'  :item.status=="inactive" ? '<span class="badge fw-semibold py-1 w-85 bg-info-subtle text-warning">Inactive</span>':'<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-warning">Hidden</span>'
+     
+      html += `
+              <tr>
+                  <td>${item.name}</td>
+                  <td>${item.currency}</td>
+                  <td>${item.site_url}</td>
+                  <td>${item.admin_site_url}</td>
+                  <td>${formatMoney(item.fees)}</td>
+                  <td>${formatMoney(item.min_deposit)}</td>
+                  <td>${formatMoney(item.max_deposit)}</td>
+                  <td>${formatMoney(item.min_withdrawal)}</td>
+                  <td>${formatMoney(item.max_withdrawal)}</td>
+                  <td>${item.date_created}</td>
+                  <td>${timezone}</td>
+                  <td>${item.created_by}</td>
+                  <td>${item.last_update}</td>
+                  <td>${item.last_update_by}</td>
+                  <td>${status}</td>
+                  <td>
+                    <div class="dropdown">
+                    <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class='bx bx-dots-vertical-rounded'></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"> 
+                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 editpayment" href="javascript:void(0);" datas ="${item.bankid}"> 
+                        <i class="bx bx-edit fs-5" ></i>Edit
+                    </a>
+                        <a class="dropdown-item deletepayment cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="${item.bankid}">
+                        <i class="bx bx-trash fs-5"></i>Delete
+                    </a>
+                    </div>
+                    </div>
+                  </td>
+                      
+                  </tr>
+              `;
+    });
+    return html;
+  };
 
-};
+
 const partnersMarkup = (data) => {
     partnersObjs[data.partner_id] = data;
     let timezone = data.timezone.split(" ");
@@ -1096,6 +1120,7 @@ const partnersMarkup = (data) => {
 };
 
 
+
 function getFormattedDateTime() {
     const now = new Date();
     
@@ -1113,6 +1138,60 @@ function getFormattedDateTime() {
     return `${year}-${month}-${day} / ${hours}:${minutes}:${seconds}`;
   }
 
+
+function renderpaymentPagination(totalPages, currentPage, pageLimit, callback) {
+    const createPageLink = (i, label = i, disabled = false, active = false) =>
+        `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+            <a class='page-link' href='#' data-page='${i}'>${label}</a>
+        </li>`;
+    let pagLink = `<ul class='pagination justify-content-end'>`;
+
+    // Previous Button
+    pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
+
+    // Page numbers with ellipsis
+    for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+            pagLink += createPageLink(i, i, false, i === currentPage);
+        } else if (i === currentPage - 3 || i === currentPage + 3) {
+            pagLink += createPageLink(i, "...", true);
+        }
+    }
+
+    // Next Button
+    pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
+    pagLink += "</ul>";
+
+    document.getElementById("ptns-pagination").innerHTML = pagLink;
+
+    // Add click event listeners
+    document.querySelectorAll("#ptns-pagination .page-link").forEach((link) => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const newPage = +this.getAttribute("data-page");
+            if (newPage > 0 && newPage <= totalPages) {
+                currentPage = newPage; // Update currentPage when a page link is clicked
+                $("#maskpayment").LoadingOverlay("show", {
+                    background: "rgb(90,106,133,0.1)",
+                    size: 3,
+                });
+                callback(newPage, pageLimit); // Call fetchpayment with the new page and pageLimit
+            }
+        });
+    });
+}
+
+  function formatMoney(money) { 
+    let moneyStr = String(money); 
+    if (moneyStr.includes(".")) { 
+        let parts = moneyStr.split("."); 
+        if (parts[1].length > 2) { 
+            parts[1] = parts[1].substring(0, 4); 
+        } 
+        moneyStr = parts.join(".").replace(/\.?0+$/, ""); 
+    } 
+    return moneyStr; 
+}
 
 const countries = [
     "Afghanistan",
@@ -1373,8 +1452,6 @@ const currencyCodes = [
       'ZAR','ZMW','ZWL'
   ];
   
- 
-
 
  const internationalLanguagesNative = {
     "arabic" : "العربية",            // Arabic

@@ -1888,12 +1888,11 @@
                 <thead class="text-dark fs-4 tbl-financeheads">
                     <tr class="financeheadrows">
                         <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Payment Name</h6>
+                        </th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0">Payment Type</h6>
                         </th>
-
-                        <!-- <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Currency Type</h6>
-                        </th> -->
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Currency</h6>
                         </th>
@@ -1907,13 +1906,22 @@
                             <h6 class="fs-4 fw-semibold mb-0">Fees</h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Min. Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Min. Deposit</h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Max. Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Max. Deposit</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Min. Withdrawal</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Max. Withdrawal</h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Date Created</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
                         </th>
                         
                        <th>
@@ -1936,7 +1944,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody id="pp-dtholder">
+                <tbody id="ptns-payment-platforms-dtholder">
                     <tr class="no-resultslist">
                         <td colspan="13">
                             <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark">
@@ -1973,7 +1981,7 @@
                 <option value="200">200</option>
                 <option value="500">500</option>
             </select>
-            <span class="toplist-right" id="paginationmessage" aria-label="Page navigation example">
+            <span class="toplist-right" id="ptns-pagination" aria-label="Page navigation example">
                 <!--Dynamic pagination-->
             </span>
 

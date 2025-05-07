@@ -27,27 +27,32 @@ $(function () {
         5: "Crypto",
       };
 
-
-    const paymentdata = (data) => { 
+      const paymentdata = (data) => { 
     
         let html = "";
        
          data.forEach((item) => {
           let timezone = item.timezone.split(" ");
           timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
-         const bankstatus = item.status === 'active' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Active</span>'  :item.status=="inactive" ? '<span class="badge fw-semibold py-1 w-85 bg-info-subtle text-warning">Inactive</span>':'<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-warning">Hidden</span>'
+          const status = item.status === 'active' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Active</span>'  :item.status=="inactive" ? '<span class="badge fw-semibold py-1 w-85 bg-info-subtle text-warning">Inactive</span>':'<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-warning">Hidden</span>'
          
           html += `
                   <tr>
                       <td>${item.name}</td>
-                      <td>${item.bank_type}</td>
-                      <td>${item.currency_type}</td>
+                      <td>${item.currency}</td>
+                      <td>${item.site_url}</td>
+                      <td>${item.admin_site_url}</td>
+                      <td>${formatMoney(item.fees)}</td>
+                      <td>${formatMoney(item.min_deposit)}</td>
                       <td>${formatMoney(item.max_deposit)}</td>
+                      <td>${formatMoney(item.min_withdrawal)}</td>
                       <td>${formatMoney(item.max_withdrawal)}</td>
                       <td>${item.date_created}</td>
                       <td>${timezone}</td>
+                      <td>${item.created_by}</td>
+                      <td>${item.last_update}</td>
                       <td>${item.last_update_by}</td>
-                      <td>${bankstatus}</td>
+                      <td>${status}</td>
                       <td>
                         <div class="dropdown">
                         <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -69,6 +74,7 @@ $(function () {
         });
         return html;
       };
+    
   
     const renderpayment = (data) => {
       var html = paymentdata(data);

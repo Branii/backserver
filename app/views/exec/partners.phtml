@@ -252,7 +252,7 @@ else if($flag == "editPartnerlanguagesSettings"){
     $partner_id            = isset($this->viewData['partner_id']) ?  $this->viewData['partner_id'] : "";
     $payment_platform_id   = isset($this->viewData['payment_platform_id']) ?  $this->viewData['payment_platform_id'] : "";
     $currency_types        = isset($this->viewData['curency_type']) ?  $this->viewData['curency_type'] : "";
-    $status         = isset($this->viewData['status']) ?  $this->viewData['status'] : "";
+    $status                = isset($this->viewData['status']) ?  $this->viewData['status'] : "";
     $startdate             = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
     $enddate               = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
     $page                  = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
@@ -263,20 +263,20 @@ else if($flag == "editPartnerlanguagesSettings"){
         echo json_encode($result);
         return;
     }
-    $partnerBlockedPaymentsPlatforms = explode(",",$result["data"]['blocked_payment_platforms']);
-    $platformsResults   = PartnersModel::fetchAllPaymentPlatforms();
-    if($platformsResults["status"] != "success"){
-        echo json_encode($platformsResults);
-        return;
-    }
+    $hidden_payment_platforms = explode(",",$result["data"]['hidden']);
+    $inactive_payment_platforms = explode(",",$result["data"]['inactive']);
+    // $platformsResults   = PartnersModel::fetchAllPaymentPlatforms();
+    // if($platformsResults["status"] != "success"){
+    //     echo json_encode($platformsResults);
+    //     return;
+    // }
 
-    $platformIds  = array_column($platformsResults["data"],"cid");
+    // $platformIds  = array_column($platformsResults["data"],"cid");
 
-    $partnerBlockedPaymentsPlatforms  = implode(',',array_diff(array_values($platformIds),array_map("intval",$partnerBlockedPaymentsPlatforms)));
+    // $partnerBlockedPaymentsPlatforms  = implode(',',array_diff(array_values($platformIds),array_map("intval",$partnerBlockedPaymentsPlatforms)));
+    $results = PartnersModel::searchPaymentPlatform(["currency_type" => $currency_types,"status" => $status,  "startDate" => $startdate,"endDate" => $enddate,], $page, $limit );
 
-    echo json_encode(["payment_type_id" => $partner_id,"blocked_partner_payment_platforms" => $partnerBlockedPaymentsPlatforms,  "currency_type" => $currency_types,"status" => $status,  "startDate" => $startdate,"endDate" => $enddate]);
-
-    
+echo json_encode($results);
    }catch(Exception $e){
 
     echo json_encode([$e->getMessage()]);
