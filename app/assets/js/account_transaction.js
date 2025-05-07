@@ -140,7 +140,7 @@ $(function () {
 
     async function fetchTrasaction(page, pageLimit) {
         try {
-            const response = await fetch(`../admin/transactiondata/${partnerID}/${page}/${pageLimit}`);
+            const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
             const data = await response.json();
             $("#mask").LoadingOverlay("hide");
             render(data.transaction);
@@ -404,7 +404,7 @@ $(function () {
 
     async function fetchTrasactionBet(transactionId) {
         try {
-            const response = await fetch(`../admin/${partnerID}/getTransactionBet/${transactionId}`);
+            const response = await fetch(`../admin/getTransactionBet/${transactionId}`);
             const transactiondata = await response.json();
             if (transactiondata.deposit) {
                 populatedepositeTable(transactiondata);
@@ -433,7 +433,6 @@ $(function () {
         $("#signup-modal").modal("show");
         const transactionId = $(this).attr("value");
         //console.log(transactionId);
-
         $("#row1").empty();
         $("#row2").empty();
         fetchTrasactionBet(transactionId);
@@ -513,7 +512,7 @@ $(function () {
     function fetchbetUser(query) {
         let optionsHtml = "";
 
-        $.post(`../admin/${partnerID}/Searchusername/${encodeURIComponent(query)}`, function (response) {
+        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
 

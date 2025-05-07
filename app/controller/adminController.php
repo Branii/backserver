@@ -123,8 +123,8 @@ class adminController extends Controller {
 
     // side bar datas adminLogs
 
-    public function transactiondata($partnerID,$pageNumber,$limit){
-        $this->view('exec/businessflow',['partner_id' => $partnerID,'page'=>$pageNumber,'limit'=>$limit, 'flag' => 'transactiondata']);
+    public function transactiondata($pageNumber,$limit){
+        $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit,'flag'=> 'transactiondata']);
         $this->view->render();
     }
 
@@ -133,9 +133,9 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function filterusername($partnerID,$username)
+    public function filterusername($username)
     {
-        $this->view('exec/businessflow', ['partner_id' => $partnerID,'username' => $username, 'flag' => 'filterusername']);
+        $this->view('exec/businessflow', ['username' => $username, 'flag' => 'filterusername']);
         $this->view->render();
     }
 
@@ -163,18 +163,18 @@ class adminController extends Controller {
    //NOTE -
     //////////////LOTTERY BETS -//////////
 
-    public function lotterydata($partnerID,$pageNumber,$limit){
-        $this->view('exec/businessflow',['partern_id' => $partnerID,'page'=>$pageNumber,'limit'=>$limit, 'flag' => 'lotterydata']);
+    public function lotterydata($pageNumber,$limit){
+        $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'lotterydata']);
         $this->view->render();
     }
 
-    public function viewBetstake($partnerID,$becode){
-        $this->view('exec/businessflow',['partner_id' => $partnerID,'betcode'=>$becode,'flag' => 'viewBetstake']);
+    public function viewBetstake($becode){
+        $this->view('exec/businessflow',['betcode'=>$becode,'flag' => 'viewBetstake']);
         $this->view->render();
     }
 
-    public function fetchLotteryname($partnerID){
-        $this->view('exec/businessflow',['partner_id' => $partnerID,'flag' => 'fetchLotteryname']);
+    public function fetchLotteryname(){
+        $this->view('exec/businessflow',['flag' => 'fetchLotteryname']);
         $this->view->render();
     }
  
@@ -194,8 +194,8 @@ class adminController extends Controller {
         $this->view->render();
     }
     
-    public function searchusername($partnerID,$username){
-        $this->view('exec/businessflow',['partner_id' => $partnerID,'username'=>$username,'flag' => 'searchusername']);
+    public function searchusername($username){
+        $this->view('exec/businessflow',['username'=>$username,'flag' => 'searchusername']);
         $this->view->render();
     }
     public function searchPlatformNames($partnerID,$platformName){
@@ -284,8 +284,8 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function  fetchPartnername($partnerID){
-        $this->view('exec/businessflow',['partner_id' => $partnerID, 'flag' => 'partnernames']);
+    public function  fetchPartnername(){
+        $this->view('exec/businessflow',['flag' => 'partnernames']);
         $this->view->render();
     }
     
@@ -696,13 +696,8 @@ class adminController extends Controller {
     public function   fetchbankcard($partnerID,$uid,$bank_type,$card_number,$status,$pageNumber, $limit,$miscelleanous)
     {
 
-<<<<<<< HEAD
-
-       
         $this->view('exec/userbank_manage', ['uid' => $uid,'bank_type' => urldecode($bank_type),'card_number' => $card_number,'status' => $status,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchbankcard']);
-=======
         $this->view('exec/userbank_manage', ['partner_id' =>$partnerID,'uid' => $uid,'bank_type' => urldecode($bank_type),'card_number' => $card_number,'status' => $status,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchbankcard']);
->>>>>>> master
         $this->view->render();
     }
   
@@ -870,14 +865,12 @@ class adminController extends Controller {
 
 
          //Payment Platform
-<<<<<<< HEAD
         public function fetchPaymentPlatform($currency_types,$stautspayment,$startdepay,$enddepay,$page ,$limit){  
             $this->view('exec/payment_platform', ["currency_types" => $currency_types,"status" => $stautspayment,"startdate" => $startdepay,"enddate"=> $enddepay,"page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
-=======
-        public function fetchPaymentPlatform($partnerID,$page ,$limit){  
-            $this->view('exec/payment_platform', ['partner_id' => $partnerID,"page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
->>>>>>> master
-            $this->view->render();
+        
+            // public function fetchPaymentPlatform($partnerID,$page ,$limit){  
+            // $this->view('exec/payment_platform', ['partner_id' => $partnerID,"page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
+            // $this->view->render();
          }
 
         public function addnewpayment($partnerID){  
