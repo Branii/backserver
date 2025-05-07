@@ -18,6 +18,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Sonata\\GoogleAuthenticator\\' => 27,
         ),
         'P' => 
         array (
@@ -38,6 +39,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'G' => 
         array (
             'GrahamCampbell\\ResultType\\' => 26,
+            'Google\\Authenticator\\' => 21,
             'GeoIp2\\' => 7,
         ),
         'D' => 
@@ -63,6 +65,10 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'Symfony\\Polyfill\\Ctype\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
+        ),
+        'Sonata\\GoogleAuthenticator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sonata-project/google-authenticator/src',
         ),
         'PhpOption\\' => 
         array (
@@ -96,6 +102,10 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
         ),
+        'Google\\Authenticator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sonata-project/google-authenticator/src',
+        ),
         'GeoIp2\\' => 
         array (
             0 => __DIR__ . '/..' . '/geoip2/geoip2/src',
@@ -127,6 +137,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'Database' => __DIR__ . '/../..' . '/app/database/Database.php',
         'FinancialManageModel' => __DIR__ . '/../..' . '/app/model/FinancialManageModel.php',
         'GameManageModel' => __DIR__ . '/../..' . '/app/model/GameManageModel.php',
+        'GoogleAuthenticateModel' => __DIR__ . '/../..' . '/app/model/GoogleAuthenticateModel.php',
         'MEDOOHelper' => __DIR__ . '/../..' . '/app/model/MEDOOHelper.php',
         'MedooOrm' => __DIR__ . '/../..' . '/app/database/MedooOrm.php',
         'Model' => __DIR__ . '/../..' . '/app/model/Model.php',

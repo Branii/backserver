@@ -1,239 +1,236 @@
 <style>
-.pagerlist {
-    position: relative;
-    /* Sets positioning context for absolute elements inside */
-    padding: 20px;
-    height: 80px;
-    background-color: #f9f9f9;
-}
+    .pagerlist {
+        position: relative;
+        /* Sets positioning context for absolute elements inside */
+        padding: 20px;
+        height: 80px;
+        background-color: #f9f9f9;
+    }
 
-.pagerlist {
-    position: relative;
-    /* Sets positioning context for absolute elements inside */
-    padding: 20px;
-    height: 80px;
-    background-color: #f9f9f9;
-}
+    .pagerlist {
+        position: relative;
+        /* Sets positioning context for absolute elements inside */
+        padding: 20px;
+        height: 80px;
+        background-color: #f9f9f9;
+    }
 
-.toplist-left-btn {
-    position: absolute;
-    top: 10px;
-    /* Distance from the top */
-    left: 10px;
-    /* Distance from the left */
-    padding: 5px 10px;
-    /* background-color: #007bff; */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    .toplist-left-btn {
+        position: absolute;
+        top: 10px;
+        /* Distance from the top */
+        left: 10px;
+        /* Distance from the left */
+        padding: 5px 10px;
+        /* background-color: #007bff; */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-.toplist-center {
-    position: absolute;
-    top: 50%;
-    /* Vertically centers the button */
-    left: 50%;
-    /* Horizontally centers the button */
-    transform: translate(-50%, -50%);
-    /* Adjusts for button size */
-    padding: 5px 15px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    .toplist-center {
+        position: absolute;
+        top: 50%;
+        /* Vertically centers the button */
+        left: 50%;
+        /* Horizontally centers the button */
+        transform: translate(-50%, -50%);
+        /* Adjusts for button size */
+        padding: 5px 15px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-.toplist-right-btn {
-    position: absolute;
-    top: 10px;
-    /* Distance from the top */
-    right: 10px;
-    /* Distance from the right */
-    padding: 5px 10px;
-    /* background-color: #28a745; */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    .toplist-right-btn {
+        position: absolute;
+        top: 10px;
+        /* Distance from the top */
+        right: 10px;
+        /* Distance from the right */
+        padding: 5px 10px;
+        /* background-color: #28a745; */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-.topplist-right {
-    position: absolute;
-    top: 10px;
-    /* Distance from the top */
-    right: 10px;
-    /* Distance from the right */
-    padding: 5px 10px;
-    /* background-color: #28a745; */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    .topplist-right {
+        position: absolute;
+        top: 10px;
+        /* Distance from the top */
+        right: 10px;
+        /* Distance from the right */
+        padding: 5px 10px;
+        /* background-color: #28a745; */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-.table-wrapperlist {
-    overflow: hidden;
-    /* Hide the default scrollbar */
-    white-space: nowrap;
-    max-width: 100%;
-    /* Adjust based on your needs */
-    margin-bottom: 10px;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 10px;
-    background: rgb(38, 57, 77) 0px 20px 30px -10px;
-    /* Ensure it doesn't interfere with content */
-    z-index: 10;
-}
+    .table-wrapperlist {
+        overflow: hidden;
+        /* Hide the default scrollbar */
+        white-space: nowrap;
+        max-width: 100%;
+        /* Adjust based on your needs */
+        margin-bottom: 10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: rgb(38, 57, 77) 0px 20px 30px -10px;
+        /* Ensure it doesn't interfere with content */
+        z-index: 10;
+    }
 
-.queryholderquota {
-    width: 33%;
-    margin-right: 5px;
-    background-color: #fff;
-}
+    .queryholderquota {
+        width: 33%;
+        margin-right: 5px;
+        background-color: #fff;
+    }
 
-.queryholderlinks {
-    width: 33%;
-    position: absolute;
-    background-color: #fff;
-    color: #aaa;
-    max-height: 300px;
-    overflow-y: scroll;
-    border-radius: 5px;
-    padding: 10px;
-    top: 90%;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    display: none;
-}
+    .queryholderlinks {
+        width: 33%;
+        position: absolute;
+        background-color: #fff;
+        color: #aaa;
+        max-height: 300px;
+        overflow-y: scroll;
+        border-radius: 5px;
+        padding: 10px;
+        top: 90%;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        display: none;
+    }
 
-.optionlink {
-    text-align: left;
-    border-bottom: solid 1px #eee;
-    padding: 5px;
-}
+    .optionlink {
+        text-align: left;
+        border-bottom: solid 1px #eee;
+        padding: 5px;
+    }
 
-.optionlink:hover {
-    background-color: #eee;
-}
+    .optionlink:hover {
+        background-color: #eee;
+    }
 
-#userDropdownlist {
-    max-height: 300px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
+    #userDropdownlist {
+        max-height: 300px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
 
-.no-resultslist {
-    text-align: center;
-    /* Center horizontally */
-    vertical-align: middle;
-    /* Center vertically */
-    height: 20px;
-    /* Set a minimum height to ensure centering */
-    border: none;
-}
+    .no-resultslist {
+        text-align: center;
+        /* Center horizontally */
+        vertical-align: middle;
+        /* Center vertically */
+        height: 20px;
+        /* Set a minimum height to ensure centering */
+        border: none;
+    }
 
-.no-resultslist img {
-    position: relative;
-    top: 100px;
-}
+    .no-resultslist img {
+        position: relative;
+        top: 100px;
+    }
 
-/* Custom Scrollbar for Webkit Browsers */
-.table-wrapperusernoti::-webkit-scrollbar {
-    width: 5px;
-    /* Slimmer scrollbar width */
-    height: 5px;
-    /* Slimmer scrollbar height for horizontal scrolling */
-}
+    /* Custom Scrollbar for Webkit Browsers */
+    .table-wrapperusernoti::-webkit-scrollbar {
+        width: 5px;
+        /* Slimmer scrollbar width */
+        height: 5px;
+        /* Slimmer scrollbar height for horizontal scrolling */
+    }
 
-.table-wrapperusernoti::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    /* Lighter background for track */
-    border-radius: 5px;
-}
+    .table-wrapperusernoti::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        /* Lighter background for track */
+        border-radius: 5px;
+    }
 
-.table-wrapperusernoti::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    /* Blue color for thumb */
-    border-radius: 10px;
-    cursor: pointer;
-}
+    .table-wrapperusernoti::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        /* Blue color for thumb */
+        border-radius: 10px;
+        cursor: pointer;
+    }
 
-.table-wrapperusernoti::-webkit-scrollbar-thumb:hover {
-    background-color: #aaa;
-    /* Darker blue on hover */
-}
+    .table-wrapperusernoti::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+        /* Darker blue on hover */
+    }
 
+    .notfyDropdown {
+        width: 24%;
+        position: absolute;
+        background-color: #fff;
+        color: #aaa;
+        max-height: 300px;
+        overflow-y: scroll;
+        border-radius: 5px;
+        padding: 10px;
+        top: 90%;
+        z-index: 9999;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        display: none;
+    }
 
+    .queryholdernotfys {
+        width: 25%;
+        margin-right: 10px;
+        background-color: #fff;
+    }
 
-.notfyDropdown {
-    width: 24%;
-    position: absolute;
-    background-color: #fff;
-    color: #aaa;
-    max-height: 300px;
-    overflow-y: scroll;
-    border-radius: 5px;
-    padding: 10px;
-    top: 90%;
-    z-index: 9999;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    display: none;
-}
+    /* Style for the scrollbar */
+    .notfyDropdown::-webkit-scrollbar {
+        width: 3px;
+        /* Width of the scrollbar */
+    }
 
-.queryholdernotfys {
-    width: 25%;
-    margin-right: 10px;
-    background-color: #fff;
-}
+    .notfyDropdown::-webkit-scrollbar-track {
+        background: #f0f0f0;
+        /* Background of the scrollbar track */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
 
-/* Style for the scrollbar */
-.notfyDropdown::-webkit-scrollbar {
-    width: 3px;
-    /* Width of the scrollbar */
-}
+    .notfyDropdown::-webkit-scrollbar-thumb {
+        background: #ccc;
+        /* Color of the scrollbar handle */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
 
-.notfyDropdown::-webkit-scrollbar-track {
-    background: #f0f0f0;
-    /* Background of the scrollbar track */
-    border-radius: 5px;
-    /* Rounded corners */
-}
+    .notfyDropdown::-webkit-scrollbar-thumb:hover {
+        background: #aaa;
+        /* Darker handle color on hover */
+    }
 
-.notfyDropdown::-webkit-scrollbar-thumb {
-    background: #ccc;
-    /* Color of the scrollbar handle */
-    border-radius: 5px;
-    /* Rounded corners */
-}
+    .tbl-usernotiheads {
+        position: sticky;
+        top: 0;
+    }
 
-.notfyDropdown::-webkit-scrollbar-thumb:hover {
-    background: #aaa;
-    /* Darker handle color on hover */
-}
+    .sticky-usernotiheads {
+        position: relative;
+        bottom: 1px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    }
 
+    .optionlist {
+        text-align: left;
+        border-bottom: solid 1px #eee;
+        padding: 5px;
+    }
 
-.tbl-usernotiheads {
-    position: sticky;
-    top: 0;
-}
-
-.sticky-usernotiheads {
-    position: relative;
-    bottom: 1px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-}
-
-.optionlist {
-    text-align: left;
-    border-bottom: solid 1px #eee;
-    padding: 5px;
-}
-
-.optionlist:hover {
-    background-color: #eee;
-}
+    .optionlist:hover {
+        background-color: #eee;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -243,43 +240,34 @@
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
-             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px; width: auto;">
-                <input type="text" id="usernotifys" class="form-control queryholdernotfys usernames"
-                    placeholder="<?= $translator['Search usernames']; ?>" />
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
+                <input type="text" id="usernotifys" class="form-control queryholdernotfys usernames" placeholder="<?= $translator['Search usernames']; ?>" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
                 <select class="form-control notfyDropdown" size="5" style="display: none;" id="usernotfy">
                     <!-- Options will be populated dynamically -->
                 </select>
 
-                <select name="betsate" class="form-control form-select queryholdernotfys messagesread"
-                    data-bs-placeholder="Select Type">
+                <select name="betsate" class="form-control form-select queryholdernotfys messagesread" data-bs-placeholder="Select Type">
                     <option value="">-<?= $translator['Message Status']; ?>-</option>
                     <option value="read"><?= $translator['Read']; ?></option>
                     <option value="unread"><?= $translator['Unread']; ?></option>
                 </select>
-                <select name="lotteryname" class="form-control form-select queryholdernotfys selectpartner"> 
+                <select name="lotteryname" class="form-control form-select queryholdernotfys selectpartner"> </select>
 
-                 </select>
-
-                <input name="startdate" type="date" class="form-control queryholdernotfys startnotfys"placeholder="Name" />
+                <input name="startdate" type="date" class="form-control queryholdernotfys startnotfys" placeholder="Name" />
 
                 <input name="enddate" type="date" class="form-control queryholdernotfys endnotfys" placeholder="Name" />
-              </div>
-           
+            </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
             <!--enter is free-->
         </span>
         <span class="topplist-right" id="paginations" aria-label="Page navigation example">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example"
-                style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-            
-                <button type="button" class="btn bg-white-subtle player refresusernoti" value="right"
-                    aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                <button type="button" class="btn bg-white-subtle player refresusernoti" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle executenoti" value="end" aria-label="Execute"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                <button type="button" class="btn bg-white-subtle executenoti" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                     <i class="bx bx-check-double loadernotfys" style="font-size: 20px;"></i>
                 </button>
                 <!-- <button type="button" class="btn bg-white-subtle executedeposit" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
@@ -290,13 +278,12 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperusernoti" id="maskusernoti"
-            style="height: 530px; overflow-y: scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperusernoti" id="maskusernoti" style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4 tbl-usernotiheads">
                     <tr class="usernotiheadrows">
                         <th>
-                        <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Title']; ?></h6>
@@ -322,8 +309,7 @@
                 <tbody id="notificationcontainer">
                     <tr class="no-resultslist">
                         <td colspan="9">
-                            <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo"
-                                alt="Logo-Dark" />
+                            <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
                         </td>
                     </tr>
                 </tbody>
@@ -332,8 +318,7 @@
     </div>
     <div class="px-4 py-3 border-top pagerlist">
         <span class="toplist-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example"
-                style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
                 <!-- <button type="button" class="btn bg-white-subtle playerfinance" value="startli">
                     <i class="bx bx-chevrons-left" style="font-size: 20px;"></i>
                 </button> -->
@@ -361,9 +346,6 @@
             <span class="toplist-right" id="paginationnoti" aria-label="Page navigation example">
                 <!--Dynamic pagination-->
             </span>
-
         </span>
-
     </div>
 </div>
-

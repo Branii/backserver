@@ -338,6 +338,82 @@ try {
 // });
 // </script> -->
 
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Testnet Bitcoin Payment</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+    }
+    #wallet-box {
+      margin: 20px auto;
+      width: 320px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      text-align: center;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #qrcode {
+      margin-top: 30px;
+      position: relative;
+      left: 42%;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Send or Scan to Pay (Testnet)</h2>
+  <p>Scan the QR code or copy the testnet wallet address below</p>
+
+  <div id="wallet-box">
+    <input type="text" id="wallet-address" readonly>
+    <button onclick="copyWallet()">Copy Wallet Address</button>
+  </div>
+
+  <div id="qrcode">
+
+  </div>
+
+  <script>
+    // Replace this with your own Bitcoin testnet address
+    const walletAddress = "bc1q3dvptrtjvt9807875wvsnej2spvw07r9g8kwd7";
+
+    window.onload = function () {
+      document.getElementById("wallet-address").value = walletAddress;
+
+      new QRCode(document.getElementById("qrcode"), {
+        text: `bitcoin:${walletAddress}?amount=0.001`,
+        width: 256,
+        height: 256
+      });
+    };
+
+    function copyWallet() {
+      const input = document.getElementById("wallet-address");
+      input.select();
+      input.setSelectionRange(0, 99999); // Mobile
+      document.execCommand("copy");
+      alert("Wallet address copied!");
+    }
+  </script>
+
+</body>
+</html>
+
 <?php
 // 1. What timezone is the server set to?
 // $serverTzName = date_default_timezone_get();  

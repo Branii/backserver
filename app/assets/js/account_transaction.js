@@ -576,5 +576,5 @@ $(function () {
         }
     }
     fetchPartnername();
-  
+
 });

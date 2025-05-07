@@ -295,11 +295,8 @@ $(function () {
           console.log(response)
           if (response) {
             $(".loaderfinanc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send")
-           
             showToast("Success", response, "success");
             fetchfinance(currentPage,pageLimit);
-            // Clear input fields
-          
           } else {
             showToast("Heads up!!",response, "info");
           }

@@ -265,7 +265,7 @@ $(() =>{
     
         $.post(`../admin/searchPartnersNames/${encodeURIComponent(query)}`, function (response) {
             try {
-     
+
                 response = typeof response === 'string' ? JSON.parse(response) : response;
                 // console.log(response);
                 // return;
@@ -466,7 +466,7 @@ $(() =>{
                 success: function(response){
                     
                      response = JSON.parse(response);
-                     console.log(response);
+                     //console.log(response);
                      if(response.status === "error"){
                         showToast("Error", "Error loading data for Payment Platforms","error");
                         return;
@@ -519,7 +519,7 @@ $(() =>{
             success: function(response){
                 
                     response = JSON.parse(response);
-                    console.log(response);
+                  //  console.log(response);
                     if(response.status === "error"){
                     showToast("Error", "Error loading data for Payment Platforms","error");
                     return;
@@ -668,7 +668,7 @@ $(() =>{
 
                 
                 response = typeof response === 'string' ? JSON.parse(response) : response;
-                console.log(response);
+               // console.log(response);
 
                
                 if(response.status == "error"){
@@ -763,7 +763,7 @@ $(() =>{
             beforeSend: function () {},
             success: function (response) {
                 response = JSON.parse(response);
-                console.log(response);
+              //  console.log(response);
                 let responseMarkup = "";
                 if (response.status == "error") {
                     showToast("Error", response.data, "error");
