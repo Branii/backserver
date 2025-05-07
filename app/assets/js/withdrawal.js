@@ -1,4 +1,5 @@
 $(function () {
+    const partnerID = $("#partner-holder").attr("data-partner-id");
   function tableScrollWithdraw() {
       const tableContainerFinanceWidrl = document.querySelector(".table-wrapperwithdraw");
       const headerRowFinanceWidrl = document.querySelector(".tbl-row-widrl");
@@ -62,7 +63,8 @@ $(function () {
 
   async function fetchwithdraw(pagewithdraw) {
       try {
-          let response = await fetch(`../admin/fetchwithdraw/${pagewithdraw}/${pageLimit}`);
+         
+          let response = await fetch(`../admin/fetchwithdraw/${partnerID}/${pagewithdraw}/${pageLimit}`);
           response = await response.json();
           if (response.status === "error") {
               $("#withdrawContainer").html(`<tr class="no-resultslist"><td colspan="15">Error: ${response.data}</td></tr>`);
@@ -80,7 +82,10 @@ $(function () {
       }
   }
 
-  fetchwithdraw(currentPagewithdraw);
+  $(document).on("click",".item-6",function(){
+      fetchwithdraw(currentPagewithdraw);
+  });
+
 
   function renderwithdrawPagination(totalPages, currentPagewithdraw) {
       let pagLink = `<ul class='pagination justify-content-end'>`;
@@ -236,6 +241,7 @@ $(function () {
       let widrlStatus = $("#widrl-status").val();
       let widrlStartDate = $("#widrl-startDate").val();
       let widrlEndDate = $("#widrl-endDate").val();
+      const partnerID = $("#partner-holder").attr("data-partner-id");
 
       if (widrlStartDate === undefined) {
           widrlStartDate = "all";
@@ -259,13 +265,13 @@ $(function () {
       widrlStatus = widrlStatus == 0 ? "all" : widrlStatus;
 
       $.ajax({
-          url: `../admin/searchWidrlRecords/${userID}/${widrlID}/${widrlChannels}/${widrlStatus}/${widrlStartDate}/${widrlEndDate}/${currentPage}/${limit}`,
+          url: `../admin/searchWidrlRecords/${partnerID}/${userID}/${widrlID}/${widrlChannels}/${widrlStatus}/${widrlStartDate}/${widrlEndDate}/${currentPage}/${limit}`,
           type: "POST",
           beforeSend: function () {
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
           },
           success: function (response) {
-              console.log(response);
+            //   console.log(response);
               response = JSON.parse(response);
               //console.log(response);
 

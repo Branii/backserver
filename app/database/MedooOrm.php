@@ -21,7 +21,7 @@ class MedooOrm {
     public static function openLink($db_id=null) {
         // $db = $db_id == null ? $_ENV["DB_NAME"] : self::$DB_NAME_MAP[$db_id];
         // return self::$connection ?? self::getLink($db);
-        $db = $db_id == null ? $_ENV["DB_NAME"] : self::$DB_NAME_MAP[$db_id];
+        $db = $db_id == null ? $_ENV["DB_NAME"] : self::$DB_NAME_MAP[(int) $db_id];
         return self::getLink($db);
     }
 

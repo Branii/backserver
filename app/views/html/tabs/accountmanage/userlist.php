@@ -487,6 +487,10 @@ section#tooltipp p {
     .show-user-rel:hover{
         font-weight: 900;
     }
+    .arr {
+        color: #909aa9;
+        margin: 0px 1rem;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">

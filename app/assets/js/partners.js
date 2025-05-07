@@ -3,7 +3,7 @@ let validLotteries = [];
 let currentPage = 1;
 let pageLimit  = 20;
 $(() =>{
-
+   
 
 
 
@@ -1105,6 +1105,7 @@ const partnersMarkup = (data) => {
                         <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 ptns-product-settings" data-agent-id="" href="javascript:void(0);"data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-product-settings-modal" data-uid=""> 
                         <i class='bx bx-git-merge'></i>Product Settings
                     </a>
+<<<<<<< HEAD
                     <a class="dropdown-item ptns-currency-settings cursor-pointer d-flex align-items-center gap-1 " href="javascript:void(0);"data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-currency-settings-modal" data-uid="">
                         <i class="bx bx-money fs-5"></i>Currency Settings
                     </a> 
@@ -1112,6 +1113,11 @@ const partnersMarkup = (data) => {
                         <i class='bx bx-blanket' ></i>Language Settings
                     </a> 
                    
+=======
+                    <a class="dropdown-item ptns-currency-settings cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-currency-settings-modal" data-uid="">
+                        <i class="bx bx-money fs-5"></i>Currency Settings
+                    </a> 
+>>>>>>> master
                        
                     </div>
                    </div>
