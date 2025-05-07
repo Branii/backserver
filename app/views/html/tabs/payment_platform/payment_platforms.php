@@ -266,7 +266,7 @@
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">Payment Platform</h4>
+        <h4 class="card-title mb-0"> <?= $translator['Payment Platform']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
@@ -274,21 +274,21 @@
         <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 100%;">
         <div style="width: 35%;">
           
-          <input name="resultsList" class="queryholderlist form-control bring-forward" id="platformNames" data-user-id="" placeholder="Platform Names" autocomplete="off" style="width: 98%;"> <div class="pp-names-wrapper ngp-usr-res-wrapper" style="width: 20.5%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="pp-names-list-wrapper"></ul> </div>
+          <input name="resultsList" class="queryholderlist form-control bring-forward" id="platformNames" data-user-id="" placeholder="<?= $translator['Platform Names']; ?>" autocomplete="off" style="width: 98%;"> <div class="pp-names-wrapper ngp-usr-res-wrapper" style="width: 20.5%;"> <ul style="max-height: 403px;margin: 0px; overflow-y:auto;" id="pp-names-list-wrapper"></ul> </div>
           <input name="usernames" type="hidden" id="selectedID" value="">
         </div>
                 
                 
 
                 <select name="betsate" id="platformCurrency" class="form-control form-select queryholderlistt messagestype currency-list" data-bs-placeholder="Select Type">
-                    <option value="">-Currency-</option>
+                    <option value="">-Currency<?= $translator['Currency']; ?>-</option>
                 </select>
 
                 <select name="betsate" id="platformStatus" class="form-control form-select queryholderlistt messagestype " data-bs-placeholder="Select Type">
-                    <option value="">-Status-</option>
-                    <option value="active">Active</option>
-                    <option value="hidden">Hidden</option>
-                    <option value="inactive">Inactive</option>
+                    <option value="">-<?= $translator['Status']; ?>-</option>
+                    <option value="active"><?= $translator['Active']; ?></option>
+                    <option value="hidden"><?= $translator['Hidden']; ?></option></option>
+                    <option value="inactive"><?= $translator['Inactive']; ?></option></option>
                  
                 </select>
                 <input name="startdate" id="platformStartDate" type="date" class="form-control queryholderlistt startfmessage" placeholder="Name">
@@ -335,46 +335,46 @@
                 <thead class="text-dark fs-4 tbl-financeheads">
                     <tr class="financeheadrows">
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Payment Type</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Payment Type']; ?></h6>
                         </th>
 
                         <!-- <th>
                             <h6 class="fs-4 fw-semibold mb-0">Currency Type</h6>
                         </th> -->
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Currency</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"> <?= $translator['Currency']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Site Url</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Site Url']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Admin Site Url</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"> <?= $translator['Admin Site Url']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Fees</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Fees']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Min. Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Min. Amount']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Max. Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Max. Amount']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Date Created</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Date Created']; ?></h6>
                         </th>
                         
                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Created By</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Created By']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Last Updated</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Updated']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Last Update By</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Update By']; ?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Status</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
                         </th>
                        
                         
@@ -435,32 +435,32 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Payment Platform</h5>
+                <h5 class="modal-title"> <?= $translator['Add Payment Platform']; ?></h5>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container">
                 <div class="card border mb-4">
                     <div class="card-body">
-                        <h4 class="card-title">Enzerhub Payment Platforms</h4>
+                        <h4 class="card-title">Enzerhub <?= $translator['Payment Platforms']; ?></h4>
                         <form id="pp-personalDetailsForm">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="userName" class="form-label">Partner (<span style="color: #a01616;">*</span>)</label>
+                                        <label for="userName" class="form-label"><?= $translator['Partner']; ?> (<span style="color: #a01616;">*</span>)</label>
                                         <input type="text" class="form-control" id="pp-contact" placeholder="Enzerhub" disabled="">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="pp-currency" class="form-label">Currency (<span style="color: #a01616;">*</span>)</label>
+                                        <label for="pp-currency" class="form-label"> <?= $translator['Currency']; ?> (<span style="color: #a01616;">*</span>)</label>
                                         <select id="pp-currency" class="form-select currency-list"></select>
                                     </div>
                                     
                                     
                                    <div class="mb-3">
-                                        <label for="pp-status" class="form-label">Status (<span style="color: #a01616;">*</span>)</label>
+                                        <label for="pp-status" class="form-label"><?= $translator['Status']; ?> (<span style="color: #a01616;">*</span>)</label>
                                         <select id="pp-status" class="form-select">
-                                            <option value="active">Active</option>
-                                            <option value="hidden">Hidden</option>
-                                            <option value="inactive">Inactive</option>
+                                            <option value="active"><?= $translator['Active']; ?></option>
+                                            <option value="hidden"><?= $translator['Hidden']; ?></option>
+                                            <option value="inactive"><?= $translator['Inactive']; ?></option>
                                         </select>
                                     </div>
                                 </div>
@@ -468,41 +468,41 @@
                                     
                                     
                                     <div class="mb-3">
-                                        <label for="pp-payment-type" class="form-label">Payment Type (<span style="color: #a01616;">*</span>)</label>
+                                        <label for="pp-payment-type" class="form-label"><?= $translator['Payment Type']; ?> (<span style="color: #a01616;">*</span>)</label>
                                         <select id="pp-payment-type" class="form-select pp-payment-types"></select>
                                     </div><div class="mb-3">
-                                        <label for="pp-fee" class="form-label">Fee (%) (<span style="color: #a01616;">*</span>)</label>
-                                        <input type="text" class="form-control" id="pp-fee" placeholder="Fee (%)">
+                                        <label for="pp-fee" class="form-label"> <?= $translator['Fee']; ?>(%) (<span style="color: #a01616;">*</span>)</label>
+                                        <input type="text" class="form-control" id="pp-fee" placeholder="<?= $translator['Fee']; ?>(%)">
                                     </div>
                                 <div class="mb-3">
-                                        <label for="pp-priority" class="form-label">Priority</label>
-                                        <input type="text" class="form-control" id="pp-priority" placeholder="Priority">
+                                        <label for="pp-priority" class="form-label"><?= $translator['Priority']; ?></label>
+                                        <input type="text" class="form-control" id="pp-priority" placeholder="<?= $translator['Priority']; ?>">
                                     </div></div>
                                 <div class="col-6">
                                     
                                     <div class="mb-3">
-                                        <label for="pp-info" class="form-label">Info/Description</label>
-                                        <textarea type="text" class="form-control" id="pp-info" cols="15" rows="10" placeholder="Info/Description" style="height: 235px;"></textarea>
+                                        <label for="pp-info" class="form-label"><?= $translator['Info/Description']; ?></label>
+                                        <textarea type="text" class="form-control" id="pp-info" cols="15" rows="10" placeholder="<?= $translator['Info/Description']; ?>" style="height: 235px;"></textarea>
                                     </div>
                                 <div class="mb-3">
-                                        <label for="pp-site-url" class="form-label">Site Url</label>
+                                        <label for="pp-site-url" class="form-label"> <?= $translator['Site Url']; ?></label>
                                         <input type="text" class="form-control" id="pp-site-url" placeholder="e.g www.enzerhub.com">
                                     </div><div class="mb-3">
-                                        <label for="pp-admin-site-rul" class="form-label">Admin Site Url</label>
+                                        <label for="pp-admin-site-rul" class="form-label"><?= $translator['Admin Site Url']; ?></label>
                                         <input type="text" class="form-control" id="pp-admin-site-url" placeholder="e.g www.enzerhub.com">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     
                                     <div class="mb-3">
-                                        <label for="pp-min-amount" class="form-label">Min. Amount</label>
-                                        <input type="text" class="form-control" id="pp-min-amount" placeholder="Min. Amount">
+                                        <label for="pp-min-amount" class="form-label"><?= $translator['Min. Amount']; ?></label>
+                                        <input type="text" class="form-control" id="pp-min-amount" placeholder="<?= $translator['Min. Amount']; ?>">
                                     </div><div class="mb-3">
-                                        <label for="pp-max-amount" class="form-label">Max. Amount</label>
-                                        <input type="text" class="form-control" id="pp-max-amount" placeholder="Max. Amount">
+                                        <label for="pp-max-amount" class="form-label"><?= $translator['Max. Amount']; ?></label>
+                                        <input type="text" class="form-control" id="pp-max-amount" placeholder="<?= $translator['Max. Amount']; ?>">
                                     </div>
                                 <div class="mb-3">
-         <label for="pp-site-url" class="form-label">Countries</label>
+         <label for="pp-site-url" class="form-label"><?= $translator['Countries']; ?></label>
     <div class="modal-body scrollable-container">
                         <div style="overflow: scroll;height: 256px;">
                             <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
@@ -512,787 +512,787 @@
 
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Afghanistan</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Afghanistan']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Albania</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Albania']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Algeria</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Algeria']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Andorra</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Andorra']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Angola</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Angola']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Antigua and Barbuda</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Antigua and Barbuda']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Argentina</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Argentina']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Armenia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Armenia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Australia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Armenia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Austria</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Austria']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Azerbaijan</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Azerbaijan']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Bahamas</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Bahamas']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Bahrain</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Bahrain']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Bangladesh</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Bangladesh']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Barbados</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Barbados']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Belarus</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Belarus']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Belgium</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Belgium']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Belize</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Belize']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Benin</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Benin']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Bhutan</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Bhutan']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Bolivia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Bolivia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Bosnia and Herzegovina</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Bosnia and Herzegovina']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Botswana</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Botswana']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Brazil</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Brazil']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Brunei</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Brunei']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Bulgaria</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Bulgaria']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Burkina Faso</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Burkina Faso']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Burundi</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Burundi']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Côte d'Ivoire</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Côte dIvoire']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Cabo Verde</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Cabo Verde']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Cambodia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Cambodia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Cameroon</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Cameroon']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Canada</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Canada']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Central African Republic</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Central African Republic']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Chad</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Chad']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Chile</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Chile']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">China</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['China']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Colombia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Colombia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Comoros</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Comoros']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Costa Rica</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Costa Rica']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Croatia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Croatia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Cuba</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Cuba']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Cyprus</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Cyprus']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Czech Republic</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Czech Republic']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Democratic Republic of the Congo</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Democratic Republic of the Congo']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Denmark</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Denmark']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Djibouti</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Djibouti']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Dominica</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Dominica']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Dominican Republic</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Dominican Republic']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Ecuador</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Ecuador']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Egypt</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Egypt']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">El Salvador</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['El Salvador']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Equatorial Guinea</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Equatorial Guinea']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Eritrea</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Eritrea']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Estonia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Estonia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Eswatini</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Eswatini']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Ethiopia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Ethiopia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Federated States of Micronesia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Federated States of Micronesia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Fiji</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Fiji']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Finland</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Finland']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">France</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['France']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Gabon</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Gabon']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Gambia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Gambia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Georgia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Georgia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Germany</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Germany']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Ghana</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Ghana']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Greece</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Greece']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Grenada</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Grenada']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Guatemala</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Guatemala']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Guinea</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Guinea']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Guinea-Bissau</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Guinea-Bissau']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Guyana</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Guyana']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Haiti</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Haiti']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Honduras</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Honduras']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Hungary</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Hungary']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Iceland</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Iceland']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">India</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['India']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Indonesia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Indonesia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Iran</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Iran']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Iraq</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Iraq']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Ireland</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Ireland']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Israel</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Israel']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Italy</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Italy']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Jamaica</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Jamaica']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Japan</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Japan']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Jordan</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Jordan']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Kazakhstan</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Kazakhstan']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Kenya</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Kenya']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Kiribati</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Kiribati']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Kosovo</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Kosovo']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Kuwait</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Kuwait']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Kyrgyzstan</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Kyrgyzstan']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Laos</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Laos']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Latvia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Latvia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Lebanon</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Lebanon']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Lesotho</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Lesotho']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Liberia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Liberia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Libya</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Libya']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Liechtenstein</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Liechtenstein']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Lithuania</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Lithuania']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Luxembourg</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Luxembourg']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">North Macedonia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['North Macedonia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Madagascar</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Madagascar']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Malawi</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Malawi']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Malaysia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Malaysia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Maldives</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Maldives']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Mali</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Mali']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Malta</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Malta']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Marshall Islands</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Marshall Islands']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Mauritania</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Mauritania']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Mauritius</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Mauritius']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Mexico</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Mexico']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Moldova</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Moldova']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Monaco</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Monaco']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Mongolia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Mongolia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Montenegro</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Montenegro']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Morocco</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Morocco']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Mozambique</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Mozambique']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Myanmar</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Myanmar']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Namibia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Namibia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Nauru</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Nauru']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Nepal</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Nepal']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Netherlands</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Netherlands']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">New Zealand</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['New Zealand']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Nicaragua</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Nicaragua']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Niger</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Niger']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Nigeria</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Nigeria']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">North Korea</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['North Korea']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Norway</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Norway']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Oman</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Oman']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Pakistan</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Pakistan']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Palau</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Palau']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Panama</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Panama']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Papua New Guinea</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Papua New Guinea']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Paraguay</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Paraguay']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Peru</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Peru']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Philippines</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Philippines']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Poland</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Poland']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Portugal</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Portugal']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Qatar</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Qatar']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Republic of the Congo</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Republic of the Congo']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Romania</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Romania']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Russia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Russia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Rwanda</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Rwanda']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">St Kitts and Nevis</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['St Kitts and Nevis']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">St Lucia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['St Lucia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">St Vincent and the Grenadines</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['St Vincent and the Grenadines']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Samoa</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Samoa']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">San Marino</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Sao Tome and Principe']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Sao Tome and Principe</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Sao Tome and Principe']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Saudi Arabia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Saudi Arabia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Senegal</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Senegal']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Serbia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Serbia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Seychelles</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Seychelles']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Sierra Leone</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Sierra Leone']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Singapore</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Singapore']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Slovakia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Slovakia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Slovenia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Slovenia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Solomon Islands</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Solomon Islands']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Somalia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Somalia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">South Africa</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['South Africa']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">South Korea</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['South Korea']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">South Sudan</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['South Sudan']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Spain</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Spain']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Sri Lanka</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Sri Lanka']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Sudan</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Sudan']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Suriname</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Suriname']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Sweden</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Sweden']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Switzerland</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Switzerland']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Syria</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Syria']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Taiwan</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Taiwan']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Tajikistan</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Tajikistan']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Tanzania</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Tanzania']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Thailand</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Thailand']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Timor-Leste</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Timor-Leste']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Togo</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Togo']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Tonga</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Tonga']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Trinidad and Tobago</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Trinidad and Tobago']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Tunisia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Tunisia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Turkey</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Turkey']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Turkmenistan</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Turkmenistan']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Tuvalu</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Tuvalu']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Uganda</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Uganda']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Ukraine</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Ukraine']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">United Arab Emirates</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['United Arab Emirates']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">United Kingdom</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['United Kingdom']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">United States</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['United States']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Uruguay</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Uruguay']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Uzbekistan</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Uzbekistan']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Vanuatu</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Vanuatu']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Vatican City</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Vatican City']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Venezuela</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Venezuela']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Vietnam</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Vietnam']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Yemen</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Yemen']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Zambia</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Zambia']; ?></span></td>
 </tr>
 <tr>
   <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
-  <td><span class="pp-lottery-name">Zimbabwe</span></td>
+  <td><span class="pp-lottery-name"><?= $translator['Zimbabwe']; ?></span></td>
 </tr>
 
 </tbody>
@@ -1304,8 +1304,8 @@
                                     </div></div>
                             </div>
                         <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="addNewPaymentPlatformBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="addNewPaymentPlatformBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div></form>
                     </div>
                     
@@ -1320,22 +1320,22 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Payment Platform</h5>
+                <h5 class="modal-title"><?= $translator['Add Payment Platform']; ?></h5>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container">
                 <div class="card border mb-4">
                     <div class="card-body">
-                        <h4 class="card-title">Enzerhub Payment Platforms</h4>
+                        <h4 class="card-title">Enzerhub <?= $translator['Payment Platforms']; ?></h4>
                         <form id="pp-personalDetailsForm">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="userName" class="form-label">Partner (<span style="color: #a01616;">*</span>)</label>
+                                        <label for="userName" class="form-label"><?= $translator['Partner']; ?> (<span style="color: #a01616;">*</span>)</label>
                                         <input type="text" class="form-control" id="pp-contact" placeholder="Enzerhub" disabled="">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="pp-currency-edit" class="form-label">Currency (<span style="color: #a01616;">*</span>)</label>
+                                        <label for="pp-currency-edit" class="form-label"><?= $translator['Currency']; ?> (<span style="color: #a01616;">*</span>)</label>
                                         <select id="pp-currency-edit" class="form-select currency-list"></select>
                                     </div>
                                     
@@ -1343,9 +1343,9 @@
                                    <div class="mb-3">
                                         <label for="pp-status-edit" class="form-label">Status (<span style="color: #a01616;">*</span>)</label>
                                         <select id="pp-status-edit" class="form-select">
-                                            <option value="active">Active</option>
-                                            <option value="hidden">Hidden</option>
-                                            <option value="inactive">Inactive</option>
+                                            <option value="active"><?= $translator['Active']; ?></option>
+                                            <option value="hidden"><?= $translator['Hidden']; ?></option>
+                                            <option value="inactive"><?= $translator['Inactive']; ?></option>
                                         </select>
                                     </div>
                                 </div>
@@ -1353,41 +1353,41 @@
                                     
                                     
                                     <div class="mb-3">
-                                        <label for="pp-payment-type-edit" class="form-label">Payment Type (<span style="color: #a01616;">*</span>)</label>
+                                        <label for="pp-payment-type-edit" class="form-label"><?= $translator['Payment Type']; ?> (<span style="color: #a01616;">*</span>)</label>
                                         <select id="pp-payment-type-edit" class="form-select pp-payment-types"></select>
                                     </div><div class="mb-3">
-                                        <label for="pp-fee-edit" class="form-label">Fee (%) (<span style="color: #a01616;">*</span>)</label>
+                                        <label for="pp-fee-edit" class="form-label"><?= $translator['Fee']; ?> (%) (<span style="color: #a01616;">*</span>)</label>
                                         <input type="text" class="form-control" id="pp-fee-edit" placeholder="Fee (%)">
                                     </div>
                                 <div class="mb-3">
-                                        <label for="pp-priority-edit" class="form-label">Priority</label>
+                                        <label for="pp-priority-edit" class="form-label"><?= $translator['Priority']; ?></label>
                                         <input type="text" class="form-control" id="pp-priority-edit" placeholder="Priority">
                                     </div></div>
                                 <div class="col-6">
                                     
                                     <div class="mb-3">
-                                        <label for="pp-info-edit" class="form-label">Info/Description</label>
+                                        <label for="pp-info-edit" class="form-label"><?= $translator['Info/Description']; ?></label>
                                         <textarea type="text" class="form-control" id="pp-info-edit" cols="15" rows="10" placeholder="Info/Description" style="height: 235px;"></textarea>
                                     </div>
                                 <div class="mb-3">
-                                        <label for="pp-site-url-edit" class="form-label">Site Url</label>
+                                        <label for="pp-site-url-edit" class="form-label"><?= $translator['Site Url']; ?></label>
                                         <input type="text" class="form-control" id="pp-site-url-edit" placeholder="e.g www.enzerhub.com">
                                     </div><div class="mb-3">
-                                        <label for="pp-admin-site-url-edit" class="form-label">Admin Site Url</label>
+                                        <label for="pp-admin-site-url-edit" class="form-label"><?= $translator['Admin Site Url']; ?></label>
                                         <input type="text" class="form-control" id="pp-admin-site-url-edit" placeholder="e.g www.enzerhub.com">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     
                                     <div class="mb-3">
-                                        <label for="pp-min-amount-edit" class="form-label">Min. Amount</label>
+                                        <label for="pp-min-amount-edit" class="form-label"><?= $translator['Min. Amount']; ?></label>
                                         <input type="text" class="form-control" id="pp-min-amount-edit" placeholder="Min. Amount">
                                     </div><div class="mb-3">
-                                        <label for="pp-max-amount-edit" class="form-label">Max. Amount</label>
+                                        <label for="pp-max-amount-edit" class="form-label"><?= $translator['Max. Amount']; ?></label>
                                         <input type="text" class="form-control" id="pp-max-amount-edit" placeholder="Max. Amount">
                                     </div>
                                 <div class="mb-3">
-         <label for="pp-countries-edit" class="form-label">Countries</label>
+         <label for="pp-countries-edit" class="form-label"><?= $translator['Countries']; ?></label>
     <div class="modal-body scrollable-container">
                         <div style="overflow: scroll;height: 256px;">
                             <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
@@ -1400,8 +1400,8 @@
                                     </div></div>
                             </div>
                         <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="editPaymentPlatformBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="editPaymentPlatformBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div></form>
                     </div>
                     

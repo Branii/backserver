@@ -403,12 +403,9 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab account_transaction">
             <?php include "tabs/businessflow/account_transaction.php" ?>
           </div>
-
           <div class="chrome__tab  lottery_basic_params">
             <?php include "tabs/game_management/lottery_basic_param.php" ?>
           </div>
-
-
           <div class="chrome__tab game_getting_statistics">
             <?php include "tabs/businessflow/game_getting_statistics.php" ?>
           </div>
@@ -444,16 +441,13 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab Invitation">
             <?php include "tabs/promotionmanage/invitation_referallink.php" ?>
           </div>
-
           <div class="chrome__tab quota">
             <?php include "tabs/agentmanage/quota.php" ?>
           </div>
-
           <!--User Bank management-->
           <div class="chrome__tab  Bank">
             <?php include "tabs/userbank/bankcard.php" ?>
           </div>
-
           <!-- Report Management -->
           <div class="chrome__tab Win">
             <?php include "tabs/report_management/win_loss_report.php" ?>
@@ -461,8 +455,6 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab NGPWin">
             <?php include "tabs/report_management/ngp_win_loss_report.php" ?>
           </div>
-
-
           <!--system managenet-->
           <div class="chrome__tab administrator_list">
             <?php include "tabs/system_management/administrator_list.php" ?>
@@ -495,12 +487,9 @@ $fullname = (new Controller)->getUsername($adminEmail);
             <?php include "tabs/announcement/usernotification.php" ?>
           </div>
 
-
-
-
-        
-
-
+          <div class="chrome__tab userpaymentmethod">
+            <?php include "tabs/userbank/userpaymentmethod.php" ?>
+          </div>
 
         </div>
       </div>
@@ -556,6 +545,8 @@ $fullname = (new Controller)->getUsername($adminEmail);
     <script src="<?php echo BASE_URL; ?>assets/js/annoucement.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/payment_platforms.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/usernotification.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/userpaymentmethod.js"></script>
+
 
     
     <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
