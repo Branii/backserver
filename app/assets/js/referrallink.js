@@ -21,6 +21,7 @@ $(function () {
                       <td>${item.rebate}</td>
                       <td>${item.register_count + " / " + item.quota_used}</td>
                        <td>${item.date_created + " / " + item.time_created}</td>
+                       <td></td>
                        <td>${item.remarks}</td>
                       
                   </tr>
@@ -260,7 +261,7 @@ $(function () {
   }
 
   function tableScrollLinks() {
-      const tableContainerLinks = document.querySelector(".table-wrapperquota");
+      const tableContainerLinks = document.querySelector(".table-wrapperlistlinks");
       const headerRowLinks = document.querySelector(".headrowlinks");
 
       tableContainerLinks.addEventListener("scroll", function () {

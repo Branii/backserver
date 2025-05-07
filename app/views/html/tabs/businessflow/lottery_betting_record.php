@@ -422,7 +422,7 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Server Time']; ?></h6>
+                         <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
                         </th>
                                   <!-- <th>
                         <h6 class="fs-4 fw-semibold mb-0">Bet Type</h6>

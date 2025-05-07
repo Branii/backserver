@@ -28,6 +28,22 @@ class adminController extends Controller {
         $this->view->render();
     }
 
+    #auth method
+    public function google(){
+        $this->view('html/tabs/auth/google');
+        $this->view->render();
+    }
+
+    public function mobile(){
+        $this->view('auth/mobile');
+        $this->view->render();
+    }
+
+    public function email(){
+        $this->view('auth/email');
+        $this->view->render();
+    }
+
     public function admins($data){
         $this->view('exec/admins_exec',['flag'=> 'addNewAdmin', 'data' => $data]);
         $this->view->render();
@@ -866,6 +882,16 @@ class adminController extends Controller {
         $this->view('exec/googletwofa',['email'=>$email,'flag' => 'twofaenable']);
         $this->view->render();
     }
-
+    public function verifyotp($otpcode){
+        $this->view('exec/googletwofa',['otpcode'=>$otpcode,'flag' =>'verifyotp']);
+        $this->view->render();
+    }
+    
+    
+    public function verifyloginotp($otpcodes){
+        $this->view('exec/googletwofa',['otpcodes'=>$otpcodes,'flag' =>'verifyloginotp']);
+        $this->view->render();
+    }
+    
     
 }

@@ -459,7 +459,7 @@
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Rule']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['DateTime']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
                   </th>
                   <th>
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Status']; ?></h6>

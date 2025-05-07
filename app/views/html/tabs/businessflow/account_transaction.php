@@ -339,10 +339,10 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Stake Time']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Server Time']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction ID']; ?></h6>

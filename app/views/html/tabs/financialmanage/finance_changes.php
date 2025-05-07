@@ -341,6 +341,9 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Time']; ?></h6>
                         </th>
                         <th>
+                        <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
+                       </th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Reviews']; ?></h6>
                         </th>
                       
