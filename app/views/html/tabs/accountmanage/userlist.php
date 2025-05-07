@@ -487,6 +487,10 @@ section#tooltipp p {
     .show-user-rel:hover{
         font-weight: 900;
     }
+    .arr {
+        color: #909aa9;
+        margin: 0px 1rem;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -601,6 +605,9 @@ section#tooltipp p {
 
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Creation Time']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Login']; ?></h6>
@@ -1262,7 +1269,7 @@ section#tooltipp p {
                                                 <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
                                             </th>
                                             <th>
-                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Stake Time']; ?>
+                                                <h6 class="fs-4 fw-semibold mb-0">Transaction Time
                                                 </h6>
                                             </th>
                                             <th>

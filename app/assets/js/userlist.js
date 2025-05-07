@@ -62,7 +62,7 @@ $(function () {
         flag = "all-subs";
         // console.log(agentID);
         $.ajax({
-            url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
+            url: `../admin/fetchAgentSubs/${partnerID}/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
             type: "POST",
             beforeSend: function () {
                 $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -300,7 +300,7 @@ $(function () {
 
         try {
             $.ajax({
-                url: `../admin/userlistdata/${uid}/${rechargeLevel}/${state}/${startdate}/${enddate}/${page}/${pageLimit}/1`,
+                url: `../admin/userlistdata/${partnerID}/${uid}/${rechargeLevel}/${state}/${startdate}/${enddate}/${page}/${pageLimit}/1`,
                 type: "POST",
                 beforeSend: function () {},
                 success: function (response) {
@@ -332,7 +332,7 @@ $(function () {
     fetchUserlist(currentPage, pageLimit);
 
     function filterUserlist(currentPage, pageLimit) {
-        $.post(`../admin/filteruserlist/${currentPage}/${pageLimit}`, function (response) {
+        $.post(`../admin/filteruserlist/${partnerID}/${currentPage}/${pageLimit}`, function (response) {
             try {
                 // console.log(response);
                 const data = JSON.parse(response);
@@ -366,7 +366,7 @@ $(function () {
     }
 
     const searchUserListData = (uid, rechargeLevel, state, startDate, endDate) => {
-        $.post(`../admin/searchUserListData/${uid}/${rechargeLevel}/${state}/${startDate}/${endDate}/1`, function (response) {
+        $.post(`../admin/searchUserListData/${partnerID}/${uid}/${rechargeLevel}/${state}/${startDate}/${endDate}/1`, function (response) {
             // $.post(`../admin/searchUserListData/uid/rechargeLevel/state/startDate/endDate`, function (response) {
 
             try {
@@ -538,7 +538,7 @@ $(function () {
     function fetchUsers(query) {
         let optionsHtml = "";
 
-        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+        $.post(`../admin/Searchusername/${partnerID}/${encodeURIComponent(query)}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
                 response.forEach((user) => {
@@ -609,7 +609,7 @@ $(function () {
 
     async function fetchRebatedata() {
         try {
-            const response = await fetch(`../admin/fetchRebatedata/`); // Await the fetch call
+            const response = await fetch(`../admin/fetchRebatedata/${partnerID}`); // Await the fetch call
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -643,7 +643,7 @@ $(function () {
     async function addAgent(datas) {
         try {
             ///api/v1/limvo/selfregister
-            const response = await fetch(`../admin/addAgent/${datas}`, {
+            const response = await fetch(`../admin/addAgent/${partnerID}/${datas}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -705,7 +705,7 @@ $(function () {
         // console.log(pageLimit);
         try {
             $.ajax({
-                url: `../admin/fetchTopAgent/${rechargeLevel}/${state}/${startDate}/${endDate}/${page}/${pageLimit}`,
+                url: `../admin/fetchTopAgent/${partnerID}/${rechargeLevel}/${state}/${startDate}/${endDate}/${page}/${pageLimit}`,
                 type: "POST",
                 beforeSend: function () {},
                 success: function (response) {
@@ -744,7 +744,7 @@ $(function () {
         $(".userquotaid").val(uid);
         // // console.log(uid);
 
-        $.post(`../admin/getuserrebate/${uid}/`, function (data) {
+        $.post(`../admin/getuserrebate/${partnerID}/${uid}/`, function (data) {
             const rebatelist = JSON.parse(data);
             let tableBody = document.getElementById("quotatable").getElementsByTagName("tbody")[0];
             while (tableBody.firstChild) {
@@ -800,7 +800,7 @@ $(function () {
         $(".loaderquota").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
         //
         $.post(
-            `../admin/updateUsedquota/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
+            `../admin/updateUsedquota/${partnerID}/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
 
             function (result) {
                 setTimeout(function () {
@@ -826,7 +826,7 @@ $(function () {
 
     const fetchsubagent = (userID, currentPage, pageLimit, element) => {
         $.ajax({
-            url: `../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
+            url: `../admin/agent_subordinate/${partnerID}/${userID}/${currentPage}/${pageLimit}`,
             type: "POST",
             beforeSend: function () {
                 //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -914,7 +914,8 @@ $(function () {
         data.forEach((item) => {
             //  // console.log(item)
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-
+            let timezone = item.timezone.split(" ");
+            timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
             let subordinate = "";
             if (item.account_type == 2) {
                 subordinate = "Top Agent";
@@ -959,6 +960,7 @@ $(function () {
                   <td>${formatMoney(item.balance)}</td> 
                   <td>${item.rebate}</td>
                   <td>${date + " / " + time}</td>
+                  <td>${timezone}</td>
                   <td>${dates + " / " + times}</td>
                   <td>${logsLookup[item.uid] ?? 0}</td>
                   <td id="usrl-state-${item.uid}">${status[item.user_state]}</td>
@@ -1004,28 +1006,6 @@ $(function () {
         });
         return html;
     };
-
-    // function fetchsubagent(userID,currentPage, pageLimit) {
-    //     $.post(`../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
-    //         function (response) {
-    //         try {
-    //            const data = JSON.parse(response);
-
-    //             //  return
-    //               $("#maskuserlist").LoadingOverlay("hide");
-
-    //               toggleBackButton();
-    //         } catch (error) {
-    //             console.error("Error parsing JSON response:", error);
-    //         } finally {
-    //            // $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-    //         }
-    //     }).fail(function (error) {
-    //         console.error("Error fetching data:", error);
-    //       //  $(".loaderfinances").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-    //     });
-
-    // }
 
     function toggleBackButton() {
         if (navigationHistory.length > 1) {
@@ -1085,7 +1065,7 @@ $(function () {
         const userID = $("#idHolder").val();
         const lotteryID = "all";
         $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {
                 //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -1149,7 +1129,7 @@ $(function () {
         const lotteryID = "all";
         let flag = "fetchUserLotteries";
         $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1202,7 +1182,7 @@ $(function () {
         let flag = "updateLotteryState";
 
         $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1238,7 +1218,7 @@ $(function () {
         const dailyBettingLimit = $("#usrl-daily-betting-total-limit").val();
 
         $.ajax({
-            url: `../admin/updateUserData/${userID}/${depositLimit}/${withdrawalLimit}/${rebate}/${state}/${dailyBettingLimit}/${flag}`,
+            url: `../admin/updateUserData/${partnerID}/${userID}/${depositLimit}/${withdrawalLimit}/${rebate}/${state}/${dailyBettingLimit}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1271,7 +1251,7 @@ $(function () {
         const lotteryID = "all";
 
         $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1315,7 +1295,7 @@ $(function () {
         let flag = "blockUserIp";
 
         $.ajax({
-            url: `../admin/manageUser/${userID}/${ulogID}/${flag}`,
+            url: `../admin/manageUser/${partnerID}/${userID}/${ulogID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1349,7 +1329,7 @@ $(function () {
         const lotteryID = "all";
 
         $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1393,7 +1373,7 @@ $(function () {
 
     const fetchUserRel = (userID) => {
         $.ajax({
-            url: `../admin/manageUser/${userID}/all/fetchUserRel`,
+            url: `../admin/manageUser/${partnerID}/${userID}/all/fetchUserRel`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1477,7 +1457,7 @@ $(function () {
 
     async function fetchaccount(userid, currentPage, pageLimit) {
         try {
-            const response = await fetch(`../admin/useraccountchange/${userid}/${currentPage}/${pageLimit}`);
+            const response = await fetch(`../admin/useraccountchange/${partnerID}/${userid}/${currentPage}/${pageLimit}`);
             const data = await response.json();
 
             $("#maskaccount").LoadingOverlay("hide");
@@ -1601,7 +1581,7 @@ $(function () {
 
     async function filterAccountChange(userIdacc, ordertype, startdateusers, enddateusers, currentPage, pageLimit) {
         try {
-            const response = await fetch(`../admin/filterChangeAccount/${userIdacc}/${ordertype}/${startdateusers}/${enddateusers}/${currentPage}/${pageLimit}`);
+            const response = await fetch(`../admin/filterChangeAccount/${partnerID}/${userIdacc}/${ordertype}/${startdateusers}/${enddateusers}/${currentPage}/${pageLimit}`);
             const data = await response.json();
 
             ///// console.log(response);
@@ -1695,7 +1675,7 @@ const lotteriesMarkup = (lottery, blockedLotteries) => {
     return `<tr>
             <td><span class="lottery-name"> ${lottery.name}</span></td>
             <td><span class="lottery-status">${status}</span></td>
-            <td><input class="form-check-input toggle-lot" type="checkbox" value="${lotteryID}" id="flexCheckDefault" ${checkedState}></td>
+            <td><input class="form-check-input toggle-lot" type="checkbox" value="${lotteryID}" ${checkedState}></td>
             </tr>`;
 };
 const userIpsMarkup = (data) => {
@@ -1705,7 +1685,7 @@ const userIpsMarkup = (data) => {
             <td><b class="">${data.ip} </b></td>
             <td><span class="lottery-status">${data.login_date} / ${data.login_time}</span></td>
             <td><span class="">${ipState}</span></td>
-            <td><input class="form-check-input toggle-ip-state" type="checkbox" value="${data.ulog_id}" id="flexCheckDefault" ${checkedState}></td>
+            <td><input class="form-check-input toggle-ip-state" type="checkbox" value="${data.ulog_id}" ${checkedState}></td>
             </tr>`;
 };
 const showDialog = (btnID) => {

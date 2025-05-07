@@ -14,22 +14,26 @@ $page  = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) :
 $results = [];
 
 if ($flag == "users-win-loss") {
+
+    $partnerID = $this->viewData['partner_id'];
     $lottery_id = $this->viewData['lottery_id'];
     $start_date = $this->viewData['start_date'];
     $end_date   = $this->viewData['end_date'];
     $limit      = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 10) : 10;
-    $users_results      = DataReportModel::fetch_users_win_loss_report($page,$limit);
-    $bet_tables = $lottery_id == "all" ?  BusinessFlowModel::getAllGameIds() : BusinessFlowModel::getAllGameIdsWithCondition(['game_type' => $lottery_id]);
+    $users_results      = DataReportModel::fetch_users_win_loss_report($partnerID,$page,$limit);
+    $bet_tables = $lottery_id == "all" ?  BusinessFlowModel::getAllGameIds($partnerID) : BusinessFlowModel::getAllGameIdsWithCondition(['game_type' => $lottery_id]);
     if($users_results["status"] === "error") {
         echo json_encode($user_results);
         return;
     }
     $users = $users_results["data"];
-    $results = computeUserAndSubsStats($users, $bet_tables, ["lottery_id" => $lottery_id, 'datecreated' => $start_date, 'enddate' => $end_date]);
+    $results = computeUserAndSubsStats($partnerID,$users, $bet_tables, ["lottery_id" => $lottery_id, 'datecreated' => $start_date, 'enddate' => $end_date]);
 } else if ($flag == "filter-lotteries") {
+    $partnerID = $this->viewData['partner_id'];
     $lottery_name = isset($this->viewData['lottery_name']) ? max((int)$this->viewData['lottery_name'], 1) : "";
-    if (!empty($lottery_name)) $results = (new DataReportModel())->FiltertLotteryNames();
+    if (!empty($lottery_name)) $results = (new DataReportModel())->FiltertLotteryNames($partnerID);
 } else if ($flag == 'search-user-win-loss') {
+    $partnerID = $this->viewData['partner_id'];
     $user_id    = $this->viewData['user_id'];
     $lottery_id = $this->viewData['lottery_id'];
     $start_date = $this->viewData['start_date'];
@@ -39,7 +43,7 @@ if ($flag == "users-win-loss") {
         return true;
     }
 
-    $user_res = DataReportModel::filterWinLossRecordsForUser($user_id,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date]);
+    $user_res = DataReportModel::filterWinLossRecordsForUser($partnerID,$user_id,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date]);
     echo json_encode($user_res);
 
     return ;      
@@ -47,6 +51,7 @@ if ($flag == "users-win-loss") {
 } else if ($flag === "get-top-agents") {
   
     // get the filter parameters
+    $partnerID = $this->viewData['partner_id'];
     $lottery_id = $this->viewData['lottery_id'];
     $start_date = $this->viewData['start_date'];
     $end_date   = $this->viewData['end_date'];
@@ -54,7 +59,7 @@ if ($flag == "users-win-loss") {
     
 
     // fetch the top agents
-    $top_agents_results = DataReportModel::fetch_top_agents($page,$limit);
+    $top_agents_results = DataReportModel::fetch_top_agents($partnerID,$page,$limit);
 
 
     if($top_agents_results['status'] == "error")  {
@@ -65,7 +70,7 @@ if ($flag == "users-win-loss") {
   
     $results = [];
     foreach($top_agents as $key => $top_agent){
-        $res = DataReportModel::filterWinLossRecordsForUser($top_agent->uid,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date,],false,false);
+        $res = DataReportModel::filterWinLossRecordsForUser($partnerID,$top_agent->uid,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date,],false,false);
         if($res['status'] === "error") continue;
         $res["data"]["total_records"] = $top_agent->total_records;
         $results[] = $res['data'];
@@ -78,7 +83,7 @@ if ($flag == "users-win-loss") {
     return;
    
 } else if ($flag == "get-user-details") {
-
+    $partnerID = $this->viewData['partner_id'];
     $user_id    = $this->viewData['user_id'];
     $lottery_id = $this->viewData['lottery_id'];
     $start_date = $this->viewData['start_date'];
@@ -88,7 +93,7 @@ if ($flag == "users-win-loss") {
         return true;
     }
     
-    $user_res = DataReportModel::filterWinLossRecordsForUser($user_id,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date],true);
+    $user_res = DataReportModel::filterWinLossRecordsForUser( $partnerID,$user_id,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date],true);
 
     echo json_encode($user_res);
 
@@ -97,9 +102,8 @@ if ($flag == "users-win-loss") {
 
 
 } else if ($flag == "get-active-subs") {
-
-    
      // get the filter parameters
+     $partnerID  = $this->viewData['partner_id'];
      $agent_id   = $this->viewData['agent_id'];
      $lottery_id = $this->viewData['lottery_id'];
      $start_date = $this->viewData['start_date'];
@@ -107,7 +111,7 @@ if ($flag == "users-win-loss") {
      $limit      = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 10) : 10;
      
 
-     $subs = DataReportModel::allSubs($agent_id);
+     $subs = DataReportModel::allSubs($partnerID,$agent_id);
      
 
      if($subs["status"] == "error") return ["status" => "error", "data" => "Internal Server Error."];
@@ -118,7 +122,7 @@ if ($flag == "users-win-loss") {
      $subs = $subs["data"];
      $results = [];
      foreach($subs as $key => $sub){
-         $res = DataReportModel::filterWinLossRecordsForUser($sub->uid,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date,]);
+         $res = DataReportModel::filterWinLossRecordsForUser($partnerID,$sub->uid,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date,]);
          if($res['status'] === "error") continue;
          $res['data']["totalRecords"] = $sub->total_records;
          $data = $res['data'];
@@ -130,8 +134,8 @@ if ($flag == "users-win-loss") {
      return;
 
 }else if($flag === "get-all-subs"){
-
       // get the filter parameters
+      $partnerID  = $this->viewData['partner_id'];
       $agent_id   = $this->viewData['agent_id'];
       $lottery_id = $this->viewData['lottery_id'];
       $start_date = $this->viewData['start_date'];
@@ -139,13 +143,13 @@ if ($flag == "users-win-loss") {
       $limit      = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 10) : 10;
       
       
-      $subs = DataReportModel::allSubs($agent_id);
+      $subs = DataReportModel::allSubs($partnerID,$agent_id);
       
       if(empty($subs)){  empty_response(); return; }
     
       $results = [];
       foreach($subs as $key => $sub){
-          $res = DataReportModel::filterWinLossRecordsForUser($sub->uid,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date,]);
+          $res = DataReportModel::filterWinLossRecordsForUser($partnerID,$sub->uid,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date,]);
           if($res['status'] === "error") continue;
           $res['data']["totalRecords"] = $sub->total_records;
           $data = $res['data'];
@@ -167,7 +171,7 @@ echo json_encode($results);
 function empty_response(){
     echo json_encode(["status"=> "success","data" => []]);
 }
-function computeUserAndSubsStats($users, $bet_tables, $userData): array
+function computeUserAndSubsStats($partnerID,$users, $bet_tables, $userData): array
 {
 
     try{
@@ -175,10 +179,10 @@ function computeUserAndSubsStats($users, $bet_tables, $userData): array
         
         foreach($users as $data){
             // $total_tickets_info     = DataReportModel::filterGetBetTicketsNum($data->uid, $bet_tables, $userData);
-            $total_tickets_info     = count($bet_tables ) !== 1 ?  DataReportModel::v2($data->uid, $bet_tables, $userData) : DataReportModel::filterGetBetTicketsNum($data->uid, $bet_tables, $userData);
+            $total_tickets_info     = count($bet_tables ) !== 1 ?  DataReportModel::v2($partnerID,$data->uid, $bet_tables, $userData) : DataReportModel::filterGetBetTicketsNum($partnerID,$data->uid, $bet_tables, $userData);
 
             if($total_tickets_info["status"] == "error") return $total_tickets_info;
-            $valid_amount_res     = count($bet_tables) !== 1 ? DataReportModel::filter_total_valid_amount_v2($data->uid, $bet_tables, $userData) : DataReportModel::filter_total_valid_amount($data->uid, $bet_tables, $userData);
+            $valid_amount_res     = count($bet_tables) !== 1 ? DataReportModel::filter_total_valid_amount_v2($partnerID,$data->uid, $bet_tables, $userData) : DataReportModel::filter_total_valid_amount($partnerID,$data->uid, $bet_tables, $userData);
             if($valid_amount_res["status"] == "error") return $valid_amount_res;
             
             $total_valid_amount = $valid_amount_res["data"];

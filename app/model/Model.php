@@ -109,7 +109,7 @@ class Model extends MEDOOHelper{
     public static function getPermissionSidebar(){
 
         try {
-            return parent::selectOne('permissions_tbl',['side_bar_title','side_bar_menu']);
+            return parent::selectOne('permissions_tbl',['side_bar_title','side_bar_menu','partners']);
         } catch (\Throwable $th) {
            var_dump($th);
         }

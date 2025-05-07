@@ -18,7 +18,7 @@ class UserBankManageModel extends MEDOOHelper
 
         try{
 
-        $db = parent::getLink();
+        $db = parent::openLink();
         $offset = ($page - 1) * $limit;
         $whereClause = "";
         $table_name = "user_bank";

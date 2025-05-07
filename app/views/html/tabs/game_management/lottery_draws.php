@@ -191,6 +191,11 @@
   padding:5px;
   border-bottom: solid 1px rgb(110,129,146,0.1);
 }
+
+.arr {
+      color: #909aa9;
+      margin: 0px 1rem;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -289,6 +294,9 @@
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Actual Draw Time']; ?></h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Settlement Completion Time']; ?></h6>

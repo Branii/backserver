@@ -553,7 +553,7 @@ $(function () {
                     html += `
                     <li id="tab1" class="item " value="" style="display: flex; justify-content: space-between;">
                       ${sidebarMenu[item].title}
-                      <input class="form-check-input chk" type="checkbox" value="${key + ' ' + item}" id="flexCheckDefault" ${checked}/>
+                      <input class="form-check-input chk" type="checkbox" value="${key + ' ' + item}"  ${checked}/>
                     </li>`;
                   })
                 }

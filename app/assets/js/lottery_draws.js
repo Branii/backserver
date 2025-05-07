@@ -1,5 +1,6 @@
 $(function(){
 
+  const partnerID = $("#partner-holder").attr("data-partner-id");
   function showToast(title, message, type) {
       $.toast({
         position: "bottom-right",
@@ -14,8 +15,11 @@ $(function(){
 
   const drawTables = (data) => {
       let html = "";
+      console.log(data);
       const status = {'done' : 'Settled', 'waiting' : 'Settling'};
       data.forEach((item) => {
+        let timezone = item.timezone.split(" ");
+        timezone = timezone[0] + `<span style="margin-left: 1rem;">${timezone[1]}</span>`;
         html += `<tr class="trow">
                       <td>${item.lottery_type}</td>
                       <td>${transformInputLd(item.lottery_code)}</td>
@@ -26,6 +30,7 @@ $(function(){
                       <td>${item.draw_time}</td>
                       <td>${item.sales_deadline}</td>
                       <td>${item.actual_draw_time}</td>
+                      <td>${timezone}</td>
                       <td>${item.settlement_completion_time}</td>
                       <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${status[item.status]}</span></td>
                   </tr>
@@ -46,7 +51,7 @@ $(function(){
 
   async function getAllGames() {
       try {
-        const response = await fetch(`../admin/getAllgames`);
+        const response = await fetch(`../admin/getAllgames/${partnerID}`);
         const data = await response.json();
         let html = ""
         html += ``
@@ -71,7 +76,7 @@ $(function(){
 
       try {
         $.ajax({
-          url:`../admin/getSpecificDraws/${gameID}/${issueNumber}/${status}/${startDate}/${endDate}/${currentPage}/${pageLimit}`,
+          url:`../admin/getSpecificDraws/${partnerID}/${gameID}/${issueNumber}/${status}/${startDate}/${endDate}/${currentPage}/${pageLimit}`,
           type: "POST",
           beforeSend: function(){
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
