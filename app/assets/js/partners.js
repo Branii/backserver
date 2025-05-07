@@ -687,7 +687,7 @@ $(() =>{
                 $("#ptns-site-url").val("");
                 $("#ptns-admin-site-url").val("");
                 $("#ptns-currency-body").find("tr td input:checked").val("");
-
+// this is the test commit
 
                  const html = `<tr id='ptns-id-${response.id}'>
                         <td> ${response.id} </td>
