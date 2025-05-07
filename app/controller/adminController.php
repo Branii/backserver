@@ -695,14 +695,7 @@ class adminController extends Controller {
     // 
     public function   fetchbankcard($partnerID,$uid,$bank_type,$card_number,$status,$pageNumber, $limit,$miscelleanous)
     {
-
-<<<<<<< HEAD
-
-       
-        $this->view('exec/userbank_manage', ['uid' => $uid,'bank_type' => urldecode($bank_type),'card_number' => $card_number,'status' => $status,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchbankcard']);
-=======
-        $this->view('exec/userbank_manage', ['partner_id' =>$partnerID,'uid' => $uid,'bank_type' => urldecode($bank_type),'card_number' => $card_number,'status' => $status,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchbankcard']);
->>>>>>> master
+    $this->view('exec/userbank_manage', ['uid' => $uid,'bank_type' => urldecode($bank_type),'card_number' => $card_number,'status' => $status,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchbankcard']);
         $this->view->render();
     }
   
@@ -870,13 +863,10 @@ class adminController extends Controller {
 
 
          //Payment Platform
-<<<<<<< HEAD
+
         public function fetchPaymentPlatform($currency_types,$stautspayment,$startdepay,$enddepay,$page ,$limit){  
             $this->view('exec/payment_platform', ["currency_types" => $currency_types,"status" => $stautspayment,"startdate" => $startdepay,"enddate"=> $enddepay,"page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
-=======
-        public function fetchPaymentPlatform($partnerID,$page ,$limit){  
-            $this->view('exec/payment_platform', ['partner_id' => $partnerID,"page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
->>>>>>> master
+
             $this->view->render();
          }
 
