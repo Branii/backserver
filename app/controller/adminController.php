@@ -838,7 +838,7 @@ class adminController extends Controller {
         public function fetchusernotification($partnerID,$pageNumber, $limit)
         {
             $this->view('exec/annoucement_management', [
-                'partner_id' => $partnerID,
+                
                 'flag' => 'viewnotification',
                 'page' => $pageNumber,
                 'limit' => $limit

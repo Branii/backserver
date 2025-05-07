@@ -62,7 +62,7 @@ $(function () {
         flag = "all-subs";
         // console.log(agentID);
         $.ajax({
-            url: `../admin/fetchAgentSubs/${partnerID}/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
+            url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
             type: "POST",
             beforeSend: function () {
                 $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -300,7 +300,7 @@ $(function () {
 
         try {
             $.ajax({
-                url: `../admin/userlistdata/${partnerID}/${uid}/${rechargeLevel}/${state}/${startdate}/${enddate}/${page}/${pageLimit}/1`,
+                url: `../admin/userlistdata/${uid}/${rechargeLevel}/${state}/${startdate}/${enddate}/${page}/${pageLimit}/1`,
                 type: "POST",
                 beforeSend: function () {},
                 success: function (response) {
@@ -332,7 +332,7 @@ $(function () {
     fetchUserlist(currentPage, pageLimit);
 
     function filterUserlist(currentPage, pageLimit) {
-        $.post(`../admin/filteruserlist/${partnerID}/${currentPage}/${pageLimit}`, function (response) {
+        $.post(`../admin/filteruserlist/${currentPage}/${pageLimit}`, function (response) {
             try {
                 // console.log(response);
                 const data = JSON.parse(response);
@@ -366,7 +366,7 @@ $(function () {
     }
 
     const searchUserListData = (uid, rechargeLevel, state, startDate, endDate) => {
-        $.post(`../admin/searchUserListData/${partnerID}/${uid}/${rechargeLevel}/${state}/${startDate}/${endDate}/1`, function (response) {
+        $.post(`../admin/searchUserListData/${uid}/${rechargeLevel}/${state}/${startDate}/${endDate}/1`, function (response) {
             // $.post(`../admin/searchUserListData/uid/rechargeLevel/state/startDate/endDate`, function (response) {
 
             try {
@@ -538,7 +538,7 @@ $(function () {
     function fetchUsers(query) {
         let optionsHtml = "";
 
-        $.post(`../admin/Searchusername/${partnerID}/${encodeURIComponent(query)}`, function (response) {
+        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
                 response.forEach((user) => {
@@ -643,7 +643,7 @@ $(function () {
     async function addAgent(datas) {
         try {
             ///api/v1/limvo/selfregister
-            const response = await fetch(`../admin/addAgent/${partnerID}/${datas}`, {
+            const response = await fetch(`../admin/addAgent/${datas}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -705,7 +705,7 @@ $(function () {
         // console.log(pageLimit);
         try {
             $.ajax({
-                url: `../admin/fetchTopAgent/${partnerID}/${rechargeLevel}/${state}/${startDate}/${endDate}/${page}/${pageLimit}`,
+                url: `../admin/fetchTopAgent/${rechargeLevel}/${state}/${startDate}/${endDate}/${page}/${pageLimit}`,
                 type: "POST",
                 beforeSend: function () {},
                 success: function (response) {
@@ -744,7 +744,7 @@ $(function () {
         $(".userquotaid").val(uid);
         // // console.log(uid);
 
-        $.post(`../admin/getuserrebate/${partnerID}/${uid}/`, function (data) {
+        $.post(`../admin/getuserrebate/${uid}/`, function (data) {
             const rebatelist = JSON.parse(data);
             let tableBody = document.getElementById("quotatable").getElementsByTagName("tbody")[0];
             while (tableBody.firstChild) {
@@ -800,7 +800,7 @@ $(function () {
         $(".loaderquota").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
         //
         $.post(
-            `../admin/updateUsedquota/${partnerID}/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
+            `../admin/updateUsedquota/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
 
             function (result) {
                 setTimeout(function () {
@@ -826,7 +826,7 @@ $(function () {
 
     const fetchsubagent = (userID, currentPage, pageLimit, element) => {
         $.ajax({
-            url: `../admin/agent_subordinate/${partnerID}/${userID}/${currentPage}/${pageLimit}`,
+            url: `../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
             type: "POST",
             beforeSend: function () {
                 //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -1065,7 +1065,7 @@ $(function () {
         const userID = $("#idHolder").val();
         const lotteryID = "all";
         $.ajax({
-            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {
                 //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -1129,7 +1129,7 @@ $(function () {
         const lotteryID = "all";
         let flag = "fetchUserLotteries";
         $.ajax({
-            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1182,7 +1182,7 @@ $(function () {
         let flag = "updateLotteryState";
 
         $.ajax({
-            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1218,7 +1218,7 @@ $(function () {
         const dailyBettingLimit = $("#usrl-daily-betting-total-limit").val();
 
         $.ajax({
-            url: `../admin/updateUserData/${partnerID}/${userID}/${depositLimit}/${withdrawalLimit}/${rebate}/${state}/${dailyBettingLimit}/${flag}`,
+            url: `../admin/updateUserData/${userID}/${depositLimit}/${withdrawalLimit}/${rebate}/${state}/${dailyBettingLimit}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1251,7 +1251,7 @@ $(function () {
         const lotteryID = "all";
 
         $.ajax({
-            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1295,7 +1295,7 @@ $(function () {
         let flag = "blockUserIp";
 
         $.ajax({
-            url: `../admin/manageUser/${partnerID}/${userID}/${ulogID}/${flag}`,
+            url: `../admin/manageUser/${userID}/${ulogID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1329,7 +1329,7 @@ $(function () {
         const lotteryID = "all";
 
         $.ajax({
-            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1373,7 +1373,7 @@ $(function () {
 
     const fetchUserRel = (userID) => {
         $.ajax({
-            url: `../admin/manageUser/${partnerID}/${userID}/all/fetchUserRel`,
+            url: `../admin/manageUser/${userID}/all/fetchUserRel`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1457,7 +1457,7 @@ $(function () {
 
     async function fetchaccount(userid, currentPage, pageLimit) {
         try {
-            const response = await fetch(`../admin/useraccountchange/${partnerID}/${userid}/${currentPage}/${pageLimit}`);
+            const response = await fetch(`../admin/useraccountchange/${userid}/${currentPage}/${pageLimit}`);
             const data = await response.json();
 
             $("#maskaccount").LoadingOverlay("hide");
@@ -1581,7 +1581,7 @@ $(function () {
 
     async function filterAccountChange(userIdacc, ordertype, startdateusers, enddateusers, currentPage, pageLimit) {
         try {
-            const response = await fetch(`../admin/filterChangeAccount/${partnerID}/${userIdacc}/${ordertype}/${startdateusers}/${enddateusers}/${currentPage}/${pageLimit}`);
+            const response = await fetch(`../admin/filterChangeAccount/${userIdacc}/${ordertype}/${startdateusers}/${enddateusers}/${currentPage}/${pageLimit}`);
             const data = await response.json();
 
             ///// console.log(response);

@@ -59,7 +59,7 @@ $(function () {
     async function fetchfinance(page,pageLimit) {
       try {
         const response = await fetch(
-          `../admin/fetchfinance/${partnerID}/${page}/${pageLimit}`
+          `../admin/fetchfinance/${page}/${pageLimit}`
         );
         const data = await response.json();
     
@@ -133,7 +133,7 @@ $(function () {
 
     async function filterfinance(username, financetype, startfinance, endfinance, currentPage, pageLimit) {
       $.post(
-        `../admin/filterfinance/${partnerID}/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
+        `../admin/filterfinance/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
         function (response) {
           try {
             const data = JSON.parse(response);
@@ -236,7 +236,7 @@ $(function () {
     function fetchUserss(query) {
         let optionsHtml = '';
     
-        $.post(`../admin/Searchusername/${partnerID}/${encodeURIComponent(query)}`, function (response) {
+        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
             try {
                 response = typeof response === 'string' ? JSON.parse(response) : response;
 
@@ -290,7 +290,7 @@ $(function () {
       $("#addfinancemodal").modal("hide");  
       $(".userIdFields, .amount,.review,#financeinput").val(''); 
       $(".loaderfinanc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
-      $.post(`../admin/addmoney/${partnerID}/${depositype}/${usernames}/${amount}/${approvedby}/${review}`,
+      $.post(`../admin/addmoney/${depositype}/${usernames}/${amount}/${approvedby}/${review}`,
         function (response) {
           console.log(response)
           if (response) {
@@ -358,7 +358,7 @@ $(function () {
     function fetchUsers(query) {
         let optionsHtml = '';
     
-        $.post(`../admin/Searchusername/${partnerID}/${encodeURIComponent(query)}`, function (response) {
+        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
             try {
                 response = typeof response === 'string' ? JSON.parse(response) : response;
                 response.forEach(user => {

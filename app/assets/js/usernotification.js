@@ -1,6 +1,4 @@
 $(function () {
-
-    const partnerID = $("#partner-holder").attr("data-partner-id");
   function showToast(title, message, type) {
       $.toast({
           position: "bottom-right",
@@ -12,11 +10,10 @@ $(function () {
   }
   const usernotiData = (data) => {
      let html = ""
-     console.log(data);
       data.forEach((item) => {
         const readstatus = item.read_status === 'read' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Read</span>'  : '<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-warning">Unread</span>'
         let timezone = item.timezone.split(" ");
-        timezone = `${timezone}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
+        timezone = `${timezone}<span style="margin-left: 1rem;">UTC${timezone[1]}</span>`
         html += `
             <tr>
                 <td>${item.username}</td>
@@ -41,7 +38,7 @@ $(function () {
 
   async function fetchusernotification(page,pageLimit) {
       try {
-          const response = await fetch(`../admin/fetchusernotification/${partnerID}/${page}/${pageLimit}`);
+          const response = await fetch(`../admin/fetchusernotification/${page}/${pageLimit}`);
           const data = await response.json();
           //console.log(response);
           //  return
@@ -121,7 +118,7 @@ $(function () {
    })
 
    async function filterUserNotifys(username, messagestype, startnotfys, endnotfys, currentPage, pageLimit) {
-    $.post(`../admin/filteruserNotifys/${partnerID}/${username}/${messagestype}/${startnotfys}/${endnotfys}/${currentPage}/${pageLimit}`, 
+    $.post(`../admin/filteruserNotifys/${username}/${messagestype}/${startnotfys}/${endnotfys}/${currentPage}/${pageLimit}`, 
         function (response) {
         try {
         const data = JSON.parse(response);

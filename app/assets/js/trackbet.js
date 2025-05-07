@@ -142,7 +142,7 @@ $(function () {
 
     async function fetchtrackdata(page, pageLimit) {
         try {
-            const response = await fetch(`../admin/trackdata/${partnerID}/${page}/${pageLimit}`);
+            const response = await fetch(`../admin/trackdata/${page}/${pageLimit}`);
             const data = await response.json();
     
             $("#masktrack").LoadingOverlay("hide");
