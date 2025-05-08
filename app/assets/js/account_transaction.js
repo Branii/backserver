@@ -1,5 +1,6 @@
 
 $(function () {
+    
     const partnerID = $("#partner-holder").attr("data-partner-id");
 
 

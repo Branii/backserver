@@ -123,19 +123,19 @@ class adminController extends Controller {
 
     // side bar datas adminLogs
 
-    public function transactiondata($partnerID,$pageNumber,$limit){
-        $this->view('exec/businessflow',['partner_id' => $partnerID,'page'=>$pageNumber,'limit'=>$limit, 'flag' => 'transactiondata']);
+    public function transactiondata($pageNumber,$limit){
+        $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'transactiondata']);
         $this->view->render();
     }
 
-    public function gamebetdata($partnerID,$pageNumber,$limit){
-        $this->view('exec/businessflow',['partner_id' => $partnerID,'page'=>$pageNumber,'limit'=>$limit, 'flag' => 'gamebetdata']);
+    public function gamebetdata($pageNumber,$limit){
+        $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'gamebetdata']);
         $this->view->render();
     }
 
-    public function filterusername($partnerID,$username)
+    public function filterusername($username)
     {
-        $this->view('exec/businessflow', ['partner_id' => $partnerID,'username' => $username, 'flag' => 'filterusername']);
+        $this->view('exec/businessflow', ['username' => $username, 'flag' => 'filterusername']);
         $this->view->render();
     }
 
@@ -155,32 +155,32 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function getTransactionBet($partnerID,$transactionId){
-        $this->view('exec/businessflow',['partner_id' => $partnerID,'transactionId'=>$transactionId, 'flag' => 'getTransactionBet']);
+    public function getTransactionBet($transactionId){
+        $this->view('exec/businessflow',['transactionId'=>$transactionId, 'flag' => 'getTransactionBet']);
         $this->view->render();
     }
 
    //NOTE -
     //////////////LOTTERY BETS -//////////
 
-    public function lotterydata($partnerID,$pageNumber,$limit){
-        $this->view('exec/businessflow',['partern_id' => $partnerID,'page'=>$pageNumber,'limit'=>$limit, 'flag' => 'lotterydata']);
+    public function lotterydata($pageNumber,$limit){
+        $this->view('exec/businessflow',['page'=>$pageNumber,'limit'=>$limit, 'flag' => 'lotterydata']);
         $this->view->render();
     }
 
-    public function viewBetstake($partnerID,$becode){
-        $this->view('exec/businessflow',['partner_id' => $partnerID,'betcode'=>$becode,'flag' => 'viewBetstake']);
+    public function viewBetstake($becode){
+        $this->view('exec/businessflow',['betcode'=>$becode,'flag' => 'viewBetstake']);
         $this->view->render();
     }
 
-    public function fetchLotteryname($partnerID){
-        $this->view('exec/businessflow',['partner_id' => $partnerID,'flag' => 'fetchLotteryname']);
+    public function fetchLotteryname(){
+        $this->view('exec/businessflow',['flag' => 'fetchLotteryname']);
         $this->view->render();
     }
  
-    public function filterbetdata($partnerID,$uid,$betOrderID,$gametype,$betstate,$betstatus,$startdate,$enddate,$page,$limit){
+    public function filterbetdata($uid,$betOrderID,$gametype,$betstate,$betstatus,$startdate,$enddate,$page,$limit){
         $this->view('exec/businessflow',[
-        'partner_id' => $partnerID,
+        // 'partner_id' => $partnerID,
         'uid'=>$uid,
         'betOrderID' => $betOrderID,
         'gametype'=>$gametype,
@@ -194,8 +194,8 @@ class adminController extends Controller {
         $this->view->render();
     }
     
-    public function searchusername($partnerID,$username){
-        $this->view('exec/businessflow',['partner_id' => $partnerID,'username'=>$username,'flag' => 'searchusername']);
+    public function searchusername($username){
+        $this->view('exec/businessflow',['username'=>$username,'flag' => 'searchusername']);
         $this->view->render();
     }
     public function searchPlatformNames($partnerID,$platformName){
