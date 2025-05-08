@@ -69,7 +69,8 @@ $(function () {
           const betOddsArray = Object.values(betOddsObject);
           const betodds = betOddsArray * item.multiplier * item.unit_stake;
           let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-
+          let timezone = item.timezone.split(" ");
+          timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
           htmls += `
                   <tr>
                       <td>${item.bet_code}</td>
@@ -78,8 +79,8 @@ $(function () {
                       <td>${item.game_type}</td>
                       <td>${gamemodel[item.game_model]}</td>
                       <td>${item.game_label}</td>
-                      <td>${item.bet_date + " / " + item.bet_time}</td>
                       <td>${item.server_date + " / " + item.server_time}</td>
+                      <td>${timezone}</td>
                       <td>${item.unit_stake}</td>
                       <td>${item.multiplier}</td>
                       <td>${formatMoney(item.bet_amount)}</td>

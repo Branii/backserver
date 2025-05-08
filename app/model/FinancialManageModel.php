@@ -1,5 +1,5 @@
 <?php
-
+ date_default_timezone_set('Asia/Shanghai');
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     // Throw an Exception with the error message and details
     throw new \Exception("$errstr in $errfile on line $errline", $errno);
@@ -123,10 +123,6 @@ class FinancialManageModel extends MEDOOHelper
         //return  $amount;
         $trans_oderId = bin2hex(random_bytes(4));
         $depositid = $desposittype == 1 ? 'DEPO' . $trans_oderId : 'WITHD' . $trans_oderId;
-
-        // $usernames = $uid ?? [];
-
-        // foreach ($usernames as $username) {
         $Data = self::getUserDataByUsername($uid)[0];
 
         if ($desposittype == 1) {
@@ -142,9 +138,7 @@ class FinancialManageModel extends MEDOOHelper
             if ($amount > $Data['balance']) {
                 return "Insufficient balance";
                 exit();
-                //  continue; // Skip this iteration if balance is insufficient
             }
-
             // Subtract amount from balance for withdrawal
             $recharge_balance = (float) $Data['balance'] - (float) $amount;
         }
@@ -152,28 +146,27 @@ class FinancialManageModel extends MEDOOHelper
         $success = false; // Initialize a success fla
 
         if ($desposittype == 1) {
-            if (
-                self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance) &&
-                self::insertIntoDepositsNew($uid, $amount, $username) &&
-                self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
-            ) {
-                // Update user balance if all operations succeed
+            $depositSuccess = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance);
+            $newDepositSuccess = self::insertIntoDepositsNew($uid, $amount, $username);
+            $transactionSuccess = self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data);
+        
+            if ($depositSuccess && $newDepositSuccess && $transactionSuccess) {
                 self::updateBalance($uid, $recharge_balance);
                 $success = true;
             }
+        
         } elseif ($desposittype == 4) {
-            if (
-                self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance) &&
-                self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data) &&
-                self::insertIntoWithrawManage($uid, $amount, $username)
-            ) {
-                // Update user balance if all operations succeed
+            $depositSuccess = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance);
+            $transactionSuccess = self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data);
+            $withdrawManageSuccess = self::insertIntoWithdrawManage($uid, $amount, $username);
+        
+            if ($depositSuccess && $transactionSuccess && $withdrawManageSuccess) {
                 self::updateBalance($uid, $recharge_balance);
                 $success = true;
             }
         }
 
-        return $success ? "transaction success" : "transaction failed";
+        return $success ? "transaction failed" : "transaction success";
     }
 
     public static function insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance)
@@ -217,7 +210,7 @@ class FinancialManageModel extends MEDOOHelper
         return $inserdata = parent::insert("deposit_new", $params);
     }
 
-    public static function insertIntoWithrawManage($uid, $amount, $username)
+    public static function insertIntoWithdrawManage($uid, $amount, $username)
     {
         $manualusername = "Enzerhub";
         $manualemail = "enzerhub@gmail.com";

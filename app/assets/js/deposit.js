@@ -35,8 +35,6 @@ $(function () {
       data.forEach((item) => {
         let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
 
-         
-        
           html += `
                       <tr>
                           <td>${item.payment_reference}</td>

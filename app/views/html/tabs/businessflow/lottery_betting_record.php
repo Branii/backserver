@@ -72,6 +72,33 @@
         cursor: pointer;
     }
 
+    .queryholderbet {
+        width: 19%;
+        margin-right: 5px;
+        background-color: #fff;
+    }
+
+
+    .optionlist:hover {
+        background-color: #eee;
+    }
+
+   
+    .no-resultslist {
+        text-align: center;
+        /* Center horizontally */
+        vertical-align: middle;
+        /* Center vertically */
+        height: 20px;
+        /* Set a minimum height to ensure centering */
+        border: none;
+    }
+
+    .no-resultslist img {
+        position: relative;
+        top: 100px;
+    }
+    
     .table-wrapperlottery {
         overflow: hidden;
         /* Hide the default scrollbar */
@@ -86,57 +113,6 @@
         background: rgb(38, 57, 77) 0px 20px 30px -10px;
         /* Ensure it doesn't interfere with content */
         z-index: 10;
-    }
-
-    .queryholderbet {
-        width: 19%;
-        margin-right: 5px;
-        background-color: #fff;
-    }
-
-    .queryholderxx {
-        width: 19%;
-        position: absolute;
-        background-color: #fff;
-        color: #aaa;
-        max-height: 300px;
-        overflow-y: scroll;
-        border-radius: 5px;
-        padding: 10px;
-        top: 90%;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-        display: none;
-    }
-
-    .queryholderxx.optionlist {
-        text-align: left;
-        border-bottom: solid 1px #eee;
-        padding: 5px;
-    }
-
-    .optionlist:hover {
-        background-color: #eee;
-    }
-
-    #userDropdownlist {
-        max-height: 300px;
-        overflow-y: scroll;
-        overflow-x: hidden;
-    }
-
-    .no-resultslist {
-        text-align: center;
-        /* Center horizontally */
-        vertical-align: middle;
-        /* Center vertically */
-        height: 20px;
-        /* Set a minimum height to ensure centering */
-        border: none;
-    }
-
-    .no-resultslist img {
-        position: relative;
-        top: 100px;
     }
 
     /* Custom Scrollbar for Webkit Browsers */
@@ -216,7 +192,7 @@
     }
 
     .userDropdownb {
-        width: 16%;
+        width: 12%;
         position: absolute;
         background-color: #fff;
         color: #aaa;
@@ -341,17 +317,13 @@
                     <select class="form-control userDropdownb" size="5" style="display: none;" id="userlotteryDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>
-                    <div class="custom-dropdown">
-                        <select name="lotteryname" class="form-control form-select queryholderbet typelottery selectlottery" data-bs-placeholder="Select Type"> 
+            
+                        <select name="lotteryname" class="form-control form-select custom-dropdown queryholderbet typelottery selectlottery" data-bs-placeholder="Select Type"> 
 
                         </select>
-                    </div>
 
                     <select name="betsate" class="form-control form-select queryholderbet betsate" data-bs-placeholder="Select Type">
-                        <option value="">
-                            -<?= $translator['State']; ?>
-                            -
-                        </option>
+                        <option value=""> -<?= $translator['State']; ?>-</option>
                         <option value="1"> <?= $translator['Settled']; ?></option>
                         <option value="2"><?= $translator['Unsettled']; ?></option>
                         <option value="4"> <?= $translator['Cancelled Bet']; ?></option>

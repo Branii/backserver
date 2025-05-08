@@ -31,17 +31,18 @@ $(function () {
 
           let types = item.deposit_withdrawal_type == 1 ? 'Deposit':item.deposit_withdrawal_type == 4 ? 'Withdrawal' : '';
           let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
-
+          let timezone = item.timezone.split(" ");
+            timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>` 
          html += `
               <tr>
               <td>${username}</td>
               <td>VIP</td>
-              <td class="editables">${types}</td>
-              <td class="editables">${formatMoney(total_income)}</td>
-              <td class="editables">${formatMoney(item.recharge_balance_in_advance)}</td>
-              <td class="editables">${item.date_created +' / '+item.deposit_and_withdrawal_time}</td>
-              <td class="editables">${item.date_created +' / '+item.deposit_and_withdrawal_time}</td>
-              <td class="editables">${item.remark.charAt(0).toUpperCase() + item.remark.slice(1)}</td>             
+              <td>${types}</td>
+              <td>${formatMoney(total_income)}</td>
+              <td>${formatMoney(item.recharge_balance_in_advance)}</td>
+              <td>${item.date_created +' / '+item.deposit_and_withdrawal_time}</td>
+              <td>${timezone}</td>
+              <td>${item.remark.charAt(0).toUpperCase() + item.remark.slice(1)}</td>             
               </tr>
                   `;
          });
@@ -57,66 +58,58 @@ $(function () {
     let pageLimit = 20;
   
     async function fetchfinance(page,pageLimit) {
-      try {
-        const response = await fetch(
-          `../admin/fetchfinance/${page}/${pageLimit}`
-        );
+      try { const response = await fetch( `../admin/fetchfinance/${page}/${pageLimit}`);
         const data = await response.json();
-    
         $("#maskfinance").LoadingOverlay("hide");
         renderfinace(data.finance);
         renderfinacePagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchfinance(newPage, pageLimit));
         document.getElementById("paging_infofinance").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
-    
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
   
     fetchfinance(currentPage,pageLimit);
-  
-
     function renderfinacePagination(totalPages, currentPage, pageLimit, callback) {
-      const createPageLink = (i, label = i, disabled = false, active = false) =>
-          `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
-        <a class='page-link' href='#' data-page='${i}'>${label}</a>
-    </li>`;
-      let pagLink = `<ul class='pagination justify-content-end'>`;
+        const createPageLink = (i, label = i, disabled = false, active = false) =>
+            `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+          <a class='page-link' href='#' data-page='${i}'>${label}</a>
+      </li>`;
+        let pagLink = `<ul class='pagination justify-content-end'>`;
 
-      // Previous Button
-      pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
+        // Previous Button
+        pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
 
-      // Page numbers with ellipsis
-      for (let i = 1; i <= totalPages; i++) {
-          if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
-              pagLink += createPageLink(i, i, false, i === currentPage);
-          } else if (i === currentPage - 3 || i === currentPage + 3) {
-              pagLink += createPageLink(i, "...", true);
-          }
-      }
+        // Page numbers with ellipsis
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+                pagLink += createPageLink(i, i, false, i === currentPage);
+            } else if (i === currentPage - 3 || i === currentPage + 3) {
+                pagLink += createPageLink(i, "...", true);
+            }
+        }
 
-      // Next Button
-      pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
-      pagLink += "</ul>";
+        // Next Button
+        pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
+        pagLink += "</ul>";
 
-      document.getElementById("paginationfiance").innerHTML = pagLink;
+        document.getElementById("paginationfiance").innerHTML = pagLink;
 
-      // Add click event listeners
-      document.querySelectorAll("#paginationfiance .page-link").forEach((link) => {
-          link.addEventListener("click", function (e) {
-              e.preventDefault();
-              const newPage = +this.getAttribute("data-page");
-              if (newPage > 0 && newPage <= totalPages) {
-                  $("#maskfinance").LoadingOverlay("show", {
-                      background: "rgb(90,106,133,0.1)",
-                      size: 3,
-                  });
-                  callback(newPage, pageLimit); // Call the provided callback with new page and pageLimit
-              }
-          });
-      });
-  }
-
+        // Add click event listeners
+        document.querySelectorAll("#paginationfiance .page-link").forEach((link) => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const newPage = +this.getAttribute("data-page");
+                if (newPage > 0 && newPage <= totalPages) {
+                    $("#maskfinance").LoadingOverlay("show", {
+                        background: "rgb(90,106,133,0.1)",
+                        size: 3,
+                    });
+                    callback(newPage, pageLimit); // Call the provided callback with new page and pageLimit
+                }
+            });
+        });
+    }
     
     $(".refreshfiance").click(function () {
       $(".queryholderlistt").val("");
@@ -127,10 +120,7 @@ $(function () {
       fetchfinance(currentPage,pageLimit)
     });
   
-  
-  
     //search function
-
     async function filterfinance(username, financetype, startfinance, endfinance, currentPage, pageLimit) {
       $.post(
         `../admin/filterfinance/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
@@ -178,14 +168,9 @@ $(function () {
       const financetype = $(".financetype").val();
       const username = $("#financeDropdown").val();
       const startfinance = $(".startfinances").val();
-      const endfinance = $(".endfinances").val();
-       //console.log(endfinance)
-      // return
-   
+      const endfinance = $(".endfinances").val(); 
      filterfinance(username,financetype,startfinance,endfinance,currentPage,pageLimit)
-      // Show loader
       $(".loaderfinance").removeClass('bx-check-double').addClass('bx-loader bx-spin');
-  
     });
   
 
@@ -274,7 +259,6 @@ $(function () {
         });
     }
     
-
     //add money
     $(document).on("click", ".addmoneybtn", function () {
       // const deposity = $("#financeinput").val()
@@ -303,8 +287,7 @@ $(function () {
         }
       );
     });
-    
-
+  
 
     //modal 
     
@@ -401,7 +384,6 @@ $(function () {
       fetchfinance(currentPage,numrows)
      });
 
-
     function tableScrollFinance() {
       const tableContainerFinance= document.querySelector(".table-wrapperfinance");
       const headerRowFinance= document.querySelector(".financeheadrow");
@@ -413,8 +395,8 @@ $(function () {
               headerRowFinance.classList.remove("sticky-financehead");
           }
       });
-   }
-   tableScrollFinance();
+    }
+    tableScrollFinance();
 
    
   });
