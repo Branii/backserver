@@ -123,7 +123,7 @@ $(function () {
     //search function
     async function filterfinance(username, financetype, startfinance, endfinance, currentPage, pageLimit) {
       $.post(
-        `../admin/filterfinance/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
+        `../admin/filterfinance/${partnerID}/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
         function (response) {
           try {
             const data = JSON.parse(response);

@@ -147,7 +147,7 @@ $(function () {
 
     async function fetchtrackdata(page, pageLimit) {
         try {
-            const response = await fetch(`../admin/trackdata/${page}/${pageLimit}`);
+            const response = await fetch(`../admin/trackdata/${partnerID}/${page}/${pageLimit}`);
             const data = await response.json();
     
             $("#masktrack").LoadingOverlay("hide");
@@ -162,7 +162,7 @@ $(function () {
 
     async function filterTrack(usernames, trackstatus, trackcode, tracklotery, startdatetrack, enddatetrack, currentPagetrack, pageLimit) {
         try {
-            const response = await fetch(`../admin/filterTrackdata/${usernames}/${trackstatus}/${trackcode}/${tracklotery}/${startdatetrack}/${enddatetrack}/${currentPagetrack}/${pageLimit}`);
+            const response = await fetch(`../admin/filterTrackdata/${partnerID}/${usernames}/${trackstatus}/${trackcode}/${tracklotery}/${startdatetrack}/${enddatetrack}/${currentPagetrack}/${pageLimit}`);
 
             const data = await response.json();
             if (data.response == "error") {

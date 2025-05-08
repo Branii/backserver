@@ -34,7 +34,10 @@ $(function () {
         let html = "";
        
          data.forEach((item) => {
-         const bankstatus = item.bank_status === 'active' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Active</span>'  :item.bank_status=="inactive" ? '<span class="badge fw-semibold py-1 w-85 bg-info-subtle text-warning">Inactive</span>':'<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-warning">Hidden</span>'
+         const bankstatus = item.status === 'active' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Active</span>'  :item.status=="inactive" ? '<span class="badge fw-semibold py-1 w-85 bg-info-subtle text-warning">Inactive</span>':'<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-warning">Hidden</span>'
+
+         let timezone = item.timezone.split(" ");
+         timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
          
           html += `
                       <tr>
@@ -79,14 +82,34 @@ $(function () {
     
     async function fetchPaymentPlatform(page,pageLimit) {
       try {
-        const response = await fetch( `../admin/fetchPaymentPlatform/${page}/${pageLimit}`
+
+        const curency_types = $("#platformStatuss").val();
+        const status = $("#platformStatuse").val()
+        const startdate = $("#platformStartDates").val();
+        const endDate = $("#platformEndDates").val();
+        let response = await fetch( `../admin/fetchPaymentPlatform/${partnerID}/${curency_types}/${status}/${startdate}/${endDate}/${page}/${pageLimit}`
         );
-        const data = await response.json();
-      //  console.log(data);
-        //return
+        response = (await response.json());
+        const data = response.data;
+        
+        if(response.status == "error"){
+          showToast("Error", data, "error");
+          return;
+        }
+
+        if(data.length < 1){
+
+          $("#paymentContainer").html(`<tr class="no-resultslist">
+                        <td colspan="9">
+                            <img src="/admin/app/assets/images/notfound.png" class="dark-logo" alt="Logo-Dark">
+                        </td>
+                    </tr>`)
+          return;
+        }
         $("#maskpayment").LoadingOverlay("hide");
-        renderpayment(data.payment);
-        renderpaymentPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchPaymentPlatform(newPage, pageLimit));
+        renderpayment(data);
+        const totalPages = (data[0].total_pages / 20);
+        renderpaymentPagination(totalPages, page, pageLimit, (newPage, pageLimit) => fetchPaymentPlatform(newPage, pageLimit));
         document.getElementById("paging_infopayment").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
     
       } catch (error) {
@@ -139,14 +162,13 @@ $(function () {
   
   async function filterpayment(curencytypes,stautspayment,startdepay,enddepay,currentPage,pageLimit) {
     try {
-        const response = await fetch(`../admin/filterpayments/${curencytypes}/${stautspayment}/${startdepay}/${enddepay}/${currentPage}/${pageLimit}`);
-
-        const data = await response.json();
+        let  response = await fetch(`../admin/filterpayments/${partnerID}/${curencytypes}/${stautspayment}/${startdepay}/${enddepay}/${currentPage}/${pageLimit}`);
+        response =  await response.json();
+        const data = response.data ;
         console.log(data);
-       // return
 
         $(".loaderpay").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-        if (data.payments.length < 1) {
+        if (data.length < 1) {
             let html = `
         <tr class="no-results">
             <td colspan="9">
@@ -158,8 +180,9 @@ $(function () {
             return;
         }
         $("#maskpayment").LoadingOverlay("hide");
-        renderpayment(data.payments);
-        renderpaymentPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterpayment(username,stautspayment,startdepay,enddepay,newPage,pageLimit));
+        renderpayment(data);
+        const totalPages  = Math.ceil(data[0].total_records / 20)
+        renderpaymentPagination(totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterpayment(username,stautspayment,startdepay,enddepay,newPage,pageLimit));
         document.getElementById("paging_infopayment").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
     } catch (error) {
         console.error("Error fetching data:", error);

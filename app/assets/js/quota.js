@@ -40,7 +40,7 @@ $(function () {
 
   async function fetchquota(pagequota) {
       try {
-          const response = await fetch(`../admin/fetchquota/${pagequota}/${pageLimit}`);
+          const response = await fetch(`../admin/fetchquota/${partnerID}/${pagequota}/${pageLimit}`);
           const data = await response.json();
           $("#maskquota").LoadingOverlay("hide");
           renderquota(data.quota); 

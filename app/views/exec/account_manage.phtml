@@ -215,14 +215,14 @@ if ($flag == "filterUserlogs") {
     if (!empty($usernameCheck) && $usernameCheck != null) {
         $usernamelog = $usernameCheck[0]['uid'];
         $sunquery = (new UserManageModel())->FilterUserlogsDataSubQuery($usernamelog, $startdate, $enddate);
-        $result = (new UserManageModel())->Filteruserlogs($sunquery, $page, $limit) ?? [];
+        $result = (new UserManageModel())->Filteruserlogs($page, $limit, $username, $startdate, $enddate) ?? [];
         echo json_encode([
             'userloggs' => $result['data'],
             'totalPages' => ceil($result['total'] / $limit),
         ]);
     } else {
         $sunquery = (new UserManageModel())->FilterUserlogsDataSubQuery($username, $startdate, $enddate);
-        $result = (new UserManageModel())->Filteruserlogs($sunquery, $page, $limit) ?? [];
+        $result = (new UserManageModel())->Filteruserlogs($page, $limit, $username, $startdate, $enddate) ?? [];
         echo json_encode([
             'userloggs' => $result['data'],
             'totalPages' => ceil($result['total'] / $limit),

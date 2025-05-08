@@ -407,10 +407,9 @@ class FinancialManageModel extends MEDOOHelper
         try {
             $startpoint = ($page - 1) * $limit;
             $table_name = "withdrawal_manage";
-            $db = parent::openLink($partnerID);
+            $db = parent::openLink();
             // $data = parent::query("SELECT *,(SELECT COUNT(*) FROM {$table_name}) AS total_records FROM withdrawal_manage ORDER BY withdrawalid DESC LIMIT :offset, :limit", ['offset' => $startpoint, 'limit' => $limit]);
-            $stmt = $db->query("SELECT *,(SELECT COUNT(*) FROM {$table_name}) AS total_records FROM withdrawal_manage ORDER BY withdrawalid DESC LIMIT :offset, :limit", ['offset' => $startpoint, 'limit' => $limit]);
-
+            $stmt = $db->query("SELECT *,(SELECT COUNT(*) FROM {$table_name}) AS total_records FROM withdrawal_manage ORDER BY withdrawalid DESC LIMIT :offset, :limit", [':offset' => $startpoint, ':limit' => $limit]);
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return ["status" => "success", 'data' => $data];
         } catch (Exception $e) {
@@ -421,14 +420,12 @@ class FinancialManageModel extends MEDOOHelper
         // return ['data' => $data, 'total' => $totalRecords];
     }
 
-    // Muniru
-
     public static function filterWidrlRecords($partnerID,$userData, $page = 1, $limit = 10): array
     {
         try {
             $offset = ($page - 1) * $limit;
             $table_name = "withdrawal_manage";
-            $db = parent::openLink($partnerID);
+            $db = parent::openLink();
 
             $where_clause = "";
             $params = ['offset' => (int) $offset, 'limit' => (int) $limit];

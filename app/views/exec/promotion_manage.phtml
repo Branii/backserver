@@ -27,7 +27,7 @@ if($flag  == "filterUserlinks"){
     $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
 
     $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
-    $username = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : $uid;
+    $username = !empty($usernameCheck) ? $usernameCheck['uid'] : $uid;
     $subquery =   (new PromotionManageModel())->FilterUserlinksDataSubQuery($username, $startdate, $enddate) ;
     $result = (new PromotionManageModel())->FilterUserlinks($subquery,$page, $limit) ?? [];
  

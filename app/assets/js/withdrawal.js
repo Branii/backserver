@@ -28,6 +28,8 @@ $(function () {
       const status = { 1: "Pending", 2: "Success", 3: "Failed" };
       const withdrawal_channel = { 3: "Momo", 5: "Crypto", 2: "Bank", 4: "Manual" }; // 3:momo 5:crypto 2:bank 4:manual
       
+
+
       data.forEach((item) => {
         let timezone = item.withdrawal_timezone.split(" ");
         timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
@@ -71,10 +73,11 @@ $(function () {
               return;
           }
 
+          console.log(response);
           const data = response.data;
           $("#maskwithdraw").LoadingOverlay("hide");
           renderwithdraw(data);
-          const totalPages = Math.ceil(data[0].total_records / 10);
+          const totalPages = Math.ceil(data[0].total_records / 20);
           // Render pagination
           renderwithdrawPagination(totalPages, 1);
       } catch (error) {
@@ -272,9 +275,9 @@ $(function () {
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
           },
           success: function (response) {
-            //   console.log(response);
+              console.log(response);
               response = JSON.parse(response);
-              //console.log(response);
+              console.log(response);
 
               if (response.status === "error") {
                   $("#withdrawContainer").html(`<tr class="no-resultslist"><td colspan="15">Error: ${response.data}</td></tr>`);

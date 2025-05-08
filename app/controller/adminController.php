@@ -86,8 +86,8 @@ class adminController extends Controller {
 
         $this->view('exec/game_management',[
         'partner_id' => $partnerID,
-        'page'=>$pageNumber,
-        'limit'=>$limit, 
+        'page'=>  $pageNumber,
+        'limit'=> $limit, 
         'flag'=> 'getDraws',
         'status' => $status,
         'gameId'=>$gameId,
@@ -400,9 +400,9 @@ class adminController extends Controller {
     }
 
 
-    public function  searchPartners($partnerID,$partnerName,$state,$startDate,$endDate,$page,$limit)
+    public function  searchPartners($partnerName,$state,$startDate,$endDate,$page,$limit)
     { 
-        $this->view('exec/partners', ['partner_id' => $partnerID,"partnerName"=> $partnerName,"state" => $state,"startDate" => $startDate,"endDate" => $endDate,"page" => $page, "limit" => $limit,'flag' => 'searchPartners']);
+        $this->view('exec/partners', ["partnerName"=> $partnerName,"state" => $state,"startDate" => $startDate,"endDate" => $endDate,"page" => $page, "limit" => $limit,'flag' => 'searchPartners']);
         $this->view->render();
     }
     public function  addNewPaymentPlaftorm($partnerID,$paymentType,$paymentTypeName,$currency,$status,$fee,$maxAmount,$minAmount,$siteUrl,$adminSiteUrl,$info,$priority,$countries)
@@ -642,9 +642,8 @@ class adminController extends Controller {
     }
    
     
-     //NOTE -
+     // NOTE -
     //////////////Withdrawal Records -//////////
-    // 
     public function fetchwithdraw($partnerID,$pageNumber, $limit)
     {
         $this->view('exec/financial_manage', ['partner_id' => $partnerID,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchwithdraw']);
@@ -652,9 +651,8 @@ class adminController extends Controller {
     }
 
 
-     //NOTE -
-    //////////////Bank Cardlist Records -//////////
-    // 
+     // NOTE -
+    ////////////// Bank Cardlist Records - //////////
     public function   fetchbankcard($partnerID,$uid,$bank_type,$card_number,$status,$pageNumber, $limit,$miscelleanous)
     {
 
