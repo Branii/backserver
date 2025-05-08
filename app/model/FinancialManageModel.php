@@ -305,7 +305,7 @@ class FinancialManageModel extends MEDOOHelper
     {
         $startpoint = $page * $limit - $limit;
         $data = parent::query(
-            "SELECT deposit_new.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.username, 'N/A') AS username 
+            "SELECT deposit_new.*,users_test.email,users_test.contact,users_test.reg_type,users_test.username
              FROM deposit_new
              LEFT JOIN users_test ON users_test.uid = deposit_new.user_id
              ORDER BY deposit_new.deposit_id DESC 
@@ -314,7 +314,6 @@ class FinancialManageModel extends MEDOOHelper
         );
 
         $totalRecords = parent::count('deposit_new');
-        // $trasationIds = array_column($data, 'order_id');
         return ['data' => $data, 'total' => $totalRecords];
     }
 

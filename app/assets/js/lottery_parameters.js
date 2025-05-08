@@ -78,7 +78,7 @@ $(function () {
 
     async function getAllGamesLottery() {
         try {
-            const response = await fetch(`../admin/getAllGamesLottery/${partnerID}`);
+            const response = await fetch(`../admin/getAllGamesLottery`);
             const data = await response.json();
             //  console.log(data);
             let html = "";

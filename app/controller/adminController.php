@@ -681,8 +681,8 @@ class adminController extends Controller {
    //NOTE -
     //////////////lottery bounus Parameter -//////////
     // 
-    public function fetchgames($partnerID){
-        $this->view('exec/game_manage',['parter_id' => $partnerID,'flag' => 'fetchgames']);
+    public function fetchgames(){
+        $this->view('exec/game_manage',['flag' => 'fetchgames']);
         $this->view->render();
     }
 
@@ -691,14 +691,14 @@ class adminController extends Controller {
     //     $this->view->render();
     // }
 
-    public function getAllGamesLottery($partnerID){
-        $this->view('exec/game_management',['partner_id' => $partnerID,'flag' => 'getAllGamesLottery']);
+    public function getAllGamesLottery(){
+        $this->view('exec/game_management',['flag' => 'getAllGamesLottery']);
         $this->view->render();
     }
 
-    public function getLotteryGames($partnerID,string $lotterId, string $tables){
+    public function getLotteryGames(string $lotterId, string $tables){
         $this->view('exec/game_management',[
-            'partner_id' => $partnerID,
+         
             'flag' => 'getLotteryGames',
             'gameId' => $lotterId,
             'tables' => $tables
@@ -706,9 +706,8 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-      function updateoddstotalbets($partnerID,$lotterId,$gamemodel,$oddpercent,$newodds,$totalbetpercent,$newtotalbet){
+      function updateoddstotalbets($lotterId,$gamemodel,$oddpercent,$newodds,$totalbetpercent,$newtotalbet){
         $this->view('exec/game_management',[
-            'partner_id' => $partnerID,
             'flag' => 'updateoddstotalbets',
             'gameId' => $lotterId,
             'models' =>$gamemodel,
@@ -722,9 +721,9 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    function resettotalbet($partnerID,$lotterId,$gamemodel,$totalbetpercent,$newtotalbet){
+    function resettotalbet($lotterId,$gamemodel,$totalbetpercent,$newtotalbet){
         $this->view('exec/game_management',[
-            'partner_id' => $partnerID,
+       
             'flag' => 'resettotalbet',
             'gameId' => $lotterId,
             'models' =>$gamemodel,
@@ -734,9 +733,8 @@ class adminController extends Controller {
         $this->view->render();
     }
     
-    function updategamestatus($partnerID,$lotterId,$gamemodel,$gametate){
+    function updategamestatus($lotterId,$gamemodel,$gametate){
         $this->view('exec/game_management',[
-            'partner_id' => $partnerID,
             'flag' => 'updategamestatus',
             'gameId' => $lotterId,
             'models' =>$gamemodel,

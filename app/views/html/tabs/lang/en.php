@@ -48,6 +48,7 @@ return [
 'Transaction Time' =>'Transaction Time',
 'Time Zone/Hrs' =>'Time Zone/Hrs',
 'Track Time' =>'Track Time',
+'Referral Time'=>'Referral Time',
 
 //'Withdrawal Review' => 'Withdrawal Review',
 'Withdrawal Review' => 'Withdrawal Review',

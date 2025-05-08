@@ -34,7 +34,8 @@ $(function () {
        
       data.forEach((item) => {
         let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
-
+        let timezone = item.timezone.split(" ");
+        timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>` 
           html += `
                       <tr>
                           <td>${item.payment_reference}</td>
@@ -45,6 +46,7 @@ $(function () {
                           <td>${formatMoney(item.charges)}</td>
                           <td>${formatMoney(item.amount_recieved)}</td>
                           <td>${item.date_created == undefined ? "" : item.date_created.replace(" ", " / ")}</td>
+                          <td>${timezone}</td>
                           <td>${item.provider ? item.provider: "N/A"}</td>
                           <td>${item.user_mobile}</td>
                           <td>${item.status.charAt(0).toUpperCase() + item.status.slice(1)}</td>

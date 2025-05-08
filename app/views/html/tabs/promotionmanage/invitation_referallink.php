@@ -94,19 +94,6 @@
         background-color: #FFF;
     }
 
-    .queryholderlinkss {
-        width:  33%;
-        position: absolute;
-        background-color: #fff;
-        color: #aaa;
-        max-height: 300px;
-        overflow-y: scroll;
-        border-radius: 5px;
-        padding: 10px;
-        top: 90%;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-        display: none;
-    }
 
     .optionlist {
         text-align: left;
@@ -118,11 +105,6 @@
         background-color: #eee;
     }
 
-    #userDropdownlist {
-        max-height: 300px;
-        overflow-y: scroll;
-        overflow-x: hidden;
-    }
 
     .no-resultslist {
         text-align: center;
@@ -167,7 +149,7 @@
     }
 
     .linkDropdown {
-        width: 32%;
+        width: 24%;
         position: absolute;
         background-color: #fff;
         color: #aaa;
@@ -176,7 +158,7 @@
         border-radius: 5px;
         padding: 10px;
         top: 90%;
-        z-index: 9999;
+        z-index: 99;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         display: none;
     }
@@ -228,7 +210,7 @@
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:120%;">
 
               <input type="text" id="linkinput" class="form-control queryholderlogss " placeholder="<?= $translator['Search usernames']; ?>" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
@@ -289,7 +271,7 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Number of Registrations']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Creation Time']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Referral Time']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
