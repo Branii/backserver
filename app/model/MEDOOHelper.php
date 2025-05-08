@@ -29,8 +29,8 @@ class MEDOOHelper extends MedooOrm{
         return $req;
     }
 
-    public static function insert($partnerID,$table,$data) {
-        parent::openLink($partnerID)->insert($table, $data);
+    public static function insert($table,$data) {
+        parent::openLink()->insert($table, $data);
         return parent::openLink()->id();
     }
     
