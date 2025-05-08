@@ -900,6 +900,7 @@ class adminController extends Controller {
                 $this->view->render();
         }
 
+        // stash change.
         public function filterpayments($partnerID,$curencytypes,$stautspayment,$startdepo,$enddepo,$page,$pageLimit)
         {
                 $this->view('exec/payment_platform', [
