@@ -32,7 +32,7 @@ $(() =>{
 
       data = JSON.stringify(data);
       $.ajax({
-        url: `../admin/updateGameGroupData/${partnerID}/${data}`,
+        url: `../admin/updateGameGroupData/${data}`,
         type: "GET",
         beforeSend: function () {
             // $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -223,7 +223,7 @@ $(() =>{
       const gameID = $(this).attr("id").split("-")[2];
       const element = this;
       $.ajax({ 
-          url: `../admin/toggleTwosidesLotteryState/${partnerID}/${gameID}`,
+          url: `../admin/toggleTwosidesLotteryState/${gameID}`,
           type: "POST",
           beforeSend: function () {
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

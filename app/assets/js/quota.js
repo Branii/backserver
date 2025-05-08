@@ -40,7 +40,7 @@ $(function () {
 
   async function fetchquota(pagequota) {
       try {
-          const response = await fetch(`../admin/fetchquota/${partnerID}/${pagequota}/${pageLimit}`);
+          const response = await fetch(`../admin/fetchquota/${pagequota}/${pageLimit}`);
           const data = await response.json();
           $("#maskquota").LoadingOverlay("hide");
           renderquota(data.quota); 
@@ -88,7 +88,7 @@ $(function () {
 
   async function EditSingleQuota(rebatid, quota) {
       try {
-          const response = await fetch(`../admin/updatequota/${partnerID}/${rebatid}/${quota}`);
+          const response = await fetch(`../admin/updatequota/${rebatid}/${quota}`);
           if (response) {
               showToast("Success", "quota updated successfully", "success");
           }
@@ -104,7 +104,7 @@ $(function () {
   $(document).on("click", "#btn-setallquota", function () {
       const quotaval = $("#c-quota").val();
       try {
-          $.post(`../admin/UpdateAllquota/${partnerID}/${quotaval}`, function (response) {
+          $.post(`../admin/UpdateAllquota/${quotaval}`, function (response) {
               if (response) {
                   showToast("Success", "quota updated successfully", "success");
 
@@ -135,7 +135,7 @@ $(function () {
 
       // If valid number, make the API call
       try {
-          $.post(`../admin/filterRebate/${partnerID}/${datarebate}`, function (response) {
+          $.post(`../admin/filterRebate/${datarebate}`, function (response) {
               const data = JSON.parse(response);
               renderquota(data.filterquota);
           });
