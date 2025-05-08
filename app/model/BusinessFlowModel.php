@@ -7,7 +7,7 @@ class BusinessFlowModel extends MEDOOHelper
       $startpoint = $page * $limit - $limit;
       $data = parent::query(
          "SELECT transaction.trans_id,transaction.account_change,transaction.balance,transaction.dateTime,
-            transaction.game_type,transaction.order_id,transaction.order_type,transaction.date_created,
+            transaction.game_type,transaction.order_id,transaction.order_type,transaction.date_created,transaction.timezone,
             users_test.email,users_test.contact,users_test.reg_type,users_test.username,partners_v1.name 
          FROM transaction INNER JOIN partners_v1 ON partners_v1.partner_id = transaction.partner_uid
           INNER JOIN users_test ON users_test.uid = transaction.uid ORDER BY transaction.trans_id DESC LIMIT :offset, :limit",
