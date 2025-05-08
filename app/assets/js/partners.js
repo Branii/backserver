@@ -1,6 +1,33 @@
+let partnersObjs = {};
+let validLotteries = [];
+let currentPage = 1;
+let pageLimit  = 20;
 $(() =>{
+    
+    
+    
+    const partnerID = $("#partner-holder").attr("data-partner-id");
 
 
+    $(document).on("click",".dropdown-edit-partners",function(){
+        const partnerID = $(this).attr("id").split("-")[2];
+        partnerObj = partnersObjs[partnerID];
+        $("#data-holder").attr("data-row-id",partnerID);
+        $("#ptns-partner-id").val(partnerObj.partner_id);
+        $("#ptns-partner-name-edit").val(partnerObj.name);
+        $("#ptns-site-url-edit").val(partnerObj.site_url);
+        $("#ptns-admin-site-url-edit").val(partnerObj.admin_site_url);
+        $("#ptns-client-min-age").val(partnerObj.client_min_age);
+        $("#ptns-verification-type-edit").val(partnerObj.verification_type);
+        $("#ptns-unused-withdrawal-amount").val(partnerObj.unused_withdrawal_amount);
+        $("#ptns-priority-edit").val(partnerObj.priority);
+        $("#ptns-state-edit").val(partnerObj.state);
+        $("#ptns-currency-edit").val(partnerObj.currency);
+        $("#ptns-creation-time-edit").val(partnerObj.date_created);
+        $("#ptns-created-by-edit").val(partnerObj.created_by);
+        $("#ptns-last-update-edit").val(partnerObj.last_update);
+        $("#ptns-update-by-edit").val(partnerObj.last_update_by);
+    });
 
     $(document).on("click","#ptns-addPartnerBtn",function(){
 
@@ -25,6 +52,208 @@ $(() =>{
         });
       }  
 
+
+
+      $(document).on("click","#editPartnerMainInfoBtn",function(){
+        editPartnerMainInfo();
+      });
+
+      const editPartnerMainInfo = () => {
+        const partnerID              = $("#data-holder").attr("data-row-id");
+        const partnerName            = $("#ptns-partner-name-edit").val();
+        const siteUrl                = $("#ptns-site-url-edit").val();
+        const adminSiteUrl           =  $("#ptns-admin-site-url-edit").val();
+        const clientMinAge           =  $("#ptns-client-min-age").val();
+        const verificationType       = $("#ptns-verification-type-edit").val();
+        const unusedWithdrawalAmount =  $("#ptns-unused-withdrawal-amount").val();
+        const priority               =  $("#ptns-priority-edit").val();
+        const state                  =  $("#ptns-state-edit").val();
+        const currency               =  $("#ptns-currency-edit").val();
+     
+     
+        $.post(`../admin/editPartnerMainInfo/${partnerID}/${partnerName}/${siteUrl}/${adminSiteUrl}/${clientMinAge}/${verificationType}/${unusedWithdrawalAmount}/${priority}/${state}/${currency}`, function (response) {
+            try {
+     
+                response = typeof response === 'string' ? JSON.parse(response) : response;
+              
+                if(response.status === "error"){
+                    showToast("Error", response.data, 'error');
+                }
+                if(response.status === "success"){
+
+                    if(response.data > 0){
+                        $(".tclose").click();
+                        fetchAllPartners();
+                        showToast("Success", "Partner Info updated successfully.", 'success');
+                        return;
+                    }
+
+                  showToast("Error", "Please no change in information.", 'error');
+                }
+
+                
+             } catch (error) {
+                console.error("Error parsing response: ", error);
+                $('.userDropdown').hide();
+            }
+        }).fail(function () {
+            console.error("Error fetching users.");
+            $('.userDropdown').hide();
+        });
+
+      }
+
+
+      $(document).on("click","#editCurrencySettingsBtn",() => {
+        const lotteries = $("#ptns-currency-list tr td input:checked").map((_,el) => el.value).get().join(",");
+        const partnerID = $("#data-holder").attr("data-row-id");
+
+        $.post(`../admin/editPartnerCurrencySettings/${partnerID}/${lotteries}`, function (response) {
+            try {
+     
+                response = typeof response === 'string' ? JSON.parse(response) : response;
+                if(response.status === "error"){
+                    showToast("Error", response.data, 'error');
+                }
+                if(response.status === "success"){
+
+                    if(response.data > 0){
+                        $(".tclose").click();
+                        fetchAllPartners();
+                        showToast("Success", "Product Settings updated successfully.", 'success');
+                        return;
+                    }
+
+                  showToast("Error", "Please no change in information.", 'error');
+                }
+            } catch (error) {
+                console.error("Error parsing response: ", error);
+                $('.userDropdown').hide();
+            }
+        }).fail(function () {
+            console.error("Error fetching users.");
+            $('.userDropdown').hide();
+        });
+        
+    });
+
+      $(document).on("click","#editLanguageSettingsBtn",() => {
+        const languages = $("#ptns-languages-list tr td input:checked").map((_,el) => el.value).get().join(",");
+        const partnerID = $("#data-holder").attr("data-row-id");
+
+        $.post(`../admin/editPartnerlanguagesSettings/${partnerID}/${languages}`, function (response) {
+            try {
+     
+                response = typeof response === 'string' ? JSON.parse(response) : response;
+                if(response.status === "error"){
+                    showToast("Error", response.data, 'error');
+                }
+                if(response.status === "success"){
+
+                    if(response.data > 0){
+                        $(".tclose").click();
+                        fetchAllPartners();
+                        showToast("Success", "Product Settings updated successfully.", 'success');
+                        return;
+                    }
+
+                  showToast("Error", "Please no change in information.", 'error');
+                }
+            } catch (error) {
+                console.error("Error parsing response: ", error);
+                $('.userDropdown').hide();
+            }
+        }).fail(function () {
+            console.error("Error fetching users.");
+            $('.userDropdown').hide();
+        });
+        
+    });
+
+
+    
+      $(document).on("click","#editPartnerLotteriesBtn",() => {
+        const lotteries = $("#ptns-lotteries-list tr td input:checked").map((_,el) => el.value).get().join(",");
+        const partnerID = $("#data-holder").attr("data-row-id");
+        $.post(`../admin/editPartnerLotteries/${partnerID}/${lotteries}`, function (response) {
+            try {
+     
+                response = typeof response === 'string' ? JSON.parse(response) : response;
+                if(response.status === "error"){
+                    showToast("Error", response.data, 'error');
+                }
+                if(response.status === "success"){
+
+                    if(response.data > 0){
+                        $(".tclose").click();
+                        fetchAllPartners();
+                        showToast("Success", "Product Settings updated successfully.", 'success');
+                        return;
+                    }
+
+                  showToast("Error", "Please no change in information.", 'error');
+                }
+            } catch (error) {
+                console.error("Error parsing response: ", error);
+                $('.userDropdown').hide();
+            }
+        }).fail(function () {
+            console.error("Error fetching users.");
+            $('.userDropdown').hide();
+        });
+        
+    });
+
+
+
+
+      const editPartnerLotteries = () => {
+        const partnerID              = $("#data-holder").attr("data-row-id");
+        const partnerName            = $("#ptns-partner-name-edit").val();
+        const siteUrl                = $("#ptns-site-url-edit").val();
+        const adminSiteUrl           =  $("#ptns-admin-site-url-edit").val();
+        const clientMinAge           =  $("#ptns-client-min-age").val();
+        const verificationType       = $("#ptns-verification-type-edit").val();
+        const unusedWithdrawalAmount =  $("#ptns-unused-withdrawal-amount").val();
+        const priority               =  $("#ptns-priority-edit").val();
+        const state                  =  $("#ptns-state-edit").val();
+        const currency               =  $("#ptns-currency-edit").val();
+     
+     
+        $.post(`../admin/editPartnerMainInfo/${partnerID}/${partnerName}/${siteUrl}/${adminSiteUrl}/${clientMinAge}/${verificationType}/${unusedWithdrawalAmount}/${priority}/${state}/${currency}`, function (response) {
+            try {
+     
+                response = typeof response === 'string' ? JSON.parse(response) : response;
+              
+                if(response.status === "error"){
+                    showToast("Error", response.data, 'error');
+                }
+                if(response.status === "success"){
+
+                    if(response.data > 0){
+                        $(".tclose").click();
+                        fetchAllPartners();
+                        showToast("Success", "Partner Info updated successfully.", 'success');
+                        return;
+                    }
+
+                  showToast("Error", "Please no change in information.", 'error');
+                }
+
+                
+             } catch (error) {
+                console.error("Error parsing response: ", error);
+                $('.userDropdown').hide();
+            }
+        }).fail(function () {
+            console.error("Error fetching users.");
+            $('.userDropdown').hide();
+        });
+
+      }
+
+
+
       const  searchPartnersNames = (query) =>{
         let optionsHtml = '';
         console.log(query);
@@ -37,9 +266,7 @@ $(() =>{
     
         $.post(`../admin/searchPartnersNames/${encodeURIComponent(query)}`, function (response) {
             try {
-                
-             //   console.log(response);
-                return;
+
                 response = typeof response === 'string' ? JSON.parse(response) : response;
                 // console.log(response);
                 // return;
@@ -77,9 +304,6 @@ $(() =>{
         $(".pp-names-wrapper").hide();
       });
 
-
-
-
       const translatorScript = document.querySelector(".translations"); // Get the script tag
       const translator = JSON.parse(translatorScript.textContent);
    
@@ -107,7 +331,7 @@ $(() =>{
            let tableHtml = "";
             countries.forEach(country => {
                 tableHtml += `<tr>
-                <td><input class="form-check-input " type="checkbox" value="${country}" id="flexCheckDefault" ${$(`#ptns-pp-countries-${cid}`).text().includes(country) ? "checked" : ""}></td>
+                <td><input class="form-check-input " type="checkbox" value="${country}"  ${$(`#ptns-pp-countries-${cid}`).text().includes(country) ? "checked" : ""}></td>
                 <td><span class="pp-lottery-name">${country}</span></td>
                 </tr>
                 `
@@ -237,7 +461,7 @@ $(() =>{
     const fetchAllPartners = ()=> {
         try {
              $.ajax({
-                url: `../admin/fetchPartners/${page}/${limit}/`,
+                url: `../admin/fetchPartners/${partnerID}/${page}/${limit}/`,
                 type: "POST",
                 
                 success: function(response){
@@ -291,7 +515,7 @@ $(() =>{
     const fetchPartnersNames = ()=> {
     try {
             $.ajax({
-            url: `../admin/fetchPartnersNames/${page}/${limit}/`,
+            url: `../admin/fetchPartnersNames/${partnerID}/${page}/${limit}/`,
             type: "POST",
             success: function(response){
                 
@@ -334,6 +558,121 @@ $(() =>{
         searchPlatformNames($("#ptns-platformNames").val());
     });
 
+    $(document).on("click",".ptns-main-info",function(){
+        const partnerID = $("#data-holder").attr("data-row-id");
+        const partner   = partnersObjs[partnerID];
+
+        console.log(partner);
+        return;
+        const partnerName            = $("#ptns-partner-name-edit").val();
+        const siteUrl                = $("#ptns-site-url-edit").val();
+        const adminSiteUrl           =  $("#ptns-admin-site-url-edit").val();
+        const clientMinAge           =  $("#ptns-client-min-age").val();
+        const verificationType       = $("#ptns-verification-type-edit").val();
+        const unusedWithdrawalAmount =  $("#ptns-unused-withdrawal-amount").val();
+        const priority               =  $("#ptns-priority-edit").val();
+        const state                  =  $("#ptns-state-edit").val();
+        const currency               =  $("#ptns-currency-edit").val();
+    
+    });
+
+    $(document).on("click",".ptns-product-settings",function(){
+        const partnerID = $("#data-holder").attr("data-row-id");
+        const partner   = partnersObjs[partnerID];
+        let blocked_lotteries = partner.blocked_lotteries.split(",");
+        let lotteriesMarkup = "";
+        validLotteries.forEach((lottery) => {
+            let lotteryCheckState = !blocked_lotteries.includes(String(lottery.lt_id)) ? "checked" : ""; 
+            lotteriesMarkup += `<tr>
+        <td><input class="form-check-input " type="checkbox" value="${lottery.lt_id}" ${lotteryCheckState}></td>
+        <td><span class="pp-lottery-name">${lottery.name}</span></td>
+        </tr>`
+        });
+        $("#ptns-lotteries-list").html(lotteriesMarkup);
+    });
+
+    $(document).on("click",".ptns-currency-settings",function(){
+        const partnerID = $("#data-holder").attr("data-row-id");
+        const partner   = partnersObjs[partnerID];
+        let blocked_currencies = partner.blocked_currencies.split(",");
+        let currenciesMarkup = "";
+        currencyCodes.forEach((currency) => {
+            let currencyCheckState = !blocked_currencies.includes(currency) ? "checked" : ""; 
+            currenciesMarkup += `<tr>
+        <td><input class="form-check-input " type="checkbox" value="${currency}" ${currencyCheckState}></td>
+        <td><span class="pp-lottery-name">${currency}</span></td>
+        </tr>`
+        });
+        $("#ptns-currency-list").html(currenciesMarkup);
+    });
+
+    $(document).on("click",".ptns-language-settings",function(){
+        const partnerID = $("#data-holder").attr("data-row-id");
+        const partner   = partnersObjs[partnerID];
+        let blocked_languages = partner.blocked_languages.split(",");
+        let languagesMarkup = "";
+        for (let name in internationalLanguagesNative) {
+            let language = internationalLanguagesNative[name];
+            let languageCheckState = !blocked_languages.includes(name) ? "checked" : ""; 
+            languagesMarkup += `<tr>
+        <td><input class="form-check-input " type="checkbox" value="${name}" ${languageCheckState}></td>
+        <td><span class="pp-lottery-name">${language}</span></td>
+        </tr>`
+        }
+      
+        $("#ptns-languages-list").html(languagesMarkup);
+    });
+   
+
+    const filterPaymentPlatforms = async (page,limit) => {
+
+        const partnerID = $("#data-holder").attr("data-row-id");
+        const partner   = partnersObjs[partnerID];
+        const paymentPlatformID = $("#data-holder").attr("data-payment-platform-id");
+        const curency_types = $("#platformStatuss").val();
+        const status = $("#platformStatuse").val()
+        const startDate = $("#platformStartDates").val();
+        const endDate = $("#platformEndDates").val();
+        let blocked_payment_platforms = partner.blocked_payment_platforms.split(",");
+            try {
+                const response = await fetch(`../admin/filterPartnerPaymentPlatforms/${partnerID}/${blocked_payment_platforms}/${paymentPlatformID}/${curency_types}/${status}/${startDate}/${endDate}/${page}/${limit}`);
+        
+                const data = await response.json();
+                console.log(data);
+                if(data.data.status === "error"){
+                    showToast("Error",data.data,"error");
+                    return;
+                }
+            
+                if (data.data.length < 1) {
+                    let html = `
+                <tr class="no-results">
+                    <td colspan="9">
+                        <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                    </td>
+                </tr>`;
+                    $("#maskpayment").LoadingOverlay("hide");
+                    $("#ptns-payment-platforms-dtholder").html(html);
+                    return;
+                }
+                $("#maskpayment").LoadingOverlay("hide");
+                $("#ptns-payment-platforms-dtholder").html(paymentdata(data.data));
+                const totalPages = Math.ceil(data.data[0].total_records / 20);
+                renderpaymentPagination(totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterPaymentPlatforms(newPage,pageLimit));
+                document.getElementById("paging_infopayment").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+    };
+
+
+    $(document).on("click",".ptns-payment-settings", async function() {
+       
+        filterPaymentPlatforms(1,20);
+          
+    });
+
+
     $(document).on('click',"#ptns-addNewPartnerBtn",function(){
 
         const partnerName  = $("#ptns-partner-name").val();
@@ -368,7 +707,7 @@ $(() =>{
                 $("#ptns-site-url").val("");
                 $("#ptns-admin-site-url").val("");
                 $("#ptns-currency-body").find("tr td input:checked").val("");
-
+// this is the test commit
 
                  const html = `<tr id='ptns-id-${response.id}'>
                         <td> ${response.id} </td>
@@ -382,7 +721,7 @@ $(() =>{
                         <td> ${response.extra.date_created} </td>
                         <td> ${response.extra.created_by} </td>
                          <td><div class="dropdown">
-                                <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="${response.id}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 <i class='bx bx-dots-vertical-rounded'></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
@@ -395,32 +734,15 @@ $(() =>{
                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 ptns-product-settings" data-agent-id="" href="javascript:void(0);"data-uid=""> 
                                     <i class='bx bx-git-merge'></i>Product Settings
                                 </a>
-                                <a class="dropdown-item ptns-currency-settings cursor-pointer d-flex align-items-center gap-1 acountbtn" href="javascript:void(0);"data-uid="">
+                                <a class="dropdown-item ptns-currency-settings cursor-pointer d-flex align-items-center gap-1 " href="javascript:void(0);"data-uid="">
                                     <i class="bx bx-money fs-5"></i>Currency Settings
                                 </a>
                                     <a class="dropdown-item ptns-language-settings cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
                                     <i class='bx bx-blanket' ></i>Language Settings
-                                </a> <a class="dropdown-item ptns-product-limits cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                                    <i class='bx bxl-product-hunt' ></i>Product Limits
                                 </a>
-                                    <a class="dropdown-item ptns-payment-limits cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                                    <i class="bx bx-trash fs-5"></i>Payment Limits
-                                </a>
-                                    <a class="dropdown-item  ptns-complimentary-point-rates cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                                    <i class="bx bx-git-merge"></i>Complimentary point Rates
-                                </a>
-                                </a>
-                                    <a class="dropdown-item  ptns-payment-info cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                                    <i class='bx bx-info-circle' ></i>Payment Info
-                                </a>
-                                </a>
-                                    <a class="dropdown-item  ptns-web-site-settings cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                                    <i class='bx bx-globe' ></i>Web Site Settings
-                                </a>
-                                </a>
-                                    <a class="dropdown-item ptns-keys cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                                    <box-icon name='buoy'></box-icon>Keys
-                                </a>
+                                 
+                                   
+                                
                                 </div>
                             </div>
                 </td>
@@ -456,7 +778,7 @@ $(() =>{
 
      const fetchLotteryTypes = () => {
         $.ajax({
-            url: `../admin/fetchLotteries/fetchLotteries`,
+            url: `../admin/fetchLotteries/${partnerID}/fetchLotteries`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -468,15 +790,7 @@ $(() =>{
                     return;
                 }
                 data = response.data;
-                data.forEach((lottery) => {
-                    responseMarkup += `<tr>
-                <td><input class="form-check-input " type="checkbox" value="${lottery.lt_id}" checked></td>
-                <td><span class="pp-lottery-name">${lottery.name}</span></td>
-                </tr>`
-                });
-
-
-                $("#ptns-lotteries-list").html(responseMarkup);
+                validLotteries = data;   
             },
             error: function (res, status, error) {},
             complete: function () {
@@ -499,7 +813,7 @@ $(() =>{
         $("#ptns-currency-list").html(markup);
     };
 
-    populateCurrencySettings();
+    // populateCurrencySettings();
 
     const populateLanguageSettings = () => {
         let markup = "";
@@ -512,7 +826,7 @@ $(() =>{
         $("#ptns-languages-list").html(markup);
     };
 
-    populateLanguageSettings();
+    // populateLanguageSettings();
 // Function to fetch and display users
 const  fetchDifferentCurrencies = () =>{
     let optionsHtml = `<option value="">--Currency--</option>`;
@@ -672,7 +986,7 @@ $(".playerWinLoss").click(function(e){
   }
 
 
-  const populateCurrencies = () => {
+const populateCurrencies = () => {
     let tableHtml = "";
     currencyCodes.forEach(currency => {
         tableHtml += `<tr>
@@ -690,14 +1004,6 @@ populateCurrencies();
 
 
 // --------------------------------------------------------------------
-
-
-
-
-     
-
-
-
 
 
 const renderPaginationPaymentPlatform = (elementID,totalPages, currentPage, ) => {
@@ -741,32 +1047,59 @@ const renderPaginationPaymentPlatform = (elementID,totalPages, currentPage, ) =>
     });
 }
 
+const paymentdata = (data) => { 
+    
+    let html = "";
+   
+     data.forEach((item) => {
+      let timezone = item.timezone.split(" ");
+      timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
+      const status = item.status === 'active' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Active</span>'  :item.status=="inactive" ? '<span class="badge fw-semibold py-1 w-85 bg-info-subtle text-warning">Inactive</span>':'<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-warning">Hidden</span>'
+     
+      html += `
+              <tr>
+                  <td>${item.name}</td>
+                  <td>${item.currency}</td>
+                  <td>${item.site_url}</td>
+                  <td>${item.admin_site_url}</td>
+                  <td>${formatMoney(item.fees)}</td>
+                  <td>${formatMoney(item.min_deposit)}</td>
+                  <td>${formatMoney(item.max_deposit)}</td>
+                  <td>${formatMoney(item.min_withdrawal)}</td>
+                  <td>${formatMoney(item.max_withdrawal)}</td>
+                  <td>${item.date_created}</td>
+                  <td>${timezone}</td>
+                  <td>${item.created_by}</td>
+                  <td>${item.last_update}</td>
+                  <td>${item.last_update_by}</td>
+                  <td>${status}</td>
+                  <td>
+                    <div class="dropdown">
+                    <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class='bx bx-dots-vertical-rounded'></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"> 
+                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 editpayment" href="javascript:void(0);" datas ="${item.bankid}"> 
+                        <i class="bx bx-edit fs-5" ></i>Edit
+                    </a>
+                        <a class="dropdown-item deletepayment cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="${item.bankid}">
+                        <i class="bx bx-trash fs-5"></i>Delete
+                    </a>
+                    </div>
+                    </div>
+                  </td>
+                      
+                  </tr>
+              `;
+    });
+    return html;
+  };
 
-const paymentsMarkup = (data) => {
-    console.log(data.countries);
-    const cid  = data.payment_type_id === undefined ? data.cid : data.payment_type_id;
-    return `<tr id='cid-${cid}'>
-        <td> ${data.name} </td>
-        <td> ${data.currency} </td>
-        <td> ${data.site_url} </td>
-        <td> ${data.admin_site_url} </td>
-        <td> ${data.fee} </td>
-        <td> ${data.min_amount} </td>
-        <td> ${data.max_amount} </td>
-        <td> ${data.date_created} </td>
-        <td> ${data.created_by} </td>
-        <td> ${data.last_update} </td>
-        <td> ${data.last_update_by} </td>
-        <td> ${data.status == "active" ? "Active" : (data.status == "inactive" ? "Inactive" : "Hidden")} </td>
-        <td class="showEditModal" style="cursor:pointer;" ><i class='bx bx-edit-alt'></i> </td>
-        <td id="pp-info-${cid}" style="display:none;">${data.info}</td>
-        <td id="pp-priority-${cid}" style="display:none;">${data.priority}</td>
-        <td id="pp-countries-${cid}" style="display:none;">${data.countries}</td>
-            </tr>`
 
-};
 const partnersMarkup = (data) => {
-
+    partnersObjs[data.partner_id] = data;
+    let timezone = data.timezone.split(" ");
+    timezone     = `${timezone[0]}<span style="margin-left: 1rem">GMT${timezone[1]}</span>`;
     return `<tr id='ptns-id-${data.partner_id}'>
             <td> ${data.partner_id} </td>
             <td> ${data.name} </td>
@@ -775,12 +1108,12 @@ const partnersMarkup = (data) => {
             <td> ${data.admin_site_url} </td>
             <td> ${data.state}</td>
             <td> ${data.date_created} </td>
+            <td> ${timezone}</td>
             <td> ${data.created_by} </td>
             <td> ${data.date_created} </td>
             <td> ${data.last_update_by} </td>
             <td><div class="dropdown">
-                    <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <i class='bx bx-dots-vertical-rounded'></i>
+                    <a class="dropdown-toggles dropdown-edit-partners" href="javascript:void(0)" role="button" id="data-obj-${data.partner_id}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ><i class='bx bx-dots-vertical-rounded'></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 ptns-main-info" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#ptns-main-info-modal" data-uid="">
@@ -792,37 +1125,22 @@ const partnersMarkup = (data) => {
                         <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 ptns-product-settings" data-agent-id="" href="javascript:void(0);"data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-product-settings-modal" data-uid=""> 
                         <i class='bx bx-git-merge'></i>Product Settings
                     </a>
-                    <a class="dropdown-item ptns-currency-settings cursor-pointer d-flex align-items-center gap-1 acountbtn" href="javascript:void(0);"data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-currency-settings-modal" data-uid="">
+
+                    <a class="dropdown-item ptns-currency-settings cursor-pointer d-flex align-items-center gap-1 " href="javascript:void(0);"data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-currency-settings-modal" data-uid="">
                         <i class="bx bx-money fs-5"></i>Currency Settings
                     </a> 
                         <a class="dropdown-item ptns-language-settings cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-languages-settings-modal" data-uid="">
                         <i class='bx bx-blanket' ></i>Language Settings
-                    </a> <a class="dropdown-item ptns-product-limits cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                        <i class='bx bxl-product-hunt' ></i>Product Limits
-                    </a>
-                        <a class="dropdown-item ptns-payment-limits cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                        <i class="bx bx-trash fs-5"></i>Payment Limits
                     </a> 
-                        <a class="dropdown-item  ptns-complimentary-point-rates cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                        <i class="bx bx-git-merge"></i>Complimentary point Rates
-                    </a>
-                    </a>
-                        <a class="dropdown-item  ptns-payment-info cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-paymennt-info-modal" >
-                        <i class='bx bx-info-circle' ></i>Payment Info
-                    </a>
-                    </a>
-                        <a class="dropdown-item  ptns-web-site-settings cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                        <i class='bx bx-globe' ></i>Web Site Settings
-                    </a>
-                    </a>
-                        <a class="dropdown-item ptns-keys cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="">
-                        <box-icon name='buoy'></box-icon>Keys
-                    </a>
+                   
+
+                       
                     </div>
                    </div>
                 </td>
         </tr>`
 };
+
 
 
 function getFormattedDateTime() {
@@ -842,6 +1160,60 @@ function getFormattedDateTime() {
     return `${year}-${month}-${day} / ${hours}:${minutes}:${seconds}`;
   }
 
+
+function renderpaymentPagination(totalPages, currentPage, pageLimit, callback) {
+    const createPageLink = (i, label = i, disabled = false, active = false) =>
+        `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
+            <a class='page-link' href='#' data-page='${i}'>${label}</a>
+        </li>`;
+    let pagLink = `<ul class='pagination justify-content-end'>`;
+
+    // Previous Button
+    pagLink += createPageLink(currentPage - 1, `<i class='bx bx-chevron-left'></i>`, currentPage === 1);
+
+    // Page numbers with ellipsis
+    for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+            pagLink += createPageLink(i, i, false, i === currentPage);
+        } else if (i === currentPage - 3 || i === currentPage + 3) {
+            pagLink += createPageLink(i, "...", true);
+        }
+    }
+
+    // Next Button
+    pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
+    pagLink += "</ul>";
+
+    document.getElementById("ptns-pagination").innerHTML = pagLink;
+
+    // Add click event listeners
+    document.querySelectorAll("#ptns-pagination .page-link").forEach((link) => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const newPage = +this.getAttribute("data-page");
+            if (newPage > 0 && newPage <= totalPages) {
+                currentPage = newPage; // Update currentPage when a page link is clicked
+                $("#maskpayment").LoadingOverlay("show", {
+                    background: "rgb(90,106,133,0.1)",
+                    size: 3,
+                });
+                callback(newPage, pageLimit); // Call fetchpayment with the new page and pageLimit
+            }
+        });
+    });
+}
+
+  function formatMoney(money) { 
+    let moneyStr = String(money); 
+    if (moneyStr.includes(".")) { 
+        let parts = moneyStr.split("."); 
+        if (parts[1].length > 2) { 
+            parts[1] = parts[1].substring(0, 4); 
+        } 
+        moneyStr = parts.join(".").replace(/\.?0+$/, ""); 
+    } 
+    return moneyStr; 
+}
 
 const countries = [
     "Afghanistan",
@@ -1102,38 +1474,38 @@ const currencyCodes = [
       'ZAR','ZMW','ZWL'
   ];
   
-  const internationalLanguagesNative = [
-    "العربية",            // Arabic
-    "中文（普通话）",      // Chinese (Mandarin)
-    "English",           // English
-    "Français",          // French
-    "Русский",           // Russian
-    "Español",           // Spanish
-    "Português",         // Portuguese
-    "Deutsch",           // German
-    "日本語",             // Japanese
-    "हिन्दी",             // Hindi
-  
-    // Additional major Asian languages
-    "বাংলা",             // Bengali
-    "اردو",             // Urdu
-    "ਪੰਜਾਬੀ",           // Punjabi
-    "ગુજરાતી",           // Gujarati
-    "मराठी",             // Marathi
-    "తెలుగు",           // Telugu
-    "தமிழ்",             // Tamil
-    "ಕನ್ನಡ",             // Kannada
-    "മലയാളം",           // Malayalam
-    "नेपाली",           // Nepali
-    "සිංහල",           // Sinhala
-    "한국어",             // Korean
-    "Tiếng Việt",        // Vietnamese
-    "ภาษาไทย",          // Thai
-    "বাংলা",             // Bengali (duplicate removed)
-    "فارسی",             // Persian (Farsi)
-    "Bahasa Indonesia",  // Indonesian (Latin script)
-    "Bahasa Melayu",     // Malay (Latin script)
-    "ဗမာစာ",            // Burmese (Myanmar)
-    "ភាសាខ្មែរ",        // Khmer
-    "ລາວ",             // Lao
-  ];
+
+ const internationalLanguagesNative = {
+    "arabic" : "العربية",            // Arabic
+   "chinese" : "中文（普通话）",      // Chinese (Mandarin)
+   "english" : "English",           // English
+   "french" : "Français",          // French
+   "russian" : "Русский",           // Russian
+   "spanish" : "Español",           // Spanish
+   "portugal" : "Português",         // Portuguese
+   "germany" : "Deutsch",           // German
+   "japanese" : "日本語",             // Japanese
+   "hindi" : "हिन्दी",             // Hindi
+ 
+   // Additional major Asian languages
+  "Bengali" : "বাংলা",             // Bengali
+  "Urdu" : "اردو",             // Urdu
+  "Punjabi" : "ਪੰਜਾਬੀ",           // Punjabi
+  "Gujarati" : "ગુજરાતી",           // Gujarati
+  "Marathi" : "मराठी",             // Marathi
+  "Telugu" : "తెలుగు",           // Telugu
+  "Tamil" : "தமிழ்",             // Tamil
+  "Kannada" : "ಕನ್ನಡ",             // Kannada
+  "Malayalam" : "മലയാളം",           // Malayalam
+  "Nepali" : "नेपाली",           // Nepali
+  "Sinhala" : "සිංහල",           // Sinhala
+  "Korean" : "한국어",             // Korean
+  "Vietnamese" : "Tiếng Việt",        // Vietnamese
+  "Thai" : "ภาษาไทย",          // Thai
+  "Persian" : "فارسی",             // Persian (Farsi)
+  "Indonesian" : "Bahasa Indonesia",  // Indonesian (Latin script)
+  "Malay" : "Bahasa Melayu",     // Malay (Latin script)
+  "Burmese" : "ဗမာစာ",            // Burmese (Myanmar)
+  "Khmer" : "ភាសាខ្មែរ",        // Khmer
+  "Lao" : "ລາວ",             // Lao
+ };

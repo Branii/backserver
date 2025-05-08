@@ -274,7 +274,7 @@
                     <input name="usernames" type="hidden" id="selectedID" value="" />
                 </div> -->
 
-                <select name="betsate" id="platformStatuss" class="form-control form-select queryholderlistt messagestype" data-bs-placeholder="Select Type">
+                <select name="betsate" id="platformStatuss" class="form-control form-select queryholderlistt messagestype payment-type" data-bs-placeholder="Select Type">
                     <option value="">-Select Payment Type-</option>
                     <option value="momo">Mobile Money</option>
                     <option value="bank">Bank</option>
@@ -324,37 +324,60 @@
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Payment Name</h6>
                         </th>
-
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Payment Type</h6>
                         </th>
-
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Currency</h6>
                         </th>
-
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Minimum Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Site Url</h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Maximum Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Admin Site Url</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Fees</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Min. Deposit</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Max. Deposit</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Min. Withdrawal</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Max. Withdrawal</h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Date Created</h6>
                         </th>
-
                         <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
+                        </th>
+                        
+                       <th>
                             <h6 class="fs-4 fw-semibold mb-0">Created By</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Last Updated</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Last Update By</h6>
                         </th>
 
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Status</h6>
                         </th>
-
+                       
+                        
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
                         </th>
                     </tr>
+                   
                 </thead>
                 <tbody id="paymentContainer">
                     <tr class="no-resultslist">

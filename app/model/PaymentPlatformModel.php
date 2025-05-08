@@ -166,6 +166,17 @@ class PaymentPlatformModel extends MEDOOHelper{
         return ['data' => $data, 'total' => $totalRecords];
     }
 
+
+    public static function fetchAllPaymentPlatform($page, $limit){
+     
+        $startpoint = $page * $limit - $limit;
+        $query =
+         "SELECT *,(SELECT COUNT(*) FROM payment_platforms) as  FROM payment_platforms  ORDER BY cid DESC LIMIT :offset, :limit 
+         ";
+        $data = parent::query($query, ['offset' => $startpoint, 'limit' => $limit]);
+        return ['status' => "success",'data' => $data, ];
+    
+    }
     public static function AddPaymentPlatform($paymentname, $currencytype,$paylogo, $currencystate,$maxiamount, $miniamount,$currencyselect,$approvedby)
     {
         $params =[
@@ -207,6 +218,69 @@ class PaymentPlatformModel extends MEDOOHelper{
          $data = parent::query($sql, $params);
         return $data ? "Please try again." : "Updated successfully.";
     }
+
+
+
+    public static function updatePartnerMainInfo($parameters = []){
+        
+
+        try{
+        $params["partner_id"] = (int)$parameters["partner_id"];
+        $query  = []; 
+        foreach($parameters as $field => $value){
+            if($field === "partner_id") continue;
+            $params[$field] = $value;
+            $query[] = "$field = :$field";
+        }
+         $sql = "UPDATE partners_v1 SET partnerName = :partnerName, currency_type = :currency_type, max_deposit = :max_deposit, max_withdrawal = :max_withdrawal WHERE partner_id = :partner_id";
+         $sql = "UPDATE partners_v1 SET ".implode(",",$query)." WHERE partner_id = :partner_id";
+         $stmt = parent::openLink()->query($sql, $params);
+       return ["status" => "success", "data" => $stmt->rowCount()];
+    }catch(Exception $e){
+        return ["status" => "error", "data" => "Internal Server Error.". $e->getMessage()];       
+    }
+    }
+    
+    public static function fetchAllPaymentPlatforms(){
+     try{
+         $sql = "SELECT cid FROM  payment_platforms";
+         $stmt = parent::openLink()->query($sql);
+         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+       return ["status" => "success", "data" => $data];
+    }catch(Exception $e){
+        return ["status" => "error", "data" => "Internal Server Error."];       
+    }
+    }
+    public static function editPartnerLotteries($partnerID,$blocked_lotteries){
+        
+        try{
+         $sql = "UPDATE partners_v1 SET blocked_lotteries = :blocked_lotteries WHERE partner_id = :partner_id";
+         $stmt = parent::openLink()->query($sql, [":partner_id" => $partnerID,":blocked_lotteries" => $blocked_lotteries]);
+       return ["status" => "success", "data" => $stmt->rowCount()];
+        }catch(Exception $e){
+            return ["status" => "error", "data" => "Internal Server Error.". $e->getMessage()];       
+        }
+    }
+    public static function editPartnerCurrencySettings($partnerID,$blocked_currencies){
+        
+        try{
+         $sql = "UPDATE partners_v1 SET blocked_currencies = :blocked_currencies WHERE partner_id = :partner_id";
+         $stmt = parent::openLink()->query($sql, [":partner_id" => $partnerID,":blocked_currencies" => $blocked_currencies]);
+       return ["status" => "success", "data" => $stmt->rowCount()];
+        }catch(Exception $e){
+            return ["status" => "error", "data" => "Internal Server Error.". $e->getMessage()];       
+        }
+    }
+    public static function editPartnerlanguagesSettings($partnerID,$blocked_languages){
+        
+        try{
+         $sql = "UPDATE partners_v1 SET blocked_languages = :blocked_languages WHERE partner_id = :partner_id";
+         $stmt = parent::openLink()->query($sql, [":partner_id" => $partnerID,":blocked_languages" => $blocked_languages]);
+       return ["status" => "success", "data" => $stmt->rowCount()];
+        }catch(Exception $e){
+            return ["status" => "error", "data" => "Internal Server Error.". $e->getMessage()];       
+        }
+    }
     
     public static function Platformsubquery($curencytypes,$stautspayment, $startdate, $enddate)
     {
@@ -237,7 +311,7 @@ class PaymentPlatformModel extends MEDOOHelper{
         return $subQuery;
     }
 
-    public static function FilterPlatformData($subquery, $page, $limit){
+    public static function FilterPlatformData($subquery,$blocked_partner_payment_platforms, $page, $limit){
         try {
              $startpoint = ($page - 1) * $limit;
               $sql = "
@@ -260,5 +334,47 @@ class PaymentPlatformModel extends MEDOOHelper{
         } catch (Exception $e) {
             error_log("Error executing query: " . $e->getMessage());
         }
+    }
+
+
+    public static function searchPaymentPlatform($searchData = [],$page, $limit): Mixed {
+
+
+        
+        try{
+        
+        $table_name = "payment_platforms";
+        $offset = ($page - 1) * 10;
+        $params = [":offset" => (int) $offset, ":limit" => (int) $limit];
+        $where_clause = [];
+        foreach($searchData as $key => $value){
+            if(!empty($value)){
+                if($key != "startDate" && $key != "endDate" ){
+                    $where_clause[] = "$key=:$key";
+                    $params[":$key"] = $value;
+                }
+            }
+        }
+
+        if (!empty($searchData["startDate"]) || !empty($searchData['endDate'])) {
+            if (empty($searchData['endDate'])) {
+                $where_clause[] = "date_created=:datecreated";
+                $params[":datecreated"] = $searchData['datecreated'];
+            } elseif (empty($searchData['startDate'])) {
+                $where_clause[] = "date_created=:enddate";
+                $params[":enddate"] = $searchData['endDate'];
+            } else {
+                $where_clause[] = "date_created BETWEEN :datecreated AND :enddate";
+                $params[":datecreated"] = min($searchData['startDate'], $searchData['endDate']);
+                $params[":enddate"]     = max($searchData['startDate'], $searchData['endDate']);
+            }
+        }
+
+        $sql = "SELECT *,(SELECT COUNT(*) FROM {$table_name}) as total_records FROM {$table_name} ".(empty($where_clause) ? "" : " WHERE ".implode(" AND ",$where_clause)) ." LIMIT :offset,:limit";
+        $res = parent::openLink()->query($sql, $params)->fetchAll(PDO::FETCH_OBJ);
+        return ["status" => "success", "data" => $res];
+    }catch(Exception $e){
+        return ["status" => "error", "data" => $e->getMessage()];
+    }
     }
 }

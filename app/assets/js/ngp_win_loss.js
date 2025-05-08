@@ -1,9 +1,9 @@
 $(() => {
+    const partnerID = $('#partner-holder').attr("data-partner-id");
     const BASE_URL = "../admin";
     let historyStack = [];
     let pagesStack = [];
     let pagingInfo = [];
-
     function showToast(title, message, type) {
         $.toast({
             position: "bottom-right",
@@ -60,7 +60,7 @@ $(() => {
     const fetchLotteryNames = () => {
         try {
             $.ajax({
-                url: `../admin/fetchLotteryname/`,
+                url: `../admin/fetchLotteryname/${partnerID}`,
                 type: "POST",
                 success: function (data) {
                     data = JSON.parse(data);

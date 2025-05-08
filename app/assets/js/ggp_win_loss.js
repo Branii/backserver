@@ -1,4 +1,6 @@
 $(() =>{
+    
+    const partnerID = $("#partner-holder").attr("data-partner-id");
 
     const BASE_URL = '../admin';
     let historyStack  = [];
@@ -67,55 +69,11 @@ $(() =>{
 //         });
 //     };
 
-   const searchUserWinLoss = () => {
-
-      const data = new URLSearchParams({username: username, lottery:lottery_id , start_date: start_date, end_date: end_date}).toString();
-        $.ajax({
-            url: "../controller/datareport/winlossreport",
-            type: "POST",
-            data: {data:data, flag:flag },
-            beforeSend: function(){
-                    $("#win-loss-loader").css('display', 'flex');
-            },
-            success: function(response){
-                $("#subs-back-btn").hide();
-                response  = JSON.parse(response);
-                
-                const num_res = response.length;
-                if(response.length == 0){
-                    historyStack = [];
-                    $("#win-loss-dtholder").html("<tr><td colspan='12'  style='text-align:center;'>No results found.</td></tr>");  
-                    return; 
-                }
-                if($("#user-details-btn").is(":visible")) $("#user-details-btn").hide();
-                if(num_res === 1){
-                    if(response[0].account_type > 1) $("#user-details-btn").show();
-                }
-                
-                let htmlMarkup = "";
-                response.forEach((data,index) => {
-                    htmlMarkup += getUserRowMarkup(data);
-                }); 
-                $("#win-loss-dtholder").html(htmlMarkup);
-                // historyStack = [htmlMarkup];
-                pagesStack = [];
-                
-                },
-            error: function(xhr,status,error){
-                console.log("An error occured: " );
-            },
-            complete: function(){
-                    $("#win-loss-loader").css('display', 'none');
-            }
-        });
-
-        }; // search for user win loss
-
-
+  
     const fetchLotteryNames = ()=> {
             try {
              $.ajax({
-                url: `../admin/fetchLotteryname/`,
+                url: `../admin/fetchLotteryname/${partnerID}`,
                 type: "POST",
                 success: function(data){
                      data = JSON.parse(data);
@@ -268,6 +226,7 @@ let debounceTimeout = null;
         let lotteryID = $("#wl-selectlottery").val();
         let startDate = $("#wl-startdate").val();
         let endDate   = $("#wl-enddate").val();
+
         const element = this;
        
 
@@ -361,44 +320,6 @@ let debounceTimeout = null;
     // Get Top Agents
     $(document).on("click", ".fetch-agent-subs", function () { fetchAgentSubs(this,1); });
 
-
-//     // handle the back button action
-//     $(document).on("click",".fetch-user-details",function(){
-
-//             const lotteryID = $("#wl-lottery").attr("data-lot-id");
-//             const startDate = $("#startdate").val();
-//             const endDate   = $("#enddate").val();
-//             const agentID   = $("#winLossDtholder").find('tr:first-child').attr("id").split("-")[2];
-
-//                 $.ajax({
-//                     url: `../admin/get_user_details/${agentID}/${lotteryID}/${startDate}/${endDate}//}`,
-//                     type: "POST",
-//                     beforeSend: function(){
-//                         $("#win-loss-loader").css('display', 'flex');
-//                     },
-//                     success: function(response){
-//                     console.log(response);
-//                     response  = JSON.parse(response); // parse the response server
-                    
-                
-//                     if(response.length == 0){
-//                         // show the empty response placeholder
-//                         $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);  
-//                         return; 
-//                     }
-
-//                     // add the the tbody html with the new accumulated html markup
-//                     $("#winLossDtholder").html(getUserRowMarkup(response));
-                    
-//                     },
-//                     error: function(xhr,status,error){
-//                         console.log("An error occured: " );
-//                     },
-//                     complete: function(){
-//                         $("#win-loss-loader").css('display', 'none');
-//                     }
-//             });
-// });
 
 
     // refresh list
@@ -729,21 +650,7 @@ $(".playerWinLoss").click(function(e){
     pagLink += "</ul>";
     document.getElementById("wl-pagination-wrapper").innerHTML = pagLink;
     $("#paging_infowl").text(`Page ${currentPagewithdraw} of ${totalPages} ${totalPages === 1 ? ' Page ' : ' Pages '} `)
-    // Add click event listeners to pagination links
-    // document.querySelectorAll("#paginationwithdraw .page-link").forEach((link) => {
-    //   link.addEventListener("click", function (e) {
-    //     e.preventDefault();
-    //     const newPage = parseInt(this.getAttribute("data-page"));
-    //     if (newPage > 0 && newPage <= totalPages && newPage !== currentPagewithdraw) {
-    //       // Update currentPagewithdraw and display paging information
-    //       currentPagewithdraw = newPage;
-    //       // document.getElementById("paging_infowithdraw").innerHTML = `Page ${currentPagewithdraw} of ${totalPages} pages`;
-          
-    //       // Fetch and render new page data
-    //       fetchwithdraw(currentPagewithdraw);
-    //     }
-    //   });
-    // });
+
   }
 
 });

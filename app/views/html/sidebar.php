@@ -1,4 +1,3 @@
-
 <?php
 $controller = new Controller;
 $adminEmail = $controller->getSeesion("isUserLoggedIn");
@@ -25,6 +24,3 @@ foreach ($userPermissions as $sidebar => $menu): ?>
         </div>
     </div>
 <?php endforeach; ?>
-
-
-

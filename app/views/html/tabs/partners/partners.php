@@ -259,6 +259,10 @@
 .optionlist:hover {
     background-color: #eee;
 }
+
+.dark-red {
+  color: #af0404;
+}
 </style>
 
 
@@ -268,7 +272,7 @@
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0">Partners</h4>
     </div>
-
+<input name="data-holder" id="data-holder" type="hidden" data-row-id="" data-payment-platform-id="">
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn" style="width: 70%;">
         <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 100%;">
@@ -340,6 +344,9 @@
                         
                        <th>
                             <h6 class="fs-4 fw-semibold mb-0">Creation Time</h6>
+                        </th>
+                       <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
                         </th>
                        <th>
                             <h6 class="fs-4 fw-semibold mb-0">Creation By</h6>
@@ -502,7 +509,7 @@
                                         <select id="ptns-pp-payment-type-edit" class="form-select pp-payment-types"></select>
                                     </div><div class="mb-3">
                                         <label for="partner-name-edit" class="form-label">Fee (%) (<span style="color: #a01616;">*</span>)</label>
-                                        <input type="text" class="form-control" id="ptns-partner-name-edit" placeholder="Fee (%)">
+                                        <input type="text" class="form-control" id="partner-name-edit" placeholder="Fee (%)">
                                     </div>
                                 <div class="mb-3">
                                         <label for="pp-priority-edit" class="form-label">Priority</label>
@@ -803,787 +810,787 @@
  <tbody class="pp-countries-list-wrapper" id="pp-countries-list">
 
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Afghanistan</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Albania</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Algeria</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Andorra</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Angola</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Antigua and Barbuda</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Argentina</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Armenia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Australia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Austria</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Azerbaijan</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Bahamas</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Bahrain</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Bangladesh</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Barbados</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Belarus</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Belgium</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Belize</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Benin</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Bhutan</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Bolivia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Bosnia and Herzegovina</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Botswana</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Brazil</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Brunei</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Bulgaria</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Burkina Faso</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Burundi</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Côte d'Ivoire</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Cabo Verde</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Cambodia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Cameroon</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Canada</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Central African Republic</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Chad</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Chile</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">China</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Colombia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Comoros</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Costa Rica</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Croatia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Cuba</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Cyprus</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Czech Republic</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Democratic Republic of the Congo</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Denmark</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Djibouti</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Dominica</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Dominican Republic</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Ecuador</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Egypt</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">El Salvador</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Equatorial Guinea</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Eritrea</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Estonia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Eswatini</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Ethiopia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Federated States of Micronesia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Fiji</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Finland</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">France</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Gabon</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Gambia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Georgia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Germany</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Ghana</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Greece</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Grenada</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Guatemala</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Guinea</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Guinea-Bissau</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Guyana</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Haiti</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Honduras</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Hungary</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Iceland</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">India</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Indonesia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Iran</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Iraq</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Ireland</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Israel</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Italy</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Jamaica</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Japan</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Jordan</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Kazakhstan</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Kenya</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Kiribati</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Kosovo</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Kuwait</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Kyrgyzstan</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Laos</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Latvia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Lebanon</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Lesotho</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Liberia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Libya</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Liechtenstein</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Lithuania</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Luxembourg</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">North Macedonia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Madagascar</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Malawi</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Malaysia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Maldives</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Mali</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Malta</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Marshall Islands</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Mauritania</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Mauritius</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Mexico</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Moldova</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Monaco</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Mongolia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Montenegro</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Morocco</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Mozambique</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Myanmar</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Namibia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Nauru</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Nepal</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Netherlands</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">New Zealand</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Nicaragua</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Niger</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Nigeria</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">North Korea</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Norway</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Oman</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Pakistan</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Palau</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Panama</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Papua New Guinea</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Paraguay</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Peru</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Philippines</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Poland</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Portugal</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Qatar</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Republic of the Congo</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Romania</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Russia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Rwanda</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">St Kitts and Nevis</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">St Lucia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">St Vincent and the Grenadines</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Samoa</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">San Marino</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Sao Tome and Principe</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Saudi Arabia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Senegal</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Serbia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Seychelles</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Sierra Leone</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Singapore</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Slovakia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Slovenia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Solomon Islands</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Somalia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">South Africa</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">South Korea</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">South Sudan</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Spain</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Sri Lanka</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Sudan</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Suriname</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Sweden</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Switzerland</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Syria</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Taiwan</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Tajikistan</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Tanzania</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Thailand</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Timor-Leste</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Togo</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Tonga</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Trinidad and Tobago</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Tunisia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Turkey</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Turkmenistan</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Tuvalu</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Uganda</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Ukraine</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">United Arab Emirates</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">United Kingdom</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">United States</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Uruguay</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Uzbekistan</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Vanuatu</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Vatican City</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Venezuela</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Vietnam</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Yemen</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Zambia</span></td>
 </tr>
 <tr>
-  <td><input class="form-check-input country-input " type="checkbox" value="1" id="flexCheckDefault" ></td>
+  <td><input class="form-check-input country-input " type="checkbox" value="1"  ></td>
   <td><span class="pp-lottery-name">Zimbabwe</span></td>
 </tr>
 
@@ -1714,140 +1721,97 @@
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container">
-                <div class="card border mb-4">
+            <div class="card border mb-4">
                     <div class="card-body">
                         <h4 class="card-title">Main Info</h4>
                         <form id="pp-personalDetailsForm">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="userName" class="form-label">ID</label>
-                                        <input type="text" class="form-control" id="pp-contact" placeholder="Enzerhub">
+                                        <label for="ptns-partner-id" class="form-label">ID (<span class="dark-red">*</span>)</label>
+                                        <input type="text" class="form-control" id="ptns-partner-id" placeholder="Enzerhub" disabled>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="pp-currency-edit" class="form-label">Name</label>
+                                        <label for="ptns-partner-name-edit" class="form-label">Name (<span class="dark-red">*</span>)</label>
                                         
-                                    <input type="text" class="form-control" id="pp-fee-edit" placeholder="Name"></div>
+                                    <input type="text" class="form-control" id="ptns-partner-name-edit" placeholder="Name"></div>
                                     
                                     
                                    
                                 <div class="mb-3">
-                                        <label for="pp-site-url-edit" class="form-label">Site Url</label>
-                                        <input type="text" class="form-control" id="pp-site-url-edit" placeholder="e.g www.enzerhub.com">
+                                        <label for="ptns-site-url-edit" class="form-label">Site Url (<span class="dark-red">*</span>)</label>
+                                        <input type="text" class="form-control" id="ptns-site-url-edit" placeholder="e.g www.enzerhub.com">
                                     </div><div class="mb-3">
-                                        <label for="pp-admin-site-url-edit" class="form-label">Admin Site Url</label>
-                                        <input type="text" class="form-control" id="pp-admin-site-url-edit" placeholder="e.g www.enzerhub.com">
+                                        <label for="ptns-admin-site-url-edit" class="form-label">Admin Site Url (<span class="dark-red">*</span>)</label>
+                                        <input type="text" class="form-control" id="ptns-admin-site-url-edit" placeholder="e.g www.enzerhub.com">
+                                    </div><div class="mb-3">
+                                        <label for="ptns-client-min-age" class="form-label">Client Min Age </label>
+                                        <input type="text" value="18" class="form-control" id="ptns-client-min-age" placeholder="18">
+                                    </div><div class="mb-3">
+                                        <label for="ptns-verification-type-edit" class="form-label">Verification Type </label>
+                                        
+                                    <select id="ptns-verification-type-edit" class="form-select">
+                                      <option value="email">Email</option>
+                                      <option value="phone">Phone</option>
+                                      <option value="emailandphone">Email & Phone</option>
+                                  </select></div><div class="mb-3">
+                                        <label for="ptns-unused-withdrawal-amount" class="form-label">Unused Amount Withdraw</label>
+                                        <input type="text" value="10" class="form-control" id="ptns-unused-withdrawal-amount" placeholder="e.g 10">
                                     </div></div>
                                 <div class="col-lg-6">
                                     
                                     
-                                    <div class="mb-3">
-                                        <label for="pp-fee-edit" class="form-label">AutoApproved Withdrawal Amount</label>
-                                        <input type="text" value="1000" class="form-control" id="pp-fee-edit" placeholder="1000">
-                                    </div>
+                                    
                                 <div class="mb-3">
-                                        <label for="pp-priority-edit" class="form-label">Email Verification Code Length</label>
-                                        <input type="text" value="6" class="form-control" id="pp-priority-edit" placeholder="e.g 6">
+                                        <label for="ptns-priority-edit" class="form-label">Priority</label>
+                                        <input type="text" value="6" class="form-control" id="ptns-priority-edit" placeholder="e.g 6">
                                     </div><div class="mb-3">
-                                        <label for="pp-priority-edit" class="form-label">Priority</label>
-                                        <input type="text" value="6" class="form-control" id="pp-priority-edit" placeholder="e.g 6">
-                                    </div><div class="mb-3">
-                                        <label for="pp-priority-edit" class="form-label">State</label>
-                                        <select id="pp-status-edit" class="form-select">
+                                        <label for="ptns-state-edit" class="form-label">State (<span class="dark-red">*</span>)</label>
+                                        <select id="ptns-state-edit" class="form-select">
                                             <option value="active">Active</option>
                                             <option value="hidden">Hidden</option>
                                             <option value="inactive">Inactive</option>
                                         </select>
-                                    </div></div>
-                                <div class="col-6">
-                                    
-                                    
-                                <div class="mb-3">
-                                        <label for="pp-site-url-edit" class="form-label">Client Min Age</label>
-                                        <input type="text" value="18" class="form-control" id="pp-site-url-edit" placeholder="18">
                                     </div><div class="mb-3">
-                                        <label for="pp-admin-site-url-edit" class="form-label">Client Session Expire Time</label>
-                                        <input type="text" value="20" class="form-control" id="pp-admin-site-url-edit" placeholder="e.g 20">
+                                        <label for="ptns-currency-edit" class="form-label">Currency (<span class="dark-red">*</span>)</label>
+                                        <select id="ptns-currency-edit" class="form-select currency-list"><option value="">--Currency--</option>
+                                      
+                                      </select>
                                     </div>
-                                </div>
-                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="ptns-creation-time-edit" class="form-label">Creation Time</label>
+                                        <input type="text" class="form-control" id="ptns-creation-time-edit" disabled>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="ptns-created-by-edit" class="form-label">Created By</label>
+                                        <input type="text" class="form-control" id="ptns-created-by-edit" disabled>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="ptns-last-update-edit" class="form-label">Last Update</label>
+                                        <input type="text" class="form-control" id="ptns-last-update-edit" disabled>
+                                    </div>
                                     
                                     <div class="mb-3">
-                                        <label for="pp-min-amount-edit" class="form-label">Accounting Day Start Time</label>
-                                        <input type="text" value="00:00:01" class="form-control" id="pp-min-amount-edit" placeholder="00:00:01">
-                                    </div><div class="mb-3">
-                                        <label for="pp-max-amount-edit" class="form-label">Autoapprove Bet Shop Delivery</label>
-                                        <input type="text" value="1000" class="form-control" id="pp-max-amount-edit" placeholder="1000">
+                                        <label for="ptns-update-by-edit" class="form-label">Update By</label>
+                                        <input type="text" class="form-control" id="ptns-update-by-edit" disabled>
                                     </div>
+                                   
+                                  </div>
+                                
+                                <div class="col-6">
+                                    
+                                    
                                 
                                   </div>
                             </div>
-                        </form>
-                    </div>
-                    
-                </div>
-                
-            <div class="card border mb-4">
-                    <div class="card-body">
-                        
-                        <form id="pp-personalDetailsForm">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    
-                                    <div class="mb-3">
-                                        <label for="pp-currency-edit" class="form-label">Currency</label>
-                                        <select id="pp-currency-edit" class="form-select currency-list"><option value="">--Currency--</option><option value="AED">AED</option><option value="AFN">AFN</option><option value="ALL">ALL</option><option value="AMD">AMD</option><option value="ANG">ANG</option><option value="AOA">AOA</option><option value="ARS">ARS</option><option value="AUD">AUD</option><option value="AWG">AWG</option><option value="AZN">AZN</option><option value="BAM">BAM</option><option value="BBD">BBD</option><option value="BDT">BDT</option><option value="BGN">BGN</option><option value="BHD">BHD</option><option value="BIF">BIF</option><option value="BMD">BMD</option><option value="BND">BND</option><option value="BOB">BOB</option><option value="BOV">BOV</option><option value="BRL">BRL</option><option value="BSD">BSD</option><option value="BTN">BTN</option><option value="BWP">BWP</option><option value="BYN">BYN</option><option value="BZD">BZD</option><option value="CAD">CAD</option><option value="CDF">CDF</option><option value="CHE">CHE</option><option value="CHF">CHF</option><option value="CHW">CHW</option><option value="CLF">CLF</option><option value="CLP">CLP</option><option value="CNY">CNY</option><option value="COP">COP</option><option value="COU">COU</option><option value="CRC">CRC</option><option value="CUC">CUC</option><option value="CUP">CUP</option><option value="CVE">CVE</option><option value="CZK">CZK</option><option value="DJF">DJF</option><option value="DKK">DKK</option><option value="DOP">DOP</option><option value="DZD">DZD</option><option value="EGP">EGP</option><option value="ERN">ERN</option><option value="ETB">ETB</option><option value="EUR">EUR</option><option value="FJD">FJD</option><option value="FKP">FKP</option><option value="GBP">GBP</option><option value="GEL">GEL</option><option value="GHS">GHS</option><option value="GIP">GIP</option><option value="GMD">GMD</option><option value="GNF">GNF</option><option value="GTQ">GTQ</option><option value="GYD">GYD</option><option value="HKD">HKD</option><option value="HNL">HNL</option><option value="HRK">HRK</option><option value="HTG">HTG</option><option value="HUF">HUF</option><option value="IDR">IDR</option><option value="ILS">ILS</option><option value="INR">INR</option><option value="IQD">IQD</option><option value="IRR">IRR</option><option value="ISK">ISK</option><option value="JMD">JMD</option><option value="JOD">JOD</option><option value="JPY">JPY</option><option value="KES">KES</option><option value="KGS">KGS</option><option value="KHR">KHR</option><option value="KMF">KMF</option><option value="KPW">KPW</option><option value="KRW">KRW</option><option value="KWD">KWD</option><option value="KYD">KYD</option><option value="KZT">KZT</option><option value="LAK">LAK</option><option value="LBP">LBP</option><option value="LKR">LKR</option><option value="LRD">LRD</option><option value="LSL">LSL</option><option value="LYD">LYD</option><option value="MAD">MAD</option><option value="MDL">MDL</option><option value="MGA">MGA</option><option value="MKD">MKD</option><option value="MMK">MMK</option><option value="MNT">MNT</option><option value="MOP">MOP</option><option value="MRU">MRU</option><option value="MUR">MUR</option><option value="MVR">MVR</option><option value="MWK">MWK</option><option value="MXN">MXN</option><option value="MXV">MXV</option><option value="MYR">MYR</option><option value="MZN">MZN</option><option value="NAD">NAD</option><option value="NGN">NGN</option><option value="NIO">NIO</option><option value="NOK">NOK</option><option value="NPR">NPR</option><option value="NZD">NZD</option><option value="OMR">OMR</option><option value="PAB">PAB</option><option value="PEN">PEN</option><option value="PGK">PGK</option><option value="PHP">PHP</option><option value="PKR">PKR</option><option value="PLN">PLN</option><option value="PYG">PYG</option><option value="QAR">QAR</option><option value="RON">RON</option><option value="RSD">RSD</option><option value="RUB">RUB</option><option value="RWF">RWF</option><option value="SAR">SAR</option><option value="SBD">SBD</option><option value="SCR">SCR</option><option value="SDG">SDG</option><option value="SEK">SEK</option><option value="SGD">SGD</option><option value="SHP">SHP</option><option value="SLL">SLL</option><option value="SOS">SOS</option><option value="SRD">SRD</option><option value="SSP">SSP</option><option value="STN">STN</option><option value="SVC">SVC</option><option value="SYP">SYP</option><option value="SZL">SZL</option><option value="THB">THB</option><option value="TJS">TJS</option><option value="TMT">TMT</option><option value="TND">TND</option><option value="TOP">TOP</option><option value="TRY">TRY</option><option value="TTD">TTD</option><option value="TWD">TWD</option><option value="TZS">TZS</option><option value="UAH">UAH</option><option value="UGX">UGX</option><option value="USD">USD</option><option value="USN">USN</option><option value="UYI">UYI</option><option value="UYU">UYU</option><option value="UYW">UYW</option><option value="UZS">UZS</option><option value="VED">VED</option><option value="VES">VES</option><option value="VND">VND</option><option value="VUV">VUV</option><option value="WST">WST</option><option value="XAF">XAF</option><option value="XAG">XAG</option><option value="XAU">XAU</option><option value="XBA">XBA</option><option value="XBB">XBB</option><option value="XBC">XBC</option><option value="XBD">XBD</option><option value="XCD">XCD</option><option value="XDR">XDR</option><option value="XOF">XOF</option><option value="XPD">XPD</option><option value="XPF">XPF</option><option value="XPT">XPT</option><option value="XSU">XSU</option><option value="XTS">XTS</option><option value="XUA">XUA</option><option value="XXX">XXX</option><option value="YER">YER</option><option value="ZAR">ZAR</option><option value="ZMW">ZMW</option><option value="ZWL">ZWL</option></select>
-                                    </div>
-                                    
-                                    
-                                   <div class="mb-3">
-                                        <label for="pp-status-edit" class="form-label">Status (<span style="color: #a01616;">*</span>)</label>
-                                        <select id="pp-status-edit" class="form-select">
-                                            <option value="active">Active</option>
-                                            <option value="hidden">Hidden</option>
-                                            <option value="inactive">Inactive</option>
-                                        </select>
-                                    </div>
-                                <div class="mb-3">
-                                        <label for="pp-status-edit" class="form-label">Creation Time</label>
-                                        <input type="text" class="form-control" id="pp-fee-edit" placeholder="00:00:00">
-                                    </div><div class="mb-3">
-                                        <label for="pp-status-edit" class="form-label">Last Update</label>
-                                        <input type="text" class="form-control" id="pp-fee-edit" placeholder="00:00:00">
-                                    </div><div class="mb-3">
-                                        <label for="pp-payment-type-edit" class="form-label">Unpaid Win Amount</label>
-                                        
-                                    <input type="text" value="50" class="form-control" id="pp-fee-edit" placeholder="e.g 50"></div></div>
-                                <div class="col-lg-6">
-                                    
-                                    
-                                    <div class="mb-3">
-                                        <label for="pp-fee-edit" class="form-label">Unused Amount Withdraw</label>
-                                        <input type="text" value="10" class="form-control" id="pp-fee-edit" placeholder="e.g 10">
-                                    </div>
-                                <div class="mb-3">
-                                        <label for="pp-priority-edit" class="form-label">User Session Expire time</label>
-                                        <input type="text" value="120" class="form-control" id="pp-priority-edit" placeholder="120">
-                                    </div><div class="mb-3">
-                                        <label for="pp-priority-edit" class="form-label">Verification Key Acite Minutes</label>
-                                        <input type="text" value="120" class="form-control" id="pp-priority-edit" placeholder="120">
-                                    </div><div class="mb-3">
-                                        <label for="pp-priority-edit" class="form-label">Verification Type</label>
-                                        
-                                    <select id="pp-currency-edit" class="form-select currency-list"><option value="email">Email</option><option value="mobile">Mobile</option><option value="emailandmobile">Email And Mobile</option><option value="google-authenticator">Google Authenticator</option></select></div><div class="mb-3">
-                                        <label for="pp-priority-edit" class="form-label">Password RegExp</label>
-                                        <input type="text" value="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/" class="form-control" id="pp-priority-edit" placeholder="e.g /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/">
-                                    </div></div>
-                                
-                                
-                            </div>
                         <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="editPaymentPlatformBtn">Save</button>
+                                <button type="button" class="btn btn-primary" id="editPartnerMainInfoBtn">Save</button>
                                 <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
                             </div></form>
                     </div>
                     
-                </div></div>
+                </div>
+          </div>
         </div>
     </div>
 </div>
@@ -1924,12 +1888,11 @@
                 <thead class="text-dark fs-4 tbl-financeheads">
                     <tr class="financeheadrows">
                         <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Payment Name</h6>
+                        </th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0">Payment Type</h6>
                         </th>
-
-                        <!-- <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Currency Type</h6>
-                        </th> -->
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Currency</h6>
                         </th>
@@ -1943,13 +1906,22 @@
                             <h6 class="fs-4 fw-semibold mb-0">Fees</h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Min. Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Min. Deposit</h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Max. Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Max. Deposit</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Min. Withdrawal</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Max. Withdrawal</h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Date Created</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
                         </th>
                         
                        <th>
@@ -1972,7 +1944,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody id="pp-dtholder">
+                <tbody id="ptns-payment-platforms-dtholder">
                     <tr class="no-resultslist">
                         <td colspan="13">
                             <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark">
@@ -2009,7 +1981,7 @@
                 <option value="200">200</option>
                 <option value="500">500</option>
             </select>
-            <span class="toplist-right" id="paginationmessage" aria-label="Page navigation example">
+            <span class="toplist-right" id="ptns-pagination" aria-label="Page navigation example">
                 <!--Dynamic pagination-->
             </span>
 
@@ -2056,7 +2028,7 @@
                                 </div>
                             </div>
                         <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="addNewPaymentPlatformBtn">Save</button>
+                                <button type="button" class="btn btn-primary" id="editPartnerLotteriesBtn">Save</button>
                                 <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
                             </div></form>
                     </div>
@@ -2101,7 +2073,7 @@
                                 </div>
                             </div>
                         <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="addNewPaymentPlatformBtn">Save</button>
+                                <button type="button" class="btn btn-primary" id="editCurrencySettingsBtn">Save</button>
                                 <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
                             </div></form>
                     </div>
@@ -2145,7 +2117,7 @@
                                 </div>
                             </div>
                         <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="addNewPaymentPlatformBtn">Save</button>
+                                <button type="button" class="btn btn-primary" id="editLanguageSettingsBtn">Save</button>
                                 <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
                             </div></form>
                     </div>

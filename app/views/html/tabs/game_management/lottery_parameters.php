@@ -503,6 +503,10 @@ input:checked + .lpd-slider:after {
   transform: translateX(3.1em);
 }
 
+.arr {
+      color: #909aa9;
+      margin: 0px 1rem;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">

@@ -1,10 +1,10 @@
 $(() =>{
+  const partnerID = $('#partner-holder').attr("data-partner-id");
 
   const BASE_URL = '../admin';
   let historyStack  = [];
   let pagesStack    = [];
   let pagingInfo    = [];
- 
   function showToast(title, message, type) {
       $.toast({
         position: "bottom-right",
@@ -15,6 +15,7 @@ $(() =>{
       });
     }
 
+   
     $(document).on("click",".update-gamegroup",function(){
       const gameItems =  $($($(this).parents(".lbp-gamegroup-wrapper")[0]).find(".lbp-gameitem-wrapper")[0]).find(".lbp-gameitem-parent");
       let data = [];

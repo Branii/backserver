@@ -1,4 +1,6 @@
+
 $(function () {
+    const partnerID = $("#partner-holder").attr("data-partner-id");
     function showToast(title, message, type) {
     $.toast({
         position: "bottom-right",
@@ -41,6 +43,9 @@ $(function () {
     data.forEach((item) => {
         let messagetype = item.ms_type == "general" ? "Announcement" : item.ms_type == "personal" ? "Notification" : item.ms_type == "new_users" ? "Notification" : "";
         var storedDate = item.created_at.trim();  // Clean up any leading/trailing spaces
+       
+        let timezone = item.timezone.split(" ");
+        timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
         getTimeDifferenceFromNow(storedDate)
         
         html += `
@@ -48,6 +53,7 @@ $(function () {
                     <td>${item.subject}</td>
                     <td style ="max-width: 300px;word-wrap: break-word;overflow-wrap: break-word; white-space: normal;">${item.message}</td>
                     <td>${item.created_at}</td>
+                    <td>${timezone}</td>
                     <td>${getTimeDifferenceFromNow(storedDate)}</td>
                     <td>${messagetype}</td>
                     <td>${item.audience}</td> 
@@ -86,7 +92,7 @@ $(function () {
 
     async function fetchmessage(page, pageLimit) {
     try {
-        const response = await fetch(`../admin/fetchmessage/${page}/${pageLimit}`);
+        const response = await fetch(`../admin/fetchmessage/${partnerID}/${page}/${pageLimit}`);
         const data = await response.json();
         // console.log(data);
         $("#maskfinances").LoadingOverlay("hide");

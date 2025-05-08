@@ -1,4 +1,8 @@
+
 $(function () {
+    const partnerID = $("#partner-holder").attr("data-partner-id");
+
+
     function showToast(title, message, type) {
         $.toast({
             position: "bottom-right",
@@ -559,7 +563,8 @@ $(function () {
 
     async function fetchPartnername() {
         try {
-            const response = await fetch(`../admin/fetchPartnername`); // Await the fetch call
+            const response = await fetch(`../admin/fetchPartnername/${partnerID}`); // Await the fetch call
+
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

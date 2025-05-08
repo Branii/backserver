@@ -174,7 +174,70 @@ class PartnersModel extends MedooOrm{
 
     }
   
+    public static function fetchAllBlockedPartnerPaymentPlatforms($partner_id){
+        
+     try{
+         $sql = "SELECT inactive_payment_platforms AS inactive,hidden_payment_platforms AS hidden FROM  partners_v1 WHERE partner_id = :partner_id";
+         $stmt = parent::openLink()->query($sql, [":partner_id" => $partner_id]);
+         $data = $stmt->fetch(PDO::FETCH_ASSOC);
+       return ["status" => "success", "data" => $data];
+    }catch(Exception $e){
+        return ["status" => "error", "data" => "Internal Server Error.". $e->getMessage()];       
+    }
+    }
 
+    public static function fetchAllPaymentPlatforms(): array{
+        try{
+            $sql = "SELECT * FROM  payment_platforms";
+            $stmt = parent::openLink()->query($sql);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          return ["status" => "success", "data" => $data];
+       }catch(Exception $e){
+           return ["status" => "error", "data" => "Internal Server Error."];       
+       }
+       }
+
+
+    public static function searchPaymentPlatform($searchData = [],$page = 1, $limit = 20): Mixed {
+
+
+        
+        try{
+        
+        $table_name = "payment_platforms";
+        $offset = ($page - 1) * 10;
+        $params = [":offset" => (int) $offset, ":limit" => (int) $limit];
+        $where_clause = [];
+        foreach($searchData as $key => $value){
+            if(!empty($value)){
+                if($key != "startDate" && $key != "endDate" && $key){
+                    $where_clause[] = "$key=:$key";
+                    $params[":$key"] = $value;
+                }
+            }
+        }
+
+        if (!empty($searchData["startDate"]) || !empty($searchData['endDate'])) {
+            if (empty($searchData['endDate'])) {
+                $where_clause[] = "date_created=:datecreated";
+                $params[":datecreated"] = $searchData['datecreated'];
+            } elseif (empty($searchData['startDate'])) {
+                $where_clause[] = "date_created=:enddate";
+                $params[":enddate"] = $searchData['endDate'];
+            } else {
+                $where_clause[] = "date_created BETWEEN :datecreated AND :enddate";
+                $params[":datecreated"] = min($searchData['startDate'], $searchData['endDate']);
+                $params[":enddate"]     = max($searchData['startDate'], $searchData['endDate']);
+            }
+        }
+
+        $sql = "SELECT *,(SELECT COUNT(*) FROM {$table_name}) as total_records FROM {$table_name} ".(empty($where_clause) ? "" : " WHERE ".implode(" AND ",$where_clause)) ." LIMIT :offset,:limit";
+        $res = parent::openLink()->query($sql, $params)->fetchAll(PDO::FETCH_OBJ);
+        return ["status" => "success", "data" => $res];
+    }catch(Exception $e){
+        return ["status" => "error", "data" => $e->getMessage()];
+    }
+    }
 
     public static function response($data,$type = true) {  return ["status" => $type ? "success" : "error" , "data" => $data];  }
 }
