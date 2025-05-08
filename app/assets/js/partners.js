@@ -461,13 +461,14 @@ $(() =>{
     const fetchAllPartners = ()=> {
         try {
              $.ajax({
-                url: `../admin/fetchPartners/${partnerID}/${page}/${limit}/`,
+                url: `../admin/fetchPartners/${page}/${limit}/`,
                 type: "POST",
                 
                 success: function(response){
                     
+                    console.log(response);
                      response = JSON.parse(response);
-                     //console.log(response);
+                     return
                      if(response.status === "error"){
                         showToast("Error", "Error loading data for Payment Platforms","error");
                         return;
