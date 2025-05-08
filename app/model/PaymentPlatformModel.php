@@ -1,5 +1,5 @@
 <?php
-
+ date_default_timezone_set('Asia/Shanghai');
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     // Throw an Exception with the error message and details
     throw new \Exception("$errstr in $errfile on line $errline", $errno);
