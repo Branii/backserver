@@ -198,7 +198,7 @@ if ($flag == "fetchTopAgentV1") {
 if ($flag == "userlogsdata") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $result = (new UserManageModel())->FetchUserlogsData($partnerID,$page, $limit) ?? [];
+    $result = (new UserManageModel())->FetchUserlogsData($page, $limit) ?? [];
     echo json_encode([
         'userlogs' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit),

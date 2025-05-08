@@ -72,41 +72,19 @@
     cursor: pointer;
 }
 
-.table-wrapperlist {
+.table-wrapperfinance {
     overflow: hidden;
-    /* Hide the default scrollbar */
     white-space: nowrap;
     max-width: 100%;
-    /* Adjust based on your needs */
     margin-bottom: 10px;
     top: 0;
     left: 0;
     right: 0;
     height: 10px;
     background: rgb(38, 57, 77) 0px 20px 30px -10px;
-    /* Ensure it doesn't interfere with content */
     z-index: 10;
 }
 
-.queryholderquota {
-    width: 33%;
-    margin-right: 5px;
-    background-color: #fff;
-}
-
-.queryholderlinks {
-    width: 33%;
-    position: absolute;
-    background-color: #fff;
-    color: #aaa;
-    max-height: 300px;
-    overflow-y: scroll;
-    border-radius: 5px;
-    padding: 10px;
-    top: 90%;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    display: none;
-}
 
 .optionlink {
     text-align: left;
@@ -126,11 +104,8 @@
 
 .no-resultslist {
     text-align: center;
-    /* Center horizontally */
     vertical-align: middle;
-    /* Center vertically */
     height: 20px;
-    /* Set a minimum height to ensure centering */
     border: none;
 }
 
@@ -139,45 +114,37 @@
     top: 100px;
 }
 
-/* Custom Scrollbar for Webkit Browsers */
+
 .table-wrapperfinance::-webkit-scrollbar {
     width: 5px;
-    /* Slimmer scrollbar width */
     height: 5px;
-    /* Slimmer scrollbar height for horizontal scrolling */
 }
 
 .table-wrapperfinance::-webkit-scrollbar-track {
     background: #f1f1f1;
-    /* Lighter background for track */
     border-radius: 5px;
 }
 
 .table-wrapperfinance::-webkit-scrollbar-thumb {
     background-color: #ccc;
-    /* Blue color for thumb */
     border-radius: 10px;
     cursor: pointer;
 }
 
 .table-wrapperfinance::-webkit-scrollbar-thumb:hover {
     background-color: #aaa;
-    /* Darker blue on hover */
 }
 
 .editable {
-    /* cursor: pointer; */
     background-color: #f9f9f9;
 }
 
 .editable:focus {
     outline: 1px solid #ccc;
     background-color: #fff;
-    /* Optional: Make it stand out */
 }
 
 .financeDropdowns {
-    /* width: 23%; */
     position: absolute;
     background-color: #fff;
     color: #aaa;
@@ -191,8 +158,8 @@
     display: none;
 }
 
-.financeDropdown {
-    width: 24%;
+.financefunds {
+    width: 19%;
     position: absolute;
     background-color: #fff;
     color: #aaa;
@@ -201,38 +168,38 @@
     border-radius: 5px;
     padding: 10px;
     top: 90%;
-    z-index: 9999;
+    z-index: 9;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     display: none;
 }
 
 .queryholderlistt {
-    width: 29%;
+    width: 1%;
     margin-right: 5px;
     background-color: #fff;
 }
 
 /* Style for the scrollbar */
-.financeDropdown::-webkit-scrollbar {
+.financefunds::-webkit-scrollbar {
     width: 3px;
     /* Width of the scrollbar */
 }
 
-.financeDropdown::-webkit-scrollbar-track {
+.financefunds::-webkit-scrollbar-track {
     background: #f0f0f0;
     /* Background of the scrollbar track */
     border-radius: 5px;
     /* Rounded corners */
 }
 
-.financeDropdown::-webkit-scrollbar-thumb {
+.financefunds::-webkit-scrollbar-thumb {
     background: #ccc;
     /* Color of the scrollbar handle */
     border-radius: 5px;
     /* Rounded corners */
 }
 
-.financeDropdown::-webkit-scrollbar-thumb:hover {
+.financefunds::-webkit-scrollbar-thumb:hover {
     background: #aaa;
     /* Darker handle color on hover */
 }
@@ -273,11 +240,11 @@
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                 <input type="text" id="financeDropdown" class="form-control queryholderlistt usernames"
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 120%;">
+                 <input type="text" id="financefunds" class="form-control queryholderlistt usernames"
                     placeholder="<?= $translator['Search usernames']; ?>" />
                  <input name="usernames" type="hidden" class="userIdfinance" />
-                 <select class="form-control financeDropdown" size="5" style="display: none;" id="userfinaceDropdowns">
+                 <select class="form-control financefunds " size="5" style="display: none;" id="userfinaceDropdowns">
                     <!-- Options will be populated dynamically -->
                  </select>
 

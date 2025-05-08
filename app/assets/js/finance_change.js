@@ -160,13 +160,13 @@ $(function () {
 
     $(document).on('click', '.executefinance', function () {
     
-      if ($("#financeDropdown").val() == "" && $(".financetype").val() == "" && $(".startfinances").val() == "" ) {
+      if ($("#financefunds").val() == "" && $(".financetype").val() == "" && $(".startfinances").val() == "" ) {
         // $("#danger-finance").modal("show");
         showToast("Heads up!!","Select one or more data fields to filter","info")
         return;
     }
       const financetype = $(".financetype").val();
-      const username = $("#financeDropdown").val();
+      const username = $("#financefunds").val();
       const startfinance = $(".startfinances").val();
       const endfinance = $(".endfinances").val(); 
      filterfinance(username,financetype,startfinance,endfinance,currentPage,pageLimit)
@@ -290,7 +290,6 @@ $(function () {
   
 
     //modal 
-    
     $(document).on('click','.showmodal',function(){
       $("#addfinancemodal").modal("show");   
     })
@@ -298,7 +297,7 @@ $(function () {
     let debounceTimeouts = null;
     $(document).ready(function () {
         // Event listener for keyup on #myInput
-        $(document).on('keyup', '#financeDropdown', function () {
+        $(document).on('keyup', '#financefunds', function () {
             const query = $(this).val().trim();
     
             // Only trigger if input is more than 2 characters
@@ -306,31 +305,31 @@ $(function () {
                 clearTimeout(debounceTimeouts); // Clear any existing timeout
                 debounceTimeout = setTimeout(fetchUsers, 500, query); // Call fetchUsers with the query after 500ms delay
             } else {
-                $('.financeDropdown').hide(); // Hide dropdown if input is less than 3 characters
+                $('.financefunds').hide(); // Hide dropdown if input is less than 3 characters
             }
         });
     
         // Handle dropdown item selection
-        $(document).on('change', '.financeDropdown', function () {
+        $(document).on('change', '.financefunds', function () {
             const selectedOption = $(this).find('option:selected');
             const selectedUserId = selectedOption.val();
             const selectedUsername = selectedOption.data('username');
     
             if (selectedUserId) {
-                $('#financeDropdown').val(selectedUsername);
+                $('#financefunds').val(selectedUsername);
                 $('.userIdfinance').val(selectedUserId);
-                $('.financeDropdown').hide();
+                $('.financefunds').hide();
             }
         });
 
        $(document).on("click", function (e) {
           const $dropdownbet = $("#userfinaceDropdowns");
-          if (!$(e.target).closest("#financeDropdown, #userfinaceDropdowns").length) {
+          if (!$(e.target).closest("#financefunds, #userfinaceDropdowns").length) {
               $dropdownbet.hide();
           }
       });
         // Handle manual input clearing
-        $(document).on('input', '#financeDropdown', function () {
+        $(document).on('input', '#financefunds', function () {
             if (!$(this).val()) {
                 $('.userIdfinance').val(''); // Reset user ID if input is cleared
             }
@@ -364,14 +363,14 @@ $(function () {
                     optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regnames}">${displayValues}</option>`;
                 });
     
-                $('.financeDropdown').html(optionsHtml).show();
+                $('.financefunds').html(optionsHtml).show();
             } catch (error) {
                 console.error("Error parsing response: ", error);
-                $('.financeDropdown').hide();
+                $('.financefunds').hide();
             }
         }).fail(function () {
             console.error("Error fetching users.");
-            $('.financeDropdown').hide();
+            $('.financefunds').hide();
         });
     }
 
