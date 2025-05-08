@@ -314,10 +314,10 @@ class adminController extends Controller {
 
 
     // -- Lottery Draw Records ------------------------
-    public function fetch_lottery_basic_params($partnerID,$lottery_id,$page)
+    public function fetch_lottery_basic_params($lottery_id,$page)
     {
     
-        $this->view('exec/lottery_basic_params', ['partner_id' => $partnerID,'lottery_id' => $lottery_id,'page' => $page,'flag' => 'fetch-lottery-basic-params']);
+        $this->view('exec/lottery_basic_params', ['lottery_id' => $lottery_id,'page' => $page,'flag' => 'fetch-lottery-basic-params']);
         $this->view->render();
     }
 
@@ -381,23 +381,7 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function  fetchPaymentPlatformsForPartner($partnerID,$page , $limit)
-    {  
-        $this->view('exec/payment_platform', ['partner_id' => $partnerID,"page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatformsForPartner']);
-        $this->view->render();
-    }
-
-    public function  fetchPartners($partnerID,$page , $limit)
-    {  
-        $this->view('exec/partners', ['partner_id' => $partnerID,"page" => $page, "limit" => $limit,'flag' => 'fetch_partners']);
-        $this->view->render();
-    }
-    public function  fetchPaymentPlatforms($partnerID,$page , $limit)
-    {  
-
-        $this->view('exec/payment_platforms', ['partner_id' => $partnerID ,'flag' => 'fetchpaymentplatforms']);
-        $this->view->render();
-    }
+  
     public function  fetchPartnersNames($page , $limit)
     {  
         $this->view('exec/partners', ['flag' => 'fetchPartnersNames']);
@@ -838,8 +822,8 @@ class adminController extends Controller {
 
 
          //Payment Platform
-        public function fetchPaymentPlatform($currency_types,$stautspayment,$startdepay,$enddepay,$page ,$limit){  
-            $this->view('exec/payment_platform', ["currency_types" => $currency_types,"status" => $stautspayment,"startdate" => $startdepay,"enddate"=> $enddepay,"page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
+        public function fetchPaymentPlatform($page ,$limit){  
+            $this->view('exec/payment_platform', ["page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
             $this->view->render();
          }
 
