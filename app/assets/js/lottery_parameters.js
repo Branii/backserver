@@ -115,7 +115,7 @@ $(function () {
 
     async function getLotteryGames(lotterId, models) {
         try {
-            const response = await fetch(`../admin/getLotteryGames/${lotterId}/${models}`);
+            const response = await fetch(`../admin/getLotteryGames/${partnerID}/${lotterId}/${models}`);
             const data = await response.json();
             //  console.log(response);
             renderLotteryParams(data.bonus);
