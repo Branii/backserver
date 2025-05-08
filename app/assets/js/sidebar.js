@@ -58,7 +58,9 @@ function toggleAccordion(header) {
     }
 }
 
+
 $(() => {
+    const partnerID = $("#partner-holder").attr("data-partner-id");
 
     $(document).on("click",".pn-wrapper",function(){
       const partnerData =  $(this).attr("id").split("-");

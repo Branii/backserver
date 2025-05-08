@@ -82,9 +82,10 @@ $(function () {
       }
   }
 
-  $(document).on("click",".item-6",function(){
-      fetchwithdraw(currentPagewithdraw);
-  });
+  fetchwithdraw(currentPagewithdraw);
+//   $(document).on("click",".item-6",function(){
+     
+//   });
 
 
   function renderwithdrawPagination(totalPages, currentPagewithdraw) {

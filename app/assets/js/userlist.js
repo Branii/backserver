@@ -1,4 +1,6 @@
+
 $(function () {
+    const partnerID = $("#partner-holder").attr("data-partner-id");
     const showToast = (title, message, type) => {
         $.toast({
             position: "bottom-right",
@@ -304,7 +306,7 @@ $(function () {
                 type: "POST",
                 beforeSend: function () {},
                 success: function (response) {
-                    // console.log(response);
+               
                     const data = JSON.parse(response);
                     if (data.data.length === 0) {
                         $("#userlistContainer").html(`<tr class="no-results"><td colspan="9">
@@ -610,6 +612,7 @@ $(function () {
     async function fetchRebatedata() {
         try {
             const response = await fetch(`../admin/fetchRebatedata/${partnerID}`); // Await the fetch call
+
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

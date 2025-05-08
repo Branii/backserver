@@ -1,4 +1,5 @@
 $(() => {
+  const partnerID = $("#partner-holder").attr("data-partner-id");
   //      // Muniru <!---- FUNCTIONS BY YUSSIF MUNIRU ---------------->
   //         let max_prize_amt_per_bet = "";
   //         let max_win_per_issue = "";
@@ -399,7 +400,6 @@ $(() => {
 
   // fetch the lottery draw records on page read
 
-  const partnerID = $("#partner-holder").attr("data-partner-id");
   function showToast(title, message, type,duration) {
     
     $.toast({

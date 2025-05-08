@@ -1,7 +1,7 @@
 $(function () {
-
-
     const partnerID = $('#partner-holder').attr("data-partner-id");
+
+
    
   function showToast(title, message, type) {
       $.toast({

@@ -3,9 +3,10 @@ let validLotteries = [];
 let currentPage = 1;
 let pageLimit  = 20;
 $(() =>{
-   
-
-
+    
+    
+    
+    const partnerID = $("#partner-holder").attr("data-partner-id");
 
 
     $(document).on("click",".dropdown-edit-partners",function(){
@@ -460,7 +461,7 @@ $(() =>{
     const fetchAllPartners = ()=> {
         try {
              $.ajax({
-                url: `../admin/fetchPartners/${page}/${limit}/`,
+                url: `../admin/fetchPartners/${partnerID}/${page}/${limit}/`,
                 type: "POST",
                 
                 success: function(response){
@@ -514,7 +515,7 @@ $(() =>{
     const fetchPartnersNames = ()=> {
     try {
             $.ajax({
-            url: `../admin/fetchPartnersNames/${page}/${limit}/`,
+            url: `../admin/fetchPartnersNames/${partnerID}/${page}/${limit}/`,
             type: "POST",
             success: function(response){
                 
@@ -758,7 +759,7 @@ $(() =>{
 
      const fetchLotteryTypes = () => {
         $.ajax({
-            url: `../admin/fetchLotteries/fetchLotteries`,
+            url: `../admin/fetchLotteries/${partnerID}/fetchLotteries`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {

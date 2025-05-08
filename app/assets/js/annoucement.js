@@ -1,4 +1,6 @@
+
 $(function () {
+    const partnerID = $("#partner-holder").attr("data-partner-id");
     function showToast(title, message, type) {
     $.toast({
         position: "bottom-right",
@@ -90,7 +92,7 @@ $(function () {
 
     async function fetchmessage(page, pageLimit) {
     try {
-        const response = await fetch(`../admin/fetchmessage/${page}/${pageLimit}`);
+        const response = await fetch(`../admin/fetchmessage/${partnerID}/${page}/${pageLimit}`);
         const data = await response.json();
         // console.log(data);
         $("#maskfinances").LoadingOverlay("hide");

@@ -1,4 +1,5 @@
 $(function () {
+    const partnerID = $('#partner-holder').attr("data-partner-id");
     // var el = document.querySelector("#tabheadParams");
     // var chromeTabsParams = new ChromeTabs();
     // chromeTabsParams.init(el);
@@ -10,7 +11,6 @@ $(function () {
     // el.addEventListener("tabAdd", ({ detail }) => setcurr(detail.tabEl));
     // el.addEventListener("tabRemove", ({ detail }) => closeTab(detail.tabEl));
 
-    const partnerID = $('#partner-holder').attr("data-partner-id");
 
     function showToast(title, message, type) {
         $.toast({

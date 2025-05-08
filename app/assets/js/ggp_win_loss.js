@@ -1,11 +1,11 @@
 $(() =>{
-
+    
+    const partnerID = $("#partner-holder").attr("data-partner-id");
 
     const BASE_URL = '../admin';
     let historyStack  = [];
     let pagesStack    = [];
     let pagingInfo    = [];
-    const partnerID = $("#partner-holder").attr("data-partner-id");
    
     function showToast(title, message, type) {
         $.toast({

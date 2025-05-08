@@ -1,6 +1,6 @@
 $(function(){
-
   const partnerID = $("#partner-holder").attr("data-partner-id");
+
   function showToast(title, message, type) {
       $.toast({
         position: "bottom-right",
@@ -52,6 +52,7 @@ $(function(){
   async function getAllGames() {
       try {
         const response = await fetch(`../admin/getAllgames/${partnerID}`);
+
         const data = await response.json();
         let html = ""
         html += ``
@@ -203,14 +204,6 @@ $(".ld_data_scroll").click(function () {
           case "right":
               tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
               break;
-          // case "startlists":
-          //     // Scroll to the absolute start (leftmost position)
-          //     tableWrapper.animate({ scrollLeft: 0 }, "slow");
-          //     break;
-          // case "endlists":
-          //     const maxScrollLeft = tableWrapper[0].scrollWidth - tableWrapper[0].clientWidth;
-          //     tableWrapper.animate({ scrollLeft: maxScrollLeft }, "slow");
-          //     break;
           default:
               break;
       }
