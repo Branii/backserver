@@ -102,8 +102,8 @@ class adminController extends Controller {
 
         $this->view('exec/game_management',[
         'partner_id' => $partnerID,
-        'page'=>$pageNumber,
-        'limit'=>$limit, 
+        'page'=>  $pageNumber,
+        'limit'=> $limit, 
         'flag'=> 'getDraws',
         'status' => $status,
         'gameId'=>$gameId,
@@ -139,9 +139,8 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function filtertransactions($partnerID,$username,$orderid,$ordertype,$partneruid,$startdate,$enddate,$pageNumber,$limit){
+    public function filtertransactions($username,$orderid,$ordertype,$partneruid,$startdate,$enddate,$pageNumber,$limit){
         $this->view('exec/businessflow',[
-            'partner_id'=> $partnerID,
             'username' => $username,
             'orderid' => $orderid,
             'ordertype' => $ordertype,
@@ -194,8 +193,8 @@ class adminController extends Controller {
         $this->view->render();
     }
     
-    public function searchusername($partnerID,$username){
-        $this->view('exec/businessflow',['partner_id' => $partnerID,'username'=>$username,'flag' => 'searchusername']);
+    public function searchusername($username){
+        $this->view('exec/businessflow',['username'=>$username,'flag' => 'searchusername']);
         $this->view->render();
     }
     public function searchPlatformNames($partnerID,$platformName){
@@ -343,6 +342,7 @@ class adminController extends Controller {
     public function userlistdata($partnerID,$uid,$recharge_level, $state, $start_date, $end_date,$pageNumber, $limit,$miscelleanous)
     {
       
+
         $this->view('exec/account_manage', ["partner_id" => $partnerID,'uid' => $uid,'recharge_level' => $recharge_level,'state' => $state, 'startdate' => $start_date, 'enddate' => $end_date,'page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
         $this->view->render();
     }
@@ -434,9 +434,9 @@ class adminController extends Controller {
     }
 
 
-    public function  searchPartners($partnerID,$partnerName,$state,$startDate,$endDate,$page,$limit)
+    public function  searchPartners($partnerName,$state,$startDate,$endDate,$page,$limit)
     { 
-        $this->view('exec/partners', ['partner_id' => $partnerID,"partnerName"=> $partnerName,"state" => $state,"startDate" => $startDate,"endDate" => $endDate,"page" => $page, "limit" => $limit,'flag' => 'searchPartners']);
+        $this->view('exec/partners', ["partnerName"=> $partnerName,"state" => $state,"startDate" => $startDate,"endDate" => $endDate,"page" => $page, "limit" => $limit,'flag' => 'searchPartners']);
         $this->view->render();
     }
     public function  addNewPaymentPlaftorm($partnerID,$paymentType,$paymentTypeName,$currency,$status,$fee,$maxAmount,$minAmount,$siteUrl,$adminSiteUrl,$info,$priority,$countries)
@@ -681,9 +681,8 @@ class adminController extends Controller {
     }
    
     
-     //NOTE -
+     // NOTE -
     //////////////Withdrawal Records -//////////
-    // 
     public function fetchwithdraw($partnerID,$pageNumber, $limit)
     {
         $this->view('exec/financial_manage', ['partner_id' => $partnerID,'page' => $pageNumber,'limit' => $limit, 'flag' => 'fetchwithdraw']);
@@ -691,9 +690,8 @@ class adminController extends Controller {
     }
 
 
-     //NOTE -
-    //////////////Bank Cardlist Records -//////////
-    // 
+     // NOTE -
+    ////////////// Bank Cardlist Records - //////////
     public function   fetchbankcard($partnerID,$uid,$bank_type,$card_number,$status,$pageNumber, $limit,$miscelleanous)
     {
 
@@ -865,8 +863,8 @@ class adminController extends Controller {
 
 
          //Payment Platform
-        public function fetchPaymentPlatform($currency_types,$stautspayment,$startdepay,$enddepay,$page ,$limit){  
-            $this->view('exec/payment_platform', ["currency_types" => $currency_types,"status" => $stautspayment,"startdate" => $startdepay,"enddate"=> $enddepay,"page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
+        public function fetchPaymentPlatform($partnerID,$currency_types,$stautspayment,$startdepay,$enddepay,$page ,$limit){  
+            $this->view('exec/payment_platform', ["partner_id" => $partnerID,"currency_types" => $currency_types,"status" => $stautspayment,"startdate" => $startdepay,"enddate"=> $enddepay,"page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
             $this->view->render();
          }
 
@@ -906,8 +904,8 @@ class adminController extends Controller {
         {
                 $this->view('exec/payment_platform', [
                 'partner_id' => $partnerID,
-                'curencytypes' => $curencytypes,
-                'stautspayment' => $stautspayment,
+                'curency_types' => $curencytypes,
+                'status' => $stautspayment,
                 'startdate' => $startdepo,
                 'enddate' => $enddepo,
                 'page' => $page,

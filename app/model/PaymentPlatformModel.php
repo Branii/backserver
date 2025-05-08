@@ -337,10 +337,8 @@ class PaymentPlatformModel extends MEDOOHelper{
     }
 
 
-    public static function searchPaymentPlatform($searchData = [],$page, $limit): Mixed {
+public static function searchPaymentPlatform($searchData = [],$page, $limit): Mixed {
 
-
-        
         try{
         
         $table_name = "payment_platforms";
@@ -371,6 +369,7 @@ class PaymentPlatformModel extends MEDOOHelper{
         }
 
         $sql = "SELECT *,(SELECT COUNT(*) FROM {$table_name}) as total_records FROM {$table_name} ".(empty($where_clause) ? "" : " WHERE ".implode(" AND ",$where_clause)) ." LIMIT :offset,:limit";
+
         $res = parent::openLink()->query($sql, $params)->fetchAll(PDO::FETCH_OBJ);
         return ["status" => "success", "data" => $res];
     }catch(Exception $e){

@@ -59,7 +59,7 @@ $(function () {
     async function fetchfinance(page,pageLimit) {
       try {
         const response = await fetch(
-          `../admin/fetchfinance/${page}/${pageLimit}`
+          `../admin/fetchfinance/${partnerID}/${page}/${pageLimit}`
         );
         const data = await response.json();
     
@@ -133,7 +133,7 @@ $(function () {
 
     async function filterfinance(username, financetype, startfinance, endfinance, currentPage, pageLimit) {
       $.post(
-        `../admin/filterfinance/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
+        `../admin/filterfinance/${partnerID}/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
         function (response) {
           try {
             const data = JSON.parse(response);

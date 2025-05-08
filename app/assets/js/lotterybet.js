@@ -161,7 +161,7 @@ $(function () {
   // Fetch lottery bet data
   async function fetchLotteryBet(currentPagebet,pageLimit) {
       try {
-          const response = await fetch(`../admin/lotterydata/${currentPagebet}/${pageLimit}`);
+          const response = await fetch(`../admin/lotterydata/${partnerID}/${currentPagebet}/${pageLimit}`);
           const data = await response.json();
           $("#maskbet").LoadingOverlay("hide");
           renderlottery(data.lotterybet);
@@ -227,7 +227,7 @@ $(function () {
   }
   // Filter and fetch lottery bet data
   async function filterbetdatas(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit) {
-      $.post(`../admin/filterbetdata/${uidd}/${betOrderID}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`).done(function (response) {
+      $.post(`../admin/filterbetdata/${partnerID}/${uidd}/${betOrderID}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`).done(function (response) {
           try {
               const data = JSON.parse(response);
               if (data.response == "error") {

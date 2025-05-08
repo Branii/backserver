@@ -87,12 +87,12 @@ class BusinessFlowModel extends MEDOOHelper
       $data = parent::query("SELECT username,email,contact,reg_type,uid FROM users_test WHERE uid = :uid", ['uid' => $userId])[0];
       return $data;
    }
-   public static function getUserIdByUsername($partnerID,string $key)
+   public static function getUserIdByUsername(string $key)
    {
       if (empty($key)) {
          return []; // Return empty if no key is provided
      }
-     $db = parent::openLink($partnerID);
+     $db = parent::openLink();
 
       $stmt = $db->query(
             "SELECT uid FROM users_test WHERE 

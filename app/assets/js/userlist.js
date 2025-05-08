@@ -302,7 +302,7 @@ $(function () {
 
         try {
             $.ajax({
-                url: `../admin/userlistdata/${uid}/${rechargeLevel}/${state}/${startdate}/${enddate}/${page}/${pageLimit}/1`,
+                url: `../admin/userlistdata/${partnerID}/${uid}/${rechargeLevel}/${state}/${startdate}/${enddate}/${page}/${pageLimit}/1`,
                 type: "POST",
                 beforeSend: function () {},
                 success: function (response) {

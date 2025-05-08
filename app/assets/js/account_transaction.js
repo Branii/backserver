@@ -141,7 +141,7 @@ $(function () {
 
     async function fetchTrasaction(page, pageLimit) {
         try {
-            const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
+            const response = await fetch(`../admin/transactiondata/${partnerID}/${page}/${pageLimit}`);
             const data = await response.json();
             $("#mask").LoadingOverlay("hide");
             render(data.transaction);
@@ -257,8 +257,9 @@ $(function () {
     async function filterTrasaction(transusername, transactionId, ordertypetrans,partneruid, startdatrans, enddatetrans, currentPage, pageLimit) {
         try {
             const response = await fetch(`../admin/filtertransactions/${transusername}/${transactionId}/${ordertypetrans}/${partneruid}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
+           
+           
             const data = await response.json();
-    
             $(".loadertrans").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             if (data.transactions.length < 1) {
                 let html = `

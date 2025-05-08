@@ -60,13 +60,14 @@ if ($flag == "filterpayments") {
     // $blocked_languages  = implode(',',array_diff($allPaymentPlatforms,$partnerBlockedPaymentsPlatforms));
     
     // $subquery = PaymentPlatformModel::Platformsubquery($curencytypes,$stautspayment,$startdate,$enddate) ?? [];
-    $currency_types  = isset($this->viewData['curency_type']) ?  $this->viewData['curency_type'] : "";
+    $currency_types  = isset($this->viewData['curency_types']) ?  $this->viewData['curency_types'] : "";
     $status          = isset($this->viewData['status']) ?  $this->viewData['status'] : "";
     $startdate       = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
     $enddate         = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
     $page            = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit           = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $results = PaymentPlatformModel::searchPaymentPlatform(["currency_type" => $currency_types,"status" => $status,  "startDate" => $startperiod,"endDate" => $enddate,], $page, $limit
+
+    $results = PaymentPlatformModel::searchPaymentPlatform(["currency_type" => $currency_types,"status" => $status,  "startDate" => $startdate,"endDate" => $enddate,], $page, $limit
     );
 
     echo json_encode($results);
