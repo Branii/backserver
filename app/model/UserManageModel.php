@@ -1,73 +1,46 @@
 <?php
 
-set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-    // Throw an Exception with the error message and details
-    throw new \Exception("$errstr in $errfile on line $errline", $errno);
-});
 class UserManageModel extends MEDOOHelper
 {
+
     //NOTE -
     ////////////// USERLIST LIST -//////////
 
     public static function FetchUserlistData($page, $limit): array
     {
-        $startpoint = ($page - 1) * $limit;
-        $sql = "SELECT 
-             u.uid, 
-             u.username, 
-             u.email, 
-             u.contact, 
-             u.nickname, 
-             u.agent_name, 
-             u.balance, 
-             u.recharge_level, 
-             u.user_state, 
-             u.reg_type, 
-             u.agent_level,           
-             u.rebate, 
-             u.created_at, 
-             u.agent_id, 
-             u.last_login, 
-             u.account_type, 
-                            GROUP_CONCAT(a.nickname) AS subordinates, 
-                            COUNT(a.uid) AS sub_count, 
-                            u.rebate
-                        FROM 
-                            users_test u
-                        LEFT JOIN 
-                            users_test a ON u.uid = a.agent_id
-                        GROUP BY 
-                            u.uid DESC
-                        LIMIT :offset, :limit;";
-        $pdo = (new Database())->openLink();
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':offset', $startpoint, PDO::PARAM_INT);
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-        $stmt->execute();
 
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($data as &$row) {
-            $row['logincount'] = self::countUserLogs($row['uid']);
-        }
+        $startpoint = ($page - 1) * $limit;
+        $data = parent::query(
+            "SELECT uid, username,email,contact,nickname, agent_name, balance, recharge_level, user_state,reg_type,
+                  rebate, created_at, agent_id, account_type,reg_type
+             FROM users_test
+             ORDER BY uid DESC
+             LIMIT :startpoint, :limit",
+            [
+                'startpoint' => (int)$startpoint,
+                'limit' => (int)$limit
+            ]
+        );
 
         $totalRecords = parent::count('users_test');
 
         return ['data' => $data, 'total' => $totalRecords];
     }
-    public static function countUserLogs($uid)
-    {
-        $logCount = parent::count("user_logs", '*', ["uid" => $uid]);
+    public static function countUserLogs($partnerID,$uid)
+    {   
+        $logCount = parent::openLink($partnerID)->count("user_logs", '*', ["uid" => $uid]);
+        // $logCount = parent::count("user_logs", '*', ["uid" => $uid]);
         return $logCount ?: null;
     }
 
-    public static function getDirectReferrals($agent_id)
+    public static function getDirectReferrals($partnerID,$agent_id)
     {
-        $total = parent::count("users_test", "*", ["agent_id" => $agent_id]);
+        $total = parent::getLink($partnerID)->count("users_test", "*", ["agent_id" => $agent_id]);
         return $total > 2 ? '...' : '->';
     }
-    public static function getSubordinate($agent_id)
+    public static function getSubordinate($partnerID,$agent_id)
     {
-        return $data = parent::query("SELECT nickname FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
+        return $data = parent::openLink($partnerID)->query("SELECT nickname FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
     }
 
     public static function getUserIdByMixedValued(array $mixedValue)
@@ -91,38 +64,25 @@ class UserManageModel extends MEDOOHelper
             error_log("Database error: " . $e->getMessage());
             return [];
         }
+
+        return  $data = parent::query("SELECT nickname FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
     }
 
-    public static function Fetchsubordinates($uid)
+    public static function Fetchsubordinates($partnerID,$uid)
     {
+        $totalCount = parent::openLink($partnerID)->count("users_test", "*", ["AND" => ["agent_id" => $uid, "account_type" => 3, "uid[!]" => $uid]]);
         $totalCount = parent::count("users_test", "*", ["AND" => ["agent_id" => $uid, "account_type" => 3, "uid[!]" => $uid]]);
         return $totalCount;
     }
 
-    public static function Filteruserlist($subQuery, $page, $limit)
+ 
+    public static function Filteruserlist($page, $limit, $username, $states, $startdate, $enddate)
     {
-        $startpoint = ($page - 1) * $limit;
-
-        $sql = "SELECT uid, username,email,contact,nickname, agent_name, balance, recharge_level, user_state,reg_type,
-                  rebate, created_at, agent_id, account_type,reg_type,last_login
-             FROM users_test WHERE  $subQuery ";
-
-        $countSql = "
-                SELECT 
-                    COUNT(*) AS total_count
-                FROM 
-                    users_test
-            WHERE
-                $subQuery
-                ";
-
-        $data = parent::query($sql);
-        foreach ($data as &$row) {
-            $row['logincount'] = self::countUserLogs($row['uid']);
-        }
-        $totalRecords = parent::query($countSql);
-        $totalRecords = $totalRecords[0]['total_count'];
+        $whereConditions = self::FilterUserlistDataSubQuery($username, $states, $startdate, $enddate);
+        $startpoint = ($page * $limit) - $limit;
+        $data = parent::selectAll("users", '*', ["AND" => $whereConditions, "ORDER" => ["users.uid" => "DESC"], "LIMIT" => [$startpoint, $limit]]);
         $lastQuery = MedooOrm::openLink()->log();
+        $totalRecords = parent::count("users","*",["AND" => $whereConditions]);
         return ['data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery[0]];
     }
 
@@ -198,7 +158,7 @@ class UserManageModel extends MEDOOHelper
     public static function fetch_users_login_count(array $user_ids): array
     {
         try {
-            $db = parent::getLink();
+            $db = parent::openLink();
             $placeholders = [];
             $params = [];
             foreach ($user_ids as $user_id) {
@@ -217,7 +177,7 @@ class UserManageModel extends MEDOOHelper
     public static function count_subs(array $agent_ids): array
     {
         try {
-            $db = parent::getLink();
+            $db = parent::openLink();
             $placeholders = [];
             $params = [];
             foreach ($agent_ids as $agent_id) {
@@ -231,12 +191,16 @@ class UserManageModel extends MEDOOHelper
         } catch (Exception $e) {
             return ["status" => "error", "data" => "Internal Server Error."];
         }
+
+        // $totalRecords  = parent::selectAll('users', '*', ['AND' => $whereConditions]);
+        // return ['data' => $data, 'total' => count($totalRecords), 'sql' => $lastQuery[0]];
+
     }
 
     public static function fetch_agent_nickname(array $agent_ids): array
     {
         try {
-            $db = parent::getLink();
+            $db = parent::openLink();
             $placeholders = [];
             $params = [];
             foreach ($agent_ids as $key => $agent_id) {
@@ -274,10 +238,10 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function filter_user(array $filters = []): array
+    public static function filter_user($partnerID,array $filters = []): array
     {
         try {
-            $database = parent::getLink();
+            $database = parent::openLink($partnerID);
 
             // Add binding parameters
             $params = [":uid" => $filters["uid"]];
@@ -369,17 +333,17 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function searchUserData($filters): array
+    public static function searchUserData($partnerID,$filters): array
     {
         try {
-            $top_agents = self::filter_user($filters);
+            $top_agents = self::filter_user($partnerID,$filters);
             if (empty($top_agents["data"])) {
                 return ["status" => "success", "data" => []];
             }
             $top_agents = $top_agents["data"];
             $uids = array_column($top_agents, 'uid');
-            $login_counts = self::fetch_users_login_count($uids);
-            $subs_count = self::count_subs($uids);
+            $login_counts = self::fetch_users_login_count($partnerID,$uids);
+            $subs_count = self::count_subs($partnerID,$uids);
 
             return ["status" => "success", "data" => $top_agents, "login_counts" => $login_counts, "direct_subs_count" => $subs_count];
         } catch (Exception $e) {
@@ -406,10 +370,11 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function fetchUsersData(array $filters = [], $page = 1, $limit): array
+    public static function fetchUsersData($partnerID,array $filters = [], $page = 1, $limit): array
     {
         try {
-            $db = parent::getLink();
+            $db = parent::openLink();
+
             // Pagination setup
             $offset = ($page - 1) * $limit;
             // Add binding parameters
@@ -446,12 +411,14 @@ class UserManageModel extends MEDOOHelper
                 $params[':end_date'] = $end;
             }
 
+            
             $whereClause = empty($whereClause) ? " " : " WHERE  {$whereClause} ";
 
             $sql = "SELECT *,(SELECT COUNT(*) FROM users_test {$whereClause}) AS total_records FROM users_test {$whereClause}  ORDER BY uid DESC LIMIT :offset, :limit";
             $stmt = $db->query($sql, $params);
             $data = $stmt->fetchAll(PDO::FETCH_OBJ);
 
+            
             $uids = array_column($data, 'uid');
             $agent_ids = array_column($data, 'agent_id');
             $login_counts = self::fetch_users_login_count($uids);
@@ -480,360 +447,37 @@ class UserManageModel extends MEDOOHelper
         } catch (PDOException $pDOException) {
             return ['status' => 'error', 'message' => $pDOException];
         }
-    }
+        }
+    // public static function FilterUserlistDataSubQuery($username = '', $states = '', $from = '', $to = '')
+    // {
+    //     $conditions = [];
 
-    public static function fetch_user_ips($user_id)
-    {
-        $db = parent::getLink();
-        $sql = "SELECT ulog_id,login_date,login_time,ip,ip_state FROM `user_logs` WHERE uid=:user_id";
-        $stmt = $db->query($sql, [":user_id" => $user_id]);
-        return $stmt->fetch(PDO::FETCH_OBJ);
-    }
+    //     if (!empty($username) && $username != 'all') {
+    //         $conditions['users.uid'] = $username;
+    //     }
 
-    public static function deleteUserData(int $userId)
+    //     if (!empty($states) && $states != 'all') {
+    //         $conditions['users.state'] = $states;
+    //     }
+
+    //     if ($from != '' && $to != '') {
+    //         $conditions['users.date_created[<>]'] = [$from, $to];
+    //     } elseif ($from != '') {
+    //         $conditions['users.date_created[>=]'] = $from;
+    //     } elseif ($to != '') {
+    //         $conditions['users.date_created[<=]'] = $to;
+    //     }
+
+    //     return $conditions;
+    // }
+
+
+    public static function AddAgentData($datas)
     {
+
         try {
-            $db = parent::getLink();
-            $sql = "DELETE FROM users_test WHERE uid = :userid";
-            $stmt = $db->query($sql, [":userid" => intval($userId)]);
-            if ($stmt->rowCount() > 0) {
-                return ['status' => 'success', 'data' => $stmt->rowCount()];
-            } else {
-                return ['status' => 'success', 'data' => 0];
-            }
-        } catch (Exception $e) {
-            return ["status" => "error", "data" => "Internal Server Error."];
-        }
-    }
+            $inserAgentdata = parent::insert("users_test", $datas);
 
-    public static function fetchUserLotteries($user_id)
-    {
-        try {
-            $db = parent::getLink();
-            $sql = "SELECT lt_id,name,(SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id ) as blockedLotteries FROM `lottery_type`";
-            $stmt = $db->query($sql, [":user_id" => $user_id]);
-            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
-            if (empty($data)) {
-                return ["status" => "error", "data", "No Lotteries registered"];
-            }
-            $blocked_lotteries = $data[0]->blockedLotteries;
-            if ($blocked_lotteries != null && $blocked_lotteries != "*****") {
-                $data[0]->blockedLotteries = unserialize($blocked_lotteries);
-            }
-
-            return ["status" => "success", "data" => $data];
-        } catch (Exception $e) {
-            return ["status" => "error", "data" => "Internal Server Error." . $e->getMessage()];
-        }
-        // return ['lotteries' => $lotteries, 'blockedLotteries' => empty($data->blocked_lotteries) ? [] : unserialize($data->blocked_lotteries)];
-    }
-
-    public static function update_lottery_stat_for_user($user_id, $lottery_id)
-    {
-        try {
-            $db = parent::getLink();
-            $sql = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
-            $stmt = $db->query($sql, [":user_id" => $user_id]);
-            $data = $stmt->fetch(PDO::FETCH_OBJ);
-            $state = false;
-
-            $unserialized_lotteries = empty($data->blocked_lotteries) || $data->blocked_lotteries == "*****" ? [] : unserialize($data->blocked_lotteries);
-
-            if (empty($unserialized_lotteries)) {
-                $state = true;
-                $sql = "UPDATE `users_test` SET blocked_lotteries='" . serialize([$lottery_id]) . "' WHERE uid=:user_id";
-            } else {
-                if (in_array($lottery_id, $unserialized_lotteries)) {
-                    $unserialized_lotteries = array_diff($unserialized_lotteries, [$lottery_id]);
-                } else {
-                    $state = true;
-                    array_push($unserialized_lotteries, $lottery_id);
-                }
-
-                $sql = "UPDATE `users_test` SET blocked_lotteries='" . serialize($unserialized_lotteries) . "' WHERE uid=:user_id";
-            }
-            $stmt = $db->query($sql, [":user_id" => $user_id]);
-            if ($stmt->rowCount()) {
-                return ['status' => 'success', 'data' => $stmt->rowCount()];
-            }
-
-            print_r($unserialized_lotteries);
-            return ['status' => 'success', 'data' => 0];
-        } catch (Exception $e) {
-            return ['status' => 'error', 'msg' => 'Error Blocking Lottery for User.' . $e->getMessage()];
-        }
-    }
-
-    public static function fetchUserLogs($user_id, $page = 1, $limit = 100): array
-    {
-        try {
-            $db = parent::getLink();
-            $offset = ($page - 1) * $limit;
-            $sql =
-                "SELECT ulog_id,uid,ip,login_date,login_time,(SELECT COUNT(ulog_id) FROM user_logs WHERE uid=:user_id) as totalPages, CASE ip_state WHEN 1 THEN 'allowed' ELSE 'unknown' END AS ip_state FROM user_logs WHERE uid=:user_id LIMIT :offset, :limit";
-            $stmt = $db->query($sql, [":user_id" => $user_id, ":offset" => $offset, ":limit" => $limit]);
-            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
-            return ['status' => 'success', "data" => $data];
-        } catch (Exception $e) {
-            return ["status" => "error", "data" => "Internal Server Error."];
-        }
-    }
-
-    public static function block_user_ip($user_id, $ip_id)
-    {
-        try {
-            $db = parent::getLink();
-            $sql = "UPDATE user_logs SET ip_state = CASE ip_state WHEN 1  THEN 2 ELSE 1 END WHERE uid =:user_id AND ulog_id=:ulog_id";
-            $stmt = $db->query($sql, [":user_id" => $user_id, ":ulog_id" => $ip_id]);
-            if ($stmt->rowCount() > 0) {
-                return ['status' => 'success', "data" => $stmt->rowCount()];
-            } else {
-                return ['status' => 'success', 'data' => 0];
-            }
-        } catch (PDOException $e) {
-            return ['status' => 'error', 'msg' => 'Error Blocking Lottery for User.' . $e->getMessage()];
-        }
-    }
-
-    public static function FetchUserData(int $user_id)
-    {
-        try {
-            $db = parent::getLink();
-            $sql = "SELECT * FROM users_test WHERE uid = :user_id";
-            $stmt = $db->query($sql, [":user_id" => $user_id]);
-            $data = $stmt->fetch(PDO::FETCH_OBJ);
-            return ["status" => "success", "data" => $data];
-        } catch (Exception $e) {
-            return ["status" => "error", "data" => $e->getMessage()];
-        }
-    }
-
-    public static function updateUserInfo($user_id, $depositLimit, $withdrawalLimit, $rebate, $state, $dailyBettingTotalLimit)
-    {
-        try {
-            $db = parent::getLink();
-            $sql = "UPDATE  users_test SET rebate=:rebate, user_state =:user_state, daily_bet_limit=:daily_bet_limit, withdrawal_level=:withdrawal_level,recharge_level=:recharge_level  WHERE uid = :user_id";
-            $stmt = $db->query($sql, [
-                ":user_id" => intval($user_id),
-                ":rebate" => $rebate,
-                ":user_state" => $state,
-                ":daily_bet_limit" => $dailyBettingTotalLimit,
-                ":withdrawal_level" => $withdrawalLimit,
-                ":recharge_level" => $depositLimit,
-            ]);
-            $data = $stmt->rowCount();
-            return ["status" => "success", "data" => $data];
-        } catch (Exception $e) {
-            return ["status" => "error", "data" => $e->getMessage()];
-        }
-    }
-
-   
-
-    public static function FetchSubAgents($nicknames, $page, $limit)
-    {
-        if (!is_array($nicknames)) {
-            $nicknames = explode(",", $nicknames); // Split string into array
-        }
-        $placeholders = implode(',', array_fill(0, count($nicknames), '?'));
-
-        if (!is_array($nicknames)) {
-            $nicknames = explode(",", $nicknames);
-        }
-
-        $startpoint = ($page - 1) * $limit;
-
-        if (empty($nicknames)) {
-            return ['data' => [], 'total' => 0];
-        }
-
-        // Named placeholders for nicknames
-        $placeholders = implode(',', array_map(fn($index) => ":nickname$index", array_keys($nicknames)));
-
-        // SQL to fetch data
-        $sql = "
-        SELECT 
-            u.uid, 
-            u.username, 
-            u.email, 
-            u.contact, 
-            u.nickname, 
-            u.agent_name, 
-            u.balance, 
-            u.recharge_level, 
-            u.user_state, 
-            u.reg_type, 
-            u.agent_level,           
-            u.rebate, 
-            u.created_at, 
-            u.agent_id, 
-            u.last_login, 
-            u.account_type, 
-            GROUP_CONCAT(a.nickname) AS subordinates, 
-            COUNT(a.uid) AS sub_count
-        FROM 
-            users_test u
-        LEFT JOIN 
-            users_test a ON u.uid = a.agent_id
-        WHERE 
-            u.nickname IN ($placeholders)
-        GROUP BY 
-            u.uid
-        LIMIT :offset, :limit
-        ";
-
-        // SQL to count total records
-        $countSql = "
-            SELECT 
-                COUNT(DISTINCT u.uid) AS total_count
-            FROM 
-                users_test u
-            LEFT JOIN 
-                users_test a ON u.uid = a.agent_id
-            WHERE 
-                u.nickname IN ($placeholders)
-        ";
-
-        $pdo = (new Database())->openLink();
-
-        // Prepare and bind nicknames for the main query
-        $stmt = $pdo->prepare($sql);
-        foreach ($nicknames as $index => $nickname) {
-            $stmt->bindValue(":nickname$index", $nickname, PDO::PARAM_STR);
-        }
-        $stmt->bindValue(':offset', $startpoint, PDO::PARAM_INT);
-        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-        $stmt->execute();
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($data as &$row) {
-            $row['logincount'] = self::countUserLogs($row['uid']);
-        }
-        // Prepare and bind nicknames for the count query
-        $countStmt = $pdo->prepare($countSql);
-        foreach ($nicknames as $index => $nickname) {
-            $countStmt->bindValue(":nickname$index", $nickname, PDO::PARAM_STR);
-        }
-        $countStmt->execute();
-        $totalRecords = $countStmt->fetchColumn();
-
-        return ['data' => $data, 'total' => $totalRecords];
-    }
-    public function FetchUserAccountChange($userid, $page, $limit)
-    {
-        $startpoint = ($page - 1) * $limit;
-        $sql = "SELECT 
-                    transaction.*, 
-                    users_test.email, 
-                    users_test.contact, 
-                    users_test.reg_type, 
-                    COALESCE(users_test.username, 'N/A') AS username 
-                FROM 
-                    transaction   
-                LEFT JOIN 
-                    users_test ON users_test.uid = transaction.uid  
-                WHERE 
-                    transaction.uid = :uid  
-                ORDER BY 
-                    transaction.trans_id DESC 
-                LIMIT :offset, :limit";
-
-        $countSql = "SELECT COUNT(*) AS total_count 
-        FROM transaction 
-        LEFT JOIN users_test ON users_test.uid = transaction.uid  
-        WHERE transaction.uid = :uid";
-
-        $pdo = (new Database())->openLink();
-        $stmt = $pdo->prepare($sql);
-
-        // Bind parameters correctly
-        $stmt->bindValue(':offset', (int) $startpoint, PDO::PARAM_INT);
-        $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
-        $stmt->bindValue(':uid', (int) $userid, PDO::PARAM_INT);
-        $stmt->execute();
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Count total records
-        $countStmt = $pdo->prepare($countSql);
-        $countStmt->bindValue(':uid', (int) $userid, PDO::PARAM_INT);
-        $countStmt->execute();
-        $totalRecords = $countStmt->fetchColumn();
-
-        return ['data' => $data, 'total' => $totalRecords];
-    }
-
-    public function FilterUserAccountChange($subquery, $userid, $page, $limit)
-    {
-        $startpoint = ($page - 1) * $limit;
-
-        $sql = "SELECT 
-                    transaction.*, 
-                    users_test.email, 
-                    users_test.contact, 
-                    users_test.reg_type, 
-                    COALESCE(users_test.username, 'N/A') AS username 
-                FROM 
-                    transaction   
-                LEFT JOIN 
-                    users_test ON users_test.uid = transaction.uid  
-                 WHERE   $subquery AND transaction.uid = :uid
-                  ORDER BY  transaction.trans_id DESC 
-                LIMIT :offset, :limit";
-
-        $countSql = "SELECT COUNT(*) AS total_count 
-                     FROM transaction 
-                     LEFT JOIN users_test ON users_test.uid = transaction.uid  
-                    WHERE $subquery AND transaction.uid = :uid";
-
-        // Database connection
-        $pdo = (new Database())->openLink();
-
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':uid', (int) $userid, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', $startpoint, PDO::PARAM_INT);
-        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-        $stmt->execute();
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $countStmt = $pdo->prepare($countSql);
-        $countStmt->bindValue(':uid', (int) $userid, PDO::PARAM_INT);
-        $countStmt->execute();
-        $totalRecords = $countStmt->fetchColumn();
-
-        return ['data' => $data, 'total' => $totalRecords];
-    }
-
-    public static function FilterChangeDataSubQuery($states, $startdate, $enddate)
-    {
-        $filterConditions = [];
-
-        if (!empty($states)) {
-            $filterConditions[] = "transaction.order_type = '$states'";
-        }
-
-        if (!empty($startdate) && !empty($enddate)) {
-            $filterConditions[] = "DATE(transaction.dateTime) BETWEEN '$startdate' AND '$enddate'";
-        } elseif (!empty($startdate)) {
-            $filterConditions[] = "DATE(transaction.dateTime) = '$startdate'";
-        } elseif (!empty($enddate)) {
-            $filterConditions[] = "DATE(transaction.dateTime) = '$enddate'";
-        }
-
-        // Combine conditions into the final query
-        if (!empty($filterConditions)) {
-            $subQuery = implode(' AND ', $filterConditions);
-        }
-
-        // Add ordering and limit to the query (you can also parameterize order if needed)
-        //  $subQuery .= " ORDER BY dateTime DESC";
-
-        // Return the final subquery
-        return $subQuery;
-    }
-
- public static function AddAgentData($datas)
- {
-        try {
             $inserAgentdata = parent::insert("users_test", $datas);
             if ($inserAgentdata) {
                 self::UpdateAgentTable($datas);
@@ -841,15 +485,15 @@ class UserManageModel extends MEDOOHelper
             } else {
                 return "Failed";
             }
-         } catch (Exception $e) {
+        } catch (Exception $e) {
             return "Error: " . $e->getMessage();
         }
- }
+    }
 
     public static function FetchTopAgentData($page, $limit): array
     {
         // Calculate the starting point for pagination
-        $startpoint = $page * $limit - $limit;
+        $startpoint = ($page * $limit) - $limit;
         $sql = "
         SELECT 
             uid, username,email,contact, agent_name, balance, recharge_level, user_state, 
@@ -860,7 +504,8 @@ class UserManageModel extends MEDOOHelper
         LIMIT :startpoint, :limit
       ";
 
-        $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+        // $data = parent:: query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+      $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
         // Count the total records with the same filter (for pagination)
         $totalRecords = parent::count("users_test");
 
@@ -870,40 +515,43 @@ class UserManageModel extends MEDOOHelper
 
     public static function checkEmailExist($datas)
     {
-        return $agentemail = parent::selectAll("users_test", ["username", "uid"], ["username" => $datas]);
+        return  $agentemail = parent::selectAll("users_test", ["email", "uid"], ["email" => $datas]);
     }
 
     public static function UpdateAgentTable($userData)
     {
-        $dates = new DateTime();
-        $date = $dates->format('Y-m-d');
-        $time = $dates->format("H:i:s");
-        $agent = self::checkEmailExist($userData['email'])[0];
+
+        $dates  = new DateTime();
+        $date   = $dates->format('Y-m-d');
+        $time   = $dates->format("H:i:s");
+        $agent  =  self::checkEmailExist($userData['email'])[0];
         $agentid = $agent['uid'];
         $data = [
             "agent_id" => $agentid,
             "agent_name" => $userData["username"],
             "agent_email" => $userData["email"],
-            "agent_rebate" => $userData["rebate"],
-            "date_created" => $date,
+            "agent_rebate" =>  $userData["rebate"],
+            "date_created" =>  $date,
             "time_created" => $time,
         ];
         return $Agentdata = parent::insert("agents", $data);
     }
 
-    public static function validateRegister($datas)
+    public static function validateRegister($partnerID,$datas)
     {
+
         $errors = [];
-        $emailexist = self::checkEmailExist(trim($datas['agentname']));
+        // $emailexist = self::checkEmailExist($datas['agentemail']);
         $password = trim($datas['agentpassword'] ?? '');
         // $confirmPassword = trim($datas['agentpassword1'] ?? '');
-        //  $email = trim($datas['agentemail'] ?? '');
+        // $email = trim($datas['agentemail'] ?? '');
         $username = trim($datas['agentname'] ?? '');
 
-        // //email exit
-        if ($emailexist) {
-            $errors['emailexist'] = "Username already taken";
-        }
+
+        //email exit    
+        // if ($emailexist) {
+        //     $errors['emailexist'] = "Email already exists";
+        // }
         // Password validation
         if (empty($password)) {
             $errors['passwordRequired'] = "Password is required";
@@ -930,7 +578,7 @@ class UserManageModel extends MEDOOHelper
             $errors['passwordNumber'] = "Password must contain at least one number";
         }
 
-        // Email validation
+        // // Email validation
         // if (empty($email)) {
         //     $errors['email'] = "Email is required";
         // } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -952,18 +600,21 @@ class UserManageModel extends MEDOOHelper
         return $errors;
     }
 
-    public static function FetchRebateData()
+    public static function FetchRebateData($partnerID)
     {
-        return $res = parent::selectAll("rebate", ["rebate"], ["ORDER" => ["rebate_id" => "ASC"]]);
+        // return $res = parent::selectAll($partnerID,"rebate", ["rebate"], ["ORDER" => ["rebate_id" => "ASC"]]);
+        return  $res = parent::selectAll("rebate", ["rebate"], ["ORDER" => ["rebate_id" => "ASC"]]);
     }
 
-    public static function fetchquotaData($userrebate)
+    public static function fetchquotaData($partnerID,$userrebate)
     {
+        $data = parent::openLink($partnerID)->query("SELECT odds_group, rebate, quota, counts FROM rebate WHERE rebate <= :rebate", ['rebate' => $userrebate]);
+
         $data = parent::query("SELECT odds_group, rebate, quota, counts FROM rebate WHERE rebate <= :rebate", ['rebate' => $userrebate]);
         return $serializedData = json_encode($data);
     }
 
-    public static function generateRandomNickname()
+    public static   function generateRandomNickname()
     {
         // List of random words to pick from
         $adjectives = ['Swift', 'Bold', 'Clever', 'Brave', 'Mighty', 'Fierce', 'Silent', 'Electric', 'Lucky', 'Shiny'];
@@ -982,79 +633,73 @@ class UserManageModel extends MEDOOHelper
     //NOTE -
 
     ////////////// USERLIST LOGS -//////////
-    public static function FetchUserlogsData($page, $limit): array
+    public static function FetchUserlogsData($partnerID,$page, $limit): array
     {
-        $startpoint = $page * $limit - $limit;
+        $startpoint = ($page * $limit) - $limit;
         $sql = "
         SELECT 
             user_logs.*, 
-            users_test.email, users_test.contact, users_test.reg_type,users_test.username
+            users_test.email, users_test.contact, users_test.reg_type ,
+            COALESCE(users_test.username, 'N/A') AS username 
         FROM user_logs   
-        INNER JOIN users_test ON users_test.uid = user_logs.uid  
+        JOIN users_test ON users_test.uid = user_logs.uid  
         ORDER BY user_logs.ulog_id DESC 
         LIMIT :startpoint, :limit
      ";
 
-        $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+        // Execute the query with pagination parameters
+        $data = parent::openLink()->query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
         $totalRecords = parent::count('user_logs');
+
+    
+    // Execute the query with pagination parameters
+      $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+        $totalRecords  = parent::count('user_logs');
         return ['data' => $data, 'total' => $totalRecords];
     }
 
-    public static function Filteruserlogs($subQuery, $page, $limit)
+
+    public static function Filteruserlogs($page, $limit, $username, $startdate, $enddate)
     {
-        $startpoint = $page * $limit - $limit;
-        $sql = "
-        SELECT 
-            user_logs.*, 
-            users_test.email,
-            users_test.username,
-            users_test.contact,
-            users_test.reg_type
-        FROM user_logs
-        LEFT JOIN users_test ON users_test.uid = user_logs.uid
-        WHERE $subQuery
-        LIMIT :offset, :limit
-        ";
-
-        $countSql = " SELECT COUNT(*) AS total_count FROM user_logs WHERE $subQuery";
-        $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
-        $totalRecords = parent::query($countSql);
-        $totalRecords = $totalRecords[0]['total_count'];
-        //$lastQuery = MedooOrm::openLink()->log();
-        return ['data' => $data, 'total' => $totalRecords];
+        $whereConditions = self::FilterUserlogsDataSubQuery($username,  $startdate, $enddate);
+        $startpoint = ($page * $limit) - $limit;
+        $data = parent::selectAll("user_logs", '*', ["AND" => $whereConditions, "ORDER" => ["ulog_id" => "DESC"], "LIMIT" => [$startpoint, $limit]]);
+        $lastQuery = MedooOrm::openLink()->log();
+        $totalRecords  = parent::selectAll('user_logs', '*', ['AND' => $whereConditions]);
+        return ['data' => $data, 'total' => count($totalRecords), 'sql' => $lastQuery[0]];
     }
 
-    public static function FilterUserlogsDataSubQuery($username, $startdate, $enddate)
+    public static function FilterUserlogsDataSubQuery($username = '', $from = '', $to = '')
     {
         $filterConditions = [];
-
+   
         // Build filter conditions
         if (!empty($username)) {
             $filterConditions[] = "user_logs.uid = '$username'";
+        $conditions = [];
+
+        if (!empty($username) && $username != 'all') {
+            $conditions['user_logs.uid'] = $username;
         }
 
-        if (!empty($startdate) && !empty($enddate)) {
-            $filterConditions[] = "user_logs.login_date BETWEEN '$startdate' AND '$enddate'";
-        } elseif (!empty($startdate)) {
-            $filterConditions[] = "user_logs.login_date = '$startdate'";
-        } elseif (!empty($enddate)) {
-            $filterConditions[] = "user_logs.login_date = '$enddate'";
+        // if (!empty($states) && $states != 'all') {
+        //     $conditions['users.state'] = $states;
+        // }
+
+        if ($from != '' && $to != '') {
+            $conditions['user_logs.date_created[<>]'] = [$from, $to];
+        } elseif ($from != '') {
+            $conditions['user_logs.date_created[>=]'] = $from;
+        } elseif ($to != '') {
+            $conditions['user_logs.date_created[<=]'] = $to;
         }
 
-        // Combine conditions into the final query
-        if (!empty($filterConditions)) {
-            $subQuery = implode(' AND ', $filterConditions);
-        }
-
-         $subQuery .= " ORDER BY user_logs.login_date DESC";
-
-        return $subQuery;
+        return $conditions;
     }
-
+    }
     public static function fetchUserRebateList($uid)
     {
         $rebatelist = parent::selectOne("users_test", "*", ["uid" => $uid])['rebate_list'];
-        return $data = json_decode($rebatelist, true);
+        return json_decode($rebatelist);
     }
-
 }

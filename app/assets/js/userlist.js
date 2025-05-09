@@ -747,7 +747,7 @@ $(function () {
         $(".userquotaid").val(uid);
         // // console.log(uid);
 
-        $.post(`../admin/getuserrebate/${uid}/`, function (data) {
+        $.post(`../admin/getuserrebate/${uid}`, function (data) {
             const rebatelist = JSON.parse(data);
             let tableBody = document.getElementById("quotatable").getElementsByTagName("tbody")[0];
             while (tableBody.firstChild) {

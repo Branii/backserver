@@ -363,9 +363,9 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function  addAgent($partnerID,$data)
+    public function  addAgent($data)
     {
-        $this->view('exec/account_manage', ['partner_id' => $partnerID,'data' => $data,'flag' => 'addAgent']);
+        $this->view('exec/account_manage', ['data' => $data,'flag' => 'addAgent']);
         $this->view->render();
     }
 
@@ -472,9 +472,9 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function  getuserrebate($partnerID,$uid)
+    public function  getuserrebate($uid)
     {
-        $this->view('exec/account_manage', ['partner_id' => $partnerID,'uid' => $uid, 'flag' => 'getuserrebate']);
+        $this->view('exec/account_manage', ['uid' => $uid, 'flag' => 'getuserrebate']);
         $this->view->render();
     }
 
