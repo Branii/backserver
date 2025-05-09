@@ -128,7 +128,7 @@ if ($flag == "addAgent") {
             'nickname' => $nickname,
             'agent_name' => $parsedData['agentname'],
             'upassword' => password_hash($parsedData['agentpassword'], PASSWORD_BCRYPT),
-            'email' => "***** $uniqueId",
+            'email' => "*****$uniqueId",
             'rebate' => $parsedData['agentrebate'],
             'account_type' => $account_type,
             'created_at' => $dateTime,
@@ -139,7 +139,7 @@ if ($flag == "addAgent") {
             'agent_level' => '*****',
             'dob' => "*****",
             'country_code' => "*****",
-            'contact' => "***** $uniqueId",
+            'contact' => "*****$uniqueId",
             'contact_verified' => "0",
             'avatar' => "/assets/avators/profile.png",
             'agent_id' => "*****",
@@ -161,7 +161,7 @@ if ($flag == "addAgent") {
             'auth_type' => "*****",
         ];
 
-        $result = (new UserManageModel())->AddAgentData($partnerID,$datas) ?? [];
+        $result = (new UserManageModel())->AddAgentData($datas) ?? [];
     }
 
     echo json_encode($result);

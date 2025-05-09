@@ -31,7 +31,7 @@ class MEDOOHelper extends MedooOrm{
 
     public static function insert($table,$data) {
         parent::openLink()->insert($table, $data);
-        return parent::openLink()->id();
+        return parent::openLink();
     }
     
     public static function update($table, $data, $where) {
