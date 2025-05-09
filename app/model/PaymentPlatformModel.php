@@ -157,7 +157,7 @@ class PaymentPlatformModel extends MEDOOHelper{
     {
         $startpoint = $page * $limit - $limit;
         $query =
-         "SELECT bankid,name,bank_type,currency_type,
+         "SELECT bankid,name,bank_type,currency_type,timezone,
                  bank_status,max_deposit,max_withdrawal,created_at,approved_by
          FROM banks  ORDER BY banks.bankid DESC LIMIT :offset, :limit 
          ";
@@ -315,7 +315,7 @@ class PaymentPlatformModel extends MEDOOHelper{
         try {
              $startpoint = ($page - 1) * $limit;
              $sql = "
-             SELECT bankid, name, bank_type, currency_type, bank_status, 
+             SELECT bankid, name, bank_type, currency_type, bank_status,timezone, 
                     max_deposit, max_withdrawal, created_at, approved_by
              FROM banks
              WHERE $subquery

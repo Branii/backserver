@@ -32,12 +32,12 @@ $(function () {
     const paymentdata = (data) => { 
     
         let html = "";
-       
+  
          data.forEach((item) => {
          const bankstatus = item.bank_status === 'active' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Active</span>':item.bank_status=="inactive" ? '<span class="badge fw-semibold py-1 w-85 bg-info-subtle text-warning">Inactive</span>':'<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-info">Hidden</span>'
 
-        //  let timezone = item.timezone.split(" ");
-        //  timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
+         let timezone = item.timezone.split(" ");
+         timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
          
           html += `
                       <tr>
@@ -46,7 +46,8 @@ $(function () {
                           <td>${item.currency_type}</td>
                           <td>${formatMoney(item.max_deposit)}</td>
                           <td>${formatMoney(item.max_withdrawal)}</td>
-                          <td>${ item.created_at}</td>
+                          <td>${item.created_at}</td>
+                          <td>${timezone}</td>
                           <td>${item.approved_by}</td>
                           <td>${bankstatus}</td>
                           <td>
