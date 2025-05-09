@@ -5,8 +5,6 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     throw new \Exception("$errstr in $errfile on line $errline", $errno);
 });
 
-use Medoo\Medoo;
-
 class GameManageModel extends MEDOOHelper
 {
 

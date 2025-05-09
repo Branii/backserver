@@ -694,7 +694,6 @@ class adminController extends Controller {
 
     public function getLotteryGames(string $lotterId, string $tables){
         $this->view('exec/game_management',[
-         
             'flag' => 'getLotteryGames',
             'gameId' => $lotterId,
             'tables' => $tables

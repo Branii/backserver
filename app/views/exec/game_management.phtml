@@ -32,7 +32,6 @@ if ($flag == "getLotteryGames") {
     // $decodedUrl = urldecode($tableData);
     // $tables = json_decode($decodedUrl);
     $result = (new GameManageModel())->getLotteryGamesById($gameId,$tableData);
-
     echo json_encode([
         'bonus' => $result['data'],
     ]);
