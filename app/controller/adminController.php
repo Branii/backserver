@@ -326,11 +326,12 @@ class adminController extends Controller {
     public function userlistdata($partnerID,$uid,$recharge_level, $state, $start_date, $end_date,$pageNumber, $limit,$miscelleanous)
     {
       
+
         $this->view('exec/account_manage', ["partner_id" => $partnerID,'uid' => $uid,'recharge_level' => $recharge_level,'state' => $state, 'startdate' => $start_date, 'enddate' => $end_date,'page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
         $this->view->render();
     }
 
-    public function filteruserlist($pageNumber, $limit)
+    public function filteruserlist($partnerID,$pageNumber, $limit)
     {
         $this->view('exec/account_manage', [
             'partner_id' => $pageNumber,
@@ -341,10 +342,10 @@ class adminController extends Controller {
         ]);
         $this->view->render();
     }
-    public function searchUserListData($username,$recharge_level, $states , $startdate , $enddate,$miscelleanous)
+    public function searchUserListData($partnerID,$username,$recharge_level, $states , $startdate , $enddate,$miscelleanous)
     {
         $this->view('exec/account_manage', [
-            // 'partner_id' => $partnerID,
+            'partner_id' => $partnerID,
             'uid' => $username,
             'recharge_level' => $recharge_level,
             'state' => $states,
@@ -356,21 +357,21 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function fetchRebatedata()
+    public function fetchRebatedata($partnerID)
     {
-        $this->view('exec/account_manage', ['flag' => 'fetchRebatedata']);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,'flag' => 'fetchRebatedata']);
         $this->view->render();
     }
 
-    public function  addAgent($data)
+    public function  addAgent($partnerID,$data)
     {
-        $this->view('exec/account_manage', ['data' => $data,'flag' => 'addAgent']);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,'data' => $data,'flag' => 'addAgent']);
         $this->view->render();
     }
 
-    public function  fetchTopAgent($recharge_level,$state,$start_date,$end_date,$page, $limit)
+    public function  fetchTopAgent($partnerID,$recharge_level,$state,$start_date,$end_date,$page, $limit)
     {
-        $this->view('exec/account_manage', ["recharge_level"=>$recharge_level,"state" => $state,"start_date" => $start_date,"end_date" => $end_date,'page' => $page, 'limit' => $limit,'flag' => 'fetchTopAgent']);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,"recharge_level"=>$recharge_level,"state" => $state,"start_date" => $start_date,"end_date" => $end_date,'page' => $page, 'limit' => $limit,'flag' => 'fetchTopAgent']);
         $this->view->render();
     }
 
