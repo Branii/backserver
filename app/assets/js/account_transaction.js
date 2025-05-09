@@ -142,7 +142,7 @@ $(function () {
 
     async function fetchTrasaction(page, pageLimit) {
         try {
-            const response = await fetch(`../admin/transactiondata/${partnerID}/${page}/${pageLimit}`);
+            const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
             const data = await response.json();
             $("#mask").LoadingOverlay("hide");
             render(data.transaction);

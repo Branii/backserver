@@ -323,10 +323,9 @@ class adminController extends Controller {
 
       //NOTE -
     ////////////// USERLIST LIST -//////////
-    public function userlistdata($uid,$recharge_level, $state, $start_date, $end_date,$pageNumber, $limit,$miscelleanous)
+    public function userlistdata($partnerID,$uid,$recharge_level, $state, $start_date, $end_date,$pageNumber, $limit,$miscelleanous)
     {
       
-
         $this->view('exec/account_manage', ["partner_id" => $partnerID,'uid' => $uid,'recharge_level' => $recharge_level,'state' => $state, 'startdate' => $start_date, 'enddate' => $end_date,'page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
         $this->view->render();
     }

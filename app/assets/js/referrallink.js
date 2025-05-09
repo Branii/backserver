@@ -45,7 +45,7 @@ $(function () {
 
   async function fetchUserlinks(page, pageLimit) {
       try {
-          const response = await fetch(`../admin/userlinkdata/${partnerID}/${page}/${pageLimit}`);
+          const response = await fetch(`../admin/userlinkdata/${page}/${pageLimit}`);
           const data = await response.json();
           $("#maskreferal").LoadingOverlay("hide");
           renderuserlinks(data.userlinks);
@@ -58,7 +58,7 @@ $(function () {
 
   async function filterUserlinks(username, linkstart, linkenddate, currentPage, pageLimit) {
       try {
-          const response = await fetch(`../admin/filterUserlinks/${partnerID}/${username}/${linkstart}/${linkenddate}/${currentPage}/${pageLimit}`);
+          const response = await fetch(`../admin/filterUserlinks/${username}/${linkstart}/${linkenddate}/${currentPage}/${pageLimit}`);
           const data = await response.json();
           // console.log(response)
           //  return
