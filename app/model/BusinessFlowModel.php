@@ -89,9 +89,10 @@ class BusinessFlowModel extends MEDOOHelper
    }
    public static function getUserIdByUsername(string $key)
    {
-         if (empty($key)) {
-            return []; // Return empty if no key is provided
-         }
+      if (empty($key)) {
+         return []; // Return empty if no key is provided
+     }
+     $db = parent::openLink();
 
       $data = parent::query(
             "SELECT uid FROM users_test WHERE 

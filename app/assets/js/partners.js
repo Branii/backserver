@@ -1059,6 +1059,7 @@ const paymentdata = (data) => {
       html += `
               <tr>
                   <td>${item.name}</td>
+                  <td>${item.currency_type}</td>
                   <td>${item.currency}</td>
                   <td>${item.site_url}</td>
                   <td>${item.admin_site_url}</td>

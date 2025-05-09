@@ -127,7 +127,7 @@ if ($flag == "filtertransactions") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
-    $username = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : $uid;
+    $username = !empty($usernameCheck) ? $usernameCheck['uid'] : $uid;
     $sunquery = (new BusinessFlowModel())->FilterTransactionDataSubQuery($username, $orderid, $ordertype,$partneruid, $startdate, $enddate);
     $result   = (new BusinessFlowModel())->FilterTransactionData($sunquery, $page, $limit) ?? [];
     $response = [
@@ -206,7 +206,7 @@ if ($flag == "filterbetdata") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
-    $username = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : $uid;
+    $username = !empty($usernameCheck) ? $usernameCheck['uid'] : $uid;
     $result = (new BusinessFlowModel())->getAllUserBetByUserId($username, $betOrderID, $gametype, $betstate, $betstatus, $enddate, $startdate, $page, $limit);
     echo json_encode([
         'filterbet' =>  $result['data'],
@@ -236,7 +236,7 @@ if ($flag == "filterTrack") {
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
 
     $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
-    $username = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : $uid;
+    $username = !empty($usernameCheck) ? $usernameCheck['uid'] : $uid;
     $subquery = (new BusinessFlowModel())->FilterSubQuery($username, $trackstatus, $trackcode, $tracklotery, $enddate, $startdate);
     $result = (new BusinessFlowModel())->FilterTrackData($subquery, $page, $limit);
 

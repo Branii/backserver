@@ -166,7 +166,7 @@ let debounceTimeout = null;
 
 
         $.ajax({
-            url: `../admin/searchWinLossUser/${userID}/${lotteryID}/${startDate}/${endDate}/`,
+            url: `../admin/searchWinLossUser/${partnerID}/${userID}/${lotteryID}/${startDate}/${endDate}/`,
             type: "POST",
             beforeSend: function(){
                $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
