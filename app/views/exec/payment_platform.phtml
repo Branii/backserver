@@ -60,7 +60,7 @@ if ($flag == "filterpayments") {
      $subquery = PaymentPlatformModel::Platformsubquery($curencytypes,$stautspayment,$startdate,$enddate) ?? [];
      $result   = PaymentPlatformModel::FilterPlatformData($subquery,$page,$limit) ?? [];
     echo json_encode([
-        'payments' => $result['data'],
+        'payments' => $stautspayment,
         'totalPages' => ceil($result['total'] / $limit),
     ]);
 }

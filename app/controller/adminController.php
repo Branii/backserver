@@ -314,10 +314,10 @@ class adminController extends Controller {
 
 
     // -- Lottery Draw Records ------------------------
-    public function fetch_lottery_basic_params($lottery_id,$page)
+    public function fetch_lottery_basic_params($partnerID,$lottery_id,$page)
     {
     
-        $this->view('exec/lottery_basic_params', ['lottery_id' => $lottery_id,'page' => $page,'flag' => 'fetch-lottery-basic-params']);
+        $this->view('exec/lottery_basic_params', ['partner_id' => $partnerID,'lottery_id' => $lottery_id,'page' => $page,'flag' => 'fetch-lottery-basic-params']);
         $this->view->render();
     }
 
@@ -820,8 +820,8 @@ class adminController extends Controller {
 
 
          //Payment Platform
-        public function fetchPaymentPlatform($partnerID,$currency_types,$stautspayment,$startdepay,$enddepay,$page ,$limit){  
-            $this->view('exec/payment_platform', ["partner_id" => $partnerID,"currency_types" => $currency_types,"status" => $stautspayment,"startdate" => $startdepay,"enddate"=> $enddepay,"page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
+        public function fetchPaymentPlatform($page ,$limit){  
+            $this->view('exec/payment_platform', ["page" => $page, "limit" => $limit,'flag' => 'fetchPaymentPlatform']);
             $this->view->render();
          }
 
@@ -846,7 +846,6 @@ class adminController extends Controller {
         public function updateplatform($typecurrency,$maxiamounts,$minamount,$statecurrent,$paymentids)
         {
                 $this->view('exec/payment_platform', [
-         
                     'typecurrency' => $typecurrency,
                     'maxiamounts' => $maxiamounts,
                     'minamount' => $minamount,
@@ -862,8 +861,8 @@ class adminController extends Controller {
         {
                 $this->view('exec/payment_platform', [
                 'partner_id' => $partnerID,
-                'curency_types' => $curencytypes,
-                'status' => $stautspayment,
+                'curencytypes' => $curencytypes,
+                'stautspayment' => $stautspayment,
                 'startdate' => $startdepo,
                 'enddate' => $enddepo,
                 'page' => $page,
