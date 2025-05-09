@@ -238,7 +238,7 @@
     </div>
     <div class="px-4 py-3 border-bottom pager1">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width:140%;">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width:105%;">
                 <input type="text" id="transuser" class="form-control queryholdertransaction usernames transuser"
                     placeholder="<?= $translator['Search Username']; ?>" />
                 <input name="usernames" type="hidden" class="" />
@@ -263,6 +263,15 @@
                     <option value="10"><?= $translator['Red Envelope Receive']; ?></option>
                     <option value="11"><?= $translator['Bet Refund']; ?></option>
                 </select>
+
+                <select name="order_type" class="form-control form-select queryholdertransaction " id="ordertypetruans"
+                    data-bs-placeholder="Select Type">
+                    <option value="">-<?= $translator['Status']; ?>-</option>
+                    <option value="1"><?= $translator['Completed']; ?></option>
+                    <option value="2"><?= $translator['Pending']; ?></option>
+                    <option value="3"> <?= $translator['Failed']; ?></option>
+                </select>
+
 
                 <select name="lotteryname" class="form-control form-select queryholdertransaction selectpartner"> 
 
