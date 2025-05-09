@@ -48,7 +48,6 @@ if ($flag == "updateoddstotalbets") {
     $totalbetpercent =isset($this->viewData['totalbetpercent']) ? $this->viewData['totalbetpercent'] : '';
     $newodds = array_map('floatval', explode(',', $newodds));
     $newodds =   json_encode($newodds);
-   
    $result = (new GameManageModel())->UpdateOddsTotalbets($gameId,$gamemodel,$newodds,$oddpercent,$newtotalbet,$totalbetpercent);
     echo json_encode($result);
 }
@@ -57,22 +56,18 @@ if ($flag == "resettotalbet") {
     $gameId = isset($this->viewData['gameId']) ? $this->viewData['gameId'] : '';
     $gamemodel = isset($this->viewData['models']) ? $this->viewData['models'] : '';
     $newtotalbet =isset($this->viewData['newtotalbet']) ? $this->viewData['newtotalbet'] : '';
-    $totalbetpercent =isset($this->viewData['totalbetpercent']) ? $this->viewData['totalbetpercent'] : '';
-   
-   $result = (new GameManageModel())->ResetTotalbets($gameId,$gamemodel,$newtotalbet,$totalbetpercent);
+    $totalbetpercent =isset($this->viewData['totalbetpercent']) ? $this->viewData['totalbetpercent'] : '';   
+    $result = (new GameManageModel())->ResetTotalbets($gameId,$gamemodel,$newtotalbet,$totalbetpercent);
     echo json_encode($result);
 }
 
 if ($flag == "updategamestatus") {
     $gameId = isset($this->viewData['gameId']) ? $this->viewData['gameId'] : '';
     $gamemodel = isset($this->viewData['models']) ? $this->viewData['models'] : '';
-    $gametate =isset($this->viewData['gametate']) ? $this->viewData['gametate'] : '';
-   
+    $gametate =isset($this->viewData['gametate']) ? $this->viewData['gametate'] : ''; 
     $result = (new GameManageModel())->UpdateGameStatus($gameId,$gamemodel,$gametate);
     echo json_encode($result);
 }
-
-
 
 
 
@@ -83,8 +78,6 @@ if($flag == "getSpecificDraws") {
     $datefrom = isset($this->viewData['datefrom']) ? $this->viewData['datefrom'] : '';
     $dateto = isset($this->viewData['dateto']) ? $this->viewData['dateto'] : '';
     $result = (new GameManageModel())->filterGameDraws($page, $limit, $gameId, $datefrom, $dateto);
-    // echo json_encode( $result);
-    // exit;
     echo json_encode([
         'gameDraws' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit),
@@ -99,13 +92,9 @@ if ($flag == "getDraws") {
     $end_date = isset($this->viewData['end_date']) ?  $this->viewData['end_date'] : "";
     $issue_number = isset($this->viewData['issue_number']) ? $this->viewData['issue_number'] : "";
     $draw_status = isset($this->viewData['status']) ? $this->viewData['status'] : "";
-
-
     // echo json_encode(['game_id' => $game_id, 'limit' => $limit , 'page' => $page, 'start_date' => $start_date, 'end_date' => $end_date, 'issue_number' => $issue_number, 'draw_status' => $draw_status]);
     // return;
      if(empty($game_id))return ["status" => 'error', "data" => "Internal Server Error"];
-
-    
     $result = GameManageModel::getDrawTableInfo($game_id,$issue_number,$draw_status,$start_date,$end_date,$page,$limit);
     echo json_encode($result );
     

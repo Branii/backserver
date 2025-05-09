@@ -12,12 +12,8 @@ $page = isset($this->viewData['page']) ? max($this->viewData['page'],0)  : 0;
 $start_date = isset($this->viewData['start_date']) ? $this->viewData['start_date'] : "";
 $end_date = isset($this->viewData['end_date']) ?$this->viewData['end_date'] : "";
 $issue_number = isset($this->viewData['issue_number']) ? $this->viewData['issue_number'] : "";
-
-
-
-    $result = GameManageModel::getDrawTableInfo($game_id,$issue_number,$start_date,$end_date,$page,$limit);
-    echo json_encode($result );
-
+$result = GameManageModel::getDrawTableInfo($game_id,$issue_number,$start_date,$end_date,$page,$limit);
+echo json_encode($result );
 }
 
 
