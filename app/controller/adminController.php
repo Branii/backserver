@@ -490,9 +490,9 @@ class adminController extends Controller {
        
     }
     
-    public function filterChangeAccount($partnerID,$uid,$ordertype,$startdate,$enddate,$pageNumber,$limit){
+    public function filterChangeAccount($uid,$ordertype,$startdate,$enddate,$pageNumber,$limit){
         $this->view('exec/account_manage',[
-            'partner_id' => $partnerID,
+            // 'partner_id' => $partnerID,
             'uid' => $uid,
             'ordertype' => $ordertype,'startdate' => $startdate,
             'enddate' => $enddate, 'flag' => 'filterchange',
