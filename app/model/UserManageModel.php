@@ -118,7 +118,7 @@ class UserManageModel extends MEDOOHelper
 
     public static function fetch_user_hierarchy($user_id)
     {
-        $db = parent::getLink();
+        $db = parent::openLink();
         $sql = "SELECT uid,username,agent_level,account_type FROM users_test  WHERE uid=:user_id";
         $stmt = $db->query($sql, [":user_id" => intval($user_id)]);
         return $stmt->fetch(PDO::FETCH_OBJ);
@@ -127,7 +127,7 @@ class UserManageModel extends MEDOOHelper
     public static function fetch_user_rel($user_id): array
     {
         try {
-            $db = parent::getLink();
+            $db = parent::openLink();
 
             $agent_level_res = self::fetch_user_hierarchy($user_id);
             if (empty($agent_level_res) || $agent_level_res->agent_level === "*****") {
@@ -288,7 +288,7 @@ class UserManageModel extends MEDOOHelper
     public static function filter_top_agents(array $filters = [], $page, $limit): array
     {
         try {
-            $database = parent::getLink();
+            $database = parent::openLink();
 
             // Pagination setup
             $offset = ($page - 1) * $limit;

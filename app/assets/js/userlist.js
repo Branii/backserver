@@ -708,7 +708,7 @@ $(function () {
         // console.log(pageLimit);
         try {
             $.ajax({
-                url: `../admin/fetchTopAgent/${rechargeLevel}/${state}/${startDate}/${endDate}/${page}/${pageLimit}`,
+                url: `../admin/fetchTopAgent/${partnerID}/${rechargeLevel}/${state}/${startDate}/${endDate}/${page}/${pageLimit}`,
                 type: "POST",
                 beforeSend: function () {},
                 success: function (response) {
@@ -829,7 +829,7 @@ $(function () {
 
     const fetchsubagent = (userID, currentPage, pageLimit, element) => {
         $.ajax({
-            url: `../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
+            url: `../admin/agent_subordinate/${partnerID}/${userID}/${currentPage}/${pageLimit}`,
             type: "POST",
             beforeSend: function () {
                 //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -1376,7 +1376,7 @@ $(function () {
 
     const fetchUserRel = (userID) => {
         $.ajax({
-            url: `../admin/manageUser/${userID}/all/fetchUserRel`,
+            url: `../admin/manageUser/${partnerID}/${userID}/all/fetchUserRel`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {

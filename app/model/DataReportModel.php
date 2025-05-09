@@ -220,7 +220,7 @@ class DataReportModel extends MedooOrm
 public static function allSubs($partnerID,$agent_id, int $currentPage = 1, int $limit = 10, bool $addAgent = false) {
     try{
         $table_name = "users_test";
-        $db = parent::openLink($partnerID);
+        $db = parent::openLink();
         $offset = ($currentPage - 1) * $limit;
         $include_agent = $addAgent ? " || uid=:agent_id " : " AND uid !=:agent_id " ;
         // Construct raw SQL query
