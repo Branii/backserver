@@ -1,0 +1,30 @@
+<?php
+session_start();
+ini_set("display_error",1);
+
+$flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+
+if($flag == "twofaenable"){
+     $email = isset($this->viewData['email']) ?  $this->viewData['email'] : "";
+     $result = GoogleAuthenticateModel::UpdategoogleAuth($email) ?? [];
+    echo json_encode($result);
+ }
+
+ if($flag == "verifyotp"){
+   $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
+   $otpcode = isset($this->viewData['otpcode']) ?  $this->viewData['otpcode'] : "";
+   $result = GoogleAuthenticateModel::VerifyOtpCode($adminEmail,$otpcode) ?? [];
+  echo json_encode($result);
+}
+
+if($flag == "verifyloginotp"){
+   $adminEmail = (new Controller)->getSeesion("userauthmethosid");
+   $otpcodes = isset($this->viewData['otpcodes']) ? $this->viewData['otpcodes'] : "";
+   // $otpcodes = implode(explode(",",$otpcodes));
+   $result = GoogleAuthenticateModel::GetSecreteCode($adminEmail,$otpcodes) ?? [];
+   echo json_encode($result);
+}
+
+
+
+ 

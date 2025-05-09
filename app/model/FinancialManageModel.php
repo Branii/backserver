@@ -1,5 +1,5 @@
 <?php
-
+ date_default_timezone_set('Asia/Shanghai');
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     // Throw an Exception with the error message and details
     throw new \Exception("$errstr in $errfile on line $errline", $errno);
@@ -123,10 +123,6 @@ class FinancialManageModel extends MEDOOHelper
         //return  $amount;
         $trans_oderId = bin2hex(random_bytes(4));
         $depositid = $desposittype == 1 ? 'DEPO' . $trans_oderId : 'WITHD' . $trans_oderId;
-
-        // $usernames = $uid ?? [];
-
-        // foreach ($usernames as $username) {
         $Data = self::getUserDataByUsername($uid)[0];
 
         if ($desposittype == 1) {
@@ -142,9 +138,7 @@ class FinancialManageModel extends MEDOOHelper
             if ($amount > $Data['balance']) {
                 return "Insufficient balance";
                 exit();
-                //  continue; // Skip this iteration if balance is insufficient
             }
-
             // Subtract amount from balance for withdrawal
             $recharge_balance = (float) $Data['balance'] - (float) $amount;
         }
@@ -152,28 +146,27 @@ class FinancialManageModel extends MEDOOHelper
         $success = false; // Initialize a success fla
 
         if ($desposittype == 1) {
-            if (
-                self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance) &&
-                self::insertIntoDepositsNew($uid, $amount, $username) &&
-                self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
-            ) {
-                // Update user balance if all operations succeed
+            $depositSuccess = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance);
+            $newDepositSuccess = self::insertIntoDepositsNew($uid, $amount, $username);
+            $transactionSuccess = self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data);
+        
+            if ($depositSuccess && $newDepositSuccess && $transactionSuccess) {
                 self::updateBalance($uid, $recharge_balance);
                 $success = true;
             }
+        
         } elseif ($desposittype == 4) {
-            if (
-                self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance) &&
-                self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data) &&
-                self::insertIntoWithrawManage($uid, $amount, $username)
-            ) {
-                // Update user balance if all operations succeed
+            $depositSuccess = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance);
+            $transactionSuccess = self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data);
+            $withdrawManageSuccess = self::insertIntoWithdrawManage($uid, $amount, $username);
+        
+            if ($depositSuccess && $transactionSuccess && $withdrawManageSuccess) {
                 self::updateBalance($uid, $recharge_balance);
                 $success = true;
             }
         }
 
-        return $success ? "transaction success" : "transaction failed";
+        return $success ? "transaction failed" : "transaction success";
     }
 
     public static function insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance)
@@ -210,13 +203,14 @@ class FinancialManageModel extends MEDOOHelper
             'payment_reference' => $depositid,
             'provider' => 'MTN',
             'status' => 'success',
+            'charges' => '0',
             'approved_by' => $username,
             'desposit_channel' => '1',
         ];
         return $inserdata = parent::insert("deposit_new", $params);
     }
 
-    public static function insertIntoWithrawManage($uid, $amount, $username)
+    public static function insertIntoWithdrawManage($uid, $amount, $username)
     {
         $manualusername = "Enzerhub";
         $manualemail = "enzerhub@gmail.com";
@@ -242,12 +236,34 @@ class FinancialManageModel extends MEDOOHelper
             'review_completion_time' => $currentDateTime,
             'withdrawal_time' => $currentTime,
             'withdrawal_date' => $currentDate,
+            'withdrawal_timezone' => self::timezoneConverter(),
             'withdrawal_state' => '2',
             'review' => 'Done',
             'approved_by' => $username,
         ];
 
         return parent::insert("withdrawal_manage", $params);
+    }
+
+
+
+    public static function timezoneConverter(string $otherTzName = ""){
+        date_default_timezone_set("Africa/Accra");  
+        $serverZone = new DateTimeZone(date_default_timezone_get());
+        $otherTzName  = "Asia/Shanghai";
+        $otherZone  = new DateTimeZone($otherTzName);
+        $now        = new DateTime('now', $serverZone);
+    
+        $serverOffset = $serverZone->getOffset($now);
+        $otherOffset  = $otherZone->getOffset($now);
+        $diffSeconds  = $otherOffset - $serverOffset;
+    
+        $h = intdiv(abs($diffSeconds), 3600);
+        $m = abs(($diffSeconds % 3600) / 60);
+        $s = $diffSeconds >= 0 ? '+' : '-';
+    
+        return  $otherTzName."  ".sprintf('%s%02d', $s, $h, );
+        
     }
     public static function insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data)
     {
@@ -289,7 +305,7 @@ class FinancialManageModel extends MEDOOHelper
     {
         $startpoint = $page * $limit - $limit;
         $data = parent::query(
-            "SELECT deposit_new.*,users_test.email,users_test.contact,users_test.reg_type,COALESCE(users_test.username, 'N/A') AS username 
+            "SELECT deposit_new.*,users_test.email,users_test.contact,users_test.reg_type,users_test.username
              FROM deposit_new
              LEFT JOIN users_test ON users_test.uid = deposit_new.user_id
              ORDER BY deposit_new.deposit_id DESC 
@@ -298,7 +314,6 @@ class FinancialManageModel extends MEDOOHelper
         );
 
         $totalRecords = parent::count('deposit_new');
-        // $trasationIds = array_column($data, 'order_id');
         return ['data' => $data, 'total' => $totalRecords];
     }
 
@@ -387,12 +402,15 @@ class FinancialManageModel extends MEDOOHelper
     //NOTE -
     //////////////Withdrawal Records -//////////
     //
-    public static function WithrawalDataRecords($page = 1, $limit = 10): array
+    public static function WithrawalDataRecords($partnerID = 0,$page = 1, $limit = 10): array
     {
         try {
             $startpoint = ($page - 1) * $limit;
             $table_name = "withdrawal_manage";
-            $data = parent::query("SELECT *,(SELECT COUNT(*) FROM {$table_name}) AS total_records FROM withdrawal_manage ORDER BY withdrawalid DESC LIMIT :offset, :limit", ['offset' => $startpoint, 'limit' => $limit]);
+            $db = parent::openLink();
+            // $data = parent::query("SELECT *,(SELECT COUNT(*) FROM {$table_name}) AS total_records FROM withdrawal_manage ORDER BY withdrawalid DESC LIMIT :offset, :limit", ['offset' => $startpoint, 'limit' => $limit]);
+            $stmt = $db->query("SELECT *,(SELECT COUNT(*) FROM {$table_name}) AS total_records FROM withdrawal_manage ORDER BY withdrawalid DESC LIMIT :offset, :limit", [':offset' => $startpoint, ':limit' => $limit]);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return ["status" => "success", 'data' => $data];
         } catch (Exception $e) {
             return ["status" => "error", 'data' => "Internal Server Error."];
@@ -402,14 +420,12 @@ class FinancialManageModel extends MEDOOHelper
         // return ['data' => $data, 'total' => $totalRecords];
     }
 
-    // Muniru
-
-    public static function filterWidrlRecords($userData, $page = 1, $limit = 10): array
+    public static function filterWidrlRecords($partnerID,$userData, $page = 1, $limit = 10): array
     {
         try {
             $offset = ($page - 1) * $limit;
             $table_name = "withdrawal_manage";
-            $db = parent::getLink();
+            $db = parent::openLink();
 
             $where_clause = "";
             $params = ['offset' => (int) $offset, 'limit' => (int) $limit];

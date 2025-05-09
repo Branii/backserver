@@ -1,4 +1,8 @@
 $(function () {
+    const partnerID = $('#partner-holder').attr("data-partner-id");
+
+
+   
   function showToast(title, message, type) {
       $.toast({
           position: "bottom-right",
@@ -65,7 +69,8 @@ $(function () {
           const betOddsArray = Object.values(betOddsObject);
           const betodds = betOddsArray * item.multiplier * item.unit_stake;
           let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-
+          let timezone = item.timezone.split(" ");
+          timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
           htmls += `
                   <tr>
                       <td>${item.bet_code}</td>
@@ -74,16 +79,15 @@ $(function () {
                       <td>${item.game_type}</td>
                       <td>${gamemodel[item.game_model]}</td>
                       <td>${item.game_label}</td>
-                      <td>${item.bet_date + " / " + item.bet_time}</td>
-                       <td>${item.server_date + " / " + item.server_time}</td>
+                      <td>${item.server_date + " / " + item.server_time}</td>
+                      <td>${timezone}</td>
                       <td>${item.unit_stake}</td>
                       <td>${item.multiplier}</td>
                       <td>${formatMoney(item.bet_amount)}</td>
                       <td>${formatMoney(item.win_bonus)}</td>
-                       <td><i class='bx bxs-circle' style='color:${status[item.bet_status].color};font-size:8px;margin-right:5px;'></i>${status[item.bet_status].title}</td>
-                      <td>${states[item.state]}</td>
+                      <td><i class='bx bxs-circle' style='color:${status[item.bet_status].color};font-size:8px;margin-right:5px;'></i>${status[item.bet_status].title}</td>
+                      <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${states[item.state]}</span></td>
                       <td><i value='${item.bet_code}_${item.gt_id}' class='bx bx-info-circle viewbets' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
-                     
                   </tr>
               `;
       });
@@ -99,7 +103,7 @@ $(function () {
               htmlbet += `
           <td>${value}</td>
            <td class="${key === "user_selection" ? "bet_userSelection" : ""}">
-            <textarea class="form-control"   readonly style="height: 75px;">${obj[key]}</textarea>
+            <textarea class="form-control" readonly style="height: 75px;">${obj[key]}</textarea>
             </td>`;
           } else {
               htmlbet += `
@@ -116,7 +120,7 @@ $(function () {
       return htmlbet;
   };
   const langMap = {
-      "投注选择:": "Bet Selection",
+     "投注选择:": "Bet Selection",
   };
 
   const firstRowbet = {
@@ -156,23 +160,20 @@ $(function () {
   let pageLimit = 20;
 
   // Fetch lottery bet data
-  async function fetchLotteryBet(currentPagebet) {
+  async function fetchLotteryBet(currentPagebet,pageLimit) {
       try {
           const response = await fetch(`../admin/lotterydata/${currentPagebet}/${pageLimit}`);
           const data = await response.json();
-
           $("#maskbet").LoadingOverlay("hide");
-          const totalPages = data.totalPages;
           renderlottery(data.lotterybet);
-          renderbetPagination(totalPages, currentPagebet, (page) => fetchLotteryBet(page, pageLimit)); // Pass callback
-          document.getElementById("paging_infobet").innerHTML = `${translator["Page"]} ${currentPagebet} ${translator["Of"]} ${totalPages} ${translator["Page"]}`;
+          renderbetPagination(data.totalPages, currentPagebet, (currentPagebet) => fetchLotteryBet(currentPagebet, pageLimit)); // Pass callback
+          document.getElementById("paging_infobet").innerHTML = `${translator["Page"]} ${currentPagebet} ${translator["Of"]} ${data.totalPages} ${translator["Page"]}`;
       } catch (error) {
-          //   console.error("Error fetching data:", error);
+            console.error("Error fetching data:", error);
       }
   }
 
   fetchLotteryBet(currentPagebet, pageLimit);
-  // Render pagination dynamically
   function renderbetPagination(totalPages, currentPagebet, callback) {
       let pagLink = `<ul class='pagination justify-content-end'>`;
 
@@ -225,9 +226,8 @@ $(function () {
           });
       });
   }
-
   // Filter and fetch lottery bet data
-  async function filterbetdatas(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit) {
+  async function filterbetdata(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit) {
       $.post(`../admin/filterbetdata/${uidd}/${betOrderID}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`).done(function (response) {
           try {
               const data = JSON.parse(response);
@@ -236,7 +236,7 @@ $(function () {
                   $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
                   return;
               }
-              console.log(response);
+    
               $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
               if (data.filterbet.length < 1) {
                   let html = `
@@ -251,10 +251,9 @@ $(function () {
               }
               $("#maskbet").LoadingOverlay("hide");
               renderlottery(data.filterbet);
-              renderbetPagination(data.totalPages, currentPagebet, (page) => {filterbetdatas(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, page, pageLimit);
-              }); // Pass callback
+              renderbetPagination(data.totalPages,currentPagebet, (page) => {filterbetdata(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, page, pageLimit);}); // Pass callback
 
-              document.getElementById("paging_infobet").innerHTML =`${translator["Page"]} ${currentPagebet} ${translator["Of"]} ${totalPages} ${translator["Page"]}`
+              document.getElementById("paging_infobet").innerHTML =`${translator["Page"]} ${currentPagebet} ${translator["Of"]} ${data.totalPages} ${translator["Page"]}`
           } catch (error) {
               console.error("Error parsing JSON response:", error);
               $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
@@ -322,25 +321,22 @@ $(function () {
       // console.log(uidd)
       // console.log(enddates)
 
-      filterbetdatas(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit);
+      filterbetdata(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit);
 
       $(".loaderbet").removeClass("bx bx-check-double").addClass("bx bx-loader bx-spin");
   });
 
   async function fetchLotteryname() {
       try {
-          const response = await fetch(`../admin/fetchLotteryname/`); // Await the fetch call
+          const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
           if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
           }
-
           const data = await response.json(); // Parse JSON response
-          // console.log(data);
           let html = `<option value="">${translator['Lottery Type']}</option>`;
           data.forEach((lottery) => {
               html += `<option value="${lottery.gt_id}">${lottery.name}</option>`;
           });
-
           $(".selectlottery").html(html);
       } catch (error) {
           console.error("Error fetching data:", error);
@@ -426,7 +422,6 @@ $(function () {
           }
       });
   });
-
   // Function to fetch and display users
   function fetchbetUser(query) {
       $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {

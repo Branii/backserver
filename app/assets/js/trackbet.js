@@ -1,4 +1,6 @@
+
 $(function () {
+    const partnerID = $("#partner-holder").attr("data-partner-id");
     //NOTE -
     ////////////// LOTTERY BETTING-//////////
     function showToast(title, message, type) {
@@ -54,6 +56,9 @@ $(function () {
 
         data.forEach((item) => {
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+            let trackrule = item.track_rule == "no_rule" ? "No Rule" : item.track_rule == "stop_if_not_win" ? "Stop If Not Win" : item.track_rule == "stop_if_win" ? "Stop If Win" : "";
+            let timezone = item.timezone.split(" ");
+            timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
             htmls += `
                     <tr>
                         <td>${item.track_token}</td>
@@ -62,14 +67,12 @@ $(function () {
                         <td>${item.start_draw}</td>
                         <td>${item.tracked + "/" + item.total_bets}</td>
                         <td>${formatMoney(item.done_amount) + "/" + formatMoney(item.total_amount)}</td>                  
-                        <td>${trackstatus[item.track_status]}</td>
                         <td>${formatMoney(item.win_amount)}</td>
-                        <td>${translator[item.track_rule]}</td>
+                        <td>${trackrule}</td>
                         <td>${item.server_date + " / " + item.server_time}</td>
+                        <td>${timezone}</td>
+                        <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${trackstatus[item.track_status]}</span></td>
                         <td><i value='${item.track_token}_${item.game_type_id}' class='bx bx-info-circle trackinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
-                       
-                        
-                        
                     </tr>
                 `;
         });
@@ -131,7 +134,6 @@ $(function () {
         opening_time:`${translator["Draw Time"]}`,
         bet_status:  `${translator["Bet Status"]}`,
         user_selection: `${translator["Bet Selection"]}`,
-
     };
      
 
@@ -147,10 +149,9 @@ $(function () {
         try {
             const response = await fetch(`../admin/trackdata/${page}/${pageLimit}`);
             const data = await response.json();
-
+    
             $("#masktrack").LoadingOverlay("hide");
             rendertrack(data.trackbet);
-
             // Render pagination
             renderPaginationtrack(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchtrackdata(newPage, pageLimit));
             document.getElementById("paging_infotrack").innerHTML = `${translator["Page"]} ${page} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
@@ -171,15 +172,14 @@ $(function () {
             }
 
             ///console.log(response);
-
             $(".loadertrack").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             if (data.trackfilter.length < 1) {
                 let html = `
-            <tr class="no-results">
-                <td colspan="9">
-                    <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-                </td>
-            </tr>`;
+                <tr class="no-results">
+                    <td colspan="9">
+                        <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                    </td>
+                </tr>`;
                 $("#masktrack").LoadingOverlay("hide");
                 $("#trackdataContainer").html(html);
                 return;
@@ -303,7 +303,7 @@ $(function () {
 
     async function fetchLotteryname() {
         try {
-            const response = await fetch(`../admin/fetchLotteryname/`); // Await the fetch call
+            const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -349,12 +349,19 @@ $(function () {
                     6: translator["Void"],
                     7: translator["Refund"],
                 };
+
+                const states = {
+                    1: "Settled",
+                    2: "Unsettled",
+                    4: "Cancelled",
+                    7: translator["Refund"]
+                };
                 row.innerHTML = `
                 <td>${item.draw_number || "N/A"}</td>     
                 <td>${item.draw_period || "N/A"}</td> 
                 <td>${item.multiplier || "N/A"}</td>       
                 <td>${item.bet_amount || "N/A"}</td> 
-                <td>${item.trackrule || "N/A"}</td>
+                <td>${states[item.state]|| "N/A"}</td>
                 <td>${betstatus[item.bet_status] || "N/A"}</td>    
             `;
                 // Append the row to the table body
@@ -382,7 +389,6 @@ $(function () {
     }
 
     let debounceTimeout = null;
-
     $(document).ready(function () {
         // Event listener for keyup on #myInput
         $(document).on("keyup", "#trackinput", function () {
@@ -477,6 +483,20 @@ $(function () {
         });
     }
     tableScrolltrack();
+
+    function tableScrolltracker() {
+        const tableContainerTracker = document.querySelector(".trackertable");
+        const headerRowTrack = document.querySelector(".trackerheasrow");
+
+        tableContainerTracker.addEventListener("scroll", function () {
+            if (tableContainerTracker.scrollTop > 0) {
+                headerRowTracker.classList.add("sticky-trackerhead");
+            } else {
+                headerRowTracker.classList.remove("sticky-trackerhead");
+            }
+        });
+    }
+    tableScrolltracker();
 
     $(".clearitem").on("dblclick", function () {
         $(this).val(""); // Clears the input field

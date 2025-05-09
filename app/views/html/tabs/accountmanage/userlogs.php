@@ -218,6 +218,11 @@
         /* Darker handle color on hover */
     }
 
+    .arr {
+        color: #909aa9;
+        margin: 0px 1rem;
+    }
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -230,12 +235,14 @@
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-              <input type="text" id="userloginput" class="form-control  queryholderlogs" placeholder="Search usernames" />
+              <input type="text" id="userloginput" class="form-control  queryholderlogs" placeholder="<?= $translator['Search usernames']; ?>" />
                 <input name="usernames" type="hidden" class="userIdfinancexcx" />
                 <select class="form-control userlogdropdown" size="5" style="display: none;" id="userfinaceuserlogs">
               
                 </select>
-                
+                <select name="lotteryname" class="form-control form-select queryholderlogs selectpartner"> 
+
+               </select>
                 <input type="date" class="form-control queryholderlogs startdatelog" id="namete" aria-describedby="name"
                     placeholder="Name" />
 
@@ -278,6 +285,9 @@
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Login Time']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
                         </th>
                         <!-- <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Login Count']; ?></h6>

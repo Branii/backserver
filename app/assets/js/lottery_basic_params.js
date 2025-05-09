@@ -1,4 +1,5 @@
 $(() => {
+  const partnerID = $("#partner-holder").attr("data-partner-id");
   //      // Muniru <!---- FUNCTIONS BY YUSSIF MUNIRU ---------------->
   //         let max_prize_amt_per_bet = "";
   //         let max_win_per_issue = "";
@@ -399,8 +400,6 @@ $(() => {
 
   // fetch the lottery draw records on page read
 
-
-
   function showToast(title, message, type,duration) {
     
     $.toast({
@@ -528,7 +527,7 @@ $(() => {
   const lotteryID =  $("#lb-id-holder").val();
   const status    =  $("#lb-toggle-lottery").attr("data-status");
     $.ajax({
-      url: `../admin/updateLotteryStatus/${lotteryID}/${status}`,
+      url: `../admin/updateLotteryStatus/${partnerID}/${lotteryID}/${status}`,
       type: "POST",
       beforeSend: function () {
         $("#lottery-draw-loader").css({ display: "flex" });
@@ -769,7 +768,7 @@ const pageLimit = 20;
 const fetchLotteryBasicParams = (page,element) => {
   const lottery_id = $("#lottery").val();
   $.ajax({
-    url: `../admin/fetch_lottery_basic_params/${lottery_id}/${page}`,
+    url: `../admin/fetch_lottery_basic_params/${partnerID}/${lottery_id}/${page}`,
     type: "POST",
     beforeSend: function () {
 

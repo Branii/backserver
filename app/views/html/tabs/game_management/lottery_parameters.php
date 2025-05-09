@@ -503,6 +503,10 @@ input:checked + .lpd-slider:after {
   transform: translateX(3.1em);
 }
 
+.arr {
+      color: #909aa9;
+      margin: 0px 1rem;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -519,7 +523,7 @@ input:checked + .lpd-slider:after {
 
         </select>
         <select name="order_type" class="form-control form-select"  style= "margin-left:15px" id="allmodels"
-        data-bs-placeholder="Select Type">
+        data-bs-placeholder="Select Type<?= $translator['Game Model']; ?>">
         <!-- <option value="">-<?= $translator['Game Model']; ?>-</option>
         <option value="standard"><?= $translator['Standard']; ?></option>
         <option value="twosides"><?= $translator['Two Sides']; ?></option>
@@ -534,6 +538,9 @@ input:checked + .lpd-slider:after {
           <select name="order_type" class="form-control form-select" style= "margin-left:15px; display: none;" id="game_groups">
        
           </select>
+          <select name="lotteryname" class="form-control form-select  selectpartner" style= "margin-left:15px"> 
+
+         </select>
 
         <!-- <input type="date" class="form-control queryholder startdate" id="drawfrom"/>
 
@@ -616,7 +623,7 @@ input:checked + .lpd-slider:after {
             </table>
         </div>
 
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_twosides" style="height:530px;overflow-y:scroll;display:none;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_twosides" style="height:750px;overflow-y:scroll;display:none;">
             <table class="table text-nowrap mb-0 align-middle table-bordered" style="display:none;">
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">
@@ -657,7 +664,7 @@ input:checked + .lpd-slider:after {
             </table>
         </div>
 
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_boardgames" style="height:530px;overflow-y:scroll;display:none;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_boardgames" style="height:750px;overflow-y:scroll;display:none;">
             <table class="table text-nowrap mb-0 align-middle table-bordered" style="display:none;">
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">
@@ -698,7 +705,7 @@ input:checked + .lpd-slider:after {
             </table>
         </div>
 
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_fantan" style="height:530px;overflow-y:scroll;display:none;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbonus lpd-table-wrappers" id="lbp_fantan" style="height:750px;overflow-y:scroll;display:none;">
             <table class="table text-nowrap mb-0 align-middle table-bordered" style="display:none;">
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">

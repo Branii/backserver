@@ -206,7 +206,7 @@
     }
 
 
-    .tbl-trackhead {
+ .tbl-trackhead {
     position: sticky;
     top: 0;
   }
@@ -217,9 +217,20 @@
     background-color: red;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   }
+  .trackerhead {
+    position: sticky;
+    top: 0;
+  }
 
+  .sticky-trackerhead {
+    position: relative;
+    bottom: 1px;
+    background-color: red;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  }
+  
   .trackdown {
-        width: 19%;
+        width: 14%;
         position: absolute;
         background-color: #fff;
         color: #aaa;
@@ -228,7 +239,7 @@
         border-radius: 5px;
         padding: 10px;
         top: 90%;
-        z-index: 9999;
+        z-index: 9;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         display: none;
     }
@@ -340,6 +351,11 @@
         /* Rounded corners for the track */
     }
 
+    .arr {
+        color: #909aa9;
+        margin: 0px 1rem;
+    }
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -358,7 +374,7 @@
                         <!-- Options will be populated dynamically -->
                     </select>
                     <input name="usernames"  class="form-control queryholderlist clearitem"  id="trackcode" placeholder="<?=$translator['Search Track Id']?>"/>
-                 <select name="recharge" class="form-control form-select queryholderlist trackstatus"
+                   <select name="recharge" class="form-control form-select queryholderlist trackstatus"
                     data-bs-placeholder="Select Type">
                     <option value="">-<?=$translator['Track Status']?>-</option>
                     <option value="1"><?= $translator['Running'];?></option>
@@ -366,11 +382,15 @@
                     <option value="3"><?= $translator['Completed'];?></option>
                     <option value="4"><?= $translator['Stop If Win'];?></option>
                     <option value="5"><?= $translator['Stop If Not Win'];?></option>
-                  </select>
+                   </select>
 
-                <div class="custom-dropdown">
-                    <select name="lotteryname" class="form-control form-select queryholderlist tracklotery selectlottery" data-bs-placeholder="Select Type"> </select>
-                 </div>
+                    <select name="lotteryname" class="form-control form-select queryholderlist tracklotery selectlottery" data-bs-placeholder="Select Type">
+
+                    </select>
+
+                   <select name="lotteryname" class="form-control form-select queryholderlist selectpartner"> 
+
+                   </select>
 
                 <input type="date" class="form-control queryholderlist startdatetrack"  aria-describedby="name"
                     placeholder="Name" />
@@ -436,9 +456,7 @@
                   <th>
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Amount/Total Bet Amount']; ?></h6>
                   </th>
-                  <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Status']; ?></h6>
-                  </th>
+                 
                   <th>
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win/Loss']; ?></h6>
                   </th>
@@ -446,7 +464,13 @@
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Rule']; ?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Time']; ?></h6>
+                  </th>
+                  <th>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
+                  </th>
+                  <th>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Status']; ?></h6>
                   </th>
                 
                     <th>
@@ -505,26 +529,6 @@
 
 </div>
 
-<div class="modal fade" id="dangertrack" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content modal-filled " style="background-color:#F9F9F9">
-            <div class="modal-body p-4">
-                <div class="text-center text-danger">
-                    <i class="ti ti-hexagon-letter-x fs-7"></i>
-                    <h4 class="mt-2">Oh snap!</h4>
-                    <p class="mt-3" style="color:#aaa">
-                    All fields are required! Select one or more data fields to filter.
-                    </p>
-                    <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color:#ddd">
-                      Okay
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-</div>
-
 
 
 <!--manage user Quota -->
@@ -560,10 +564,10 @@
 
           </div>
         </form>
-    <hr>
-        <table class="table table-hover table-bordered text-nowrap mb-0" id="track">
-					<thead class="">
-						<tr class="">
+      <hr>
+        <table class="table table-hover table-bordered text-nowrap mb-0 trackertable" id="track">
+					<thead class="trackerhead">
+						<tr class="trackerheasrow">
 							<!-- <th class="font-weight-normal">#</th> -->
 							<th class="font-weight-normal"><?=$translator['Draw Results']?></th>
 							<th class="font-weight-normal"><?=$translator['Issue Number']?></th>
@@ -577,7 +581,6 @@
 					<tbody id='trackbetTableBody'>
 
 					</tbody>
-
 					<!-- <td></td>
 					<tr>
 						<td colspan="3"></td>

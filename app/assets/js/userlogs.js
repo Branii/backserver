@@ -1,4 +1,6 @@
 $(function () {
+    
+    const partnerID = $("#partner-holder").attr("data-partner-id");
   function showToast(title, message, type) {
       $.toast({
           position: "bottom-right",
@@ -18,10 +20,13 @@ $(function () {
           // // Extract city from IP information or use a fallback
           //  const city = ipInfo?.geoplugin_city || 'Unknown';
           let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+          let timezone = item.timezone.split(" ");
+          timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
           html += `
                   <tr>
                       <td>${typeof username === "string" || typeof username === "number" ? String(username).charAt(0).toUpperCase() + String(username).slice(1) : "N/A"}</td>
                       <td>${item.login_date + " / " + item.login_time}</td>
+                      <td>${timezone}</td>
                       <td>${item.ip}</td>
                       <td></td>
                       <td>${item.browser_info.substring(0, 12)}</td>

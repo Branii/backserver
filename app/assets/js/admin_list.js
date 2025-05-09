@@ -140,6 +140,7 @@ $(function () {
       const response = await fetch(
         `../admin/alladmins/${currentPage}/${pageLimit}`
       );
+
       const data = await response.json();
       renderAdmin(data.admins);
       // Render pagination
@@ -507,6 +508,11 @@ $(function () {
       19: { title: "NGP Win/Loss Report", content: "backup_recovery" },
       20: { title: "Annoucement List", content: "annouce" },
       21: { title: "User Notification", content: "usernoti" },
+      22: { title: "Add Payment Platform", content: "annouces" },
+      23: { title: "BensonGames", content: "usernotis" },
+      24: { title: "User Overview", content: "overview" },
+      23: { title: "Partners", content: "Partners" }
+      // 21: { title: "User Notification", content: "usernoti" },
       
     };
 
@@ -514,13 +520,15 @@ $(function () {
       1: { category: "Business flow", items: [1, 2, 3, 4] }, 
       2: { category: "Financial Management", items: [5, 6, 7] },
       3: { category: "Report Management", items: [8,19] },
-      4: { category: "User Management", items: [9, 10] },
+      4: { category: "User Management", items: [9,10,24] },
       5: { category: "Promotion Management", items: [11] },
       6: { category: "User Bank Management", items: [12] },
       7: { category: "Game Management", items: [14,15,16] },
       8: { category: "Agent Management", items: [13] },
       9: { category: "System Management", items: [17, 18] },
-      10: { category: "System Announcement", items: [20, 21] }
+      10: { category: "System Announcement", items: [20, 21] },
+      11: { category: "Payment Platform", items: [22] },
+      12: { category: "Partner Management", items: [23] },
     };
   
     let html = "";
@@ -546,7 +554,7 @@ $(function () {
                     html += `
                     <li id="tab1" class="item " value="" style="display: flex; justify-content: space-between;">
                       ${sidebarMenu[item].title}
-                      <input class="form-check-input chk" type="checkbox" value="${key + ' ' + item}" id="flexCheckDefault" ${checked}/>
+                      <input class="form-check-input chk" type="checkbox" value="${key + ' ' + item}"  ${checked}/>
                     </li>`;
                   })
                 }

@@ -1,5 +1,7 @@
 $(function () {
 
+
+    const partnerID = $("#partner-holder").attr("data-partner-id");
     function showToast(title, message, type) {
       $.toast({
         position: "bottom-right",
@@ -22,7 +24,8 @@ $(function () {
        
       data.forEach((item) => {
         const username = item.username == '*****' ? item.nickname : item.username;
-      
+        let timezone = item.timezone.split(" ");
+        timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
           html += `<tr>
                     <td>${username}</td>
                       <td>${item.bank_type}</td>
@@ -30,6 +33,7 @@ $(function () {
                       <td>${item.card_number}</td>
                       <td>${item.withdrawal_count}</td>
                       <td>${item.bind_time}</td>
+                      <td>${timezone}</td>
                       <td>${states[item.status]}</td> 
                     </tr>
                   `;
@@ -63,9 +67,9 @@ $(function () {
         const card_number = $("#bl-card-number").val();
         const status      = $("#bl-status").val();
         const response = await fetch(
-          `../admin/fetchbankcard/${uid}/${bank_type}/${card_number}/${status}/${pagebankcard}/${pageLimit}/1`
+          `../admin/fetchbankcard/${partnerID}/${uid}/${bank_type}/${card_number}/${status}/${pagebankcard}/${pageLimit}/1`
         );
-         const data = await response.json();
+     const data = await response.json();
           // console.log(response);
         //   return
 
@@ -230,7 +234,7 @@ const searchBankList = (currentPage) => {
       return;
   }
 $.ajax({
-      url: `../admin/fetchbankcard/${userID}/${bankType}/${cardNumber}/${state}/${currentPage}/${pageLimit}/1`,
+      url: `../admin/fetchbankcard/${partnerID}/${userID}/${bankType}/${cardNumber}/${state}/${currentPage}/${pageLimit}/1`,
       type: "POST",
       beforeSend: function(){
          $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -277,7 +281,7 @@ $.ajax({
 };
 
 // Function to fetch and display users
-const  fetchUsers = (query) =>{
+const  fetchUsers = (query) => {
   let optionsHtml = '';
 
   $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
@@ -296,15 +300,17 @@ const  fetchUsers = (query) =>{
           }
           for (let index = 0; index < response.length; index++) {
               const user = response[index];
-              const username = getDisplayName(user);
-              optionsHtml += `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
+              const username =user[user.regtype];
+              optionsHtml += username === undefined ? `<li class="name-items">No Data Found.</li>` : `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
           }
           $('#bl-names-wrapper').html(optionsHtml);
           $(".bl-users-wrapper").show();
        } catch (error) {
+          console.log(error);
           showToast("Error", "Request could not be completed, please try again.","error");
       }
   }).fail(function () {
+    console.log("Request failed");
     showToast("Error", "Request could not be completed, please try again.","error");
   });
 }

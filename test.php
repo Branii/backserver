@@ -246,130 +246,219 @@ try {
 //     'count' => $total // Total count of records
 // ]);
 
+// Set the timezone for the server (Berlin time)
+// $berlinTimeZone = new DateTimeZone('Europe/Berlin');
+// $serverDate = new DateTime('now', $berlinTimeZone);  // Get the current server time
+// $serverDateFormatted = $serverDate->format('Y-m-d / H:i:s');  // Format it
+
+// // Set the timezone for the local machine (e.g., UTC or any timezone)
+// $localTimeZone = new DateTimeZone('UTC');  // Adjust this to your local timezone
+// $localDate = new DateTime('now', $localTimeZone);  // Get the current local time
+// $localDateFormatted = $localDate->format('Y-m-d / H:i:s');  // Format it
+
+// // Output both times
+// echo "Server Time (Berlin): " . $serverDateFormatted . "<br>";
+// echo "Local Time (UTC): " . $localDateFormatted . "<br>";
+
+// // Calculate the difference between the two
+// $interval = $serverDate->diff($localDate);
+// echo "Time difference: " . $interval->format('%d days, %h hours, %i minutes') . "<br>";
  
-?>
-<!-- <input type="range" id="rangeSlider" min="0" max="100" value="100">
-<span id="rangeValue">100%</span>
+// ?>
+// <input type="range" id="rangeSlider" min="0" max="100" value="100">
+// <span id="rangeValue">100%</span>
 
-<input type="text" id="valueList" class="form-control" readonly>
+// <input type="text" id="valueList" class="form-control" readonly>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        let originalValues = [10, 20, 30];
+// <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+// <script>
+//     $(document).ready(function() {
+//         let originalValues = [10, 20, 30];
         
-        // Function to update values based on the percentage
-        function updateValues(percentage) {
-            let scaledValues = originalValues.map(value => (value * percentage / 100));
-            $("#valueList").val(`[${scaledValues.join(", ")}]`);
-        }
+//         // Function to update values based on the percentage
+//         function updateValues(percentage) {
+//             let scaledValues = originalValues.map(value => (value * percentage / 100));
+//             $("#valueList").val(`[${scaledValues.join(", ")}]`);
+//         }
 
-        // Initial load
-        updateValues(100);
+//         // Initial load
+//         updateValues(100);
 
-        // Update values on slider change
-        $("#rangeSlider").on("input", function() {
-            let percentage = $(this).val();
-            $("#rangeValue").text(percentage + "%");
-            updateValues(percentage);
-        });
-    });
-</script> -->
+//         // Update values on slider change
+//         $("#rangeSlider").on("input", function() {
+//             let percentage = $(this).val();
+//             $("#rangeValue").text(percentage + "%");
+//             updateValues(percentage);
+//         });
 
-<!-- 
-<input type='text' class='form-control oddsone' value='[10, 20, 30]' readonly>
-<input type="range" id="rangeSliderone" min="0" max="100" value="100">
-<span id="rangeValue">100%</span>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    // Get the initial values from the input box
-    let originalValues = JSON.parse($(".oddsone").val());
+//     static String getTimeDifferenceFromNow(DateTime dateTime) {
+//     Duration difference = DateTime.now().difference(dateTime);
+//     if (difference.inSeconds < 5) {
+//       return "Just now";
+//     } else if (difference.inMinutes < 1) {
+//       return "${difference.inSeconds}s ago";
+//     } else if (difference.inHours < 1) {
+//       return "${difference.inMinutes}m ago";
+//     } else if (difference.inHours < 24) {
+//       return "${difference.inHours}h ago";
+//     } else {
+//       return "${difference.inDays}d ago";
+//     }
+//   }
+//     });
+// </script>
 
-    // Function to update values based on the percentage
-    function updateValues(percentage) {
-        let scaledValues = originalValues.map(value => (value * percentage / 100).toFixed(0));
-        $(".oddsone").val(`[${scaledValues.join(", ")}]`);
-    }
+// <!-- 
+// <input type='text' class='form-control oddsone' value='[10, 20, 30]' readonly>
+// <input type="range" id="rangeSliderone" min="0" max="100" value="100">
+// <span id="rangeValue">100%</span>
 
-    // Initial load
-    updateValues(100);
+// <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+// <script>
+// $(document).ready(function() {
+//     // Get the initial values from the input box
+//     let originalValues = JSON.parse($(".oddsone").val());
 
-    // Update values on slider change
-    $("#rangeSliderone").on("input", function() {
-        let percentage = $(this).val();
-        $("#rangeValue").text(percentage + "%");
-        updateValues(percentage);
-    });
-});
-</script> -->
+//     // Function to update values based on the percentage
+//     function updateValues(percentage) {
+//         let scaledValues = originalValues.map(value => (value * percentage / 100).toFixed(0));
+//         $(".oddsone").val(`[${scaledValues.join(", ")}]`);
+//     }
+
+//     // Initial load
+//     updateValues(100);
+
+//     // Update values on slider change
+//     $("#rangeSliderone").on("input", function() {
+//         let percentage = $(this).val();
+//         $("#rangeValue").text(percentage + "%");
+//         updateValues(percentage);
+//     });
+// });
+// </script> -->
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Styled Table</title>
+  <meta charset="UTF-8">
+  <title>Testnet Bitcoin Payment</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+    }
+    #wallet-box {
+      margin: 20px auto;
+      width: 320px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      text-align: center;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #qrcode {
+      margin-top: 30px;
+      position: relative;
+      left: 42%;
+    }
+  </style>
 </head>
-<body class="p-6 bg-gray-100">
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-300">
-            <thead>
-                <tr class="bg-gray-200 text-gray-700">
-                    <th class="p-3 border">Game Category</th>
-                    <th class="p-3 border">Game Group</th>
-                    <th class="p-3 border">Game</th>
-                    <th class="p-3 border">Prize Level</th>
-                    <th class="p-3 border">Standard Odds</th>
-                    <th class="p-3 border">Bonus Range</th>
-                    <th class="p-3 border">Game Toggle</th>
-                    <th class="p-3 border">Bet Toggle</th>
-                    <th class="p-3 border">Bet Percentage</th>
-                    <th class="p-3 border">Max Bet</th>
-                    <th class="p-3 border">Bet Value</th>
-                    <th class="p-3 border">Series Multiplier</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="text-center border">
-                    <td class="p-2 border">Three Star</td>
-                    <td class="p-2 border">Direct Selection</td>
-                    <td class="p-2 border">
-                        <input type="radio" name="game1" class="w-5 h-5">
-                    </td>
-                    <td class="p-2 border">1000</td>
-                    <td class="p-2 border">
-                        <input type="range" class="w-20" value="100">
-                        <span>100%</span>
-                    </td>
-                    <td class="p-2 border">1000</td>
-                    <td class="p-2 border">
-                        <label class="inline-flex items-center cursor-pointer">
-                            <input type="checkbox" class="sr-only peer" checked>
-                            <div class="w-10 h-5 bg-gray-300 peer-checked:bg-green-500 rounded-full"></div>
-                        </label>
-                    </td>
-                    <td class="p-2 border">
-                        <label class="inline-flex items-center cursor-pointer">
-                            <input type="checkbox" class="sr-only peer" checked>
-                            <div class="w-10 h-5 bg-gray-300 peer-checked:bg-green-500 rounded-full"></div>
-                        </label>
-                    </td>
-                    <td class="p-2 border">
-                        <input type="range" class="w-20" value="80"> <span>80%</span>
-                    </td>
-                    <td class="p-2 border">1000</td>
-                    <td class="p-2 border">800</td>
-                    <td class="p-2 border">
-                        <button class="px-3 py-1 bg-gray-300 rounded">Big/Small</button>
-                        <button class="px-3 py-1 bg-orange-400 text-white rounded">Pole</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<body>
+
+  <h2>Send or Scan to Pay (Testnet)</h2>
+  <p>Scan the QR code or copy the testnet wallet address below</p>
+
+  <div id="wallet-box">
+    <input type="text" id="wallet-address" readonly>
+    <button onclick="copyWallet()">Copy Wallet Address</button>
+  </div>
+
+  <div id="qrcode">
+
+  </div>
+
+  <script>
+    // Replace this with your own Bitcoin testnet address
+    const walletAddress = "bc1q3dvptrtjvt9807875wvsnej2spvw07r9g8kwd7";
+
+    window.onload = function () {
+      document.getElementById("wallet-address").value = walletAddress;
+
+      new QRCode(document.getElementById("qrcode"), {
+        text: `bitcoin:${walletAddress}?amount=0.001`,
+        width: 256,
+        height: 256
+      });
+    };
+
+    function copyWallet() {
+      const input = document.getElementById("wallet-address");
+      input.select();
+      input.setSelectionRange(0, 99999); // Mobile
+      document.execCommand("copy");
+      alert("Wallet address copied!");
+    }
+  </script>
+
 </body>
 </html>
 
+<?php
+// 1. What timezone is the server set to?
+// $serverTzName = date_default_timezone_get();  
+// $serverTz     = new DateTimeZone($serverTzName);
 
+// // 2. Create a DateTime “now” in the server’s timezone
+// $now = new DateTime('now', $serverTz);
+
+// // 3. How many seconds is server-time ahead of (or behind) UTC?
+// $serverOffsetSeconds = $serverTz->getOffset($now);
+
+// // Convert to hours/minutes
+// $hours   = intdiv($serverOffsetSeconds, 3600);
+// $minutes = abs(($serverOffsetSeconds % 3600) / 60);
+
+// // Build a nice string like “+02:00” or “-05:30”
+// $sign = $serverOffsetSeconds >= 0 ? '+' : '-';
+// $offsetFormatted = sprintf('%s%02d', $sign, abs($hours));
+
+// 4. (Optional) Compare to another timezone, e.g. “America/New_York”
+// function diffFromServerTz(string $otherTzName = ""): string {
+//     date_default_timezone_set("Africa/Accra");  
+//     $serverZone = new DateTimeZone(date_default_timezone_get());
+//     $otherTzName  = "Asia/Shanghai";
+//     $otherZone  = new DateTimeZone($otherTzName);
+//     $now        = new DateTime('now', $serverZone);
+
+//     $serverOffset = $serverZone->getOffset($now);
+//     $otherOffset  = $otherZone->getOffset($now);
+//     $diffSeconds  = $otherOffset - $serverOffset;
+
+//     $h = intdiv(abs($diffSeconds), 3600);
+//     $m = abs(($diffSeconds % 3600) / 60);
+//     $s = $diffSeconds >= 0 ? '+' : '-';
+
+//     return  $otherTzName."  ".sprintf('%s%02d', $s, $h, );
+// }
+
+echo  diffFromServerTz();
+
+
+// use MaxMind\Db\Reader;
+// // open the local MMDB file
+// $reader = new Reader('/path/to/GeoLite2-City.mmdb');
+// $record = $reader->get('8.8.8.8');
+
+// // record['location']['time_zone'] holds the tz string
+// echo $record['location']['time_zone'];  // e.g. "America/Chicago"

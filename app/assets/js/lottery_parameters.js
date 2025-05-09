@@ -1,4 +1,5 @@
 $(function () {
+    const partnerID = $('#partner-holder').attr("data-partner-id");
     // var el = document.querySelector("#tabheadParams");
     // var chromeTabsParams = new ChromeTabs();
     // chromeTabsParams.init(el);
@@ -9,6 +10,7 @@ $(function () {
     // el.addEventListener("activeTabChange", ({ detail }) => onTabChanged(detail.tabEl));
     // el.addEventListener("tabAdd", ({ detail }) => setcurr(detail.tabEl));
     // el.addEventListener("tabRemove", ({ detail }) => closeTab(detail.tabEl));
+
 
     function showToast(title, message, type) {
         $.toast({
@@ -126,7 +128,6 @@ $(function () {
         let lotteryId = $("#allGameNamesLottery").val();
         let models = $("#allmodels").val();
         // console.log(lotteryId, models);
-
       if(models == "twosides" || models === "boardgames" || models === "fantan") return;
 
       getLotteryGames(lotteryId,models);

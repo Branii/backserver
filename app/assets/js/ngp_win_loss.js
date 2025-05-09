@@ -1,9 +1,9 @@
 $(() => {
+    const partnerID = $('#partner-holder').attr("data-partner-id");
     const BASE_URL = "../admin";
     let historyStack = [];
     let pagesStack = [];
     let pagingInfo = [];
-
     function showToast(title, message, type) {
         $.toast({
             position: "bottom-right",
@@ -60,7 +60,7 @@ $(() => {
     const fetchLotteryNames = () => {
         try {
             $.ajax({
-                url: `../admin/fetchLotteryname/`,
+                url: `../admin/fetchLotteryname/${partnerID}`,
                 type: "POST",
                 success: function (data) {
                     data = JSON.parse(data);
@@ -146,7 +146,7 @@ $(() => {
         endDate = endDate.length != 0 ? endDate : "all";
 
         $.ajax({
-            url: `../admin/searchWinLossUser/${userID}/${lotteryID}/${startDate}/${endDate}/`,
+            url: `../admin/searchWinLossUser/${partnerID}/${userID}/${lotteryID}/${startDate}/${endDate}/`,
             type: "POST",
             beforeSend: function () {
                 $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -319,8 +319,8 @@ $(() => {
                 response = typeof response === "string" ? JSON.parse(response) : response;
                 for (let index = 0; index < response.length; index++) {
                     const user = response[index];
-                    const username = getDisplayName(user);
-                    optionsHtml += `<li class="name-items ngp-name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
+                    const username = user[user.regtype];
+                    optionsHtml +=  username === undefined ?  `<li class="name-items ngp-name-items"> No Data Found.</li>`  :  `<li class="name-items ngp-name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
                 }
                 $("#ngp-user-list-wrapper").html(optionsHtml);
                 $(".ngp-usr-res-wrapper").show();
@@ -470,7 +470,8 @@ $(() => {
         startDate = startDate.length != 0 ? startDate : "all";
         endDate = endDate.length != 0 ? endDate : "all";
         $.ajax({
-            url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${currentPage}/${limit}`,
+            // url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${currentPage}/${limit}`,
+            url: `../admin/fetchAgentSubs/${partnerID}/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
             type: "POST",
             beforeSend: function () {
                 $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

@@ -215,6 +215,11 @@
   .maintext {
     color: #000;
   }
+
+  .arr {
+    color: #909aa9;
+    margin: 0px 1rem;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -271,31 +276,31 @@
         <thead class="text-dark fs-4 tbl-headerAdmin">
           <tr class="headrow">
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Avatar</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Avatar']; ?></h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Full Name</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Full Name']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Initials</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Initials']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Email Address</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Email Address']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Mobile Number</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Mobile Number']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Two Factor Enabled</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Activity Role</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Activity Role']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0">Account Status</h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Account Status']; ?></h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
@@ -319,18 +324,18 @@
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
         style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-        <button type="button" class="btn bg-white-subtle player" value="start">
+        <!-- <button type="button" class="btn bg-white-subtle player" value="start">
           <i class='bx bx-chevrons-left' style="font-size:20px"></i>
-        </button>
+        </button> -->
         <button type="button" class="btn bg-white-subtle player" value="left">
           <i class='bx bx-chevron-left' style="font-size:20px"></i>
         </button>
         <button type="button" class="btn bg-white-subtle player" value="right">
           <i class='bx bx-chevron-right' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle player" value="end">
+        <!-- <button type="button" class="btn bg-white-subtle player" value="end">
           <i class='bx bx-chevrons-right' style="font-size:20px"></i>
-        </button>
+        </button> -->
       </div>
     </span>
     <span class="top-center" aria-label=" navigation example">
@@ -383,7 +388,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content" style="padding:20px">
       <div class="d-flex justify-content-between">
-        <div>New Administrator</div>
+        <div><?= $translator['New Administrator']; ?></div>
         <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
       </div>
       <p></p>
@@ -447,7 +452,7 @@
                 <input type="text" class="form-control fullname" name="full_name" placeholder="Username" autocomplete="new-username" />
                 <label>
                   <!-- <i class="ti ti-mail me-2 fs-4 text-info"></i> -->
-                  <span class="border-start ps-3">Full Name</span>
+                  <span class="border-start ps-3"><?= $translator['Full Name']; ?></span>
                 </label>
               </div>
 
@@ -455,7 +460,7 @@
                 <input type="email" class="form-control fullemail" name="email" placeholder="Email" autocomplete="new-username" />
                 <label>
                   <!-- <i class="ti ti-mail me-2 fs-4 text-info"></i> -->
-                  <span class="border-start ps-3">Email address</span>
+                  <span class="border-start ps-3"><?= $translator['Email address']; ?></span>
                 </label>
               </div>
 
@@ -463,26 +468,26 @@
                 <input type="email" class="form-control fullcontact" name="phone_number" placeholder="Email" autocomplete="new-username" />
                 <label>
                   <!-- <i class="ti ti-mail me-2 fs-4 text-info"></i> -->
-                  <span class="border-start ps-3">Mobile Contact</span>
+                  <span class="border-start ps-3"><?= $translator['Mobile Contact']; ?></span>
                 </label>
               </div>
 
               <div class="form-floating mb-3">
                 <select id="user-role" class="form-select fullrole" name="role">
-                  <option value="super_admin">Super Admin</option>
-                  <option value="admin">Admin</option>
-                  <option value="moderator">Moderator</option>
-                  <option value="content_manager">Content Manager</option>
-                  <option value="support_staff">Support Staff</option>
-                  <option value="finance_manager">Finance Manager</option>
-                  <option value="agent_manager">Agent Manager</option>
-                  <option value="auditor">Auditor</option>
-                  <option value="limited">Limited Access Admin</option>
+                  <option value="super_admin"><?= $translator['Super Admin']; ?></option>
+                  <option value="admin"><?= $translator['Admin']; ?></option>
+                  <option value="moderator"><?= $translator['Moderator']; ?></option>
+                  <option value="content_manager"><?= $translator['Content Manager']; ?></option>
+                  <option value="support_staff"><?= $translator['Support Staff']; ?></option>
+                  <option value="finance_manager"><?= $translator['Finance Manager']; ?></option>
+                  <option value="agent_manager"><?= $translator['Agent Manager']; ?></option>
+                  <option value="auditor"><?= $translator['Auditor']; ?></option>
+                  <option value="limited"><?= $translator['Limited Access Admin']; ?></option>
                 </select>
 
                 <label>
                   <!-- <i class="ti ti-mail me-2 fs-4 text-info"></i> -->
-                  <span class="border-start ps-3">User Role</span>
+                  <span class="border-start ps-3"><?= $translator['User Role']; ?></span>
                 </label>
               </div>
 
@@ -490,12 +495,12 @@
               <div class="d-md-flex align-items-center">
                 <div class="form-check">
                   <!-- <input type="checkbox" class="form-check-input" id="sf2" value="check" /> -->
-                  <label class="form-check-label" for="sf2">Verify before submit</label>
+                  <!-- <label class="form-check-label" for="sf2"><?= $translator['Verify before submit']; ?></label> -->
                 </div>
                 <div class="mt-3 mt-md-0 ms-auto">
                   <button type="submit" class="btn hstack gap-6 fullsubmit" style="border:solid 1px #ccc">
                     <i class="ti ti-send me-2 fs-4"></i>
-                    Submit
+                  <?= $translator['Submit']; ?>
                   </button>
                 </div>
               </div>

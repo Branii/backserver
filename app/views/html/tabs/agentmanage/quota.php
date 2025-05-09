@@ -191,6 +191,10 @@
         box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
     }
 
+    .arr {
+        color: #909aa9;
+        margin: 0px 1rem;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -311,7 +315,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header d-flex align-items-center">
-                <div>  <h5>Quota</h5></div>
+                <div>  <h5><?= $translator['Quota']; ?></h5></div>
                 <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' ></i></div>
             </div>
             <div class="modal-body">
@@ -322,7 +326,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-3 contact-location">
-                                        <input type="text" id="c-quota" class="form-control" placeholder="Update all quota" />
+                                        <input type="text" id="c-quota" class="form-control" placeholder="<?= $translator['Update all quota']; ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -333,8 +337,8 @@
             <div class="modal-footer">
                 <div class="d-flex gap-6 m-0">
                     <!-- <button id="btn-add" class="btn btn-light">Add</button> -->
-                    <button id="btn-setallquota" class="btn btn-light" data-bs-dismiss="modal">Save</button>
-                    <button class="btn bg-danger-subtle text-danger" data-bs-dismiss="modal"> Discard
+                    <button id="btn-setallquota" class="btn btn-light" data-bs-dismiss="modal"><?= $translator['Save']; ?></button>
+                    <button class="btn bg-danger-subtle text-danger" data-bs-dismiss="modal"> <?= $translator['Discard']; ?>
                     </button>
                 </div>
 

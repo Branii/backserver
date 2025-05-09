@@ -487,6 +487,10 @@ section#tooltipp p {
     .show-user-rel:hover{
         font-weight: 900;
     }
+    .arr {
+        color: #909aa9;
+        margin: 0px 1rem;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -499,7 +503,7 @@ section#tooltipp p {
         <form action="" class="betform">
             <span class="top-left-btn">
                 <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
-                    <input type="text" id="selectuserlist" class="form-control queryholderuserlistz usernames" placeholder="Search Usernames" />
+                    <input type="text" id="selectuserlist" class="form-control queryholderuserlistz usernames" placeholder="<?= $translator['Search Username']; ?>" />
                     <input name="usernames" type="hidden" id="usrl-id-holder" />
                     <select class="form-control queryholderuserlist" size="5" style="display: none;" id="userlists">
                         <!-- Options will be populated dynamically -->
@@ -508,23 +512,25 @@ section#tooltipp p {
                     <select name="recharge" id="usrl-recharge-lvl"
                         class="form-control form-select queryholderuserlistz recharges"
                         data-bs-placeholder="Select Type">
-                        <option value="">-Recharge Level-</option>
-                        <option value="1">Level One</option>
-                        <option value="2">Level Two</option>
-                        <option value="3">Level Three</option>
+                        <option value="">-<?= $translator['Recharge Level']; ?>-</option>
+                        <option value="1"><?= $translator['Level One']; ?></option>
+                        <option value="2"><?= $translator['Level Two']; ?></option>
+                        <option value="3"><?= $translator['Level Three']; ?></option>
                     </select>
 
                     <select name="state" id="usrl-filter-state"
                         class="form-control form-select queryholderuserlistz states" data-bs-placeholder="Select Type">
-                        <option value="">-State-</option>
-                        <option value="1">Enable to run</option>
-                        <option value="2">Suspend Betting</option>
-                        <option value="3">Forbidden to log in</option>
-                        <option value="4">Block User</option>
+                        <option value="">-<?= $translator['State']; ?>-</option>
+                        <option value="1"><?= $translator['Enable to run']; ?></option>
+                        <option value="2"><?= $translator['Suspend Betting']; ?></option>
+                        <option value="3"><?= $translator['Forbidden to log in']; ?></option>
+                        <option value="4"><?= $translator['Block User']; ?></option>
                     </select>
+                    <select name="lotteryname" class="form-control form-select queryholderuserlistz selectpartner"> 
 
-                    <input name="startdate" id="usrl-start-date" type="date"
-                        class="form-control queryholderuserlistz startdateuser" aria-describedby="name"
+                   </select>
+
+                    <input name="startdate" id="usrl-start-date" type="date" class="form-control queryholderuserlistz startdateuser" aria-describedby="name"
                         placeholder="Name" />
 
                     <input name="enddate" id="usrl-end-date" type="date"
@@ -601,6 +607,9 @@ section#tooltipp p {
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Creation Time']; ?></h6>
                         </th>
                         <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
+                        </th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Login']; ?></h6>
                         </th>
                         <th>
@@ -669,7 +678,7 @@ section#tooltipp p {
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div>Add Agent</div>
+                        <div><?= $translator['Add Agent']; ?></div>
                         <i class="bx bx-message-square-x listclose"
                             style="color: #868c87; font-size: 25px; cursor: pointer;"></i>
                     </div>
@@ -680,10 +689,10 @@ section#tooltipp p {
                     <!-- Username Field -->
 
                     <div class="form-floating mb-3">
-                        <input name="agentname" type="text" class="form-control border" placeholder="Username" />
+                        <input name="agentname" type="text" class="form-control border" placeholder="<?= $translator['Username']; ?>" />
                         <label>
                             <i class="bx bx-user me-2 fs-4 text-infod"></i>
-                            <span class="border-start ps-3">Username</span>
+                            <span class="border-start ps-3"> <?= $translator['Username']; ?></span>
                         </label>
                     </div>
 
@@ -700,10 +709,10 @@ section#tooltipp p {
                     <!-- Password Field -->
                     <div class="form-floating mb-3">
                         <input name="agentpassword" type="password" id="agentpassword"
-                            class="form-control border border-infs" placeholder="Password" />
+                            class="form-control border border-infs" placeholder="<?= $translator['Password']; ?>" />
                         <label>
                             <i class="bx bx-lock me-2 fs-4 text-infoss"></i>
-                            <span class="border-start ps-3">Password</span>
+                            <span class="border-start ps-3"><?= $translator['Password']; ?></span>
                         </label>
                         <i class="bx bx-show fs-7 showpass" style="position:relative;left:95%;bottom:42px;"></i>
                     </div>
@@ -727,7 +736,7 @@ section#tooltipp p {
                         </select>
                         <label>
                             <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
-                            <span class="border-start ps-3">Rebate</span>
+                            <span class="border-start ps-3"><?= $translator['Rebate']; ?></span>
                         </label>
                     </div>
 
@@ -756,7 +765,7 @@ section#tooltipp p {
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Manage User Account</h5>
+                <h5 class="modal-title"> <?= $translator['Manage User Account']; ?></h5>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;"
                         data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
@@ -771,73 +780,74 @@ section#tooltipp p {
                 <!-- Personal Details Section -->
                 <div class="card border mb-4">
                     <div class="card-body">
-                        <h4 class="card-title">Personal Details</h4>
+                        <h4 class="card-title"> <?= $translator['Personal Details']; ?></h4>
                         <form id="personalDetailsForm">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="userName" class="form-label">Contact</label>
+                                        <label for="userName" class="form-label"><?= $translator['Contact']; ?></label>
                                         <input type="text" class="form-control" id="usrl-contact" placeholder="Contact"
                                             disabled />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="userEmail" class="form-label">Whatsapp</label>
+                                        <label for="userEmail" class="form-label"><?= $translator['Whatsapp']; ?></label>
                                         <input type="email" class="form-control" id="usrl-whatsapp"
                                             placeholder="whatsapp" disabled />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="userEmail" class="form-label">Username</label>
+                                        <label for="userEmail" class="form-label"><?= $translator['Username']; ?></label>
                                         <input type="email" class="form-control" id="usrl-username"
                                             placeholder="username" disabled />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="storeName" class="form-label">Account Type</label>
+                                        <label for="storeName" class="form-label"><?= $translator['Account Type']; ?></label>
                                         <input type="text" class="form-control" id="usrl-account-type"
                                             placeholder="Account Type" disabled />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="usrl-state" class="form-label">State</label>
+                                        <label for="usrl-state" class="form-label"><?= $translator['State']; ?></label>
                                         <select id="usrl-state" class="form-select">
-                                            <option value="1">Enable to Run</option>
-                                            <option value="2">Suspend Betting</option>
-                                            <option value="3">Forbidden to Log In</option>
-                                            <option value="5">Forbidden to Deposit</option>
-                                            <option value="6">Forbidden to Withdraw</option>
-                                            <option value="4">Block User</option>
+                                            <option value="1"><?= $translator['Enable to Run']; ?></option>
+                                            <option value="2"><?= $translator['Suspend Betting']; ?></option>
+                                            <option value="3"><?= $translator['Forbidden to Log In']; ?></option>
+                                            <option value="5"><?= $translator['Forbidden to Deposit']; ?></option>
+                                            <option value="6"><?= $translator['Forbidden to Withdraw']; ?></option>
+                                            <option value="4"><?= $translator['Block User']; ?></option>
 
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="usrl-rebate" class="form-label">Rebate (%)</label>
+                                        <label for="usrl-rebate" class="form-label"><?= $translator['Rebate (%)']; ?></label>
                                         <input type="text" class="form-control" id="usrl-rebate"
-                                            placeholder="rebate(%)" />
+                                            placeholder="<?= $translator['Rebate (%)']; ?>" />
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="userAddress" class="form-label">Remarks</label>
-                                        <input type="text" class="form-control" id="usrl-remarks" placeholder="remarks"
+                                        <label for="userAddress" class="form-label"><?= $translator['Remarks']; ?></label>
+                                        <input type="text" class="form-control" id="usrl-remarks" placeholder="<?= $translator['Remarks']; ?>"
                                             disabled />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="usrl-deposit-limit" class="form-label">Deposit Limit</label>
+                                        <label for="usrl-deposit-limit" class="form-label"><?= $translator['Deposit Limit']; ?></label>
                                         <input type="text" class="form-control" id="usrl-deposit-limit"
-                                            placeholder="Deposit Limit" />
+                                            placeholder="<?= $translator['Deposit Limit']; ?>" />
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="usrl-withdrawal-limit" class="form-label">Withdrawal Limit</label>
+                                        <label for="usrl-withdrawal-limit" class="form-label"><?= $translator['Withdrawal Limit']; ?></label>
                                         <input type="text" class="form-control" id="usrl-withdrawal-limit"
-                                            placeholder="Withdrawal Limit" />
+                                            placeholder="<?= $translator['Withdrawal Limit']; ?>" />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="usrl-daily-betting-total-limit" class="form-label">Daily Betting
-                                            Total Limit</label>
+                                        <label for="usrl-daily-betting-total-limit" class="form-label"><?= $translator['Daily Betting']; ?>
+                                        <?= $translator['Total Limit']; ?></label>
                                         <input type="text" class="form-control" id="usrl-daily-betting-total-limit"
-                                            placeholder="Daily Betting Total Limit" />
+                                            placeholder="<?= $translator['Daily Betting']; ?>
+                                        <?= $translator['Total Limit']; ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -848,41 +858,40 @@ section#tooltipp p {
                 <!-- Account Details Section -->
                 <div class="card border">
                     <div class="card-body">
-                        <h4 class="card-title">Account Security</h4>
+                        <h4 class="card-title"><?= $translator['Account Security']; ?></h4>
                         <form id="accountDetailsForm">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="usrl-login-password" class="form-label">Login Password</label>
+                                        <label for="usrl-login-password" class="form-label"><?= $translator['Login Password']; ?></label>
                                         <input type="password" class="form-control" id="usrl-login-password"
-                                            placeholder="Login Password" disabled />
+                                            placeholder="Login Password<?= $translator['Login Password']; ?>" disabled />
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="usrl-withdrawal-password" class="form-label">Withdrawal
-                                            Password</label>
+                                        <label for="usrl-withdrawal-password" class="form-label"><?= $translator['Withdrawal Password']; ?></label>
                                         <input type="password" class="form-control" id="usrl-withdrawal-password"
-                                            placeholder="Withdrawal Password" disabled />
+                                            placeholder="Withdrawal Password<?= $translator['Withdrawal Password']; ?>" disabled />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="usrl-accounting-binding" class="form-label">Account Binding</label>
+                                        <label for="usrl-accounting-binding" class="form-label"><?= $translator['Account Binding']; ?></label>
                                         <input type="password" class="form-control" id="usrl-accounting-binding"
-                                            placeholder="Account Binding" disabled />
+                                            placeholder="<?= $translator['Account Binding']; ?>" disabled />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="usrl-security" class="form-label">Security</label>
+                                        <label for="usrl-security" class="form-label"><?= $translator['Security']; ?></label>
                                         <input type="password" class="form-control" id="usrl-security"
-                                            placeholder="Security" disabled />
+                                            placeholder="<?= $translator['Security']; ?>" disabled />
                                     </div>
                                 </div>
 
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="update-user-infobtn">Save</button>
+                                <button type="button" class="btn btn-primary" id="update-user-infobtn"><?= $translator['Save']; ?></button>
                                 <button type="button" class="btn btn-secondary close-modal"
-                                    data-bs-dismiss="modal">Cancel</button>
+                                    data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -899,7 +908,7 @@ section#tooltipp p {
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="text-infos">Quota</h5>
+                        <h5 class="text-infos"><?= $translator['Quota']; ?></h5>
                         <i class="bx bx-message-square-x listclose"
                             style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
                             aria-label="Close"></i>
@@ -918,10 +927,10 @@ section#tooltipp p {
                                         <thead class="text-dark fs-4 tbl-headeruserquota">
                                             <tr class="headrowusequota">
 
-                                                <th class="font-weight-normal">Bonus Group</th>
-                                                <th class="font-weight-normal">Rebate(%)</th>
-                                                <th class="font-weight-normal">Quota Used</th>
-                                                <th class="font-weight-normal">Quota Set</th>
+                                                <th class="font-weight-normal"><?= $translator['Bonus Group']; ?></th>
+                                                <th class="font-weight-normal"><?= $translator['Rebate(%)']; ?></th>
+                                                <th class="font-weight-normal"><?= $translator['Quota Used']; ?></th>
+                                                <th class="font-weight-normal"><?= $translator['Quota Set']; ?></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -942,7 +951,7 @@ section#tooltipp p {
                             <button type="button" class="btn hstack gap-6 updatequotabtn"
                                 style="border: solid 1px #ccc;">
                                 <i class="bx bx-send loaderquota"></i>
-                                Submit
+                                <?= $translator['Submit']; ?>
                             </button>
                         </div>
                     </div>
@@ -953,8 +962,6 @@ section#tooltipp p {
     <!-- /.modal-dialog -->
 </div>
 
-
-
 <div id="usl-deactivate-user-dialog" class="modal fade " tabindex="-1" aria-modal="true" role="dialog"
     style="display: none;top: 363px;left: 191px;">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -963,7 +970,7 @@ section#tooltipp p {
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="text-infos" style="color: #e60e38;">Deactivate User</h5>
+                        <h5 class="text-infos" style="color: #e60e38;"> <?= $translator['Deactivate User ']; ?></h5>
                         <i class="bx bx-message-square-x usrl-listclose"
                             style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
                             aria-label="Close"></i>
@@ -975,7 +982,7 @@ section#tooltipp p {
 
                     <div class="modal-body scrollable-container">
                         <div style="overflow: hidden;text-align: center;font-size: large;font-weight: bold;">
-                            <p>Are you sure you want to <span style="color: #e60e38;">Deactivate Agent 1 ? </span></p>
+                            <p>Are you sure you want to <?= $translator['Deactivate User ']; ?><span style="color: #e60e38;">Deactivate Agent 1 ? <?= $translator['Deactivate User ']; ?></span></p>
                         </div>
                     </div>
                     <div class="d-md-flex align-items-center">
@@ -991,7 +998,6 @@ section#tooltipp p {
         </div>
     </div>
 </div>
-
 
 <div id="usl-lottery-name-modal" class="modal fade" tabindex="-1" aria-modal="true" role="dialog"
     style="display: none;">
@@ -1039,7 +1045,6 @@ section#tooltipp p {
     </div>
 </div>
 
-
 <div id="usl-delete-user-dialog" class="modal fade " tabindex="-1" aria-modal="true" role="dialog"
     style="display: none;top: 363px;left: 191px;">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -1076,7 +1081,6 @@ section#tooltipp p {
         </div>
     </div>
 </div>
-
 
 <div id="usl-whitelist-ips-modal" class="modal fade " tabindex="-1" aria-modal="true" role="dialog"
     style="display: none;">
@@ -1222,9 +1226,7 @@ section#tooltipp p {
                                             placeholder="Name" />
                                     </div>
                                 </span>
-                                <span class="toplist-center" aria-label=" navigation example">
-                                    <!--enter is free-->
-                                </span>
+                                <span class="toplist-center" aria-label=" navigation example"></span>
                                 <span class="topplist-right" id="paginations" aria-label="Page navigation example">
                                     <div class="btn-group mb-2" role="group" aria-label="Basic example"
                                         style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
@@ -1267,7 +1269,7 @@ section#tooltipp p {
                                                 <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
                                             </th>
                                             <th>
-                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Stake Time']; ?>
+                                                <h6 class="fs-4 fw-semibold mb-0">Transaction Time
                                                 </h6>
                                             </th>
                                             <th>

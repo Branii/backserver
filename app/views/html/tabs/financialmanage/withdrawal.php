@@ -194,6 +194,11 @@
     background-color: red;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   }
+
+  .arr {
+    color: #909aa9;
+    margin: 0px 1rem;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -205,29 +210,22 @@
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 165%;">
-                <input type="text" id="mytrans" class="form-control widrl-queryholdertrans widrl-username mytrans" placeholder="Search usernames">
+                <input type="text" id="mytrans" class="form-control widrl-queryholdertrans widrl-username mytrans" placeholder="<?= $translator['Search usernames']; ?>">
                 <input name="usernames" type="hidden"  id="widrl-userID" class="userIdtrans widrl-queryholdertrans">
                 <select class="form-control trackdown" size="5" style="display: none; width: 11%;background:#fff;" id="users-options-wrapper" ></select>
-                <input type="text" class="form-control widrl-queryholdertrans orderid" id="widrl-ID" aria-describedby="name" placeholder="Search Withdrawal ID">
+                <input type="text" class="form-control widrl-queryholdertrans orderid" id="widrl-ID" aria-describedby="name" placeholder=" <?= $translator['Search Withdrawal ID']; ?>">
 
-                <div class="custom-dropdown" style="width: 12%; margin-right: 5px;">
-                    <select name="lotteryname" id="widrl-channels" class="form-control form-select queryholderlist tracklotery " data-bs-placeholder="Select Type">
-                        <option value="0">Withdrawal Channels</option>
-                        <option value="3">Momo</option>
-                        <option value="2">Bank</option>
-                        <option value="5">Crypto</option>
-                        <option value="4">Manual</option>
-                    </select>
-                 </div>
-                <div class="custom-dropdown" style="width: 11%; margin-right: 5px;">
-                    <select name="lotteryname" id="widrl-status" class="form-control form-select queryholderlist tracklotery " data-bs-placeholder="Select Type">
-                        <option value="0">Status</option>
-                        <option value="1">Pending</option>
-                        <option value="2">Success</option>
-                        <option value="3">Failed</option>
-                    </select>
-                 </div>
+                <select name="lotteryname" id="widrl-channels" class="form-control form-select widrl-queryholdertrans tracklotery " data-bs-placeholder="Select Type">
+                    <option value="0"><?= $translator['Withdrawal Channels']; ?></option>
+                    <option value="3"><?= $translator['Momo']; ?></option>
+                    <option value="2"><?= $translator['Bank']; ?></option>
+                    <option value="5"><?= $translator['Crypto']; ?></option>
+                    <option value="4"><?= $translator['Manual']; ?></option>
+                </select>
+                <select name="lotteryname" class="form-control form-select widrl-queryholdertrans selectpartner"> 
 
+                </select>
+                 
                 <input type="date"  class="form-control widrl-queryholdertrans wdrl-startdate" id="widrl-startDate" aria-describedby="name" placeholder="Start Date">
                 <input type="date"  class="form-control widrl-queryholdertrans wdrl-enddate"   id="widrl-endDate" aria-describedby="name" placeholder="End Date">
 
@@ -298,6 +296,9 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Withdrawal Application Time']; ?></h6>
                         </th>
                         <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Timezone/hrs</h6>
+                        </th>
+                        <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
                         </th>
                         <th>
@@ -337,41 +338,20 @@
 
         </span>
         <span class="top-right-btn"  aria-label="Page navigation example">
-        <select class="left-element form-control numrowstrans" id="widrl-numrowstans" style="font-size: 12px;">
+           <select class="left-element form-control numrowstrans" id="widrl-numrowstans" style="font-size: 12px;">
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
                 <option value="50">50</option>
             </select>
-        <span class="right-element" id="paginationwithdraw">
-            <!--Dynamic pagination-->
-        </span>
+            <span class="right-element" id="paginationwithdraw">
+                <!--Dynamic pagination-->
+            </span>
 
         </span>
 
     </div>
 
-</div>
-
-<div class="modal fade" id="danger-depobsits" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content modal-filled " style="background-color:#F9F9F9">
-            <div class="modal-body p-4">
-                <div class="text-center text-danger">
-                    <i class="ti ti-hexagon-letter-x fs-7"></i>
-                    <h4 class="mt-2">Oh snap!</h4>
-                    <p class="mt-3" style="color:#aaa">
-                        All fields are required!
-                        Select one or more data fields to filter.
-                    </p>
-                    <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color:#ddd">
-                        Okay
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
 </div>
 
 

@@ -18,6 +18,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Sonata\\GoogleAuthenticator\\' => 27,
         ),
         'P' => 
         array (
@@ -27,6 +28,9 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             'ModernPHPException\\' => 19,
             'Medoo\\' => 6,
+            'MaxMind\\WebService\\' => 19,
+            'MaxMind\\Exception\\' => 18,
+            'MaxMind\\Db\\' => 11,
         ),
         'J' => 
         array (
@@ -35,6 +39,8 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'G' => 
         array (
             'GrahamCampbell\\ResultType\\' => 26,
+            'Google\\Authenticator\\' => 21,
+            'GeoIp2\\' => 7,
         ),
         'D' => 
         array (
@@ -42,6 +48,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         ),
         'C' => 
         array (
+            'Composer\\CaBundle\\' => 18,
             'Codedungeon\\PHPCliColors\\' => 25,
         ),
     );
@@ -59,6 +66,10 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
+        'Sonata\\GoogleAuthenticator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sonata-project/google-authenticator/src',
+        ),
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
@@ -71,6 +82,18 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             0 => __DIR__ . '/..' . '/catfan/medoo/src',
         ),
+        'MaxMind\\WebService\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/maxmind/web-service-common/src/WebService',
+        ),
+        'MaxMind\\Exception\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/maxmind/web-service-common/src/Exception',
+        ),
+        'MaxMind\\Db\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/maxmind-db/reader/src/MaxMind/Db',
+        ),
         'Josantonius\\Session\\' => 
         array (
             0 => __DIR__ . '/..' . '/josantonius/session/src',
@@ -79,9 +102,21 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
         ),
+        'Google\\Authenticator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sonata-project/google-authenticator/src',
+        ),
+        'GeoIp2\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/geoip2/geoip2/src',
+        ),
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+        'Composer\\CaBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/ca-bundle/src',
         ),
         'Codedungeon\\PHPCliColors\\' => 
         array (
@@ -92,6 +127,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
     public static $classMap = array (
         'AdminModel' => __DIR__ . '/../..' . '/app/model/AdminModel.php',
         'AgentManageModel' => __DIR__ . '/../..' . '/app/model/AgentManageModel.php',
+        'AnnouncementModel' => __DIR__ . '/../..' . '/app/model/AnnouncementModel.php',
         'App' => __DIR__ . '/../..' . '/app/core/App.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'BusinessFlowModel' => __DIR__ . '/../..' . '/app/model/BusinessFlowModel.php',
@@ -101,10 +137,13 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'Database' => __DIR__ . '/../..' . '/app/database/Database.php',
         'FinancialManageModel' => __DIR__ . '/../..' . '/app/model/FinancialManageModel.php',
         'GameManageModel' => __DIR__ . '/../..' . '/app/model/GameManageModel.php',
+        'GoogleAuthenticateModel' => __DIR__ . '/../..' . '/app/model/GoogleAuthenticateModel.php',
         'MEDOOHelper' => __DIR__ . '/../..' . '/app/model/MEDOOHelper.php',
         'MedooOrm' => __DIR__ . '/../..' . '/app/database/MedooOrm.php',
         'Model' => __DIR__ . '/../..' . '/app/model/Model.php',
         'PDOHelper' => __DIR__ . '/../..' . '/app/model/PDOHelper.php',
+        'PartnersModel' => __DIR__ . '/../..' . '/app/model/PartnersModel.php',
+        'PaymentPlatformModel' => __DIR__ . '/../..' . '/app/model/PaymentPlatformModel.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
         'PromotionManageModel' => __DIR__ . '/../..' . '/app/model/PromotionManageModel.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',

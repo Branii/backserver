@@ -20,7 +20,6 @@ class Controller{
       return (new Model())->getUsername($fullname);
     }
 
-
     public function getUserPermissions(string $email){
       $response = (new Model())->getUserPermissions($email);
       return json_decode($response,true);
@@ -31,6 +30,7 @@ class Controller{
       $response = (new Model())->getPermissionSidebar();
       $result['title'] = json_decode($response['side_bar_title'],true);
       $result['menu']  = json_decode($response['side_bar_menu'],true);
+      $result['partners']  = json_decode($response['partners'],true);
       return $result;
     }
 

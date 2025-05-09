@@ -1,4 +1,7 @@
+
+
 $(function () {
+    const partnerID = $("#partner-holder").attr("data-partner-id");
   const showToast = (title, message, type) => {
       $.toast({
           position: "bottom-right",
@@ -13,14 +16,17 @@ $(function () {
       let html = "";
 
       data.forEach((item) => {
-          const username = item.username == "*****" ? item.email : item.username || item.contact;
+        let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+        let timezone = item.timezone.split(" ");
+        timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
           html += `
                   <tr>
-                      <td>${item.agent_name}</td>
+                      <td>${username}</td>
                       <td class='link-offset-1 text-decoration-underline'>${item.register_link}</td>
                       <td>${item.rebate}</td>
                       <td>${item.register_count + " / " + item.quota_used}</td>
                        <td>${item.date_created + " / " + item.time_created}</td>
+                       <td>${timezone}</td>
                        <td>${item.remarks}</td>
                       
                   </tr>
@@ -35,14 +41,12 @@ $(function () {
   };
 
   let currentPage = 1;
-  let pageLimit = 5;
+  let pageLimit = 20;
 
   async function fetchUserlinks(page, pageLimit) {
       try {
           const response = await fetch(`../admin/userlinkdata/${page}/${pageLimit}`);
           const data = await response.json();
-          // console.log(response);
-          // return
           $("#maskreferal").LoadingOverlay("hide");
           renderuserlinks(data.userlinks);
           renderfinacesPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlinks(newPage, pageLimit));
@@ -72,8 +76,8 @@ $(function () {
           }
           renderuserlinks(data.userlinkss);
 
-          renderfinacesPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => filterUserlinks(username, linkstart, linkenddate, newPage, pageLimit));
-          document.getElementById("paging_inforeferal").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+          renderfinacesPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterUserlinks(username, linkstart, linkenddate, newPage, pageLimit));
+          document.getElementById("paging_inforeferal").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
       } catch (error) {
           console.error("Error fetching data:", error);
       }
@@ -262,7 +266,7 @@ $(function () {
   }
 
   function tableScrollLinks() {
-      const tableContainerLinks = document.querySelector(".table-wrapperquota");
+      const tableContainerLinks = document.querySelector(".table-wrapperlistlinks");
       const headerRowLinks = document.querySelector(".headrowlinks");
 
       tableContainerLinks.addEventListener("scroll", function () {

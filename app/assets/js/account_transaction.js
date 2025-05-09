@@ -1,4 +1,8 @@
+
 $(function () {
+    
+    const partnerID = $("#partner-holder").attr("data-partner-id");
+
     function showToast(title, message, type) {
         $.toast({
             position: "bottom-right",
@@ -21,9 +25,7 @@ $(function () {
         return moneyStr;
     }
 
-    // const translator = JSON.parse(document.getElementsByClassName("translation-container").getAttribute("data-translations"));
-    // // console.log(translations)
-    const translatorScript = document.querySelector(".translations"); // Get the script tag
+    const translatorScript = document.querySelector(".translations"); 
     const translator = JSON.parse(translatorScript.textContent); 
     const AccountTransactions = (data) => {
         let html = "";
@@ -49,22 +51,22 @@ $(function () {
         data.forEach((item) => {
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
             if (item.order_type === 12) return;
-
+            let timezone = item.timezone.split(" ");
+            timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
             html += `
                       <tr class="trow">
                         <td>${"TR" + item.order_id.substring(0, 7)}</td>
                         <td>${username}</td>
+                        <td>${item.name}</td>
                         <td><i class='bx bxs-circle' style='color:${statusColor[item.order_type].color};font-size:8px;margin-right:5px;'></i>${statusColor[item.order_type].title}</td>
-                       <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
+                        <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
                         <td>${formatMoney(item.balance)}</td>
-                        <td>${formatTimestamp(item.dateTime)}</td>
                         <td>${formatTimestamp(item.date_created)}</td>
+                        <td>${timezone}</td>
                         <td>${item.order_id}</td>
-                        <td><i class='bx bxs-circle' style='color:#1dd846;font-size:8px'></i> ${completes}</td>
+                        <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${completes}</span></td>
                         <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
                       </tr>
-                       
-
                   `;
         });
 
@@ -75,11 +77,8 @@ $(function () {
         let html = ""; // Initialize the HTML string
 
         Object.entries(transactiondata).forEach(([key, value]) => {
-           //console.log(value)
 
             let test = value !== translator["Bet Selection"] && langMap[value] ? langMap[value] : translator["Bet Selection"];
-        
-            
             if (value == test) {
                 html += `
                    <td>${value}</td>
@@ -99,7 +98,7 @@ $(function () {
             }
         });
 
-        return html; // Return the generated HTML
+        return html; 
     };
 
     const langMap = {
@@ -145,11 +144,8 @@ $(function () {
         try {
             const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
             const data = await response.json();
-
             $("#mask").LoadingOverlay("hide");
             render(data.transaction);
-
-            // Render pagination
             renderPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchTrasaction(newPage, pageLimit));
             document.getElementById("paging_info").innerHTML = `${translator["Page"]} ${page} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
         } catch (error) {
@@ -199,12 +195,10 @@ $(function () {
         });
     }
 
-  
-
     $(".playertrans").click(function () {
         let direction = $(this).val();
-        const tableWrapper = $(".table-wrapper");
-        const tableWrappers = document.querySelector(".table-wrapper");
+        const tableWrapper = $(".table-wrapperaccount");
+        const tableWrappers = document.querySelector(".table-wrapperaccount");
         const scrollAmount = 1000; // Adjust as needed
         const scrollOptions = {
             behavior: "smooth",
@@ -243,30 +237,30 @@ $(function () {
     });
 
     $(document).on("click", ".executetrans", function () {
-        if ($("#transuser").val() == "" && $("#transactionId").val() == "" && $("#ordertypetrans").val() == "" && $("#startdatrans").val() == "") {
+        if ($("#transuser").val() == "" && $("#transactionId").val() == "" && $("#ordertypetrans").val() == ""
+         && $("#startdatrans").val() == "" && $(".selectpartner").val() == "") {
             showToast("Heads up!!", "Select one or more data fields to filter", "info");
             return;
         }
-
         const transusername = $("#transuser").val();
         const transactionId = $("#transactionId").val();
         const ordertypetrans = $("#ordertypetrans").val();
+        const partneruid = $(".selectpartner").val();
         const startdatrans = $("#startdatrans").val();
         const enddatetrans = $("#enddatetrans").val();
-        // console.log(enddatetrans);
-     
+       
         $(".loadertrans").removeClass("bx-check-double").addClass("bx-loader bx-spin");
         setTimeout(() => {
-            filterTrasaction(transusername, transactionId, ordertypetrans, startdatrans, enddatetrans, currentPage, pageLimit);
+            filterTrasaction(transusername, transactionId, ordertypetrans,partneruid, startdatrans, enddatetrans, currentPage, pageLimit);
         }, 100);
     });
 
-    async function filterTrasaction(transusername, transactionId, ordertypetrans, startdatrans, enddatetrans, currentPage, pageLimit) {
+    async function filterTrasaction(transusername, transactionId, ordertypetrans,partneruid, startdatrans, enddatetrans, currentPage, pageLimit) {
         try {
-            const response = await fetch(`../admin/filtertransactions/${transusername}/${transactionId}/${ordertypetrans}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
+            const response = await fetch(`../admin/filtertransactions/${transusername}/${transactionId}/${ordertypetrans}/${partneruid}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
+           
+           
             const data = await response.json();
-            ///console.log(response);
-
             $(".loadertrans").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             if (data.transactions.length < 1) {
                 let html = `
@@ -282,9 +276,9 @@ $(function () {
             $("#mask").LoadingOverlay("hide");
             render(data.transactions);
 
-            // Render pagination
-            renderPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterTrasaction(transusername, transactionId, ordertypetrans, startdatrans, enddatetrans, newPage, pageLimit));
-            document.getElementById("paging_info").innerHTML = `${translator["Page"]} ${page} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
+            // Render pagination"Page " + currentPage + " of " + data.totalPages + " pages"
+            renderPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterTrasaction(transusername, transactionId, ordertypetrans,partneruid, startdatrans, enddatetrans, newPage, pageLimit));
+            document.getElementById("paging_info").innerHTML = `${translator["Page"]} ${currentPage} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -462,12 +456,10 @@ $(function () {
     });
 
     //search the for username
-
     let debounceTimeout = null;
     let isPastings = false;
 
     $(document).ready(function () {
-        // Event listener for keyup on #myInput
         $(document).on("keyup", "#transuser", function () {
             const query = $(this).val().trim();
 
@@ -476,7 +468,7 @@ $(function () {
                 clearTimeout(debounceTimeout); // Clear any existing timeout
                 debounceTimeout = setTimeout(fetchbetUser, 500, query); // Call fetchUsers with the query after 500ms delay
             } else {
-                $(".useraccount").hide(); // Hide dropdown if input is less than 3 characters
+                $(".useraccount").hide(); 
             }
         });
 
@@ -493,14 +485,11 @@ $(function () {
             const selectedOption = $(this).find("option:selected");
             const selectedUserId = selectedOption.val();
             const selectedUsername = selectedOption.data("username");
-
             if (selectedUserId) {
                 $("#transuser").val(selectedUsername);
                 $(".userIdtrans").val(selectedUserId);
                 $(".useraccount").hide();
             }
-
-            console.log(selectedUsername);
         });
 
         $(document).on("click", function (e) {
@@ -523,7 +512,6 @@ $(function () {
         //     $dropdown.hide();
         // });
     });
-
     // Function to fetch and display users
     function fetchbetUser(query) {
         let optionsHtml = "";
@@ -574,4 +562,26 @@ $(function () {
             $(self).val($(self).val().replace(/^\s+/, ""));
         }, 0);
     });
+
+    async function fetchPartnername() {
+        try {
+            const response = await fetch(`../admin/fetchPartnername/${partnerID}`); // Await the fetch call
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json(); // Parse JSON response
+            //console.log(data)
+           
+            let html = `<option value="">Partner Name</option>`;
+            data.forEach((partner) => {
+                html += `<option value="${partner.partner_id}">${partner.name}</option>`;
+            });
+            $(".selectpartner").html(html);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+    fetchPartnername();
+
 });

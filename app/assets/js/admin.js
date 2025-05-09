@@ -37,6 +37,8 @@ $(function(){
         !isEmpty ? request('admin/signin',params) : showToast(translator["Heads up!!"],translator["All fields are mandatory"],"info");
     })
 
+    
+
     $(".lang").on("change",function(){
         const language = $(this).val()
         $.post("/admin/limvo/admin/changelang/" + language , function(){

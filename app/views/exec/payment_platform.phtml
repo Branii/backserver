@@ -1,0 +1,76 @@
+<?php
+
+
+$flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+
+if($flag == "fetchPaymentPlatform"){
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $result = PaymentPlatformModel::FetchPaymentPlatform($page, $limit) ?? [];
+    echo json_encode([
+        'payment' => $result['data'],  // Correct key
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
+
+if($flag == "addpayment"){
+    $data = json_decode(file_get_contents("php://input"), true);
+    $paymentname = $data['paymentname'] ?? ''; 
+    $paymentname = $data['paymentname'] ?? '';
+    $currencytype = $data['currencytype'] ?? '';
+    $paylogo = $data['paylogo'] ?? '';
+    $currencystate = $data['currencystate'] ?? '';
+    $maxiamount = $data['maxiamount'] ?? '';
+    $miniamount = $data['miniamount'] ?? '';
+    $currencyselect = $data['currencyselect'] ?? '';
+    $approvedby = $data['approvedby'] ?? '';
+    $result = PaymentPlatformModel::AddPaymentPlatform($paymentname, $currencytype,$paylogo, $currencystate,$maxiamount, $miniamount,$currencyselect,$approvedby) ?? [];
+    echo json_encode($result);
+}
+
+if($flag == "deletepayment"){
+    $payid = isset($this->viewData['payid']) ? (int) $this->viewData['payid'] : "";
+    $result = PaymentPlatformModel::DeletePaymentPlatform($payid) ?? [];
+    echo json_encode($result);
+}
+
+if($flag == "editpayment"){
+    $payid = isset($this->viewData['payid']) ? (int) $this->viewData['payid'] : "";
+    $result = PaymentPlatformModel::EditPaymentPlatform($payid) ?? [];
+    echo json_encode($result);
+}
+
+if($flag == "updateplatform"){
+    $typecurrency = isset($this->viewData['typecurrency']) ?  $this->viewData['typecurrency'] : "";
+    $maxiamounts = isset($this->viewData['maxiamounts']) ?  $this->viewData['maxiamounts'] : "";
+    $minamount = isset($this->viewData['minamount']) ?  $this->viewData['minamount'] : "";
+    $statecurrent = isset($this->viewData['statecurrent']) ? $this->viewData['statecurrent'] : "";
+    $paymentids = isset($this->viewData['paymentids']) ?  $this->viewData['paymentids'] : "";
+    $result = PaymentPlatformModel::UpdatePaymentPlatform($typecurrency,$maxiamounts,$minamount,$statecurrent,$paymentids) ?? [];
+    echo json_encode($result);
+}
+
+if ($flag == "filterpayments") {
+    $curencytypes = isset($this->viewData['curencytypes']) ?  $this->viewData['curencytypes'] : "";
+    $stautspayment = isset($this->viewData['stautspayment']) ?  $this->viewData['stautspayment'] : "";
+    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
+    $enddate = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+     $subquery = PaymentPlatformModel::Platformsubquery($curencytypes,$stautspayment,$startdate,$enddate) ?? [];
+     $result   = PaymentPlatformModel::FilterPlatformData($subquery,$page,$limit) ?? [];
+    echo json_encode([
+        'payments' => $stautspayment,
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
+
+
+
+
+
+
+
+
+
+

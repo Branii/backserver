@@ -1,10 +1,10 @@
 $(() =>{
+  const partnerID = $('#partner-holder').attr("data-partner-id");
 
   const BASE_URL = '../admin';
   let historyStack  = [];
   let pagesStack    = [];
   let pagingInfo    = [];
- 
   function showToast(title, message, type) {
       $.toast({
         position: "bottom-right",
@@ -15,6 +15,7 @@ $(() =>{
       });
     }
 
+   
     $(document).on("click",".update-gamegroup",function(){
       const gameItems =  $($($(this).parents(".lbp-gamegroup-wrapper")[0]).find(".lbp-gameitem-wrapper")[0]).find(".lbp-gameitem-parent");
       let data = [];
@@ -69,7 +70,7 @@ $(() =>{
 
    });
 
-    $(document).on('click', '#lbp_search',function(){
+    $(document).on('click', '#lbp_search',async function()  {
 
       const lotteryType      = $('#allGameNamesLottery').val();
       let lotteryTextCaps    = $("#allGameNamesLottery option:selected").text();
@@ -90,6 +91,10 @@ $(() =>{
         url = `https://winsstarts.com/chairman_test/api/v1/limvo/fantangames`;
       }
 
+      // $($(this).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+      // let response = await fetch(url,{method : "GET"});
+      // response     = await response.json();
+
       $.ajax({ 
           url: url,
           type: "GET",
@@ -97,7 +102,6 @@ $(() =>{
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
           },
           success: function (response) {
-           
             if(response === "Game id not found!!"){
               showToast("Error", "Sorry the lottery selected is not yet ready.", "error");
               return;

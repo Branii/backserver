@@ -1,4 +1,6 @@
+
 $(function () {
+    const partnerID = $("#partner-holder").attr("data-partner-id");
   function showToast(title, message, type) {
       $.toast({
           position: "bottom-right",
@@ -105,7 +107,6 @@ $(function () {
           $.post(`../admin/UpdateAllquota/${quotaval}`, function (response) {
               if (response) {
                   showToast("Success", "quota updated successfully", "success");
-
                   fetchquota(currentPagequota, pageLimit);
               }
           });

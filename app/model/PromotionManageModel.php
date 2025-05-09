@@ -10,9 +10,14 @@ class PromotionManageModel extends MEDOOHelper
     {
         $startpoint = ($page * $limit) - $limit;
         $data = parent::query(
-            "SELECT * FROM referral_link  ORDER BY refid  DESC LIMIT :offset, :limit",
+            "SELECT referral_link.*,users_test.email,users_test.contact,users_test.reg_type,users_test.username FROM referral_link   
+             INNER JOIN users_test ON users_test.uid= referral_link.agent_id  ORDER BY refid DESC LIMIT :offset, :limit",
             ['offset' => $startpoint, 'limit' => $limit]
-        );
+         );
+        // $data = parent::query(
+        //     "SELECT * FROM referral_link  ORDER BY refid  DESC LIMIT :offset, :limit",
+        //     ['offset' => $startpoint, 'limit' => $limit]
+        // );
 
         $totalRecords  = parent::count('referral_link');
         return ['data' => $data, 'total' => $totalRecords];
@@ -51,7 +56,7 @@ class PromotionManageModel extends MEDOOHelper
         $totalRecords = $totalRecordsResult[0]['total_counts'];
         $lastQuery = MedooOrm::openLink()->log();
 
-        return ['data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery[0]];
+        return ['data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery];
     }
 
     public static function FilterUserlinksDataSubQuery($username, $startdate, $enddate)
@@ -76,7 +81,7 @@ class PromotionManageModel extends MEDOOHelper
             $subQuery = implode(' AND ', $filterConditions);
         }
         // Add ordering and limit to the query
-        $subQuery .= " ORDER BY referral_link.date_created DESC";
+       // $subQuery .= " ORDER BY referral_link.date_created DESC";
 
         return $subQuery;
     }

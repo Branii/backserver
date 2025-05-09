@@ -5,8 +5,6 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     throw new \Exception("$errstr in $errfile on line $errline", $errno);
 });
 
-use Medoo\Medoo;
-
 class GameManageModel extends MEDOOHelper
 {
 
@@ -403,7 +401,7 @@ class GameManageModel extends MEDOOHelper
 
         try{
 
-        $db = parent::getLink();
+        $db = parent::openLink();
         $sql = "SELECT draw_table,bet_table FROM gamestable_map WHERE game_type = :game_type";
         $stmt = $db->query($sql,[':game_type' => (int) $game_type]);
         $data = $stmt->fetch(PDO::FETCH_OBJ);
@@ -421,7 +419,7 @@ class GameManageModel extends MEDOOHelper
 
         $res = self::fetch_draw_info_game_type($game_type);
         if($res['status'] === "error") return ["status" => 'error', 'data' => "Internal Server error."];
-        $db = parent::getLink();
+        $db = parent::openLink();
         $offset = ($currentPage - 1) * $limit;
         $res = $res['data'];
         $drawtable = $res->draw_table;
@@ -465,7 +463,7 @@ class GameManageModel extends MEDOOHelper
         $data = [];
 
         foreach($result as $key => $value){
-            $data[] = ['lottery_type' => $value->name, 'lottery_code' => $value->game_group , 'issue_number' => $value->period , 'winning_numbers' => implode(',',json_decode($value->draw_number)), 'total_bet_amount' => $value->sumTotalAmount ?? 0 , 'total_win_amount' => $value->total_won_amount ?? 0, 'draw_time' => str_replace(' ','/',$value->time_added), 'sales_deadline' => str_replace(' ','/',$value->my_closing), 'actual_draw_time' => str_replace(' ','/',$value->time_added), 'settlement_completion_time' => str_replace(' ','/',$value->settlement_completion_time ?? 0) ,'status' => $value->draw_status, 'total_records' => $value->total_records] ;
+            $data[] = ['lottery_type' => $value->name, 'lottery_code' => $value->game_group , 'issue_number' => $value->period , 'winning_numbers' => implode(',',json_decode($value->draw_number)), 'total_bet_amount' => $value->sumTotalAmount ?? 0 , 'total_win_amount' => $value->total_won_amount ?? 0, 'draw_time' => str_replace(' ','/',$value->time_added), 'sales_deadline' => str_replace(' ','/',$value->my_closing), 'actual_draw_time' => str_replace(' ','/',$value->time_added), 'settlement_completion_time' => str_replace(' ','/',$value->settlement_completion_time ?? 0) ,'status' => $value->draw_status, 'total_records' => $value->total_records, "timezone" => $value->timezone] ;
         }
         return ['status' => 'success','data' => $data];
     }

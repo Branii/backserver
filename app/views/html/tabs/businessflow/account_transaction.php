@@ -1,107 +1,190 @@
 <style>
-.pager {
-    position: relative;
-    /* Sets positioning context for absolute elements inside */
-    padding: 20px;
-    height: 80px;
-    background-color: #f9f9f9;
-}
+    .pager {
+        position: relative;
+        /* Sets positioning context for absolute elements inside */
+        padding: 20px;
+        height: 80px;
+        background-color: #f9f9f9;
+    }
 
-.pager1 {
-    position: relative;
-    /* Sets positioning context for absolute elements inside */
-    padding: 20px;
-    height: 80px;
-    background-color: #f9f9f9;
-}
+    .pager1 {
+        position: relative;
+        /* Sets positioning context for absolute elements inside */
+        padding: 20px;
+        height: 80px;
+        background-color: #f9f9f9;
+    }
 
-.top-left-btn {
-    position: absolute;
-    top: 10px;
-    /* Distance from the top */
-    left: 10px;
-    /* Distance from the left */
-    padding: 5px 10px;
-    /* background-color: red; */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.top-center {
-    position: absolute;
-    top: 50%;
-    /* Vertically centers the button */
-    left: 50%;
-    /* Horizontally centers the button */
-    transform: translate(-50%, -50%);
-    /* Adjusts for button size */
-    padding: 5px 15px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.top-right-btn {
-    position: absolute;
-    top: 10px;
-    /* Distance from the top */
-    right: 10px;
-    /* Distance from the right */
-    padding: 5px 10px;
-    /* background-color: red; */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    /* Optional: Adds space between elements */
-    align-items: center;
-    /* Optional: Vertically centers the elements */
-}
-
-.topp-right {
-    position: absolute;
-    top: 10px;
-    /* Distance from the top */
-    right: 10px;
-    /* Distance from the right */
-    padding: 5px 10px;
-    /* background-color: #28a745; */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.table-wrapper {
-    overflow: hidden;
-    /* Hide the default scrollbar */
-    white-space: nowrap;
-    max-width: 100%;
-    /* Adjust based on your needs */
-    margin-bottom: 10px;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 10px;
-    background: rgb(38, 57, 77) 0px 20px 30px -10px;
-    /* Ensure it doesn't interfere with content */
-    z-index: 10;
-}
-
-.queryholdertransaction {
-    width: 39%;
-    margin-right: 7px;
-    background-color: white;
-}
-
-/* .acc_transaction_username {
-        width: 19%;
+    .top-left-btn {
         position: absolute;
+        top: 10px;
+        /* Distance from the top */
+        left: 10px;
+        /* Distance from the left */
+        padding: 5px 10px;
+        /* background-color: red; */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .top-center {
+        position: absolute;
+        top: 50%;
+        /* Vertically centers the button */
+        left: 50%;
+        /* Horizontally centers the button */
+        transform: translate(-50%, -50%);
+        /* Adjusts for button size */
+        padding: 5px 15px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .top-right-btn {
+        position: absolute;
+        top: 10px;
+        /* Distance from the top */
+        right: 10px;
+        /* Distance from the right */
+        padding: 5px 10px;
+        /* background-color: red; */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        /* Optional: Adds space between elements */
+        align-items: center;
+        /* Optional: Vertically centers the elements */
+    }
+
+    .topp-right {
+        position: absolute;
+        top: 10px;
+        /* Distance from the top */
+        right: 10px;
+        /* Distance from the right */
+        padding: 5px 10px;
+        /* background-color: #28a745; */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .table-wrapperaccount {
+        overflow: hidden;
+        /* Hide the default scrollbar */
+        white-space: nowrap;
+        max-width: 100%;
+        /* Adjust based on your needs */
+        margin-bottom: 10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: rgb(38, 57, 77) 0px 20px 30px -10px;
+        /* Ensure it doesn't interfere with content */
+        z-index: 10;
+    }
+
+    .queryholdertransaction {
+        width: 13%;
+        margin-right: 7px;
+        background-color: white;
+    }
+
+   
+    .option {
+        text-align: left;
+        border-bottom: solid 1px #eee;
+        padding: 5px;
+    }
+
+    .option:hover {
+        background-color: #eee;
+    }
+
+    .no-results {
+        text-align: center;
+        /* Center horizontally */
+        vertical-align: middle;
+        /* Center vertically */
+        height: 20px;
+        /* Set a minimum height to ensure centering */
+        border: none;
+    }
+
+    .no-results img {
+        position: relative;
+        top: 100px;
+    }
+
+    /* Custom Scrollbar for Webkit Browsers */
+    .table-wrapperaccount::-webkit-scrollbar {
+        width: 5px;
+        /* Slimmer scrollbar width */
+        height: 5px;
+        /* Slimmer scrollbar height for horizontal scrolling */
+    }
+
+    .table-wrapperaccount::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        /* Lighter background for track */
+        border-radius: 5px;
+    }
+
+    .table-wrapperaccount::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        /* Blue color for thumb */
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .table-wrapperaccount::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+        /* Darker blue on hover */
+    }
+
+    .left-element {
+        position: relative;
+        bottom: 8px;
+        height: 35px;
+        background-color: #fff;
+        margin-right: 5px;
+    }
+
+    .active>.page-link {
+        background-color: orangered !important;
+        border: none;
+    }
+
+    .tbl-header {
+        position: sticky;
+        background-color: red;
+        top: 0;
+    }
+
+    .sticky-header {
+        position: relative;
+        bottom: 1px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    }
+
+    .pins {
+        padding: 5px;
+        border-bottom: solid 1px rgb(110, 129, 146, 0.1);
+    }
+
+    .useraccount {
+        width: 13%;
+        position: absolute;
+        background-color: #fff;
         color: #aaa;
         max-height: 300px;
         overflow-y: scroll;
@@ -111,137 +194,43 @@
         z-index: 9999;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         display: none;
-    } */
-.option {
-    text-align: left;
-    border-bottom: solid 1px #eee;
-    padding: 5px;
-}
+    }
 
-.option:hover {
-    background-color: #eee;
-}
+    /* Style for the scrollbar */
+    .useraccount::-webkit-scrollbar {
+        width: 3px;
+        /* Width of the scrollbar */
+    }
 
-.no-results {
-    text-align: center;
-    /* Center horizontally */
-    vertical-align: middle;
-    /* Center vertically */
-    height: 20px;
-    /* Set a minimum height to ensure centering */
-    border: none;
-}
+    .useraccount::-webkit-scrollbar-track {
+        background: #f0f0f0;
+        /* Background of the scrollbar track */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
 
-.no-results img {
-    position: relative;
-    top: 100px;
-}
+    .useraccount::-webkit-scrollbar-thumb {
+        background: #ccc;
+        /* Color of the scrollbar handle */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
 
-/* Custom Scrollbar for Webkit Browsers */
-.table-wrapper::-webkit-scrollbar {
-    width: 5px;
-    /* Slimmer scrollbar width */
-    height: 5px;
-    /* Slimmer scrollbar height for horizontal scrolling */
-}
+    .useraccount::-webkit-scrollbar-thumb:hover {
+        background: #aaa;
+        /* Darker handle color on hover */
+    }
 
-.table-wrapper::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    /* Lighter background for track */
-    border-radius: 5px;
-}
+    /* Dropdown item styling */
+    .optionlist {
+        padding: 5px;
+        cursor: pointer;
+    }
 
-.table-wrapper::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    /* Blue color for thumb */
-    border-radius: 10px;
-    cursor: pointer;
-}
+    .optionlist:hover {
+        background-color: #f0f0f0;
+    }
 
-.table-wrapper::-webkit-scrollbar-thumb:hover {
-    background-color: #aaa;
-    /* Darker blue on hover */
-}
-
-.left-element {
-    position: relative;
-    bottom: 8px;
-    height: 35px;
-    background-color: #fff;
-    margin-right: 5px;
-}
-
-.active>.page-link {
-    background-color: orangered !important;
-    border: none;
-}
-
-.tbl-header {
-    position: sticky;
-    background-color: red;
-    top: 0;
-}
-
-.sticky-header {
-    position: relative;
-    bottom: 1px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-}
-
-.pins {
-    padding: 5px;
-    border-bottom: solid 1px rgb(110, 129, 146, 0.1);
-}
-
-.useraccount {
-    width: 19%;
-    position: absolute;
-    background-color: #fff;
-    color: #aaa;
-    max-height: 300px;
-    overflow-y: scroll;
-    border-radius: 5px;
-    padding: 10px;
-    top: 90%;
-    z-index: 9999;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    display: none;
-}
-
-/* Style for the scrollbar */
-.useraccount::-webkit-scrollbar {
-    width: 3px;
-    /* Width of the scrollbar */
-}
-
-.useraccount::-webkit-scrollbar-track {
-    background: #f0f0f0;
-    /* Background of the scrollbar track */
-    border-radius: 5px;
-    /* Rounded corners */
-}
-
-.useraccount::-webkit-scrollbar-thumb {
-    background: #ccc;
-    /* Color of the scrollbar handle */
-    border-radius: 5px;
-    /* Rounded corners */
-}
-
-.useraccount::-webkit-scrollbar-thumb:hover {
-    background: #aaa;
-    /* Darker handle color on hover */
-}
-
-/* Dropdown item styling */
-.optionlist {
-    padding: 5px;
-    cursor: pointer;
-}
-
-.optionlist:hover {
-    background-color: #f0f0f0;
-}
 </style>
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
@@ -249,7 +238,7 @@
     </div>
     <div class="px-4 py-3 border-bottom pager1">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width:105%;">
                 <input type="text" id="transuser" class="form-control queryholdertransaction usernames transuser"
                     placeholder="<?= $translator['Search Username']; ?>" />
                 <input name="usernames" type="hidden" class="" />
@@ -273,12 +262,24 @@
                     <option value="9"><?= $translator['Sending Red Envelope']; ?></option>
                     <option value="10"><?= $translator['Red Envelope Receive']; ?></option>
                     <option value="11"><?= $translator['Bet Refund']; ?></option>
+                </select>
+
+                <select name="order_type" class="form-control form-select queryholdertransaction " id="ordertypetruans"
+                    data-bs-placeholder="Select Type">
+                    <option value="">-<?= $translator['Status']; ?>-</option>
+                    <option value="1"><?= $translator['Completed']; ?></option>
+                    <option value="2"><?= $translator['Pending']; ?></option>
+                    <option value="3"> <?= $translator['Failed']; ?></option>
+                </select>
+
+
+                <select name="lotteryname" class="form-control form-select queryholdertransaction selectpartner"> 
 
                 </select>
-                <input type="date" class="form-control queryholdertransaction" id="startdatrans" aria-describedby="name"
-                    placeholder="Name" />
-                <input type="date" class="form-control queryholdertransaction" id="enddatetrans" aria-describedby="name"
-                    placeholder="Name" />
+           
+                <input type="date" class="form-control queryholdertransaction" id="startdatrans" aria-describedby="name"placeholder="Name" />
+
+                <input type="date" class="form-control queryholdertransaction" id="enddatetrans" aria-describedby="name"placeholder="Name" />
             </div>
         </span>
         <span class="top-center" aria-label=" navigation example">
@@ -310,7 +311,7 @@
         </span>
     </div>
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapper" id="mask"
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperaccount" id="mask"
             style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
                 <thead class="text-dark fs-4 tbl-header">
@@ -320,6 +321,10 @@
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
+                        </th>
+
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Partner Name</h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Type']; ?></h6>
@@ -331,10 +336,10 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Stake Time']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Server Time']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction ID']; ?></h6>
@@ -372,10 +377,10 @@
                 <!-- <button type="button" class="btn bg-white-subtle player" value="start">
                     <i class="bx bx-chevrons-left" style="font-size: 20px;"></i>
                 </button> -->
-                <button type="button" class="btn bg-white-subtle player" value="left">
+                <button type="button" class="btn bg-white-subtle playertrans" value="lefttrans">
                     <i class="bx bx-chevron-left" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle player" value="right">
+                <button type="button" class="btn bg-white-subtle playertrans" value="righttrans">
                     <i class="bx bx-chevron-right" style="font-size: 20px;"></i>
                 </button>
                 <!-- <button type="button" class="btn bg-white-subtle player" value="end">
@@ -490,6 +495,9 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+
+
 
 <script class="translations" type="application/json">
 <?= json_encode($translator); ?>

@@ -7,7 +7,6 @@ $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 
 
 if ($flag == "fetchfinance") {
-
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $result = (new FinancialManageModel())->FinancialDataRecords($page, $limit) ?? [];
@@ -20,56 +19,36 @@ if ($flag == "fetchfinance") {
 
 if ($flag == "filterfinance") {
 
-    $uid = isset($this->viewData['uid']) ?  $this->viewData['uid'] : "";
+    $uid             = isset($this->viewData['uid']) ?  $this->viewData['uid'] : "";
+    $states          = isset($this->viewData['status']) ?  $this->viewData['status'] : "";
+    $startdate       = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
+    $enddate         = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
+    $page            = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit           = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
-    $states = isset($this->viewData['status']) ?  $this->viewData['status'] : "";
-    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
-    $enddate = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
-    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
-    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-   
-    if(!empty($usernameCheck) && $usernameCheck != null){
-       $username = $usernameCheck[0]['uid'];
-       $subquery = (new FinancialManageModel())->Financialsubquery($username,$states,$startdate,$enddate) ?? [];
-       $result = (new FinancialManageModel())->FilterFinancialData($subquery,$page,$limit) ?? [];
-
-       echo json_encode([
-           'finances' => $result['data'],
-          'totalPages' => ceil($result['total'] / $limit),
-       ]);
-      }else{
-
-       $subquery = (new FinancialManageModel())->Financialsubquery($uid,$states,$startdate,$enddate) ?? [];
-       $result = (new FinancialManageModel())->FilterFinancialData($subquery,$page,$limit) ?? [];
-
-       echo json_encode([
-           'finances' => $result['data'],
-           'totalPages' => ceil($result['total'] / $limit),
-       ]);
-      }
+    $username = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : $uid;
+    $subquery = (new FinancialManageModel())->Financialsubquery($username,$states,$startdate,$enddate) ?? [];
+    $result = (new FinancialManageModel())->FilterFinancialData($subquery,$page,$limit) ?? [];
+    echo json_encode([
+        'finances' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
 }
 
 
-
 if ($flag == "addmoney") {
-
     $depositetype = isset($this->viewData['depositetype']) ? (int) $this->viewData['depositetype'] : "";
     $uid = isset($this->viewData['uid']) ? (int) $this->viewData['uid'] :"";
-  //  $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
     $amount = isset($this->viewData['amount']) ? (float)$this->viewData['amount'] : "";
     $username = isset($this->viewData['approvedby']) ? $this->viewData['approvedby'] : "";
     $review = urldecode(isset($this->viewData['review'])) ? urldecode($this->viewData['review']) : "";
     $username =  urldecode($username);
-    // if (!empty($usernameCheck) && $usernameCheck != null) {
-    //     $userid = $usernameCheck[0]['uid']; 
      $result = (new FinancialManageModel())->addMoneyData($depositetype,$uid,$amount,$username,$review) ?? [];
     echo json_encode($result);
-    //}
 }
 
 
 if ($flag == "fetchDeposit") {
-
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $result = (new FinancialManageModel())->DepositDataRecords($page, $limit) ?? [];
@@ -83,7 +62,6 @@ if ($flag == "fetchDeposit") {
 if ($flag == "filterdeposit") {
 
     $uid = isset($this->viewData['uid']) ?  $this->viewData['uid'] : "";
-    $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
     $states = isset($this->viewData['states']) ?  $this->viewData['states'] : "";
     $depositids = isset($this->viewData['depositid']) ?  $this->viewData['depositid'] : "";
     $depostatus = isset($this->viewData['depostatus']) ?  $this->viewData['depostatus'] : "";
@@ -91,34 +69,22 @@ if ($flag == "filterdeposit") {
     $enddate = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-
-     if(!empty($usernameCheck) && $usernameCheck != null){
-        $username = $usernameCheck[0]['uid'];
-        $subquery = (new FinancialManageModel())->Depositsubquery($username,$states,$depositids,$depostatus,$startdate,$enddate) ?? [];
-        $result = (new FinancialManageModel())->FilterDepositData($subquery,$page,$limit) ?? [];
-
-        echo json_encode([
-            'deposits' => $result['data'],
-           'totalPages' => ceil($result['total'] / $limit),
-        ]);
-       }else{
-
-        $subquery = (new FinancialManageModel())->Depositsubquery($uid,$states,$depositids,$depostatus,$startdate,$enddate) ?? [];
-        $result = (new FinancialManageModel())->FilterDepositData($subquery,$page,$limit) ?? [];
-
-        echo json_encode([
-            'deposits' => $result['data'],
-            'totalPages' => ceil($result['total'] / $limit),
-        ]);
-       }
-      
+    $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
+    $username = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : $uid;
+    $subquery = (new FinancialManageModel())->Depositsubquery($username,$states,$depositids,$depostatus,$startdate,$enddate) ?? [];
+    $result = (new FinancialManageModel())->FilterDepositData($subquery,$page,$limit) ?? [];
+    echo json_encode([
+        'deposits' => $result['data'],
+        'totalPages' => ceil($result['total'] / $limit),
+    ]);
 }
+      
 
 if ($flag == "fetchwithdraw") {
-
-    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
-    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 10;
-    $result = (new FinancialManageModel())->WithrawalDataRecords($page) ?? [];
+    $partnerID = isset($this->viewData['partner_id']) ? (int) $this->viewData['partner_id'] : 0;
+    $page      = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit     = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 10;
+    $result    = (new FinancialManageModel())->WithrawalDataRecords($partnerID,$page) ?? [];
     echo json_encode($result);
 }
 

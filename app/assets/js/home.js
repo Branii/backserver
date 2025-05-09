@@ -59,7 +59,7 @@ $(function () {
 
       // Render pagination
       renderPagination(data.totalPages, page);
-      document.getElementById("paging_info").innerHTML =
+      document.getElementById("paging_infox").innerHTML =
         "Page " + page + " of " + data.totalPages + " pages";
     } catch (error) {
       console.error("Error fetching data:", error);

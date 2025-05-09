@@ -260,6 +260,11 @@
     /* Ensure it doesn't interfere with content */
     z-index: 10;
 }
+
+.arr {
+    color: #909aa9;
+    margin: 0px 1rem;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -273,7 +278,7 @@
                 <input id="bl-idholder" type="hidden" value="" />
                 <div style="width: 65%;">
                     <input name="usernamelist" class="form-control bring-forward" id="bl-username" data-user-id=""
-                        placeholder="Search Username" autocomplete="off" style="width: 97%;" />
+                        placeholder="<?= $translator['Search usernames']; ?>" autocomplete="off" style="width: 97%;" />
                     <div class="bl-users-wrapper" style="width: 24.5%;">
                         <ul style="max-height: 403px; margin: 0px; overflow-y: auto;" id="bl-names-wrapper"></ul>
                     </div>
@@ -281,24 +286,24 @@
 
                 <div style="width: 65%;">
                     <input name="bank-type" class="form-control bring-forward" id="bl-bank-type"
-                        placeholder="Search Bank Type" autocomplete="off" style="width: 97%;" />
+                        placeholder="<?= $translator['Search Bank Type']; ?>" autocomplete="off" style="width: 97%;" />
                     <div class="bl-bank-type-wrapper" style="width: 24.5%;">
                         <ul style="max-height: 403px; margin: 0px; overflow-y: auto;" id="bl-bank-type-wrapper"></ul>
                     </div>
                 </div>
                 <div style="width: 65%;">
                     <input name="card-number" type="text" class="form-control bring-forward" value=""
-                        id="bl-card-number" placeholder="Search Card Number" autocomplete="off" style="width: 97%;" />
+                        id="bl-card-number" placeholder="<?= $translator['Search Card Number']; ?>" autocomplete="off" style="width: 97%;" />
                 </div>
 
                 <div class="custom-dropdown" style="width: 57%; margin-right: 5px;">
                     <select name="lotteryname" class="form-control form-select" id="bl-status"
                         data-bs-placeholder="Select Type">
-                        <option value="0">Status</option>
-                        <option value="1">In Force</option>
-                        <option value="2">Not Active</option>
-                        <option value="3">Terminated</option>
-                        <option value="4">Deleted</option>
+                        <option value="0"><?= $translator['Status']; ?></option>
+                        <option value="1"><?= $translator['In Force']; ?></option>
+                        <option value="2"><?= $translator['Not Active']; ?></option>
+                        <option value="3"><?= $translator['Terminated']; ?></option>
+                        <option value="4"><?= $translator['Deleted']; ?></option>
                     </select>
                 </div>
                 <!-- <input type="date" name="startdate" class="form-control startdate" placeholder="Name" id="wl-startdate" style="width: 50%;">
@@ -349,6 +354,9 @@
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Binding Time']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
                         </th>
 
                         <th>
