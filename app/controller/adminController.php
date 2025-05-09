@@ -382,9 +382,22 @@ class adminController extends Controller {
     }
 
   
-    public function  fetchPartnersNames($page , $limit)
+    public function  fetchPartners($partnerID,$page , $limit)
     {  
-        $this->view('exec/partners', ['flag' => 'fetchPartnersNames']);
+        $this->view('exec/partners', ['partner_id' => $partnerID,"page" => $page, "limit" => $limit,'flag' => 'fetch_partners']);
+        $this->view->render();
+    }
+    public function  fetchPaymentPlatforms($partnerID,$page , $limit)
+    {  
+
+        $this->view('exec/payment_platforms', ['partner_id' => $partnerID ,'flag' => 'fetchpaymentplatforms']);
+        $this->view->render();
+    }
+    
+    public function  fetchPartnersNames($partnerID,$page , $limit)
+    {  
+
+        $this->view('exec/partners', ['partner_id' => $partnerID,'flag' => 'fetchPartnersNames']);
         $this->view->render();
     }
 
