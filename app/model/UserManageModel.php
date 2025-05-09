@@ -633,7 +633,7 @@ class UserManageModel extends MEDOOHelper
     //NOTE -
 
     ////////////// USERLIST LOGS -//////////
-    public static function FetchUserlogsData($partnerID,$page, $limit): array
+    public static function FetchUserlogsData($page, $limit): array
     {
         $startpoint = ($page * $limit) - $limit;
         $sql = "
@@ -650,53 +650,60 @@ class UserManageModel extends MEDOOHelper
         // Execute the query with pagination parameters
         $data = parent::openLink()->query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
         $totalRecords = parent::count('user_logs');
-
-    
     // Execute the query with pagination parameters
       $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
         $totalRecords  = parent::count('user_logs');
         return ['data' => $data, 'total' => $totalRecords];
     }
 
-
-    public static function Filteruserlogs($page, $limit, $username, $startdate, $enddate)
+    public static function Filteruserlogs($subQuery, $page, $limit)
     {
-        $whereConditions = self::FilterUserlogsDataSubQuery($username,  $startdate, $enddate);
-        $startpoint = ($page * $limit) - $limit;
-        $data = parent::selectAll("user_logs", '*', ["AND" => $whereConditions, "ORDER" => ["ulog_id" => "DESC"], "LIMIT" => [$startpoint, $limit]]);
-        $lastQuery = MedooOrm::openLink()->log();
-        $totalRecords  = parent::selectAll('user_logs', '*', ['AND' => $whereConditions]);
-        return ['data' => $data, 'total' => count($totalRecords), 'sql' => $lastQuery[0]];
+        $startpoint = $page * $limit - $limit;
+        $sql = "
+        SELECT 
+            user_logs.*, 
+            users_test.email,
+            users_test.username,
+            users_test.contact,
+            users_test.reg_type
+        FROM user_logs
+        LEFT JOIN users_test ON users_test.uid = user_logs.uid
+        WHERE $subQuery
+        LIMIT :offset, :limit
+        ";
+
+        $countSql = " SELECT COUNT(*) AS total_count FROM user_logs WHERE $subQuery";
+        $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
+        $totalRecords = parent::query($countSql);
+        $totalRecords = $totalRecords[0]['total_count'];
+        //$lastQuery = MedooOrm::openLink()->log();
+        return ['data' => $data, 'total' => $totalRecords];
     }
 
-    public static function FilterUserlogsDataSubQuery($username = '', $from = '', $to = '')
+    public static function FilterUserlogsDataSubQuery($username, $startdate, $enddate)
     {
         $filterConditions = [];
-   
+
         // Build filter conditions
         if (!empty($username)) {
             $filterConditions[] = "user_logs.uid = '$username'";
-        $conditions = [];
-
-        if (!empty($username) && $username != 'all') {
-            $conditions['user_logs.uid'] = $username;
         }
 
-        // if (!empty($states) && $states != 'all') {
-        //     $conditions['users.state'] = $states;
-        // }
-
-        if ($from != '' && $to != '') {
-            $conditions['user_logs.date_created[<>]'] = [$from, $to];
-        } elseif ($from != '') {
-            $conditions['user_logs.date_created[>=]'] = $from;
-        } elseif ($to != '') {
-            $conditions['user_logs.date_created[<=]'] = $to;
+        if (!empty($startdate) && !empty($enddate)) {
+            $filterConditions[] = "user_logs.login_date BETWEEN '$startdate' AND '$enddate'";
+        } elseif (!empty($startdate)) {
+            $filterConditions[] = "user_logs.login_date = '$startdate'";
+        } elseif (!empty($enddate)) {
+            $filterConditions[] = "user_logs.login_date = '$enddate'";
         }
+        // Combine conditions into the final query
+        if (!empty($filterConditions)) {
+            $subQuery = implode(' AND ', $filterConditions);
+        }
+        // $subQuery .= " ORDER BY login_date DESC";
+        return $subQuery;
+    }
 
-        return $conditions;
-    }
-    }
     public static function fetchUserRebateList($uid)
     {
         $rebatelist = parent::selectOne("users_test", "*", ["uid" => $uid])['rebate_list'];
