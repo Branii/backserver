@@ -16,16 +16,15 @@ class UserBankManageModel extends MEDOOHelper
 
         try {
 
-            $db = parent::getLink();
-            $offset = ($page - 1) * $limit;
-            $whereClause = "";
-            $table_name = "user_bank";
-            $params  = [":offset" => $offset, ":limit" => $limit];
-            foreach ($filters as $db_column => $value) {
-                if (!empty($value)) {
-                    $whereClause .= empty($whereClause) ? " {$table_name}.{$db_column}=:{$db_column} " : " AND  {$table_name}.{$db_column}=:{$db_column}";
-                    $params[":{$db_column}"]      = $value;
-                }
+        $db = parent::openLink();
+        $offset = ($page - 1) * $limit;
+        $whereClause = "";
+        $table_name = "user_bank";
+        $params  = [":offset" => $offset,":limit" => $limit];
+        foreach ($filters as $db_column => $value) {
+            if(!empty($value)){
+                $whereClause .= empty($whereClause) ? " {$table_name}.{$db_column}=:{$db_column} " : " AND  {$table_name}.{$db_column}=:{$db_column}" ;
+                $params[":{$db_column}"]      = $value;
             }
 
             $whereClause = empty($whereClause) ? " " : " WHERE {$whereClause} ";

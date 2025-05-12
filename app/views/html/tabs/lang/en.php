@@ -45,7 +45,8 @@ return [
 'Refresh' => 'Refresh',
 'Execute'=>'Execute',
 'Search Bet Order ID'=> 'Search Bet Order ID',
-'Cancel'=> 'Cancel',
+'Transaction Time' =>'Transaction Time',
+'Time Zone/Hrs' =>'Time Zone/Hrs',
 
 //'Withdrawal Review' => 'Withdrawal Review',
 'Withdrawal Review' => 'Withdrawal Review',

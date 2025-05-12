@@ -253,6 +253,10 @@
         z-index: 10;
     }
 
+    .arr {
+        color: #909aa9;
+        margin: 0px 1rem;
+    }
 </style>
 
 <div id="lb-edit" class="modal fade " tabindex="-1" style="display: none;" aria-modal="true" role="dialog">

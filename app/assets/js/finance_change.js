@@ -1,5 +1,6 @@
 $(function () {
-
+  
+    const partnerID  = $('#partner-holder').attr("data-partner-id");
     function showToast(title, message, type) {
       $.toast({
         position: "bottom-right",
@@ -28,23 +29,22 @@ $(function () {
         let total_income = item.deposit_withdrawal_type == 1 ? `+${item.deposit_and_withdrawal_amount}` :
         item.deposit_withdrawal_type == 4 ? `-${item.deposit_and_withdrawal_amount}` : 0;
 
-          let types = item.deposit_withdrawal_type == 1 ? 'Deposit' :
-          item.deposit_withdrawal_type == 4 ? 'Withdrawal' : '';
+          let types = item.deposit_withdrawal_type == 1 ? 'Deposit':item.deposit_withdrawal_type == 4 ? 'Withdrawal' : '';
           let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
 
-        html += `
-                      <tr>
-                     <td>${username}</td>
-                      <td>VIP</td>
-                      <td class="editables">${types}</td>
-                      <td class="editables">${formatMoney(total_income)}</td>
-                      <td class="editables">${formatMoney(item.recharge_balance_in_advance)}</td>
-                      <td class="editables">${item.date_created +' / '+item.deposit_and_withdrawal_time}</td>
-                      <td class="editables">${item.remark.charAt(0).toUpperCase() + item.remark.slice(1)}</td>
-                                          
-                      </tr>
+         html += `
+              <tr>
+              <td>${username}</td>
+              <td>VIP</td>
+              <td class="editables">${types}</td>
+              <td class="editables">${formatMoney(total_income)}</td>
+              <td class="editables">${formatMoney(item.recharge_balance_in_advance)}</td>
+              <td class="editables">${item.date_created +' / '+item.deposit_and_withdrawal_time}</td>
+              <td class="editables">${item.date_created +' / '+item.deposit_and_withdrawal_time}</td>
+              <td class="editables">${item.remark.charAt(0).toUpperCase() + item.remark.slice(1)}</td>             
+              </tr>
                   `;
-      });
+         });
       return html;
     };
   
@@ -59,7 +59,7 @@ $(function () {
     async function fetchfinance(page,pageLimit) {
       try {
         const response = await fetch(
-          `../admin/fetchfinance/${page}/${pageLimit}`
+          `../admin/fetchfinance/${partnerID}/${page}/${pageLimit}`
         );
         const data = await response.json();
     
@@ -133,7 +133,7 @@ $(function () {
 
     async function filterfinance(username, financetype, startfinance, endfinance, currentPage, pageLimit) {
       $.post(
-        `../admin/filterfinance/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
+        `../admin/filterfinance/${partnerID}/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
         function (response) {
           try {
             const data = JSON.parse(response);
@@ -236,7 +236,7 @@ $(function () {
     function fetchUserss(query) {
         let optionsHtml = '';
     
-        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+        $.post(`../admin/Searchusername/${partnerID}/${encodeURIComponent(query)}`, function (response) {
             try {
                 response = typeof response === 'string' ? JSON.parse(response) : response;
 
@@ -290,7 +290,7 @@ $(function () {
       $("#addfinancemodal").modal("hide");  
       $(".userIdFields, .amount,.review,#financeinput").val(''); 
       $(".loaderfinanc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
-      $.post(`../admin/addmoney/${depositype}/${usernames}/${amount}/${approvedby}/${review}`,
+      $.post(`../admin/addmoney/${partnerID}/${depositype}/${usernames}/${amount}/${approvedby}/${review}`,
         function (response) {
           console.log(response)
           if (response) {
@@ -358,7 +358,7 @@ $(function () {
     function fetchUsers(query) {
         let optionsHtml = '';
     
-        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+        $.post(`../admin/Searchusername/${partnerID}/${encodeURIComponent(query)}`, function (response) {
             try {
                 response = typeof response === 'string' ? JSON.parse(response) : response;
                 response.forEach(user => {

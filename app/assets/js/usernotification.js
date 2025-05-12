@@ -1,4 +1,6 @@
 $(function () {
+
+    const partnerID = $("#partner-holder").attr("data-partner-id");
   function showToast(title, message, type) {
       $.toast({
           position: "bottom-right",
@@ -10,14 +12,18 @@ $(function () {
   }
   const usernotiData = (data) => {
      let html = ""
+     console.log(data);
       data.forEach((item) => {
         const readstatus = item.read_status === 'read' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Read</span>'  : '<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-warning">Unread</span>'
-          html += `
+        let timezone = item.timezone.split(" ");
+        timezone = `${timezone}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
+        html += `
             <tr>
                 <td>${item.username}</td>
                 <td>${item.subject}</td>
                 <td style ="max-width: 300px;word-wrap: break-word;overflow-wrap: break-word; white-space: normal;">${item.message}</td>
                 <td>${item.created_at}</td> 
+                <td>${timezone}</td> 
                 <td> ${readstatus}</td>                               
             </tr>
             `;
@@ -35,7 +41,7 @@ $(function () {
 
   async function fetchusernotification(page,pageLimit) {
       try {
-          const response = await fetch(`../admin/fetchusernotification/${page}/${pageLimit}`);
+          const response = await fetch(`../admin/fetchusernotification/${partnerID}/${page}/${pageLimit}`);
           const data = await response.json();
           //console.log(response);
           //  return
@@ -115,7 +121,7 @@ $(function () {
    })
 
    async function filterUserNotifys(username, messagestype, startnotfys, endnotfys, currentPage, pageLimit) {
-    $.post(`../admin/filteruserNotifys/${username}/${messagestype}/${startnotfys}/${endnotfys}/${currentPage}/${pageLimit}`, 
+    $.post(`../admin/filteruserNotifys/${partnerID}/${username}/${messagestype}/${startnotfys}/${endnotfys}/${currentPage}/${pageLimit}`, 
         function (response) {
         try {
         const data = JSON.parse(response);

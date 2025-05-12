@@ -51,7 +51,7 @@ if ($flag == "searchusername") {
 
 //trasanction data
 if ($flag == "transactiondata") {
-    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $page  = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $result = (new BusinessFlowModel())->FetchTransactionData($page, $limit) ?? [];
     echo json_encode([
@@ -189,7 +189,8 @@ if ($flag == "viewBetstake") {
 }
 
 if ($flag == "fetchLotteryname") {
-    $result = (new BusinessFlowModel())->fetchLotteryname();
+    $partnerID = isset($this->viewData['partner_id']) ? $this->viewData['partner_id'] : '';
+    $result = (new BusinessFlowModel())->fetchLotteryname($partnerID);
     echo json_encode($result);
 }
 

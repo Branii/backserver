@@ -1,4 +1,5 @@
 $(function () {
+    const partnerID = $("#partner-holder").attr("data-partner-id");
   function tableScrollWithdraw() {
       const tableContainerFinanceWidrl = document.querySelector(".table-wrapperwithdraw");
       const headerRowFinanceWidrl = document.querySelector(".tbl-row-widrl");
@@ -26,7 +27,10 @@ $(function () {
       let html = "";
       const status = { 1: "Pending", 2: "Success", 3: "Failed" };
       const withdrawal_channel = { 3: "Momo", 5: "Crypto", 2: "Bank", 4: "Manual" }; // 3:momo 5:crypto 2:bank 4:manual
+      
       data.forEach((item) => {
+        let timezone = item.withdrawal_timezone.split(" ");
+        timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
           html += `
         <tr>
             <td>${item.withdrawal_id}</td>
@@ -40,6 +44,7 @@ $(function () {
             <td>${formatNumber(item.fee)}</td>
             <td>${formatNumber(item.actual_withdrawal_amount)}</td>
             <td>${item.withdrawal_application_time.replace(" ", "/")}</td>
+            <td>${timezone}</td>
             <td>${status[item.withdrawal_state]}</td>
             <td>${item.approved_by}</td>
         </tr>
@@ -58,7 +63,8 @@ $(function () {
 
   async function fetchwithdraw(pagewithdraw) {
       try {
-          let response = await fetch(`../admin/fetchwithdraw/${pagewithdraw}/${pageLimit}`);
+         
+          let response = await fetch(`../admin/fetchwithdraw/${partnerID}/${pagewithdraw}/${pageLimit}`);
           response = await response.json();
           if (response.status === "error") {
               $("#withdrawContainer").html(`<tr class="no-resultslist"><td colspan="15">Error: ${response.data}</td></tr>`);
@@ -66,20 +72,20 @@ $(function () {
           }
 
           const data = response.data;
-          // return
           $("#maskwithdraw").LoadingOverlay("hide");
-          //  console.log(data)
           renderwithdraw(data);
           const totalPages = Math.ceil(data[0].total_records / 10);
-
-          // // Render pagination
+          // Render pagination
           renderwithdrawPagination(totalPages, 1);
       } catch (error) {
           console.error("Error fetching data:", error);
       }
   }
 
-  fetchwithdraw(currentPagewithdraw);
+  $(document).on("click",".item-6",function(){
+      fetchwithdraw(currentPagewithdraw);
+  });
+
 
   function renderwithdrawPagination(totalPages, currentPagewithdraw) {
       let pagLink = `<ul class='pagination justify-content-end'>`;
@@ -235,6 +241,7 @@ $(function () {
       let widrlStatus = $("#widrl-status").val();
       let widrlStartDate = $("#widrl-startDate").val();
       let widrlEndDate = $("#widrl-endDate").val();
+      const partnerID = $("#partner-holder").attr("data-partner-id");
 
       if (widrlStartDate === undefined) {
           widrlStartDate = "all";
@@ -258,13 +265,13 @@ $(function () {
       widrlStatus = widrlStatus == 0 ? "all" : widrlStatus;
 
       $.ajax({
-          url: `../admin/searchWidrlRecords/${userID}/${widrlID}/${widrlChannels}/${widrlStatus}/${widrlStartDate}/${widrlEndDate}/${currentPage}/${limit}`,
+          url: `../admin/searchWidrlRecords/${partnerID}/${userID}/${widrlID}/${widrlChannels}/${widrlStatus}/${widrlStartDate}/${widrlEndDate}/${currentPage}/${limit}`,
           type: "POST",
           beforeSend: function () {
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
           },
           success: function (response) {
-              console.log(response);
+            //   console.log(response);
               response = JSON.parse(response);
               //console.log(response);
 

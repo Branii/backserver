@@ -218,6 +218,11 @@
         /* Darker handle color on hover */
     }
 
+    .arr {
+        color: #909aa9;
+        margin: 0px 1rem;
+    }
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -280,6 +285,9 @@
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Login Time']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
                         </th>
                         <!-- <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Login Count']; ?></h6>

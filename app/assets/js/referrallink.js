@@ -14,6 +14,8 @@ $(function () {
 
       data.forEach((item) => {
         let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+        let timezone = item.timezone.split(" ");
+        timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
           html += `
                   <tr>
                       <td>${username}</td>
@@ -21,6 +23,7 @@ $(function () {
                       <td>${item.rebate}</td>
                       <td>${item.register_count + " / " + item.quota_used}</td>
                        <td>${item.date_created + " / " + item.time_created}</td>
+                       <td>${timezone}</td>
                        <td>${item.remarks}</td>
                       
                   </tr>
@@ -39,7 +42,7 @@ $(function () {
 
   async function fetchUserlinks(page, pageLimit) {
       try {
-          const response = await fetch(`../admin/userlinkdata/${page}/${pageLimit}`);
+          const response = await fetch(`../admin/userlinkdata/${partnerID}/${page}/${pageLimit}`);
           const data = await response.json();
           $("#maskreferal").LoadingOverlay("hide");
           renderuserlinks(data.userlinks);
@@ -52,7 +55,7 @@ $(function () {
 
   async function filterUserlinks(username, linkstart, linkenddate, currentPage, pageLimit) {
       try {
-          const response = await fetch(`../admin/filterUserlinks/${username}/${linkstart}/${linkenddate}/${currentPage}/${pageLimit}`);
+          const response = await fetch(`../admin/filterUserlinks/${partnerID}/${username}/${linkstart}/${linkenddate}/${currentPage}/${pageLimit}`);
           const data = await response.json();
           // console.log(response)
           //  return
@@ -221,7 +224,7 @@ $(function () {
   function fetchUserlink(query) {
       let optionsHtml = "";
 
-      $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+      $.post(`../admin/Searchusername/${partnerID}/${encodeURIComponent(query)}`, function (response) {
           try {
               response = typeof response === "string" ? JSON.parse(response) : response;
 
@@ -260,7 +263,7 @@ $(function () {
   }
 
   function tableScrollLinks() {
-      const tableContainerLinks = document.querySelector(".table-wrapperquota");
+      const tableContainerLinks = document.querySelector(".table-wrapperlistlinks");
       const headerRowLinks = document.querySelector(".headrowlinks");
 
       tableContainerLinks.addEventListener("scroll", function () {

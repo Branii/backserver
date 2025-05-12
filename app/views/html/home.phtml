@@ -11,10 +11,7 @@ $translator = include "tabs/lang/{$lang}.php";
 
 !(new Controller)->isUserLoggedIn() ? header("location:../") : "";
 $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
-
-
 $fullname = (new Controller)->getUsername($adminEmail);
-
 ?>
 <!DOCTYPE html>
 <html oncontextmenu="return falsex" lang="en" dir="ltr" data-color-theme="Blue_Theme"
@@ -130,6 +127,54 @@ $fullname = (new Controller)->getUsername($adminEmail);
           var(--x-offset) var(--y-offset) var(--stroke) 0px var(--stroke-color);
       }
     }
+
+      .otp-input-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+     
+      }
+      .otp-box {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      right:6%;
+      position:relative;
+      margin-top: 10px;
+      }
+      .otp-box:focus {
+      border-color: #28a745;
+      outline: none;
+      box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+      }
+      .verify-otp-btn {
+    /* padding: 5px 10px; */
+    font-size: 16px;
+    border-radius: 6px;
+    background-color: #ccc;
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    cursor: pointer;
+    width:39%;
+    right:5%;
+    position:relative;
+}
+
+.verify-otp-btn:hover {
+    background-color: #218838;
+    transform: scale(1.02);
+}
+
+.verify-otp-btn:active {
+    transform: scale(0.98);
+    background-color: #1e7e34;
+}
   </style>
   <style>
     /* :root {
@@ -216,13 +261,21 @@ $fullname = (new Controller)->getUsername($adminEmail);
          color: var(--text-color);
          cursor: pointer;
          } */
+   .arr {
+        color: #2a3547;
+        margin: 0px 1rem;
+    }
 
+    .pn-wrapper {
+      background-color:  #fffefe ;
+    }
 </style>
 </head>
 
 <body>
   <div class="toast toast-onload align-items-center text-bg-primary border-0" role="alert" aria-live="assertive"
     aria-atomic="true">
+    <input type="hidden" value="" id="partner-holder">
     <div class="toast-body hstack align-items-start gap-6">
       <i class="ti ti-alert-circle fs-6"></i>
       <div>
@@ -344,12 +397,9 @@ $fullname = (new Controller)->getUsername($adminEmail);
                
         </div>
 
-
-              
         <!-- ---------------------------------- -->
         <!-- Start Vertical Layout Sidebar -->
         <!-- ---------------------------------- -->
-
 
       </div>
     </aside>

@@ -1,4 +1,7 @@
 $(function () {
+
+
+    const partnerID = $("#partner-holder").attr("data-partner-id");
     function showToast(title, message, type) {
         $.toast({
             position: "bottom-right",
@@ -430,7 +433,6 @@ $(function () {
         $("#signup-modal").modal("show");
         const transactionId = $(this).attr("value");
         //console.log(transactionId);
-
         $("#row1").empty();
         $("#row2").empty();
         fetchTrasactionBet(transactionId);

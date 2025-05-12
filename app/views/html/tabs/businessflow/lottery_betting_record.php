@@ -319,6 +319,11 @@
     background-color: red;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   }
+
+  .arr {
+    color: #909aa9;
+    margin: 0px 1rem;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -422,7 +427,7 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Server Time']; ?></h6>
+                         <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
                         </th>
                                   <!-- <th>
                         <h6 class="fs-4 fw-semibold mb-0">Bet Type</h6>

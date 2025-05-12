@@ -18,6 +18,7 @@ return array(
     'Database' => $baseDir . '/app/database/Database.php',
     'FinancialManageModel' => $baseDir . '/app/model/FinancialManageModel.php',
     'GameManageModel' => $baseDir . '/app/model/GameManageModel.php',
+    'GoogleAuthenticateModel' => $baseDir . '/app/model/GoogleAuthenticateModel.php',
     'MEDOOHelper' => $baseDir . '/app/model/MEDOOHelper.php',
     'MedooOrm' => $baseDir . '/app/database/MedooOrm.php',
     'Model' => $baseDir . '/app/model/Model.php',

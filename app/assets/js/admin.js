@@ -16,7 +16,6 @@ $(function(){
         elem.addClass("bx-loader bx-spin").removeClass("bx-check-shieldn")
         setTimeout(() => {
             $.post(url,params,function(result){
-                console.log(result)
                 if(JSON.parse(result).type == 'success'){
                     elem.removeClass("bx-loader bx-spin").addClass("bx-check-shieldn")
                     showToast(translator["Success"],translator["Signin successful"],"success")

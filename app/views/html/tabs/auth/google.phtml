@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<head>
+    <title>OTP Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .card {
+            background-color: white;
+            width: 360px;
+            padding: 30px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 5px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        p {
+            margin-top: 0;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .otp-boxes {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .otp-boxes input {
+            width: 40px;
+            height: 50px;
+            font-size: 24px;
+            text-align: center;
+            margin: 0 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            color: white;
+            background: linear-gradient(to right, #f46b45, #eea849);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #eea849, #f46b45);
+        }
+
+     
+        .signin-note {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+        }
+        .otpstatus {
+            margin-top: 15px;
+            padding: 10px 17px;
+            border-radius: 5px;
+            font-size: 14px;
+            background.color:red;
+            /* box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);  */
+            margin-left:20px
+         }
+
+         <style>
+      .containers {
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 0 15px;
+        margin-top: 30px;
+      }
+      #contact {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#contact:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+}
+
+.contacts {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.contacts:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+}
+
+
+</style>
+
+    </style>
+    
+</head>
+<body>
+
+<div class="container" id ="mainconttainer">
+    <div class="card">
+        <h2>OTP</h2>
+
+        <p>Verify your account</p>
+
+            <div class="otp-boxes">
+                <input type="text" name="digit1" id="d1"  class="otp-box" maxlength="1" onkeyup="moveNext(this, 'd2')" required>
+                <input type="text" name="digit2" id="d2"  class="otp-box" maxlength="1" onkeyup="moveNext(this, 'd3')" required>
+                <input type="text" name="digit3" id="d3"  class="otp-box"maxlength="1" onkeyup="moveNext(this, 'd4')" required>
+                <input type="text" name="digit4" id="d4"  class="otp-box"maxlength="1" onkeyup="moveNext(this, 'd5')" required>
+                <input type="text" name="digit5" id="d5"  class="otp-box"maxlength="1" onkeyup="moveNext(this, 'd6')" required>
+                <input type="text" name="digit6" id="d6"  class="otp-box"maxlength="1" required>
+            </div>
+            <button class="btn btn-success verifybtn">
+                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <span class="btn-text">Verify Code</span>
+                <i class='bx bx-loader-circle bx-spin bx-rotate-90' style='color:#0c0c0c;display:none'></i>
+            </button>
+
+            <div class="signin-note" id="show-contact-form" style="cursor: pointer;">
+            Sign in with <strong>other</strong> <strong>options</strong>.
+            </div>
+  
+    </div>
+   
+    
+</div>
+
+<div class="containers" id="sendcode">
+    <div class="card" id="contact-form-card" style="display: none;">
+        <div class="input-group" id="contact-form">
+            <label for="contact">Enter your email or contact number</label>
+            <p></p>
+            <input type="text" id="contact" name="contact" placeholder="example@email.com or 0712345678" required>
+            <button class="btn-send-code">Send Code</button>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container" id="resetcode">
+     <div class="card">
+         <h2>OTP</h2>
+         <p>Verify your account</p>
+            <div class="otp-boxes">
+                <input type="text" name="digit1" id="d1"  class="otp-box" maxlength="1" onkeyup="moveNext(this, 'd2')" required>
+                <input type="text" name="digit2" id="d2"  class="otp-box" maxlength="1" onkeyup="moveNext(this, 'd3')" required>
+                <input type="text" name="digit3" id="d3"  class="otp-box"maxlength="1" onkeyup="moveNext(this, 'd4')" required>
+                <input type="text" name="digit4" id="d4"  class="otp-box"maxlength="1" onkeyup="moveNext(this, 'd5')" required>
+                <input type="text" name="digit5" id="d5"  class="otp-box"maxlength="1" onkeyup="moveNext(this, 'd6')" required>
+                <input type="text" name="digit6" id="d6"  class="otp-box"maxlength="1" required>
+            </div>
+            <button class="btn btn-success verifyresetbtn">Verify Code</button>
+     </div>
+   
+    
+</div>
+
+<div class="otpstatus"></div>
+</body>
+</html>
+
+<script src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/googletwofa.js"></script>
+<script>
+      $("#resetcode").hide();
+    function moveNext(el, nextID) {
+        if (el.value.length === 1 && nextID) {
+            document.getElementById(nextID).focus();
+        }
+    }
+
+    $("#show-contact-form").on("click", function () {
+        $("#mainconttainer").hide();
+         $("#contact-form-card").show();
+        $(this).hide(); // Optionally hide the prompt after clicked
+        $("#contact").focus();
+    });
+
+    $(".btn-send-code").on("click", function () {
+        const input = $("#contact").val().trim();
+        console.log(input);
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneRegex = /^(\+?\d{1,4}[\s-]?)?(\(?\d{3}\)?[\s-]?)?\d{3}[\s-]?\d{4}$/;
+        $(".otpstatus").show();
+
+        if (!input) {
+            $(".otpstatus").html("<p style='color:red;'>Please enter your email or contact number..</p>");
+            return;
+        }
+        const $btn = $(this);
+        if (emailRegex.test(input)) {
+            $(".otpstatus").html("<p style='color:green;'>Verification code will be sent to email</p>");
+            $("#resetcode").show();
+            $("#sendcode").hide();
+            startCooldown($btn);
+        }  else if (phoneRegex.test(input)) {
+            $(".otpstatus").html("<p style='color:green;'>Verification code will be sent to number</p>");
+            $("#resetcode").show();
+            $("#sendcode").hide();
+            startCooldown($btn);
+    }  else {
+            $(".otpstatus").html("<p style='color:red;'>Invalid email or phone number format.</p>");
+        }
+    });
+
+    function startCooldown($button) {
+        let countdown = 60;
+        $button.prop("disabled", true).text(`Resend code in ${countdown}s`);
+
+        const interval = setInterval(() => {
+            countdown--;
+            if (countdown > 0) {
+                $button.text(`Resend code in ${countdown}s`);
+            } else {
+                clearInterval(interval);
+                $button.prop("disabled", false).text("Send Code");
+            }
+        }, 1000);
+    }
+</script>
+
+

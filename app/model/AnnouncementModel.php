@@ -192,7 +192,7 @@ class AnnouncementModel extends MEDOOHelper
         $startpoint = $page * $limit - $limit;
     
         $query =
-         "SELECT nu.msg_id, nu.username, nu.read_status, n.subject, n.message, n.created_at
+         "SELECT nu.msg_id, nu.username, nu.read_status, n.subject, n.message, n.created_at,n.timezone 
             FROM notice_users AS nu
             JOIN notices AS n ON nu.msg_id = n.msg_id
             ORDER BY nu.msg_id DESC

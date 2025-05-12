@@ -300,12 +300,12 @@
                     <input name="usernames" type="hidden" id="selectedID" value="" />
                 </div> -->
 
-            <select name="betsate" id="platformStatuss" class="form-control form-select queryholderlistt messagestype" data-bs-placeholder="Select Type">
-              <option value="">-Select Payment Type-</option>
-              <option value="momo">Mobile Money</option>
-              <option value="bank">Bank</option>
-              <option value="crypto">Crypto</option>
-            </select>
+                <select name="betsate" id="platformStatuss" class="form-control form-select queryholderlistt messagestype payment-type" data-bs-placeholder="Select Type">
+                    <option value="">-Select Payment Type-</option>
+                    <option value="momo">Mobile Money</option>
+                    <option value="bank">Bank</option>
+                    <option value="crypto">Crypto</option>
+                </select>
 
             <select name="betsate" id="platformStatuse" class="form-control form-select queryholderlistt messagestype" data-bs-placeholder="Select Type">
               <option value="">-Status-</option>
@@ -343,89 +343,60 @@
     </span>
   </div>
 
-  <div class="card-body p-4">
-    <div class="table-responsive mb-4 border rounded-1 table-wrapperpayment" id="maskpayment" style="height: 530px; overflow-y: scroll;">
-      <table class="table text-nowrap mb-0 align-middle table-bordered">
-        <thead class="text-dark fs-4 tbl-paymentheader">
-          <tr class="paymentheaderrow">
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Payment Name</h6>
-            </th>
+    <div class="card-body p-4">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperpayment" id="maskpayment" style="height: 530px; overflow-y: scroll;">
+            <table class="table text-nowrap mb-0 align-middle table-bordered">
+                <thead class="text-dark fs-4 tbl-paymentheader">
+                    <tr class="paymentheaderrow">
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Payment Name</h6>
+                        </th>
 
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Payment Type']; ?></h6>
-            </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Payment Type</h6>
+                        </th>
 
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0"> <?= $translator['Currency']; ?></h6>
-            </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Currency</h6>
+                        </th>
 
-            <th>
-              <<<<<<< HEAD
-                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Site Url']; ?></h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0"> <?= $translator['Admin Site Url']; ?></h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Fees']; ?></h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Min. Amount']; ?></h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Max. Amount']; ?></h6>
-              =======
-              <h6 class="fs-4 fw-semibold mb-0">Minimum Amount</h6>
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0">Maximum Amount</h6>
-              >>>>>>> 04341e5d5094aca8f5be8e7c1109987248e7745a
-            </th>
-            <th>
-              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Date Created']; ?></h6>
-            </th>
-            <<<<<<< HEAD
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Minimum Amount</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Maximum Amount</h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Date Created</h6>
+                        </th>
 
-              <th>
-              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Created By']; ?></h6>
-              </th>
-              <th>
-                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Updated']; ?></h6>
-              </th>
-              <th>
-                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Update By']; ?></h6>
-              </th>
-              =======
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Created By</h6>
+                        </th>
 
-              <th>
-                <h6 class="fs-4 fw-semibold mb-0">Created By</h6>
-              </th>
-              >>>>>>> 04341e5d5094aca8f5be8e7c1109987248e7745a
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Status</h6>
+                        </th>
 
-              <th>
-                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
-              </th>
-
-              <th>
-                <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
-              </th>
-          </tr>
-        </thead>
-        <tbody id="paymentContainer">
-          <tr class="no-resultslist">
-            <td colspan="9">
-              <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="paymentContainer">
+                    <tr class="no-resultslist">
+                        <td colspan="9">
+                            <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
-  <div class="px-4 py-3 border-top pagerlist">
-    <span class="toplist-left-btn">
-      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-        <!-- <button type="button" class="btn bg-white-subtle playerfinance" value="startli">
+    <div class="px-4 py-3 border-top pagerlist">
+        <span class="toplist-left-btn">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                <!-- <button type="button" class="btn bg-white-subtle playerfinance" value="startli">
                     <i class="bx bx-chevrons-left" style="font-size: 20px;"></i>
                 </button> -->
         <button type="button" class="btn bg-white-subtle playerfinance" value="leftlin">

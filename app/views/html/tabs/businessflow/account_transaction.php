@@ -242,6 +242,11 @@
     .optionlist:hover {
         background-color: #f0f0f0;
     }
+
+    .arr {
+        color: #909aa9;
+        margin: 0px 1rem;
+    }
 </style>
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
@@ -339,10 +344,10 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Stake Time']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Server Time']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction ID']; ?></h6>

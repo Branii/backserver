@@ -9,11 +9,11 @@ class BusinessFlowModel extends MEDOOHelper
          "SELECT transaction.trans_id,transaction.account_change,transaction.balance,transaction.dateTime,
             transaction.game_type,transaction.order_id,transaction.order_type,transaction.date_created,
             users_test.email,users_test.contact,users_test.reg_type,users_test.username,partners_v1.name 
-         FROM transaction INNER JOIN partners_v1 ON partners_v1.partner_id = transaction.partner_uid
+          FROM transaction INNER JOIN partners_v1 ON partners_v1.partner_id = transaction.partner_uid
           INNER JOIN users_test ON users_test.uid = transaction.uid ORDER BY transaction.trans_id DESC LIMIT :offset, :limit",
          ['offset' => $startpoint, 'limit' => $limit]
       );
-      $totalRecords = parent::count('transaction');
+       $totalRecords = parent::count('transaction');
       $trasationIds = array_column($data, 'order_id');
       return ['data' => $data, 'total' => $totalRecords, 'transactionIds' => $trasationIds];
    }
@@ -87,12 +87,14 @@ class BusinessFlowModel extends MEDOOHelper
       $data = parent::query("SELECT username,email,contact,reg_type,uid FROM users_test WHERE uid = :uid", ['uid' => $userId])[0];
       return $data;
    }
-   public static function getUserIdByUsername(string $key)
+   public static function getUserIdByUsername($partnerID,string $key)
    {
       if (empty($key)) {
          return []; // Return empty if no key is provided
      }
-      $data = parent::query(
+     $db = parent::openLink($partnerID);
+
+      $stmt = $db->query(
             "SELECT uid FROM users_test WHERE 
                uid = :key 
                OR email = :key 
@@ -101,6 +103,8 @@ class BusinessFlowModel extends MEDOOHelper
                OR nickname = :key",
             ['key' => $key]
       );
+
+      $data = $stmt->fetch(PDO::FETCH_ASSOC);
       return $data;
       
    }
@@ -145,9 +149,9 @@ class BusinessFlowModel extends MEDOOHelper
    //NOTE -
    ////////////// LOTTERY BETTING-//////////
 
-   public static function getAllGameIds(): array
+   public static function getAllGameIds($partnerID): array
    {
-      $res = parent::selectAll("gamestable_map", ["bet_table", "game_type"]);
+      $res = parent::selectAll($partnerID,"gamestable_map", ["bet_table", "game_type"]);
       return $res;
    }
 

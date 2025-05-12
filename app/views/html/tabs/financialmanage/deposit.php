@@ -214,6 +214,11 @@
         background: #aaa;
         /* Darker handle color on hover */
     }
+
+    .arr {
+        color: #909aa9;
+        margin: 0px 1rem;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">

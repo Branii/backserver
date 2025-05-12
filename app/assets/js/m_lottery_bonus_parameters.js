@@ -4,7 +4,7 @@ $(() =>{
   let historyStack  = [];
   let pagesStack    = [];
   let pagingInfo    = [];
- 
+  const partnerID = $('#partner-holder').attr("data-partner-id");
   function showToast(title, message, type) {
       $.toast({
         position: "bottom-right",
@@ -15,6 +15,7 @@ $(() =>{
       });
     }
 
+   
     $(document).on("click",".update-gamegroup",function(){
       const gameItems =  $($($(this).parents(".lbp-gamegroup-wrapper")[0]).find(".lbp-gameitem-wrapper")[0]).find(".lbp-gameitem-parent");
       let data = [];
@@ -31,7 +32,7 @@ $(() =>{
 
       data = JSON.stringify(data);
       $.ajax({
-        url: `../admin/updateGameGroupData/${data}`,
+        url: `../admin/updateGameGroupData/${partnerID}/${data}`,
         type: "GET",
         beforeSend: function () {
             // $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -222,7 +223,7 @@ $(() =>{
       const gameID = $(this).attr("id").split("-")[2];
       const element = this;
       $.ajax({ 
-          url: `../admin/toggleTwosidesLotteryState/${gameID}`,
+          url: `../admin/toggleTwosidesLotteryState/${partnerID}/${gameID}`,
           type: "POST",
           beforeSend: function () {
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
