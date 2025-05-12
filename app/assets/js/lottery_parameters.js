@@ -115,7 +115,7 @@ $(function () {
 
     async function getLotteryGames(lotterId, models) {
         try {
-            const response = await fetch(`../admin/getLotteryGames/${partnerID}/${lotterId}/${models}`);
+            const response = await fetch(`../admin/getLotteryGames/${lotterId}/${models}`);
             const data = await response.json();
             //  console.log(response);
             renderLotteryParams(data.bonus);
@@ -128,7 +128,6 @@ $(function () {
         let lotteryId = $("#allGameNamesLottery").val();
         let models = $("#allmodels").val();
         // console.log(lotteryId, models);
-
       if(models == "twosides" || models === "boardgames" || models === "fantan") return;
 
       getLotteryGames(lotteryId,models);

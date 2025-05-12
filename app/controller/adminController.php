@@ -314,23 +314,24 @@ class adminController extends Controller {
 
 
     // -- Lottery Draw Records ------------------------
-    public function fetch_lottery_basic_params($lottery_id,$page)
+    public function fetch_lottery_basic_params($partnerID,$lottery_id,$page)
     {
     
-        $this->view('exec/lottery_basic_params', ['lottery_id' => $lottery_id,'page' => $page,'flag' => 'fetch-lottery-basic-params']);
+        $this->view('exec/lottery_basic_params', ['partner_id' => $partnerID,'lottery_id' => $lottery_id,'page' => $page,'flag' => 'fetch-lottery-basic-params']);
         $this->view->render();
     }
 
       //NOTE -
     ////////////// USERLIST LIST -//////////
-    public function userlistdata($uid,$recharge_level, $state, $start_date, $end_date,$pageNumber, $limit,$miscelleanous)
+    public function userlistdata($partnerID,$uid,$recharge_level, $state, $start_date, $end_date,$pageNumber, $limit,$miscelleanous)
     {
       
-        $this->view('exec/account_manage', ['uid' => $uid,'recharge_level' => $recharge_level,'state' => $state, 'startdate' => $start_date, 'enddate' => $end_date,'page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
+
+        $this->view('exec/account_manage', ["partner_id" => $partnerID,'uid' => $uid,'recharge_level' => $recharge_level,'state' => $state, 'startdate' => $start_date, 'enddate' => $end_date,'page' => $pageNumber, 'limit' => $limit, 'flag' => 'userlistdata']);
         $this->view->render();
     }
 
-    public function filteruserlist($pageNumber, $limit)
+    public function filteruserlist($partnerID,$pageNumber, $limit)
     {
         $this->view('exec/account_manage', [
             'partner_id' => $pageNumber,
@@ -341,10 +342,10 @@ class adminController extends Controller {
         ]);
         $this->view->render();
     }
-    public function searchUserListData($username,$recharge_level, $states , $startdate , $enddate,$miscelleanous)
+    public function searchUserListData($partnerID,$username,$recharge_level, $states , $startdate , $enddate,$miscelleanous)
     {
         $this->view('exec/account_manage', [
-            // 'partner_id' => $partnerID,
+            'partner_id' => $partnerID,
             'uid' => $username,
             'recharge_level' => $recharge_level,
             'state' => $states,
@@ -356,9 +357,9 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function fetchRebatedata()
+    public function fetchRebatedata($partnerID)
     {
-        $this->view('exec/account_manage', ['flag' => 'fetchRebatedata']);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,'flag' => 'fetchRebatedata']);
         $this->view->render();
     }
 
@@ -368,9 +369,9 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function  fetchTopAgent($recharge_level,$state,$start_date,$end_date,$page, $limit)
+    public function  fetchTopAgent($partnerID,$recharge_level,$state,$start_date,$end_date,$page, $limit)
     {
-        $this->view('exec/account_manage', ["recharge_level"=>$recharge_level,"state" => $state,"start_date" => $start_date,"end_date" => $end_date,'page' => $page, 'limit' => $limit,'flag' => 'fetchTopAgent']);
+        $this->view('exec/account_manage', ['partner_id' => $partnerID,"recharge_level"=>$recharge_level,"state" => $state,"start_date" => $start_date,"end_date" => $end_date,'page' => $page, 'limit' => $limit,'flag' => 'fetchTopAgent']);
         $this->view->render();
     }
 
@@ -382,9 +383,22 @@ class adminController extends Controller {
     }
 
   
-    public function  fetchPartnersNames($page , $limit)
+    public function  fetchPartners($partnerID,$page , $limit)
     {  
-        $this->view('exec/partners', ['flag' => 'fetchPartnersNames']);
+        $this->view('exec/partners', ['partner_id' => $partnerID,"page" => $page, "limit" => $limit,'flag' => 'fetch_partners']);
+        $this->view->render();
+    }
+    public function  fetchPaymentPlatforms($partnerID,$page , $limit)
+    {  
+
+        $this->view('exec/payment_platforms', ['partner_id' => $partnerID ,'flag' => 'fetchpaymentplatforms']);
+        $this->view->render();
+    }
+    
+    public function  fetchPartnersNames($partnerID,$page , $limit)
+    {  
+
+        $this->view('exec/partners', ['partner_id' => $partnerID,'flag' => 'fetchPartnersNames']);
         $this->view->render();
     }
 
@@ -458,9 +472,9 @@ class adminController extends Controller {
         $this->view->render();
     }
 
-    public function  getuserrebate($partnerID,$uid)
+    public function  getuserrebate($uid)
     {
-        $this->view('exec/account_manage', ['partner_id' => $partnerID,'uid' => $uid, 'flag' => 'getuserrebate']);
+        $this->view('exec/account_manage', ['uid' => $uid, 'flag' => 'getuserrebate']);
         $this->view->render();
     }
 
@@ -476,9 +490,9 @@ class adminController extends Controller {
        
     }
     
-    public function filterChangeAccount($partnerID,$uid,$ordertype,$startdate,$enddate,$pageNumber,$limit){
+    public function filterChangeAccount($uid,$ordertype,$startdate,$enddate,$pageNumber,$limit){
         $this->view('exec/account_manage',[
-            'partner_id' => $partnerID,
+            // 'partner_id' => $partnerID,
             'uid' => $uid,
             'ordertype' => $ordertype,'startdate' => $startdate,
             'enddate' => $enddate, 'flag' => 'filterchange',
@@ -519,9 +533,9 @@ class adminController extends Controller {
         $this->view('exec/account_manage', ['partner_id' => $partnerID,'user_id' => $user_id ,'flag' => 'fetchsubagent','page' => $pageNumber, 'limit' => $limit,]);
         $this->view->render();
     }
-    public function useraccountchange($partnerID,$uid,$pageNumber, $limit)
+    public function useraccountchange($uid,$pageNumber, $limit)
     {
-        $this->view('exec/account_manage', ['partner_id' => $partnerID,'uid' => $uid ,'flag' => 'fetchaccountchange','page' => $pageNumber, 'limit' => $limit,]);
+        $this->view('exec/account_manage', ['uid' => $uid ,'flag' => 'fetchaccountchange','page' => $pageNumber, 'limit' => $limit,]);
         $this->view->render();
     }
     
@@ -680,7 +694,6 @@ class adminController extends Controller {
 
     public function getLotteryGames(string $lotterId, string $tables){
         $this->view('exec/game_management',[
-         
             'flag' => 'getLotteryGames',
             'gameId' => $lotterId,
             'tables' => $tables
@@ -846,7 +859,6 @@ class adminController extends Controller {
         public function updateplatform($typecurrency,$maxiamounts,$minamount,$statecurrent,$paymentids)
         {
                 $this->view('exec/payment_platform', [
-         
                     'typecurrency' => $typecurrency,
                     'maxiamounts' => $maxiamounts,
                     'minamount' => $minamount,
@@ -857,10 +869,11 @@ class adminController extends Controller {
                 $this->view->render();
         }
 
-        public function filterpayments($curencytypes,$stautspayment,$startdepo,$enddepo,$page,$pageLimit)
+        // stash change.
+        public function filterpayments($partnerID,$curencytypes,$stautspayment,$startdepo,$enddepo,$page,$pageLimit)
         {
                 $this->view('exec/payment_platform', [
-         
+                'partner_id' => $partnerID,
                 'curencytypes' => $curencytypes,
                 'stautspayment' => $stautspayment,
                 'startdate' => $startdepo,

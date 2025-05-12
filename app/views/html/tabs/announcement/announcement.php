@@ -325,7 +325,7 @@
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['DateTime']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Message Time']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>

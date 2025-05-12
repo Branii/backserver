@@ -60,7 +60,7 @@ $(function () {
   
     // fetchuseroverview(currentPage, pageLimit);
   
-    async function filterUserlogs(usernamelog, startdatelog, enddatelog) {
+    async function fetchuseroverview(usernamelog, startdatelog, enddatelog) {
         try {
             const response = await fetch("http://192.168.1.51/chairman_test/api/v1/limvo/myteamgraph", {
                 method: "POST",
@@ -206,7 +206,7 @@ $(function () {
         console.log(usernamelog,startdateover,enddateover);
     //    return
          $(".loaderover").removeClass("bx-check-double").addClass("bx-loader bx-spin");
-            filterUserlogs(usernamelog, startdateover, enddateover, currentPage, pageLimit);
+         fetchuseroverview(usernamelog, startdateover, enddateover, currentPage, pageLimit);
     
     });
   

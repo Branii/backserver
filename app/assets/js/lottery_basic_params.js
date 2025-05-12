@@ -527,7 +527,7 @@ $(() => {
   const lotteryID =  $("#lb-id-holder").val();
   const status    =  $("#lb-toggle-lottery").attr("data-status");
     $.ajax({
-      url: `../admin/updateLotteryStatus/${lotteryID}/${status}`,
+      url: `../admin/updateLotteryStatus/${partnerID}/${lotteryID}/${status}`,
       type: "POST",
       beforeSend: function () {
         $("#lottery-draw-loader").css({ display: "flex" });

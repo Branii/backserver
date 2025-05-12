@@ -48,7 +48,7 @@ $(function () {
 
   async function fetchUserlogs(page, pageLimit) {
       try {
-          const response = await fetch(`../admin/userlogsdata/${partnerID}/${page}/${pageLimit}`);
+          const response = await fetch(`../admin/userlogsdata/${page}/${pageLimit}`);
           const data = await response.json();
           //  console.log(response);
 
@@ -65,7 +65,7 @@ $(function () {
 
   async function filterUserlogs(usernamelog, startdatelog, enddatelog, currentPage, pageLimit) {
       try {
-          const response = await fetch(`../admin/filterUserlogs/${partnerID}/${usernamelog}/${startdatelog}/${enddatelog}/${currentPage}/${pageLimit}`);
+          const response = await fetch(`../admin/filterUserlogs/${usernamelog}/${startdatelog}/${enddatelog}/${currentPage}/${pageLimit}`);
           const data = await response.json();
           console.log(response);
           //  return

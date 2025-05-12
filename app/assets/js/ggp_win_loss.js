@@ -540,9 +540,7 @@ $(".playerWinLoss").click(function(e){
     let endDate   = $("#wl-enddate").val();
     const element = this;
     const limit = 10;
-    if(lotteryID != undefined){
-        if(lotteryID.length == 0) return;
-    }
+
 
 
     lotteryID = lotteryID == undefined ?  "all" : lotteryID;
@@ -551,7 +549,7 @@ $(".playerWinLoss").click(function(e){
     flag      = "get-active-subs"
     console.log(agentID);
     $.ajax({
-        url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
+        url: `../admin/fetchAgentSubs/${partnerID}/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
         type: "POST",
         beforeSend: function(){
            $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

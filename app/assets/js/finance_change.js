@@ -58,7 +58,10 @@ $(function () {
     let pageLimit = 20;
   
     async function fetchfinance(page,pageLimit) {
-      try { const response = await fetch( `../admin/fetchfinance/${page}/${pageLimit}`);
+      try {
+        const response = await fetch(
+          `../admin/fetchfinance/${page}/${pageLimit}`
+        );
         const data = await response.json();
         $("#maskfinance").LoadingOverlay("hide");
         renderfinace(data.finance);
@@ -123,7 +126,7 @@ $(function () {
     //search function
     async function filterfinance(username, financetype, startfinance, endfinance, currentPage, pageLimit) {
       $.post(
-        `../admin/filterfinance/${partnerID}/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
+        `../admin/filterfinance/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
         function (response) {
           try {
             const data = JSON.parse(response);

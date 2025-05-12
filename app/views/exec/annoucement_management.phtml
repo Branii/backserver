@@ -61,7 +61,6 @@ if ($flag == "message") {
             } else {
                 $username = $userData['email'];
             }
-
             if (in_array($messagetype, ["general", "personal"])) {
                 $targetUser = ($messagetype === "personal") ? $username : '';
                 echo AnnouncementModel::GeneralMessage($messagetitle, $description, $sendby, $messagetype, $targetUser, $usernames);

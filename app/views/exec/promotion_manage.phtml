@@ -19,18 +19,15 @@ if ($flag == "userlinkdata") {
 
 if($flag  == "filterUserlinks"){
 
-    
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $uid = isset($this->viewData['username']) ? $this->viewData['username'] : '';
     $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
     $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
-
     $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
-    $username = !empty($usernameCheck) ? $usernameCheck['uid'] : $uid;
-    $subquery =   (new PromotionManageModel())->FilterUserlinksDataSubQuery($username, $startdate, $enddate) ;
+    $username = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : $uid;
+    $subquery =  (new PromotionManageModel())->FilterUserlinksDataSubQuery($username, $startdate, $enddate) ;
     $result = (new PromotionManageModel())->FilterUserlinks($subquery,$page, $limit) ?? [];
- 
     echo json_encode([
         'sql' => $result['sql'],
         'userlinkss' => $result['data'],

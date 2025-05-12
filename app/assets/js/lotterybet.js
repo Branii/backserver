@@ -162,7 +162,7 @@ $(function () {
   // Fetch lottery bet data
   async function fetchLotteryBet(currentPagebet,pageLimit) {
       try {
-          const response = await fetch(`../admin/lotterydata/${partnerID}/${currentPagebet}/${pageLimit}`);
+          const response = await fetch(`../admin/lotterydata/${currentPagebet}/${pageLimit}`);
           const data = await response.json();
           $("#maskbet").LoadingOverlay("hide");
           renderlottery(data.lotterybet);
@@ -227,8 +227,8 @@ $(function () {
       });
   }
   // Filter and fetch lottery bet data
-  async function filterbetdatas(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit) {
-      $.post(`../admin/filterbetdata/${partnerID}/${uidd}/${betOrderID}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`).done(function (response) {
+  async function filterbetdata(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit) {
+      $.post(`../admin/filterbetdata/${uidd}/${betOrderID}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`).done(function (response) {
           try {
               const data = JSON.parse(response);
               if (data.response == "error") {
@@ -251,7 +251,7 @@ $(function () {
               }
               $("#maskbet").LoadingOverlay("hide");
               renderlottery(data.filterbet);
-              renderbetPagination(data.totalPages,currentPagebet, (page) => {filterbetdatas(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, page, pageLimit);}); // Pass callback
+              renderbetPagination(data.totalPages,currentPagebet, (page) => {filterbetdata(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, page, pageLimit);}); // Pass callback
 
               document.getElementById("paging_infobet").innerHTML =`${translator["Page"]} ${currentPagebet} ${translator["Of"]} ${data.totalPages} ${translator["Page"]}`
           } catch (error) {
@@ -321,7 +321,7 @@ $(function () {
       // console.log(uidd)
       // console.log(enddates)
 
-      filterbetdatas(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit);
+      filterbetdata(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit);
 
       $(".loaderbet").removeClass("bx bx-check-double").addClass("bx bx-loader bx-spin");
   });
