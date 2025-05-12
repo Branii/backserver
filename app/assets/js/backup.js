@@ -95,7 +95,6 @@ $(function(){
         try {
           const response = await fetch(`../admin/getAllBackups/${currentPage}/${pageLimit}`);
           const data = await response.json();
-          //console.log(data);
           renderAllBackups(data.backups);
           $("#maskk").LoadingOverlay("hide")
           //Render pagination

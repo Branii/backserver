@@ -176,7 +176,7 @@
     }
 
     .DepositDropdown {
-        width: 16%;
+        width: 14%;
         position: absolute;
         background-color: #fff;
         color: #aaa;
@@ -185,7 +185,7 @@
         border-radius: 5px;
         padding: 5px;
         top: 90%;
-        z-index: 9999;
+        z-index:9;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         display: none;
     }
@@ -215,10 +215,6 @@
         /* Darker handle color on hover */
     }
 
-    .arr {
-        color: #909aa9;
-        margin: 0px 1rem;
-    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -228,7 +224,7 @@
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width:120%;">
                 <input type="text" id="Depositinput" class="form-control queryholderdeposit userdeposit" placeholder="<?= $translator['Search usernames']; ?>" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
                 <select class="form-control DepositDropdown" size="5" style="display: none;" id="userfinaceDepo">
@@ -308,6 +304,9 @@
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit Time']; ?></h6>
                         </th>
+                        <th>
+                        <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
+                       </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Receiving Bank']; ?></h6>
                         </th>

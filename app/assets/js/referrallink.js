@@ -1,4 +1,7 @@
+
+
 $(function () {
+    const partnerID = $("#partner-holder").attr("data-partner-id");
   const showToast = (title, message, type) => {
       $.toast({
           position: "bottom-right",
@@ -42,7 +45,7 @@ $(function () {
 
   async function fetchUserlinks(page, pageLimit) {
       try {
-          const response = await fetch(`../admin/userlinkdata/${partnerID}/${page}/${pageLimit}`);
+          const response = await fetch(`../admin/userlinkdata/${page}/${pageLimit}`);
           const data = await response.json();
           $("#maskreferal").LoadingOverlay("hide");
           renderuserlinks(data.userlinks);
@@ -55,7 +58,7 @@ $(function () {
 
   async function filterUserlinks(username, linkstart, linkenddate, currentPage, pageLimit) {
       try {
-          const response = await fetch(`../admin/filterUserlinks/${partnerID}/${username}/${linkstart}/${linkenddate}/${currentPage}/${pageLimit}`);
+          const response = await fetch(`../admin/filterUserlinks/${username}/${linkstart}/${linkenddate}/${currentPage}/${pageLimit}`);
           const data = await response.json();
           // console.log(response)
           //  return
@@ -73,8 +76,8 @@ $(function () {
           }
           renderuserlinks(data.userlinkss);
 
-          renderfinacesPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => filterUserlinks(username, linkstart, linkenddate, newPage, pageLimit));
-          document.getElementById("paging_inforeferal").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+          renderfinacesPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterUserlinks(username, linkstart, linkenddate, newPage, pageLimit));
+          document.getElementById("paging_inforeferal").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
       } catch (error) {
           console.error("Error fetching data:", error);
       }
@@ -224,7 +227,7 @@ $(function () {
   function fetchUserlink(query) {
       let optionsHtml = "";
 
-      $.post(`../admin/Searchusername/${partnerID}/${encodeURIComponent(query)}`, function (response) {
+      $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
           try {
               response = typeof response === "string" ? JSON.parse(response) : response;
 

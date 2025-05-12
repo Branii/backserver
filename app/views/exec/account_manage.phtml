@@ -1,5 +1,5 @@
 <?php
-
+ date_default_timezone_set('Asia/Shanghai');
 // declare(strict_types=1);
 // header('Content-Type: application/json');
 
@@ -10,13 +10,14 @@ if ($flag == "userlistdata") {
 
   
     $page = isset($this->viewData['page']) ? max((int) $this->viewData['page'], 1) : 1; // Ensure valid page number
+    $partnerID = isset($this->viewData['partner_id']) ? max((int) $this->viewData['partner_id'], 0) : 0; // Ensure valid page number
     $limit = isset($this->viewData['limit']) ? max((int) $this->viewData['limit'], 1) : 20; // Ensure valid limit
     $uid = isset($this->viewData['uid']) ? max((int) $this->viewData['uid'], 0) : ""; // Ensure valid page
     $recharge_level = isset($this->viewData['recharge_level']) ? max((int) $this->viewData['recharge_level'], 0) : ""; // Ensure valid page
     $state = isset($this->viewData['state']) ? max((int) $this->viewData['state'], 0) : ""; // Ensure valid limit
     $start_date = isset($this->viewData['start_date']) ? max((int) $this->viewData['start_date'], 0) : ""; // Ensure valid page number
     $end_date = isset($this->viewData['end_date']) ? max((int) $this->viewData['end_date'], 0) : ""; // Ensure valid limit
-    $res = UserManageModel::fetchUsersData(["uid" => $uid, "state" => $state, "recharge_level" => $recharge_level, "start_date" => $start_date, "end_date" => $end_date], $page, $limit);
+    $res = UserManageModel::fetchUsersData($partnerID,["uid" => $uid, "state" => $state, "recharge_level" => $recharge_level, "start_date" => $start_date, "end_date" => $end_date], $page, $limit);
     echo json_encode($res);
     return;
     // $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
@@ -127,7 +128,7 @@ if ($flag == "addAgent") {
             'nickname' => $nickname,
             'agent_name' => $parsedData['agentname'],
             'upassword' => password_hash($parsedData['agentpassword'], PASSWORD_BCRYPT),
-            'email' => "***** $uniqueId",
+            'email' => "*****$uniqueId",
             'rebate' => $parsedData['agentrebate'],
             'account_type' => $account_type,
             'created_at' => $dateTime,
@@ -138,7 +139,7 @@ if ($flag == "addAgent") {
             'agent_level' => '*****',
             'dob' => "*****",
             'country_code' => "*****",
-            'contact' => "***** $uniqueId",
+            'contact' => "*****$uniqueId",
             'contact_verified' => "0",
             'avatar' => "/assets/avators/profile.png",
             'agent_id' => "*****",
@@ -160,7 +161,7 @@ if ($flag == "addAgent") {
             'auth_type' => "*****",
         ];
 
-        $result = (new UserManageModel())->AddAgentData($partnerID,$datas) ?? [];
+        $result = (new UserManageModel())->AddAgentData($datas) ?? [];
     }
 
     echo json_encode($result);
@@ -197,7 +198,7 @@ if ($flag == "fetchTopAgentV1") {
 if ($flag == "userlogsdata") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-    $result = (new UserManageModel())->FetchUserlogsData($partnerID,$page, $limit) ?? [];
+    $result = (new UserManageModel())->FetchUserlogsData($page, $limit) ?? [];
     echo json_encode([
         'userlogs' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit),
@@ -214,14 +215,14 @@ if ($flag == "filterUserlogs") {
     if (!empty($usernameCheck) && $usernameCheck != null) {
         $usernamelog = $usernameCheck[0]['uid'];
         $sunquery = (new UserManageModel())->FilterUserlogsDataSubQuery($usernamelog, $startdate, $enddate);
-        $result = (new UserManageModel())->Filteruserlogs($sunquery, $page, $limit) ?? [];
+        $result = (new UserManageModel())->Filteruserlogs($sunquery,$page, $limit) ?? [];
         echo json_encode([
             'userloggs' => $result['data'],
             'totalPages' => ceil($result['total'] / $limit),
         ]);
     } else {
         $sunquery = (new UserManageModel())->FilterUserlogsDataSubQuery($username, $startdate, $enddate);
-        $result = (new UserManageModel())->Filteruserlogs($sunquery, $page, $limit) ?? [];
+        $result = (new UserManageModel())->Filteruserlogs($sunquery) ?? [];
         echo json_encode([
             'userloggs' => $result['data'],
             'totalPages' => ceil($result['total'] / $limit),

@@ -140,6 +140,7 @@ $(function () {
       const response = await fetch(
         `../admin/alladmins/${currentPage}/${pageLimit}`
       );
+
       const data = await response.json();
       renderAdmin(data.admins);
       // Render pagination

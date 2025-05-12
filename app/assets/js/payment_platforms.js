@@ -1,4 +1,5 @@
 $(function () {
+  const partnerID = $("#partner-holder").attr("data-partner-id");
 
     function showToast(title, message, type) {
       $.toast({
@@ -27,54 +28,49 @@ $(function () {
         5: "Crypto",
       };
 
-      const paymentdata = (data) => { 
+
+    const paymentdata = (data) => { 
     
         let html = "";
-       
+  
          data.forEach((item) => {
-          let timezone = item.timezone.split(" ");
-          timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
-          const status = item.status === 'active' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Active</span>'  :item.status=="inactive" ? '<span class="badge fw-semibold py-1 w-85 bg-info-subtle text-warning">Inactive</span>':'<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-warning">Hidden</span>'
+         const bankstatus = item.bank_status === 'active' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Active</span>':item.bank_status=="inactive" ? '<span class="badge fw-semibold py-1 w-85 bg-info-subtle text-warning">Inactive</span>':'<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-info">Hidden</span>'
+
+         let timezone = item.timezone.split(" ");
+         timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
          
           html += `
-                  <tr>
-                      <td>${item.name}</td>
-                      <td>${item.currency}</td>
-                      <td>${item.site_url}</td>
-                      <td>${item.admin_site_url}</td>
-                      <td>${formatMoney(item.fees)}</td>
-                      <td>${formatMoney(item.min_deposit)}</td>
-                      <td>${formatMoney(item.max_deposit)}</td>
-                      <td>${formatMoney(item.min_withdrawal)}</td>
-                      <td>${formatMoney(item.max_withdrawal)}</td>
-                      <td>${item.date_created}</td>
-                      <td>${timezone}</td>
-                      <td>${item.created_by}</td>
-                      <td>${item.last_update}</td>
-                      <td>${item.last_update_by}</td>
-                      <td>${status}</td>
-                      <td>
-                        <div class="dropdown">
-                        <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <i class='bx bx-dots-vertical-rounded'></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"> 
-                        <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 editpayment" href="javascript:void(0);" datas ="${item.bankid}"> 
-                            <i class="bx bx-edit fs-5" ></i>Edit
-                        </a>
-                            <a class="dropdown-item deletepayment cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="${item.bankid}">
-                            <i class="bx bx-trash fs-5"></i>Delete
-                        </a>
-                        </div>
-                        </div>
-                      </td>
+                      <tr>
+                          <td>${item.name}</td>
+                          <td>${item.bank_type}</td>
+                          <td>${item.currency_type}</td>
+                          <td>${formatMoney(item.max_deposit)}</td>
+                          <td>${formatMoney(item.max_withdrawal)}</td>
+                          <td>${item.created_at}</td>
+                          <td>${timezone}</td>
+                          <td>${item.approved_by}</td>
+                          <td>${bankstatus}</td>
+                          <td>
+                           <div class="dropdown">
+                            <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <i class='bx bx-dots-vertical-rounded'></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"> 
+                            <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 editpayment" href="javascript:void(0);" datas ="${item.bankid}"> 
+                                <i class="bx bx-edit fs-5" ></i>Edit
+                            </a>
+                                <a class="dropdown-item deletepayment cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="${item.bankid}">
+                                <i class="bx bx-trash fs-5"></i>Delete
+                            </a>
+                            </div>
+                            </div>
+                          </td>
                           
                       </tr>
                   `;
         });
         return html;
       };
-    
   
     const renderpayment = (data) => {
       var html = paymentdata(data);
@@ -87,25 +83,11 @@ $(function () {
     
     async function fetchPaymentPlatform(page,pageLimit) {
       try {
-        const curencytypes  = $("#platformStatuss").val();
-        const stautspayment = $("#platformStatuse").val()
-        const startdepay    = $("#platformStartDates").val();
-        const enddepay      = $("#platformEndDates").val();
-        const response = await fetch( `../admin/fetchPaymentPlatform/${curencytypes}/${stautspayment}/${startdepay}/${enddepay}/${page}/${pageLimit}`);
+        const response = await fetch( `../admin/fetchPaymentPlatform/${page}/${pageLimit}`);
         const data = await response.json();
-      //  console.log(data);
-      //   return
         $("#maskpayment").LoadingOverlay("hide");
-        if(data.status === "error"){
-          showToast("Error", data.data, "error");
-          return;
-        }
-
-        if(data.length < 1) return;
-
-        renderpayment(data.data);
-        const totalPages = data.data[0].total_records;
-        renderpaymentPagination(totalPages, page, pageLimit, (newPage, pageLimit) => fetchPaymentPlatform(newPage, pageLimit));
+        renderpayment(data.payment);
+        renderpaymentPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchPaymentPlatform(newPage, pageLimit));
         document.getElementById("paging_infopayment").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
     
       } catch (error) {
@@ -158,20 +140,17 @@ $(function () {
   
   async function filterpayment(curencytypes,stautspayment,startdepay,enddepay,currentPage,pageLimit) {
     try {
-        const response = await fetch(`../admin/filterpayments/${curencytypes}/${stautspayment}/${startdepay}/${enddepay}/${currentPage}/${pageLimit}`);
-
-        const data = await response.json();
-        console.log(data);
-       // return
+        let  response = await fetch(`../admin/filterpayments/${partnerID}/${curencytypes}/${stautspayment}/${startdepay}/${enddepay}/${currentPage}/${pageLimit}`);
+        const data =  await response.json();
 
         $(".loaderpay").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
         if (data.payments.length < 1) {
             let html = `
-        <tr class="no-results">
-            <td colspan="9">
-                <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-            </td>
-        </tr>`;
+          <tr class="no-results">
+              <td colspan="9">
+                  <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+              </td>
+          </tr>`;
             $("#maskpayment").LoadingOverlay("hide");
             $("#paymentContainer").html(html);
             return;

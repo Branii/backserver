@@ -82,7 +82,7 @@ class DataReportModel extends MedooOrm
 
         try{
             $table_name = "users_test";
-            $service = parent::openLink($partnerID);
+            $service = parent::openLink();
             $sql     = "SELECT * FROM {$table_name} WHERE uid=:uid";
             $data =  $service->query( $sql, [":uid" => intval($user_id)] )->fetchAll(PDO::FETCH_OBJ);
             return self::response($data);
@@ -165,7 +165,7 @@ class DataReportModel extends MedooOrm
           
 
            
-       $service = parent::openLink($partnerID);
+       $service = parent::openLink();
        if(!$isForOnlyUser){
            unset($subs_uids[array_search($user_id,$subs_uids)]);
        } 
@@ -220,7 +220,7 @@ class DataReportModel extends MedooOrm
 public static function allSubs($partnerID,$agent_id, int $currentPage = 1, int $limit = 10, bool $addAgent = false) {
     try{
         $table_name = "users_test";
-        $db = parent::openLink($partnerID);
+        $db = parent::openLink();
         $offset = ($currentPage - 1) * $limit;
         $include_agent = $addAgent ? " || uid=:agent_id " : " AND uid !=:agent_id " ;
         // Construct raw SQL query
@@ -305,12 +305,12 @@ public static function fetchFullHierarchy($agent_id) {
         }
         }
 
-    public static function fetchFullHierarchyV2($partnerID,$agent_id) {
+    public static function fetchFullHierarchyV2($partnerID,$agent_id): array {
         try{
 
 
 
-            $db = parent::openLink($partnerID);
+            $db = parent::openLink();
 
 
             // Construct query for all active bettors

@@ -81,7 +81,7 @@ class PromotionManageModel extends MEDOOHelper
             $subQuery = implode(' AND ', $filterConditions);
         }
         // Add ordering and limit to the query
-        $subQuery .= " ORDER BY referral_link.date_created DESC";
+       // $subQuery .= " ORDER BY referral_link.date_created DESC";
 
         return $subQuery;
     }

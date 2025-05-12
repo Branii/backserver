@@ -1,9 +1,9 @@
 $(() => {
+    const partnerID = $('#partner-holder').attr("data-partner-id");
     const BASE_URL = "../admin";
     let historyStack = [];
     let pagesStack = [];
     let pagingInfo = [];
-    const partnerID = $('#partner-holder').attr("data-partner-id");
     function showToast(title, message, type) {
         $.toast({
             position: "bottom-right",
@@ -211,7 +211,7 @@ $(() => {
         endDate = endDate.length != 0 ? endDate : "all";
 
         $.ajax({
-            url: `../admin/getUserDetails/${partnerID}/${userID}/${lotteryID}/${startDate}/${endDate}/`,
+            url: `../admin/getUserDetails/${userID}/${lotteryID}/${startDate}/${endDate}/`,
             type: "POST",
             beforeSend: function () {
                 $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -309,7 +309,7 @@ $(() => {
     const fetchbetUser = (query) => {
         let optionsHtml = "";
 
-        $.post(`../admin/Searchusername/${partnerID}/${encodeURIComponent(query)}`, function (response) {
+        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
             try {
                 const getDisplayName = (user) => {
                     if (user.username !== "" && user.username != undefined && user.username !== "*****") return user.username;
@@ -338,7 +338,7 @@ $(() => {
     const fetchLotteryname = (lotteryName) => {
         let optionsHtml = "";
 
-        $.post(`../admin/searchLotteryName/${partnerID}/${encodeURIComponent(lotteryName)}`, function (response) {
+        $.post(`../admin/searchLotteryName/${encodeURIComponent(lotteryName)}`, function (response) {
             try {
                 const getDisplayName = (user) => {
                     if (user.username !== "" && user.username != undefined && user.username !== "*****") return user.username;
@@ -408,7 +408,7 @@ $(() => {
         endDate = endDate.length != 0 ? endDate : "all";
 
         $.ajax({
-            url: `../admin/fetchTopAgents/${partnerID}/${lotteryID}/${startDate}/${endDate}/${currentPage}/${limit}`,
+            url: `../admin/fetchTopAgents/${lotteryID}/${startDate}/${endDate}/${currentPage}/${limit}`,
             type: "POST",
             beforeSend: function () {
                 $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -470,7 +470,8 @@ $(() => {
         startDate = startDate.length != 0 ? startDate : "all";
         endDate = endDate.length != 0 ? endDate : "all";
         $.ajax({
-            url: `../admin/fetchAgentSubs/${partnerID}/${agentID}/${lotteryID}/${startDate}/${endDate}/${currentPage}/${limit}`,
+            // url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${currentPage}/${limit}`,
+            url: `../admin/fetchAgentSubs/${partnerID}/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
             type: "POST",
             beforeSend: function () {
                 $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

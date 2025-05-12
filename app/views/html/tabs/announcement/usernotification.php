@@ -228,35 +228,8 @@
         padding: 5px;
     }
 
-<<<<<<< HEAD
     .optionlist:hover {
         background-color: #eee;
-=======
-.tbl-usernotiheads {
-    position: sticky;
-    top: 0;
-}
-
-.sticky-usernotiheads {
-    position: relative;
-    bottom: 1px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-}
-
-.optionlist {
-    text-align: left;
-    border-bottom: solid 1px #eee;
-    padding: 5px;
-}
-
-.optionlist:hover {
-    background-color: #eee;
-}
-
-.arr {
-    color: #909aa9;
-    margin: 0px 1rem;
->>>>>>> master
     }
 </style>
 
@@ -321,7 +294,10 @@
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['DateTime']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Notification Time']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
                         </th>
 
                         <th>

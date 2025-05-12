@@ -3,9 +3,10 @@ let validLotteries = [];
 let currentPage = 1;
 let pageLimit  = 20;
 $(() =>{
-   
-
-
+    
+    
+    
+    const partnerID = $("#partner-holder").attr("data-partner-id");
 
 
     $(document).on("click",".dropdown-edit-partners",function(){
@@ -460,7 +461,7 @@ $(() =>{
     const fetchAllPartners = ()=> {
         try {
              $.ajax({
-                url: `../admin/fetchPartners/${page}/${limit}/`,
+                url: `../admin/fetchPartners/${partnerID}/${page}/${limit}/`,
                 type: "POST",
                 
                 success: function(response){
@@ -514,7 +515,7 @@ $(() =>{
     const fetchPartnersNames = ()=> {
     try {
             $.ajax({
-            url: `../admin/fetchPartnersNames/${page}/${limit}/`,
+            url: `../admin/fetchPartnersNames/${partnerID}/${page}/${limit}/`,
             type: "POST",
             success: function(response){
                 
@@ -556,6 +557,25 @@ $(() =>{
     $(document).on("keyup","#ptns-platformNames",function(){
         searchPlatformNames($("#ptns-platformNames").val());
     });
+
+    $(document).on("click",".ptns-main-info",function(){
+        const partnerID = $("#data-holder").attr("data-row-id");
+        const partner   = partnersObjs[partnerID];
+
+        console.log(partner);
+        return;
+        const partnerName            = $("#ptns-partner-name-edit").val();
+        const siteUrl                = $("#ptns-site-url-edit").val();
+        const adminSiteUrl           =  $("#ptns-admin-site-url-edit").val();
+        const clientMinAge           =  $("#ptns-client-min-age").val();
+        const verificationType       = $("#ptns-verification-type-edit").val();
+        const unusedWithdrawalAmount =  $("#ptns-unused-withdrawal-amount").val();
+        const priority               =  $("#ptns-priority-edit").val();
+        const state                  =  $("#ptns-state-edit").val();
+        const currency               =  $("#ptns-currency-edit").val();
+    
+    });
+
     $(document).on("click",".ptns-product-settings",function(){
         const partnerID = $("#data-holder").attr("data-row-id");
         const partner   = partnersObjs[partnerID];
@@ -758,7 +778,7 @@ $(() =>{
 
      const fetchLotteryTypes = () => {
         $.ajax({
-            url: `../admin/fetchLotteries/fetchLotteries`,
+            url: `../admin/fetchLotteries/${partnerID}/fetchLotteries`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1039,6 +1059,7 @@ const paymentdata = (data) => {
       html += `
               <tr>
                   <td>${item.name}</td>
+                  <td>${item.currency_type}</td>
                   <td>${item.currency}</td>
                   <td>${item.site_url}</td>
                   <td>${item.admin_site_url}</td>
@@ -1105,7 +1126,7 @@ const partnersMarkup = (data) => {
                         <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 ptns-product-settings" data-agent-id="" href="javascript:void(0);"data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-product-settings-modal" data-uid=""> 
                         <i class='bx bx-git-merge'></i>Product Settings
                     </a>
-<<<<<<< HEAD
+
                     <a class="dropdown-item ptns-currency-settings cursor-pointer d-flex align-items-center gap-1 " href="javascript:void(0);"data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-currency-settings-modal" data-uid="">
                         <i class="bx bx-money fs-5"></i>Currency Settings
                     </a> 
@@ -1113,11 +1134,7 @@ const partnersMarkup = (data) => {
                         <i class='bx bx-blanket' ></i>Language Settings
                     </a> 
                    
-=======
-                    <a class="dropdown-item ptns-currency-settings cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-currency-settings-modal" data-uid="">
-                        <i class="bx bx-money fs-5"></i>Currency Settings
-                    </a> 
->>>>>>> master
+
                        
                     </div>
                    </div>

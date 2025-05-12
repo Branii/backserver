@@ -1,4 +1,6 @@
+
 $(function () {
+    const partnerID = $("#partner-holder").attr("data-partner-id");
     function showToast(title, message, type) {
     $.toast({
         position: "bottom-right",
@@ -154,7 +156,7 @@ $(function () {
 
     //search function
     async function filtermessage(username, messagestype, startfmessage, endmessage, currentPage, pageLimit) {
-    $.post(`../admin/filtermessage/${username}/${messagestype}/${startfmessage}/${endmessage}/${currentPage}/${pageLimit}`, function (response) {
+    $.post(`../admin/filtermessage/${partnerID}/${username}/${messagestype}/${startfmessage}/${endmessage}/${currentPage}/${pageLimit}`, function (response) {
     try {
         const data = JSON.parse(response);
         console.log(data);

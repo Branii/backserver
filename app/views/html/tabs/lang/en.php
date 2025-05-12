@@ -47,6 +47,10 @@ return [
 'Search Bet Order ID'=> 'Search Bet Order ID',
 'Transaction Time' =>'Transaction Time',
 'Time Zone/Hrs' =>'Time Zone/Hrs',
+'Track Time' =>'Track Time',
+'Referral Time'=>'Referral Time',
+'Message Time'=>'Message Time',
+'Notification Time'=>'Notification Time',
 
 //'Withdrawal Review' => 'Withdrawal Review',
 'Withdrawal Review' => 'Withdrawal Review',

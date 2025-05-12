@@ -230,7 +230,7 @@
   }
   
   .trackdown {
-        width: 19%;
+        width: 14%;
         position: absolute;
         background-color: #fff;
         color: #aaa;
@@ -239,7 +239,7 @@
         border-radius: 5px;
         padding: 10px;
         top: 90%;
-        z-index: 9999;
+        z-index: 9;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         display: none;
     }
@@ -462,6 +462,9 @@
                   </th>
                   <th>
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Rule']; ?></h6>
+                  </th>
+                  <th>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Time']; ?></h6>
                   </th>
                   <th>
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>

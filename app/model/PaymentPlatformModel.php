@@ -1,5 +1,5 @@
 <?php
-
+ date_default_timezone_set('Asia/Shanghai');
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     // Throw an Exception with the error message and details
     throw new \Exception("$errstr in $errfile on line $errline", $errno);
@@ -157,8 +157,8 @@ class PaymentPlatformModel extends MEDOOHelper{
     {
         $startpoint = $page * $limit - $limit;
         $query =
-         "SELECT banks.bankid, banks.name, banks.bank_type,banks.currency_type,
-                 banks.bank_status, banks.max_deposit,banks.max_withdrawal,banks.created_at,banks.approved_by
+         "SELECT bankid,name,bank_type,currency_type,timezone,
+                 bank_status,max_deposit,max_withdrawal,created_at,approved_by
          FROM banks  ORDER BY banks.bankid DESC LIMIT :offset, :limit 
          ";
         $data = parent::query($query, ['offset' => $startpoint, 'limit' => $limit]);
@@ -311,16 +311,16 @@ class PaymentPlatformModel extends MEDOOHelper{
         return $subQuery;
     }
 
-    public static function FilterPlatformData($subquery,$blocked_partner_payment_platforms, $page, $limit){
+    public static function FilterPlatformData($subquery,$page, $limit){
         try {
              $startpoint = ($page - 1) * $limit;
-              $sql = "
-                    SELECT bankid, name, bank_type, currency_type, bank_status, 
-                            max_deposit, max_withdrawal, created_at, approved_by
-                    FROM banks
-                    WHERE $subquery
-                    LIMIT :limit OFFSET :offset
-                ";
+             $sql = "
+             SELECT bankid, name, bank_type, currency_type, bank_status,timezone, 
+                    max_deposit, max_withdrawal, created_at, approved_by
+             FROM banks
+             WHERE $subquery
+             LIMIT :limit OFFSET :offset
+         ";
                 
               $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
 
@@ -337,10 +337,8 @@ class PaymentPlatformModel extends MEDOOHelper{
     }
 
 
-    public static function searchPaymentPlatform($searchData = [],$page, $limit): Mixed {
+public static function searchPaymentPlatform($searchData = [],$page, $limit): Mixed {
 
-
-        
         try{
         
         $table_name = "payment_platforms";
@@ -371,6 +369,7 @@ class PaymentPlatformModel extends MEDOOHelper{
         }
 
         $sql = "SELECT *,(SELECT COUNT(*) FROM {$table_name}) as total_records FROM {$table_name} ".(empty($where_clause) ? "" : " WHERE ".implode(" AND ",$where_clause)) ." LIMIT :offset,:limit";
+
         $res = parent::openLink()->query($sql, $params)->fetchAll(PDO::FETCH_OBJ);
         return ["status" => "success", "data" => $res];
     }catch(Exception $e){

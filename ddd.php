@@ -41,8 +41,13 @@ error_reporting(E_ALL);
 //     'data' => $data,
 //     'total' => count($totalcount)
 // ]);
+// Set timezone to Asia/Shanghai
+date_default_timezone_set('Asia/Shanghai');
+
+// Display the current time
+echo "Current time in Shanghai: " . date("Y-m-d H:i:s");
 ?>
-<form id="loginForm">
+<!-- <form id="loginForm">
     <input type="text" name="username" placeholder="Username" required /><br>
     <input type="password" name="password" placeholder="Password" required /><br>
     <button type="submit">Login</button>
@@ -57,5 +62,5 @@ error_reporting(E_ALL);
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="login.js"></script>
-<script src="2fa.js"></script>
+<script src="2fa.js"></script> -->
 

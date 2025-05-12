@@ -1,4 +1,6 @@
+
 $(function () {
+    const partnerID = $("#partner-holder").attr("data-partner-id");
     //NOTE -
     ////////////// LOTTERY BETTING-//////////
     function showToast(title, message, type) {
@@ -55,6 +57,8 @@ $(function () {
         data.forEach((item) => {
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
             let trackrule = item.track_rule == "no_rule" ? "No Rule" : item.track_rule == "stop_if_not_win" ? "Stop If Not Win" : item.track_rule == "stop_if_win" ? "Stop If Win" : "";
+            let timezone = item.timezone.split(" ");
+            timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
             htmls += `
                     <tr>
                         <td>${item.track_token}</td>
@@ -66,6 +70,7 @@ $(function () {
                         <td>${formatMoney(item.win_amount)}</td>
                         <td>${trackrule}</td>
                         <td>${item.server_date + " / " + item.server_time}</td>
+                        <td>${timezone}</td>
                         <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${trackstatus[item.track_status]}</span></td>
                         <td><i value='${item.track_token}_${item.game_type_id}' class='bx bx-info-circle trackinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
                     </tr>
@@ -142,7 +147,7 @@ $(function () {
 
     async function fetchtrackdata(page, pageLimit) {
         try {
-            const response = await fetch(`../admin/trackdata/${partnerID}/${page}/${pageLimit}`);
+            const response = await fetch(`../admin/trackdata/${page}/${pageLimit}`);
             const data = await response.json();
     
             $("#masktrack").LoadingOverlay("hide");
@@ -298,7 +303,7 @@ $(function () {
 
     async function fetchLotteryname() {
         try {
-            const response = await fetch(`../admin/fetchLotteryname/`); // Await the fetch call
+            const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

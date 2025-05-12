@@ -88,25 +88,7 @@
     z-index: 10;
 }
 
-.queryholderquota {
-    width: 33%;
-    margin-right: 5px;
-    background-color: #fff;
-}
 
-.queryholderlinks {
-    width: 33%;
-    position: absolute;
-    background-color: #fff;
-    color: #aaa;
-    max-height: 300px;
-    overflow-y: scroll;
-    border-radius: 5px;
-    padding: 10px;
-    top: 90%;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    display: none;
-}
 
 .optionlink {
     text-align: left;
@@ -343,7 +325,7 @@
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['DateTime']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Message Time']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>

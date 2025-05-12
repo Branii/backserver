@@ -1,4 +1,5 @@
 $(function () {
+    const partnerID = $('#partner-holder').attr("data-partner-id");
     // var el = document.querySelector("#tabheadParams");
     // var chromeTabsParams = new ChromeTabs();
     // chromeTabsParams.init(el);
@@ -10,7 +11,6 @@ $(function () {
     // el.addEventListener("tabAdd", ({ detail }) => setcurr(detail.tabEl));
     // el.addEventListener("tabRemove", ({ detail }) => closeTab(detail.tabEl));
 
-    const partnerID = $('#partner-holder').attr("data-partner-id");
 
     function showToast(title, message, type) {
         $.toast({
@@ -78,7 +78,7 @@ $(function () {
 
     async function getAllGamesLottery() {
         try {
-            const response = await fetch(`../admin/getAllGamesLottery/${partnerID}`);
+            const response = await fetch(`../admin/getAllGamesLottery`);
             const data = await response.json();
             //  console.log(data);
             let html = "";
@@ -115,7 +115,7 @@ $(function () {
 
     async function getLotteryGames(lotterId, models) {
         try {
-            const response = await fetch(`../admin/getLotteryGames/${partnerID}/${lotterId}/${models}`);
+            const response = await fetch(`../admin/getLotteryGames/${lotterId}/${models}`);
             const data = await response.json();
             //  console.log(response);
             renderLotteryParams(data.bonus);
@@ -128,7 +128,6 @@ $(function () {
         let lotteryId = $("#allGameNamesLottery").val();
         let models = $("#allmodels").val();
         // console.log(lotteryId, models);
-
       if(models == "twosides" || models === "boardgames" || models === "fantan") return;
 
       getLotteryGames(lotteryId,models);
@@ -207,7 +206,7 @@ $(function () {
  
     async function resettotalbet(gametypeId, gamemodel, toatalbetValue, rangeSliderValue) {
         try {
-            const response = await fetch(`../admin/resettotalbet/${partnerID}/${gametypeId}/${gamemodel}/${toatalbetValue}/${rangeSliderValue}`);
+            const response = await fetch(`../admin/resettotalbet/${gametypeId}/${gamemodel}/${toatalbetValue}/${rangeSliderValue}`);
             const data = await response.json();
             if (data) {
                 showToast("Success", "updated succesfully", "success");
@@ -241,7 +240,7 @@ $(function () {
 
     async function updateoddstotalbets(gametypeId, gamemodel, percentageOne, scaledValuesOne, percentageTwo, scaledValueTwo) {
         try {
-            const response = await fetch(`../admin/updateoddstotalbets/${partnerID}/${gametypeId}/${gamemodel}/${percentageOne}/${scaledValuesOne}/${percentageTwo}/${scaledValueTwo}`);
+            const response = await fetch(`../admin/updateoddstotalbets/${gametypeId}/${gamemodel}/${percentageOne}/${scaledValuesOne}/${percentageTwo}/${scaledValueTwo}`);
             const data = await response.json();
             if (data) {
                 showToast("Success", "updated succesfully", "success");
@@ -264,7 +263,7 @@ $(function () {
 
     async function updateGameStatus(gametypeId, gamemodel, isChecked) {
         try {
-            const response = await fetch(`../admin/updategamestatus/${partnerID}/${gametypeId}/${gamemodel}/${isChecked}`);
+            const response = await fetch(`../admin/updategamestatus/${gametypeId}/${gamemodel}/${isChecked}`);
             const data = await response.json();
             // console.log(data);
             if (data.success) {

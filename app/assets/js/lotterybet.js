@@ -1,7 +1,7 @@
 $(function () {
-
-
     const partnerID = $('#partner-holder').attr("data-partner-id");
+
+
    
   function showToast(title, message, type) {
       $.toast({
@@ -69,7 +69,8 @@ $(function () {
           const betOddsArray = Object.values(betOddsObject);
           const betodds = betOddsArray * item.multiplier * item.unit_stake;
           let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-
+          let timezone = item.timezone.split(" ");
+          timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
           htmls += `
                   <tr>
                       <td>${item.bet_code}</td>
@@ -78,8 +79,8 @@ $(function () {
                       <td>${item.game_type}</td>
                       <td>${gamemodel[item.game_model]}</td>
                       <td>${item.game_label}</td>
-                      <td>${item.bet_date + " / " + item.bet_time}</td>
                       <td>${item.server_date + " / " + item.server_time}</td>
+                      <td>${timezone}</td>
                       <td>${item.unit_stake}</td>
                       <td>${item.multiplier}</td>
                       <td>${formatMoney(item.bet_amount)}</td>
@@ -161,7 +162,7 @@ $(function () {
   // Fetch lottery bet data
   async function fetchLotteryBet(currentPagebet,pageLimit) {
       try {
-          const response = await fetch(`../admin/lotterydata/${partnerID}/${currentPagebet}/${pageLimit}`);
+          const response = await fetch(`../admin/lotterydata/${currentPagebet}/${pageLimit}`);
           const data = await response.json();
           $("#maskbet").LoadingOverlay("hide");
           renderlottery(data.lotterybet);
@@ -226,8 +227,8 @@ $(function () {
       });
   }
   // Filter and fetch lottery bet data
-  async function filterbetdatas(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit) {
-      $.post(`../admin/filterbetdata/${partnerID}/${uidd}/${betOrderID}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`).done(function (response) {
+  async function filterbetdata(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit) {
+      $.post(`../admin/filterbetdata/${uidd}/${betOrderID}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`).done(function (response) {
           try {
               const data = JSON.parse(response);
               if (data.response == "error") {
@@ -250,7 +251,7 @@ $(function () {
               }
               $("#maskbet").LoadingOverlay("hide");
               renderlottery(data.filterbet);
-              renderbetPagination(data.totalPages,currentPagebet, (page) => {filterbetdatas(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, page, pageLimit);}); // Pass callback
+              renderbetPagination(data.totalPages,currentPagebet, (page) => {filterbetdata(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, page, pageLimit);}); // Pass callback
 
               document.getElementById("paging_infobet").innerHTML =`${translator["Page"]} ${currentPagebet} ${translator["Of"]} ${data.totalPages} ${translator["Page"]}`
           } catch (error) {
@@ -320,7 +321,7 @@ $(function () {
       // console.log(uidd)
       // console.log(enddates)
 
-      filterbetdatas(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit);
+      filterbetdata(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit);
 
       $(".loaderbet").removeClass("bx bx-check-double").addClass("bx bx-loader bx-spin");
   });
@@ -357,7 +358,7 @@ $(function () {
 
   async function viewstakedBet(betcode) {
       try {
-          const response = await fetch(`../admin/viewBetstake/${partnerID}/${betcode}`);
+          const response = await fetch(`../admin/viewBetstake/${betcode}`);
           const data = await response.json();
           //  console.log(response)
           //  return
@@ -423,7 +424,7 @@ $(function () {
   });
   // Function to fetch and display users
   function fetchbetUser(query) {
-      $.post(`../admin/Searchusername/${partnerID}/${encodeURIComponent(query)}`, function (response) {
+      $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
           try {
               response = typeof response === "string" ? JSON.parse(response) : response;
 

@@ -281,10 +281,10 @@ $.ajax({
 };
 
 // Function to fetch and display users
-const  fetchUsers = (query) =>{
+const  fetchUsers = (query) => {
   let optionsHtml = '';
 
-  $.post(`../admin/Searchusername/${partnerID}/${encodeURIComponent(query)}`, function (response) {
+  $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
       try {
            const getDisplayName = (user) => {
                if(user.username !== "" && user.username != undefined && user.username !== "*****") return user.username;
@@ -301,14 +301,16 @@ const  fetchUsers = (query) =>{
           for (let index = 0; index < response.length; index++) {
               const user = response[index];
               const username =user[user.regtype];
-              optionsHtml += username === undefine ? `<li class="name-items">No Data Found.</li>` : `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
+              optionsHtml += username === undefined ? `<li class="name-items">No Data Found.</li>` : `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
           }
           $('#bl-names-wrapper').html(optionsHtml);
           $(".bl-users-wrapper").show();
        } catch (error) {
+          console.log(error);
           showToast("Error", "Request could not be completed, please try again.","error");
       }
   }).fail(function () {
+    console.log("Request failed");
     showToast("Error", "Request could not be completed, please try again.","error");
   });
 }
@@ -319,7 +321,7 @@ const  fetchBankTypes = (query) =>{
   try {
           const elemennt = this;
   $.ajax({
-    url: `../admin/searchBankTypes/${partnerID}/${query}`,
+    url: `../admin/searchBankTypes/${query}`,
     type: "POST",
     beforeSend: function(){
       //  $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

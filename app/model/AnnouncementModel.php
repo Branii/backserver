@@ -1,11 +1,8 @@
 <?php
-
+ date_default_timezone_set('Asia/Shanghai');
 class AnnouncementModel extends MEDOOHelper
 {
-    // $query = "SELECT u.*, p.profile_info
-    // FROM users u
-    // JOIN user_profiles p ON u.uid = p.uid
-    // WHERE u.uid IN ($uidList)";
+  
 
     public static function FetchAnnoucement($page, $limit): array
     {

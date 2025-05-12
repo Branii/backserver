@@ -300,7 +300,7 @@
                     <input name="usernames" type="hidden" id="selectedID" value="" />
                 </div> -->
 
-                <select name="betsate" id="platformStatuss" class="form-control form-select queryholderlistt messagestype payment-type" data-bs-placeholder="Select Type">
+                <select name="betsate" id="platformStatuss" class="form-control form-select queryholderlistt messagestype" data-bs-placeholder="Select Type">
                     <option value="">-Select Payment Type-</option>
                     <option value="momo">Mobile Money</option>
                     <option value="bank">Bank</option>
@@ -368,6 +368,10 @@
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Date Created</h6>
+                        </th>
+
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
                         </th>
 
                         <th>

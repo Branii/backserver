@@ -94,24 +94,12 @@
     }
 
     .queryholdertransaction {
-        width: 39%;
+        width: 13%;
         margin-right: 7px;
         background-color: white;
     }
 
-    /* .acc_transaction_username {
-            width: 19%;
-            position: absolute;
-            color: #aaa;
-            max-height: 300px;
-            overflow-y: scroll;
-            border-radius: 5px;
-            padding: 10px;
-            top: 90%;
-            z-index: 9999;
-            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-            display: none;
-        } */
+   
     .option {
         text-align: left;
         border-bottom: solid 1px #eee;
@@ -194,7 +182,7 @@
     }
 
     .useraccount {
-        width: 19%;
+        width: 13%;
         position: absolute;
         background-color: #fff;
         color: #aaa;
@@ -243,10 +231,6 @@
         background-color: #f0f0f0;
     }
 
-    .arr {
-        color: #909aa9;
-        margin: 0px 1rem;
-    }
 </style>
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
@@ -254,7 +238,7 @@
     </div>
     <div class="px-4 py-3 border-bottom pager1">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width:105%;">
                 <input type="text" id="transuser" class="form-control queryholdertransaction usernames transuser"
                     placeholder="<?= $translator['Search Username']; ?>" />
                 <input name="usernames" type="hidden" class="" />
@@ -280,14 +264,22 @@
                     <option value="11"><?= $translator['Bet Refund']; ?></option>
                 </select>
 
+                <select name="order_type" class="form-control form-select queryholdertransaction " id="ordertypetruans"
+                    data-bs-placeholder="Select Type">
+                    <option value="">-<?= $translator['Status']; ?>-</option>
+                    <option value="1"><?= $translator['Completed']; ?></option>
+                    <option value="2"><?= $translator['Pending']; ?></option>
+                    <option value="3"> <?= $translator['Failed']; ?></option>
+                </select>
+
+
                 <select name="lotteryname" class="form-control form-select queryholdertransaction selectpartner"> 
 
                 </select>
            
-                <input type="date" class="form-control queryholdertransaction" id="startdatrans" aria-describedby="name"
-                    placeholder="Name" />
-                <input type="date" class="form-control queryholdertransaction" id="enddatetrans" aria-describedby="name"
-                    placeholder="Name" />
+                <input type="date" class="form-control queryholdertransaction" id="startdatrans" aria-describedby="name"placeholder="Name" />
+
+                <input type="date" class="form-control queryholdertransaction" id="enddatetrans" aria-describedby="name"placeholder="Name" />
             </div>
         </span>
         <span class="top-center" aria-label=" navigation example">
