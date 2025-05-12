@@ -104,7 +104,6 @@ class UserManageModel extends MEDOOHelper
         $startpoint = ($page * $limit) - $limit;
         $data = parent::selectAll("users", '*', ["AND" => $whereConditions, "ORDER" => ["users.uid" => "DESC"], "LIMIT" => [$startpoint, $limit]]);
         $lastQuery = MedooOrm::openLink()->log();
-<<<<<<< HEAD
         return ['data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery[0]];
     }
 
@@ -213,10 +212,6 @@ class UserManageModel extends MEDOOHelper
         } catch (Exception $e) {
             return ["status" => "error", "data" => "Internal Server Error."];
         }
-=======
-        $totalRecords  = parent::selectAll('users', '*', ['AND' => $whereConditions]);
-        return ['data' => $data, 'total' => count($totalRecords), 'sql' => $lastQuery[0]];
->>>>>>> master
     }
 
     public static function fetch_agent_nickname(array $agent_ids): array
