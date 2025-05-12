@@ -86,12 +86,11 @@ class AnnouncementModel extends MEDOOHelper
         }
 
         $userIdList = implode(',', $userIds);
-
         $result = parent::query("SELECT username, email, contact, reg_type, uid FROM users_test WHERE uid IN ($userIdList)");
 
         $userData = [];
         foreach ($result as $data) {
-            // Determine the correct username based on reg_type
+
             if ($data['reg_type'] == 'username') {
                 $username = $data['username'];
             } elseif ($data['reg_type'] == 'contact') {
@@ -99,7 +98,6 @@ class AnnouncementModel extends MEDOOHelper
             } else {
                 $username = $data['email'];
             }
-
             $id = $data['uid'];
             $currentDateTime = date('Y-m-d / H:i:s'); 
             // Make sure username is properly quoted and add current date
@@ -175,7 +173,6 @@ class AnnouncementModel extends MEDOOHelper
 
     public static function EditMessageData($mgid)
     {
-        // $params = ['mgid' => $mgid];
         $sql = "SELECT msg_id,subject,message FROM notices WHERE msg_id = :mgid";
         $data = parent::query($sql, ['mgid' => $mgid]);
         return $data;
@@ -183,7 +180,6 @@ class AnnouncementModel extends MEDOOHelper
 
     public static function UpdateMessageData($msgtilte, $msgcontent, $mgid)
     {
-        // $params = ['mgid' => $mgid];
         $sql = "UPDATE notices SET subject =:title, message=:content  WHERE msg_id = :mgid";
         $data = parent::query($sql, ['title' => $msgtilte, 'content' => $msgcontent, 'mgid' => $mgid]);
         return $data ? "Message could not be updated. Please try again." : "Message updated successfully.";

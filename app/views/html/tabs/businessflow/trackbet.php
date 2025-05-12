@@ -369,7 +369,7 @@
                         <!-- Options will be populated dynamically -->
                     </select>
                     <input name="usernames"  class="form-control queryholderlist clearitem"  id="trackcode" placeholder="<?=$translator['Search Track Id']?>"/>
-                 <select name="recharge" class="form-control form-select queryholderlist trackstatus"
+                   <select name="recharge" class="form-control form-select queryholderlist trackstatus"
                     data-bs-placeholder="Select Type">
                     <option value="">-<?=$translator['Track Status']?>-</option>
                     <option value="1"><?= $translator['Running'];?></option>
@@ -377,11 +377,15 @@
                     <option value="3"><?= $translator['Completed'];?></option>
                     <option value="4"><?= $translator['Stop If Win'];?></option>
                     <option value="5"><?= $translator['Stop If Not Win'];?></option>
-                  </select>
+                   </select>
 
-                <div class="custom-dropdown">
-                    <select name="lotteryname" class="form-control form-select queryholderlist tracklotery selectlottery" data-bs-placeholder="Select Type"> </select>
-                 </div>
+                    <select name="lotteryname" class="form-control form-select queryholderlist tracklotery selectlottery" data-bs-placeholder="Select Type">
+
+                    </select>
+
+                   <select name="lotteryname" class="form-control form-select queryholderlist selectpartner"> 
+
+                   </select>
 
                 <input type="date" class="form-control queryholderlist startdatetrack"  aria-describedby="name"
                     placeholder="Name" />
@@ -515,26 +519,6 @@
 
     </div>
 
-</div>
-
-<div class="modal fade" id="dangertrack" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content modal-filled " style="background-color:#F9F9F9">
-            <div class="modal-body p-4">
-                <div class="text-center text-danger">
-                    <i class="ti ti-hexagon-letter-x fs-7"></i>
-                    <h4 class="mt-2">Oh snap!</h4>
-                    <p class="mt-3" style="color:#aaa">
-                    All fields are required! Select one or more data fields to filter.
-                    </p>
-                    <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color:#ddd">
-                      Okay
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
 </div>
 
 

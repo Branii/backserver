@@ -522,9 +522,11 @@ section#tooltipp p {
                         <option value="3"><?= $translator['Forbidden to log in']; ?></option>
                         <option value="4"><?= $translator['Block User']; ?></option>
                     </select>
+                    <select name="lotteryname" class="form-control form-select queryholderuserlistz selectpartner"> 
 
-                    <input name="startdate" id="usrl-start-date" type="date"
-                        class="form-control queryholderuserlistz startdateuser" aria-describedby="name"
+                   </select>
+
+                    <input name="startdate" id="usrl-start-date" type="date" class="form-control queryholderuserlistz startdateuser" aria-describedby="name"
                         placeholder="Name" />
 
                     <input name="enddate" id="usrl-end-date" type="date"
@@ -953,8 +955,6 @@ section#tooltipp p {
     <!-- /.modal-dialog -->
 </div>
 
-
-
 <div id="usl-deactivate-user-dialog" class="modal fade " tabindex="-1" aria-modal="true" role="dialog"
     style="display: none;top: 363px;left: 191px;">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -991,7 +991,6 @@ section#tooltipp p {
         </div>
     </div>
 </div>
-
 
 <div id="usl-lottery-name-modal" class="modal fade" tabindex="-1" aria-modal="true" role="dialog"
     style="display: none;">
@@ -1039,7 +1038,6 @@ section#tooltipp p {
     </div>
 </div>
 
-
 <div id="usl-delete-user-dialog" class="modal fade " tabindex="-1" aria-modal="true" role="dialog"
     style="display: none;top: 363px;left: 191px;">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -1076,7 +1074,6 @@ section#tooltipp p {
         </div>
     </div>
 </div>
-
 
 <div id="usl-whitelist-ips-modal" class="modal fade " tabindex="-1" aria-modal="true" role="dialog"
     style="display: none;">

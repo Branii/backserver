@@ -1,0 +1,174 @@
+<?php
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+    // Throw an Exception with the error message and details
+    throw new \Exception("$errstr in $errfile on line $errline", $errno);
+});
+// declare(strict_types=1);
+// header('Content-Type: application/json');
+
+
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
+
+
+  
+$valid_currencies = [
+    // A
+    'AED','AFN','ALL','AMD','ANG','AOA','ARS','AUD','AWG','AZN',
+    // B
+    'BAM','BBD','BDT','BGN','BHD','BIF','BMD','BND','BOB','BOV',
+    'BRL','BSD','BTN','BWP','BYN','BZD',
+    // C
+    'CAD','CDF','CHE','CHF','CHW','CLF','CLP','CNY','COP','COU',
+    'CRC','CUC','CUP','CVE','CZK',
+    // D
+    'DJF','DKK','DOP','DZD',
+    // E
+    'EGP','ERN','ETB','EUR',
+    // F
+    'FJD','FKP',
+    // G
+    'GBP','GEL','GHS','GIP','GMD','GNF','GTQ','GYD',
+    // H
+    'HKD','HNL','HRK','HTG','HUF',
+    // I
+    'IDR','ILS','INR','IQD','IRR','ISK',
+    // J
+    'JMD','JOD','JPY',
+    // K
+    'KES','KGS','KHR','KMF','KPW','KRW','KWD','KYD','KZT',
+    // L
+    'LAK','LBP','LKR','LRD','LSL','LYD',
+    // M
+    'MAD','MDL','MGA','MKD','MMK','MNT','MOP','MRU','MUR','MVR',
+    'MWK','MXN','MXV','MYR','MZN',
+    // N
+    'NAD','NGN','NIO','NOK','NPR','NZD',
+    // O
+    'OMR',
+    // P
+    'PAB','PEN','PGK','PHP','PKR','PLN','PYG',
+    // Q
+    'QAR',
+    // R
+    'RON','RSD','RUB','RWF',
+    // S
+    'SAR','SBD','SCR','SDG','SEK','SGD','SHP','SLL','SOS','SRD',
+    'SSP','STN','SVC','SYP','SZL',
+    // T
+    'THB','TJS','TMT','TND','TOP','TRY','TTD','TWD','TZS',
+    // U
+    'UAH','UGX','USD','USN','UYI','UYU','UYW','UZS',
+    // V
+    'VED','VES','VND','VUV',
+    // W
+    'WST',
+    // X (special codes / precious metals, etc.)
+    'XAF','XAG','XAU','XBA','XBB','XBC','XBD','XCD','XDR','XOF',
+    'XPD','XPF','XPT','XSU','XTS','XUA','XXX',
+    // Y
+    'YER',
+    // Z
+    'ZAR','ZMW','ZWL'
+];
+
+
+
+$adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
+$fullname   = (new Controller)->getUsername($adminEmail);
+
+$flag  = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+$page  = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
+$limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
+
+$results = [];
+
+if ($flag == "fetch_partners") {
+    $results = PartnersModel::fetch_partners($page,$limit);   
+}else if($flag == "fetchPartnersNames"){
+    $results = PartnersModel::fetch_partners_names();
+}else if($flag == "searchPartners"){
+    $partnerName = isset($this->viewData['partnerName']) ? $this->viewData['partnerName'] : "";
+    $state       = isset($this->viewData['state']) ? $this->viewData['state']             : "";
+    $startDate    = isset($this->viewData['startDate']) ? $this->viewData['startDate']       : "";
+    $endDate      = isset($this->viewData['endDate']) ? $this->viewData['endDate']           : "";
+    $results      = PartnersModel::searchPartners(["partner_id" => $partnerName,"state" => $state,"startDate" => $startDate,"endDate" => $endDate,"page" => $page, "limit" => $limit]);
+
+}else if($flag == "addNewPartner"){
+   
+    try{
+    $partnerName     = isset($this->viewData['partner_name']) ? $this->viewData['partner_name'] : "";
+    $currency     = isset($this->viewData['currency']) ? $this->viewData['currency'] : "";
+    $siteUrl         = isset($this->viewData['site_url']) ? $this->viewData['site_url'] : "";
+    $adminSiteUrl    = isset($this->viewData['admin_site_url']) ? $this->viewData['admin_site_url'] : "";
+    $currentDate     = date("Y-m-d / H:i:s");
+
+    if(empty($partnerName) || empty($siteUrl) || empty($adminSiteUrl) || !in_array($currency,$valid_currencies)){
+        echo json_encode(["status" => "error", "data" => "Please fill the required fields."]);
+        return ;
+    }
+
+    $results        = PartnersModel::addNewPartner(["name" => trim($partnerName),"state" => "inactive","created_by" => trim($fullname["full_name"]),"date_created" => trim($currentDate),"site_url" => trim($siteUrl), "admin_site_url" => trim($adminSiteUrl),"last_update" => trim($currentDate),"last_update_by" => trim($fullname["full_name"]),"currency" => $currency]);
+
+    $results["extra"] = ["created_by" => trim($fullname["full_name"]),"date_created" => trim($currentDate)];
+}catch(Exception $e){
+    $results  = ["status"=> "error", "data" => $e->getMessage()];   
+}
+
+}else if($flag == "fetchLotteries"){
+
+    try{
+       $results = PartnersModel::fetchLotteries();
+    }catch(Exception $e){
+        $results  = ["status"=> "error", "data" => $e->getMessage()];   
+    }
+}
+else if($flag == "editPaymentPlaftorm"){
+   
+    $paymentType    = isset($this->viewData['paymentType']) ? $this->viewData['paymentType'] : "";
+    $paymentTypeName    = isset($this->viewData['paymentTypeName']) ? $this->viewData['paymentTypeName'] : "";
+    $currency       = isset($this->viewData['currency']) ? $this->viewData['currency']         : "";
+    $status         = isset($this->viewData['status']) ? $this->viewData['status']             : "";
+    $fee            = isset($this->viewData['fee']) ? $this->viewData['fee']       : "";
+    $maxAmount      = isset($this->viewData['maxAmount']) ? $this->viewData['maxAmount'] : 0;
+    $minAmount      = isset($this->viewData['minAmount']) ? $this->viewData['minAmount']         : 0           ;
+    $siteUrl        = isset($this->viewData['siteUrl']) ? $this->viewData['siteUrl']           : "";
+    $adminSiteUrl   = isset($this->viewData['adminSiteUrl']) ? $this->viewData['adminSiteUrl']           : "";
+    $info           = isset($this->viewData['info']) ? $this->viewData['info']         : 0           ;
+    $priority       = isset($this->viewData['priority']) ? $this->viewData['priority']           : "";
+    $countries      = isset($this->viewData['countries']) ? $this->viewData['countries']           : "";
+    $currentDate    = date("Y-m-d / H:i:s");
+    
+
+    if(!in_array($currency,$$currencyCodes)){
+
+        echo json_encode(["status" => "error", "data" => "Invalid request, please try again later."]);
+        return;
+    }
+
+    if(empty($paymentType) || empty($paymentTypeName) || empty($currency) || empty($status)){
+
+        echo json_encode(["status" => "error", "data" => "Please fill the required fields."]);
+        return ;
+    }
+
+    $results        = PaymentPlatformModel::editPaymentPlaftorm(["payment_type_id" => trim($paymentType),"status" => trim($status),"currency" => trim($currency),"fee" => trim($fee),"site_url" => trim($siteUrl), "admin_site_url" => trim($adminSiteUrl),"last_update" => $currentDate,"last_update_by" => $fullname["full_name"],"min_amount" => $minAmount,"max_amount" => $maxAmount,"info" => urldecode($info),"priority" => $priority,"countries" => urldecode($countries)]);
+
+}
+
+
+else if($flag == "searchPartnersNames"){
+     try{
+      $partnerName = isset($this->viewData['partnerName']) ? $this->viewData['partnerName'] : "";
+      $results     = PartnersModel::searchPartnersNames($partnerName);
+    }catch(Exception $e){
+     echo $e->getMessage();   
+    }
+}else if($flag == "fetchDifferentCurrency"){
+    $results      = PaymentPlatformModel::fetchDifferentCurrency();
+}
+
+echo json_encode(value: $results);
+
+

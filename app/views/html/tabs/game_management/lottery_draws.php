@@ -77,7 +77,7 @@
 
   }
 
-  .table-wrapper {
+  .ld-table-wrapperDraws {
     overflow: hidden;
     /* Hide the default scrollbar */
     white-space: nowrap;
@@ -139,27 +139,27 @@
   }
 
   /* Custom Scrollbar for Webkit Browsers */
-  .table-wrapper::-webkit-scrollbar {
+  .ld-table-wrapperDraws::-webkit-scrollbar {
     width: 5px;
     /* Slimmer scrollbar width */
     height: 5px;
     /* Slimmer scrollbar height for horizontal scrolling */
   }
 
-  .table-wrapper::-webkit-scrollbar-track {
+  .ld-table-wrapperDraws::-webkit-scrollbar-track {
     background: #f1f1f1;
     /* Lighter background for track */
     border-radius: 5px;
   }
 
-  .table-wrapper::-webkit-scrollbar-thumb {
+  .ld-table-wrapperDraws::-webkit-scrollbar-thumb {
     background-color: #ccc;
     /* Blue color for thumb */
     border-radius: 10px;
     cursor: pointer;
   }
 
-  .table-wrapper::-webkit-scrollbar-thumb:hover {
+  .ld-table-wrapperDraws::-webkit-scrollbar-thumb:hover {
     background-color: #aaa;
     /* Darker blue on hover */
   }
@@ -201,27 +201,28 @@
 
   <div class="px-4 py-3 border-bottom pager1">
     <span class="top-left-btn">
-    <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:156%;">
+    <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:100%;">
 
-      <select name="order_type" id="allGameNames" class="form-control form-select queryholder ordertype" data-bs-placeholder="<?= $translator['Select Type']; ?>" style="width: 15%;">
+      <select name="order_type" id="allGameNames" class="form-control form-select queryholder ordertype" data-bs-placeholder="<?= $translator['Select Type']; ?>" style="widthx: 15%;">
       <option value="1">Royal 5</option>
       </select>
-<div style="width: 15%;">
-    <input name="issuenumber" class="queryholderlist form-control bring-forward" id="ltd-issuenumber" placeholder="<?= $translator['Search Issue Number']; ?>" autocomplete="off" style="width:97%;"> </div>
 
+      
+    <input name="issuenumber" class="queryholder form-control bring-forward" id="ltd-issuenumber" placeholder="<?= $translator['Search Issue Number']; ?>" autocomplete="off" style="widthx:97%;">
+ 
 
-
-  <select name="status" id="ltd-status" class="form-control form-select queryholder" data-bs-placeholder="Select Status" style="width: 15%;">
+  <select name="status" id="ltd-status" class="form-control form-select queryholder" data-bs-placeholder="Select Status" style="widthx: 15%;">
     <option value="0">-- <?= $translator['Status']; ?> --</option>
     <option value="1"><?= $translator['Open']; ?></option>
     <option value="2"><?= $translator['Closed']; ?></option>
     <option value="waiting"><?= $translator['Settling']; ?></option>
     <option value="done"><?= $translator['Settled']; ?></option>
+</select>
+<select name="lotteryname" class="form-control form-select queryholder selectpartner"> 
 
 </select>
-
-  <input type="date" class="form-control queryholder startdate" id="ltd-start-date" style="width: 15%;">
-  <input type="date" class="form-control queryholder enddate" id="ltd-end-date" style="width: 15%;">
+  <input type="date" class="form-control queryholder startdate" id="ltd-start-date" style="widthx: 15%;">
+  <input type="date" class="form-control queryholder enddate" id="ltd-end-date" style="widthx: 15%;">
 
 </div>
     </span>
@@ -258,7 +259,7 @@
   </div>
 
   <div class="card-body p-4">
-    <div class="table-responsive mb-4 border rounded-1 table-wrapper table-wrapperDraws ld-table-wrapperDraws" id="maskkk" style="height:530px;overflow-y:scroll;">
+    <div class="table-responsive mb-4 border rounded-1 table-wrapper  ld-table-wrapperDraws" id="maskkk" style="height:530px;overflow-y:scroll;">
       <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
         <thead class="text-dark fs-4 tbl-header">
           <tr class="headrowDraws">

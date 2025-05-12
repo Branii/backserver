@@ -18,6 +18,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Sonata\\GoogleAuthenticator\\' => 27,
         ),
         'P' => 
         array (
@@ -35,6 +36,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'G' => 
         array (
             'GrahamCampbell\\ResultType\\' => 26,
+            'Google\\Authenticator\\' => 21,
         ),
         'D' => 
         array (
@@ -59,6 +61,10 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
+        'Sonata\\GoogleAuthenticator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sonata-project/google-authenticator/src',
+        ),
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
@@ -79,6 +85,10 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
         ),
+        'Google\\Authenticator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sonata-project/google-authenticator/src',
+        ),
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
@@ -92,6 +102,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
     public static $classMap = array (
         'AdminModel' => __DIR__ . '/../..' . '/app/model/AdminModel.php',
         'AgentManageModel' => __DIR__ . '/../..' . '/app/model/AgentManageModel.php',
+        'AnnouncementModel' => __DIR__ . '/../..' . '/app/model/AnnouncementModel.php',
         'App' => __DIR__ . '/../..' . '/app/core/App.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'BusinessFlowModel' => __DIR__ . '/../..' . '/app/model/BusinessFlowModel.php',
@@ -105,6 +116,8 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'MedooOrm' => __DIR__ . '/../..' . '/app/database/MedooOrm.php',
         'Model' => __DIR__ . '/../..' . '/app/model/Model.php',
         'PDOHelper' => __DIR__ . '/../..' . '/app/model/PDOHelper.php',
+        'PartnersModel' => __DIR__ . '/../..' . '/app/model/PartnersModel.php',
+        'PaymentPlatformModel' => __DIR__ . '/../..' . '/app/model/PaymentPlatformModel.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
         'PromotionManageModel' => __DIR__ . '/../..' . '/app/model/PromotionManageModel.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',

@@ -647,7 +647,7 @@ public static function v2($user_id,$bet_tables,$userData):array{
             ':user_id' => $user_id
         ];
             // Dynamically construct the query without loops
-    $betTableConditions = array_map(function($betTable_array) use ($user_id, $userData) {
+        $betTableConditions = array_map(function($betTable_array) use ($user_id, $userData) {
         $betTable = $betTable_array['bet_table'];
         $lottery_id = $betTable_array['game_type'];
 

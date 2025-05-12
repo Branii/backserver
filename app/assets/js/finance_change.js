@@ -175,7 +175,6 @@ $(function () {
         showToast("Heads up!!","Select one or more data fields to filter","info")
         return;
     }
-  
       const financetype = $(".financetype").val();
       const username = $("#financeDropdown").val();
       const startfinance = $(".startfinances").val();
@@ -296,11 +295,8 @@ $(function () {
           console.log(response)
           if (response) {
             $(".loaderfinanc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send")
-           
             showToast("Success", response, "success");
             fetchfinance(currentPage,pageLimit);
-            // Clear input fields
-          
           } else {
             showToast("Heads up!!",response, "info");
           }

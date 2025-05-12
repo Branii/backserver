@@ -210,28 +210,17 @@
                 <select class="form-control trackdown" size="5" style="display: none; width: 11%;background:#fff;" id="users-options-wrapper" ></select>
                 <input type="text" class="form-control widrl-queryholdertrans orderid" id="widrl-ID" aria-describedby="name" placeholder=" <?= $translator['Search Withdrawal ID']; ?>">
 
-                <div class="custom-dropdown" style="width: 12%; margin-right: 5px;">
-                    <select name="lotteryname" id="widrl-channels" class="form-control form-select queryholderlist tracklotery " data-bs-placeholder="Select Type">
-                        <option value="0"><?= $translator['Withdrawal Channels']; ?></option>
-                        <option value="3"><?= $translator['Momo']; ?></option>
-                        <option value="2"><?= $translator['Bank']; ?></option>
-                        <option value="5"><?= $translator['Crypto']; ?></option>
-                        <option value="4"><?= $translator['Manual']; ?></option>
-                    </select>
-                 </div>
-                <div class="custom-dropdown" style="width: 11%; margin-right: 5px;">
-                    <select name="lotteryname" id="widrl-status" class="form-control form-select queryholderlist tracklotery " data-bs-placeholder="Select Type">
-                        <!-- <option value="0">Status</option>
-                        <option value="1">Pending</option>
-                        <option value="2">Success</option>
-                        <option value="3">Failed</option> -->
-                        <option value="0">-<?= $translator['Status']; ?>-</option>
-                    <option value="1"><?= $translator['Pending']; ?></option>
-                    <option value="2"><?= $translator['Success']; ?></option>
-                    <option value="3"><?= $translator['Failed']; ?></option>
-                    </select>
-                 </div>
+                <select name="lotteryname" id="widrl-channels" class="form-control form-select widrl-queryholdertrans tracklotery " data-bs-placeholder="Select Type">
+                    <option value="0"><?= $translator['Withdrawal Channels']; ?></option>
+                    <option value="3"><?= $translator['Momo']; ?></option>
+                    <option value="2"><?= $translator['Bank']; ?></option>
+                    <option value="5"><?= $translator['Crypto']; ?></option>
+                    <option value="4"><?= $translator['Manual']; ?></option>
+                </select>
+                <select name="lotteryname" class="form-control form-select widrl-queryholdertrans selectpartner"> 
 
+                </select>
+                 
                 <input type="date"  class="form-control widrl-queryholdertrans wdrl-startdate" id="widrl-startDate" aria-describedby="name" placeholder="Start Date">
                 <input type="date"  class="form-control widrl-queryholdertrans wdrl-enddate"   id="widrl-endDate" aria-describedby="name" placeholder="End Date">
 
@@ -341,41 +330,20 @@
 
         </span>
         <span class="top-right-btn"  aria-label="Page navigation example">
-        <select class="left-element form-control numrowstrans" id="widrl-numrowstans" style="font-size: 12px;">
+           <select class="left-element form-control numrowstrans" id="widrl-numrowstans" style="font-size: 12px;">
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
                 <option value="50">50</option>
             </select>
-        <span class="right-element" id="paginationwithdraw">
-            <!--Dynamic pagination-->
-        </span>
+            <span class="right-element" id="paginationwithdraw">
+                <!--Dynamic pagination-->
+            </span>
 
         </span>
 
     </div>
 
-</div>
-
-<div class="modal fade" id="danger-depobsits" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content modal-filled " style="background-color:#F9F9F9">
-            <div class="modal-body p-4">
-                <div class="text-center text-danger">
-                    <i class="ti ti-hexagon-letter-x fs-7"></i>
-                    <h4 class="mt-2">Oh snap!</h4>
-                    <p class="mt-3" style="color:#aaa">
-                        All fields are required!
-                        Select one or more data fields to filter.
-                    </p>
-                    <button type="button" class="btn my-2" data-bs-dismiss="modal" style="background-color:#ddd">
-                        Okay
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
 </div>
 
 

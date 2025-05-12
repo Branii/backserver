@@ -142,12 +142,16 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function filtertransactions($username, $orderid, $ordertype, $startdate, $enddate, $pageNumber, $limit)
+    // public function filtertransactions($username, $orderid, $ordertype, $startdate, $enddate, $pageNumber, $limit)
+    // {
+    //     $this->view('exec/businessflow', [
+    public function filtertransactions($username, $orderid, $ordertype, $partneruid, $startdate, $enddate, $pageNumber, $limit)
     {
         $this->view('exec/businessflow', [
             'username' => $username,
             'orderid' => $orderid,
             'ordertype' => $ordertype,
+            'partneruid' => $partneruid,
             'startdate' => $startdate,
             'enddate' => $enddate,
             'flag' => 'filtertransactions',
@@ -212,6 +216,15 @@ class adminController extends Controller
         $this->view('exec/payment_platform', ['platformName' => $platformName, 'flag' => 'searchPlatformNames']);
         $this->view->render();
     }
+
+    public function searchPartnersNames($partnerName)
+    {
+
+        $this->view('exec/partners', ['partnerName' => $partnerName, 'flag' => 'searchPartnersNames']);
+        $this->view->render();
+    }
+
+
     public function fetchDifferentCurrency()
     {
         $this->view('exec/payment_platform', ['flag' => 'fetchDifferentCurrency']);
@@ -299,10 +312,11 @@ class adminController extends Controller
     }
 
 
-
-
-    //
-
+    public function  fetchPartnername()
+    {
+        $this->view('exec/businessflow', ['flag' => 'partnernames']);
+        $this->view->render();
+    }
 
 
     /// ----- WIN LOSS REPORT --------------------------------
@@ -411,10 +425,24 @@ class adminController extends Controller
         $this->view('exec/payment_platform', ["page" => $page, "limit" => $limit, 'flag' => 'fetchPaymentPlatformsForPartner']);
         $this->view->render();
     }
+    // public function  fetchPaymentPlatforms($page, $limit)
+    // {
+
+    public function  fetchPartners($page, $limit)
+    {
+        $this->view('exec/partners', ["page" => $page, "limit" => $limit, 'flag' => 'fetch_partners']);
+        $this->view->render();
+    }
     public function  fetchPaymentPlatforms($page, $limit)
     {
 
-        $this->view('exec/payment_platform', ['flag' => 'fetchpaymentplatforms']);
+        $this->view('exec/payment_platforms', ['flag' => 'fetchpaymentplatforms']);
+        $this->view->render();
+    }
+    public function  fetchPartnersNames($page, $limit)
+    {
+
+        $this->view('exec/partners', ['flag' => 'fetchPartnersNames']);
         $this->view->render();
     }
 
@@ -507,6 +535,11 @@ class adminController extends Controller
     public function manageUser($userID,  $lotteryID, $flag)
     {
         $this->view('exec/account_manage', ['user_id' => $userID, 'ulog_id' => $lotteryID, 'lottery_id' => $lotteryID, "flag" => $flag]);
+        $this->view->render();
+    }
+    public function fetchLotteries($flag)
+    {
+        $this->view('exec/partners', ["flag" => $flag]);
         $this->view->render();
     }
 
@@ -845,14 +878,19 @@ class adminController extends Controller
         $this->view->render();
     }
 
-
-
-
     //languages
 
     public function changelang(string $lang)
     {
         $this->view('exec/switchlang', ['lang' => $lang]);
+        $this->view->render();
+    }
+
+    //changeruserpassword
+
+    public function changerAdminpassword($email, $repeatPassword)
+    {
+        $this->view('exec/admins_exec', ['email' => $email, 'repeatPassword' => $repeatPassword, 'flag' => 'changeadminpassword']);
         $this->view->render();
     }
 }

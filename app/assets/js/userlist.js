@@ -190,7 +190,7 @@ $(function () {
                       <td>VIP</td>
                      <td>
                   <span class="tooltipp" style="">${subordinate}
-                      <span class="tooltipp-text">${formattedSubordinates}</span>
+                  <span class="tooltipp-text">${formattedSubordinates}</span>
                   </span>
                   </td>
                       <td>${item.sub_count} </td>
@@ -865,7 +865,7 @@ $(function () {
     };
 
     const UserlistDataV2 = (response) => {
-        // console.log(response);
+         console.log(response);
         let html = "";
         const status = {
             1: "Enable", // Green

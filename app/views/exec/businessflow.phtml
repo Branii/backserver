@@ -121,19 +121,18 @@ if ($flag == "filtertransactions") {
     $uid  = isset($this->viewData['username']) ? $this->viewData['username'] : '';
     $orderid = isset($this->viewData['orderid']) ? $this->viewData['orderid'] : '';
     $ordertype = isset($this->viewData['ordertype']) ? $this->viewData['ordertype'] : '';
+    $partneruid = isset($this->viewData['partneruid']) ? $this->viewData['partneruid'] : '';
     $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : '';
     $enddate = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : '';
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $usernameCheck = (new BusinessFlowModel())->getUserIdByUsername($uid);
     $username = !empty($usernameCheck) ? $usernameCheck[0]['uid'] : $uid;
-    $sunquery = (new BusinessFlowModel())->FilterTrsansactionDataSubQuery($username, $orderid, $ordertype, $startdate, $enddate);
-    $result   = (new BusinessFlowModel())->FilterTrsansactionData($sunquery, $page, $limit) ?? [];
-
+    $sunquery = (new BusinessFlowModel())->FilterTransactionDataSubQuery($username, $orderid, $ordertype,$partneruid, $startdate, $enddate);
+    $result   = (new BusinessFlowModel())->FilterTransactionData($sunquery, $page, $limit) ?? [];
     $response = [
-        'response' => "success",
         'transactions' => $result['data'] ?? [],
-        'totalPages' => !empty($result['total']) ? ceil($result['total'] / $limit) : 0,
+        'totalPages' => ceil($result['total'] / $limit),
     ];
 
     echo json_encode($response);
@@ -292,3 +291,9 @@ if ($flag == 'getTracktokenbet') {
     $result = (new BusinessFlowModel())->getTrackData($betTable, $data[0]) ?? [];
     echo json_encode($result);
 }
+
+if ($flag == 'partnernames') {
+    $result = (new BusinessFlowModel())->GetPartnerNames() ?? [];
+    echo json_encode($result);
+}
+
