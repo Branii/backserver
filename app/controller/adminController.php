@@ -943,5 +943,16 @@ class adminController extends Controller {
         $this->view->render();
     }
     
+        
+    public function verifycodebyemail ($otpcodes){
+        $this->view('exec/googletwofa',['otpcodes'=>$otpcodes,'flag' =>'verifycodebyemail']);
+        $this->view->render();
+    }
+
+    public function verifyoption($otpcodes){
+         $this->view('exec/googletwofa',['otpcodes'=>$otpcodes,'flag' =>'verifyoption']);
+        $this->view->render();
+    }
+    
     
 }

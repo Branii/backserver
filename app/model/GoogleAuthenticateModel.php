@@ -48,14 +48,38 @@ class GoogleAuthenticateModel extends MEDOOHelper
             'status' =>'success',
             'url' => '/admin/limvo/admin/home'
           ];
-
       } else {
         return [
-          'status' =>'Invalid 2FA code. Try again',
-         // 'url' => ''
-        ];
-       
+          'status' =>'Invalid 2FA code. Try again' ];
       }
+  }
+
+  public  static function SignOptionUpdates($email,$code){
+      $params = ['email' =>$email,'otp_secret' =>$code];
+      $sql = "UPDATE system_administrators SET otp_secret = :otp_secret WHERE email = :email";
+      $updated = parent::query($sql, $params);
+  }
+
+  public static function SignOptionVerify($email,$otpcodes){
+        $data = parent::query( "SELECT admin_id,email, otp_secret FROM system_administrators WHERE email = :email",['email' => $email]);
+        $secretcode = $data[0]['otp_secret'];
+        if($secretcode == $otpcodes){
+          $params = ['email' =>$email,'two_factor_method' =>'default'];
+          $sql = "UPDATE system_administrators SET two_factor_method = :two_factor_method WHERE email = :email";
+          $updated = parent::query($sql, $params);
+          $_SESSION['isUserLoggedIn'] = $email;
+          $_SESSION['isUserLoggedInId'] = $data[0]['admin_id'];
+            return [
+              'status' =>'success',
+              'url' => '/admin/limvo/admin/home'
+            ];
+        } else {
+          return [
+            'status' =>'Invalid 2FA code. Try again',
+  
+          ];
+        }
+
   }
 
 }

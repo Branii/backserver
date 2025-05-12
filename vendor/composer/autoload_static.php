@@ -23,6 +23,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'P' => 
         array (
             'PhpOption\\' => 10,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'M' => 
         array (
@@ -73,6 +74,10 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'ModernPHPException\\' => 
         array (
