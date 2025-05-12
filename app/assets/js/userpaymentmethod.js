@@ -127,6 +127,29 @@ $(document).on("click", ".deleteMethod", function () {
     });
 });
 
+
+
+// Make the user payment inactive
+$(document).on("click", ".deleteMethod", function () {
+  const uid = $(this).data("uid");
+  const bankid = $(this).data("bankid");
+
+  $.ajax({
+      url: `../admin/Inactiveuserpaymentmethod/${uid}/${bankid}`,
+      method: "POST", // or 'GET' depending on your backend
+      success: function (response) {
+          console.log("Server Response:", response);
+          $("#Userpaymentmodal").modal("hide");
+          showToast("Heads up!!", "Payment method set to inactive successfully!", "success");
+          fetchuserpayment(currentPage, pageLimit);
+      }, 
+      error: function () {
+          $("#Userpaymentmodal").modal("hide");
+          showToast("Heads up!!", "Failed to set inactive.", "danger");
+      }
+  });
+});
+
   // refresh page
 
 
@@ -145,6 +168,14 @@ $(document).on("click", ".deleteMethod", function () {
      fetchuserpayment(currentPage, pageLimit);
  
    });
+
+  //  $(".changepasswordbtn").click(function () {
+  //   $("#autho").modal("hide"); // hide the current modal
+  //   setTimeout(function () {
+  //     $("#authopassword").modal("show"); // show the password settings modal
+  //   }, 500); // small delay to avoid modal overlap
+  // });
+  
 
    
 });

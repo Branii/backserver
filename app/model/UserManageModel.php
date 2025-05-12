@@ -1048,8 +1048,7 @@ class UserManageModel extends MEDOOHelper
             $subQuery = implode(' AND ', $filterConditions);
         }
 
-        // $subQuery .= " ORDER BY login_date DESC";
-
+  
         return $subQuery;
     }
 

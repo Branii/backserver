@@ -113,14 +113,15 @@ if($flag == "backup") {
 
 }
 
-if($flag == "getAllBackups") {
-    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
-    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
-    $result = (new AdminModel())->getAllBackups($page, $limit);
-    echo json_encode([
-        'backups' => $result['data'],
-        'totalPages' => ceil($result['total'] / $limit),
-    ]);
+
+//change Admin password   changeadminpassword
+
+if ($flag  == "changeadminpassword") {
+    $email = isset($this->viewData['email']) ? $this->viewData['email'] : "";
+    $repeatPassword = isset($this->viewData['repeatPassword']) ? $this->viewData['repeatPassword'] : "";
+    $result = AdminModel::Updatepasswordbyemail($email,$repeatPassword);
+    echo json_encode($result);
+
 }
 
 function generateUsername()

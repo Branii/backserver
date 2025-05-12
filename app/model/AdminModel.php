@@ -119,4 +119,29 @@ class AdminModel extends MEDOOHelper
         $totalRecords  = parent::count('backups');
         return ['data' => $data, 'total' => $totalRecords];
     }
+
+
+    // change damin password
+    public static function Updatepasswordbyemail($email, $repeatPassword) {
+        // Check if the email exists
+        $data = parent::query("SELECT * FROM system_administrators WHERE email = :email", [
+            'email' => $email
+        ]);
+    
+        if (!$data || count($data) === 0) {
+            return "Email not found";
+        }
+        // Hash the new password
+        $hashedPassword = password_hash($repeatPassword, PASSWORD_DEFAULT);
+
+        // Update the password
+        $update = parent::query("UPDATE system_administrators SET password_hash = :password WHERE email = :email", [
+            'password' => $hashedPassword,
+            'email' => $email
+        ]);
+    
+        return $update ;
+    }
+    
+    
 }

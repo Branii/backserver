@@ -1,7 +1,5 @@
 <?php
 
-
-
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     // Throw an Exception with the error message and details
     throw new \Exception("$errstr in $errfile on line $errline", $errno);
@@ -69,37 +67,6 @@ class UserBankManageModel extends MEDOOHelper
 
 
 
-    //    public static function FetchuserpaymentData($page, $limit)
-    // {
-    //     try {
-
-    //         $startpoint = ($page - 1) * $limit;
-
-    //         $sql = "
-    //             SELECT 
-    //                 u.uid,
-    //                 u.username,
-    //                 b.name AS bank_name,
-    //                 b.bank_status,
-    //                 b.bank_type
-    //             FROM users_test u
-    //             INNER JOIN user_payment_methods upm ON u.uid = upm.uid
-    //            INNER  JOIN banks b ON FIND_IN_SET(b.bankid, REPLACE(REPLACE(upm.bank_ids, '[', ''), ']', ''))
-    //            LIMIT :offset, :limit
-    //         ";
-
-    //         $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
-    //         $totalRecords = parent::count('user_payment_methods');
-
-    //         return ['data' => $data, 'total' => $totalRecords];
-
-    //         return ["data" => $data];
-    //     } catch (Exception $e) {
-    //         // return ["status" => "error", "data" => "Internal Server Error: " . $e->getMessage()];
-    //     }
-    // }
-
-
     public static function FetchuserpaymentData($page, $limit)
     {
         try {
@@ -136,22 +103,6 @@ class UserBankManageModel extends MEDOOHelper
 
 
 
-    // public static function fetchUserPaymentByUid($uid)
-    // {
-    //     try {
-    //         $sql = "SELECT bank_ids, uid FROM user_payment_methods WHERE bkid = :bkid";
-    //         $result = parent::query($sql, ['bkid' => $uid]);
-    //         $bankids = $result[0]['bank_ids']; // "1,2,23"
-    //         $bankids  = json_decode($bankids);
-    //         $bankids = implode(',', $bankids);
-    //         $sql = "SELECT  name, bank_type, bank_status FROM banks WHERE bankid IN ($bankids)";
-    //         $result = parent::query($sql);
-    //        return  $result;
-
-    //     } catch (Exception $e) {
-    //         //return ['status' => 'error', 'message' => 'Error occurred while fetching data.'];
-    //     }
-    // }
 
 
     public static function fetchUserPaymentByUid($uid)
