@@ -31,7 +31,7 @@ class GoogleAuthenticateModel extends MEDOOHelper
         $params = ['two_factor_enabled' =>"on",'email'=>$email ,'two_factor_method' => "google"];
         $sql = "UPDATE system_administrators SET two_factor_enabled = :two_factor_enabled,two_factor_method =:two_factor_method WHERE email = :email";
         $updated = parent::query($sql, $params);
-        return "Otp set sucessfully!,";
+        return "Otp set sucessfully!";
     } else {
         return "Invalid 2FA code. Try again";
     }
