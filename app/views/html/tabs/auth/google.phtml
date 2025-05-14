@@ -156,7 +156,7 @@
             </button>
 
             <div class="signin-note" id="show-contact-form" style="cursor: pointer;">
-            Sign in with <strong>other</strong> <strong>options</strong>.
+            Sign in with <strong>Other</strong> <strong>Options</strong>.
             </div>
   
     </div>
@@ -170,14 +170,14 @@
             <label for="contact">Enter your email or contact number</label>
             <p></p>
             <input type="text" id="contact" name="contact" placeholder="example@email.com or 0712345678" required>
-            <button class="btn-send-code">Send Code</button>
+            <button class="btn-send-code"> <i class='bx bx-loader-circle bx-spin bx-rotate-90 sendme' style='color:#0c0c0c;display:'></i>Send Code</button>
         </div>
     </div>
 </div>
 
 
 
-<div class="container" id="resetcode">
+<div class="container" id="resetcode" style="display:none;">
      <div class="card">
          <h2>OTP</h2>
          <p>Verify your account</p>
@@ -189,7 +189,7 @@
                 <input type="text" name="digit5" id="d5"  class="otp-box"maxlength="1" onkeyup="moveNext(this, 'd6')" required>
                 <input type="text" name="digit6" id="d6"  class="otp-box"maxlength="1" required>
             </div>
-            <button class="btn btn-success verifyresetbtn">Verify Code</button>
+            <button class="btn btn-success verifyresetbtn" >Verify Code</button>
      </div>
    
     
@@ -218,7 +218,7 @@
 
     $(".btn-send-code").on("click", function () {
         const input = $("#contact").val().trim();
-        console.log(input);
+        // console.log(input);
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const phoneRegex = /^(\+?\d{1,4}[\s-]?)?(\(?\d{3}\)?[\s-]?)?\d{3}[\s-]?\d{4}$/;
         $(".otpstatus").show();
@@ -227,18 +227,29 @@
             $(".otpstatus").html("<p style='color:red;'>Please enter your email or contact number..</p>");
             return;
         }
+        
+         $(".sendme").show()
         const $btn = $(this);
         if (emailRegex.test(input)) {
-            $(".otpstatus").html("<p style='color:green;'>Verification code will be sent to email</p>");
-            $("#resetcode").show();
-            $("#sendcode").hide();
-            startCooldown($btn);
-        }  else if (phoneRegex.test(input)) {
-            $(".otpstatus").html("<p style='color:green;'>Verification code will be sent to number</p>");
-            $("#resetcode").show();
-            $("#sendcode").hide();
-            startCooldown($btn);
-    }  else {
+            $.post((`../admin/verifycodebyemail/${input}`), function (response) {
+                // console.log(response);
+                // return
+                $(".otpstatus").html(`<p style='color:green;'>${response}</p>`);
+                $("#resetcode").show();
+                $("#sendcode").hide();
+                startCooldown($btn);
+            }).fail(function () {
+                $(".otpstatus").html("<p style='color:red;'>Failed to send email. Try again later.</p>");
+            });
+          }
+            //     }  else if (phoneRegex.test(input)) {
+            //         $(".otpstatus").html("<p style='color:green;'>Verification code will be sent to number</p>");
+            //         $("#resetcode").show();
+            //         $("#sendcode").hide();
+            //         startCooldown($btn);
+            // }  
+    
+    else {
             $(".otpstatus").html("<p style='color:red;'>Invalid email or phone number format.</p>");
         }
     });
@@ -246,7 +257,6 @@
     function startCooldown($button) {
         let countdown = 60;
         $button.prop("disabled", true).text(`Resend code in ${countdown}s`);
-
         const interval = setInterval(() => {
             countdown--;
             if (countdown > 0) {
@@ -257,6 +267,30 @@
             }
         }, 1000);
     }
+
+    $(".verifyresetbtn").on("click", function(){
+         const otspcode = $('.otp-box').map(function () {
+            return $(this).val();
+        }).get().join('');
+       
+      if (!otspcode) {
+            $("#otp-status").html("<p style='color:red;'>Please enter the OTP code.</p>");
+            return;
+         }
+       
+            $.post(`../admin/verifyoption/${otspcode}`, function (response) {
+                const results = JSON.parse(response);
+                // console.log(results)
+                // return
+            if (results.status === "success") {
+                window.location.href = results.url
+                // showToast("2FA Verified", "Your two-factor authentication has been successfully verified.", "success");
+                // $("#authot").modal("hide");
+            } else {
+                $("#otp-status").html(`<p style='color:red;'>${results.status}</p>`);
+            }
+        });
+    })
 </script>
 
 

@@ -37,9 +37,9 @@ $(function () {
                     <input type="text" maxlength="1" class="otp-box" />
                     <input type="text" maxlength="1" class="otp-box" />
                 </div>
-                <button class="btn btn-success verify-otp-btn">
-                <span class="" role="status" aria-hidden="true"></span>
-                <span class="btn-text">Verify Code</span>
+               <button class="btn btn-success verify-otp-btn">
+                    <i class='bx bx-loader-circle bx-spin bx-rotate-90 verifyme' style='color:#0c0c0c;display:none;'></i>
+                    Verify Code
                 </button>
                 <div id="otp-status"></div>
             `);
@@ -76,8 +76,8 @@ $(function () {
             $("#otp-status").html("<p style='color:red;'>Please enter the OTP code.</p>");
             return;
          }
-        $(".spinner-border-sm").show()
-      
+
+         $(".verifyme").show()
             $.post(`../admin/verifyotp/${otpcode}`, function (response) {
                 const result = JSON.parse(response);
             if (result) {
