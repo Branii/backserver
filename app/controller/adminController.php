@@ -944,13 +944,18 @@ class adminController extends Controller {
     }
     
         
-    public function verifycodebyemail ($otpcodes){
-        $this->view('exec/googletwofa',['otpcodes'=>$otpcodes,'flag' =>'verifycodebyemail']);
+    public function verifycodebyemail ($email){
+        $this->view('exec/googletwofa',['email'=>$email,'flag' =>'verifycodebyemail']);
         $this->view->render();
     }
 
     public function verifyoption($otpcodes){
          $this->view('exec/googletwofa',['otpcodes'=>$otpcodes,'flag' =>'verifyoption']);
+        $this->view->render();
+    }
+
+     public function verifycodebycontact($contact){
+         $this->view('exec/googletwofa',['contact'=>$contact,'flag' =>'verifycodebycontact']);
         $this->view->render();
     }
     

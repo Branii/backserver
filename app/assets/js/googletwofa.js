@@ -18,9 +18,8 @@ $(function () {
     const email = $(this).val(); // Button value should be user's email
     const button = $(this);
     $.post(`../admin/activateotp/${email}`, function (response) {
-        const result = JSON.parse(response);
-        console.log(result)
-
+         const result = JSON.parse(response);
+       
         if (result.status === "success") {
             showToast("2FA Setup", "Scan the QR code to complete setup.", "success");
             $("#autho").modal("hide")
@@ -45,7 +44,7 @@ $(function () {
             `);
             
         } else {
-            showToast("Error", result.message || "Unable to enable 2FA.", "error");
+            showToast( "Unable to enable 2FA.", "error");
         }
     });
     });
@@ -84,7 +83,7 @@ $(function () {
                 showToast("2FA Verified", "Your two-factor authentication has been successfully verified.", "success");
                 $("#authot").modal("hide");
             } else {
-                $("#otp-status").html(`<p style='color:red;'>${result.message || "Invalid OTP code."}</p>`);
+                $("#otp-status").html(`<p style='color:red;'> "Invalid OTP code."}</p>`);
             }
         });
         

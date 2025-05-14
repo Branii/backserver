@@ -15,11 +15,11 @@ class GoogleAuthenticateModel extends MEDOOHelper
       $params = ['email' =>$email,'otp_secret' =>$secret];
       $sql = "UPDATE system_administrators SET otp_secret = :otp_secret WHERE email = :email";
       $updated = parent::query($sql, $params);
-
       if ($updated !== false) {
         $qrUrl = GoogleQrUrl::generate($email, $secret, 'Enzerhub');
-        return ['status' => 'success','secret' => $secret,'qrUrl' => $qrUrl];
+        return ['status' => 'success','qrUrl' => $qrUrl];
       }
+      
   }
 
 

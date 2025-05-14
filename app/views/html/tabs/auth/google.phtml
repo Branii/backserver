@@ -76,7 +76,7 @@
             max-width: 400px;
             margin: auto;
         }
-        .otpstatus {
+        .otpstatuss {
             margin-top: 15px;
             padding: 10px 17px;
             border-radius: 5px;
@@ -127,11 +127,8 @@
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
 }
 
-
 </style>
 
-    </style>
-    
 </head>
 <body>
 
@@ -170,12 +167,10 @@
             <label for="contact">Enter your email or contact number</label>
             <p></p>
             <input type="text" id="contact" name="contact" placeholder="example@email.com or 0712345678" required>
-            <button class="btn-send-code"> <i class='bx bx-loader-circle bx-spin bx-rotate-90 sendme' style='color:#0c0c0c;display:'></i>Send Code</button>
+            <button class="btn-send-code"> <i class='bx bx-loader-circle bx-spin bx-rotate-90 sendmes' style='color:#0c0c0c;display:none'></i>Send Code</button>
         </div>
     </div>
 </div>
-
-
 
 <div class="container" id="resetcode" style="display:none;">
      <div class="card">
@@ -195,14 +190,14 @@
     
 </div>
 
-<div class="otpstatus"></div>
+<div class="otpstatuss"></div>
 </body>
 </html>
 
 <script src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script>
 <script src="<?php echo BASE_URL; ?>assets/js/googletwofa.js"></script>
 <script>
-      $("#resetcode").hide();
+
     function moveNext(el, nextID) {
         if (el.value.length === 1 && nextID) {
             document.getElementById(nextID).focus();
@@ -219,54 +214,45 @@
     $(".btn-send-code").on("click", function () {
         const input = $("#contact").val().trim();
         // console.log(input);
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const phoneRegex = /^(\+?\d{1,4}[\s-]?)?(\(?\d{3}\)?[\s-]?)?\d{3}[\s-]?\d{4}$/;
-        $(".otpstatus").show();
-
+         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+         const phoneRegex = /^(\+?\d{1,4}[\s-]?)?(\(?\d{3}\)?[\s-]?)?\d{3}[\s-]?\d{4}$/;
+       // const phoneRegex = /^233\d{9}$/;
+        $(".otpstatuss").show();
         if (!input) {
-            $(".otpstatus").html("<p style='color:red;'>Please enter your email or contact number..</p>");
+            $(".otpstatuss").html("<p style='color:red;'>Please enter your email or contact number..</p>");
             return;
         }
         
-         $(".sendme").show()
-        const $btn = $(this);
+        // const $btn = $(this);
         if (emailRegex.test(input)) {
             $.post((`../admin/verifycodebyemail/${input}`), function (response) {
                 // console.log(response);
                 // return
-                $(".otpstatus").html(`<p style='color:green;'>${response}</p>`);
+                 $(".sendmes").hide()
+                $(".otpstatuss").html(`<p style='color:green;'>${response}</p>`);
                 $("#resetcode").show();
                 $("#sendcode").hide();
-                startCooldown($btn);
+                // startCooldown($btn);
             }).fail(function () {
-                $(".otpstatus").html("<p style='color:red;'>Failed to send email. Try again later.</p>");
+                $(".otpstatuss").html("<p style='color:red;'>Failed to send email. Try again later.</p>");
             });
-          }
-            //     }  else if (phoneRegex.test(input)) {
-            //         $(".otpstatus").html("<p style='color:green;'>Verification code will be sent to number</p>");
-            //         $("#resetcode").show();
-            //         $("#sendcode").hide();
-            //         startCooldown($btn);
-            // }  
-    
-    else {
-            $(".otpstatus").html("<p style='color:red;'>Invalid email or phone number format.</p>");
-        }
-    });
-
-    function startCooldown($button) {
-        let countdown = 60;
-        $button.prop("disabled", true).text(`Resend code in ${countdown}s`);
-        const interval = setInterval(() => {
-            countdown--;
-            if (countdown > 0) {
-                $button.text(`Resend code in ${countdown}s`);
-            } else {
-                clearInterval(interval);
-                $button.prop("disabled", false).text("Send Code");
+          
+            } else if (phoneRegex.test(input)) {
+                 $.post((`../admin/verifycodebycontact/${input}`), function (response) {
+                //  console.log(response);
+                $(".sendmes").hide()
+                $(".otpstatuss").html(`<p style='color:green;'>${response}</p>`);
+                $("#resetcode").show();
+                $("#sendcode").hide();
+                // startCooldown($btn);
+            }).fail(function () {
+                $(".otpstatuss").html("<p style='color:red;'>Failed to send email. Try again later.</p>");
+            });
+          
+        }else{
+                $(".otpstatuss").html("<p style='color:red;'>Invalid email or phone number format.</p>");
             }
-        }, 1000);
-    }
+    });
 
     $(".verifyresetbtn").on("click", function(){
          const otspcode = $('.otp-box').map(function () {
@@ -274,20 +260,15 @@
         }).get().join('');
        
       if (!otspcode) {
-            $("#otp-status").html("<p style='color:red;'>Please enter the OTP code.</p>");
+            $(".otpstatuss").html("<p style='color:red;'>Please enter the OTP code.</p>");
             return;
          }
-       
             $.post(`../admin/verifyoption/${otspcode}`, function (response) {
                 const results = JSON.parse(response);
-                // console.log(results)
-                // return
             if (results.status === "success") {
-                window.location.href = results.url
-                // showToast("2FA Verified", "Your two-factor authentication has been successfully verified.", "success");
-                // $("#authot").modal("hide");
+                 window.location.href = results.url
             } else {
-                $("#otp-status").html(`<p style='color:red;'>${results.status}</p>`);
+                $(".otpstatuss").html(`<p style='color:red;'>${results.status}</p>`);
             }
         });
     })
