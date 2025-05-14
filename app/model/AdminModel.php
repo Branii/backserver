@@ -120,65 +120,22 @@ class AdminModel extends MEDOOHelper
         return ['data' => $data, 'total' => $totalRecords];
     }
 
-
-    // change damin password
-    // public static function Updatepasswordbyemail($email, $repeatPassword) {
-    //     // Check if the email exists
-    //     $data = parent::query("SELECT * FROM system_administrators WHERE email = :email", [
-    //         'email' => $email
-    //     ]);
-    
-    //     if (!$data || count($data) === 0) {
-    //         return "Email not found";
-    //     }
-    //     // Hash the new password
-    //     $hashedPassword = password_hash($repeatPassword, PASSWORD_DEFAULT);
-
-    //     // Update the password
-    //     $update = parent::query("UPDATE system_administrators SET password_hash = :password WHERE email = :email", [
-    //         'password' => $hashedPassword,
-    //         'email' => $email
-    //     ]);
-    
-    //     return $update ;
-    // }
     public static function Updatepasswordbyemail($email, $repeatPassword) {
-        // Check if the email exists
-        $data = parent::query("SELECT * FROM system_administrators WHERE email = :email", [
-            'email' => $email
-        ]);
+   
+        $data = parent::query("SELECT * FROM system_administrators WHERE email = :email", [ 'email' => $email]);
     
         if (!$data || count($data) === 0) {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Email not found'
-            ]);
-            return;
+          return  ['success' => false, 'message' => 'Email not found'];
         }
-    
-        // Hash the new password
+        
         $hashedPassword = password_hash($repeatPassword, PASSWORD_DEFAULT);
-    
-        // Update the password
-        $update = parent::query("UPDATE system_administrators SET password_hash = :password WHERE email = :email", [
-            'password' => $hashedPassword,
-            'email' => $email
-        ]);
-    
-        if ($update) {
-            echo json_encode([
-                'success' => true,
-                'message' => 'Password changed successfully!'
-            ]);
+        $update = parent::query("UPDATE system_administrators SET password_hash = :password WHERE email = :email", [ 'password' => $hashedPassword,'email' => $email]);
+        if ($update !==false) {
+          return [  'success' => true,  'message' => 'Password changed successfully!'];
         } else {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Failed to update password.'
-            ]);
+           return [ 'success' => false, 'message' => 'Failed to update password.'];
         }
     }
     
-    
-    
-    
+     
 }

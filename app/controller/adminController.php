@@ -974,9 +974,6 @@ class adminController extends Controller
         }
 
 
-    //     $this->view('exec/userbank_manage', ['uid' => $uid, 'bank_id' => $bank_id, 'flag' => 'inactivepayment']);
-    //     $this->view->render();
-    // }
 
     //languages
 
@@ -1015,6 +1012,31 @@ class adminController extends Controller
         $this->view('exec/googletwofa',['otpcodes'=>$otpcodes,'flag' =>'verifyloginotp']);
         $this->view->render();
     }
+
+
+    
+    //fetchuserpaymentmethod
+
+    public function fetchuserpaymentmethod($page,$pageLimit){
+        $this->view('exec/userbank_manage', ['page' => $page,'pageLimit' => $pageLimit, 'flag' => 'userpaymentmethod']);
+        $this->view->render();
+       
+    }
+    //fetchuserpaymentbyuid
+    public function fetchuserpaymentbyuid($uid) {
+        $this->view('exec/userbank_manage', ['uid' => $uid, 'flag' => 'getuserpaymentmethod']);
+        $this->view->render();
+    }
+    
+ //Inactiveuserpaymentmethod
+ public function Inactiveuserpaymentmethod($uid, $bank_id) {
+    $this->view('exec/userbank_manage', [
+        'uid' => $uid,
+        'bank_id' => $bank_id,
+        'flag' => 'inactivepayment'
+    ]);
+    $this->view->render();
+}
 
     
     //changeruserpassword

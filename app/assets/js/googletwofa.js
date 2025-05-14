@@ -99,6 +99,8 @@ $(document).on("submit", "#passwordChangeForm", function (e) {
         url: `../admin/changerAdminpassword/${email}/${repeatPassword}`,
         success: function (response) {
             const result = JSON.parse(response);
+            // console.log(response)
+            // return
             if (result.success) {
                 showToast("Success!", result.message || "Password changed successfully!", "success");
                 $("#passwordChangeForm")[0].reset();
