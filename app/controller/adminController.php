@@ -318,12 +318,8 @@ class adminController extends Controller
     }
 
 
-    public function  fetchPartnername()
-    {
-        $this->view('exec/businessflow', ['flag' => 'partnernames']);
-        $this->view->render();
-    }
-
+    
+//////////////TRACK BET DATA -//////////
 
     /// ----- WIN LOSS REPORT --------------------------------
     public function users_win_loss($partnerID,$lottery_id, $start_date,$end_date, $page,$limit)
@@ -516,20 +512,6 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function filterChangeAccount($uid, $ordertype, $startdate, $enddate, $pageNumber, $limit)
-    {
-        $this->view('exec/account_manage', [
-            'uid' => $uid,
-            'ordertype' => $ordertype,
-            'startdate' => $startdate,
-            'enddate' => $enddate,
-            'flag' => 'filterchange',
-            'page' => $pageNumber,
-            'limit' => $limit,
-
-        ]);
-        $this->view->render();
-    }
 
 
     //NOTE -
@@ -941,11 +923,6 @@ class adminController extends Controller
             $this->view->render();
         }
 
-
-    //     $this->view('exec/userbank_manage', ['uid' => $uid, 'bank_id' => $bank_id, 'flag' => 'inactivepayment']);
-    //     $this->view->render();
-    // }
-
     //languages
 
     public function changelang(string $lang)
@@ -954,13 +931,8 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    //changeruserpassword
+   
 
-    public function changerAdminpassword($email, $repeatPassword)
-    {
-        $this->view('exec/admins_exec', ['email' => $email, 'repeatPassword' => $repeatPassword, 'flag' => 'changeadminpassword']);
-        $this->view->render();
-    }
     public function verifyotp($otpcode){
         $this->view('exec/googletwofa',['otpcode'=>$otpcode,'flag' =>'verifyotp']);
         $this->view->render();
@@ -971,6 +943,24 @@ class adminController extends Controller
         $this->view('exec/googletwofa',['otpcodes'=>$otpcodes,'flag' =>'verifyloginotp']);
         $this->view->render();
     }
+    
+    
+ //Inactiveuserpaymentmethod
+ 
+ public function Inactiveuserpaymentmethod($uid,$bank_id){
+ 
+    $this->view('exec/userbank_manage', ['uid' => $uid, 'bank_id' => $bank_id, 'flag' => 'inactivepayment']);
+    $this->view->render();
+}
+
+     //changeruserpassword
+
+     public function changerAdminpassword($email, $repeatPassword)
+     {
+         $this->view('exec/admins_exec', ['email' => $email, 'repeatPassword' => $repeatPassword, 'flag' => 'changeadminpassword']);
+         $this->view->render();
+     }
+ 
     
     
 }

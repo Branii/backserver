@@ -129,26 +129,26 @@ $(document).on("click", ".deleteMethod", function () {
 
 
 
-// Make the user payment inactive
-$(document).on("click", ".deleteMethod", function () {
-  const uid = $(this).data("uid");
-  const bankid = $(this).data("bankid");
+// // Make the user payment inactive
+// $(document).on("click", ".deleteMethod", function () {
+//   const uid = $(this).data("uid");
+//   const bankid = $(this).data("bankid");
 
-  $.ajax({
-      url: `../admin/Inactiveuserpaymentmethod/${uid}/${bankid}`,
-      method: "POST", // or 'GET' depending on your backend
-      success: function (response) {
-          console.log("Server Response:", response);
-          $("#Userpaymentmodal").modal("hide");
-          showToast("Heads up!!", "Payment method set to inactive successfully!", "success");
-          fetchuserpayment(currentPage, pageLimit);
-      }, 
-      error: function () {
-          $("#Userpaymentmodal").modal("hide");
-          showToast("Heads up!!", "Failed to set inactive.", "danger");
-      }
-  });
-});
+//   $.ajax({
+//       url: `../admin/Inactiveuserpaymentmethod/${uid}/${bankid}`,
+//       method: "POST", // or 'GET' depending on your backend
+//       success: function (response) {
+//           console.log("Server Response:", response);
+//           $("#Userpaymentmodal").modal("hide");
+//           showToast("Heads up!!", "Payment method set to inactive successfully!", "success");
+//           fetchuserpayment(currentPage, pageLimit);
+//       }, 
+//       error: function () {
+//           $("#Userpaymentmodal").modal("hide");
+//           showToast("Heads up!!", "Failed to set inactive.", "danger");
+//       }
+//   });
+// });
 
   // refresh page
 
