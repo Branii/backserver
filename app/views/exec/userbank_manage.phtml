@@ -27,20 +27,25 @@ if ($flag == "fetchbankcard") {
     return;
 }
 
-
+//fetch payment method
 if ($flag == "userpaymentmethod") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
 
     $result = UserBankManageModel::FetchuserpaymentData($page, $limit);
     echo json_encode($result);
+
 }
+
+//fetch ueser payment by uid
 if ($flag == "getuserpaymentmethod") {
     $uid = isset($this->viewData['uid']) ? (int) $this->viewData['uid'] : "";
     $result = UserBankManageModel::fetchUserPaymentByUid($uid);
     echo json_encode($result);
 }
 
+
+//make payment inactive
 if ($flag == "inactivepayment") {
     $uid = isset($this->viewData['uid']) ? (int) $this->viewData['uid'] : "";
     $bank_id = isset($this->viewData['bank_id']) ? (int) $this->viewData['bank_id'] : "";

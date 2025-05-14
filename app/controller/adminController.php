@@ -968,8 +968,6 @@ class adminController extends Controller
     $this->view->render();
 }
 
-
-
      //changeruserpassword
 
      public function changerAdminpassword($email, $repeatPassword)
