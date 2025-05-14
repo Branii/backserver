@@ -292,12 +292,6 @@ class adminController extends Controller
     }
 
 
-    public function  fetchPartnername()
-    {
-        $this->view('exec/businessflow', ['flag' => 'partnernames']);
-        $this->view->render();
-    }
-
 
     /// ----- WIN LOSS REPORT --------------------------------
     public function users_win_loss($partnerID,$lottery_id, $start_date,$end_date, $page,$limit)
@@ -489,18 +483,18 @@ class adminController extends Controller
     }
 
 
-    public function  fetchBonusTwoSides($partnerID,$lotteryID,$lotteryGameGroup)
-    {
+    // public function  fetchBonusTwoSides($partnerID,$lotteryID,$lotteryGameGroup)
+    // {
 
 
-        $this->view('exec/payment_platform', ["paymentType" => $paymentType, "paymentTypeName" => $paymentTypeName, "currency" => $currency, "status" => $status, "fee" => $fee, "maxAmount" => $maxAmount, "minAmount" => $minAmount, "siteUrl" => $siteUrl, "adminSiteUrl" => $adminSiteUrl, "info" => $info, "priority" => $priority, "countries" => $countries, 'flag' => 'addNewPaymentPlaftorm']);
-        $this->view->render();
-    }
-    public function  editPaymentPlaftorm($paymentType, $paymentTypeName, $currency, $status, $fee, $maxAmount, $minAmount, $siteUrl, $adminSiteUrl, $info, $priority, $countries)
-    {
-        $this->view('exec/payment_platform', ["paymentType" => $paymentType, "paymentTypeName" => $paymentTypeName, "currency" => $currency, "status" => $status, "fee" => $fee, "maxAmount" => $maxAmount, "minAmount" => $minAmount, "siteUrl" => $siteUrl, "adminSiteUrl" => $adminSiteUrl, "info" => $info, "priority" => $priority, "countries" => $countries, 'flag' => 'editPaymentPlaftorm']);
-        $this->view->render();
-    }
+    //     $this->view('exec/payment_platform', ["paymentType" => $paymentType, "paymentTypeName" => $paymentTypeName, "currency" => $currency, "status" => $status, "fee" => $fee, "maxAmount" => $maxAmount, "minAmount" => $minAmount, "siteUrl" => $siteUrl, "adminSiteUrl" => $adminSiteUrl, "info" => $info, "priority" => $priority, "countries" => $countries, 'flag' => 'addNewPaymentPlaftorm']);
+    //     $this->view->render();
+    // }
+    // public function  editPaymentPlaftorm($paymentType, $paymentTypeName, $currency, $status, $fee, $maxAmount, $minAmount, $siteUrl, $adminSiteUrl, $info, $priority, $countries)
+    // {
+    //     $this->view('exec/payment_platform', ["paymentType" => $paymentType, "paymentTypeName" => $paymentTypeName, "currency" => $currency, "status" => $status, "fee" => $fee, "maxAmount" => $maxAmount, "minAmount" => $minAmount, "siteUrl" => $siteUrl, "adminSiteUrl" => $adminSiteUrl, "info" => $info, "priority" => $priority, "countries" => $countries, 'flag' => 'editPaymentPlaftorm']);
+    //     $this->view->render();
+    // }
 
 
     public function  fetchBonusTwoSides($lotteryID, $lotteryGameGroup)
@@ -528,18 +522,18 @@ class adminController extends Controller
        
     }
     
-    public function filterChangeAccount($uid,$ordertype,$startdate,$enddate,$pageNumber,$limit){
-        $this->view('exec/account_manage',[
-            // 'partner_id' => $partnerID,
-            'uid' => $uid,
-            'bonus' => $bonus_group,
-            'rebate' => $rebate_group,
-            'quota' => $quata_group,
-            'count' => $count_group,
-            'flag' => 'updateUsedquota'
-        ]);
-        $this->view->render();
-    }
+    // public function filterChangeAccount($uid,$ordertype,$startdate,$enddate,$pageNumber,$limit){
+    //     $this->view('exec/account_manage',[
+    //         // 'partner_id' => $partnerID,
+    //         'uid' => $uid,
+    //         'bonus' => $bonus_group,
+    //         'rebate' => $rebate_group,
+    //         'quota' => $quata_group,
+    //         'count' => $count_group,
+    //         'flag' => 'updateUsedquota'
+    //     ]);
+    //     $this->view->render();
+    // }
 
     public function filterChangeAccount($uid, $ordertype, $startdate, $enddate, $pageNumber, $limit)
     {
@@ -668,19 +662,19 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function filterfinance($uid,$depositestate,$startfinance,$endfinance,$page,$pageLimit)
-    {
-        $this->view('exec/financial_manage', [
-        'uid' => $uid,
-        'status' => $depositestate,
-        'startdate' => $startfinance,
-        'enddate' => $endfinance,
-        'page' => $page,
-        'limit' => $pageLimit,
-        'flag' => 'filterfinance'
-    ]);
-        $this->view->render();
-    }
+    // public function filterfinance($uid,$depositestate,$startfinance,$endfinance,$page,$pageLimit)
+    // {
+    //     $this->view('exec/financial_manage', [
+    //     'uid' => $uid,
+    //     'status' => $depositestate,
+    //     'startdate' => $startfinance,
+    //     'enddate' => $endfinance,
+    //     'page' => $page,
+    //     'limit' => $pageLimit,
+    //     'flag' => 'filterfinance'
+    // ]);
+    //     $this->view->render();
+    // }
 
     public function filterfinance($uid, $depositestate, $startfinance, $endfinance, $page, $pageLimit)
     {
@@ -898,15 +892,15 @@ class adminController extends Controller
         }
 
     //for user notification
-    public function fetchusernotification($pageNumber, $limit)
-    {
-        $this->view('exec/annoucement_management', [
-            'flag' => 'viewnotification',
-            'page' => $pageNumber,
-            'limit' => $limit
-        ]);
-        $this->view->render();
-    }
+    // public function fetchusernotification($pageNumber, $limit)
+    // {
+    //     $this->view('exec/annoucement_management', [
+    //         'flag' => 'viewnotification',
+    //         'page' => $pageNumber,
+    //         'limit' => $limit
+    //     ]);
+    //     $this->view->render();
+    // }
 
          //Payment Platform
         public function fetchPaymentPlatform($page ,$limit){  
@@ -992,8 +986,6 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    //changeruserpassword
-
      //google authentication
      public function google(){
         $this->view('html/tabs/auth/google');
@@ -1023,6 +1015,16 @@ class adminController extends Controller
         $this->view('exec/googletwofa',['otpcodes'=>$otpcodes,'flag' =>'verifyloginotp']);
         $this->view->render();
     }
+
+    
+    //changeruserpassword
+
+    public function changerAdminpassword($email,$repeatPassword){
+   
+        $this->view('exec/admins_exec',['email'=>$email,'repeatPassword'=>$repeatPassword,'flag' => 'changeadminpassword']);
+        $this->view->render();
+    }
+
     
     
 }

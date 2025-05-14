@@ -43,7 +43,7 @@ class UserBankManageModel extends MEDOOHelper
             $data = $stmt->fetchAll(PDO::FETCH_OBJ);
             return ["status" => "success", "data" => $data];
         } catch (Exception $e) {
-            return ["status" => "error", "data" => "Internal Server Error."];
+            //return ["status" => "error", "data" => "Internal Server Error."];
         }
     }
 

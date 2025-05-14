@@ -21,27 +21,95 @@ $(function () {
 
   //updatepassword
 
-  $(document).on("click", ".changepassword", function (e) {
+
+
+// $(document).on("submit", "#passwordChangeForm", function (e) {
+//     e.preventDefault(); // Prevent default form submission
+
+//     const email = $("#adminEmail").val();
+//     const currentPassword = $("#currentPassword").val();
+//     const repeatPassword = $("#repeatPassword").val();
+
+//     // Console log for debugging
+//     // console.log("Email:", email);
+//     // console.log("Repeat Password:", repeatPassword);
+
+//     // Validation: Check if passwords match
+//     if (currentPassword !== repeatPassword) {
+//         showToast("Error!", "Passwords do not match!", "error");
+//         return;
+//     }
+
+//     // Optional: Basic input validation
+//     if (!email || !currentPassword || !repeatPassword) {
+//         showToast("Error!", "All fields are required!", "error");
+//         return;
+//     }
+
+//     // Send POST request (with raw values in URL)
+//     $.ajax({
+//         type: "POST",
+//         url: `../admin/changerAdminpassword/${email}/${repeatPassword}`,
+//         success: function (response) {
+//             try {
+//                 const result = JSON.parse(response);
+//                 if (result.success) {
+//                     showToast("Success!", result.message || "Password changed successfully!", "success");
+                 
+//                 } else {
+//                     showToast("Error!", result.message || "Failed to change password!", "error");
+//                 }
+//             } catch (e) {
+//                 showToast("Error!", "Unexpected server response!", "error");
+//             }
+//         },
+//         error: function () {
+//             showToast("Error!", "Server request failed!", "error");
+//         }
+//     });
+// });
+
+
+
+$(document).on("submit", "#passwordChangeForm", function (e) {
     e.preventDefault(); // Prevent default form submission
 
-    const email = $("#adminEmail").val();
-    const currentPassword = $("#currentPassword").val();
-    const repeatPassword = $("#repeatPassword").val();
+    const email = $("#adminEmail").val().trim();
+    const currentPassword = $("#currentPassword").val().trim();
+    const repeatPassword = $("#repeatPassword").val().trim();
 
-    // console.log("Email:", email);
-    // console.log("Current Password:", currentPassword);
-    // console.log("Repeat Password:", repeatPassword);
-
-    if (currentPassword !== repeatPassword) {
-      showToast("Error!", "Passwords do not match!", "error");
-      return;
+    // Basic input validation
+    if (!email || !currentPassword || !repeatPassword) {
+        showToast("Error!", "All fields are required!", "error");
+        return;
     }
 
-    // Send POST request with email and password in URL (no postData)
-    $.post(
-      `../admin/changerAdminpassword/${email}/${repeatPassword}`,
-      function (response) {
-        const result = JSON.parse(response);
+    // Validation: Check if passwords match
+    if (currentPassword !== repeatPassword) {
+        showToast("Error!", "Passwords do not match!", "error");
+        return;
+    }
+
+    // Hide modal before sending AJAX request
+    $("#authopassword").modal("hide");
+
+    // Send POST request
+    $.ajax({
+        type: "POST",
+        url: `../admin/changerAdminpassword/${email}/${repeatPassword}`,
+        success: function (response) {
+            const result = JSON.parse(response);
+            if (result.success) {
+                showToast("Success!", result.message || "Password changed successfully!", "success");
+                $("#passwordChangeForm")[0].reset();
+            } else {
+                showToast("Error!", result.message || "Failed to change password!", "error");
+            }
+        }
+    });
+});
+
+
 
     $(document).on("click",".settingsbtn",function(){
        $("#autho").modal("show")
