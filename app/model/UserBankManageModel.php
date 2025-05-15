@@ -11,41 +11,50 @@ class UserBankManageModel extends MEDOOHelper
     //NOTE -
     ////////////// Bank Card  LIST -//////////
 
-    public static function FetchBankcardlistData(array $filters = [], $page = 1, $limit = 20): array
-    {
-
-        try {
-
+   public static function FetchBankcardlistData(array $filters = [], $page = 1, $limit = 20): array
+{
+    try {
         $db = parent::openLink();
         $offset = ($page - 1) * $limit;
         $whereClause = "";
         $table_name = "user_bank";
-        $params  = [":offset" => $offset,":limit" => $limit];
-        foreach ($filters as $db_column => $value) {
-            if(!empty($value)){
-                $whereClause .= empty($whereClause) ? " {$table_name}.{$db_column}=:{$db_column} " : " AND  {$table_name}.{$db_column}=:{$db_column}" ;
-                $params[":{$db_column}"]      = $value;
-            }
+        $params  = [":offset" => $offset, ":limit" => $limit];
 
-            $whereClause = empty($whereClause) ? " " : " WHERE {$whereClause} ";
-            $sql = "SELECT user_bank.*,(SELECT COUNT(*) FROM user_bank {$whereClause} ) AS total_records, users_test.username, users_test.nickname, users_test.email
+        foreach ($filters as $db_column => $value) {
+            if (!empty($value)) {
+                $whereClause .= empty($whereClause) ? 
+                    " {$table_name}.{$db_column} = :{$db_column} " : 
+                    " AND {$table_name}.{$db_column} = :{$db_column}";
+                $params[":{$db_column}"] = $value;
+            }
+        }
+
+        $whereClause = empty($whereClause) ? "" : " WHERE {$whereClause}";
+
+        $sql = "
+            SELECT 
+                user_bank.*,
+                (SELECT COUNT(*) FROM user_bank {$whereClause}) AS total_records,
+                users_test.username, 
+                users_test.nickname, 
+                users_test.email
             FROM user_bank
             JOIN users_test ON user_bank.uid = users_test.uid 
             {$whereClause} 
             ORDER BY bank_id DESC
-            LIMIT :offset, :limit";
+            LIMIT :offset, :limit
+        ";
 
-            $stmt = $db->query(
-                $sql,
-                $params
-            );
+        $stmt = $db->query($sql, $params);
+        $data = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
-            return ["status" => "success", "data" => $data];
-        } catch (Exception $e) {
-            //return ["status" => "error", "data" => "Internal Server Error."];
-        }
+        return ["status" => "success", "data" => $data];
+
+    } catch (Exception $e) {
+        return ["status" => "error", "data" => "Internal Server Error."];
     }
+}
+
 
     public static function fetchBankTypes($bank_type): array
     {

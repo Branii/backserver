@@ -40,8 +40,11 @@ $(function () {
   };
 
   const renderuserpayment = (data) => {
+    //  console.log("Fetched Data:", data);
     var html = usercarddata(data);
+    // console.log("Generated HTML:", html);
     $("#usercardContainer").html(html);
+  
   };
 
   let currentPage = 1;

@@ -642,6 +642,11 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab  Bank">
             <?php include "tabs/userbank/bankcard.php" ?>
           </div>
+
+          <div class="chrome__tab userpaymentmethod">
+            <?php include "tabs/userbank/userpaymentmethod.php" ?>
+          </div>
+
           <!-- Report Management -->
           <div class="chrome__tab Win">
             <?php include "tabs/report_management/win_loss_report.php" ?>
@@ -653,24 +658,19 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab administrator_list">
             <?php include "tabs/system_management/administrator_list.php" ?>
           </div>
-
           <div class="chrome__tab backup_recovery">
             <?php include "tabs/system_management/backup_recovery.php" ?>
           </div>
-
              <!--game management-->
              <div class="chrome__tab  lottery_parameters">
             <?php include "tabs/game_management/lottery_parameters.php" ?>
            </div>
-
           <div class="chrome__tab  lottery_draw">
             <?php include "tabs/game_management/lottery_draws.php" ?>
           </div>
-
           <div class="chrome__tab  lottery_basic_params">
             <?php include "tabs/game_management/lottery_basic_param.php" ?>
           </div>
-
            <!--announcement-->
           <div class="chrome__tab announcement">
             <?php include "tabs/announcement/announcement.php" ?>
@@ -678,22 +678,16 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab unotification">
             <?php include "tabs/announcement/usernotification.php" ?>
           </div>
-
               <!--paymentplstform-->
           <div class="chrome__tab payment_platform">
             <?php include "tabs/payment_platform/payment_platforms.php" ?>
           </div>
 
-
-         
-
           <div class="chrome__tab partners">
             <?php include "tabs/partners/partners.php" ?>
           </div>
 
-          <div class="chrome__tab userpaymentmethod">
-            <?php include "tabs/userbank/userpaymentmethod.php" ?>
-          </div>
+        
 
         </div>
       </div>
@@ -751,10 +745,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
     <script src="<?php echo BASE_URL; ?>assets/js/payment_platforms.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/usernotification.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/useroverview.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/googletwofa.js"></script>
-    
-    
-   
+    <script src="<?php echo BASE_URL; ?>assets/js/googletwofa.js"></script>  
     <script src="<?php echo BASE_URL; ?>assets/js/userpaymentmethod.js"></script>
 
 
