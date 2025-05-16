@@ -45,18 +45,10 @@ $(function () {
       success: function (response) {
         const result = JSON.parse(response);
         if (result.success) {
-          showToast(
-            "Success!",
-            result.message || "Password changed successfully!",
-            "success"
-          );
+          showToast( "Success!",result.message || "Password changed successfully!","success");
           $("#passwordChangeForm")[0].reset();
         } else {
-          showToast(
-            "Error!",
-            result.message || "Failed to change password!",
-            "error"
-          );
+          showToast( "Error!",result.message || "Failed to change password!", "error" );
         }
       }
     });

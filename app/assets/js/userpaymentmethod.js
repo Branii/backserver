@@ -42,9 +42,6 @@ $(function () {
   async function fetchuserpayment(page, pageLimit) {
     try {const response = await fetch(`../admin/fetchuserpaymentmethod/${page}/${pageLimit}`);
       const data = await response.json();
-      console.log(data);
-      return
-
       renderuserpayment(data.data);
       $("#maskuserpayment").LoadingOverlay("hide");
       //  renderfinacesPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlinks(newPage, pageLimit));

@@ -121,12 +121,10 @@ class AdminModel extends MEDOOHelper
 
     public static function Updatepasswordbyemail($email, $repeatPassword) {
    
-        $data = parent::query("SELECT * FROM system_administrators WHERE email = :email", [ 'email' => $email]);
-    
+        $data = parent::query("SELECT * FROM system_administrators WHERE email = :email", ['email' => $email]);
         if (!$data || count($data) === 0) {
           return  ['success' => false, 'message' => 'Email not found'];
         }
-        
         $hashedPassword = password_hash($repeatPassword, PASSWORD_DEFAULT);
         $update = parent::query("UPDATE system_administrators SET password_hash = :password WHERE email = :email", [ 'password' => $hashedPassword,'email' => $email]);
         if ($update !==false) {

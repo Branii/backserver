@@ -1054,6 +1054,29 @@ class adminController extends Controller
         $this->view('exec/googletwofa',['flag' => 'resetauth']);
         $this->view->render();
     }
-    
 
+    //
+    public function fetchuserpaymentmethod($page, $pageLimit)
+    {
+        $this->view('exec/userbank_manage', ['page' => $page, 'pageLimit' => $pageLimit, 'flag' => 'userpaymentmethod']);
+        $this->view->render();
+    }
+    //fetchuserpaymentbyuid
+    public function fetchuserpaymentbyuid($uid)
+    {
+        $this->view('exec/userbank_manage', ['uid' => $uid, 'flag' => 'getuserpaymentmethod']);
+        $this->view->render();
+    }
+
+    //Inactiveuserpaymentmethod
+    public function Inactiveuserpaymentmethod($uid, $bank_id)
+    {
+        $this->view('exec/userbank_manage', [ 'uid' => $uid,'bank_id' => $bank_id,'flag' => 'inactivepayment']);
+        $this->view->render();
+    }
+    
+   public function changerAdminpassword($email, $repeatPassword){
+      $this->view('exec/admins_exec', ['email' => $email, 'repeatPassword' => $repeatPassword, 'flag' => 'changeadminpassword']);
+        $this->view->render();
+    }
 }
