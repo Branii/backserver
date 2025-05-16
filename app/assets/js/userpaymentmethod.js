@@ -45,9 +45,9 @@ $(function () {
         `../admin/fetchuserpaymentmethod/${page}/${pageLimit}`
       );
       const data = await response.json();
-      console.log(data.data);
+   
 
-      renderuserpayment(data.data);
+      renderuserpayment(data);
       $("#maskuserpayment").LoadingOverlay("hide");
       //  renderfinacesPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlinks(newPage, pageLimit));
       //  document.getElementById("paging_inforeferal").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
@@ -137,19 +137,55 @@ $(function () {
   });
 
 
-$(document).on("keyup click", "#transuserpayment, .Searchuserpaymentrans", function () {
+// $(document).on("keyup click", "#transuserpayment, .Searchuserpaymentrans", function () {
+//     const username = $("#transuserpayment").val().trim().toLowerCase();
+//       const uid = $(this).data("uid");
+
+
+//     if (username === "") {
+//         fetchuserpayment(currentPage, pageLimit); // fallback to full data
+//         return;
+//     }
+
+//     console.log("Username input:", username);
+
+//     $.ajax({
+//         url: `../admin/filterpaymentdata/${username}`,  // <-- correct use of template literal
+//         method: "GET",
+//         dataType: "json",
+//         success: function (response) {
+//             if (response.status && response.data.length > 0) {
+//                 $("#usercardContainer").html(renderTableRow(response.data));
+//                 console.log("Fetched Data:", response.data);
+//             } else {
+//                 $("#usercardContainer").html(`
+//                     <tr class="no-resultslist">
+//                         <td colspan="9">
+//                             <img src="assets/images/not_found.jpg" class="dark-logo" alt="No results found" />
+//                         </td>
+//                     </tr>
+//                 `);
+//             }
+//         }
+//     });
+// });
+
+
+$(document).on("click", ".Searchuserpaymentrans", function () {
     const username = $("#transuserpayment").val().trim().toLowerCase();
+    const uid = $("#user_uid").val(); // Grab the hidden uid value
 
     if (username === "") {
-        fetchuserpayment(currentPage, pageLimit); // fallback to full data
+        fetchuserpayment(currentPage, pageLimit); // fallback to all
         return;
     }
 
-    console.log("Username input:", username);
+    console.log("Search Clicked -> Username:", username, "UID:", uid);
 
     $.ajax({
-        url: `../admin/filterpaymentdata/${username}`,  // <-- correct use of template literal
-        method: "GET",
+        url: "../admin/filterpaymentdata", // No need to append username in URL
+        method: "POST",
+        data: { username: username, uid: uid },
         dataType: "json",
         success: function (response) {
             if (response.status && response.data.length > 0) {

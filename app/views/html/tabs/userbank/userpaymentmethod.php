@@ -270,6 +270,8 @@
     <div class="px-4 py-3 border-bottom pagerlist1">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 120%;">
+                <input type="hidden" id="user_uid" value="" />
+
                 <input id="usernames" type="hidden" value="" />
                 <div style="width: 65%;">
                     <input name="transuserpayment" class="form-control bring-forward" id="transuserpayment" data-user-id=""
