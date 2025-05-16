@@ -511,9 +511,8 @@ $(function () {
       22: { title: "Add Payment Platform", content: "annouces" },
       23: { title: "BensonGames", content: "usernotis" },
       24: { title: "User Overview", content: "overview" },
-      23: { title: "Partners", content: "Partners" }
-      // 21: { title: "User Notification", content: "usernoti" },
-      
+      23: { title: "Partners", content: "Partners" },
+      25: { title: "User Payment Method", content: "usernotsi" },
     };
 
     const sidebarMain = {
@@ -522,7 +521,7 @@ $(function () {
       3: { category: "Report Management", items: [8,19] },
       4: { category: "User Management", items: [9,10,24] },
       5: { category: "Promotion Management", items: [11] },
-      6: { category: "User Bank Management", items: [12] },
+      6: { category: "User Bank Management", items: [12,25] },
       7: { category: "Game Management", items: [14,15,16] },
       8: { category: "Agent Management", items: [13] },
       9: { category: "System Management", items: [17, 18] },

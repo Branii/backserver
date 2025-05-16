@@ -263,7 +263,8 @@
             $(".otpstatuss").html("<p style='color:red;'>Please enter the OTP code.</p>");
             return;
          }
-            $.post(`../admin/verifyoption/${otspcode}`, function (response) {
+            const flagtype= "google"
+            $.post(`../admin/verifyoption/${otspcode}/${flagtype}`, function (response) {
                 const results = JSON.parse(response);
             if (results.status === "success") {
                  window.location.href = results.url
@@ -272,6 +273,36 @@
             }
         });
     })
+
+     $(document).on('click', '.verifybtn', function () {
+        const optcode = $('.otp-box').map(function () {
+            return $(this).val();
+        }).get().join('');
+
+        if (!optcode) {
+            $(".otpstatus").show()
+            $(".otpstatus").html("<p style='color:red;'>Please enter the OTP code.</p>");
+            return;
+        }
+        $('.bx-loader-circle').show();
+        const flagtype= "google"
+        $.post(`../admin/verifyloginotp/${optcode}/${flagtype}`, function (response) {
+                const result = JSON.parse(response);
+                // $spinner.addClass('d-none');
+                // $btn.prop('disabled', false); // Re-enable button
+            if (result.status === "success") {
+                window.location.href = result.url
+            } else {
+                $(".otpstatus").html(`<p style='color:red;'>${result.status}</p>`);
+                setTimeout(function() {
+                    $('.bx-loader-circle').hide();
+                }, 300); 
+            
+            }
+        });
+        
+    });
+    
 </script>
 
 
