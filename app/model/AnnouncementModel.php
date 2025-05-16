@@ -143,7 +143,7 @@ class AnnouncementModel extends MEDOOHelper
             $subQuery = implode(' AND ', $filterConditions);
         }
         // Add ordering and limit to the query
-        $subQuery .= "ORDER BY created_at DESC";
+      //  $subQuery .= "ORDER BY created_at DESC";
 
         return $subQuery;
     }

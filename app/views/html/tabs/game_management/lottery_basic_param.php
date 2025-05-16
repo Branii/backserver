@@ -270,7 +270,7 @@
                 <div class="card border">
                     <div class="card-body">
                         <h4 class="card-title">Lottery Info</h4>
-                        <form id="accountDetailsForm">
+                        <form id="accountDetailsFormf">
                             <div class="row">
                                 <input type="hidden" value="" id="lb-id-holder">
                                 <input type="hidden" value="" id="lb-lottery-type">
