@@ -173,7 +173,7 @@ let debounceTimeout = null;
             },
             success: function(response){
                 $("#subs-back-btn").hide();
-                console.log(response);
+                // console.log(response);
                
                 response  = JSON.parse(response);
                 if(response.status === "error"){
@@ -511,7 +511,7 @@ $(".playerWinLoss").click(function(e){
             });
             $("#winLossDtholder").html(htmlMarkup);
             if(totalPages < 2){
-                console.log("Entered here..");
+                // console.log("Entered here..");
                 $("#wl-pagination-wrapper").html("");
                 $("#paging_infowl").html("---------");
                 return;
@@ -533,7 +533,7 @@ $(".playerWinLoss").click(function(e){
 
   const fetchAgentSubs = (eventElement,currentPage) => {
 
-    console.log(eventElement);
+    // console.log(eventElement);
     const agentID = $(eventElement).attr('data-agent-id');
     let lotteryID = $("#wl-selectlottery").val();
     let startDate = $("#wl-startdate").val();
@@ -547,7 +547,7 @@ $(".playerWinLoss").click(function(e){
     startDate = startDate.length != 0 ? startDate : "all";
     endDate   = endDate.length != 0 ? endDate : "all";
     flag      = "get-active-subs"
-    console.log(agentID);
+    // console.log(agentID);
     $.ajax({
         url: `../admin/fetchAgentSubs/${partnerID}/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
         type: "POST",
