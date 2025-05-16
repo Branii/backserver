@@ -49,7 +49,6 @@ try {
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -121,11 +120,33 @@ try {
             cursor: pointer;
             border-radius: 5px;
         }
+
+        /* New input and button styling */
+        #transuserpayment {
+            padding: 8px;
+            width: 250px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #Searchuserpaymentrans {
+            padding: 8px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
     <h2>User Bank Summary Table</h2>
+
+    <!-- New Input and Button -->
+    <input type="text" id="transuserpayment" placeholder="Enter username...">
+    <button id="Searchuserpaymentrans">Search</button>
 
     <table>
         <thead>
@@ -161,6 +182,9 @@ try {
         </div>
     </div>
 
+    <!-- jQuery CDN (required for the code below) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         function openModal(banks) {
             const detailsContainer = document.getElementById("bankDetails");
@@ -181,7 +205,54 @@ try {
         function closeModal() {
             document.getElementById("bankModal").style.display = "none";
         }
+
+       
     </script>
+
+    <script>
+    function renderTableRow(userData) {
+        return `
+            <tr>
+                <td>${userData.uid}</td>
+                <td>${userData.username}</td>
+                <td>${userData.bank_name_count}</td>
+                <td>${userData.bank_type_count}</td>
+                <td>
+                    <button class="view-btn" onclick='openModal(${JSON.stringify(userData.banks)})'>View</button>
+                </td>
+            </tr>
+        `;
+    }
+
+    $("#transuserpayment").on("keyup", function () {
+        const username = $(this).val().trim();
+        if (username === "") {
+            $("table tbody").html(""); // Clear table if input is empty
+            return;
+        }
+
+        $.ajax({
+            url: "filterpaymentdata.php",
+            method: "POST",
+            data: { username: username },
+            dataType: "json",
+            success: function (response) {
+                if (response.status) {
+                    const tbody = $("table tbody");
+                    tbody.html(renderTableRow(response.data));
+                } else {
+                    $("table tbody").html(`<tr><td colspan="5">${response.message}</td></tr>`);
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("Error fetching data: " + error);
+            }
+        });
+    });
+</script>
+
+
 
 </body>
 </html>
+

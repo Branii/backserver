@@ -10,28 +10,27 @@ class UserBankManageModel extends MEDOOHelper
 
     //NOTE -
     ////////////// Bank Card  LIST -//////////
+    public static function FetchBankcardlistData(array $filters = [], $page = 1, $limit = 20): array
+    {
+        try {
+            $db = parent::openLink();
+            $offset = ($page - 1) * $limit;
+            $whereClause = "";
+            $table_name = "user_bank";
+            $params  = [":offset" => $offset, ":limit" => $limit];
 
-   public static function FetchBankcardlistData(array $filters = [], $page = 1, $limit = 20): array
-{
-    try {
-        $db = parent::openLink();
-        $offset = ($page - 1) * $limit;
-        $whereClause = "";
-        $table_name = "user_bank";
-        $params  = [":offset" => $offset, ":limit" => $limit];
-
-        foreach ($filters as $db_column => $value) {
-            if (!empty($value)) {
-                $whereClause .= empty($whereClause) ? 
-                    " {$table_name}.{$db_column} = :{$db_column} " : 
-                    " AND {$table_name}.{$db_column} = :{$db_column}";
-                $params[":{$db_column}"] = $value;
+            foreach ($filters as $db_column => $value) {
+                if (!empty($value)) {
+                    $whereClause .= empty($whereClause) ?
+                        " {$table_name}.{$db_column} = :{$db_column} " :
+                        " AND {$table_name}.{$db_column} = :{$db_column}";
+                    $params[":{$db_column}"] = $value;
+                }
             }
-        }
 
-        $whereClause = empty($whereClause) ? "" : " WHERE {$whereClause}";
+            $whereClause = empty($whereClause) ? "" : " WHERE {$whereClause}";
 
-        $sql = "
+            $sql = "
             SELECT 
                 user_bank.*,
                 (SELECT COUNT(*) FROM user_bank {$whereClause}) AS total_records,
@@ -45,16 +44,14 @@ class UserBankManageModel extends MEDOOHelper
             LIMIT :offset, :limit
         ";
 
-        $stmt = $db->query($sql, $params);
-        $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $stmt = $db->query($sql, $params);
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-        return ["status" => "success", "data" => $data];
-
-    } catch (Exception $e) {
-        return ["status" => "error", "data" => "Internal Server Error."];
+            return ["status" => "success", "data" => $data];
+        } catch (Exception $e) {
+            return ["status" => "error", "data" => "Internal Server Error."];
+        }
     }
-}
-
 
     public static function fetchBankTypes($bank_type): array
     {
@@ -72,8 +69,6 @@ class UserBankManageModel extends MEDOOHelper
             return ["status" => "error", "data" => "Internal Server Error." . $e->getMessage()];
         }
     }
-
-
 
     public static function FetchuserpaymentData($page, $limit)
     {
@@ -109,10 +104,6 @@ class UserBankManageModel extends MEDOOHelper
         }
     }
 
-
-
-
-
     public static function fetchUserPaymentByUid($uid)
     {
         try {
@@ -120,24 +111,18 @@ class UserBankManageModel extends MEDOOHelper
             $result = parent::query($sql, ['bkid' => $uid]);
             $bankids = $result[0]['bank_ids']; // "1,2,23"
             $userid = $result[0]['uid']; // user id
-
             $bankids = json_decode($bankids);
             $bankids = implode(',', $bankids);
-
             $sql = "SELECT name, bank_type, bank_status, bankid FROM banks WHERE bankid IN ($bankids)";
             $banks = parent::query($sql);
-
-            // Now attach uid to every bank record
             foreach ($banks as &$bank) {
                 $bank['uid'] = $userid;
             }
-
             return $banks;
         } catch (Exception $e) {
             // return error if needed
         }
     }
-
 
     //fetchUserPaymentInactiveByUid
     public static function DeleteUserPaymentInactiveByUid($uid, $bank_id)
@@ -146,16 +131,13 @@ class UserBankManageModel extends MEDOOHelper
         $sql = "SELECT bank_ids FROM user_payment_methods WHERE uid = :uid";
         $params = ['uid' => $uid];
         $result = parent::query($sql, $params);
-
         // If no records are found, return false
         if (!$result || !isset($result[0]['bank_ids'])) {
             return false;
         }
-
         // Decode the bank_ids, remove the bank_id, and re-encode it
         $bank_ids = json_decode($result[0]['bank_ids'], true);
         $bank_ids = array_values(array_diff($bank_ids, [$bank_id])); // Remove the bank_id and re-index
-
         // Update the database with the new bank_ids
         $updateSql = "UPDATE user_payment_methods SET bank_ids = :bank_ids WHERE uid = :uid";
         $updateParams = ['bank_ids' => json_encode($bank_ids), 'uid' => $uid];

@@ -45,3 +45,9 @@ if ($flag == "inactivepayment") {
     $result = UserBankManageModel::DeleteUserPaymentInactiveByUid($uid, $bank_id);
     echo json_encode($result);
 }
+
+if ($flag == "filteruserpayments") {
+  
+ $userrnamel = isset($this->viewData['username']) ? $this->viewData['username'] : "";
+    echo json_encode($result);
+}
