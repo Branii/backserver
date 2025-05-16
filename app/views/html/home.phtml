@@ -425,7 +425,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
                       <p class="card-subtitle mb-0">
                           Add an extra layer of security to your account by enabling two-factor authentication (2FA).
                       </p>
-                      <button class="btn btn-primary" type="button">Enable</button>
+                      <button class="btn btn-primary setupmobile" value="<?php echo $adminEmail ?>" type="button">Enable</button>
                       </div>
 
                       <div class="d-flex align-items-center justify-content-between py-3 border-top">
@@ -444,13 +444,13 @@ $fullname = (new Controller)->getUsername($adminEmail);
                       <button class="btn bg-primary-subtle text-primary" type="button">Change</button>
                       </div>
 
-                      <!-- <div class="d-flex align-items-center justify-content-between py-3 border-top"> -->
-                      <!-- <div>
-                          <h5 class="fs-5 fw-semibold mb-1">SMS Recovery</h5>
-                          <p class="mb-0 text-muted">Get recovery codes through your registered phone number.</p>
-                      </div> -->
-                      <!-- <button class="btn bg-primary-subtle text-primary" type="button">Set up</button> -->
-                      <!-- </div> -->
+                      <div class="d-flex align-items-center justify-content-between py-3 border-top">
+                      <div>
+                          <h5 class="fs-5 fw-semibold mb-1">Reset Authentication</h5>
+                          <!-- <p class="mb-0 text-muted">Deactivate </p> -->
+                      </div>
+                      <button class="btn bg-danger-subtle text-warning resetauth" type="button">Reset</button>
+                      </div>
                   </div>
               </div>
 

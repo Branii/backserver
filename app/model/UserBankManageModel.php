@@ -71,4 +71,94 @@ class UserBankManageModel extends MEDOOHelper
 }
 
 
+
+public static function FetchuserpaymentData($page, $limit)
+{
+    try {
+        $startpoint = ($page - 1) * $limit;
+
+        $sql = "
+        SELECT 
+            u.uid,
+            u.username,upm.bkid,
+            (
+                SELECT COUNT(b.bankid)
+                FROM banks b
+                WHERE FIND_IN_SET(b.bankid, REPLACE(REPLACE(upm.bank_ids, '[', ''), ']', ''))
+            ) AS bank_name_count,
+            (
+                SELECT COUNT(b.bank_type)
+                FROM banks b
+                WHERE FIND_IN_SET(b.bankid, REPLACE(REPLACE(upm.bank_ids, '[', ''), ']', ''))
+            ) AS bank_type_count
+        FROM users_test u
+        INNER JOIN user_payment_methods upm ON u.uid = upm.uid
+        GROUP BY u.uid
+        LIMIT :offset, :limit
+    ";
+
+        $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
+        $totalRecords = parent::count('user_payment_methods');
+
+        return ['data' => $data, 'total' => $totalRecords];
+    } catch (Exception $e) {
+        return ["status" => "error", "message" => $e->getMessage()];
+    }
+}
+
+
+
+
+
+public static function fetchUserPaymentByUid($uid)
+{
+    try {
+        $sql = "SELECT bank_ids, uid FROM user_payment_methods WHERE bkid = :bkid";
+        $result = parent::query($sql, ['bkid' => $uid]);
+        $bankids = $result[0]['bank_ids']; // "1,2,23"
+        $userid = $result[0]['uid']; // user id
+
+        $bankids = json_decode($bankids);
+        $bankids = implode(',', $bankids);
+
+        $sql = "SELECT name, bank_type, bank_status, bankid FROM banks WHERE bankid IN ($bankids)";
+        $banks = parent::query($sql);
+
+        // Now attach uid to every bank record
+        foreach ($banks as &$bank) {
+            $bank['uid'] = $userid;
+        }
+
+        return $banks;
+    } catch (Exception $e) {
+        // return error if needed
+    }
+}
+
+
+//fetchUserPaymentInactiveByUid
+public static function DeleteUserPaymentInactiveByUid($uid, $bank_id)
+{
+    // Fetch the bank_ids as a JSON array for the given uid
+    $sql = "SELECT bank_ids FROM user_payment_methods WHERE uid = :uid";
+    $params = ['uid' => $uid];
+    $result = parent::query($sql, $params);
+
+    // If no records are found, return false
+    if (!$result || !isset($result[0]['bank_ids'])) {
+        return false;
+    }
+
+    // Decode the bank_ids, remove the bank_id, and re-encode it
+    $bank_ids = json_decode($result[0]['bank_ids'], true);
+    $bank_ids = array_values(array_diff($bank_ids, [$bank_id])); // Remove the bank_id and re-index
+
+    // Update the database with the new bank_ids
+    $updateSql = "UPDATE user_payment_methods SET bank_ids = :bank_ids WHERE uid = :uid";
+    $updateParams = ['bank_ids' => json_encode($bank_ids), 'uid' => $uid];
+    return parent::query($updateSql, $updateParams); // Return the result (affected rows)
+}
+
+
+
 }

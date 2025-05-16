@@ -914,13 +914,13 @@ class adminController extends Controller {
 
 
      //google authentication
-     public function google(){
+    public function google(){
         $this->view('html/tabs/auth/google');
         $this->view->render();
     }
 
     public function mobile(){
-        $this->view('auth/mobile');
+        $this->view('html/tabs/auth/mobile');
         $this->view->render();
     }
 
@@ -928,6 +928,12 @@ class adminController extends Controller {
         $this->view('auth/email');
         $this->view->render();
     }
+
+    
+        public function checkotpstatus(){
+        $this->view('exec/googletwofa',['flag' => 'checkotpstatus']);
+        $this->view->render();
+     }
     
      public function activateotp($email){
         $this->view('exec/googletwofa',['email'=>$email,'flag' => 'twofaenable']);
@@ -938,10 +944,40 @@ class adminController extends Controller {
         $this->view->render();
     }
     
-    public function verifyloginotp($otpcodes){
-        $this->view('exec/googletwofa',['otpcodes'=>$otpcodes,'flag' =>'verifyloginotp']);
+    public function verifyloginotp($otpcodes,$flagtype){
+        $this->view('exec/googletwofa',['flagtype'=>$flagtype,'otpcodes'=>$otpcodes,'flag' =>'verifyloginotp']);
         $this->view->render();
     }
+    
+        
+    public function verifycodebyemail ($email){
+        $this->view('exec/googletwofa',['email'=>$email,'flag' =>'verifycodebyemail']);
+        $this->view->render();
+    }
+      public function verifycodebycontact($contact){
+         $this->view('exec/googletwofa',['contact'=>$contact,'flag' =>'verifycodebycontact']);
+        $this->view->render();
+    }
+
+    public function verifyoption($otpcodes,$flagtype){
+         $this->view('exec/googletwofa',['flags'=>$flagtype,'otpcodes'=>$otpcodes,'flag' =>'verifyoption']);
+        $this->view->render();
+    }
+
+    public function activateotpmobile($email){
+        $this->view('exec/googletwofa',['email'=>$email,'flag' => 'twofaenables']);
+        $this->view->render();
+    }
+    public function getcodeverify(){
+        $this->view('exec/googletwofa',['flag' => 'getcodeverify']);
+        $this->view->render();
+    }
+    
+    public function resetauth(){
+        $this->view('exec/googletwofa',['flag' => 'resetauth']);
+        $this->view->render();
+    }
+    
     
     
 }
