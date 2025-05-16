@@ -113,8 +113,7 @@ class AdminModel extends MEDOOHelper
 
     public static function getAllBackups($page, $limit) {
         $startpoint = ($page * $limit) - $limit;
-        $data = parent::query(" SELECT * FROM backups 
-        ORDER BY backup_id DESC 
+        $data = parent::query(" SELECT * FROM backups  ORDER BY backup_id DESC 
         LIMIT :offset, :limit",['offset' => $startpoint, 'limit' => $limit]);
         $totalRecords  = parent::count('backups');
         return ['data' => $data, 'total' => $totalRecords];

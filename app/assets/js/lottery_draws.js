@@ -15,7 +15,7 @@ $(function(){
 
   const drawTables = (data) => {
       let html = "";
-      console.log(data);
+
       const status = {'done' : 'Settled', 'waiting' : 'Settling'};
       data.forEach((item) => {
         let timezone = item.timezone.split(" ");

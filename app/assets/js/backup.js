@@ -12,7 +12,6 @@ $(function(){
 
     const backupTable = (data) => {
         let html = "";
-      
         
         data.forEach((item) => {
           html += `
@@ -95,6 +94,8 @@ $(function(){
         try {
           const response = await fetch(`../admin/getAllBackups/${currentPage}/${pageLimit}`);
           const data = await response.json();
+          console.log(data);
+          return
           renderAllBackups(data.backups);
           $("#maskk").LoadingOverlay("hide")
           //Render pagination

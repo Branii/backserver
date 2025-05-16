@@ -27,45 +27,23 @@ $(function () {
     const email = $("#adminEmail").val().trim();
     const currentPassword = $("#currentPassword").val().trim();
     const repeatPassword = $("#repeatPassword").val().trim();
-
-    // Basic input validation
     if (!email || !currentPassword || !repeatPassword) {
       showToast("Error!", "All fields are required!", "error");
       return;
     }
 
-    $(document).on("click", ".settingsbtn", function () {
-        const email = $(this).val(); // assuming button value contains user's email
-      // console.log(email)
-         $("#autho").modal("show");
-        // $.post(`../admin/checkotpstatus`, function (response) {
-        //   //  const result = JSON.parse(response);
-        //     console.log(response)
-        //     return
-        //     if (result.status === "enabled") {
-        //         // Show modal with "Disable 2FA" option
-        //         $("#autho").modal("show");
-        //         $("#setupauth-button").text("Disable 2FA").removeClass("btn-primary").addClass("btn-danger").data("action", "disable");
-        //     } else {
-        //         // Show modal with "Enable 2FA" option
-        //         $("#autho").modal("show");
-        //         $("#setupauth-button").text("Enable 2FA").removeClass("btn-danger").addClass("btn-primary").data("action", "enable");
-        //     }
-        // });
-    });
+    if (currentPassword !== repeatPassword) {
+      showToast("Error!", "Passwords do not match!", "error");
+      return;
+    }
 
-    // $(document).on("click",".settingsbtn",function(){
-    //    $("#autho").modal("show")
-    // })
+    $("#authopassword").modal("hide");
 
-    // Send POST request
     $.ajax({
       type: "POST",
       url: `../admin/changerAdminpassword/${email}/${repeatPassword}`,
       success: function (response) {
         const result = JSON.parse(response);
-        // console.log(response)
-        // return
         if (result.success) {
           showToast(
             "Success!",
@@ -185,10 +163,9 @@ $(function () {
             }
         });
     });
-
-
+ 
     //reset
-      $(document).on("click", ".resetauth", function () {
+    $(document).on("click", ".resetauth", function () {
       $.post(`../admin/resetauth`, function (response) {
             const result = JSON.parse(response);
             if (result.status === "success") {

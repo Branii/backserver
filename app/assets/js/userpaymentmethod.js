@@ -40,12 +40,10 @@ $(function () {
   let pageLimit = 20;
 
   async function fetchuserpayment(page, pageLimit) {
-    try {
-      const response = await fetch(
-        `../admin/fetchuserpaymentmethod/${page}/${pageLimit}`
-      );
+    try {const response = await fetch(`../admin/fetchuserpaymentmethod/${page}/${pageLimit}`);
       const data = await response.json();
-      console.log(data.data);
+      console.log(data);
+      return
 
       renderuserpayment(data.data);
       $("#maskuserpayment").LoadingOverlay("hide");
