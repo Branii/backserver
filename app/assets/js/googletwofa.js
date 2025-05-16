@@ -1,12 +1,37 @@
 $(function () {
-    function showToast(title, message, type) {
-        $.toast({
-            position: "bottom-right",
-            title: title,
-            message: message,
-            type: type,
-            duration: 3000, // auto-dismiss after 3s
-        });
+  function showToast(title, message, type) {
+    $.toast({
+      position: "bottom-right",
+      title: title,
+      message: message,
+      type: type,
+      duration: 3000 // auto-dismiss after 3s
+    });
+  }
+
+  $(document).on("click", ".settingsbtn", function () {
+    $("#autho").modal("show");
+  });
+
+  //password settings form
+  $(".changepasswordbtn").click(function () {
+    $("#autho").modal("hide");
+    $("#authopassword").modal("show");
+  });
+
+  //updatepassword
+
+  $(document).on("submit", "#passwordChangeForm", function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    const email = $("#adminEmail").val().trim();
+    const currentPassword = $("#currentPassword").val().trim();
+    const repeatPassword = $("#repeatPassword").val().trim();
+
+    // Basic input validation
+    if (!email || !currentPassword || !repeatPassword) {
+      showToast("Error!", "All fields are required!", "error");
+      return;
     }
 
     $(document).on("click", ".settingsbtn", function () {
@@ -33,7 +58,37 @@ $(function () {
     //    $("#autho").modal("show")
     // })
 
-    $(document).on("click", ".setupauth", function () {
+    // Send POST request
+    $.ajax({
+      type: "POST",
+      url: `../admin/changerAdminpassword/${email}/${repeatPassword}`,
+      success: function (response) {
+        const result = JSON.parse(response);
+        // console.log(response)
+        // return
+        if (result.success) {
+          showToast(
+            "Success!",
+            result.message || "Password changed successfully!",
+            "success"
+          );
+          $("#passwordChangeForm")[0].reset();
+        } else {
+          showToast(
+            "Error!",
+            result.message || "Failed to change password!",
+            "error"
+          );
+        }
+      }
+    });
+  });
+
+  $(document).on("click", ".settingsbtn", function () {
+    $("#autho").modal("show");
+  });
+
+  $(document).on("click", ".setupauth", function () {
     const email = $(this).val(); // Button value should be user's email
     $.post(`../admin/activateotp/${email}`, function (response) {
          const result = JSON.parse(response);
@@ -66,17 +121,18 @@ $(function () {
         }
     });
     });
+  });
 
-    $(document).on('input', '.otp-box', function () {
+  $(document).on("input", ".otp-box", function () {
     const $input = $(this);
     const value = $input.val();
     // Remove non-digit characters
-    const digit = value.replace(/\D/g, '');
+    const digit = value.replace(/\D/g, "");
     $input.val(digit); // Set only digit
     if (digit.length === 1) {
-        $input.next('.otp-box').focus();
+      $input.next(".otp-box").focus();
     }
-    });
+  });
 
     $(document).on('keydown', '.otp-box', function (e) {
         if (e.key === "Backspace" && $(this).val() === "") {
@@ -108,7 +164,13 @@ $(function () {
         
     });
 
-    $(".otpstatus").hide()
+  $(document).on("click", ".verify-otp-btn", function () {
+    const otpcode = $(".otp-box")
+      .map(function () {
+        return $(this).val();
+      })
+      .get()
+      .join("");
 
     //mobile......
     $(document).on("click", ".setupmobile", function () {
@@ -123,6 +185,7 @@ $(function () {
             }
         });
     });
+
 
     //reset
       $(document).on("click", ".resetauth", function () {

@@ -222,9 +222,9 @@ if (empty($userPermissions)) {
       <div class="card-body">
       <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center"><i class='bx bx-plus' style="font-size:50px;"></i></h6>
         <p class="card-text pt-2">
-          Personalise your dashboard
+          <?= $translator['Personalise your dashboard']; ?>
         </p>
-        <p class="card-link card-text pt-2">Manage dashboard</a>
+        <p class="card-link card-text pt-2"><?= $translator['Manage dashboard']; ?></a>
       </div>
     </div>
   </div>
@@ -235,7 +235,7 @@ if (empty($userPermissions)) {
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content" style="padding:20px">
       <div class="d-flex justify-content-between">
-        <h4 class="card-title">Personalise</h4>
+        <h4 class="card-title"><?= $translator['Personalise']; ?></h4>
         <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
       </div>
       <p></p>
@@ -249,7 +249,7 @@ if (empty($userPermissions)) {
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="list1" />
                         <label class="form-check-label" for="list1">
-                          Todo list 1
+                          <?= $translator['Todo list 1']; ?>
                         </label>
                       </div>
                     </li>
@@ -257,7 +257,7 @@ if (empty($userPermissions)) {
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="list2" />
                         <label class="form-check-label" for="list2">
-                          Todo list 2
+                         <?= $translator['Todo list 2']; ?>
                         </label>
                       </div>
                     </li>
@@ -265,7 +265,7 @@ if (empty($userPermissions)) {
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="list3" />
                         <label class="form-check-label" for="list3">
-                          Todo list 3
+                         <?= $translator['Todo list 3']; ?>
                         </label>
                       </div>
                     </li>
@@ -273,7 +273,7 @@ if (empty($userPermissions)) {
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="list4" />
                         <label class="form-check-label" for="list4">
-                          Todo list 4
+                           <?= $translator['Todo list 4']; ?>
                         </label>
                       </div>
                     </li>
@@ -281,7 +281,7 @@ if (empty($userPermissions)) {
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="list5" />
                         <label class="form-check-label" for="list5">
-                          Todo list 5
+                          <?= $translator['Todo list 5']; ?>
                         </label>
                       </div>
                     </li>
@@ -293,7 +293,7 @@ if (empty($userPermissions)) {
                       <div class="p-1">
                         <div class="modal-footer" id="savemenu">
                           <button type="button" class="btn" data-bs-dismiss="modal" style="border:solid 1px #eee">
-                          <i class='bx bx-save' style="font-size:15px"></i> Save menu
+                          <i class='bx bx-save' style="font-size:15px"></i>     <?= $translator['Save menu']; ?>
                           </button>
                         </div>
                       </div>

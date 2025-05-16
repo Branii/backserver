@@ -436,7 +436,6 @@ $(function () {
         $("#signup-modal").modal("show");
         const transactionId = $(this).attr("value");
         //console.log(transactionId);
-
         $("#row1").empty();
         $("#row2").empty();
         fetchTrasactionBet(transactionId);

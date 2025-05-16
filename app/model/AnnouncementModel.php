@@ -155,7 +155,7 @@ class AnnouncementModel extends MEDOOHelper
             $sql = " SELECT *  FROM notices WHERE $subquery LIMIT :offset, :limit";
             $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
 
-            $countSql1 = " SELECT COUNT(*) AS total_results FROM notices WHERE $subquery";
+            $countSql1 = "SELECT COUNT(*) AS total_results FROM notices WHERE $subquery";
 
             // Execute the count query
             $totalRecords = parent::query($countSql1);
@@ -244,12 +244,7 @@ class AnnouncementModel extends MEDOOHelper
             WHERE $subquery
             LIMIT :offset, :limit
             ";
-        //    return $sql = "SELECT nu.msg_id, nu.username, nu.read_status, n.subject, n.message
-        //     FROM notice_users AS nu
-        //     LEFT JOIN notices AS n ON n.msg_id = nu.msg_id
-        //     WHERE $subquery
-        //     LIMIT :offset, :limit";
-
+        
             $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
  
             $countSql1 = "SELECT COUNT(*) AS total_results FROM notice_users WHERE $subquery"; 
