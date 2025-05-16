@@ -59,8 +59,8 @@ $(function () {
   });
 
   $(document).on("click", ".setupauth", function () {
-    const email = $(this).val(); // Button value should be user's email
-    $.post(`../admin/activateotp/${email}`, function (response) {
+      const email = $(this).val(); // Button value should be user's email
+      $.post(`../admin/activateotp/${email}`, function (response) {
          const result = JSON.parse(response);
        
         if (result.status === "success") {
@@ -89,20 +89,20 @@ $(function () {
         } else {
             showToast( "Unable to enable 2FA.", "error");
         }
+      });
     });
-    });
-  });
 
-  $(document).on("input", ".otp-box", function () {
-    const $input = $(this);
-    const value = $input.val();
-    // Remove non-digit characters
-    const digit = value.replace(/\D/g, "");
-    $input.val(digit); // Set only digit
-    if (digit.length === 1) {
-      $input.next(".otp-box").focus();
-    }
-  });
+
+    $(document).on("input", ".otp-box", function () {
+        const $input = $(this);
+        const value = $input.val();
+        // Remove non-digit characters
+        const digit = value.replace(/\D/g, "");
+        $input.val(digit); // Set only digit
+        if (digit.length === 1) {
+        $input.next(".otp-box").focus();
+        }
+    });
 
     $(document).on('keydown', '.otp-box', function (e) {
         if (e.key === "Backspace" && $(this).val() === "") {
@@ -111,41 +111,33 @@ $(function () {
     });
         
     $(document).on('click', '.verify-otp-btn', function () {
-        const otpcode = $('.otp-box').map(function () {
+          const otpcode = $('.otp-box').map(function () {
             return $(this).val();
-        }).get().join('');
+          }).get().join('');
        
-        if (!otpcode) {
-            $("#otp-status").html("<p style='color:red;'>Please enter the OTP code.</p>");
-            return;
-         }
+            if (!otpcode) {
+                $("#otp-status").html("<p style='color:red;'>Please enter the OTP code.</p>");
+                return;
+            }
 
-         $(".verifyme").show()
+            $(".verifyme").show()
             $.post(`../admin/verifyotp/${otpcode}`, function (response) {
                 const result = JSON.parse(response);
-            if (result ==="success") {
-                showToast("2FA Verified", "Your two-factor authentication has been successfully verified.", "success");
-                $("#authot").modal("hide");
-            } else {
-                $("#otp-status").html(`<p style='color:red;'> Invalid OTP code entered</p>`);
-                 $(".verifyme").hide()
-            }
-        });
-        
-    });
+                if (result ==="success") {
+                    showToast("2FA Verified", "Your two-factor authentication has been successfully verified.", "success");
+                    $("#authot").modal("hide");
+                } else {
+                    $("#otp-status").html(`<p style='color:red;'> Invalid OTP code entered</p>`);
+                    $(".verifyme").hide()
+                }
+           }); 
+     });
 
-  $(document).on("click", ".verify-otp-btn", function () {
-    const otpcode = $(".otp-box")
-      .map(function () {
-        return $(this).val();
-      })
-      .get()
-      .join("");
-
+ 
     //mobile......
     $(document).on("click", ".setupmobile", function () {
        const email = $(this).val(); // Button value should be user's email
-      $.post(`../admin/activateotpmobile/${email}`, function (response) {
+        $.post(`../admin/activateotpmobile/${email}`, function (response) {
             const result = JSON.parse(response);
             if (result.status === "success") {
                 showToast("2FA Setup successfully",  "success");
