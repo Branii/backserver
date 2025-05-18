@@ -58,7 +58,7 @@
        }
 
 
-       <div class="accordion">
+<div class="accordion">
     <div class="accordion-item">
         <div class="accordion-header" onclick="toggleAccordion(this)">
         <i class='bx bx-menu bx-flip-horizontal' ></i><span> Business Flow</span>

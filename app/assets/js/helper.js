@@ -32,7 +32,7 @@
         }
     }
 
-    function renderPagination(totalPages, currentPage, pageLimit, paginationContainer, tableId, callback, ) {
+    function renderPagination(totalPages, currentPage, pageLimit, paginationContainer, tableId, callback) {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
             `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
             <a class='page-link' href='#' data-page='${i}'>${label}</a>
