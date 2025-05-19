@@ -505,7 +505,7 @@
 <div id="editpayplatform" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
-        <div class="modal-header">
+       <div class="modal-header">
         <h5 class="modal-title"><?= $translator['Add Payment Platform']; ?></h5>
         <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
      </div>
@@ -716,7 +716,7 @@
               <div class="note-title">
                 <label class="form-label">Maximun Amount</label>
                 <input type="text" id="maxiamounts" class="form-control" minlength="25" placeholder="maximum amount" />
-              </div>
+               </div>
             </div>
 
             <div class="col-md-12 mb-3">
@@ -746,13 +746,13 @@
 
             <!-- Submit Button -->
             <div class="d-md-flex align-items-center">
-
               <div class="mt-3 mt-md-0 ms-auto">
                 <button type="button" class="btn hstack gap-6 updatepaybtn" style="border: solid 1px #ccc;" data-bss-dismiss="modal" aria-label="Close">
                   <i class="bx bx-send loaderpayanup"></i>
                   <?= $translator['Submit']; ?>
                 </button>
               </div>
+
             </div>
           </form>
         </div>
@@ -760,3 +760,4 @@
     </div>
     <!-- /.modal-dialog -->
   </div>
+</div>

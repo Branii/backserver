@@ -274,6 +274,22 @@ const transformInputLd = (str) => {
   }
 }
 
+  
+  function tableScrollDraws() {
+      const tableContainerDraws = document.querySelector(".ld-table-wrapperDraws");
+      const headerRowDraws = document.querySelector(".headrowDraws");
+
+      tableContainerDraws.addEventListener("scroll", function () {
+          if (tableContainerDraws.scrollTop > 0) {
+              headerRowDraws.classList.add("sticky-headerDraws");
+          } else {
+              headerRowDraws.classList.remove("sticky-headerDraws");
+          }
+      });
+  }
+
+  tableScrollDraws();
+
 })
 
 

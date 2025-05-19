@@ -981,19 +981,19 @@ const transformInput = (str) => {
 
 
 fetchLotteryBasicParams(1);
-function tableScrolluserListsquota() {
-  const tableContainerUsersquota = document.querySelector(".table-wrapperbaic");
-  const headerRowUserListsquota = document.querySelector(".headrowDraws");
+function tableScrollbasic() {
+  const tableContainerBasic = document.querySelector(".table-wrapperbaic");
+  const headerRowUserListsBasic = document.querySelector(".headrowbasic");
 
-  tableContainerUsersquota.addEventListener("scroll", function () {
-      if (tableContainerUsersquota.scrollTop > 0) {
-          headerRowUserListsquota.classList.add("sticky-headrowDraws");
+  tableContainerBasic.addEventListener("scroll", function () {
+      if (tableContainerBasic.scrollTop > 0) {
+          headerRowUserListsBasic.classList.add("sticky-headerbasic");
       } else {
-          headerRowUserListsquota.classList.remove("sticky-headrowDraws");
+          headerRowUserListsBasic.classList.remove("sticky-headerbasic");
       }
   });
 }
 
-tableScrolluserListsquota();
+tableScrollbasic();
 });
 
