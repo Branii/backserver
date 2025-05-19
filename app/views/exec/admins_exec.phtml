@@ -123,6 +123,17 @@ if($flag == "getAllBackups") {
     ]);
 }
 
+
+//change Admin password   changeadminpassword
+
+if ($flag  == "changeadminpassword") {
+    $email = isset($this->viewData['email']) ? $this->viewData['email'] : "";
+    $repeatPassword = isset($this->viewData['repeatPassword']) ? $this->viewData['repeatPassword'] : "";
+    $result = AdminModel::Updatepasswordbyemail($email,$repeatPassword);
+    echo json_encode($result);
+
+}
+
 function generateUsername()
 {
     $adjectives = ['Swift', 'Mighty', 'Brave', 'Silent', 'Clever', 'Witty', 'Bold', 'Sharp','Logos','Botafogo','Royal','Senior','Speed','Fast','Steel'];

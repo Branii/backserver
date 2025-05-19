@@ -1,41 +1,66 @@
 $(function () {
-    function showToast(title, message, type) {
-        $.toast({
-            position: "bottom-right",
-            title: title,
-            message: message,
-            type: type,
-            duration: 3000, // auto-dismiss after 3s
-        });
+  function showToast(title, message, type) {
+    $.toast({
+      position: "bottom-right",
+      title: title,
+      message: message,
+      type: type,
+      duration: 3000 // auto-dismiss after 3s
+    });
+  }
+
+  $(document).on("click", ".settingsbtn", function () {
+    $("#autho").modal("show");
+  });
+
+  //password settings form
+  $(".changepasswordbtn").click(function () {
+    $("#autho").modal("hide");
+    $("#authopassword").modal("show");
+  });
+
+  //updatepassword
+
+  $(document).on("submit", "#passwordChangeForm", function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    const email = $("#adminEmail").val().trim();
+    const currentPassword = $("#currentPassword").val().trim();
+    const repeatPassword = $("#repeatPassword").val().trim();
+    if (!email || !currentPassword || !repeatPassword) {
+      showToast("Error!", "All fields are required!", "error");
+      return;
     }
 
-    $(document).on("click", ".settingsbtn", function () {
-        const email = $(this).val(); // assuming button value contains user's email
-      // console.log(email)
-         $("#autho").modal("show");
-        // $.post(`../admin/checkotpstatus`, function (response) {
-        //   //  const result = JSON.parse(response);
-        //     console.log(response)
-        //     return
-        //     if (result.status === "enabled") {
-        //         // Show modal with "Disable 2FA" option
-        //         $("#autho").modal("show");
-        //         $("#setupauth-button").text("Disable 2FA").removeClass("btn-primary").addClass("btn-danger").data("action", "disable");
-        //     } else {
-        //         // Show modal with "Enable 2FA" option
-        //         $("#autho").modal("show");
-        //         $("#setupauth-button").text("Enable 2FA").removeClass("btn-danger").addClass("btn-primary").data("action", "enable");
-        //     }
-        // });
+    if (currentPassword !== repeatPassword) {
+      showToast("Error!", "Passwords do not match!", "error");
+      return;
+    }
+
+    $("#authopassword").modal("hide");
+
+    $.ajax({
+      type: "POST",
+      url: `../admin/changerAdminpassword/${email}/${repeatPassword}`,
+      success: function (response) {
+        const result = JSON.parse(response);
+        if (result.success) {
+          showToast( "Success!",result.message || "Password changed successfully!","success");
+          $("#passwordChangeForm")[0].reset();
+        } else {
+          showToast( "Error!",result.message || "Failed to change password!", "error" );
+        }
+      }
     });
+  });
 
-    // $(document).on("click",".settingsbtn",function(){
-    //    $("#autho").modal("show")
-    // })
+  $(document).on("click", ".settingsbtn", function () {
+    $("#autho").modal("show");
+  });
 
-    $(document).on("click", ".setupauth", function () {
-    const email = $(this).val(); // Button value should be user's email
-    $.post(`../admin/activateotp/${email}`, function (response) {
+  $(document).on("click", ".setupauth", function () {
+      const email = $(this).val(); // Button value should be user's email
+      $.post(`../admin/activateotp/${email}`, function (response) {
          const result = JSON.parse(response);
        
         if (result.status === "success") {
@@ -64,18 +89,19 @@ $(function () {
         } else {
             showToast( "Unable to enable 2FA.", "error");
         }
-    });
+      });
     });
 
-    $(document).on('input', '.otp-box', function () {
-    const $input = $(this);
-    const value = $input.val();
-    // Remove non-digit characters
-    const digit = value.replace(/\D/g, '');
-    $input.val(digit); // Set only digit
-    if (digit.length === 1) {
-        $input.next('.otp-box').focus();
-    }
+
+    $(document).on("input", ".otp-box", function () {
+        const $input = $(this);
+        const value = $input.val();
+        // Remove non-digit characters
+        const digit = value.replace(/\D/g, "");
+        $input.val(digit); // Set only digit
+        if (digit.length === 1) {
+        $input.next(".otp-box").focus();
+        }
     });
 
     $(document).on('keydown', '.otp-box', function (e) {
@@ -85,35 +111,33 @@ $(function () {
     });
         
     $(document).on('click', '.verify-otp-btn', function () {
-        const otpcode = $('.otp-box').map(function () {
+          const otpcode = $('.otp-box').map(function () {
             return $(this).val();
-        }).get().join('');
+          }).get().join('');
        
-        if (!otpcode) {
-            $("#otp-status").html("<p style='color:red;'>Please enter the OTP code.</p>");
-            return;
-         }
+            if (!otpcode) {
+                $("#otp-status").html("<p style='color:red;'>Please enter the OTP code.</p>");
+                return;
+            }
 
-         $(".verifyme").show()
+            $(".verifyme").show()
             $.post(`../admin/verifyotp/${otpcode}`, function (response) {
                 const result = JSON.parse(response);
-            if (result ==="success") {
-                showToast("2FA Verified", "Your two-factor authentication has been successfully verified.", "success");
-                $("#authot").modal("hide");
-            } else {
-                $("#otp-status").html(`<p style='color:red;'> Invalid OTP code entered</p>`);
-                 $(".verifyme").hide()
-            }
-        });
-        
-    });
+                if (result ==="success") {
+                    showToast("2FA Verified", "Your two-factor authentication has been successfully verified.", "success");
+                    $("#authot").modal("hide");
+                } else {
+                    $("#otp-status").html(`<p style='color:red;'> Invalid OTP code entered</p>`);
+                    $(".verifyme").hide()
+                }
+           }); 
+     });
 
-    $(".otpstatus").hide()
-
+ 
     //mobile......
     $(document).on("click", ".setupmobile", function () {
        const email = $(this).val(); // Button value should be user's email
-      $.post(`../admin/activateotpmobile/${email}`, function (response) {
+        $.post(`../admin/activateotpmobile/${email}`, function (response) {
             const result = JSON.parse(response);
             if (result.status === "success") {
                 showToast("2FA Setup successfully",  "success");
@@ -123,9 +147,9 @@ $(function () {
             }
         });
     });
-
+ 
     //reset
-      $(document).on("click", ".resetauth", function () {
+    $(document).on("click", ".resetauth", function () {
       $.post(`../admin/resetauth`, function (response) {
             const result = JSON.parse(response);
             if (result.status === "success") {

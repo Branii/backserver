@@ -73,7 +73,7 @@ $(function () {
               return;
           }
 
-          console.log(response);
+        //   console.log(response);
           const data = response.data;
           $("#maskwithdraw").LoadingOverlay("hide");
           renderwithdraw(data);
@@ -275,9 +275,9 @@ $(function () {
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
           },
           success: function (response) {
-              console.log(response);
+            //   console.log(response);
               response = JSON.parse(response);
-              console.log(response);
+            //   console.log(response);
 
               if (response.status === "error") {
                   $("#withdrawContainer").html(`<tr class="no-resultslist"><td colspan="15">Error: ${response.data}</td></tr>`);
@@ -309,7 +309,7 @@ $(function () {
   $(document).on("change", "#widrl-numrowstans", function () {
       const element = $("#paginationwithdraw .active .page-link")[0];
       const page = $(element).text();
-      console.log($("#paginationwithdraw .active .page-link")[0]);
+    //   console.log($("#paginationwithdraw .active .page-link")[0]);
       const limit = $(this).val();
       filterWidrlRecords(parseInt(page), this, parseInt(limit), true);
   });

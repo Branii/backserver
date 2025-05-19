@@ -31,7 +31,7 @@ $(() =>{
 
     $(document).on("click","#ptns-addPartnerBtn",function(){
 
-        console.log("We will be the source.");
+        // console.log("We will be the source.");
         $("#ptns-addNewPartnerDialog").addClass("show");
         $("#ptns-addNewPartnerDialog").css("display","block");
     });
@@ -256,7 +256,7 @@ $(() =>{
 
       const  searchPartnersNames = (query) =>{
         let optionsHtml = '';
-        console.log(query);
+        // console.log(query);
         if(query.trim().length === 0) {
     
             $('#ptns-ptn-names-list-wrapper').html("");
@@ -287,7 +287,7 @@ $(() =>{
     }
 
     $(document).on("keyup","#ptns-ptn-search-partners-names",function (){
-        console.log();
+        // console.log();
         searchPartnersNames($(this).val());
       });
 
@@ -424,7 +424,7 @@ $(() =>{
             const startDate        = $("#ptns-partnerStartDate").val();
             const endDate       = $("#ptns-partnerEndDate").val();
 
-            console.log(partnerName,state,startDate,endDate);
+            // console.log(partnerName,state,startDate,endDate);
 
             if(partnerName == undefined && state == undefined && startDate == undefined && endDate == undefined){
                 showToast("Error", "Please select at least one filter","error");
@@ -468,7 +468,7 @@ $(() =>{
                     
                     console.log(response);
                      response = JSON.parse(response);
-                     return
+                    //   console.log(response);
                      if(response.status === "error"){
                         showToast("Error", "Error loading data for Payment Platforms","error");
                         return;
@@ -539,7 +539,7 @@ $(() =>{
                     const data = response[index];
                     optionsHtml += `<option value="${data.partner_id}" data-name="${data.name}">${data.name}</option>`;
                 }
-                console.log(optionsHtml);
+                // console.log(optionsHtml);
                 $('#ptns-partners').html(optionsHtml);
             },
             error: function(xhr,status,error){
@@ -563,7 +563,7 @@ $(() =>{
         const partnerID = $("#data-holder").attr("data-row-id");
         const partner   = partnersObjs[partnerID];
 
-        console.log(partner);
+        // console.log(partner);
         return;
         const partnerName            = $("#ptns-partner-name-edit").val();
         const siteUrl                = $("#ptns-site-url-edit").val();
@@ -639,7 +639,7 @@ $(() =>{
                 const response = await fetch(`../admin/filterPartnerPaymentPlatforms/${partnerID}/${blocked_payment_platforms}/${paymentPlatformID}/${curency_types}/${status}/${startDate}/${endDate}/${page}/${limit}`);
         
                 const data = await response.json();
-                console.log(data);
+                // console.log(data);
                 if(data.data.status === "error"){
                     showToast("Error",data.data,"error");
                     return;
@@ -927,7 +927,7 @@ $(".playerWinLoss").click(function(e){
     startDate = startDate.length != 0 ? startDate : "all";
     endDate   = endDate.length != 0 ? endDate : "all";
     flag      = "get-active-subs"
-    console.log(agentID);
+    // console.log(agentID);
     $.ajax({
         url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
         type: "POST",
