@@ -62,7 +62,7 @@ $(function () {
   
     async function fetchuseroverview(usernamelog, startdatelog, enddatelog) {
         try {
-            const response = await fetch("http://192.168.1.51/chairman_test/api/v1/limvo/myteamgraph", {
+            const response = await fetch("https://winsstarts.com/chairman_test/api/v1/limvo/myteamgraph", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
