@@ -307,7 +307,6 @@ $(function () {
 
   $(".executebet").click(function () {
       if ($("#myInput").val() == "" && $(".typelottery").val() == "" && $(".startdates").val() == "" && $(".betsate").val() == "" && $(".betstatus").val() == "" && $("#lot-betID").val() == "") {
-          // $("#dangerbet").modal("show");
           showToast("Heads up!!", "Select one or more data fields to filter", "info");
           return;
       }
@@ -318,11 +317,7 @@ $(function () {
       const betstatus = $(".betstatus").val();
       const startdates = $(".startdates").val();
       const enddates = $(".enddates").val();
-      // console.log(uidd)
-      // console.log(enddates)
-
       filterbetdata(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit);
-
       $(".loaderbet").removeClass("bx bx-check-double").addClass("bx bx-loader bx-spin");
   });
 
@@ -348,9 +343,6 @@ $(function () {
   $(document).on("click", ".viewbets", function () {
       $("#viewbetsmodal").modal("show");
       const betcode = $(this).attr("value");
-      console.log(betcode);
-
-      // console.log(gametype)
       $("#rowbet").empty();
       $("#rowbe1").empty();
       viewstakedBet(betcode);
@@ -360,8 +352,6 @@ $(function () {
       try {
           const response = await fetch(`../admin/viewBetstake/${betcode}`);
           const data = await response.json();
-          //  console.log(response)
-          //  return
           let htmlbet1 = Showbettable(firstRowbet, data);
           let htmlbet2 = Showbettable(secondRowbet, data);
           $("#rowbet").html(htmlbet1);

@@ -405,6 +405,8 @@ $fullname = (new Controller)->getUsername($adminEmail);
     </aside>
 
     
+ 
+ 
     <div id="autho" class="modal fade" tabindex="-1"  aria-hidden="true">
           <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
@@ -425,10 +427,10 @@ $fullname = (new Controller)->getUsername($adminEmail);
                       <p class="card-subtitle mb-0">
                           Add an extra layer of security to your account by enabling two-factor authentication (2FA).
                       </p>
-                      <button class="btn btn-primary" type="button">Enable</button>
+                      <button class="btn btn-primary setupmobile" value="<?php echo $adminEmail ?>" type="button">Enable</button>
                       </div>
 
-                      <div class="d-flex align-items-center justify-content-between py-3 border-top">
+                      <div class="d-flex align-items-center justify-content-between py-3 border-top" >
                       <div>
                           <h5 class="fs-5 fw-semibold mb-1">Authentication App</h5>
                           <p class="mb-0 text-muted">Use an app like Google Authenticator or Authy to generate secure codes.</p>
@@ -441,16 +443,16 @@ $fullname = (new Controller)->getUsername($adminEmail);
                           <h5 class="fs-5 fw-semibold mb-1">Change Password</h5>
                           <p class="mb-0 text-muted">You can reset your default password</p>
                       </div>
-                      <button class="btn bg-primary-subtle text-primary" type="button">Change</button>
+                      <button class="btn bg-primary-subtle text-primary changepasswordbtn" type="button">Change</button>
                       </div>
 
-                      <!-- <div class="d-flex align-items-center justify-content-between py-3 border-top"> -->
-                      <!-- <div>
-                          <h5 class="fs-5 fw-semibold mb-1">SMS Recovery</h5>
-                          <p class="mb-0 text-muted">Get recovery codes through your registered phone number.</p>
-                      </div> -->
-                      <!-- <button class="btn bg-primary-subtle text-primary" type="button">Set up</button> -->
-                      <!-- </div> -->
+                      <div class="d-flex align-items-center justify-content-between py-3 border-top">
+                      <div>
+                          <h5 class="fs-5 fw-semibold mb-1">Reset Authentication</h5>
+                          <!-- <p class="mb-0 text-muted">Deactivate </p> -->
+                      </div>
+                      <button class="btn bg-danger-subtle text-warning resetauth" type="button">Reset</button>
+                      </div>
                   </div>
               </div>
 
@@ -459,6 +461,44 @@ $fullname = (new Controller)->getUsername($adminEmail);
           </div>
     
     </div>
+
+
+    <div id="authopassword" class="modal fade" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="text-center mt-2 mb-4">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Password Settings</h5>
+            <i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
+          </div>
+        </div>
+
+        <form id="passwordChangeForm">
+
+        <input type="hidden" id="adminEmail" name="adminEmail" value="<?php echo $adminEmail; ?>">
+
+
+          <div class="mb-3">
+            <label for="currentPassword" class="form-label fw-semibold">Current Password</label>
+            <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="repeatPassword" class="form-label fw-semibold">Repeat Password</label>
+            <input type="password" class="form-control" id="repeatPassword" placeholder="Repeat new password" required>
+          </div>
+
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary  changepassword">Submit</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 
     <div id="authot" class="modal fade" tabindex="-1"  aria-hidden="true">
           <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -594,15 +634,17 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab Invitation">
             <?php include "tabs/promotionmanage/invitation_referallink.php" ?>
           </div>
-
           <!--Agent management-->
           <div class="chrome__tab quota">
             <?php include "tabs/agentmanage/quota.php" ?>
           </div>
-
           <!--User Bank management-->
           <div class="chrome__tab  Bank">
             <?php include "tabs/userbank/bankcard.php" ?>
+          </div>
+
+          <div class="chrome__tab userpaymentmethod">
+            <?php include "tabs/userbank/userpaymentmethod.php" ?>
           </div>
 
           <!-- Report Management -->
@@ -612,30 +654,23 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab NGPWin">
             <?php include "tabs/report_management/ngp_win_loss_report.php" ?>
           </div>
-
-
           <!--system managenet-->
           <div class="chrome__tab administrator_list">
             <?php include "tabs/system_management/administrator_list.php" ?>
           </div>
-
           <div class="chrome__tab backup_recovery">
             <?php include "tabs/system_management/backup_recovery.php" ?>
           </div>
-
              <!--game management-->
              <div class="chrome__tab  lottery_parameters">
             <?php include "tabs/game_management/lottery_parameters.php" ?>
            </div>
-
           <div class="chrome__tab  lottery_draw">
             <?php include "tabs/game_management/lottery_draws.php" ?>
           </div>
-
           <div class="chrome__tab  lottery_basic_params">
             <?php include "tabs/game_management/lottery_basic_param.php" ?>
           </div>
-
            <!--announcement-->
           <div class="chrome__tab announcement">
             <?php include "tabs/announcement/announcement.php" ?>
@@ -649,12 +684,10 @@ $fullname = (new Controller)->getUsername($adminEmail);
             <?php include "tabs/payment_platform/payment_platforms.php" ?>
           </div>
 
-
-         
-
           <div class="chrome__tab partners">
             <?php include "tabs/partners/partners.php" ?>
           </div>
+        
         </div>
       </div>
       <script>
@@ -711,10 +744,9 @@ $fullname = (new Controller)->getUsername($adminEmail);
     <script src="<?php echo BASE_URL; ?>assets/js/payment_platforms.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/usernotification.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/useroverview.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/googletwofa.js"></script>
-    
-    
-   
+    <script src="<?php echo BASE_URL; ?>assets/js/googletwofa.js"></script>  
+    <script src="<?php echo BASE_URL; ?>assets/js/userpaymentmethod.js"></script>
+
 
     
     <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>

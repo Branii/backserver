@@ -1,29 +1,163 @@
 <?php
 session_start();
-ini_set("display_error",1);
+// ini_set("display_error",1);
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require "../app/assets/Zenoph/Notify/AutoLoader.php";
+use Zenoph\Notify\Enums\AuthModel;
+use Zenoph\Notify\Request\SMSRequest;
+use Zenoph\Notify\Response\MessageResponse;
 
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 
 if($flag == "twofaenable"){
      $email = isset($this->viewData['email']) ?  $this->viewData['email'] : "";
      $result = GoogleAuthenticateModel::UpdategoogleAuth($email) ?? [];
-    echo json_encode($result);
- }
+     echo json_encode($result);
+}
 
- if($flag == "verifyotp"){
+if($flag == "verifyotp"){
    $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
    $otpcode = isset($this->viewData['otpcode']) ?  $this->viewData['otpcode'] : "";
    $result = GoogleAuthenticateModel::VerifyOtpCode($adminEmail,$otpcode) ?? [];
-  echo json_encode($result);
+   echo json_encode($result);
 }
 
 if($flag == "verifyloginotp"){
    $adminEmail = (new Controller)->getSeesion("userauthmethosid");
    $otpcodes = isset($this->viewData['otpcodes']) ? $this->viewData['otpcodes'] : "";
-   // $otpcodes = implode(explode(",",$otpcodes));
-   $result = GoogleAuthenticateModel::GetSecreteCode($adminEmail,$otpcodes) ?? [];
+   $flagtype = isset($this->viewData['flagtype']) ? $this->viewData['flagtype'] : "";
+   $result = GoogleAuthenticateModel::GetSecreteCode($adminEmail,$otpcodes,$flagtype) ?? [];
    echo json_encode($result);
 }
+
+if($flag == "verifycodebyemail"){
+    $emails = isset($this->viewData['email']) ? $this->viewData['email'] : "";
+    $code = rand(100000, 999999);
+    
+    if (filter_var($emails, FILTER_VALIDATE_EMAIL)) {
+        $mail = new PHPMailer(true);
+
+        try {
+            // SMTP config for Gmail
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'pneumalogoss@gmail.com';         // Your Gmail address
+            $mail->Password   = 'uxoz rwmj exdm wesl';      // Gmail App Password
+            $mail->SMTPSecure = 'tls';
+            $mail->Port       = 587;
+
+            // Email content
+            $mail->setFrom('pneumalogoss@gmail.com', 'Enzerhub TestApp');
+            $mail->addAddress($emails);
+            $mail->Subject = 'Your Verification Code';
+            $mail->Body    = "Your verification code is: $code";
+            $mail->send();
+             echo "Verification code sent to your email.";
+             $adminEmail = (new Controller)->getSeesion("userauthmethosid");
+             $result = GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo "Email failed: {$mail->ErrorInfo}";
+        }
+    } else {
+        http_response_code(400);
+        echo "Invalid email address.";
+    }
+
+}
+
+if($flag =="verifycodebycontact"){
+    $phone = isset($this->viewData['contact']) ? $this->viewData['contact'] : "";
+    $code = rand(100000, 999999);
+    
+    try {
+        $request = new SMSRequest();
+        $request->setHost("api.smsonlinegh.com");
+        $request->setAuthModel(AuthModel::API_KEY);
+        $request->setAuthApiKey("a49c61c65a8166d35b55fbcdcef25771399768bab912caf0cc987c33216d3b9c"); // Replace with your actual API key
+
+        $request->setSender("LIMVO APP"); // Replace with your approved sender ID
+        $request->setMessage( "Verfication Code"."  ".$code);
+        $request->addDestination($phone);
+
+        $response = $request->submit();
+
+        if ($response instanceof MessageResponse) {
+            echo "SMS sent successfully to $phone!";
+            $adminEmail = (new Controller)->getSeesion("userauthmethosid");
+             GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
+        } else {
+            echo "Failed to send SMS. Reason: " . $response->getResponseMessage();
+        }
+        } catch (Exception $ex) {
+            echo "Error: " . $ex->getMessage();
+        }
+
+}
+
+if($flag == "verifyoption"){
+   $adminEmail = (new Controller)->getSeesion("userauthmethosid");
+   $otpcodes = isset($this->viewData['otpcodes']) ? $this->viewData['otpcodes'] : "";
+   $flagtype = isset($this->viewData['flags']) ? $this->viewData['flags'] : "";
+   $result = GoogleAuthenticateModel::SignOptionVerify($adminEmail,$otpcodes,$flagtype); 
+   echo json_encode($result);
+}
+
+if($flag == "twofaenables"){
+     $email = isset($this->viewData['email']) ?  $this->viewData['email'] : "";
+     $result = GoogleAuthenticateModel::UpdatemobileAuth($email) ?? [];
+     echo json_encode($result);
+}
+
+if($flag == "getcodeverify"){
+     $adminEmail = (new Controller)->getSeesion("userauthmethosid");
+     $phone = GoogleAuthenticateModel::GetOtpCode($adminEmail);
+      $code = rand(100000, 999999);
+    
+    try {
+        $request = new SMSRequest();
+        $request->setHost("api.smsonlinegh.com");
+        $request->setAuthModel(AuthModel::API_KEY);
+        $request->setAuthApiKey("a49c61c65a8166d35b55fbcdcef25771399768bab912caf0cc987c33216d3b9c"); // Replace with your actual API key
+
+        $request->setSender("LIMVO APP"); // Replace with your approved sender ID
+        $request->setMessage( "Verfication Code"."  ".$code);
+        $request->addDestination($phone);
+
+        $response = $request->submit();
+
+        if ($response instanceof MessageResponse) {
+            echo "SMS sent successfully to $phone!";
+            $adminEmail = (new Controller)->getSeesion("userauthmethosid");
+            $result = GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
+        } else {
+            echo "Failed to send SMS. Reason: " . $response->getResponseMessage();
+        }
+        } catch (Exception $ex) {
+            echo "Error: " . $ex->getMessage();
+        }
+   
+}
+
+if($flag == "checkotpstatus"){
+     $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
+     $result = GoogleAuthenticateModel::CheckotpStatus($adminEmail);
+     echo json_encode($adminEmail);
+}
+
+if($flag == "resetauth"){
+     $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
+     $result = GoogleAuthenticateModel::ResetAuthentication($adminEmail);
+     echo json_encode($result);
+}
+
+
+
+
+
+
 
 
 

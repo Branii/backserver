@@ -113,10 +113,26 @@ class AdminModel extends MEDOOHelper
 
     public static function getAllBackups($page, $limit) {
         $startpoint = ($page * $limit) - $limit;
-        $data = parent::query(" SELECT * FROM backups 
-        ORDER BY backup_id DESC 
+        $data = parent::query(" SELECT * FROM backups  ORDER BY backup_id DESC 
         LIMIT :offset, :limit",['offset' => $startpoint, 'limit' => $limit]);
         $totalRecords  = parent::count('backups');
         return ['data' => $data, 'total' => $totalRecords];
     }
+
+    public static function Updatepasswordbyemail($email, $repeatPassword) {
+   
+        $data = parent::query("SELECT * FROM system_administrators WHERE email = :email", ['email' => $email]);
+        if (!$data || count($data) === 0) {
+          return  ['success' => false, 'message' => 'Email not found'];
+        }
+        $hashedPassword = password_hash($repeatPassword, PASSWORD_DEFAULT);
+        $update = parent::query("UPDATE system_administrators SET password_hash = :password WHERE email = :email", [ 'password' => $hashedPassword,'email' => $email]);
+        if ($update !==false) {
+          return [  'success' => true,  'message' => 'Password changed successfully!'];
+        } else {
+           return [ 'success' => false, 'message' => 'Failed to update password.'];
+        }
+    }
+    
+     
 }

@@ -156,7 +156,7 @@ $(function () {
 
     //search function
     async function filtermessage(username, messagestype, startfmessage, endmessage, currentPage, pageLimit) {
-    $.post(`../admin/filtermessage/${partnerID}/${username}/${messagestype}/${startfmessage}/${endmessage}/${currentPage}/${pageLimit}`, function (response) {
+    $.post(`../admin/filtermessage/${username}/${messagestype}/${startfmessage}/${endmessage}/${currentPage}/${pageLimit}`, function (response) {
     try {
         const data = JSON.parse(response);
         console.log(data);
@@ -233,31 +233,31 @@ $(function () {
 
     //add annoucement
     $(document).on("click", ".sendmessagebtn", function () {
-    const messagetype = $(".messagetype").val();
-    const messagetitle = $("#note-has-title").val();
-    const usernames = $(".userIdFieldss").val();
-    const description = encodeURIComponent($("#description").val());
-    const sendby = $(".sendby").val();
-    const notistartdate = $(".notistartdate").val();
-    const notienddates = $(".notienddates").val();
-    // console.log(usernames + "" + messagetype +""+messagetitle +""+description+""+sendby + ""+combinedates)
-    if (messagetitle === "" || description === "" || sendby === "") {
-    showToast("Heads up!!", "All field are required", "info");
-    return false;
-    }
+        const messagetype = $(".messagetype").val();
+        const messagetitle = $("#note-has-title").val();
+        const usernames = $(".userIdFieldss").val();
+        const description = encodeURIComponent($("#description").val());
+        const sendby = $(".sendby").val();
+        const notistartdate = $(".notistartdate").val();
+        const notienddates = $(".notienddates").val();
+        // console.log(usernames + "" + messagetype +""+messagetitle +""+description+""+sendby + ""+combinedates)
+        if (messagetitle === "" || description === "" || sendby === "") {
+        showToast("Heads up!!", "All field are required", "info");
+        return false;
+        }
 
-    $("#announcementemodal").modal("hide");
-    $(".userIdFieldss, #note-has-title,#description,#financeinputnot").val("");
-    $(".loaderfinancc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
-    $.post(`../admin/createannoucement/${messagetype}/${messagetitle}/${usernames}/${description}/${notistartdate}/${notienddates}/${sendby}`, function (response) {
-    if (response) {
-        $(".loaderfinancc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
-        showToast("Success", response, "success");
-        fetchmessage(currentPage, pageLimit);
-    } else {
-        showToast("Heads up!!", "failed", "info");
-    }
-    });
+        $("#announcementemodal").modal("hide");
+        $(".userIdFieldss, #note-has-title,#description,#financeinputnot").val("");
+        $(".loaderfinancc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
+        $.post(`../admin/createannoucement/${messagetype}/${messagetitle}/${usernames}/${description}/${notistartdate}/${notienddates}/${sendby}`, function (response) {
+        if (response) {
+            $(".loaderfinancc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+            showToast("Success", response, "success");
+            fetchmessage(currentPage, pageLimit);
+        } else {
+            showToast("Heads up!!", "failed", "info");
+        }
+        });
     });
 
     //delete message
@@ -275,14 +275,14 @@ $(function () {
 
     //edit message
     $(document).on("click", ".editmsg", function () {
-    $("#editmessage").modal("show");
-    let msgid = $(this).attr("datas");
-    $.post(`../admin/editannoucement/${msgid}`, function (response) {
-    let data = JSON.parse(response)[0];
-    $("#note-has-titles").val(data.subject);
-    $("#descriptions").val(data.message);
-    $("#updatemsgid").val(data.msg_id);
-    });
+        $("#editmessage").modal("show");
+        let msgid = $(this).attr("datas");
+        $.post(`../admin/editannoucement/${msgid}`, function (response) {
+            let data = JSON.parse(response)[0];
+            $("#note-has-titles").val(data.subject);
+            $("#descriptions").val(data.message);
+            $("#updatemsgid").val(data.msg_id);
+        });
     });
 
     $(document).on("click", ".updatemessagebtn", function () {

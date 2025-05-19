@@ -87,19 +87,7 @@
         background-color: #FFF;
     }
 
-    .acc_transaction_username {
-        width: 19%;
-        position: absolute;
-        color: #aaa;
-        max-height: 300px;
-        overflow-y: scroll;
-        border-radius: 5px;
-        padding: 10px;
-        top: 90%;
-        z-index: 9999;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    }
-
+  
     .option {
         text-align: left;
         border-bottom: solid 1px #eee;
@@ -168,12 +156,12 @@
         z-index: 10;
     }
 
-    .sticky-headrowDraws {
+    .sticky-headerbasic {
     position: relative;
     bottom: 1px;
     background-color: red;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-}
+    }
 
     .left-element {
         position: relative;
@@ -188,75 +176,16 @@
         border: none;
     }
 
-    .lb-tbl-header {
+    .tbl-headerbasic {
         position: sticky;
         top: 0;
     }
-
-
-
- 
 
     .pins {
         padding: 5px;
         border-bottom: solid 1px rgb(110, 129, 146, 0.1);
     }
 
-
-    /* .fix-bring-forward {
-        position:absolute;
-        z-index: 10 !important;
-        background: white !important;
-        
-} */
-
-
-   /* Custom Scrollbar for Webkit Browsers */
-   .table-wrapperbaic::-webkit-scrollbar {
-        width: 5px;
-        /* Slimmer scrollbar width */
-        height: 5px;
-        /* Slimmer scrollbar height for horizontal scrolling */
-    }
-
-    .table-wrapperbaic::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        /* Lighter background for track */
-        border-radius: 5px;
-    }
-
-    .table-wrapperbaic::-webkit-scrollbar-thumb {
-        background-color: #ccc;
-        /* Blue color for thumb */
-        border-radius: 10px;
-        cursor: pointer;
-    }
-
-    .table-wrapperbaic::-webkit-scrollbar-thumb:hover {
-        background-color: #aaa;
-        /* Darker blue on hover */
-    }
-
-    .table-wrapperbaic {
-        overflow: hidden;
-        /* Hide the default scrollbar */
-        white-space: nowrap;
-        max-width: 100%;
-        /* Adjust based on your needs */
-        margin-bottom: 10px;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 10px;
-        background: rgb(38, 57, 77) 0px 20px 30px -10px;
-        /* Ensure it doesn't interfere with content */
-        z-index: 10;
-    }
-
-    .arr {
-        color: #909aa9;
-        margin: 0px 1rem;
-    }
 </style>
 
 <div id="lb-edit" class="modal fade " tabindex="-1" style="display: none;" aria-modal="true" role="dialog">
@@ -270,7 +199,7 @@
                 <div class="card border">
                     <div class="card-body">
                         <h4 class="card-title">Lottery Info</h4>
-                        <form id="accountDetailsForm">
+                        <form id="accountDetailsFormf">
                             <div class="row">
                                 <input type="hidden" value="" id="lb-id-holder">
                                 <input type="hidden" value="" id="lb-lottery-type">
@@ -402,10 +331,10 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapper table-wrapperbaic" id="maskkk" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbaic" id="maskkk" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
-                <thead class="text-dark fs-4 lb-tbl-header">
-                    <tr class="headrowDraws">
+                <thead class="text-dark fs-4 tbl-headerbasic">
+                    <tr class="headrowbasic">
                       
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['ID']; ?></h6>

@@ -130,7 +130,7 @@ $(function () {
         function (response) {
           try {
             const data = JSON.parse(response);
-              console.log(data)
+              // console.log(data)
             //  return
             $(".loaderfinance").removeClass("bx-loader bx-spin").addClass("bx-check-double");
             if (data.finances.length < 1) {
@@ -279,7 +279,7 @@ $(function () {
       $(".loaderfinanc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
       $.post(`../admin/addmoney/${depositype}/${usernames}/${amount}/${approvedby}/${review}`,
         function (response) {
-          console.log(response)
+          // console.log(response)
           if (response) {
             $(".loaderfinanc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send")
             showToast("Success", response, "success");
