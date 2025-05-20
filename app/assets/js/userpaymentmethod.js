@@ -168,8 +168,7 @@ fetchuserpayment(currentPage, pageLimit);
                     <tr class="no-resultslist">
                         <td colspan="9">
                          
-                                <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-
+                                <img src="/../admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
                         </td>
                     </tr>
                 `);
