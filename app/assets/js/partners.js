@@ -342,7 +342,7 @@ $(() =>{
     });
 
    $(document).on("click","#ptns-editPaymentPlatformBtn",function(){
-            const paymentType = $("#ptns-pp-payment-type-edit").val();
+        const paymentType = $("#ptns-pp-payment-type-edit").val();
         const paymentTypeName = $("#ptns-pp-payment-type-edit option:selected").attr("data-name");
         const currency    = $("#ptns-pp-currency-edit").val();
         const status      = $("#ptns-pp-status-edit").val();
@@ -461,7 +461,7 @@ $(() =>{
     const fetchAllPartners = ()=> {
         try {
              $.ajax({
-                url: `../admin/fetchPartners/${page}/${limit}/`,
+                url: `../admin/fetchPartners/${partnerID}/${page}/${limit}/`,
                 type: "POST",
                 
                 success: function(response){
