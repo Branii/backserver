@@ -98,7 +98,7 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function getSpecificDraws($gameId, $issue_number, $status, $start_date, $end_date, $pageNumber, $limit)
+    public function getSpecificDraws($partnerID, $gameId, $issue_number, $status, $start_date, $end_date, $pageNumber, $limit)
     {
 
         $this->view('exec/game_management', [
@@ -384,7 +384,7 @@ class adminController extends Controller
         ]);
         $this->view->render();
     }
-    public function searchUserListData($username, $recharge_level, $states, $startdate, $enddate, $miscelleanous)
+    public function searchUserListData($partnerID, $username, $recharge_level, $states, $startdate, $enddate, $miscelleanous)
     {
         $this->view('exec/account_manage', [
             'partner_id' => $partnerID,
@@ -432,7 +432,7 @@ class adminController extends Controller
         $this->view('exec/partners', ['partner_id' => $partnerID, "page" => $page, "limit" => $limit, 'flag' => 'fetch_partners']);
         $this->view->render();
     }
-    public function  fetchPaymentPlatforms($page, $limit)
+    public function  fetchPaymentPlatforms($partnerID, $page, $limit)
     {
 
         $this->view('exec/payment_platforms', ['partner_id' => $partnerID, 'flag' => 'fetchpaymentplatforms']);
@@ -1025,6 +1025,15 @@ class adminController extends Controller
         $this->view->render();
     }
 
+    //changeruserpassword
+
+    public function changerAdminpassword($email, $repeatPassword)
+    {
+
+        $this->view('exec/admins_exec', ['email' => $email, 'repeatPassword' => $repeatPassword, 'flag' => 'changeadminpassword']);
+        $this->view->render();
+    }
+
     //fetchuserpaymentmethod
 
     public function fetchuserpaymentmethod($page, $pageLimit)
@@ -1051,20 +1060,25 @@ class adminController extends Controller
     }
 
 
-    //changeruserpassword
-
-    public function changerAdminpassword($email, $repeatPassword){
-
-      $this->view('exec/admins_exec', ['email' => $email, 'repeatPassword' => $repeatPassword, 'flag' => 'changeadminpassword']);
+    //search name inputs
+    public function searchusernames($username)
+    {
+        $this->view('exec/userbank_manage', ['username' => $username, 'flag' => 'searchusername']);
         $this->view->render();
     }
 
-   public function filterpaymentdata($username){
-  
-  
-    $this->view('exec/userbank_manage', ['username' => $username,  'flag' => 'filteruserpayments']);
-    $this->view->render();
-}
+    //filter data
 
+    public function filterpaymentdata($username, $uid, $pageNumber, $limit)
+    {
 
+        $this->view('exec/userbank_manage', [
+            'username' => $username,
+            'uid' => $uid,
+            'flag' => 'filteruserpayments',
+            'page' => $pageNumber,
+            'limit' => $limit,
+        ]);
+        $this->view->render();
+    }
 }

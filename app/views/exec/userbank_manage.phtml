@@ -3,7 +3,6 @@
 declare(strict_types=1);
 // header('Content-Type: application/json');
 
-
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 
 if ($flag == "fetchbankcard") {
@@ -15,11 +14,10 @@ if ($flag == "fetchbankcard") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
 
-    $result =  UserBankManageModel::FetchBankcardlistData(["uid" => $uid, "bank_type" => $bank_type, "card_number" => $card_number, "status" => $status],$page, $limit);
-       
+    $result =  UserBankManageModel::FetchBankcardlistData(["uid" => $uid, "bank_type" => $bank_type, "card_number" => $card_number, "status" => $status], $page, $limit);
+
     echo json_encode($result);
-    
-}else if($flag === "search-bank-name"){
+} else if ($flag === "search-bank-name") {
     $bank_type = isset($this->viewData['bank_type']) ? $this->viewData['bank_type'] : "";
     if (empty($bank_type)) return ["status" => "success", "data" => []];
     $result =  UserBankManageModel::fetchBankTypes($bank_type);
@@ -45,9 +43,57 @@ if ($flag == "inactivepayment") {
     $result = UserBankManageModel::DeleteUserPaymentInactiveByUid($uid, $bank_id);
     echo json_encode($result);
 }
-
+// filter data
 if ($flag == "filteruserpayments") {
-  
- $userrname = isset($this->viewData['username']) ? $this->viewData['username'] : "";
-    echo json_encode($result);
+    $username = isset($this->viewData['username']) ? trim($this->viewData['username']) : '';
+    $uid = isset($this->viewData['uid']) ? trim($this->viewData['uid']) : '';
+
+    $page = isset($this->viewData['page']) ? (int)$this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int)$this->viewData['limit'] : 20;
+
+    // Resolve UID and Username
+    $userCheck = (new UserBankManageModel())->getUserIdByUsername($username);
+    if (!empty($userCheck)) {
+        $uid = $userCheck[0]['uid'];
+        $username = $userCheck[0]['username'];
+    }
+
+    // Fetch payment data
+    $result = (new UserBankManageModel())->filterpaymentdata($uid, $page, $limit);
+    $data = isset($result['data']) && is_array($result['data']) ? $result['data'] : [];
+
+    $response = [
+        'status' => true,
+        'username' => $username,
+        'uid' => $uid,
+        'data' => $data,
+        'totalPages' => ceil(($result['total'] ?? 0) / $limit),
+    ];
+
+    echo json_encode($response);
+}
+
+//search users
+if ($flag == "searchusername") {
+    $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
+    $result = (new UserBankManageModel())->Searchusername($username);
+
+    $results = [];
+    foreach ($result as $value) {
+        // Add each item as an associative array with 'uid', 'username', and 'nickname'
+        $data = [
+            'uid' => $value['uid'], // 'uid' is the key
+            'username' => $value['username'], // 'username' value
+            'email' => $value['email'],
+            'contact' => $value['contact'], // 'nickname' value
+            'regtype' => $value['reg_type'], // 'nickname' value
+        ];
+        $results[] = $data; // Append the formatted result to the $results array
+    }
+
+    if ($result) {
+        echo json_encode($results);
+    } else {
+        echo json_encode([['username' => '', 'empty' => true]]);
+    }
 }

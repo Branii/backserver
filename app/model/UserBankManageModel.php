@@ -143,4 +143,127 @@ class UserBankManageModel extends MEDOOHelper
         $updateParams = ['bank_ids' => json_encode($bank_ids), 'uid' => $uid];
         return parent::query($updateSql, $updateParams); // Return the result (affected rows)
     }
+
+    //search usernames
+
+   
+
+    public static function Searchusername(string $username){
+    $query = trim($username); // Clean input
+    $data = parent::query(
+        "SELECT uid, username, email, contact, reg_type
+         FROM users_test
+         WHERE 
+            (LOWER(username) LIKE LOWER(:search) 
+            OR LOWER(contact) LIKE LOWER(:search) 
+            OR LOWER(email) LIKE LOWER(:search))
+         ORDER BY 
+            CASE
+                WHEN LOWER(username) = LOWER(:exactMatch) THEN 1
+                WHEN LOWER(contact) = LOWER(:exactMatch) THEN 2
+                WHEN LOWER(email) = LOWER(:exactMatch) THEN 3
+                WHEN LOWER(username) LIKE LOWER(:startsWith) THEN 4
+                WHEN LOWER(contact) LIKE LOWER(:startsWith) THEN 5
+                WHEN LOWER(email) LIKE LOWER(:startsWith) THEN 6
+                ELSE 7
+            END,
+            username ASC
+         LIMIT 50",
+        [
+            'search' => "%$query%",
+            'startsWith' => "$query%",
+            'exactMatch' => $query
+        ]
+    );
+
+    return $data;
+}
+
+
+
+    //GET USERNAME
+    public static function getUserIdByUsername(string $key)
+    {
+        if (empty($key)) return [];
+        $db = parent::openLink();
+        return parent::query(
+            "SELECT uid, username FROM users_test WHERE 
+           uid = :key OR email = :key OR username = :key OR contact = :key OR nickname = :key",
+            ['key' => $key]
+        );
+    }
+
+
+
+
+    //filter search 
+    public static function FilterpaymentDataSubQuery($uid)
+    {
+        $filterConditions = [];
+
+        if (!empty($uid)) {
+            $filterConditions[] = "u.uid = '$uid'";
+        }
+
+        $subQuery = implode(' AND ', $filterConditions);
+        $subQuery .= " ORDER BY u.uid DESC"; // Fixed space before ORDER
+        return $subQuery;
+    }
+
+
+
+    //filter data in table 
+    public static function filterpaymentdata($uid, $page, $limit)
+    {
+        try {
+            $startpoint = (int)(($page - 1) * $limit);
+            $limit = (int)$limit;
+
+            $sql = "
+            SELECT 
+                u.uid,
+                u.username,
+                upm.bkid,
+                (
+                    SELECT COUNT(b.bankid)
+                    FROM banks b
+                    WHERE FIND_IN_SET(b.bankid, 
+                        REPLACE(REPLACE(REPLACE(REPLACE(upm.bank_ids, '[', ''), ']', ''), '\"', ''), '\"', '')
+                    )
+                ) AS bank_name_count,
+                (
+                    SELECT COUNT(b.bank_type)
+                    FROM banks b
+                    WHERE FIND_IN_SET(b.bankid, 
+                        REPLACE(REPLACE(REPLACE(REPLACE(upm.bank_ids, '[', ''), ']', ''), '\"', ''), '\"', '')
+                    )
+                ) AS bank_type_count
+            FROM users_test u
+            INNER JOIN user_payment_methods upm ON u.uid = upm.uid
+            WHERE u.uid = :uid
+            GROUP BY u.uid, upm.bkid
+            LIMIT {$startpoint}, {$limit}
+        ";
+
+            $params = [
+                'uid' => $uid
+            ];
+
+            $data = parent::query($sql, $params);
+
+            // Count query
+            $countSql = "
+            SELECT COUNT(DISTINCT upm.bkid) AS total
+            FROM users_test u
+            INNER JOIN user_payment_methods upm ON u.uid = upm.uid
+            WHERE u.uid = :uid
+        ";
+            $totalResult = parent::query($countSql, ['uid' => $uid]);
+            $totalRecords = $totalResult[0]['total'] ?? 0;
+
+            return ['data' => $data, 'total' => $totalRecords];
+        } catch (Exception $e) {
+            return ["status" => false, "message" => $e->getMessage()];
+        }
+    }
 }

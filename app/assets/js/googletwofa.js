@@ -22,51 +22,56 @@ $(function () {
   //updatepassword
 
   $(document).on("submit", "#passwordChangeForm", function (e) {
-    e.preventDefault(); // Prevent default form submission
-
+    e.preventDefault();
     const email = $("#adminEmail").val().trim();
     const currentPassword = $("#currentPassword").val().trim();
     const repeatPassword = $("#repeatPassword").val().trim();
-
-    // Basic input validation
-    if (!email || !currentPassword || !repeatPassword) {
-      showToast("Error!", "All fields are required!", "error");
-      return;
-    }
-
-    // Validation: Check if passwords match
-    if (currentPassword !== repeatPassword) {
-      showToast("Error!", "Passwords do not match!", "error");
-      return;
-    }
-
-    // Hide modal before sending AJAX request
-    $("#authopassword").modal("hide");
-
-    // Send POST request
-    $.ajax({
-      type: "POST",
-      url: `../admin/changerAdminpassword/${email}/${repeatPassword}`,
-      success: function (response) {
-        const result = JSON.parse(response);
-        // console.log(response)
-        // return
-        if (result.success) {
-          showToast(
-            "Success!",
-            result.message || "Password changed successfully!",
-            "success"
-          );
-          $("#passwordChangeForm")[0].reset();
-        } else {
-          showToast(
-            "Error!",
-            result.message || "Failed to change password!",
-            "error"
-          );
-        }
+    const $spinner = $("#spinner");
+    const $submitBtn = $("#submitBtn");
+    $spinner.removeClass("d-none");
+    $submitBtn.prop("disabled", true);
+    setTimeout(() => {
+      if (!email || !currentPassword || !repeatPassword) {
+        showToast("Error!", "All fields are required!", "error");
+        resetButton();
+        return;
       }
-    });
+      if (currentPassword !== repeatPassword) {
+        showToast("Error!", "Passwords do not match!", "error");
+        resetButton();
+        return;
+      }
+      $("#authopassword").modal("hide");
+
+      $.ajax({
+        type: "POST",
+        url: `../admin/changerAdminpassword/${email}/${repeatPassword}`,
+        success: function (response) {
+          setTimeout(() => {
+            const result = JSON.parse(response);
+            if (result.success) {
+              showToast("Success!",result.message || "Password changed successfully!", "success"
+              );
+              $("#passwordChangeForm")[0].reset();
+            } else {
+              showToast("Error!",  result.message || "Failed to change password!","error" );
+            }
+            resetButton();
+          }, 2000);
+        },
+        error: function () {
+          setTimeout(() => {
+            showToast("Error!", "Something went wrong!", "error");
+            resetButton();
+          }, 2000);
+        }
+      });
+    }, 2000);
+
+    function resetButton() {
+      $spinner.addClass("d-none");
+      $submitBtn.prop("disabled", false);
+    }
   });
 
   $(document).on("click", ".settingsbtn", function () {
@@ -138,26 +143,17 @@ $(function () {
       .join("");
 
     if (!otpcode) {
-      $("#otp-status").html(
-        "<p style='color:red;'>Please enter the OTP code.</p>"
-      );
+      $("#otp-status").html( "<p style='color:red;'>Please enter the OTP code.</p>");
       return;
     }
     $(".spinner-border-sm").show();
-
     $.post(`../admin/verifyotp/${otpcode}`, function (response) {
       const result = JSON.parse(response);
       if (result) {
-        showToast(
-          "2FA Verified",
-          "Your two-factor authentication has been successfully verified.",
-          "success"
-        );
+        showToast( "2FA Verified", "Your two-factor authentication has been successfully verified.", "success");
         $("#authot").modal("hide");
       } else {
-        $("#otp-status").html(
-          `<p style='color:red;'>${result.message || "Invalid OTP code."}</p>`
-        );
+        $("#otp-status").html( `<p style='color:red;'>${result.message || "Invalid OTP code."}</p>` );
       }
     });
   });
@@ -171,7 +167,6 @@ $(function () {
       })
       .get()
       .join("");
-
     if (!optcode) {
       $(".otpstatus").show();
       $(".otpstatus").html(
@@ -182,8 +177,7 @@ $(function () {
     $(".bx-loader-circle").show();
     $.post(`../admin/verifyloginotp/${optcode}`, function (response) {
       const result = JSON.parse(response);
-      // $spinner.addClass('d-none');
-      // $btn.prop('disabled', false); // Re-enable button
+
       if (result.status === "success") {
         window.location.href = result.url;
       } else {

@@ -260,6 +260,22 @@
         /* Ensure it doesn't interfere with content */
         z-index: 10;
     }
+
+    .queryholderuserpayment {
+        background-color: white;
+        border: 1px solid #ccc;
+        color: #333;
+        z-index: 1000;
+        position: absolute;
+        width: 65%;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .queryholderuserpayment {
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -269,13 +285,14 @@
 
     <div class="px-4 py-3 border-bottom pagerlist1">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 120%;">
-                <input type="hidden" id="user_uid" value="" />
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 150%;">
 
-                <input id="usernames" type="hidden" value="" />
+
+                <input type="hidden" class="userIdtrans" />
                 <div style="width: 65%;">
                     <input name="transuserpayment" class="form-control bring-forward" id="transuserpayment" data-user-id=""
-                        placeholder="<?= $translator['Search usernames']; ?>" autocomplete="off" style="width: 97%;" />
+                        placeholder="<?= $translator['Search usernames']; ?>" autocomplete="off"  >
+
                     <select class="form-control queryholderuserpayment" size="5" style="display: none;" id="userpaymentAccountDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>
@@ -321,7 +338,7 @@
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle bl-search   Searchuserpaymentrans" value="" aria-label="Searchuserpayment"
+                <button type="button" class="btn bg-white-subtle  Searchuserpaymentrans" value="" aria-label="Searchuserpayment"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Searchuserpayment">
                     <i class="bx loaderlist bx-check-double" style="font-size: 20px;"></i>
                 </button>
