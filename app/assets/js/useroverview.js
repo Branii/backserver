@@ -79,7 +79,7 @@ $(function () {
             }
     
             const data = await response.json();
-            console.log(data.stats);
+            // console.log(data.stats);
 
          // return
   
