@@ -436,7 +436,7 @@
             <div class="modal-body">
                 <div class="add-contact-box">
                     <div class="add-contact-content">
-                        <form id="add[CbontactModalTitle">
+                        <form id="addxCbontactModalTitle">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-3 contact-location">

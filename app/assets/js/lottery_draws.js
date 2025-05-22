@@ -15,7 +15,7 @@ $(function(){
 
   const drawTables = (data) => {
       let html = "";
-      console.log(data);
+
       const status = {'done' : 'Settled', 'waiting' : 'Settling'};
       data.forEach((item) => {
         let timezone = item.timezone.split(" ");
@@ -273,6 +273,22 @@ const transformInputLd = (str) => {
     return abbreviation.charAt(0).toUpperCase() + abbreviation.slice(1) + "500";
   }
 }
+
+  
+  function tableScrollDraws() {
+      const tableContainerDraws = document.querySelector(".ld-table-wrapperDraws");
+      const headerRowDraws = document.querySelector(".headrowDraws");
+
+      tableContainerDraws.addEventListener("scroll", function () {
+          if (tableContainerDraws.scrollTop > 0) {
+              headerRowDraws.classList.add("sticky-headerDraws");
+          } else {
+              headerRowDraws.classList.remove("sticky-headerDraws");
+          }
+      });
+  }
+
+  tableScrollDraws();
 
 })
 

@@ -163,20 +163,20 @@
     background-color: #aaa;
     /* Darker blue on hover */
   }
-  .left-element {
+  /* .left-element {
   position: relative;
   bottom:8px;
   height: 35px;
   background-color: #fff;
   margin-right: 5px;
-}
+} */
 
 .active > .page-link{
   background-color: orangered !important;
   border:none;
 }
 
-.tbl-header {
+.tbl-headerDraws {
   position: sticky;
   top: 0;
 }
@@ -192,10 +192,7 @@
   border-bottom: solid 1px rgb(110,129,146,0.1);
 }
 
-.arr {
-      color: #909aa9;
-      margin: 0px 1rem;
-    }
+
 </style>
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -266,7 +263,7 @@
   <div class="card-body p-4">
     <div class="table-responsive mb-4 border rounded-1 table-wrapper  ld-table-wrapperDraws" id="maskkk" style="height:530px;overflow-y:scroll;">
       <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
-        <thead class="text-dark fs-4 tbl-header">
+        <thead class="text-dark fs-4 tbl-headerDraws">
           <tr class="headrowDraws">
             <th>
               <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Type']; ?></h6>

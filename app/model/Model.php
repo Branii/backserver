@@ -43,23 +43,6 @@ class Model extends MEDOOHelper{
             session_regenerate_id(true);
             (new Controller)->addAdminLoggins($res['admin_id'], "Sign In", 'Signed Out', 'Signed In', $res['admin_id'], 'success');
            
-             $res['two_factor_method'] == 'googleauth';
-              if($res){
-                return [
-                'Oauth' => $res['two_factor_enabled'] == 'on' ? '../admin/Oauth' : 'Off',
-            ];
-              }
-              $_SESSION['isUserLoggedIn'] = $email;
-             $_SESSION['isUserLoggedInId'] = $res['admin_id'];
-            
-            return [
-                'type' => 'success',
-                'message'=> 'sign in successful',
-                'email' => $email,
-                'role' => $res['role'],
-                'Oauth' => $res['two_factor_enabled'] == 'on' ? '../admin/Oauth' : 'Off',
-                'url' => 'admin/home'
-            ];
         }else{
             return [
                 'type' => 'error',

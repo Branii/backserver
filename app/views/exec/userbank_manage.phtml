@@ -24,10 +24,10 @@ if ($flag == "fetchbankcard") {
     echo json_encode($result);
     return;
 }
+
 if ($flag == "userpaymentmethod") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-
     $result = UserBankManageModel::FetchuserpaymentData($page, $limit);
     echo json_encode($result);
 }

@@ -174,7 +174,7 @@ $(function () {
       const username = $("#linkinput").val();
       const linkstart = $(".linkstart").val();
       const linkenddate = $(".linkenddate").val();
-      console.log(username);
+    //   console.log(username);
       $(".loaderreferal").removeClass("bx-check-double").addClass("bx-loader bx-spin");
       // setTimeout(() => {
       filterUserlinks(username, linkstart, linkenddate, currentPage, pageLimit);
