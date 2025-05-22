@@ -167,9 +167,10 @@ $(function () {
   const updatePermissions = (url) => {
     $.post(url, function (result) {
       const data = JSON.parse(result);
-      console.log(data);
+      // console.log(data);
       graph = {}
       showToast("Success", data, "success");
+      $("#view-permissions").modal("hide")
     });
   };
 
@@ -420,6 +421,16 @@ $(function () {
   }
 
 
+$(document).on('change', '#checkAll', function () {
+  let isChecked = $(this).is(':checked');
+  // Set all checkboxes
+  $('.permissionholder .chk').each(function () {
+    $(this).prop('checked', isChecked).trigger('change'); // trigger change to update bigArr
+  });
+});
+
+
+
   function tableScroll() {
     const tableContainerAdmin = document.querySelector(".table-wrappereAdmin");
     const headerRowAdmin = document.querySelector(".headrow");
@@ -537,6 +548,7 @@ $(function () {
           <div class="accordion-header">
              <span class='maintext'>${sidebarMain[key].category}</span>
           </div>
+      
              <div class="accordion-contentt">
               <ul class="custom-list">`;
 
@@ -571,15 +583,20 @@ $(function () {
     applyCustomScrollbarsToTabs();
   });
 
-  $(document).on("click",".chk",function(){
-      if ($(this).is(":checked")) {
-        console.log($(this).val());
-        bigArr.push($(this).val())
-      }else{
-        const index = bigArr.indexOf($(this).val());  
-        bigArr.splice(index, 1); 
-      }
-  })
+ $(document).on("change", ".chk", function () {
+  const value = $(this).val();
+  if ($(this).is(":checked")) {
+    if (!bigArr.includes(value)) {
+      bigArr.push(value);
+    }
+  } else {
+    const index = bigArr.indexOf(value);
+    if (index > -1) {
+      bigArr.splice(index, 1);
+    }
+  }
+  });
+
 
   $(".updateperm").click(function(){
     graph = {}
@@ -600,7 +617,7 @@ $(function () {
    
     const userdata = JSON.parse($(this).attr("value"));
     adminId = JSON.parse(userdata.admin_id);
-    console.log(adminId);
+    // console.log(adminId);
     $(".logname").text(userdata.full_name)
     getAdminLogs(currentPage, pageLimit, adminId)
 

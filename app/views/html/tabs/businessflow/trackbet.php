@@ -87,6 +87,73 @@
         /* Ensure it doesn't interfere with content */
         z-index: 10;
     }
+     /* Custom Scrollbar for Webkit Browsers */
+    .table-wrappertrack::-webkit-scrollbar {
+        width: 5px;
+        /* Slimmer scrollbar width */
+        height: 5px;
+        /* Slimmer scrollbar height for horizontal scrolling */
+    }
+
+    .table-wrappertrack::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        /* Lighter background for track */
+        border-radius: 5px;
+    }
+
+    .table-wrappertrack::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        /* Blue color for thumb */
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .table-wrappertrack::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+        /* Darker blue on hover */
+    }
+
+    .table-trackertable{
+        overflow: hidden;
+        /* Hide the default scrollbar */
+        white-space: nowrap;
+        max-width: 100%;
+        /* Adjust based on your needs */
+        margin-bottom: 10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: rgb(38, 57, 77) 0px 20px 30px -10px;
+        /* Ensure it doesn't interfere with content */
+        z-index: 10;
+    }
+
+     /* Custom Scrollbar for Webkit Browsers */
+    .table-trackertable::-webkit-scrollbar {
+        width: 5px;
+        /* Slimmer scrollbar width */
+        height: 5px;
+        /* Slimmer scrollbar height for horizontal scrolling */
+    }
+
+    .table-trackertable::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        /* Lighter background for track */
+        border-radius: 5px;
+    }
+
+    .table-trackertable::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        /* Blue color for thumb */
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .table-trackertable::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+        /* Darker blue on hover */
+    }
 
     .queryholderlist {
         width: 19%;
@@ -140,31 +207,7 @@
 
     }
 
-    /* Custom Scrollbar for Webkit Browsers */
-    .table-wrappertrack::-webkit-scrollbar {
-        width: 5px;
-        /* Slimmer scrollbar width */
-        height: 5px;
-        /* Slimmer scrollbar height for horizontal scrolling */
-    }
-
-    .table-wrappertrack::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        /* Lighter background for track */
-        border-radius: 5px;
-    }
-
-    .table-wrappertrack::-webkit-scrollbar-thumb {
-        background-color: #ccc;
-        /* Blue color for thumb */
-        border-radius: 10px;
-        cursor: pointer;
-    }
-
-    .table-wrappertrack::-webkit-scrollbar-thumb:hover {
-        background-color: #aaa;
-        /* Darker blue on hover */
-    }
+   
 
     .scrollable-container {
         max-height: 600px;
@@ -217,7 +260,7 @@
     background-color: red;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   }
-  .trackerhead {
+  .tbl-trackerhead {
     position: sticky;
     top: 0;
   }
@@ -546,7 +589,7 @@
           </div>
         </div>
         <div class="scrollable-container">
-        <form>
+         <form>
           <div class="row">
             <div class="col-md-6">
               <table class="table table-bordered table-striped"> 
@@ -563,10 +606,11 @@
             </div>
 
           </div>
-        </form>
-      <hr>
-        <table class="table table-hover table-bordered text-nowrap mb-0 trackertable" id="track">
-					<thead class="trackerhead">
+          </form>
+           <hr>
+           <div class="table-responsive mb-4 border rounded-1 table-trackertable"  style="height:530px;overflow-y:scroll;">
+            <table class="table table-hover table-bordered text-nowrap mb-0 " id="track">
+					<thead class="tbl-trackerhead">
 						<tr class="trackerheasrow">
 							<!-- <th class="font-weight-normal">#</th> -->
 							<th class="font-weight-normal"><?=$translator['Draw Results']?></th>
@@ -588,7 +632,8 @@
 						<td colspan="">Total: <span class="totalBetAmountDisplay" style='margin-left:10px'></span></td>
 						<td colspan="2"></td>
 					</tr> -->
-				</table>
+			</table>
+           </div>
 
       </div>
       </div>

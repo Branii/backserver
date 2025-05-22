@@ -612,6 +612,12 @@
 
         <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
       </div>
+       <div class="d-flex justify-content-end mt-3">
+        <label class="d-flex align-items-center gap-2">
+          <input type="checkbox" id="checkAll">
+          Check/Uncheck All
+        </label>
+      </div>
       <p></p>
       <div class="permissionholder" style="overflow-y:scroll;max-height:500px;">
 
@@ -619,7 +625,7 @@
       </div>
       <div class="col-12">
         <div class="d-flex align-items-center justify-content-end mt-4 gap-6">
-          <button class="btn bg-danger-subtle text-danger updateperm">Update permissions</button>
+          <button class="btn bg-success-subtle text-danger updateperm">Update permissions</button>
         </div>
       </div>
     </div>
