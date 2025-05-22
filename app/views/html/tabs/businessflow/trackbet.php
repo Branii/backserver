@@ -609,7 +609,7 @@
           </form>
            <hr>
            <div class="table-responsive mb-4 border rounded-1 table-trackertable"  style="height:530px;overflow-y:scroll;">
-            <table class="table table-hover table-bordered text-nowrap mb-0 " id="track">
+             <table class="table table-hover table-bordered text-nowrap mb-0 " id="track">
 					<thead class="tbl-trackerhead">
 						<tr class="trackerheasrow">
 							<!-- <th class="font-weight-normal">#</th> -->
@@ -632,8 +632,8 @@
 						<td colspan="">Total: <span class="totalBetAmountDisplay" style='margin-left:10px'></span></td>
 						<td colspan="2"></td>
 					</tr> -->
-			</table>
-           </div>
+			  </table>
+            </div>
 
       </div>
       </div>
