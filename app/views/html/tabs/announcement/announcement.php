@@ -328,7 +328,7 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Message Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Timezone/Hrs']; ?></h6>
                         </th>
 
                         <th>
@@ -424,9 +424,9 @@
                     <div class="form-floating mb-3">
                         <select name="deposit" class="form-select form-control borders border-infos messagetype">
                         <option value="general"><?= $translator['General Announcement (All Users)']; ?></option>
-                        <option value="new_users">Newly Registered Users Only</option>
+                        <option value="new_users"><?= $translator['Newly Registered Users Only']; ?></option>
                         <option value="personal"><?= $translator['User-Specific Announcement']; ?></option>
-                        <option value="vipusers">VIP Users Only</option>
+                        <option value="vipusers"><?= $translator['VIP Users Only']; ?></option>
                         </select>
                         <label>
                             <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
@@ -450,8 +450,8 @@
 
                     <div class="input-group mb-3">
                     <span class="input-group-text" id="" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bxs-calendar' style="font-size:18px;"></i></span>
-                    <input type="date" class="form-control notistartdate" placeholder="Search ..." id="combinedatess" aria-describedby="basic-addon1" />
-                    <input type="date" class="form-control notienddates" placeholder="Search ..." id="combinedates" aria-describedby="basic-addon1" />
+                    <input type="date" class="form-control notistartdate" placeholder=" <?=$translator['Search']; ?>..." id="combinedatess" aria-describedby="basic-addon1" />
+                    <input type="date" class="form-control notienddates" placeholder="<?=$translator['Search']; ?>..." id="combinedates" aria-describedby="basic-addon1" />
                     </div>
 
                     <div class="form-floating mb-3">
@@ -462,7 +462,7 @@
                         </select>
                         <label>
                             <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
-                            <span class="border-start ps-3">Audience</span>
+                            <span class="border-start ps-3"><?=$translator['Audience']; ?></span>
                         </label>
                       </div>
 

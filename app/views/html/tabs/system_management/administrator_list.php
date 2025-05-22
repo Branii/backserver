@@ -235,7 +235,7 @@
 
         <div class="input-group mb-3">
           <span class="input-group-text" id="basic-addon1" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
-          <input type="text" class="form-control queryholder" placeholder="Search ..." aria-label="Username" aria-describedby="basic-addon1" />
+          <input type="text" class="form-control queryholder" placeholder="<?= $translator['Search']; ?>..." aria-label="Username" aria-describedby="basic-addon1" />
         </div>
 
 
@@ -519,7 +519,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content" style="padding:20px">
       <div class="d-flex justify-content-between">
-        <h4 class="card-title">Admin Profile</h4>
+        <h4 class="card-title"><?= $translator['Admin Profile']; ?></h4>
         <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
       </div>
       <p></p>
@@ -534,7 +534,7 @@
                   <div class="text-center">
                     <img src="" alt="modernize-img" id="adminprofile" class="img-fluid rounded-circle" width="120" height="120">
                     <div class="d-flex align-items-center justify-content-center my-4 gap-4">
-                      <h3 class="mb-0" id="pro_fullname">full_name</h3>
+                      <h3 class="mb-0" id="pro_fullname"><?= $translator['full_name']; ?></h3>
                     </div>
                   </div>
                 </div>
@@ -545,35 +545,35 @@
             <div class="col-12">
               <div class="card w-100 border position-relative overflow-hidden mb-0">
                 <div class="card-body p-4">
-                  <h4 class="card-title">Personal Details</h4>
-                  <p class="card-subtitle mb-4">To change your personal detail , edit and save from here</p>
+                  <h4 class="card-title"><?= $translator['Personal Details']; ?></h4>
+                  <p class="card-subtitle mb-4"><?= $translator['To change your personal detail , edit and save from here']; ?></p>
                   <form>
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <label for="exampleInputtext" class="form-label">User name</label>
+                          <label for="exampleInputtext" class="form-label"><?= $translator['User name']; ?></label>
                           <input type="text" class="form-control" id="adminusername" placeholder="---">
                         </div>
                         <div class="mb-3">
-                          <label for="exampleInputtext1" class=" form-label">Email address</label>
+                          <label for="exampleInputtext1" class=" form-label"><?= $translator['Email address']; ?></label>
                           <input type="email" class="form-control" id="adminemail" placeholder="---">
                         </div>
                         <div class="mb-3">
-                          <label for="exampleInputtext1" class="form-label">Mobile contact</label>
+                          <label for="exampleInputtext1" class="form-label"><?= $translator['Mobile contact']; ?></label>
                           <input type="email" class="form-control" id="admincontact" placeholder="---">
                         </div>
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <label for="exampleInputtext2" class="form-label">Recovery email</label>
+                          <label for="exampleInputtext2" class="form-label"><?= $translator['Recovery email']; ?></label>
                           <input type="text" class="form-control" id="adminrecovery" placeholder="---">
                         </div>
                         <div class="mb-3">
-                          <label for="exampleInputtext2" class="form-label">Account status</label>
+                          <label for="exampleInputtext2" class="form-label"><?= $translator['Account status']; ?></label>
                           <input type="text" class="form-control" id="adminstatus" placeholder="---">
                         </div>
                         <div class="mb-3">
-                          <label for="exampleInputtext3" class="form-label">Activity role</label>
+                          <label for="exampleInputtext3" class="form-label"><?= $translator['Activity role']; ?></label>
                           <input type="text" class="form-control" id="adminrole" placeholder="---">
                         </div>
                       </div>
@@ -619,7 +619,7 @@
       </div>
       <div class="col-12">
         <div class="d-flex align-items-center justify-content-end mt-4 gap-6">
-          <button class="btn bg-danger-subtle text-danger updateperm">Update permissions</button>
+          <button class="btn bg-danger-subtle text-danger updateperm"><?= $translator['Update permissions']; ?></button>
         </div>
       </div>
     </div>
@@ -645,7 +645,7 @@
 
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
-              <input type="text" class="form-control queryholder" placeholder="Search ..." aria-label="Username" aria-describedby="basic-addon1" />
+              <input type="text" class="form-control queryholder" placeholder="<?= $translator['Search']; ?>..." aria-label="Username" aria-describedby="basic-addon1" />
             </div>
 
             <div class="input-group mb-3">
@@ -692,28 +692,28 @@
                         <h6 class="fs-4 fw-semibold mb-0">Id</h6>
                       </th> -->
               <th>
-                <h6 class="fs-4 fw-semibold mb-0">Action</h6>
+                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Action']; ?></h6>
               </th>
               <th>
-                <h6 class="fs-4 fw-semibold mb-0">Date</h6>
+                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Date']; ?></h6>
               </th>
               <th>
-                <h6 class="fs-4 fw-semibold mb-0">Time</h6>
+                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time']; ?></h6>
               </th>
               <th>
-                <h6 class="fs-4 fw-semibold mb-0">Ip Address</h6>
+                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Ip Address']; ?></h6>
               </th>
               <th>
-                <h6 class="fs-4 fw-semibold mb-0">Affected</h6>
+                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Affected']; ?></h6>
               </th>
               <th>
-                <h6 class="fs-4 fw-semibold mb-0">Old Value</h6>
+                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Old Value']; ?></h6>
               </th>
               <th>
-                <h6 class="fs-4 fw-semibold mb-0">New Value</h6>
+                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['New Value']; ?></h6>
               </th>
               <th>
-                <h6 class="fs-4 fw-semibold mb-0">Status</h6>
+                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
               </th>
             </tr>
           </thead>

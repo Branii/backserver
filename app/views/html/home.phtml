@@ -447,7 +447,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="modal-body">
             <div class="text-center mt-2 mb-4">
               <div class="d-flex justify-content-between">
-                <div>Account Settings</div>
+                <div><?= $translator['Account Settings']; ?></div>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
               </div>
             </div>
@@ -455,29 +455,29 @@ $fullname = (new Controller)->getUsername($adminEmail);
 
           <div class="card border shadow-none">
             <div class="card-body p-4">
-              <h4 class="card-title mb-3">Two-factor Authentication</h4>
+              <h4 class="card-title mb-3"><?= $translator['Two-factor Authentication']; ?></h4>
 
               <div class="d-flex align-items-center justify-content-between pb-4" id="enable2fa">
                 <p class="card-subtitle mb-0">
-                  Add an extra layer of security to your account by enabling two-factor authentication (2FA).
+                  <?= $translator['Add an extra layer of security to your account by enabling two-factor authentication (2FA).']; ?>
                 </p>
-                <button class="btn btn-primary" type="button">Enable</button>
+                <button class="btn btn-primary" type="button"><?= $translator['Enable']; ?></button>
               </div>
 
               <div class="d-flex align-items-center justify-content-between py-3 border-top">
                 <div>
-                  <h5 class="fs-5 fw-semibold mb-1">Authentication App</h5>
-                  <p class="mb-0 text-muted">Use an app like Google Authenticator or Authy to generate secure codes.</p>
+                  <h5 class="fs-5 fw-semibold mb-1"><?= $translator['Authentication App']; ?></h5>
+                  <p class="mb-0 text-muted"><?= $translator['Use an app like Google Authenticator or Authy to generate secure codes.']; ?></p>
                 </div>
-                <button class="btn bg-primary-subtle text-primary setupauth" value="<?php echo $adminEmail ?>" type="button">Set up</button>
+                <button class="btn bg-primary-subtle text-primary setupauth" value="<?php echo $adminEmail ?>" type="button"><?= $translator['Set up']; ?></button>
               </div>
 
               <div class="d-flex align-items-center justify-content-between py-3 border-top">
                 <div>
-                  <h5 class="fs-5 fw-semibold mb-1">Change Password</h5>
-                  <p class="mb-0 text-muted">You can reset your default password</p>
+                  <h5 class="fs-5 fw-semibold mb-1"><?= $translator['Change Password']; ?></h5>
+                  <p class="mb-0 text-muted"><?= $translator['You can reset your default password']; ?></p>
                 </div>
-                <button class="btn bg-primary-subtle text-primary changepasswordbtn" type="button">Change</button>
+                <button class="btn bg-primary-subtle text-primary changepasswordbtn" type="button"><?= $translator['Change']; ?></button>
               </div>
 
               <!-- <div class="d-flex align-items-center justify-content-between py-3 border-top"> -->
@@ -503,7 +503,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="modal-body">
             <div class="text-center mt-2 mb-4">
               <div class="d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Password Settings</h5>
+                <h5 class="mb-0"><?= $translator['Password Settings']; ?></h5>
                 <i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
               </div>
             </div>
@@ -514,20 +514,20 @@ $fullname = (new Controller)->getUsername($adminEmail);
 
 
               <div class="mb-3">
-                <label for="currentPassword" class="form-label fw-semibold">Current Password</label>
-                <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password" required>
+                <label for="currentPassword" class="form-label fw-semibold"><?= $translator['Current Password']; ?></label>
+                <input type="password" class="form-control" id="currentPassword" placeholder="<?= $translator['Enter current password']; ?>" required>
               </div>
 
               <div class="mb-3">
-                <label for="repeatPassword" class="form-label fw-semibold">Repeat Password</label>
-                <input type="password" class="form-control" id="repeatPassword" placeholder="Repeat new password" required>
+                <label for="repeatPassword" class="form-label fw-semibold"><?= $translator['Repeat Password']; ?></label>
+                <input type="password" class="form-control" id="repeatPassword" placeholder="<?= $translator['Repeat new password']; ?>" required>
               </div>
 
               <div class="text-end">
                 <!-- <button type="submit" class="btn btn-primary  changepassword">Submit</button> -->
                 <button type="submit" class="btn btn-primary changepassword d-flex align-items-center gap-2" id="submitBtn">
                   <span class="custom-spinner d-none" id="spinner"></span>
-                  <span>Submit</span>
+                  <span><?= $translator['Submit']; ?></span>
                 </button>
 
 
@@ -549,7 +549,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="modal-body">
             <div class="text-center mt-2 mb-4">
               <div class="d-flex justify-content-between">
-                <div>Scan QRCode</div>
+                <div><?= $translator['Scan QRCode']; ?></div>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
               </div>
             </div>
@@ -557,7 +557,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
 
           <div class="card border shadow-none">
             <div class="card-body p-4">
-              <h4 class="card-title mb-3">Two-factor Authentication</h4>
+              <h4 class="card-title mb-3"><?= $translator['Two-factor Authentication']; ?></h4>
               <div id="qr-container" style="position:relative; left:40%;">
 
               </div>

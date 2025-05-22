@@ -428,7 +428,7 @@
         <div class="modal-content">
             <div class="modal-header d-flex align-items-center">
                 <div>
-                    <h5>User Payment Method</h5>
+                    <h5><?= $translator['User Payment Method']; ?></h5>
                 </div>
                 <div><i class="bx bx-message-square-x tclose"
                         style="color: #868c87; font-size: 25px; cursor: pointer;"></i></div>
@@ -441,7 +441,7 @@
                                 <div class="col-md-12">
                                     <div class="mb-3 contact-location">
                                         <input type="text" id="c-b-bankcard" class="form-control"
-                                            placeholder="Update all User Payment Method" />
+                                            placeholder="Update all User Payment Method<?= $translator['Timezone/Hrs']; ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -467,7 +467,7 @@
             <div class="modal-body">
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between">
-                        <div>Bank Payment Method</div>
+                        <div><?= $translator['Bank Payment Method']; ?></div>
                         <div><i class="bx bx-message-square-x tclose"
                                 style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
                                 aria-label="Close"></i></div>
@@ -498,10 +498,10 @@
                         <thead>
                             <tr>
                                 <!-- <th class="font-weight-normal">#</th> -->
-                                <th class="font-weight-normal">Payment Method</th>
-                                <th class="font-weight-normal">Payment Type</th>
-                                <th class="font-weight-normal">Status</th>
-                                <th class="font-weight-normal">Action</th>
+                                <th class="font-weight-normal"><?= $translator['Payment Method']; ?></th>
+                                <th class="font-weight-normal"><?= $translator['Payment Type']; ?></th>
+                                <th class="font-weight-normal"><?= $translator['Status']; ?></th>
+                                <th class="font-weight-normal"><?= $translator['Action']; ?></th>
 
                             </tr>
                         </thead>

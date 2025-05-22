@@ -267,7 +267,7 @@
 
   <div class="px-4 py-3 border-bottom pagerlist">
     <span class="top-left-btn" style="width: 70%;">
-      <<<<<<< HEAD
+     
         <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 100%;">
         <div style="width: 35%;">
 
@@ -349,37 +349,37 @@
                 <thead class="text-dark fs-4 tbl-paymentheader">
                     <tr class="paymentheaderrow">
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Payment Name</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Payment Name']; ?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Payment Type</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Payment Type']; ?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Currency</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Currency']; ?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Minimum Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Minimum Amount']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Maximum Amount</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Maximum Amount']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Date Created</h6>
-                        </th>
-
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Date Created']; ?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Created By</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Timezone/Hrs']; ?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Status</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Created By']; ?></h6>
+                        </th>
+
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
                         </th>
 
                         <th>
@@ -1418,7 +1418,7 @@
 <div id="editpayplatform" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
-      <<<<<<< HEAD
+      <!-- <<<<<<< HEAD -->
         <div class="modal-header">
         <h5 class="modal-title"><?= $translator['Add Payment Platform']; ?></h5>
         <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
@@ -1441,7 +1441,7 @@
 
 
                 <div class="mb-3">
-                  <label for="pp-status-edit" class="form-label">Status (<span style="color: #a01616;">*</span>)</label>
+                  <label for="pp-status-edit" class="form-label"><?= $translator['Status']; ?>  (<span style="color: #a01616;">*</span>)</label>
                   <select id="pp-status-edit" class="form-select">
                     <option value="active"><?= $translator['Active']; ?></option>
                     <option value="hidden"><?= $translator['Hidden']; ?></option>
@@ -1458,18 +1458,18 @@
                 </div>
                 <div class="mb-3">
                   <label for="pp-fee-edit" class="form-label"><?= $translator['Fee']; ?> (%) (<span style="color: #a01616;">*</span>)</label>
-                  <input type="text" class="form-control" id="pp-fee-edit" placeholder="Fee (%)">
+                  <input type="text" class="form-control" id="pp-fee-edit" placeholder="<?= $translator['Fee']; ?> (%)">
                 </div>
                 <div class="mb-3">
                   <label for="pp-priority-edit" class="form-label"><?= $translator['Priority']; ?></label>
-                  <input type="text" class="form-control" id="pp-priority-edit" placeholder="Priority">
+                  <input type="text" class="form-control" id="pp-priority-edit" placeholder="<?= $translator['Priority']; ?>">
                 </div>
               </div>
               <div class="col-6">
 
                 <div class="mb-3">
                   <label for="pp-info-edit" class="form-label"><?= $translator['Info/Description']; ?></label>
-                  <textarea type="text" class="form-control" id="pp-info-edit" cols="15" rows="10" placeholder="Info/Description" style="height: 235px;"></textarea>
+                  <textarea type="text" class="form-control" id="pp-info-edit" cols="15" rows="10" placeholder="<?= $translator['Info/Description']; ?>" style="height: 235px;"></textarea>
                 </div>
                 <div class="mb-3">
                   <label for="pp-site-url-edit" class="form-label"><?= $translator['Site Url']; ?></label>
@@ -1477,18 +1477,18 @@
                 </div>
                 <div class="mb-3">
                   <label for="pp-admin-site-url-edit" class="form-label"><?= $translator['Admin Site Url']; ?></label>
-                  <input type="text" class="form-control" id="pp-admin-site-url-edit" placeholder="e.g www.enzerhub.com">
+                  <input type="text" class="form-control" id="pp-admin-site-url-edit" placeholder="<?= $translator['Site Url']; ?>e.g www.enzerhub.com">
                 </div>
               </div>
               <div class="col-6">
 
                 <div class="mb-3">
                   <label for="pp-min-amount-edit" class="form-label"><?= $translator['Min. Amount']; ?></label>
-                  <input type="text" class="form-control" id="pp-min-amount-edit" placeholder="Min. Amount">
+                  <input type="text" class="form-control" id="pp-min-amount-edit" placeholder="<?= $translator['Min. Amount']; ?>">
                 </div>
                 <div class="mb-3">
                   <label for="pp-max-amount-edit" class="form-label"><?= $translator['Max. Amount']; ?></label>
-                  <input type="text" class="form-control" id="pp-max-amount-edit" placeholder="Max. Amount">
+                  <input type="text" class="form-control" id="pp-max-amount-edit" placeholder="<?= $translator['Max. Amount']; ?>">
                 </div>
                 <div class="mb-3">
                   <label for="pp-countries-edit" class="form-label"><?= $translator['Countries']; ?></label>
@@ -1511,15 +1511,15 @@
           </form>
         </div>
 
-        =======
+
         <div class="modal-body">
           <!-- Modal Header -->
           <div class="text-center mt-2 mb-4">
             <div class="d-flex justify-content-between align-items-center">
-              <div>Edit PaymentPlatform</div>
+              <div><?= $translator['Edit PaymentPlatform']; ?></div>
               <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
-            >>>>>>> 04341e5d5094aca8f5be8e7c1109987248e7745a
+       
           </div>
 
           <!-- Form -->
@@ -1529,7 +1529,7 @@
 
             <div class="col-md-12 mb-3">
               <select name="currency" class="form-select typecurrency" id="typecurrency">
-                <option value="">-- Select Currency --</option>
+                <option value="">-- <?= $translator['Select Currency']; ?> --</option>
                 <option value="AED">AED</option>
                 <option value="AFN">AFN</option>
                 <option value="ALL">ALL</option>

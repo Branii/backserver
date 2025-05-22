@@ -263,55 +263,55 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Lottery</h5>
+                <h5 class="modal-title"><?= $translator['Edit Lottery']; ?></h5>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container">
                 <div class="card border">
                     <div class="card-body">
-                        <h4 class="card-title">Lottery Info</h4>
+                        <h4 class="card-title"><?= $translator['Lottery Info']; ?></h4>
                         <form id="accountDetailsForm">
                             <div class="row">
                                 <input type="hidden" value="" id="lb-id-holder">
                                 <input type="hidden" value="" id="lb-lottery-type">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="lb-dialog-mx-prize" class="form-label">Maximum Prize Amount Per Bet</label>
-                                        <input type="text" class="form-control" id="lb-dialog-mx-prize" placeholder="Maximum Prize Amount Per Bet">
+                                        <label for="lb-dialog-mx-prize" class="form-label"><?= $translator['Maximum Prize Amount Per Bet']; ?></label>
+                                        <input type="text" class="form-control" id="lb-dialog-mx-prize" placeholder="<?= $translator['Maximum Prize Amount Per Bet']; ?>">
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="lb-dialog-mx-win" class="form-label">Maximum Winnings Per Person Per Issue</label>
-                                        <input type="text" class="form-control" id="lb-dialog-mx-win" placeholder="Maximum Winnings Per Person Per Issue">
+                                        <label for="lb-dialog-mx-win" class="form-label"><?= $translator['Maximum Winnings Per Person Per Issue']; ?></label>
+                                        <input type="text" class="form-control" id="lb-dialog-mx-win" placeholder="<?= $translator['Maximum Winnings Per Person Per Issue']; ?>">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="lb-dialog-mx-amt" class="form-label">Maximum Bet Amount Per Issue</label>
-                                        <input type="text" class="form-control" id="lb-dialog-mx-amt" placeholder="Maximum Bet Amount Per Issue" >
+                                        <label for="lb-dialog-mx-amt" class="form-label"><?= $translator['Maximum Bet Amount Per Issue']; ?></label>
+                                        <input type="text" class="form-control" id="lb-dialog-mx-amt" placeholder="<?= $translator['Maximum Bet Amount Per Issue']; ?>" >
                                     </div>
                                     <div class="mb-3">
-                                        <label for="lb-dialog-mn-amt" class="form-label">Minimum Bet Amount Per Issue</label>
-                                        <input type="text" class="form-control" id="lb-dialog-mn-amt" placeholder="Minimum Bet Amount Per Issue">
+                                        <label for="lb-dialog-mn-amt" class="form-label"><?= $translator['Minimum Bet Amount Per Issue']; ?></label>
+                                        <input type="text" class="form-control" id="lb-dialog-mn-amt" placeholder="<?= $translator['Minimum Bet Amount Per Issue']; ?>">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="lb-dialog-clsing" class="form-label">Lock Time for Closing Bets</label>
-                                        <input type="text" class="form-control" id="lb-dialog-clsing" placeholder="Lock Time for Closing Bets">
+                                        <label for="lb-dialog-clsing" class="form-label"><?= $translator['Lock Time for Closing Bets']; ?></label>
+                                        <input type="text" class="form-control" id="lb-dialog-clsing" placeholder="<?= $translator['Lock Time for Closing Bets']; ?>">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                 <div class="mb-3">
-                                        <label for="lb-dialog-sorting-weight" class="form-label">Sorting Weight</label>
-                                        <input type="text" class="form-control" id="lb-dialog-sorting-weight" placeholder="Sorting Weight">
+                                        <label for="lb-dialog-sorting-weight" class="form-label"><?= $translator['Lock Time for Closing Bets']; ?></label>
+                                        <input type="text" class="form-control" id="lb-dialog-sorting-weight" placeholder="<?= $translator['Lock Time for Closing Bets']; ?>">
                                     </div>
                                 </div>
 
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="lb-update-lottery">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="lb-update-lottery"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -327,7 +327,7 @@
             <div class="modal-body">
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="text-infos" style="color:  #2a3547;">Toggle Lottery</h5>
+                        <h5 class="text-infos" style="color:  #2a3547;"><?= $translator['Toggle Lottery']; ?></h5>
                         <i class="bx bx-message-square-x lb-tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
                 </div>
@@ -341,7 +341,7 @@
                     <div class="d-md-flex align-items-center">
                         <div class="mt-3 mt-md-0 ms-auto">
                             <button type="button" class="btn hstack gap-6 update-lottery-state-btn" style="border: solid 1px #ccc;color: #2a3547!important;">
-                                Confirm</button>
+                               <?= $translator['Confirm']; ?> </button>
                         </div>
                     </div>
                 </form>

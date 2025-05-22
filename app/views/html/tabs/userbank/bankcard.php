@@ -356,7 +356,7 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Binding Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Timezone/Hrs']; ?></h6>
                         </th>
 
                         <th>
