@@ -1383,6 +1383,8 @@ return [
 '例如 www.enzerhub.com' => '例如 www.enzerhub.com',
 'Edit PaymentPlatform'=>'编辑支付平台',
 'Select Currency' => '选择货币',
+'Inactive' => '未激活',
+
 
 
 

@@ -1345,6 +1345,8 @@ return [
       'e.g www.enzerhub.com' => 'e.g www.enzerhub.com',
          'Edit PaymentPlatform' => 'Edit PaymentPlatform',
             'Select Currency' => 'Select Currency',
+            ' Inactive' => ' Inactive',
+           
 
 
 

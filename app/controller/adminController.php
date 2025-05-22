@@ -1025,9 +1025,37 @@ class adminController extends Controller
         $this->view('exec/googletwofa',['flagtype'=>$flagtype,'otpcodes'=>$otpcodes,'flag' =>'verifyloginotp']);
         $this->view->render();
     }
+    
+        
+    public function verifycodebyemail ($email){
+        $this->view('exec/googletwofa',['email'=>$email,'flag' =>'verifycodebyemail']);
+        $this->view->render();
+    }
+      public function verifycodebycontact($contact){
+         $this->view('exec/googletwofa',['contact'=>$contact,'flag' =>'verifycodebycontact']);
+        $this->view->render();
+    }
 
-    //fetchuserpaymentmethod
+    public function verifyoption($otpcodes,$flagtype){
+         $this->view('exec/googletwofa',['flags'=>$flagtype,'otpcodes'=>$otpcodes,'flag' =>'verifyoption']);
+        $this->view->render();
+    }
 
+    public function activateotpmobile($email){
+        $this->view('exec/googletwofa',['email'=>$email,'flag' => 'twofaenables']);
+        $this->view->render();
+    }
+    public function getcodeverify(){
+        $this->view('exec/googletwofa',['flag' => 'getcodeverify']);
+        $this->view->render();
+    }
+    
+    public function resetauth(){
+        $this->view('exec/googletwofa',['flag' => 'resetauth']);
+        $this->view->render();
+    }
+
+    //
     public function fetchuserpaymentmethod($page, $pageLimit)
     {
         $this->view('exec/userbank_manage', ['page' => $page, 'pageLimit' => $pageLimit, 'flag' => 'userpaymentmethod']);
@@ -1048,20 +1076,25 @@ class adminController extends Controller
     }
 
 
-    //changeruserpassword
-
-    public function changerAdminpassword($email, $repeatPassword){
-
-      $this->view('exec/admins_exec', ['email' => $email, 'repeatPassword' => $repeatPassword, 'flag' => 'changeadminpassword']);
+    //search name inputs
+    public function searchusernames($username)
+    {
+        $this->view('exec/userbank_manage', ['username' => $username, 'flag' => 'searchusername']);
         $this->view->render();
     }
 
-   public function filterpaymentdata($username){
-  
-  
-    $this->view('exec/userbank_manage', ['username' => $username,  'flag' => 'filteruserpayments']);
-    $this->view->render();
-}
+    //filter data
 
+    public function filterpaymentdata($username, $uid, $pageNumber, $limit)
+    {
 
+        $this->view('exec/userbank_manage', [
+            'username' => $username,
+            'uid' => $uid,
+            'flag' => 'filteruserpayments',
+            'page' => $pageNumber,
+            'limit' => $limit,
+        ]);
+        $this->view->render();
+    }
 }

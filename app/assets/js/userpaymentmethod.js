@@ -62,6 +62,8 @@ async function fetchuserpayment(page, pageLimit) {
 fetchuserpayment(currentPage, pageLimit);
 
 
+
+const inactiveText = document.getElementById("inactive-text")?.dataset.translation || "Inactive";
   $(document).on("click", ".tuserpayment", function () {
     const uid = $(this).data("uid");
     $("#Userpaymentmodal").modal("show");
@@ -83,8 +85,12 @@ fetchuserpayment(currentPage, pageLimit);
                             class="btn btn-success btn-sm deleteMethod" 
                             data-uid="${item.uid}" 
                             data-bankid="${item.bankid}">
-                            Inactive
+                           ${inactiveText}
+                           
                         </button>
+
+                       
+                      
                     </td>
                 </tr>
             `;

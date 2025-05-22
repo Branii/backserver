@@ -346,6 +346,9 @@
         </span>
     </div>
 
+<!-- language tranlate relates with js file start -->
+    <span id="inactive-text" data-translation="<?= $translator['Inactive']; ?>" style="display:none;"></span>
+<!-- language tranlate relates with js file end   -->
     <div class="card-body p-4">
         <div class="table-responsive mb-4 border rounded-1 table-wrapperuserpaymentcard" id="maskuserpayment"
             style="height: 530px; overflow-y: scroll;">

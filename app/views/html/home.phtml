@@ -791,6 +791,11 @@ $fullname = (new Controller)->getUsername($adminEmail);
     <script src="<?php echo BASE_URL; ?>assets/js/usernotification.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/useroverview.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/googletwofa.js"></script>
+    <script>
+  const langStrings = {
+    inactive: "<?= $translator['Inactive']; ?>"
+  };
+</script>
     <script src="<?php echo BASE_URL; ?>assets/js/userpaymentmethod.js"></script>
 
 
