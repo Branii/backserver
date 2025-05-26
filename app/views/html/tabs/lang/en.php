@@ -129,6 +129,7 @@ return [
     'Deleted' => 'Deleted',
     'Cancelled Bet' => 'Cancelled Bet',
     'Delete' => 'Delete',
+ 
     'Cancelled' => 'Cancelled',
     'Number of Wins' => 'Number of Wins',
     'Bet Selection' => 'Bet Selection',
@@ -140,10 +141,15 @@ return [
     'Fantan' => 'Fantan',
     'Trend' => 'Trend',
     'Board Games' => 'Board Games',
+      'BoardGames' => 'BoardGames',
     'Many Tables' => 'Many Tables',
     'Long Dragon' => 'Long Dragon',
+        'Logdragon' => 'Logdragon',
+    
     'Road Bets' => 'Road Bets',
     'Two Sides' => 'Two Sides',
+      'Twosides' => 'Twosides',
+  
 
     //track 
     'Track Records' => 'Track Records',
@@ -688,8 +694,10 @@ return [
     'Long Dragon' => 'Long Dragon',
     'Board Games' => 'Board Games',
     'Road Bet' => 'Road Bet',
+     'Roadbet' => 'RoadBet',
     'Fantan' => 'Fantan',
     'Many Tables' => 'Many Tables',
+       'Manytables' => 'Manytables',
     'Total Bets Control' => 'Total Bets Control',
     'Game Status' => 'Game Status',
 
@@ -1037,7 +1045,7 @@ return [
     'Login Password' => 'Login Password',
 
     'Account Security' => 'Account Security',
-    'Deactivate User ' => 'Deactivate User ',
+    'Deactivate User' => 'Deactivate User',
     'Partners' => 'Partners',
     'Partner' => 'Partner',
     'Partner Management' => 'Partner Management',
@@ -1057,6 +1065,7 @@ return [
     //payment platform
     'Platform Names' => 'Platform Names',
     'Currency' => 'Currency',
+    
     'Hidden' => 'Hidden',
     'Inactive' => 'Inactive',
     'Payment Type' => 'Payment Type',
@@ -1339,14 +1348,47 @@ return [
     'Newly Registered Users Only' => 'Newly Registered Users Only',
     'VIP Users Only' => 'VIP Users Only',
     'Audience' => 'Audience',
-     'Notification Time' => 'Notification Time',
+    'Notification Time' => 'Notification Time',
     'Minimum Amount' => 'Minimum Amount',
-   'Maximum Amount' => 'Maximum Amount',
-      'e.g www.enzerhub.com' => 'e.g www.enzerhub.com',
-         'Edit PaymentPlatform' => 'Edit PaymentPlatform',
-            'Select Currency' => 'Select Currency',
-            ' Inactive' => ' Inactive',
-           
+    'Maximum Amount' => 'Maximum Amount',
+    'e.g www.enzerhub.com' => 'e.g www.enzerhub.com',
+    'Edit PaymentPlatform' => 'Edit PaymentPlatform',
+    'Select Currency' => 'Select Currency',
+    'Inactive' => 'Inactive',
+    'Maximun Amount' => 'Maximun Amount',
+    'Select Status' => 'Select Status',
+    'Turn Off' => 'Turn Off',
+    'Turn On' => 'Turn On',
+    'Edit' => 'Edit',
+    'View' => 'View',
+    'Quota' => 'Quota',
+    'Subs' => 'Subs',
+    'Account Change' => 'Account Change',
+    'Lottery Name' => 'Lottery Name',
+    'White List' => 'White List',
+    'Delete User' => 'Delete User',
+    'View Profile'   => 'View Profile',
+    'Activity Logs'  => 'Activity Logs',
+    'Permissions'    => 'Permissions',
+     'Restore Backup' => 'Restore Backup',
+    'Email Backup'   => 'Email Backup',
+    'Delete Backup'  => 'Delete Backup',
+    'Select Game'  => 'Select Game',
+      'Partner Name'  => 'Partner Name',
+  'Payment method set to inactive successfully'  => 'Payment method set to inactive successfully',
+    'Failed to set inactive.'  => 'Failed to set inactive.',
+  
+      
+
+
+
+
+
+
+
+
+
+
 
 
 

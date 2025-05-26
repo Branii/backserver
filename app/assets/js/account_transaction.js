@@ -562,6 +562,11 @@ $(function () {
         }, 0);
     });
 
+    function getTranslation(key) {
+  const span = document.getElementById(`trans-${key.toLowerCase().replace(/\s+/g, '-')}`);
+  return span?.dataset.translation || key;
+}
+
     async function fetchPartnername() {
         try {
             const response = await fetch(`../admin/fetchPartnername/${partnerID}`); // Await the fetch call
@@ -572,7 +577,8 @@ $(function () {
             const data = await response.json(); // Parse JSON response
             //console.log(data)
            
-            let html = `<option value="">Partner Name</option>`;
+          let html = `<option value="">${getTranslation('Partner Name')}</option>`;
+
             data.forEach((partner) => {
                 html += `<option value="${partner.partner_id}">${partner.name}</option>`;
             });

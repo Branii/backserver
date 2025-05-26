@@ -118,6 +118,21 @@ $(function () {
         });
     };
 
+
+function getTranslation(id, fallback) {
+    return document.getElementById(id)?.dataset.translation || fallback;
+}
+
+const viewText = document.getElementById("view-text")?.dataset.translation || "View";
+     
+const quotaText = getTranslation("quota-text", "Quota");
+const subsText = getTranslation("subs-text", "Subs");
+const accountChangeText = getTranslation("account-change-text", "Account Change");
+const lotteryNameText = getTranslation("lottery-name-text", "Lottery Name");
+const whiteListText = getTranslation("whitelist-text", "White List");
+const deleteUserText = getTranslation("delete-user-text", "Delete User");
+const deactivateUserText = getTranslation("deactivate-user-text", "Deactivate User");
+
     function formatMoney(money) {
         let moneyStr = String(money);
         if (moneyStr.includes(".")) {
@@ -151,6 +166,7 @@ $(function () {
             3: "bank card",
             4: "crypto", // Red
         };
+
 
         data.forEach((item) => {
             //  // console.log(item)
@@ -213,7 +229,7 @@ $(function () {
                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${
                                         item.uid
                                     }">
-                                      <i class="bx bx-show fs-5"></i>View
+                                      <i class="bx bx-show fs-5"></i>${viewText}
                                     </a>
                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
                                       <i class="bx bx-show fs-5" ></i>Quota
@@ -225,7 +241,7 @@ $(function () {
                                       <i class="bx bx-money fs-5"></i>Account Change
                                     </a>
                                      <a class="dropdown-item usr-deactivate-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                      <i class="bx bx-trash fs-5"></i>Deactivate User
+                                      <i class="bx bx-trash fs-5"></i>${viewText}
                                     </a> <a class="dropdown-item user-lottery-name cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                       <i class="bx bx-trash fs-5"></i>Lottery Name
                                     </a>
@@ -978,27 +994,27 @@ $(function () {
                                 <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${
                                     item.uid
                                 }">
-                                  <i class="bx bx-show fs-5"></i>View
+                                  <i class="bx bx-show fs-5"></i>${viewText}
                                 </a>
                                 <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
-                                  <i class='bx bx-list-minus'></i>Quota
+                                  <i class='bx bx-list-minus'></i>${quotaText}
                                 </a>
                                  <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewsub" data-agent-id="${item.uid}" href="javascript:void(0);"data-uid="${item.subordinates}"> 
-                                  <i class='bx bx-git-merge'></i>Subs
+                                  <i class='bx bx-git-merge'></i>${subsText}
                                 </a>
                                 <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1 acountbtn" href="javascript:void(0);"data-uid="${item.uid}">
-                                  <i class="bx bx-money fs-5"></i>Account Change
+                                  <i class="bx bx-money fs-5"></i>${accountChangeText}
                                 </a>
                                  <a class="dropdown-item usr-deactivate-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class='bx bx-user-x' ></i>Deactivate User
+                                  <i class='bx bx-user-x' ></i>${deactivateUserText}
                                 </a> <a class="dropdown-item user-lottery-name cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class='bx bx-filter' ></i>Lottery Name
+                                  <i class='bx bx-filter' ></i>${lotteryNameText}
                                 </a>
                                  <a class="dropdown-item usr-white-list cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class="bx bx-trash fs-5"></i>White List
+                                  <i class="bx bx-trash fs-5"></i>${whiteListText}
                                 </a>
                                  <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class='bx bx-user-minus' ></i>Delete User
+                                  <i class='bx bx-user-minus' ></i>${deleteUserText}
                                 </a>
                               </div>
                             </div>

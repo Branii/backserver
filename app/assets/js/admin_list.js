@@ -9,6 +9,17 @@ $(function () {
     });
   }
 
+
+  function getTranslation(id, fallback) {
+    return document.getElementById(id)?.dataset.translation || fallback;
+}
+
+const viewprofile_text = document.getElementById("viewprofile-text")?.dataset.translation || "View Profile";
+
+const activity_text = getTranslation("activity-text", "Activity Logs");
+const permission_text = getTranslation("permission-text", "Permissions");
+
+
   const AdminTable = (data) => {
     let html = "";
     const status = {
@@ -75,21 +86,21 @@ $(function () {
                               item
                             )}' class='admin_pro'>
                               <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view-profile">
-                                <i class='bx bx-show-alt'></i>View Profile
+                                <i class='bx bx-show-alt'></i>${viewprofile_text}
                               </a>
                             </li>
                             <li value='${JSON.stringify(
                               item
                             )}' class='admin_logs'>
                               <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#view-activity-logs">
-                                <i class='bx bx-history' style='font-size:16px;'></i>Activity Logs
+                                <i class='bx bx-history' style='font-size:16px;'></i>${activity_text}
                               </a>
                             </li>
                              <li value='${JSON.stringify(
                               item
                             )}' class='admin_per'>
                               <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#view-permissions">
-                                <i class='bx bx-edit-alt' style='font-size:16px;'></i>Permissions
+                                <i class='bx bx-edit-alt' style='font-size:16px;'></i>${permission_text}
                               </a>
                             </li>
                           </ul>

@@ -222,6 +222,12 @@
     }
 </style>
 
+  
+<span id="viewprofile-text" data-translation="<?= $translator['View Profile'] ?? 'View Profile'; ?>" style="display:none;"></span>
+<span id="activity-text" data-translation="<?= $translator['Activity Logs'] ?? 'Activity Logs'; ?>" style="display:none;"></span>
+<span id="permission-text" data-translation="<?= $translator['Permissions'] ?? 'Permissions'; ?>" style="display:none;"></span>
+
+
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">

@@ -10,6 +10,14 @@ $(function () {
         duration: 3000, // auto-dismiss after 3s
       });
     }
+
+     function getTranslation(id, fallback) {
+    return document.getElementById(id)?.dataset.translation || fallback;
+}
+
+const EdittText = document.getElementById("Editt-text")?.dataset.translation || "Edit";
+const DeleteeText = getTranslation("Deletee-text", "Delete");
+
     function formatMoney(money) { 
       let moneyStr = String(money); 
       if (moneyStr.includes(".")) { 
@@ -57,10 +65,10 @@ $(function () {
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"> 
                             <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 editpayment" href="javascript:void(0);" datas ="${item.bankid}"> 
-                                <i class="bx bx-edit fs-5" ></i>Edit
+                                <i class="bx bx-edit fs-5" ></i>${EdittText}
                             </a>
                                 <a class="dropdown-item deletepayment cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="${item.bankid}">
-                                <i class="bx bx-trash fs-5"></i>Delete
+                                <i class="bx bx-trash fs-5"></i>${DeleteeText}
                             </a>
                             </div>
                             </div>

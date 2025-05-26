@@ -22,6 +22,14 @@ $(function () {
         });
     }
 
+      function getTranslation(id, fallback) {
+    return document.getElementById(id)?.dataset.translation || fallback;
+}
+
+const SaveText = document.getElementById("savee-text")?.dataset.translation || "Save";
+
+
+
     const lotteryParamTable = (data) => {
         let html = "";
         data.forEach((item) => {
@@ -64,7 +72,7 @@ $(function () {
                     </label>
                 </td>
          
-                <td> <button type="button" class="btn btn-light updatethis saveBtn" value ='${item.gn_id}' datas= '${item.model}' >Save</button></td>
+                <td> <button type="button" class="btn btn-light updatethis saveBtn" value ='${item.gn_id}' datas= '${item.model}' >${SaveText}</button></td>
              </tr>
       `;
         });
@@ -76,13 +84,22 @@ $(function () {
         $("#game_name_container").html(html);
     };
 
+    function getTranslation(key) {
+    const span = document.getElementById(`trans-${key.replace(/\s+/g, '')}`);
+    return span?.dataset.translation || key;
+}
+
+// Use in HTML
+
     async function getAllGamesLottery() {
         try {
             const response = await fetch(`../admin/getAllGamesLottery`);
             const data = await response.json();
             //  console.log(data);
             let html = "";
-            html += `<option>Select Game</option>`;
+           let translatedSelectGame = getTranslation("Select Game");
+html += `<option>${translatedSelectGame}</option>`;
+
             data.forEach((item) => {
                 html += `<option value='${item.lt_id}'>${item.name}</option>`;
             });
@@ -277,41 +294,94 @@ $(function () {
         }
     }
 
+
+    // $(document).on("change", "#allGameNamesLottery", function () {
+    //     let selectedValue = $(this).val(); // Get selected value
+
+    //     let optionsMap = {
+    //         "1": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Roadbet", "Fantan"],
+    //         "2": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
+    //         "3": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Fantan"],
+    //         "5": ["Standard", "Twosides", "Logdragon", "Roadbet"],
+    //         "6": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Roadbet"],
+    //         "8": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
+    //         "10": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
+    //     };
+
+    //     let options = optionsMap[selectedValue] || []; // Get corresponding options or empty
+
+    //     // Populate second dropdown
+    //     let secondDropdown = $("#allmodels");
+    //     secondDropdown.empty(); // Clear existing options
+    //     $.each(options, function (index, value) {
+    //         secondDropdown.append(new Option(value, value.toLowerCase())); // Add new options
+    //     });
+    // });
+
+    // function tableScrollBonus() {
+    //     const tableContainerBonus = document.querySelector(".table-wrapperbonus");
+    //     const headerRowBonus = document.querySelector(".headrowbonus");
+
+    //     tableContainerBonus.addEventListener("scroll", function () {
+    //         if (tableContainerBonus.scrollTop > 0) {
+    //             headerRowBonus.classList.add("sticky-headerbonus");
+    //         } else {
+    //             headerRowBonus.classList.remove("sticky-headerbonus");
+    //         }
+    //     });
+    // }
+
+    // tableScrollBonus();
+
+
     $(document).on("change", "#allGameNamesLottery", function () {
-        let selectedValue = $(this).val(); // Get selected value
+    let selectedValue = $(this).val();
 
-        let optionsMap = {
-            "1": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Roadbet", "Fantan"],
-            "2": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
-            "3": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Fantan"],
-            "5": ["Standard", "Twosides", "Logdragon", "Roadbet"],
-            "6": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Roadbet"],
-            "8": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
-            "10": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
-        };
-
-        let options = optionsMap[selectedValue] || []; // Get corresponding options or empty
-
-        // Populate second dropdown
-        let secondDropdown = $("#allmodels");
-        secondDropdown.empty(); // Clear existing options
-        $.each(options, function (index, value) {
-            secondDropdown.append(new Option(value, value.toLowerCase())); // Add new options
-        });
-    });
-
-    function tableScrollBonus() {
-        const tableContainerBonus = document.querySelector(".table-wrapperbonus");
-        const headerRowBonus = document.querySelector(".headrowbonus");
-
-        tableContainerBonus.addEventListener("scroll", function () {
-            if (tableContainerBonus.scrollTop > 0) {
-                headerRowBonus.classList.add("sticky-headerbonus");
-            } else {
-                headerRowBonus.classList.remove("sticky-headerbonus");
-            }
-        });
+    // Helper to get translated value
+    function getGameTranslation(key) {
+      const span = document.getElementById(`trans-${key}`);
+      return span?.dataset.translation || key;
     }
 
-    tableScrollBonus();
+    // Original mapping
+    const optionsMap = {
+      "1": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Roadbet", "Fantan"],
+      "2": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
+      "3": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Fantan"],
+      "5": ["Standard", "Twosides", "Logdragon", "Roadbet"],
+      "6": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Roadbet"],
+      "8": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
+      "10": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
+    };
+
+    // Get matching games for selected value
+    let options = optionsMap[selectedValue] || [];
+
+    // Populate second dropdown with translated labels
+    let secondDropdown = $("#allmodels");
+    secondDropdown.empty();
+    $.each(options, function (index, gameKey) {
+      let translatedLabel = getGameTranslation(gameKey);
+      secondDropdown.append(new Option(translatedLabel, gameKey.toLowerCase()));
+    });
+  });
+
+  // Sticky header for bonus table
+  function tableScrollBonus() {
+    const tableContainerBonus = document.querySelector(".table-wrapperbonus");
+    const headerRowBonus = document.querySelector(".headrowbonus");
+
+    if (tableContainerBonus && headerRowBonus) {
+      tableContainerBonus.addEventListener("scroll", function () {
+        if (tableContainerBonus.scrollTop > 0) {
+          headerRowBonus.classList.add("sticky-headerbonus");
+        } else {
+          headerRowBonus.classList.remove("sticky-headerbonus");
+        }
+      });
+    }
+  }
+
+  // Initialize sticky scroll
+  tableScrollBonus();
 });

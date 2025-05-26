@@ -10,6 +10,17 @@ $(function(){
         });
       }
 
+  function getTranslation(id, fallback) {
+    return document.getElementById(id)?.dataset.translation || fallback;
+}
+
+const BackupText = document.getElementById("restbackup-text")?.dataset.translation || "Restore Backup";
+const EmailbackupText = getTranslation("emailbackup-text", "Email Backup");
+const DeletebackupText = getTranslation("deletebackup-text", "Delete Backup");
+
+
+
+
     const backupTable = (data) => {
         let html = "";
       
@@ -41,21 +52,21 @@ $(function(){
                               item
                             )}' class='admin_pro'>
                               <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view-profile">
-                                <i class='bx bx-refresh' style='font-size:20px;'></i>Restore Backup
+                                <i class='bx bx-refresh' style='font-size:20px;'></i>${BackupText}
                               </a>
                             </li>
                             <li value='${JSON.stringify(
                               item
                             )}' class='admin_logs'>
                               <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#view-activity-logs">
-                                <i class='bx bx-envelope' style='font-size:20px;'></i>Email Backup
+                                <i class='bx bx-envelope' style='font-size:20px;'></i>${EmailbackupText}
                               </a>
                             </li>
                              <li value='${JSON.stringify(
                               item
                             )}' class='admin_per'>
                               <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#view-permissions">
-                                <i class='bx bx-trash' style='font-size:20px;'></i>Delete Backup
+                                <i class='bx bx-trash' style='font-size:20px;'></i>${DeletebackupText}
                               </a>
                             </li>
                           </ul>

@@ -217,6 +217,16 @@
     }
 </style>
 
+
+
+
+    <span id="restbackup-text" data-translation="<?= $translator['Restore Backup'] ?? 'Restore Backup'; ?>" style="display:none;"></span>
+<span id="emailbackup-text" data-translation="<?= $translator['Email Backup'] ?? 'Email Backup'; ?>" style="display:none;"></span>
+<span id="deletebackup-text" data-translation="<?= $translator['Delete Backup'] ?? 'Delete Backup'; ?>" style="display:none;"></span>
+
+
+
+
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">

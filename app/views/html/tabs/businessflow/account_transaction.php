@@ -232,6 +232,7 @@
     }
 
 </style>
+<span id="trans-partner-name" data-translation="<?= htmlspecialchars($translator['Partner Name'] ?? 'Partner Name') ?>" style="display:none;"></span>
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Account Transaction Details']; ?></h4>

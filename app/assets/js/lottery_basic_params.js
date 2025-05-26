@@ -700,6 +700,11 @@ $(() => {
               </tr>`;
   }
   
+  // Read the translations from hidden span elements
+const turnOnText = document.getElementById("turnon-text")?.dataset.translation || "Turn On";
+const turnOffText = document.getElementById("turnoff-text")?.dataset.translation || "Turn Off";
+const EditText = document.getElementById("Edit-text")?.dataset.translation || "Edit";
+
   function lotteryBasicParametersMarkup(data) {
     return `
   <tr>
@@ -735,7 +740,7 @@ $(() => {
                          closing_time="${data.clsing}" 
                          game-id="${data.id}" 
                          id="edit-${data.id}" >
-                          Edit
+                         ${EditText}
                       </a>
                   </li>
                   <li class="action-btn" style="cursor:pointer;">
@@ -743,17 +748,19 @@ $(() => {
                          data-target="${data.id}" 
                          data-bs-target="#confirm-state-modal-gameon" 
                          data-bs-toggle="modal" >
-                          Turn On
+                          ${turnOnText}
                       </a>
                   </li>
                   <li class="action-btn" style="cursor:pointer;">
                       <a class="dropdown-item gameoff" 
                          data-target="${data.id}" 
                          data-bs-target="#confirm-state-modal-gameoff" 
-                         data-bs-toggle="modal" >
-                          Turn Off
+                         data-bs-toggle="modal">
+                          ${turnOffText}
                       </a>
                   </li>
+
+                   
               </ul>
           </div>
       </td>

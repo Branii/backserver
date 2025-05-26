@@ -493,6 +493,16 @@ section#tooltipp p {
     }
 </style>
 
+
+<span id="view-text" data-translation="<?= $translator['View'] ?? 'View'; ?>" style="display:none;"></span>
+<span id="quota-text" data-translation="<?= $translator['Quota'] ?? 'Quota'; ?>" style="display:none;"></span>
+<span id="subs-text" data-translation="<?= $translator['Subs'] ?? 'Subs'; ?>" style="display:none;"></span>
+<span id="account-change-text" data-translation="<?= $translator['Account Change'] ?? 'Account Change'; ?>" style="display:none;"></span>
+<span id="lottery-name-text" data-translation="<?= $translator['Lottery Name'] ?? 'Lottery Name'; ?>" style="display:none;"></span>
+<span id="whitelist-text" data-translation="<?= $translator['White List'] ?? 'White List'; ?>" style="display:none;"></span>
+<span id="delete-user-text" data-translation="<?= $translator['Delete User'] ?? 'Delete User'; ?>" style="display:none;"></span>
+<span id="deactivate-user-text" data-translation="<?= $translator['Deactivate User'] ?? 'Deactivate User'; ?>" style="display:none;"></span>
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['User List']; ?></h4>

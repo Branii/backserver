@@ -247,6 +247,11 @@
     }
 </style>
 
+<span id="Editt-text" data-translation="<?= $translator['Edit'] ?? 'Edit'; ?>" style="display:none;"></span>
+<span id="Deletee-text" data-translation="<?= $translator['Delete'] ?? 'Delete'; ?>" style="display:none;"></span>
+  
+
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Announcement List']; ?></h4>

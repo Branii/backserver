@@ -188,6 +188,13 @@
 
 </style>
 
+<span id="turnon-text" data-translation="<?= $translator['Turn On']; ?>" style="display:none;"></span>
+<span id="turnoff-text" data-translation="<?= $translator['Turn Off']; ?>" style="display:none;"></span>
+<span id="Edit-text" data-translation="<?= $translator['Edit']; ?>" style="display:none;"></span>
+
+
+
+
 <div id="lb-edit" class="modal fade " tabindex="-1" style="display: none;" aria-modal="true" role="dialog">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
@@ -329,6 +336,9 @@
         </span>
 
     </div>
+
+
+    <!-- These spans are invisible but hold the translation text -->
 
     <div class="card-body p-4">
         <div class="table-responsive mb-4 border rounded-1 table-wrapperbaic" id="maskkk" style="height:530px;overflow-y:scroll;">
