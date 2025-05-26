@@ -283,6 +283,7 @@ return [
     'Username' => 'Username',
     'Level' => 'Level',
     'Bank Type' => 'Bank Type',
+       'Bank' => 'Bank',
     'Cardholder' => 'Cardholder',
     'Bank Card Number' => 'Bank Card Number',
     'Withdrawal Amount' => 'Withdrawal Amount',
@@ -303,9 +304,14 @@ return [
     'Withdrawal completed' => 'Withdrawal completed',
     'Refuse to withdraw money' => 'Refuse to withdraw money',
     'Payment Name' => 'Payment Name',
+     'payment name' => 'payment name',
     'Search User Payment Method' => 'Search User Payment Method',
     'Search Payment Method Number' => 'Search Payment Method Number',
     'Total Payment Method' => 'Total Payment Method',
+    'Select Payment Type' => 'Select Payment Type',
+ 'Mobile Money' => 'Mobile Money',
+   
+    
 
 
 
@@ -1350,7 +1356,9 @@ return [
     'Audience' => 'Audience',
     'Notification Time' => 'Notification Time',
     'Minimum Amount' => 'Minimum Amount',
+    'minimum amount' => 'minimum amount',
     'Maximum Amount' => 'Maximum Amount',
+        'maximum amount' => 'maximum amount',
     'e.g www.enzerhub.com' => 'e.g www.enzerhub.com',
     'Edit PaymentPlatform' => 'Edit PaymentPlatform',
     'Select Currency' => 'Select Currency',
@@ -1377,6 +1385,8 @@ return [
       'Partner Name'  => 'Partner Name',
   'Payment method set to inactive successfully'  => 'Payment method set to inactive successfully',
     'Failed to set inactive.'  => 'Failed to set inactive.',
+   'payment logo url'  => 'payment logo url',
+    
   
       
 

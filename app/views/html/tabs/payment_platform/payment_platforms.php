@@ -442,16 +442,16 @@
           <div class="col-md-12 mb-3">
             <div class="note-title">
               <!-- <label class="form-label">Note Title</label> -->
-              <input type="text" id="paymentname" class="form-control form-reset" minlength="25" placeholder="payment name" />
+              <input type="text" id="paymentname" class="form-control form-reset" minlength="25" placeholder="<?= $translator['payment name']; ?>" />
             </div>
           </div>
 
           <div class="form-floating mb-3">
             <select name="deposit" class="form-select form-control borders border-infos currencytype form-reset">
-              <option value="">-Select Payment Type-</option>
-              <option value="momo">Mobile Money</option>
-              <option value="bank">Bank</option>
-              <option value="crypto">Crypto</option>
+              <option value="">-<?= $translator['Select Payment Type']; ?>-</option>
+              <option value="momo"><?= $translator['Mobile Money']; ?></option>
+              <option value="bank"><?= $translator['Bank']; ?></option>
+              <option value="crypto"><?= $translator['Crypto']; ?></option>
 
             </select>
             <label>
@@ -463,16 +463,16 @@
           <div class="col-md-12 mb-3">
             <div class="note-title">
               <!-- <label class="form-label">Note Title</label> -->
-              <input type="text" id="paylogo" class="form-control paylogo form-reset" minlength="25" placeholder="payment logo url" />
+              <input type="text" id="paylogo" class="form-control paylogo form-reset" minlength="25" placeholder="<?= $translator['payment logo url']; ?>" />
             </div>
           </div>
 
           <div class="form-floating mb-3">
             <select name="deposit" class="form-select form-control borders border-infos currencystate form-reset">
-              <option value="">-Select Status-</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-              <option value="hidden">Hidden</option>
+              <option value="">-<?= $translator['Select Status']; ?>-</option>
+              <option value="active"><?= $translator['Active']; ?></option>
+              <option value="inactive"><?= $translator['Inactive']; ?></option>
+              <option value="hidden"><?= $translator['Hidden']; ?></option>
             </select>
             <label>
               <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
@@ -483,14 +483,14 @@
           <div class="col-md-12 mb-3">
             <div class="note-title">
               <!-- <label class="form-label">Note Title</label> -->
-              <input type="text" id="maxiamount" class="form-control form-reset" minlength="25" placeholder="maximum amount" />
+              <input type="text" id="maxiamount" class="form-control form-reset" minlength="25" placeholder="<?= $translator['maximum amount']; ?>" />
             </div>
           </div>
 
           <div class="col-md-12 mb-3">
             <div class="note-title">
               <!-- <label class="form-label">Note Title</label> -->
-              <input type="text" id="miniamount" class="form-control form-reset" minlength="25" placeholder="minimum amount" />
+              <input type="text" id="miniamount" class="form-control form-reset" minlength="25" placeholder="<?= $translator['minimum amount']; ?>" />
             </div>
           </div>
 
