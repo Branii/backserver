@@ -1079,4 +1079,30 @@ class adminController extends Controller
       $this->view('exec/admins_exec', ['email' => $email, 'repeatPassword' => $repeatPassword, 'flag' => 'changeadminpassword']);
         $this->view->render();
     }
+
+
+    //sms configuration
+     public function fetchsmsplatform($page, $pageLimit){
+      $this->view('exec/platform_settings', ['page' => $page, 'pageLimit' => $pageLimit, 'flag' => 'fetchsms']);
+      $this->view->render();
+    }
+    public function addprovider($smsprovider,$sendename){
+      $this->view('exec/platform_settings', ['smsprovider' => $smsprovider, 'sendename' => $sendename, 'flag' => 'addprovider']);
+      $this->view->render();
+    }
+
+     public function smspreferences(){
+      $this->view('exec/platform_settings', ['flag' => 'savepreferences']);
+      $this->view->render();
+    }
+    public function savessmsstaes(){
+      $this->view('exec/platform_settings', ['flag' => 'savessmsstaes']);
+      $this->view->render();
+    }
+    
+
+    
+
+
+    
 }

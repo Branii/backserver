@@ -1,12 +1,12 @@
 <?php
 session_start();
-// ini_set("display_error",1);
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-require "../app/assets/Zenoph/Notify/AutoLoader.php";
-use Zenoph\Notify\Enums\AuthModel;
-use Zenoph\Notify\Request\SMSRequest;
-use Zenoph\Notify\Response\MessageResponse;
+ ini_set("display_error",1);
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\Exception;
+// require "../app/assets/Zenoph/Notify/AutoLoader.php";
+// use Zenoph\Notify\Enums\AuthModel;
+// use Zenoph\Notify\Request\SMSRequest;
+// use Zenoph\Notify\Response\MessageResponse;
 
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 
@@ -71,30 +71,9 @@ if($flag == "verifycodebyemail"){
 if($flag =="verifycodebycontact"){
     $phone = isset($this->viewData['contact']) ? $this->viewData['contact'] : "";
     $code = rand(100000, 999999);
-    
-    try {
-        $request = new SMSRequest();
-        $request->setHost("api.smsonlinegh.com");
-        $request->setAuthModel(AuthModel::API_KEY);
-        $request->setAuthApiKey("a49c61c65a8166d35b55fbcdcef25771399768bab912caf0cc987c33216d3b9c"); // Replace with your actual API key
-
-        $request->setSender("LIMVO APP"); // Replace with your approved sender ID
-        $request->setMessage( "Verfication Code"."  ".$code);
-        $request->addDestination($phone);
-
-        $response = $request->submit();
-
-        if ($response instanceof MessageResponse) {
-            echo "SMS sent successfully to $phone!";
-            $adminEmail = (new Controller)->getSeesion("userauthmethosid");
-             GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
-        } else {
-            echo "Failed to send SMS. Reason: " . $response->getResponseMessage();
-        }
-        } catch (Exception $ex) {
-            echo "Error: " . $ex->getMessage();
-        }
-
+     SmsProvider::sendSmsGonline($code,$phone);
+     $adminEmail = (new Controller)->getSeesion("userauthmethosid");
+     GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
 }
 
 if($flag == "verifyoption"){
@@ -114,31 +93,10 @@ if($flag == "twofaenables"){
 if($flag == "getcodeverify"){
      $adminEmail = (new Controller)->getSeesion("userauthmethosid");
      $phone = GoogleAuthenticateModel::GetOtpCode($adminEmail);
-      $code = rand(100000, 999999);
-    
-    try {
-        $request = new SMSRequest();
-        $request->setHost("api.smsonlinegh.com");
-        $request->setAuthModel(AuthModel::API_KEY);
-        $request->setAuthApiKey("a49c61c65a8166d35b55fbcdcef25771399768bab912caf0cc987c33216d3b9c"); // Replace with your actual API key
-
-        $request->setSender("LIMVO APP"); // Replace with your approved sender ID
-        $request->setMessage( "Verfication Code"."  ".$code);
-        $request->addDestination($phone);
-
-        $response = $request->submit();
-
-        if ($response instanceof MessageResponse) {
-            echo "SMS sent successfully to $phone!";
-            $adminEmail = (new Controller)->getSeesion("userauthmethosid");
-            $result = GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
-        } else {
-            echo "Failed to send SMS. Reason: " . $response->getResponseMessage();
-        }
-        } catch (Exception $ex) {
-            echo "Error: " . $ex->getMessage();
-        }
-   
+     $code = rand(100000, 999999);
+     SmsProvider::sendSmsGonline($code,$phone);
+     $adminEmail = (new Controller)->getSeesion("userauthmethosid");
+     GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
 }
 
 if($flag == "checkotpstatus"){

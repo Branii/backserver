@@ -10,6 +10,9 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
+        '88254829cb0eed057c30eaabb6d8edc4' => __DIR__ . '/..' . '/amphp/amp/src/functions.php',
+        '429ae5f14a13a9076791c19422e10996' => __DIR__ . '/..' . '/amphp/amp/src/Future/functions.php',
+        'c8601a4144b50a7b548da082c89c4dc1' => __DIR__ . '/..' . '/amphp/amp/src/Internal/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -20,8 +23,14 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
             'Symfony\\Polyfill\\Ctype\\' => 23,
             'Sonata\\GoogleAuthenticator\\' => 27,
         ),
+        'R' => 
+        array (
+            'Revolt\\' => 7,
+        ),
         'P' => 
         array (
+            'Psr\\Http\\Message\\' => 17,
+            'Predis\\' => 7,
             'PhpOption\\' => 10,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
@@ -32,6 +41,10 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
             'MaxMind\\WebService\\' => 19,
             'MaxMind\\Exception\\' => 18,
             'MaxMind\\Db\\' => 11,
+        ),
+        'K' => 
+        array (
+            'Kicken\\Gearman\\' => 15,
         ),
         'J' => 
         array (
@@ -52,6 +65,10 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
             'Composer\\CaBundle\\' => 18,
             'Codedungeon\\PHPCliColors\\' => 25,
         ),
+        'A' => 
+        array (
+            'Amp\\' => 4,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -70,6 +87,18 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'Sonata\\GoogleAuthenticator\\' => 
         array (
             0 => __DIR__ . '/..' . '/sonata-project/google-authenticator/src',
+        ),
+        'Revolt\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/revolt/event-loop/src',
+        ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Predis\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/predis/predis/src',
         ),
         'PhpOption\\' => 
         array (
@@ -99,6 +128,10 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             0 => __DIR__ . '/..' . '/maxmind-db/reader/src/MaxMind/Db',
         ),
+        'Kicken\\Gearman\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kicken/gearman-php/src',
+        ),
         'Josantonius\\Session\\' => 
         array (
             0 => __DIR__ . '/..' . '/josantonius/session/src',
@@ -127,6 +160,10 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             0 => __DIR__ . '/..' . '/codedungeon/php-cli-colors/src',
         ),
+        'Amp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/amphp/amp/src',
+        ),
     );
 
     public static $classMap = array (
@@ -146,11 +183,14 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'MEDOOHelper' => __DIR__ . '/../..' . '/app/model/MEDOOHelper.php',
         'MedooOrm' => __DIR__ . '/../..' . '/app/database/MedooOrm.php',
         'Model' => __DIR__ . '/../..' . '/app/model/Model.php',
+        'Notify_AutoLoader' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/AutoLoader.php',
         'PDOHelper' => __DIR__ . '/../..' . '/app/model/PDOHelper.php',
+        'PLatFormSettingModel' => __DIR__ . '/../..' . '/app/model/PLatFormSettingModel.php',
         'PartnersModel' => __DIR__ . '/../..' . '/app/model/PartnersModel.php',
         'PaymentPlatformModel' => __DIR__ . '/../..' . '/app/model/PaymentPlatformModel.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
         'PromotionManageModel' => __DIR__ . '/../..' . '/app/model/PromotionManageModel.php',
+        'SmsProvider' => __DIR__ . '/../..' . '/app/model/SmsProvider.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'UserBankManageModel' => __DIR__ . '/../..' . '/app/model/UserBankManageModel.php',
@@ -158,6 +198,73 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'Utils' => __DIR__ . '/../..' . '/app/utils/Utils.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
         'View' => __DIR__ . '/../..' . '/app/core/View.php',
+        'Zenoph\\Notify\\Build\\Reader\\MessageDestinationsReader' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Build/Reader/MessageDestinationsReader.php',
+        'Zenoph\\Notify\\Build\\Reader\\MessagePropertiesReader' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Build/Reader/MessagePropertiesReader.php',
+        'Zenoph\\Notify\\Build\\Reader\\MessageReportReader' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Build/Reader/MessageReportReader.php',
+        'Zenoph\\Notify\\Build\\Writer\\DataWriter' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Build/Writer/DataWriter.php',
+        'Zenoph\\Notify\\Build\\Writer\\IDataWriter' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Build/Writer/IDataWriter.php',
+        'Zenoph\\Notify\\Build\\Writer\\KeyValueDataWriter' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Build/Writer/KeyValueDataWriter.php',
+        'Zenoph\\Notify\\Build\\Writer\\MultiPartDataWriter' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Build/Writer/MultiPartDataWriter.php',
+        'Zenoph\\Notify\\Build\\Writer\\UrlEncodedDataWriter' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Build/Writer/UrlEncodedDataWriter.php',
+        'Zenoph\\Notify\\Build\\Writer\\XmlDataWriter' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Build/Writer/XmlDataWriter.php',
+        'Zenoph\\Notify\\Collections\\ComposerDestinationsList' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Collections/ComposerDestinationsList.php',
+        'Zenoph\\Notify\\Collections\\DataList' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Collections/DataList.php',
+        'Zenoph\\Notify\\Collections\\IterableCollection' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Collections/IterableCollection.php',
+        'Zenoph\\Notify\\Collections\\MessageComposerList' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Collections/MessageComposerList.php',
+        'Zenoph\\Notify\\Collections\\MessageDestinationsList' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Collections/MessageDestinationsList.php',
+        'Zenoph\\Notify\\Collections\\ObjectStorage' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Collections/ObjectStorage.php',
+        'Zenoph\\Notify\\Collections\\PersonalisedValuesList' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Collections/PersonalisedValuesList.php',
+        'Zenoph\\Notify\\Collections\\USSDOptionsList' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Collections/USSDOptionsList.php',
+        'Zenoph\\Notify\\Compose\\Composer' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Compose/Composer.php',
+        'Zenoph\\Notify\\Compose\\IComposer' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Compose/IComposer.php',
+        'Zenoph\\Notify\\Compose\\IMessageComposer' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Compose/IMessageComposer.php',
+        'Zenoph\\Notify\\Compose\\ISMSComposer' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Compose/ISMSComposer.php',
+        'Zenoph\\Notify\\Compose\\ISchedule' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Compose/ISchedule.php',
+        'Zenoph\\Notify\\Compose\\IVoiceComposer' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Compose/IVoiceComposer.php',
+        'Zenoph\\Notify\\Compose\\MessageComposer' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Compose/MessageComposer.php',
+        'Zenoph\\Notify\\Compose\\SMSComposer' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Compose/SMSComposer.php',
+        'Zenoph\\Notify\\Compose\\Schedule' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Compose/Schedule.php',
+        'Zenoph\\Notify\\Compose\\VoiceComposer' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Compose/VoiceComposer.php',
+        'Zenoph\\Notify\\Enums\\AuthModel' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Enums/AuthModel.php',
+        'Zenoph\\Notify\\Enums\\ContentType' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Enums/ContentType.php',
+        'Zenoph\\Notify\\Enums\\DestinationMode' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Enums/DestinationMode.php',
+        'Zenoph\\Notify\\Enums\\DestinationStatus' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Enums/DestinationStatus.php',
+        'Zenoph\\Notify\\Enums\\DestinationValidation' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Enums/DestinationValidation.php',
+        'Zenoph\\Notify\\Enums\\HTTPCode' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Enums/HTTPCode.php',
+        'Zenoph\\Notify\\Enums\\MessageCategory' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Enums/MessageCategory.php',
+        'Zenoph\\Notify\\Enums\\NumberAddInfo' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Enums/NumberAddInfo.php',
+        'Zenoph\\Notify\\Enums\\RequestHandshake' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Enums/RequestHandshake.php',
+        'Zenoph\\Notify\\Enums\\SMSType' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Enums/SMSType.php',
+        'Zenoph\\Notify\\Report\\MessageReport' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Report/MessageReport.php',
+        'Zenoph\\Notify\\Report\\SMSReport' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Report/SMSReport.php',
+        'Zenoph\\Notify\\Report\\VoiceReport' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Report/VoiceReport.php',
+        'Zenoph\\Notify\\Request\\AuthRequest' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Request/AuthRequest.php',
+        'Zenoph\\Notify\\Request\\ComposeRequest' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Request/ComposeRequest.php',
+        'Zenoph\\Notify\\Request\\CreditBalanceRequest' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Request/CreditBalanceRequest.php',
+        'Zenoph\\Notify\\Request\\DestinationsDeliveryRequest' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Request/DestinationsDeliveryRequest.php',
+        'Zenoph\\Notify\\Request\\IMessageRequest' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Request/IMessageRequest.php',
+        'Zenoph\\Notify\\Request\\MessageDeliveryRequest' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Request/MessageDeliveryRequest.php',
+        'Zenoph\\Notify\\Request\\MessageRequest' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Request/MessageRequest.php',
+        'Zenoph\\Notify\\Request\\NotifyRequest' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Request/NotifyRequest.php',
+        'Zenoph\\Notify\\Request\\RequestException' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Request/RequestException.php',
+        'Zenoph\\Notify\\Request\\SMSRequest' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Request/SMSRequest.php',
+        'Zenoph\\Notify\\Request\\ScheduledMessageRequest' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Request/ScheduledMessageRequest.php',
+        'Zenoph\\Notify\\Request\\USSDRequest' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Request/USSDRequest.php',
+        'Zenoph\\Notify\\Request\\VoiceRequest' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Request/VoiceRequest.php',
+        'Zenoph\\Notify\\Response\\APIResponse' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Response/APIResponse.php',
+        'Zenoph\\Notify\\Response\\AuthResponse' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Response/AuthResponse.php',
+        'Zenoph\\Notify\\Response\\CreditBalanceResponse' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Response/CreditBalanceResponse.php',
+        'Zenoph\\Notify\\Response\\MessageResponse' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Response/MessageResponse.php',
+        'Zenoph\\Notify\\Response\\USSDResponse' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Response/USSDResponse.php',
+        'Zenoph\\Notify\\Store\\AuthProfile' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Store/AuthProfile.php',
+        'Zenoph\\Notify\\Store\\ComposerDestination' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Store/ComposerDestination.php',
+        'Zenoph\\Notify\\Store\\MessageDestination' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Store/MessageDestination.php',
+        'Zenoph\\Notify\\Store\\MoUSSDData' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Store/MoUSSDData.php',
+        'Zenoph\\Notify\\Store\\PersonalisedValues' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Store/PersonalisedValues.php',
+        'Zenoph\\Notify\\Store\\UserData' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Store/UserData.php',
+        'Zenoph\\Notify\\Utils\\MessageUtil' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Utils/MessageUtil.php',
+        'Zenoph\\Notify\\Utils\\PhoneUtil' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Utils/PhoneUtil.php',
+        'Zenoph\\Notify\\Utils\\RequestUtil' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Utils/RequestUtil.php',
         'adminController' => __DIR__ . '/../..' . '/app/controller/adminController.php',
     );
 

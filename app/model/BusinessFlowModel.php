@@ -213,7 +213,7 @@ class BusinessFlowModel extends MEDOOHelper
       $totalRecords = $countStmt->fetchColumn();
 
       // Prepare to fetch paginated data
-      $dataStmt = $pdo->prepare("$mergedQuery LIMIT $limit OFFSET $offset");
+      $dataStmt = $pdo->prepare("$mergedQuery ORDER BY server_date DESC, server_time DESC LIMIT $limit OFFSET $offset");
       $dataStmt->execute($subquery['params']);
       $data =  $dataStmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -353,7 +353,7 @@ class BusinessFlowModel extends MEDOOHelper
          $subQuery = implode(' AND ', $filterConditions);
       }
       // Add ordering and limit to the query
-       $subQuery .= " ORDER BY trackbet.server_date DESC";
+       $subQuery .= "ORDER BY trackbet.server_date DESC";
 
       return $subQuery;
    }

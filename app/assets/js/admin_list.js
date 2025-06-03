@@ -167,11 +167,13 @@ $(function () {
   const updatePermissions = (url) => {
     $.post(url, function (result) {
       const data = JSON.parse(result);
-      // console.log(data);
+      console.log(url);
       graph = {}
       showToast("Success", data, "success");
       $("#view-permissions").modal("hide")
+      fetchAdmins(currentPage, pageLimit);
     });
+
   };
 
   async function getAdminLogs(currentPage, pageLimit, adminId){
@@ -180,7 +182,7 @@ $(function () {
         `../admin/adminlogs/${currentPage}/${pageLimit}/${adminId}`
       );
       const data = await response.json();
-      console.log(data.adminLogs)
+      // console.log(data.adminLogs)
       renderAdminLogs(data.adminLogs);
       renderPaginationForAdminLogs(data.totalPages, currentPage, adminId);
     } catch (error) {
@@ -421,16 +423,6 @@ $(function () {
   }
 
 
-$(document).on('change', '#checkAll', function () {
-  let isChecked = $(this).is(':checked');
-  // Set all checkboxes
-  $('.permissionholder .chk').each(function () {
-    $(this).prop('checked', isChecked).trigger('change'); // trigger change to update bigArr
-  });
-});
-
-
-
   function tableScroll() {
     const tableContainerAdmin = document.querySelector(".table-wrappereAdmin");
     const headerRowAdmin = document.querySelector(".headrow");
@@ -454,10 +446,9 @@ $(document).on('change', '#checkAll', function () {
 
   $(document).on("click", ".admin_pro", function () {
     const adminObject = JSON.parse($(this).attr("value"));
-    console.log(adminObject);
+    // console.log(adminObject);
     $("#adminprofile").attr(
-      "src",
-      "http://localhost/admin/app/assets/images/profile/" +
+      "src","http://localhost/admin/app/assets/images/profile/" +
         adminObject.profile_picture
     );
     $("#pro_fullname").text(adminObject.full_name);
@@ -469,6 +460,16 @@ $(document).on('change', '#checkAll', function () {
     $("#adminrole").val(adminObject.role);
   });
 
+
+  $(document).on('change', '#checkAll', function () {
+    let isChecked = $(this).is(':checked');
+    // Set all checkboxes
+    $('.permissionholder .chk').each(function () {
+      $(this).prop('checked', isChecked).trigger('change'); // trigger change to update bigArr
+    });
+  });
+
+
   function applyCustomScrollbarsToTabs() {
     const tableWrappers = document.querySelectorAll('.permissionholder');
     tableWrappers.forEach(wrapper => {
@@ -476,6 +477,7 @@ $(document).on('change', '#checkAll', function () {
         wrapper.scrollTop = 0; // Reset scroll position if needed
         wrapper.scrollLeft = 0;
     });
+
   }
 
   let bigArr = [] //permission array
@@ -487,7 +489,6 @@ $(document).on('change', '#checkAll', function () {
   $(document).on("click", ".admin_per", function () {
     const userdata = JSON.parse($(this).attr("value"));
     let permissions = JSON.parse(userdata.permissions);
-
     userId = userdata.admin_id
     const sidebarMenu = {
       1: {title: "Account Transaction Details",content: "account_transaction",},
@@ -520,10 +521,10 @@ $(document).on('change', '#checkAll', function () {
       20: { title: "Annoucement List", content: "annouce" },
       21: { title: "User Notification", content: "usernoti" },
       22: { title: "Add Payment Platform", content: "annouces" },
-      23: { title: "BensonGames", content: "usernotis" },
-      24: { title: "User Overview", content: "overview" },
       23: { title: "Partners", content: "Partners" },
+      24: { title: "User Overview", content: "overview" },
       25: { title: "User Payment Method", content: "usernotsi" },
+      26: { title: "Sms Config", content: "smsconfig" },
     };
 
     const sidebarMain = {
@@ -539,6 +540,7 @@ $(document).on('change', '#checkAll', function () {
       10: { category: "System Announcement", items: [20, 21] },
       11: { category: "Payment Platform", items: [22] },
       12: { category: "Partner Management", items: [23] },
+      13: { category: "Sms Configuration", items: [26] },
     };
   
     let html = "";
@@ -579,11 +581,11 @@ $(document).on('change', '#checkAll', function () {
 
     $(".permissionholder").html(html);
     $(".adminName").text(userdata.full_name + ' [Permissions]');
-    
     applyCustomScrollbarsToTabs();
+
   });
 
- $(document).on("change", ".chk", function () {
+  $(document).on("change", ".chk", function () {
   const value = $(this).val();
   if ($(this).is(":checked")) {
     if (!bigArr.includes(value)) {
@@ -614,7 +616,6 @@ $(document).on('change', '#checkAll', function () {
   })
 
   $(document).on("click", ".admin_logs", function(){
-   
     const userdata = JSON.parse($(this).attr("value"));
     adminId = JSON.parse(userdata.admin_id);
     // console.log(adminId);

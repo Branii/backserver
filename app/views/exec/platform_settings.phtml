@@ -1,0 +1,141 @@
+<?php
+
+
+$flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
+
+if($flag == "fetchsms"){
+
+ $page  = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+        $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+        $smsResult = PLatFormSettingModel::FetchSms($page, $limit);
+        $smsRecords = $smsResult['data'] ?? [];
+        $totalCount = $smsResult['total'] ?? 0;
+        $sms_id = $smsRecords[0]['sms_id'];
+      
+       foreach ($smsRecords as &$record) {
+        $provider = $record['sms_provider'] ?? '';
+          if($provider === "smsonlinegh" ) {
+              SmsProvider::sendSmsGHBalance($provider);
+              $smsResult = PLatFormSettingModel::FetchSms($page, $limit);
+          }  
+       }
+       echo json_encode([
+                'sms' => $smsResult['data'] ,
+                'totalPages' => ceil($totalCount / $limit)
+            ]);           
+}
+
+
+if($flag == "addprovider"){
+     $smsprovider = isset($this->viewData['smsprovider']) ? $this->viewData['smsprovider'] : "";
+     $sendename   = urlencode(isset($this->viewData['sendename']))  ?  urlencode($this->viewData['sendename']) : "";
+     $result  = PLatFormSettingModel::InserIntoSms($smsprovider,$sendename);
+     echo json_encode($result);
+}
+
+if($flag == "savepreferences"){
+    $data = json_decode(file_get_contents("php://input"), true);
+    $result  = PLatFormSettingModel::InserIntoSavePreferences($data);
+    echo json_encode($result);
+}
+
+if($flag == "savessmsstaes"){
+     $result  = PLatFormSettingModel::SaveStateSmsSettings();
+     echo json_encode($result); 
+}
+
+// if($flag =="verifycodebycontact"){
+//     $phone = isset($this->viewData['contact']) ? $this->viewData['contact'] : "";
+//     $code = rand(100000, 999999);
+    
+//     try {
+//         $request = new SMSRequest();
+//         $request->setHost("api.smsonlinegh.com");
+//         $request->setAuthModel(AuthModel::API_KEY);
+//         $request->setAuthApiKey("a49c61c65a8166d35b55fbcdcef25771399768bab912caf0cc987c33216d3b9c"); // Replace with your actual API key
+
+//         $request->setSender("LIMVO APP"); // Replace with your approved sender ID
+//         $request->setMessage( "Verfication Code"."  ".$code);
+//         $request->addDestination($phone);
+
+//         $response = $request->submit();
+
+//         if ($response instanceof MessageResponse) {
+//             echo "SMS sent successfully to $phone!";
+//             $adminEmail = (new Controller)->getSeesion("userauthmethosid");
+//              GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
+//         } else {
+//             echo "Failed to send SMS. Reason: " . $response->getResponseMessage();
+//         }
+//         } catch (Exception $ex) {
+//             echo "Error: " . $ex->getMessage();
+//         }
+
+// }
+
+// if($flag == "verifyoption"){
+//    $adminEmail = (new Controller)->getSeesion("userauthmethosid");
+//    $otpcodes = isset($this->viewData['otpcodes']) ? $this->viewData['otpcodes'] : "";
+//    $flagtype = isset($this->viewData['flags']) ? $this->viewData['flags'] : "";
+//    $result = GoogleAuthenticateModel::SignOptionVerify($adminEmail,$otpcodes,$flagtype); 
+//    echo json_encode($result);
+// }
+
+// if($flag == "twofaenables"){
+//      $email = isset($this->viewData['email']) ?  $this->viewData['email'] : "";
+//      $result = GoogleAuthenticateModel::UpdatemobileAuth($email) ?? [];
+//      echo json_encode($result);
+// }
+
+// if($flag == "getcodeverify"){
+//      $adminEmail = (new Controller)->getSeesion("userauthmethosid");
+//      $phone = GoogleAuthenticateModel::GetOtpCode($adminEmail);
+//      $code = rand(100000, 999999);
+
+    
+//     try {
+//         $request = new SMSRequest();
+//         $request->setHost("api.smsonlinegh.com");
+//         $request->setAuthModel(AuthModel::API_KEY);
+//         $request->setAuthApiKey("a49c61c65a8166d35b55fbcdcef25771399768bab912caf0cc987c33216d3b9c"); // Replace with your actual API key
+
+//         $request->setSender("LIMVO APP"); // Replace with your approved sender ID
+//         $request->setMessage( "Verfication Code"."  ".$code);
+//         $request->addDestination($phone);
+
+//         $response = $request->submit();
+
+//         if ($response instanceof MessageResponse) {
+//             echo "SMS sent successfully to $phone!";
+//             $adminEmail = (new Controller)->getSeesion("userauthmethosid");
+//             $result = GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
+//         } else {
+//             echo "Failed to send SMS. Reason: " . $response->getResponseMessage();
+//         }
+//         } catch (Exception $ex) {
+//             echo "Error: " . $ex->getMessage();
+//         }
+   
+// }
+
+// if($flag == "checkotpstatus"){
+//      $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
+//      $result = GoogleAuthenticateModel::CheckotpStatus($adminEmail);
+//      echo json_encode($adminEmail);
+// }
+
+// if($flag == "resetauth"){
+//      $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
+//      $result = GoogleAuthenticateModel::ResetAuthentication($adminEmail);
+//      echo json_encode($result);
+// }
+
+
+
+
+
+
+
+
+
+ 
