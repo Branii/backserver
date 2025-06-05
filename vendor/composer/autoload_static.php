@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
 {
     public static $files = array (
+        'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -26,6 +27,12 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'R' => 
         array (
             'Revolt\\' => 7,
+            'React\\Stream\\' => 13,
+            'React\\Socket\\' => 13,
+            'React\\Promise\\' => 14,
+            'React\\EventLoop\\' => 16,
+            'React\\Dns\\' => 10,
+            'React\\Cache\\' => 12,
         ),
         'P' => 
         array (
@@ -56,6 +63,10 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
             'Google\\Authenticator\\' => 21,
             'GeoIp2\\' => 7,
         ),
+        'E' => 
+        array (
+            'Evenement\\' => 10,
+        ),
         'D' => 
         array (
             'Dotenv\\' => 7,
@@ -64,6 +75,8 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             'Composer\\CaBundle\\' => 18,
             'Codedungeon\\PHPCliColors\\' => 25,
+            'Clue\\Redis\\Protocol\\' => 20,
+            'Clue\\React\\Redis\\' => 17,
         ),
         'A' => 
         array (
@@ -91,6 +104,30 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'Revolt\\' => 
         array (
             0 => __DIR__ . '/..' . '/revolt/event-loop/src',
+        ),
+        'React\\Stream\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/react/stream/src',
+        ),
+        'React\\Socket\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/react/socket/src',
+        ),
+        'React\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/react/promise/src',
+        ),
+        'React\\EventLoop\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/react/event-loop/src',
+        ),
+        'React\\Dns\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/react/dns/src',
+        ),
+        'React\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/react/cache/src',
         ),
         'Psr\\Http\\Message\\' => 
         array (
@@ -148,6 +185,10 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         array (
             0 => __DIR__ . '/..' . '/geoip2/geoip2/src',
         ),
+        'Evenement\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/evenement/evenement/src',
+        ),
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
@@ -159,6 +200,14 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'Codedungeon\\PHPCliColors\\' => 
         array (
             0 => __DIR__ . '/..' . '/codedungeon/php-cli-colors/src',
+        ),
+        'Clue\\Redis\\Protocol\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/clue/redis-protocol/src',
+        ),
+        'Clue\\React\\Redis\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/clue/redis-react/src',
         ),
         'Amp\\' => 
         array (
@@ -179,6 +228,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'Database' => __DIR__ . '/../..' . '/app/database/Database.php',
         'FinancialManageModel' => __DIR__ . '/../..' . '/app/model/FinancialManageModel.php',
         'GameManageModel' => __DIR__ . '/../..' . '/app/model/GameManageModel.php',
+        'GearmanWorker' => __DIR__ . '/../..' . '/app/services/GearmanWorker.php',
         'GoogleAuthenticateModel' => __DIR__ . '/../..' . '/app/model/GoogleAuthenticateModel.php',
         'MEDOOHelper' => __DIR__ . '/../..' . '/app/model/MEDOOHelper.php',
         'MedooOrm' => __DIR__ . '/../..' . '/app/database/MedooOrm.php',
@@ -190,8 +240,12 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'PaymentPlatformModel' => __DIR__ . '/../..' . '/app/model/PaymentPlatformModel.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
         'PromotionManageModel' => __DIR__ . '/../..' . '/app/model/PromotionManageModel.php',
+        'SmsPreferenceScheduler' => __DIR__ . '/../..' . '/app/model/SmsPreferenceScheduler.php',
+        'SmsPromotionWorker' => __DIR__ . '/../..' . '/app/model/SmsPromotionWorker.php',
         'SmsProvider' => __DIR__ . '/../..' . '/app/model/SmsProvider.php',
+        'SmsWoker' => __DIR__ . '/../..' . '/app/services/SmsWoker.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'Testworkers' => __DIR__ . '/../..' . '/app/services/Testworkers.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'UserBankManageModel' => __DIR__ . '/../..' . '/app/model/UserBankManageModel.php',
         'UserManageModel' => __DIR__ . '/../..' . '/app/model/UserManageModel.php',

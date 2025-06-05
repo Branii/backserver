@@ -245,7 +245,7 @@ $(function () {
         $("#withdrawSwitch").prop("checked", data.withdraw == 1);
         // $("#securitySwitch").prop("checked", data.security == 1);
         // $("#promoSwitch").prop("checked", data.promo == 1);
-        // $("#gameSwitch").prop("checked", data.game == 1);
+        //  $("#gameSwitch").prop("checked", data.gamewon == 1);
         // $("#vipSwitch").prop("checked", data.vip == 1);
         $("#provider").val(data.sms_provider);
 
@@ -256,7 +256,7 @@ $(function () {
             withdraw: data.withdraw == 1,
             // security: data.security == 1,
             // promo: data.promo == 1,
-            // game: data.game == 1,
+             gamewon: data.gamewon == 1,
             // vip: data.vip == 1
         };
         localStorage.setItem("smsPreferences", JSON.stringify(savedPrefs));
@@ -357,7 +357,7 @@ $(function () {
                 withdraw: $("#withdrawSwitch").is(":checked"),
                 // security: $("#securitySwitch").is(":checked"),
                 // promo: $("#promoSwitch").is(":checked"),
-                // game: $("#gameSwitch").is(":checked"),
+                  gamewon: $("#gameSwitch").is(":checked"),
                 // vip: $("#vipSwitch").is(":checked")
             };
          ///  localStorage.setItem("smsPreferences", JSON.stringify(payload));

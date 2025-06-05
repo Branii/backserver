@@ -1,8 +1,19 @@
 <?php
 
-class SmsProvider
-{
-    public static function sendSmsGonline($code, $phonenumber)
+class SmsProvider  extends GearmanWorker{
+
+    private  $provider;
+    public function __construct(string $provider){
+        $this->provider = $provider;
+    }
+
+    public  function sendsms($params){
+        return match($this->provider){
+            'smsonlinegh' => self::sendSmsGonline($params['message'], $params['mobile']),
+        };
+    }
+
+    public  function sendSmsGonline($mesage, $phonenumber)
     {
         $headers = ['Host: api.smsonlinegh.com', 'Content-Type: application/json', 'Accept: application/json', 
         'Authorization: key a49c61c65a8166d35b55fbcdcef25771399768bab912caf0cc987c33216d3b9c'
@@ -10,7 +21,7 @@ class SmsProvider
 
         // set up the message data
         $messageData = [
-            'text' => 'Verification Code' . $code,
+            'text' => $mesage,
             'type' => 0, // GSM default
             'sender' => 'LIMVO APP',
             'destinations' => [$phonenumber],
@@ -38,7 +49,7 @@ class SmsProvider
         }
     }
 
-    public static function sendSmsGHBalance($provider)
+    public static function getSmsGHBalance($provider)
     {
         $endPoint = 'https://api.smsonlinegh.com/v5/account/balance';
 

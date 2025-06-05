@@ -1,5 +1,6 @@
 <?php
  date_default_timezone_set('Asia/Shanghai');
+
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     // Throw an Exception with the error message and details
     throw new \Exception("$errstr in $errfile on line $errline", $errno);
@@ -115,7 +116,7 @@ class FinancialManageModel extends MEDOOHelper
 
     public static function getUserDataByUsername($uid)
     {
-        return $userInfo = parent::query("SELECT balance FROM users_test WHERE uid = :uid", ["uid" => $uid]);
+        return $userInfo = parent::query("SELECT balance,contact FROM users_test WHERE uid = :uid", ["uid" => $uid]);
     }
 
     public static function addMoneyData($desposittype, $uid, $amount, $username, $review)
@@ -124,7 +125,7 @@ class FinancialManageModel extends MEDOOHelper
         $trans_oderId = bin2hex(random_bytes(4));
         $depositid = $desposittype == 1 ? 'DEPO' . $trans_oderId : 'WITHD' . $trans_oderId;
         $Data = self::getUserDataByUsername($uid)[0];
-
+    
         if ($desposittype == 1) {
             if ($amount <= 0) {
                 return "Invalid deposit amount"; // Stops negative or zero deposits
@@ -147,7 +148,7 @@ class FinancialManageModel extends MEDOOHelper
 
         if ($desposittype == 1) {
             $depositSuccess = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance);
-            $newDepositSuccess = self::insertIntoDepositsNew($uid, $amount, $username);
+            $newDepositSuccess = self::insertIntoDepositsNew($uid, $amount, $username,$Data['contact']);
             $transactionSuccess = self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data);
         
             if ($depositSuccess && $newDepositSuccess && $transactionSuccess) {
@@ -158,7 +159,7 @@ class FinancialManageModel extends MEDOOHelper
         } elseif ($desposittype == 4) {
             $depositSuccess = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance);
             $transactionSuccess = self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data);
-            $withdrawManageSuccess = self::insertIntoWithdrawManage($uid, $amount, $username);
+            $withdrawManageSuccess = self::insertIntoWithdrawManage($uid, $amount, $username,$Data['contact']);
         
             if ($depositSuccess && $transactionSuccess && $withdrawManageSuccess) {
                 self::updateBalance($uid, $recharge_balance);
@@ -166,7 +167,7 @@ class FinancialManageModel extends MEDOOHelper
             }
         }
 
-        return $success ? "transaction failed" : "transaction success";
+        return $success ? "success" : "failed";
     }
 
     public static function insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance)
@@ -185,7 +186,7 @@ class FinancialManageModel extends MEDOOHelper
         return $inserdata = parent::insert("deposits_and_withdrawals", $params);
     }
 
-    public static function insertIntoDepositsNew($uid, $amount, $username)
+    public static function insertIntoDepositsNew($uid, $amount, $username,$contact)
     {
         $trans_oderId = bin2hex(random_bytes(4));
         $depositid = 'DEPO' . $trans_oderId;
@@ -195,7 +196,7 @@ class FinancialManageModel extends MEDOOHelper
             'user_id' => $uid,
             'user_name' => $manualusername,
             'user_email' => $manualemail,
-            'user_mobile' => "Company Number",
+            'user_mobile' => $contact,
             'amount_paid' => $amount,
             'amount_recieved' => $amount,
             'date_created' => date("Y-m-d"),
@@ -207,10 +208,21 @@ class FinancialManageModel extends MEDOOHelper
             'approved_by' => $username,
             'desposit_channel' => '1',
         ];
-        return $inserdata = parent::insert("deposit_new", $params);
+        $res =  $inserdata = parent::insert("deposit_new", $params);
+        if($res){
+             $amounts = number_format($amount, 2); 
+            $message = [
+                'message' => "Your deposit of $amounts has been successfully processed. Thank you",
+                'mobile' => $contact,
+                "uid" => $uid
+            ];
+            (new Publisher)->publish('deposit',$message);
+            return $res;
+    
+        }
     }
 
-    public static function insertIntoWithdrawManage($uid, $amount, $username)
+    public static function insertIntoWithdrawManage($uid, $amount, $username,$contact)
     {
         $manualusername = "Enzerhub";
         $manualemail = "enzerhub@gmail.com";
@@ -224,7 +236,7 @@ class FinancialManageModel extends MEDOOHelper
             'withdrawal_id' => $depositid,
             'username' => $manualusername,
             'user_email' => $manualemail,
-            'contact' => "Company Number",
+            'contact' => $contact,
             'user_level' => 'Vip',
             'bank_type' => 'MTN',
             'withdrawal_channel' => '4',
@@ -242,9 +254,19 @@ class FinancialManageModel extends MEDOOHelper
             'approved_by' => $username,
         ];
 
-        return parent::insert("withdrawal_manage", $params);
+         $res = parent::insert("withdrawal_manage", $params);
+         if($res){
+             $amounts = number_format($amount, 2); 
+            $message = [
+                'message' => "Your withrawal of $amounts has been successfully processed. Thank you",
+                'mobile' => $contact,
+                "uid" => $uid
+            ];
+            (new Publisher)->publish('withdrawal',$message);
+            return $res;
+    
+        }
     }
-
 
 
     public static function timezoneConverter(string $otherTzName = ""){

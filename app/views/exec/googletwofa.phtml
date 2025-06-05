@@ -69,9 +69,11 @@ if($flag == "verifycodebyemail"){
 }
 
 if($flag =="verifycodebycontact"){
-    $phone = isset($this->viewData['contact']) ? $this->viewData['contact'] : "";
-    $code = rand(100000, 999999);
-     SmsProvider::sendSmsGonline($code,$phone);
+     $phone = isset($this->viewData['contact']) ? $this->viewData['contact'] : "";
+     $code = rand(100000, 999999); 
+     $message = 'Verification Code: ' . $code;
+     //SmsProvider::sendSmsGonline($message,$phone);
+     (new SmsProvider($provider))->sendSmsGonline($message,$phone);
      $adminEmail = (new Controller)->getSeesion("userauthmethosid");
      GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
 }
@@ -93,8 +95,10 @@ if($flag == "twofaenables"){
 if($flag == "getcodeverify"){
      $adminEmail = (new Controller)->getSeesion("userauthmethosid");
      $phone = GoogleAuthenticateModel::GetOtpCode($adminEmail);
-     $code = rand(100000, 999999);
-     SmsProvider::sendSmsGonline($code,$phone);
+     $code = rand(100000, 999999); 
+     $message = 'Verification Code: ' . $code;
+     // SmsProvider::sendSmsGonline($message,$phone);
+     (new SmsProvider($provider))->sendSmsGonline($message,$phone);
      $adminEmail = (new Controller)->getSeesion("userauthmethosid");
      GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
 }

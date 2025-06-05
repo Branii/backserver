@@ -15,7 +15,8 @@ if($flag == "fetchsms"){
        foreach ($smsRecords as &$record) {
         $provider = $record['sms_provider'] ?? '';
           if($provider === "smsonlinegh" ) {
-              SmsProvider::sendSmsGHBalance($provider);
+              SmsProvider::getSmsGHBalance($provider);
+           //  (new SmsProvider)->getSmsGHBalance($provider);
               $smsResult = PLatFormSettingModel::FetchSms($page, $limit);
           }  
        }

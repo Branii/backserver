@@ -4,3 +4,4 @@
 require_once 'app/model/SmsPreferenceScheduler.php';
 $scheduler = new SmsPreferenceScheduler();
 $scheduler->run();
+

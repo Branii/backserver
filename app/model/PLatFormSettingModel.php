@@ -39,12 +39,13 @@ class PLatFormSettingModel extends MEDOOHelper
     {  
     $pdo = (new Database())->openLink();
 
-    $sql = "REPLACE INTO sms_preferences (id, deposit, withdraw, sms_provider) VALUES (:id, :deposit, :withdraw, :sms_provider)";
+    $sql = "REPLACE INTO sms_preferences (id, deposit, withdraw,gamewon, sms_provider) VALUES (:id, :deposit, :withdraw,:gamewon, :sms_provider)";
         $id = 1;
         $params = [
             ':id' => $id,
             ':deposit' => isset($data['deposit']) && $data['deposit'] ? 1 : 0,
             ':withdraw' => isset($data['withdraw']) && $data['withdraw'] ? 1 : 0,
+            ':gamewon'=>isset($data['gamewon']) && $data['gamewon'] ? 1 : 0,
             ':sms_provider' => $data['provider'] ?? null
         ];
 
