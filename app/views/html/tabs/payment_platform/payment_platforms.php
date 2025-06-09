@@ -260,18 +260,45 @@
   }
 </style>
 
+
+<!-- For dynamic field required message -->
+<span 
+  id="trans-field-required" 
+  data-translation="<?= $translator['FieldRequired'] ?? 'Field {field} is required.'; ?>" 
+  style="display:none;">
+</span>
+
+
+<span id="translate-active" data-value="<?= $translator['Active'] ?>"></span>
+<span id="translate-inactive" data-value="<?= $translator['Inactive'] ?>"></span>
+<span id="translate-hidden" data-value="<?= $translator['Hidden'] ?>"></span>
+
 <span id="Editt-text" data-translation="<?= $translator['Edit'] ?? 'Edit'; ?>" style="display:none;"></span>
 <span id="Deletee-text" data-translation="<?= $translator['Delete'] ?? 'Delete'; ?>" style="display:none;"></span>
-  
+
+<!-- Hidden translation spans -->
+<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp'] ?? 'Heads up!!'; ?>" style="display:none;"></span>
+<span id="trans-select-fields" data-translation="<?= $translator['Select one or more data fields to filter'] ?? 'Select one or more data fields to filter'; ?>" style="display:none;"></span>
+<span id="trans-all-fields" data-translation="<?= $translator['AllFieldsRequired'] ?? 'All fields are required'; ?>" style="display:none;"></span>
+<span id="trans-failed" data-translation="<?= $translator['Failed'] ?? 'Failed'; ?>" style="display:none;"></span>
+
+<span id="trans-paymentname" data-translation="<?= $translator['PaymentName'] ?? 'Payment Name'; ?>" style="display:none;"></span>
+<span id="trans-currencytype" data-translation="<?= $translator['CurrencyType'] ?? 'Currency Type'; ?>" style="display:none;"></span>
+<span id="trans-paylogo" data-translation="<?= $translator['PayLogo'] ?? 'Pay Logo'; ?>" style="display:none;"></span>
+<span id="trans-currencystate" data-translation="<?= $translator['CurrencyState'] ?? 'Currency State'; ?>" style="display:none;"></span>
+<span id="trans-maxiamount" data-translation="<?= $translator['MaxAmount'] ?? 'Max Amount'; ?>" style="display:none;"></span>
+<span id="trans-miniamount" data-translation="<?= $translator['MinAmount'] ?? 'Min Amount'; ?>" style="display:none;"></span>
+<span id="trans-currencyselect" data-translation="<?= $translator['CurrencySelect'] ?? 'Currency Select'; ?>" style="display:none;"></span>
+<span id="trans-approvedby" data-translation="<?= $translator['ApprovedBy'] ?? 'Approved By'; ?>" style="display:none;"></span>
+
+
 <div class="card w-100 position-relative overflow-hidden">
   <div class="px-4 py-3 border-bottom">
     <h4 class="card-title mb-0"> <?= $translator['Payment Platform']; ?></h4>
   </div>
-
   <div class="px-4 py-3 border-bottom pagerlist">
     <span class="top-left-btn" style="width: 70%;">
-     
-        <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 100%;">
+      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 100%;">
         <div style="width: 35%;">
 
           <input name="resultsList" class="queryholderlist form-control bring-forward" id="platformNames" data-user-id="" placeholder="<?= $translator['Platform Names']; ?>" autocomplete="off" style="width: 98%;">
@@ -280,8 +307,6 @@
           </div>
           <input name="usernames" type="hidden" id="selectedID" value="">
         </div>
-
-
 
         <select name="betsate" id="platformCurrency" class="form-control form-select queryholderlistt messagestype currency-list" data-bs-placeholder="Select Type">
           <option value="">-<?= $translator['Currency']; ?>-</option>
@@ -295,29 +320,27 @@
           <option value="inactive"><?= $translator['Inactive']; ?></option>
           </option>
 
-          =======
-        
-          <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 100%;">
-       
-                <select name="betsate" id="platformStatuss" class="form-control form-select queryholderlistt messagestype" data-bs-placeholder="Select Type">
-                    <option value="">-Select Payment Type-</option>
-                    <option value="momo">Mobile Money</option>
-                    <option value="bank">Bank</option>
-                    <option value="crypto">Crypto</option>
-                </select>
+       <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 100%;">
+
+            <select name="betsate" id="platformStatuss" class="form-control form-select queryholderlistt messagestype" data-bs-placeholder="Select Type">
+              <option value="">-<?= $translator['Select Payment Type']; ?>-</option>
+              <option value="momo"><?= $translator['Mobile Money']; ?></option>
+              <option value="bank"><?= $translator['Bank']; ?></option>
+              <option value="crypto"><?= $translator['Crypto']; ?></option>
+            </select>
 
             <select name="betsate" id="platformStatuse" class="form-control form-select queryholderlistt messagestype" data-bs-placeholder="Select Type">
-              <option value="">-Status-</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-              <option value="hidden">Hidden</option>
-  
+              <option value="">-<?= $translator['Status']; ?>-</option>
+              <option value="active"><?= $translator['Active']; ?></option>
+              <option value="inactive"><?= $translator['Inactive']; ?></option>
+              <option value="hidden"><?= $translator['Hidden']; ?></option>
             </select>
+
             <input name="startdate" id="platformStartDates" type="date" class="form-control queryholderlistt startfmessage" placeholder="Name" />
 
             <input name="enddate" id="platformEndDates" type="date" class="form-control queryholderlistt endmessage" placeholder="Name" />
           </div>
-        
+
     </span>
     <span class="toplist-center" aria-label=" navigation example">
       <!--enter is free-->
@@ -339,64 +362,64 @@
     </span>
   </div>
 
-    <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperpayment" id="maskpayment" style="height: 530px; overflow-y: scroll;">
-            <table class="table text-nowrap mb-0 align-middle table-bordered">
-                <thead class="text-dark fs-4 tbl-paymentheader">
-                    <tr class="paymentheaderrow">
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Payment Name']; ?></h6>
-                        </th>
+  <div class="card-body p-4">
+    <div class="table-responsive mb-4 border rounded-1 table-wrapperpayment" id="maskpayment" style="height: 530px; overflow-y: scroll;">
+      <table class="table text-nowrap mb-0 align-middle table-bordered">
+        <thead class="text-dark fs-4 tbl-paymentheader">
+          <tr class="paymentheaderrow">
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Payment Name']; ?></h6>
+            </th>
 
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Payment Type']; ?></h6>
-                        </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Payment Type']; ?></h6>
+            </th>
 
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Currency']; ?></h6>
-                        </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Currency']; ?></h6>
+            </th>
 
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Minimum Amount']; ?></h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Maximum Amount']; ?></h6>
-                        </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Date Created']; ?></h6>
-                        </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Minimum Amount']; ?></h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Maximum Amount']; ?></h6>
+            </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Date Created']; ?></h6>
+            </th>
 
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Timezone/Hrs']; ?></h6>
-                        </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Timezone/Hrs']; ?></h6>
+            </th>
 
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Created By']; ?></h6>
-                        </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Created By']; ?></h6>
+            </th>
 
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
-                        </th>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
+            </th>
 
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody id="paymentContainer">
-                    <tr class="no-resultslist">
-                        <td colspan="9">
-                            <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <th>
+              <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
+            </th>
+          </tr>
+        </thead>
+        <tbody id="paymentContainer">
+          <tr class="no-resultslist">
+            <td colspan="9">
+              <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="px-4 py-3 border-top pagerlist">
-        <span class="toplist-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-                <!-- <button type="button" class="btn bg-white-subtle playerfinance" value="startli">
+  </div>
+  <div class="px-4 py-3 border-top pagerlist">
+    <span class="toplist-left-btn">
+      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+        <!-- <button type="button" class="btn bg-white-subtle playerfinance" value="startli">
                     <i class="bx bx-chevrons-left" style="font-size: 20px;"></i>
                 </button> -->
         <button type="button" class="btn bg-white-subtle playerfinance" value="leftlin">
@@ -436,9 +459,9 @@
         <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
       </div>
       <div class="scrollable-container">
-  
+
         <form>
-        
+
           <div class="col-md-12 mb-3">
             <div class="note-title">
               <!-- <label class="form-label">Note Title</label> -->
@@ -497,7 +520,7 @@
           <div class="col-md-12 mb-3">
             <div class="note-title">
               <select id="currency-select" class="form-select form-control border border-infos currency-select form-reset">
-                <option value="">--  <?= $translator['Select Currency']; ?>--</option>
+                <option value="">-- <?= $translator['Select Currency']; ?>--</option>
               </select>
             </div>
           </div>
@@ -537,346 +560,346 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
 
-        <div class="modal-header">
+      <div class="modal-header">
         <h5 class="modal-title"><?= $translator['Add Payment Platform']; ?></h5>
         <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
-    </div>
-    <div class="scrollable-container">
-      <div class="card border mb-4">
-        <div class="card-body">
-          <h4 class="card-title">Enzerhub <?= $translator['Payment Platforms']; ?></h4>
-          <form id="pp-personalDetailsForm">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="mb-3">
-                  <label for="userName" class="form-label"><?= $translator['Partner']; ?> (<span style="color: #a01616;">*</span>)</label>
-                  <input type="text" class="form-control" id="pp-contact" placeholder="Enzerhub" disabled="">
-                </div>
-                <div class="mb-3">
-                  <label for="pp-currency-edit" class="form-label"><?= $translator['Currency']; ?> (<span style="color: #a01616;">*</span>)</label>
-                  <select id="pp-currency-edit" class="form-select currency-list"></select>
-                </div>
-
-
-                <div class="mb-3">
-                  <label for="pp-status-edit" class="form-label"><?= $translator['Status']; ?> (<span style="color: #a01616;">*</span>)</label>
-                  <select id="pp-status-edit" class="form-select">
-                    <option value="active"><?= $translator['Active']; ?></option>
-                    <option value="hidden"><?= $translator['Hidden']; ?></option>
-                    <option value="inactive"><?= $translator['Inactive']; ?></option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-lg-6">
-
-
-                <div class="mb-3">
-                  <label for="pp-payment-type-edit" class="form-label"><?= $translator['Payment Type']; ?> (<span style="color: #a01616;">*</span>)</label>
-                  <select id="pp-payment-type-edit" class="form-select pp-payment-types"></select>
-                </div>
-                <div class="mb-3">
-                  <label for="pp-fee-edit" class="form-label"><?= $translator['Fee']; ?> (%) (<span style="color: #a01616;">*</span>)</label>
-                  <input type="text" class="form-control" id="pp-fee-edit" placeholder="<?= $translator['Fee']; ?>  (%)">
-                </div>
-                <div class="mb-3">
-                  <label for="pp-priority-edit" class="form-label"><?= $translator['Priority']; ?></label>
-                  <input type="text" class="form-control" id="pp-priority-edit" placeholder="<?= $translator['Priority']; ?>">
-                </div>
-              </div>
-              <div class="col-6">
-
-                <div class="mb-3">
-                  <label for="pp-info-edit" class="form-label"><?= $translator['Info/Description']; ?></label>
-                  <textarea type="text" class="form-control" id="pp-info-edit" cols="15" rows="10" placeholder="<?= $translator['Info/Description']; ?>" style="height: 235px;"></textarea>
-                </div>
-                <div class="mb-3">
-                  <label for="pp-site-url-edit" class="form-label"><?= $translator['Site Url']; ?></label>
-                  <input type="text" class="form-control" id="pp-site-url-edit" placeholder="<?= $translator['Site Url']; ?>e.g www.enzerhub.com">
-                </div>
-                <div class="mb-3">
-                  <label for="pp-admin-site-url-edit" class="form-label"><?= $translator['Admin Site Url']; ?></label>
-                  <input type="text" class="form-control" id="pp-admin-site-url-edit" placeholder="<?= $translator['Admin Site Url']; ?>e.g www.enzerhub.com">
-                </div>
-              </div>
-              <div class="col-6">
-
-                <div class="mb-3">
-                  <label for="pp-min-amount-edit" class="form-label"><?= $translator['Min. Amount']; ?></label>
-                  <input type="text" class="form-control" id="pp-min-amount-edit" placeholder="<?= $translator['Min. Amount']; ?>">
-                </div>
-                <div class="mb-3">
-                  <label for="pp-max-amount-edit" class="form-label"><?= $translator['Max. Amount']; ?></label>
-                  <input type="text" class="form-control" id="pp-max-amount-edit" placeholder="<?= $translator['Min. Amount']; ?>">
-                </div>
-                <div class="mb-3">
-                  <label for="pp-countries-edit" class="form-label"><?= $translator['Countries']; ?></label>
-                  <div class="modal-body scrollable-container">
-                    <div style="overflow: scroll;height: 256px;">
-                      <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
-                        <tbody class="pp-payment-countries-edit" id="edit-countries-tbody"></tbody>
-
-                      </table>
-                    </div>
+      </div>
+      <div class="scrollable-container">
+        <div class="card border mb-4">
+          <div class="card-body">
+            <h4 class="card-title">Enzerhub <?= $translator['Payment Platforms']; ?></h4>
+            <form id="pp-personalDetailsForm">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label for="userName" class="form-label"><?= $translator['Partner']; ?> (<span style="color: #a01616;">*</span>)</label>
+                    <input type="text" class="form-control" id="pp-contact" placeholder="Enzerhub" disabled="">
+                  </div>
+                  <div class="mb-3">
+                    <label for="pp-currency-edit" class="form-label"><?= $translator['Currency']; ?> (<span style="color: #a01616;">*</span>)</label>
+                    <select id="pp-currency-edit" class="form-select currency-list"></select>
                   </div>
 
+
+                  <div class="mb-3">
+                    <label for="pp-status-edit" class="form-label"><?= $translator['Status']; ?> (<span style="color: #a01616;">*</span>)</label>
+                    <select id="pp-status-edit" class="form-select">
+                      <option value="active"><?= $translator['Active']; ?></option>
+                      <option value="hidden"><?= $translator['Hidden']; ?></option>
+                      <option value="inactive"><?= $translator['Inactive']; ?></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+
+
+                  <div class="mb-3">
+                    <label for="pp-payment-type-edit" class="form-label"><?= $translator['Payment Type']; ?> (<span style="color: #a01616;">*</span>)</label>
+                    <select id="pp-payment-type-edit" class="form-select pp-payment-types"></select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="pp-fee-edit" class="form-label"><?= $translator['Fee']; ?> (%) (<span style="color: #a01616;">*</span>)</label>
+                    <input type="text" class="form-control" id="pp-fee-edit" placeholder="<?= $translator['Fee']; ?>  (%)">
+                  </div>
+                  <div class="mb-3">
+                    <label for="pp-priority-edit" class="form-label"><?= $translator['Priority']; ?></label>
+                    <input type="text" class="form-control" id="pp-priority-edit" placeholder="<?= $translator['Priority']; ?>">
+                  </div>
+                </div>
+                <div class="col-6">
+
+                  <div class="mb-3">
+                    <label for="pp-info-edit" class="form-label"><?= $translator['Info/Description']; ?></label>
+                    <textarea type="text" class="form-control" id="pp-info-edit" cols="15" rows="10" placeholder="<?= $translator['Info/Description']; ?>" style="height: 235px;"></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label for="pp-site-url-edit" class="form-label"><?= $translator['Site Url']; ?></label>
+                    <input type="text" class="form-control" id="pp-site-url-edit" placeholder="<?= $translator['Site Url']; ?>e.g www.enzerhub.com">
+                  </div>
+                  <div class="mb-3">
+                    <label for="pp-admin-site-url-edit" class="form-label"><?= $translator['Admin Site Url']; ?></label>
+                    <input type="text" class="form-control" id="pp-admin-site-url-edit" placeholder="<?= $translator['Admin Site Url']; ?>e.g www.enzerhub.com">
+                  </div>
+                </div>
+                <div class="col-6">
+
+                  <div class="mb-3">
+                    <label for="pp-min-amount-edit" class="form-label"><?= $translator['Min. Amount']; ?></label>
+                    <input type="text" class="form-control" id="pp-min-amount-edit" placeholder="<?= $translator['Min. Amount']; ?>">
+                  </div>
+                  <div class="mb-3">
+                    <label for="pp-max-amount-edit" class="form-label"><?= $translator['Max. Amount']; ?></label>
+                    <input type="text" class="form-control" id="pp-max-amount-edit" placeholder="<?= $translator['Min. Amount']; ?>">
+                  </div>
+                  <div class="mb-3">
+                    <label for="pp-countries-edit" class="form-label"><?= $translator['Countries']; ?></label>
+                    <div class="modal-body scrollable-container">
+                      <div style="overflow: scroll;height: 256px;">
+                        <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
+                          <tbody class="pp-payment-countries-edit" id="edit-countries-tbody"></tbody>
+
+                        </table>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="d-flex justify-content-end gap-2">
-              <button type="button" class="btn btn-primary" id="editPaymentPlatformBtn"><?= $translator['Save']; ?></button>
-              <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
-            </div>
-          </form>
-        </div>
-
-  
-        <div class="modal-body">
-          <!-- Modal Header -->
-          <div class="text-center mt-2 mb-4">
-            <div class="d-flex justify-content-between align-items-center">
-              <div><?= $translator['Edit PaymentPlatform']; ?></div>
-              <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
-            </div>
-        
+              <div class="d-flex justify-content-end gap-2">
+                <button type="button" class="btn btn-primary" id="editPaymentPlatformBtn"><?= $translator['Save']; ?></button>
+                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
+              </div>
+            </form>
           </div>
 
-          <!-- Form -->
-          <form>
-            <!-- Username Field -->
-            <input type="text" id="paymentids" hidden />
 
-            <div class="col-md-12 mb-3">
-              <select name="currency" class="form-select typecurrency" id="typecurrency">
-                <option value="">-- <?= $translator['Select Currency']; ?> --</option>
-                <option value="AED">AED</option>
-                <option value="AFN">AFN</option>
-                <option value="ALL">ALL</option>
-                <option value="AMD">AMD</option>
-                <option value="ANG">ANG</option>
-                <option value="AOA">AOA</option>
-                <option value="ARS">ARS</option>
-                <option value="AUD">AUD</option>
-                <option value="AWG">AWG</option>
-                <option value="AZN">AZN</option>
-                <option value="BAM">BAM</option>
-                <option value="BBD">BBD</option>
-                <option value="BDT">BDT</option>
-                <option value="BGN">BGN</option>
-                <option value="BHD">BHD</option>
-                <option value="BIF">BIF</option>
-                <option value="BMD">BMD</option>
-                <option value="BND">BND</option>
-                <option value="BOB">BOB</option>
-                <option value="BOV">BOV</option>
-                <option value="BRL">BRL</option>
-                <option value="BSD">BSD</option>
-                <option value="BTN">BTN</option>
-                <option value="BWP">BWP</option>
-                <option value="BYN">BYN</option>
-                <option value="BZD">BZD</option>
-                <option value="CAD">CAD</option>
-                <option value="CDF">CDF</option>
-                <option value="CHE">CHE</option>
-                <option value="CHF">CHF</option>
-                <option value="CHW">CHW</option>
-                <option value="CLF">CLF</option>
-                <option value="CLP">CLP</option>
-                <option value="CNY">CNY</option>
-                <option value="COP">COP</option>
-                <option value="COU">COU</option>
-                <option value="CRC">CRC</option>
-                <option value="CUC">CUC</option>
-                <option value="CUP">CUP</option>
-                <option value="CVE">CVE</option>
-                <option value="CZK">CZK</option>
-                <option value="DJF">DJF</option>
-                <option value="DKK">DKK</option>
-                <option value="DOP">DOP</option>
-                <option value="DZD">DZD</option>
-                <option value="EGP">EGP</option>
-                <option value="ERN">ERN</option>
-                <option value="ETB">ETB</option>
-                <option value="EUR">EUR</option>
-                <option value="FJD">FJD</option>
-                <option value="FKP">FKP</option>
-                <option value="GBP">GBP</option>
-                <option value="GEL">GEL</option>
-                <option value="GHS">GHS</option>
-                <option value="GIP">GIP</option>
-                <option value="GMD">GMD</option>
-                <option value="GNF">GNF</option>
-                <option value="GTQ">GTQ</option>
-                <option value="GYD">GYD</option>
-                <option value="HKD">HKD</option>
-                <option value="HNL">HNL</option>
-                <option value="HRK">HRK</option>
-                <option value="HTG">HTG</option>
-                <option value="HUF">HUF</option>
-                <option value="IDR">IDR</option>
-                <option value="ILS">ILS</option>
-                <option value="INR">INR</option>
-                <option value="IQD">IQD</option>
-                <option value="IRR">IRR</option>
-                <option value="ISK">ISK</option>
-                <option value="JMD">JMD</option>
-                <option value="JOD">JOD</option>
-                <option value="JPY">JPY</option>
-                <option value="KES">KES</option>
-                <option value="KGS">KGS</option>
-                <option value="KHR">KHR</option>
-                <option value="KMF">KMF</option>
-                <option value="KPW">KPW</option>
-                <option value="KRW">KRW</option>
-                <option value="KWD">KWD</option>
-                <option value="KYD">KYD</option>
-                <option value="KZT">KZT</option>
-                <option value="LAK">LAK</option>
-                <option value="LBP">LBP</option>
-                <option value="LKR">LKR</option>
-                <option value="LRD">LRD</option>
-                <option value="LSL">LSL</option>
-                <option value="LYD">LYD</option>
-                <option value="MAD">MAD</option>
-                <option value="MDL">MDL</option>
-                <option value="MGA">MGA</option>
-                <option value="MKD">MKD</option>
-                <option value="MMK">MMK</option>
-                <option value="MNT">MNT</option>
-                <option value="MOP">MOP</option>
-                <option value="MRU">MRU</option>
-                <option value="MUR">MUR</option>
-                <option value="MVR">MVR</option>
-                <option value="MWK">MWK</option>
-                <option value="MXN">MXN</option>
-                <option value="MXV">MXV</option>
-                <option value="MYR">MYR</option>
-                <option value="MZN">MZN</option>
-                <option value="NAD">NAD</option>
-                <option value="NGN">NGN</option>
-                <option value="NIO">NIO</option>
-                <option value="NOK">NOK</option>
-                <option value="NPR">NPR</option>
-                <option value="NZD">NZD</option>
-                <option value="OMR">OMR</option>
-                <option value="PAB">PAB</option>
-                <option value="PEN">PEN</option>
-                <option value="PGK">PGK</option>
-                <option value="PHP">PHP</option>
-                <option value="PKR">PKR</option>
-                <option value="PLN">PLN</option>
-                <option value="PYG">PYG</option>
-                <option value="QAR">QAR</option>
-                <option value="RON">RON</option>
-                <option value="RSD">RSD</option>
-                <option value="RUB">RUB</option>
-                <option value="RWF">RWF</option>
-                <option value="SAR">SAR</option>
-                <option value="SBD">SBD</option>
-                <option value="SCR">SCR</option>
-                <option value="SDG">SDG</option>
-                <option value="SEK">SEK</option>
-                <option value="SGD">SGD</option>
-                <option value="SHP">SHP</option>
-                <option value="SLL">SLL</option>
-                <option value="SOS">SOS</option>
-                <option value="SRD">SRD</option>
-                <option value="SSP">SSP</option>
-                <option value="STN">STN</option>
-                <option value="SVC">SVC</option>
-                <option value="SYP">SYP</option>
-                <option value="SZL">SZL</option>
-                <option value="THB">THB</option>
-                <option value="TJS">TJS</option>
-                <option value="TMT">TMT</option>
-                <option value="TND">TND</option>
-                <option value="TOP">TOP</option>
-                <option value="TRY">TRY</option>
-                <option value="TTD">TTD</option>
-                <option value="TWD">TWD</option>
-                <option value="TZS">TZS</option>
-                <option value="UAH">UAH</option>
-                <option value="UGX">UGX</option>
-                <option value="USD">USD</option>
-                <option value="USN">USN</option>
-                <option value="UYI">UYI</option>
-                <option value="UYU">UYU</option>
-                <option value="UYW">UYW</option>
-                <option value="UZS">UZS</option>
-                <option value="VED">VED</option>
-                <option value="VES">VES</option>
-                <option value="VND">VND</option>
-                <option value="VUV">VUV</option>
-                <option value="WST">WST</option>
-                <option value="XAF">XAF</option>
-                <option value="XAG">XAG</option>
-                <option value="XAU">XAU</option>
-                <option value="XBA">XBA</option>
-                <option value="XBB">XBB</option>
-                <option value="XBC">XBC</option>
-                <option value="XBD">XBD</option>
-                <option value="XCD">XCD</option>
-                <option value="XDR">XDR</option>
-                <option value="XOF">XOF</option>
-                <option value="XPD">XPD</option>
-                <option value="XPF">XPF</option>
-                <option value="XPT">XPT</option>
-                <option value="XSU">XSU</option>
-                <option value="XTS">XTS</option>
-                <option value="XUA">XUA</option>
-                <option value="XXX">XXX</option>
-                <option value="YER">YER</option>
-                <option value="ZAR">ZAR</option>
-                <option value="ZMW">ZMW</option>
-                <option value="ZWL">ZWL</option>
-              </select>
-
-            </div>
-
-            <div class="col-md-12 mb-3">
-              <div class="note-title">
-                <label class="form-label"><?= $translator['Maximun Amount']; ?></label>
-                <input type="text" id="maxiamounts" class="form-control" minlength="25" placeholder="<?= $translator['Maximun Amount']; ?>" />
+          <div class="modal-body">
+            <!-- Modal Header -->
+            <div class="text-center mt-2 mb-4">
+              <div class="d-flex justify-content-between align-items-center">
+                <div><?= $translator['Edit PaymentPlatform']; ?></div>
+                <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
               </div>
+
             </div>
 
-            <div class="col-md-12 mb-3">
-              <div class="note-title">
-                <label class="form-label"><?= $translator['Minimum Amount']; ?></label>
-                <input type="text" id="minamount" class="form-control" minlength="25" placeholder="<?= $translator['Minimum Amount']; ?>" />
+            <!-- Form -->
+            <form>
+              <!-- Username Field -->
+              <input type="text" id="paymentids" hidden />
+
+              <div class="col-md-12 mb-3">
+                <select name="currency" class="form-select typecurrency" id="typecurrency">
+                  <option value="">-- <?= $translator['Select Currency']; ?> --</option>
+                  <option value="AED">AED</option>
+                  <option value="AFN">AFN</option>
+                  <option value="ALL">ALL</option>
+                  <option value="AMD">AMD</option>
+                  <option value="ANG">ANG</option>
+                  <option value="AOA">AOA</option>
+                  <option value="ARS">ARS</option>
+                  <option value="AUD">AUD</option>
+                  <option value="AWG">AWG</option>
+                  <option value="AZN">AZN</option>
+                  <option value="BAM">BAM</option>
+                  <option value="BBD">BBD</option>
+                  <option value="BDT">BDT</option>
+                  <option value="BGN">BGN</option>
+                  <option value="BHD">BHD</option>
+                  <option value="BIF">BIF</option>
+                  <option value="BMD">BMD</option>
+                  <option value="BND">BND</option>
+                  <option value="BOB">BOB</option>
+                  <option value="BOV">BOV</option>
+                  <option value="BRL">BRL</option>
+                  <option value="BSD">BSD</option>
+                  <option value="BTN">BTN</option>
+                  <option value="BWP">BWP</option>
+                  <option value="BYN">BYN</option>
+                  <option value="BZD">BZD</option>
+                  <option value="CAD">CAD</option>
+                  <option value="CDF">CDF</option>
+                  <option value="CHE">CHE</option>
+                  <option value="CHF">CHF</option>
+                  <option value="CHW">CHW</option>
+                  <option value="CLF">CLF</option>
+                  <option value="CLP">CLP</option>
+                  <option value="CNY">CNY</option>
+                  <option value="COP">COP</option>
+                  <option value="COU">COU</option>
+                  <option value="CRC">CRC</option>
+                  <option value="CUC">CUC</option>
+                  <option value="CUP">CUP</option>
+                  <option value="CVE">CVE</option>
+                  <option value="CZK">CZK</option>
+                  <option value="DJF">DJF</option>
+                  <option value="DKK">DKK</option>
+                  <option value="DOP">DOP</option>
+                  <option value="DZD">DZD</option>
+                  <option value="EGP">EGP</option>
+                  <option value="ERN">ERN</option>
+                  <option value="ETB">ETB</option>
+                  <option value="EUR">EUR</option>
+                  <option value="FJD">FJD</option>
+                  <option value="FKP">FKP</option>
+                  <option value="GBP">GBP</option>
+                  <option value="GEL">GEL</option>
+                  <option value="GHS">GHS</option>
+                  <option value="GIP">GIP</option>
+                  <option value="GMD">GMD</option>
+                  <option value="GNF">GNF</option>
+                  <option value="GTQ">GTQ</option>
+                  <option value="GYD">GYD</option>
+                  <option value="HKD">HKD</option>
+                  <option value="HNL">HNL</option>
+                  <option value="HRK">HRK</option>
+                  <option value="HTG">HTG</option>
+                  <option value="HUF">HUF</option>
+                  <option value="IDR">IDR</option>
+                  <option value="ILS">ILS</option>
+                  <option value="INR">INR</option>
+                  <option value="IQD">IQD</option>
+                  <option value="IRR">IRR</option>
+                  <option value="ISK">ISK</option>
+                  <option value="JMD">JMD</option>
+                  <option value="JOD">JOD</option>
+                  <option value="JPY">JPY</option>
+                  <option value="KES">KES</option>
+                  <option value="KGS">KGS</option>
+                  <option value="KHR">KHR</option>
+                  <option value="KMF">KMF</option>
+                  <option value="KPW">KPW</option>
+                  <option value="KRW">KRW</option>
+                  <option value="KWD">KWD</option>
+                  <option value="KYD">KYD</option>
+                  <option value="KZT">KZT</option>
+                  <option value="LAK">LAK</option>
+                  <option value="LBP">LBP</option>
+                  <option value="LKR">LKR</option>
+                  <option value="LRD">LRD</option>
+                  <option value="LSL">LSL</option>
+                  <option value="LYD">LYD</option>
+                  <option value="MAD">MAD</option>
+                  <option value="MDL">MDL</option>
+                  <option value="MGA">MGA</option>
+                  <option value="MKD">MKD</option>
+                  <option value="MMK">MMK</option>
+                  <option value="MNT">MNT</option>
+                  <option value="MOP">MOP</option>
+                  <option value="MRU">MRU</option>
+                  <option value="MUR">MUR</option>
+                  <option value="MVR">MVR</option>
+                  <option value="MWK">MWK</option>
+                  <option value="MXN">MXN</option>
+                  <option value="MXV">MXV</option>
+                  <option value="MYR">MYR</option>
+                  <option value="MZN">MZN</option>
+                  <option value="NAD">NAD</option>
+                  <option value="NGN">NGN</option>
+                  <option value="NIO">NIO</option>
+                  <option value="NOK">NOK</option>
+                  <option value="NPR">NPR</option>
+                  <option value="NZD">NZD</option>
+                  <option value="OMR">OMR</option>
+                  <option value="PAB">PAB</option>
+                  <option value="PEN">PEN</option>
+                  <option value="PGK">PGK</option>
+                  <option value="PHP">PHP</option>
+                  <option value="PKR">PKR</option>
+                  <option value="PLN">PLN</option>
+                  <option value="PYG">PYG</option>
+                  <option value="QAR">QAR</option>
+                  <option value="RON">RON</option>
+                  <option value="RSD">RSD</option>
+                  <option value="RUB">RUB</option>
+                  <option value="RWF">RWF</option>
+                  <option value="SAR">SAR</option>
+                  <option value="SBD">SBD</option>
+                  <option value="SCR">SCR</option>
+                  <option value="SDG">SDG</option>
+                  <option value="SEK">SEK</option>
+                  <option value="SGD">SGD</option>
+                  <option value="SHP">SHP</option>
+                  <option value="SLL">SLL</option>
+                  <option value="SOS">SOS</option>
+                  <option value="SRD">SRD</option>
+                  <option value="SSP">SSP</option>
+                  <option value="STN">STN</option>
+                  <option value="SVC">SVC</option>
+                  <option value="SYP">SYP</option>
+                  <option value="SZL">SZL</option>
+                  <option value="THB">THB</option>
+                  <option value="TJS">TJS</option>
+                  <option value="TMT">TMT</option>
+                  <option value="TND">TND</option>
+                  <option value="TOP">TOP</option>
+                  <option value="TRY">TRY</option>
+                  <option value="TTD">TTD</option>
+                  <option value="TWD">TWD</option>
+                  <option value="TZS">TZS</option>
+                  <option value="UAH">UAH</option>
+                  <option value="UGX">UGX</option>
+                  <option value="USD">USD</option>
+                  <option value="USN">USN</option>
+                  <option value="UYI">UYI</option>
+                  <option value="UYU">UYU</option>
+                  <option value="UYW">UYW</option>
+                  <option value="UZS">UZS</option>
+                  <option value="VED">VED</option>
+                  <option value="VES">VES</option>
+                  <option value="VND">VND</option>
+                  <option value="VUV">VUV</option>
+                  <option value="WST">WST</option>
+                  <option value="XAF">XAF</option>
+                  <option value="XAG">XAG</option>
+                  <option value="XAU">XAU</option>
+                  <option value="XBA">XBA</option>
+                  <option value="XBB">XBB</option>
+                  <option value="XBC">XBC</option>
+                  <option value="XBD">XBD</option>
+                  <option value="XCD">XCD</option>
+                  <option value="XDR">XDR</option>
+                  <option value="XOF">XOF</option>
+                  <option value="XPD">XPD</option>
+                  <option value="XPF">XPF</option>
+                  <option value="XPT">XPT</option>
+                  <option value="XSU">XSU</option>
+                  <option value="XTS">XTS</option>
+                  <option value="XUA">XUA</option>
+                  <option value="XXX">XXX</option>
+                  <option value="YER">YER</option>
+                  <option value="ZAR">ZAR</option>
+                  <option value="ZMW">ZMW</option>
+                  <option value="ZWL">ZWL</option>
+                </select>
+
               </div>
-            </div>
 
-            <div class="form-floating mb-3">
-              <select name="deposit" class="form-select form-control borders border-infos statecurrent form-reset">
-                <option value="">-- <?= $translator['Select Status']; ?> --</option>
-                <option value="active"><?= $translator['Active']; ?></option>
-                <option value="inactive"><?= $translator['Inactive']; ?></option>
-                <option value="hidden"><?= $translator['Hidden']; ?></option>
-              </select>
-            </div>
-
-            <br />
-            <div class="form-floating mb-3">
-              <input name="agentname" type="text" class="form-control border sendby" placeholder="Approved by" value="<?php echo $fullname['full_name']; ?>" readonly />
-              <label>
-                <!-- <i class="bx bx-message me-2 fs-4 text-infod"></i> -->
-                <span class="border-start ps-3"><?= $translator['Approved By']; ?></span>
-              </label>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="d-md-flex align-items-center">
-
-              <div class="mt-3 mt-md-0 ms-auto">
-                <button type="button" class="btn hstack gap-6 updatepaybtn" style="border: solid 1px #ccc;" data-bss-dismiss="modal" aria-label="Close">
-                  <i class="bx bx-send loaderpayanup"></i>
-                  <?= $translator['Submit']; ?>
-                </button>
+              <div class="col-md-12 mb-3">
+                <div class="note-title">
+                  <label class="form-label"><?= $translator['Maximun Amount']; ?></label>
+                  <input type="text" id="maxiamounts" class="form-control" minlength="25" placeholder="<?= $translator['Maximun Amount']; ?>" />
+                </div>
               </div>
-            </div>
-          </form>
+
+              <div class="col-md-12 mb-3">
+                <div class="note-title">
+                  <label class="form-label"><?= $translator['Minimum Amount']; ?></label>
+                  <input type="text" id="minamount" class="form-control" minlength="25" placeholder="<?= $translator['Minimum Amount']; ?>" />
+                </div>
+              </div>
+
+              <div class="form-floating mb-3">
+                <select name="deposit" class="form-select form-control borders border-infos statecurrent form-reset">
+                  <option value="">-- <?= $translator['Select Status']; ?> --</option>
+                  <option value="active"><?= $translator['Active']; ?></option>
+                  <option value="inactive"><?= $translator['Inactive']; ?></option>
+                  <option value="hidden"><?= $translator['Hidden']; ?></option>
+                </select>
+              </div>
+
+              <br />
+              <div class="form-floating mb-3">
+                <input name="agentname" type="text" class="form-control border sendby" placeholder="Approved by" value="<?php echo $fullname['full_name']; ?>" readonly />
+                <label>
+                  <!-- <i class="bx bx-message me-2 fs-4 text-infod"></i> -->
+                  <span class="border-start ps-3"><?= $translator['Approved By']; ?></span>
+                </label>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="d-md-flex align-items-center">
+
+                <div class="mt-3 mt-md-0 ms-auto">
+                  <button type="button" class="btn hstack gap-6 updatepaybtn" style="border: solid 1px #ccc;" data-bss-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-send loaderpayanup"></i>
+                    <?= $translator['Submit']; ?>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
+      <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-  </div>

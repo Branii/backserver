@@ -358,6 +358,23 @@
 
 </style>
 
+
+<span id="trans-user-does-not-exist" data-translation="<?= $translator['UserDoesNotExist']; ?>" style="display:none;"></span>
+
+<span id="trans-select-data-fields" data-translation="<?= $translator['SelectDataFields']; ?>" style="display:none;"></span>
+
+<span id="trans-alert" data-translation="<?= $translator['Alert']; ?>" style="display:none;"></span>
+<span id="trans-user-does-not-exist" data-translation="<?= $translator['UserDoesNotExist']; ?>" style="display:none;"></span>
+
+<span id="trans-heads-upp" data-translation="<?= $translator['HeadsUp']; ?>" style="display:none;"></span>
+<span id="trans-failed-inactivee" data-translation="<?= $translator['FailedToSetInactive']; ?>" style="display:none;"></span>
+<span id="trans-inactive-successs" data-translation="<?= $translator['SetInactiveSuccess']; ?>" style="display:none;"></span>
+<span id="trans-select-fieldss" data-translation="<?= $translator['SelectFilterFields']; ?>" style="display:none;"></span>
+<span id="trans-successs" data-translation="<?= $translator['Success']; ?>" style="display:none;"></span>
+<span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
+<span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
+
+
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">

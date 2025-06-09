@@ -11,6 +11,105 @@ $(function () {
       });
   }
 
+  
+      const translations = {
+  headsUp: document.getElementById("trans-heads-up").dataset.translation,
+  failedInactive: document.getElementById("trans-failed-inactive").dataset.translation,
+  inactiveSuccess: document.getElementById("trans-inactive-success").dataset.translation,
+  selectFields: document.getElementById("trans-select-fields").dataset.translation,
+  success: document.getElementById("trans-success").dataset.translation,
+  noChanges: document.getElementById("trans-no-changes-made").dataset.translation,
+  alertTitle: document.getElementById("trans-alert").dataset.translation,
+  userDoesNotExist: document.getElementById("trans-user-does-not-exist").dataset.translation,
+  errorTitle: document.getElementById("trans-error").dataset.translation,
+  errorMessage: document.getElementById("trans-generic-error").dataset.translation,
+  noPages: document.getElementById("trans-no-pages").dataset.translation,
+  mainPageNotice: document.getElementById("trans-main-page-notice").dataset.translation,
+  success: document.getElementById("trans-success").dataset.translation,
+  agentAdded: document.getElementById("trans-agent-added").dataset.translation,
+  quotaUpdated: document.getElementById("trans-quota-updated").dataset.translation,
+  blocked: document.getElementById("trans-blocked").dataset.translation,
+  alreadyBlocked: document.getElementById("trans-already-blocked").dataset.translation,
+  delete: document.getElementById("trans-delete").dataset.translation,
+  invalidOperation: document.getElementById("trans-invalid-operation").dataset.translation,
+  error: document.getElementById("trans-error").dataset.translation,
+  genericError: document.getElementById("trans-generic-error").dataset.translation,
+  requestError: document.getElementById("trans-request-error").dataset.translation,
+  enabled: document.getElementById("trans-enabled").dataset.translation,
+  lotteryEnabled: document.getElementById("trans-lottery-enabled").dataset.translation,
+  disabled: document.getElementById("trans-disabled").dataset.translation,
+  lotteryDisabled: document.getElementById("trans-lottery-disabled").dataset.translation,
+  errorProcessing: document.getElementById("trans-error-processing").dataset.translation,
+  successful: document.getElementById("trans-successful").dataset.translation,
+  recordsUpdated: document.getElementById("trans-records-updated").dataset.translation,
+  notDone: document.getElementById("trans-not-done").dataset.translation,
+  ipUpdated: document.getElementById("trans-ip-updated").dataset.translation,
+  noAgent: document.getElementById("trans-no-agent").dataset.translation,
+  noAgentMessage: document.getElementById("trans-no-agent-message").dataset.translation,
+   emailExists: document.getElementById("trans-email-exists").dataset.translation,
+  usernamePattern: document.getElementById("trans-username-pattern").dataset.translation,
+  invalidEmail: document.getElementById("trans-invalid-email").dataset.translation,
+  passwordNumber: document.getElementById("trans-password-number").dataset.translation,
+  passwordCase: document.getElementById("trans-password-case").dataset.translation,
+  passwordSpecial: document.getElementById("trans-password-special").dataset.translation,
+  confirmPassword: document.getElementById("trans-confirm-password").dataset.translation,
+  passwordLength: document.getElementById("trans-password-length").dataset.translation,
+  passwordRequired: document.getElementById("trans-password-required").dataset.translation,
+  
+};
+
+
+const headsUpText = document.getElementById("trans-heads-up").textContent;
+const selectFieldsText = document.getElementById("trans-select-fields").textContent;
+
+// showToast(headsUpText, selectFieldsText, "info");
+// Use the correct object properties:
+// showToast(translations.noPages, translations.mainPageNotice, "info");
+
+
+// showToast(title, message, "info");
+
+
+
+// showToast(errorTitle, errorMessage, "info");
+
+
+// showToast(headsUp, noChanges, "info");
+
+
+// showToast(translations.headsUp, translations.failedInactive, "danger");
+
+// showToast(translations.headsUp, translations.inactiveSuccess, "success");
+
+// showToast(translations.headsUp, translations.selectFields, "info");
+
+
+
+
+
+// showToast(alertTitle, userDoesNotExist, "info");
+
+
+
+// showToast(headsUp, allFieldsRequired, "info");
+
+// showToast(translations.success, translations.agentAdded, "success");
+// showToast(translations.success, translations.quotaUpdated, "success");
+// showToast(translations.blocked, translations.alreadyBlocked, "info");
+// showToast(translations.delete, translations.invalidOperation, "error");
+// showToast(translations.error, translations.invalidOperation, "error");
+// showToast(translations.error, translations.genericError, "info");
+// showToast(translations.error, translations.requestError, "error");
+// showToast(translations.enabled, translations.lotteryEnabled, "info");
+// showToast(translations.disabled, translations.lotteryDisabled, "error");
+// showToast(translations.error, translations.errorProcessing, "error");
+// showToast(translations.successful, translations.recordsUpdated, "info");
+// showToast(translations.notDone, translations.alreadyBlocked, "info");
+// showToast(translations.completed, translations.ipUpdated, "info");
+// showToast(translations.noAgent, translations.noAgentMessage, "info");
+
+
+
   const UserlogsData = (data) => {
       let html = "";
 
@@ -183,7 +282,9 @@ $(function () {
 
   $(document).on("click", ".executeuserlogs", function () {
       if ($("#userloginput").val() == "" && $(".startdatelog").val() == "") {
-          showToast("Heads up!!", "Select one or more data fields to filter", "info");
+        //   showToast("Heads up!!", "Select one or more data fields to filter", "info");
+        
+         showToast(headsUpText, selectFieldsText, "info");
           return;
       }
       const usernamelog = $("#userloginput").val();

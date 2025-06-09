@@ -11,6 +11,11 @@ $(function () {
         duration: 3000, // auto-dismiss after 3s
       });
     }
+
+    const headsUpText = document.getElementById("trans-heads-up").textContent;
+const selectFieldsText = document.getElementById("trans-select-fields").textContent;
+
+// showToast(headsUpText, selectFieldsText, "info");
     const bankcarddata = (data) => { 
         
         const states = {
@@ -230,7 +235,8 @@ const searchBankList = (currentPage) => {
     const pageLimit    = 20;
 
     if(userID.length == "" && bankType.length == "" && cardNumber.length == "" && state.length == ""){
-      showToast("Field Required","Please select at least one field", "info");
+      // showToast("Field Required","Please select at least one field", "info");
+      showToast(headsUpText, selectFieldsText, "info");
       return;
   }
 $.ajax({

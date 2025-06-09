@@ -19,65 +19,77 @@ const EmailbackupText = getTranslation("emailbackup-text", "Email Backup");
 const DeletebackupText = getTranslation("deletebackup-text", "Delete Backup");
 
 
+const backupTable = (data) => {
+  let html = "";
 
+  data.forEach((item) => {
+    // language translate starts here
+    const status = item.backup_status?.toLowerCase() || '';
+    let badgeClass = '';
+    let translatedStatus = '';
 
-    const backupTable = (data) => {
-        let html = "";
-      
-        
-        data.forEach((item) => {
-          html += `
-                    <tr class="trow">
-                        <td>${item.backup_id}</td>
+    switch (status) {
+      case 'active':
+        badgeClass = 'bg-success-subtle text-success';
+        translatedStatus = document.getElementById("trans-backup-active").textContent;
+        break;
+      case 'inactive':
+        badgeClass = 'bg-secondary-subtle text-secondary';
+        translatedStatus = document.getElementById("trans-backup-inactive").textContent;
+        break;
+      case 'suspended':
+        badgeClass = 'bg-warning-subtle text-warning';
+        translatedStatus = document.getElementById("trans-backup-suspended").textContent;
+        break;
+      default:
+        badgeClass = 'bg-dark-subtle text-dark';
+        translatedStatus = item.backup_status || 'Unknown';
+    }
+    // language translate ends here
 
-                        <td> 
-                           <div class="d-flex align-items-center"> <i class='bx bx-sushi' style="font-size:30px"></i> </div>
-                        </td>
-    
-                        <td>${item.backup_name}</td>
-                        <td>${item.backup_type}</td>
-                        <td>${item.backup_path}</td>
-                        <td>${item.backup_size}</td>
-                        <td>${item.encryption}</td>
-                        <td>${item.backup_date}</td>
-                        <td>${item.backup_time}</td>
-                        <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${item.backup_status}</span></td>
-                        <td>
-                        <div class="dropdown dropstart">
-                          <a href="javascript:void(0)" class="text-muted" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                             <i value='' class='bx bx-dots-vertical-rounded'' style='color:#868c87;font-size:18px;cursor:pointer;'></i>
-                          </a>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li value='${JSON.stringify(
-                              item
-                            )}' class='admin_pro'>
-                              <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view-profile">
-                                <i class='bx bx-refresh' style='font-size:20px;'></i>${BackupText}
-                              </a>
-                            </li>
-                            <li value='${JSON.stringify(
-                              item
-                            )}' class='admin_logs'>
-                              <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#view-activity-logs">
-                                <i class='bx bx-envelope' style='font-size:20px;'></i>${EmailbackupText}
-                              </a>
-                            </li>
-                             <li value='${JSON.stringify(
-                              item
-                            )}' class='admin_per'>
-                              <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#view-permissions">
-                                <i class='bx bx-trash' style='font-size:20px;'></i>${DeletebackupText}
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      </td>
-                      
-                    </tr>
-                `;
-        });
-        return html;
-    };
+    html += `
+      <tr class="trow">
+        <td>${item.backup_id}</td>
+        <td><div class="d-flex align-items-center"><i class='bx bx-sushi' style="font-size:30px"></i></div></td>
+        <td>${item.backup_name}</td>
+        <td>${item.backup_type}</td>
+        <td>${item.backup_path}</td>
+        <td>${item.backup_size}</td>
+        <td>${item.encryption}</td>
+        <td>${item.backup_date}</td>
+        <td>${item.backup_time}</td>
+        <td><span class="badge fw-semibold py-1 w-85 ${badgeClass}">${translatedStatus}</span></td>
+        <td>
+          <div class="dropdown dropstart">
+            <a href="javascript:void(0)" class="text-muted" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+              <i value='' class='bx bx-dots-vertical-rounded' style='color:#868c87;font-size:18px;cursor:pointer;'></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li value='${JSON.stringify(item)}' class='admin_pro'>
+                <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view-profile">
+                  <i class='bx bx-refresh' style='font-size:20px;'></i>${BackupText}
+                </a>
+              </li>
+              <li value='${JSON.stringify(item)}' class='admin_logs'>
+                <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view-activity-logs">
+                  <i class='bx bx-envelope' style='font-size:20px;'></i>${EmailbackupText}
+                </a>
+              </li>
+              <li value='${JSON.stringify(item)}' class='admin_per'>
+                <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view-permissions">
+                  <i class='bx bx-trash' style='font-size:20px;'></i>${DeletebackupText}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    `;
+  });
+
+  return html;
+};
+
 
     const renderAllBackups = (data) => {
         var html = backupTable(data);

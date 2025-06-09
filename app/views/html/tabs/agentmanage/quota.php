@@ -197,6 +197,13 @@
     }
 </style>
 
+
+<span id="allfields_text" style="display: none;"><?= $translator['ALL_FIELDS_REQUIRED']; ?></span>
+<span id="quota_text" style="display: none;"><?= $translator['ENTER_QUOTA_VALUE']; ?></span>
+<span id="success_text" style="display: none;"><?= $translator['SUCCESS']; ?></span>
+<span id="quota_success" style="display: none;"><?= $translator['QUOTA_UPDATED']; ?></span>
+
+
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">

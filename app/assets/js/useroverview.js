@@ -10,6 +10,15 @@ $(function () {
         });
     }
   
+
+
+const headsUpText = document.getElementById("trans-heads-up").textContent;
+const selectFieldsText = document.getElementById("trans-select-fields").textContent;
+
+// showToast(headsUpText, selectFieldsText, "info");
+
+// showToast(headsUp, selectFields, "info");
+
     const UserOverviewData = (data) => {
         let html = "";
   
@@ -197,7 +206,8 @@ $(function () {
   
     $(document).on("click", ".executeuseroverview", function () {
         if ($("#userloginputs").val() == "" && $(".startdateover").val() == "") {
-            showToast("Heads up!!", "Select one or more data fields to filter", "info");
+            // showToast("Heads up!!", "Select one or more data fields to filter", "info");
+        showToast(headsUpText, selectFieldsText, "info");
             return;
         }
         const usernamelog = $(".userover").val();

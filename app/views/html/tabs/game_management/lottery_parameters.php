@@ -519,6 +519,12 @@ foreach ($gameOptions as $game) {
 <span id="trans-partner-name" data-translation="<?= htmlspecialchars($translator['Partner Name'] ?? 'Partner Name') ?>" style="display:none;"></span>
 <span id="trans-SelectGame" data-translation="<?= $translator['Select Game'] ?>"></span>
 
+<span id="success_text" style="display: none;"><?= $translator['SUCCESS']; ?></span>
+<span id="updated_successfully" style="display: none;"><?= $translator['UPDATED_SUCCESSFULLY']; ?></span>
+<span id="game_state_updated" style="display: none;"><?= $translator['GAME_STATE_UPDATED']; ?></span>
+<span id="no_changes_made" style="display: none;"><?= $translator['NO_CHANGES_MADE']; ?></span>
+
+
 <span id="savee-text" data-translation="<?= $translator['Save'] ?? 'Save'; ?>" style="display:none;"></span>
 <div class="card w-100 position-relative overflow-hidden">
 

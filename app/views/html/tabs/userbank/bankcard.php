@@ -267,6 +267,16 @@
     }
 </style>
 
+
+
+<span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
+<span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
+
+
+
+
+
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Bank Card List']; ?></h4>

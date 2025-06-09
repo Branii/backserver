@@ -12,6 +12,15 @@ $(function () {
       });
   };
 
+
+const headsUpText = document.getElementById("trans-heads-up").textContent;
+const selectFieldsText = document.getElementById("trans-select-fields").textContent;
+
+// showToast(headsUpText, selectFieldsText, "info");
+
+// showToast(headsUp, selectFieldsMessage, "info");
+
+
   const UserlinksData = (data) => {
       let html = "";
 
@@ -168,7 +177,11 @@ $(function () {
   $(document).on("click", ".executeusereferal", function () {
       if ($("#linkinput").val() == "" && $(".linkstart").val() == "") {
           //   $("#danger-userlinks").modal("show");
-          showToast("Heads up!!", "Select one or more data fields to filter", "info");
+ 
+ showToast(headsUpText, selectFieldsText, "info");
+          
+
+        //   showToast("Heads up!!", "Select one or more data fields to filter", "info");
           return;
       }
       const username = $("#linkinput").val();

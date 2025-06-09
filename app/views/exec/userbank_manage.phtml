@@ -30,11 +30,14 @@ if ($flag == "userpaymentmethod") {
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $result = UserBankManageModel::FetchuserpaymentData($page, $limit);
     echo json_encode($result);
+    return;
 }
+
 if ($flag == "getuserpaymentmethod") {
     $uid = isset($this->viewData['uid']) ? (int) $this->viewData['uid'] : "";
     $result = UserBankManageModel::fetchUserPaymentByUid($uid);
     echo json_encode($result);
+        return;
 }
 
 if ($flag == "inactivepayment") {
@@ -42,7 +45,10 @@ if ($flag == "inactivepayment") {
     $bank_id = isset($this->viewData['bank_id']) ? (int) $this->viewData['bank_id'] : "";
     $result = UserBankManageModel::DeleteUserPaymentInactiveByUid($uid, $bank_id);
     echo json_encode($result);
+        return;
 }
+
+
 // filter data
 if ($flag == "filteruserpayments") {
     $username = isset($this->viewData['username']) ? trim($this->viewData['username']) : '';
@@ -71,6 +77,8 @@ if ($flag == "filteruserpayments") {
     ];
 
     echo json_encode($response);
+        return;
+    
 }
 
 //search users

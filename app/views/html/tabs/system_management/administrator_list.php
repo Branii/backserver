@@ -219,13 +219,144 @@
   .arr {
     color: #909aa9;
     margin: 0px 1rem;
-    }
+  }
+
+  .input-wrapper {
+    position: relative;
+  }
+
+  #adminuserAccountDropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1000;
+    background: white;
+    width: 100%;
+  }
+
+  #maskadmin {
+    position: relative;
+    height: 530px;
+    overflow-y: auto;
+  }
 </style>
 
-  
+<style>
+  .search-icon-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  .search-icon-overlay {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 4px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+
+  .search-icon-overlay .spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-top: 2px solid #333;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<style>
+  /* Zoom animation */
+  .modal.zoom .modal-dialog {
+    transform: scale(0.7);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .modal.zoom.show .modal-dialog {
+    transform: scale(1);
+  }
+
+  /* Shake effect */
+  .modal.shake .modal-dialog {
+    animation: shake 2s;
+  }
+
+  @keyframes shake {
+
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+      transform: translateX(-10px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+      transform: translateX(10px);
+    }
+  }
+</style>
+
+
+<span id="translation-type-admin" data-translation="<?= $translator['Please select or type an admin to search']; ?>" style="display:none;"></span>
+
+
+<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display:none;"></span>
+<span id="trans-new-user" data-translation="<?= $translator['NewUserAdded']; ?>" style="display:none;"></span>
+<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp']; ?>" style="display:none;"></span>
+<span id="trans-mandatory" data-translation="<?= $translator['AllFieldsMandatory']; ?>" style="display:none;"></span>
+
+
 <span id="viewprofile-text" data-translation="<?= $translator['View Profile'] ?? 'View Profile'; ?>" style="display:none;"></span>
 <span id="activity-text" data-translation="<?= $translator['Activity Logs'] ?? 'Activity Logs'; ?>" style="display:none;"></span>
 <span id="permission-text" data-translation="<?= $translator['Permissions'] ?? 'Permissions'; ?>" style="display:none;"></span>
+<!-- Hidden translatable message span -->
+<span id="translation-info" data-msg="<?= $translator['Information'] ?>" style="display:none;"></span>
+<span id="translation-noperm" data-msg="<?= $translator['No permissions selected. Update not sent.'] ?>" style="display:none;"></span>
+<span id="translation-select-dates" data-msg="<?= $translator['Select date(s) to filter'] ?>" style="display:none;"></span>
+
+<span id="status-active" data-msg="<?= $translator['active'] ?>"></span>
+<span id="status-suspended" data-msg="<?= $translator['suspended'] ?>"></span>
+<span id="status-deactivated" data-msg="<?= $translator['deactivated'] ?>"></span>
+
+<span id="msg-success" data-msg="<?= $translator['permissions_success'] ?>"></span>
+<span id="msg-error" data-msg="<?= $translator['permissions_error'] ?>"></span>
+<span id="msg-title-success" data-msg="<?= $translator['success'] ?>"></span>
+<span id="msg-title-error" data-msg="<?= $translator['error'] ?>"></span>
+
+
+<span id="trans-heads-up-title" style="display:none;"><?php echo $translator['HEADS_UP_TITLE']; ?></span>
+<span id="trans-select-admin-msg" style="display:none;"><?php echo $translator['SELECT_ADMIN_MSG']; ?></span>
+
+<span id="trans-status-active" style="display:none;"><?php echo $translator['STATUS_ACTIVE']; ?></span>
+<span id="trans-status-suspended" style="display:none;"><?php echo $translator['STATUS_SUSPENDED']; ?></span>
+<span id="trans-status-deactivated" style="display:none;"><?php echo $translator['STATUS_DEACTIVATED']; ?></span>
+
+
+
+
 
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -238,10 +369,30 @@
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-
+        <!-- <input type="hidden" class="userIdtrans" /> -->
         <div class="input-group mb-3">
-          <span class="input-group-text" id="basic-addon1" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search' style="font-size:18px;"></i></span>
-          <input type="text" class="form-control queryholder" placeholder="<?= $translator['Search']; ?>..." aria-label="Username" aria-describedby="basic-addon1" />
+          <!-- <span class="input-group-text  Searchuseradmintrans" id="basic-addon1" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search Searchuseradmintrans' style="font-size:18px;"></i></span> -->
+          <span class="input-group-text search-icon-wrapper" id="basic-addon1" style="background-color:rgb(238,238,238,.4); border:solid 1px #ddd;">
+            <i class='bx bx-search search-icon' style="font-size:18px;"></i>
+            <div class="search-icon-overlay">
+              <div class="spinner"></div>
+            </div>
+          </span>
+
+
+          <!-- <input type="text" class="form-control queryholder" placeholder="<?= $translator['Search']; ?>..." aria-label="Username" aria-describedby="basic-addon1" /> -->
+          <!-- Input field to search for admins -->
+          <input name="transuserpayment" class="form-control" id="transuseradmin"
+            placeholder="<?= $translator['Search']; ?>..." autocomplete="off" />
+
+          <input type="hidden" class="adminuserIdtrans" />
+
+          <select class="form-control" size="5"
+            style="display: none; position: absolute; z-index: 1000;"
+            id="adminuserAccountDropdown">
+          </select>
+
+
         </div>
 
 
@@ -266,8 +417,14 @@
         <button type="button" class="btn bg-white-subtle" value="right" data-bs-placement="top" data-bs-title="Add new">
           ::
         </button>
+        <button type="button" class="btn bg-white-subtle player refreshadminuser" value="" aria-label="Refresh"
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+          <i class="bx bx-refresh" style="font-size: 20px;"></i>
+        </button>
+
+
         <button type="button" class="btn bg-white-subtle" value="end" aria-label="Execute" data-bs-toggle="modal" data-bs-target="#add-new"
-           data-bs-placement="top" data-bs-title="Add new">
+          data-bs-placement="top" data-bs-title="Add new">
           <i class='bx bx-plus' style="font-size:20px"></i>
         </button>
       </div>
@@ -277,8 +434,8 @@
   </div>
 
   <div class="card-body p-4">
-    <div class="table-responsive mb-4 border rounded-1 table-wrappereAdmin table-wrapper" id="mask" style="height:530px;overflow-y:scroll;">
-      <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
+    <div class="table-responsive mb-4 border rounded-1 table-wrappereAdmin table-wrapper" id="maskadmin" style="position: relative; height:530px; overflow-y:scroll;">
+      <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
         <thead class="text-dark fs-4 tbl-headerAdmin">
           <tr class="headrow">
             <th>
@@ -300,7 +457,7 @@
               <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Mobile Number']; ?></h6>
             </th>
             <th>
-              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
+              <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Two Factor Enabled']; ?></h6>
             </th>
             <th>
               <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Activity Role']; ?></h6>
@@ -314,17 +471,16 @@
           </tr>
         </thead>
         <tbody id="dataContainerAdmin" class="tbl-contentadmin">
-
           <tr class="no-resultsAdmin">
-            <td colspan="9">
-            <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
+            <td colspan="10" class="text-center">
+              <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
             </td>
           </tr>
-
         </tbody>
       </table>
-    </div>
+    </div> <!-- ✅ Correctly closing #mask wrapper -->
   </div>
+
 
   <div class="px-4 py-3 border-top pager">
     <span class="top-left-btn">
@@ -506,7 +662,7 @@
                 <div class="mt-3 mt-md-0 ms-auto">
                   <button type="submit" class="btn hstack gap-6 fullsubmit" style="border:solid 1px #ccc">
                     <i class="ti ti-send me-2 fs-4"></i>
-                  <?= $translator['Submit']; ?>
+                    <?= $translator['Submit']; ?>
                   </button>
                 </div>
               </div>
@@ -609,28 +765,36 @@
   </div>
 </div>
 
-<div id="view-permissions" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
+
+<!-- //permission card end-->
+<div id="view-permissions" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content" style="padding:20px">
       <div class="d-flex justify-content-between">
-        <h4 class="card-title adminName">
-        </h4>
-
-        <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
+        <h4 class="card-title adminName"></h4>
+        <div class="d-flex align-items-center">
+          <input class="form-check-input" type="checkbox" id="selectAllPermissions" name="permissions[]" value="view_users">
+          <i class='bx bx-message-square-x tclose ms-3'
+            style='color:#868c87; font-size:25px; cursor:pointer;'
+            data-bs-dismiss="modal"
+            aria-label="Close"></i>
+        </div>
       </div>
       <p></p>
-      <div class="permissionholder" style="overflow-y:scroll;max-height:500px;">
-
-
+      <div class="permissionholder" style="overflow-y:scroll; max-height:500px;">
+        <!-- Permissions content goes here -->
       </div>
       <div class="col-12">
         <div class="d-flex align-items-center justify-content-end mt-4 gap-6">
-          <button class="btn bg-danger-subtle text-danger updateperm"><?= $translator['Update permissions']; ?></button>
+          <button class="btn bg-danger-subtle text-danger updateperm">
+            <?= $translator['Update permissions']; ?>
+          </button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 
 <div class="modal fade" id="view-activity-logs" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="bs-example-modal-lg" aria-hidden="true">
@@ -642,8 +806,6 @@
         </h5>
         <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
       </div>
-
-
       <div class="px-4 py-3 border-bottom pager1">
         <span class="top-left-btn">
           <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
@@ -661,8 +823,6 @@
             <div class="input-group mb-3">
               <input type="date" class="form-control queryholder dateto" style="z-index:9999" />
             </div>
-
-
           </div>
         </span>
         <span class="top-center" aria-label=" navigation example">

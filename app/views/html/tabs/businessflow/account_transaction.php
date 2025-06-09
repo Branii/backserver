@@ -232,7 +232,19 @@
     }
 
 </style>
+<!-- Toast Messages Translations (Hidden Elements) -->
+<span id="trans-heads-up" data-translation="<?= htmlspecialchars($translator['HeadsUp'] ?? 'Heads up!') ?>" style="display:none;"></span>
+<span id="trans-failed-inactive" data-translation="<?= htmlspecialchars($translator['FailedToSetInactive'] ?? 'Failed to set inactive') ?>" style="display:none;"></span>
+<span id="trans-inactive-success" data-translation="<?= htmlspecialchars($translator['SetInactiveSuccess'] ?? 'Set to inactive successfully') ?>" style="display:none;"></span>
+<span id="trans-select-data-fields" data-translation="<?= htmlspecialchars($translator['SelectFilterFields'] ?? 'Select one or more data fields to filter') ?>" style="display:none;"></span>
+<span id="trans-success" data-translation="<?= htmlspecialchars($translator['Success'] ?? 'Success') ?>" style="display:none;"></span>
+
+<!-- Field Label Translations (Hidden Elements) -->
 <span id="trans-partner-name" data-translation="<?= htmlspecialchars($translator['Partner Name'] ?? 'Partner Name') ?>" style="display:none;"></span>
+
+
+<!-- toast messages ends here -->
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Account Transaction Details']; ?></h4>

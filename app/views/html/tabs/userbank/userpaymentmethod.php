@@ -278,6 +278,18 @@
     }
 </style>
 
+<!-- toast messages -->
+<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp']; ?>" style="display:none;"></span>
+<span id="trans-failed-inactive" data-translation="<?= $translator['FailedToSetInactive']; ?>" style="display:none;"></span>
+<span id="trans-inactive-success" data-translation="<?= $translator['SetInactiveSuccess']; ?>" style="display:none;"></span>
+<span id="trans-select-fields" data-translation="<?= $translator['Select One Or More Fields']; ?>" style="display:none;"></span>
+<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display:none;"></span>
+
+<span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
+<span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
+
+<!-- toast messages ends here -->
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['User Payment Method']; ?></h4>

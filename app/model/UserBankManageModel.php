@@ -52,7 +52,6 @@ class UserBankManageModel extends MEDOOHelper
             return ["status" => "error", "data" => "Internal Server Error."];
         }
     }
-
     public static function fetchBankTypes($bank_type): array
     {
 
@@ -69,7 +68,6 @@ class UserBankManageModel extends MEDOOHelper
             return ["status" => "error", "data" => "Internal Server Error." . $e->getMessage()];
         }
     }
-
     public static function FetchuserpaymentData($page, $limit)
     {
         try {
@@ -103,7 +101,6 @@ class UserBankManageModel extends MEDOOHelper
             return ["status" => "error", "message" => $e->getMessage()];
         }
     }
-
     public static function fetchUserPaymentByUid($uid)
     {
         try {
@@ -123,7 +120,6 @@ class UserBankManageModel extends MEDOOHelper
             // return error if needed
         }
     }
-
     //fetchUserPaymentInactiveByUid
     public static function DeleteUserPaymentInactiveByUid($uid, $bank_id)
     {
@@ -143,11 +139,7 @@ class UserBankManageModel extends MEDOOHelper
         $updateParams = ['bank_ids' => json_encode($bank_ids), 'uid' => $uid];
         return parent::query($updateSql, $updateParams); // Return the result (affected rows)
     }
-
     //search usernames
-
-   
-
     public static function Searchusername(string $username){
     $query = trim($username); // Clean input
     $data = parent::query(
@@ -178,9 +170,6 @@ class UserBankManageModel extends MEDOOHelper
 
     return $data;
 }
-
-
-
     //GET USERNAME
     public static function getUserIdByUsername(string $key)
     {
@@ -192,10 +181,6 @@ class UserBankManageModel extends MEDOOHelper
             ['key' => $key]
         );
     }
-
-
-
-
     //filter search 
     public static function FilterpaymentDataSubQuery($uid)
     {
@@ -209,9 +194,6 @@ class UserBankManageModel extends MEDOOHelper
         $subQuery .= " ORDER BY u.uid DESC"; // Fixed space before ORDER
         return $subQuery;
     }
-
-
-
     //filter data in table 
     public static function filterpaymentdata($uid, $page, $limit)
     {

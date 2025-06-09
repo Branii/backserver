@@ -1,43 +1,51 @@
 $(function () {
-    const partnerID = $('#partner-holder').attr("data-partner-id");
-    // var el = document.querySelector("#tabheadParams");
-    // var chromeTabsParams = new ChromeTabs();
-    // chromeTabsParams.init(el);
+  const partnerID = $("#partner-holder").attr("data-partner-id");
+  // var el = document.querySelector("#tabheadParams");
+  // var chromeTabsParams = new ChromeTabs();
+  // chromeTabsParams.init(el);
 
-    // TabArray = [];
-    // TabMap = new Map();
-    // let contentEl;
-    // el.addEventListener("activeTabChange", ({ detail }) => onTabChanged(detail.tabEl));
-    // el.addEventListener("tabAdd", ({ detail }) => setcurr(detail.tabEl));
-    // el.addEventListener("tabRemove", ({ detail }) => closeTab(detail.tabEl));
+  // TabArray = [];
+  // TabMap = new Map();
+  // let contentEl;
+  // el.addEventListener("activeTabChange", ({ detail }) => onTabChanged(detail.tabEl));
+  // el.addEventListener("tabAdd", ({ detail }) => setcurr(detail.tabEl));
+  // el.addEventListener("tabRemove", ({ detail }) => closeTab(detail.tabEl));
+
+  function showToast(title, message, type) {
+    $.toast({
+      position: "bottom-right",
+      title: title,
+      message: message,
+      type: type,
+      duration: 3000 // auto-dismiss after 3s
+    });
+  }
 
 
-    function showToast(title, message, type) {
-        $.toast({
-            position: "bottom-right",
-            title: title,
-            message: message,
-            type: type,
-            duration: 3000, // auto-dismiss after 3s
-        });
-    }
+  const SUCCESS_TEXT = document.getElementById("success_text").innerText;
+const UPDATED_SUCCESSFULLY = document.getElementById("updated_successfully").innerText;
+const GAME_STATE_UPDATED = document.getElementById("game_state_updated").innerText;
+const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
 
-      function getTranslation(id, fallback) {
+// showToast(SUCCESS_TEXT, UPDATED_SUCCESSFULLY, "success");
+// showToast(SUCCESS_TEXT, GAME_STATE_UPDATED, "info");
+// showToast(SUCCESS_TEXT, NO_CHANGES_MADE, "info");
+
+  function getTranslation(id, fallback) {
     return document.getElementById(id)?.dataset.translation || fallback;
-}
+  }
 
-const SaveText = document.getElementById("savee-text")?.dataset.translation || "Save";
+  const SaveText =
+    document.getElementById("savee-text")?.dataset.translation || "Save";
 
+  const lotteryParamTable = (data) => {
+    let html = "";
+    data.forEach((item) => {
+      let isChecked = item.state === "active" ? "checked" : "";
+      let isCheck = item.totalbetpercentage === "100" ? "" : "checked";
+      let disableslider = item.totalbetpercentage === "100" ? "disabled" : "";
 
-
-    const lotteryParamTable = (data) => {
-        let html = "";
-        data.forEach((item) => {
-            let isChecked = item.state === "active" ? "checked" : "";
-            let isCheck = item.totalbetpercentage === "100" ? "" : "checked";
-             let disableslider = item.totalbetpercentage === "100" ? "disabled" : "";
-           
-            html += `
+      html += `
             <tr class="trow">
                <td>${item.gameplay_name}</td>
                <td>${item.group_type}</td>
@@ -75,266 +83,316 @@ const SaveText = document.getElementById("savee-text")?.dataset.translation || "
                 <td> <button type="button" class="btn btn-light updatethis saveBtn" value ='${item.gn_id}' datas= '${item.model}' >${SaveText}</button></td>
              </tr>
       `;
-        });
-        return html;
-    };
+    });
+    return html;
+  };
 
-    const renderLotteryParams = (data) => {
-        var html = lotteryParamTable(data);
-        $("#game_name_container").html(html);
-    };
+  const renderLotteryParams = (data) => {
+    var html = lotteryParamTable(data);
+    $("#game_name_container").html(html);
+  };
 
-    function getTranslation(key) {
-    const span = document.getElementById(`trans-${key.replace(/\s+/g, '')}`);
+  function getTranslation(key) {
+    const span = document.getElementById(`trans-${key.replace(/\s+/g, "")}`);
     return span?.dataset.translation || key;
-}
+  }
 
-// Use in HTML
+  // Use in HTML
 
-    async function getAllGamesLottery() {
-        try {
-            const response = await fetch(`../admin/getAllGamesLottery`);
-            const data = await response.json();
-            //  console.log(data);
-            let html = "";
-           let translatedSelectGame = getTranslation("Select Game");
-html += `<option>${translatedSelectGame}</option>`;
+  async function getAllGamesLottery() {
+    try {
+      const response = await fetch(`../admin/getAllGamesLottery`);
+      const data = await response.json();
+      //  console.log(data);
+      let html = "";
+      let translatedSelectGame = getTranslation("Select Game");
+      html += `<option>${translatedSelectGame}</option>`;
 
-            data.forEach((item) => {
-                html += `<option value='${item.lt_id}'>${item.name}</option>`;
-            });
-            $(".lotteryTypes").html(html);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
+      data.forEach((item) => {
+        html += `<option value='${item.lt_id}'>${item.name}</option>`;
+      });
+      $(".lotteryTypes").html(html);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
-    getAllGamesLottery();
+  }
+  getAllGamesLottery();
 
-    function setcurr(elem) {
-        let contentEl = $(elem).find(".chrome-tab-holder").text().trim();
-        TabMap.set(contentEl, elem);
+  function setcurr(elem) {
+    let contentEl = $(elem).find(".chrome-tab-holder").text().trim();
+    TabMap.set(contentEl, elem);
+  }
+
+  function addTabStyle(contentEl, elem) {
+    TabMap.set(contentEl, elem);
+    $(".chrome-tab-drag-handle").removeClass("chromclass");
+    $(elem).find(".chrome-tab-drag-handle").addClass("chromclass");
+  }
+
+  function onTabChanged(elem) {
+    let tabContent = $(elem).find(".chrome-tab-holder").text().trim();
+    $(".chrome-tab-drag-handle").removeClass("chromclass");
+    $(elem).find(".chrome-tab-drag-handle").addClass("chromclass");
+    $(".chrome__tabb").hide();
+    $("." + tabContent).show();
+    applyCustomScrollbarsToTabs();
+  }
+
+  async function getLotteryGames(lotterId, models) {
+    try {
+      const response = await fetch(
+        `../admin/getLotteryGames/${lotterId}/${models}`
+      );
+      const data = await response.json();
+      //  console.log(response);
+      renderLotteryParams(data.bonus);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
+  }
 
-    function addTabStyle(contentEl, elem) {
-        TabMap.set(contentEl, elem);
-        $(".chrome-tab-drag-handle").removeClass("chromclass");
-        $(elem).find(".chrome-tab-drag-handle").addClass("chromclass");
-    }
+  $(document).on("click", ".executegetparams", function () {
+    let lotteryId = $("#allGameNamesLottery").val();
+    let models = $("#allmodels").val();
+    // console.log(lotteryId, models);
+    if (models == "twosides" || models === "boardgames" || models === "fantan")
+      return;
 
-    function onTabChanged(elem) {
-        let tabContent = $(elem).find(".chrome-tab-holder").text().trim();
-        $(".chrome-tab-drag-handle").removeClass("chromclass");
-        $(elem).find(".chrome-tab-drag-handle").addClass("chromclass");
-        $(".chrome__tabb").hide();
-        $("." + tabContent).show();
-        applyCustomScrollbarsToTabs();
-    }
-
-    async function getLotteryGames(lotterId, models) {
-        try {
-            const response = await fetch(`../admin/getLotteryGames/${lotterId}/${models}`);
-            const data = await response.json();
-            //  console.log(response);
-            renderLotteryParams(data.bonus);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    }
-
-    $(document).on("click", ".executegetparams", function () {
-        let lotteryId = $("#allGameNamesLottery").val();
-        let models = $("#allmodels").val();
-        // console.log(lotteryId, models);
-      if(models == "twosides" || models === "boardgames" || models === "fantan") return;
-
-      getLotteryGames(lotteryId,models);
- 
+    getLotteryGames(lotteryId, models);
   });
 
-    //max slide
+  //max slide
 
+  $(document).on("input", ".rangeSliderone, .rangeSlideroness", function () {
+    let row = $(this).closest("tr"); // Get the closest table row
+    let percentageOne = row.find(".rangeSliderone").val(); // First slider value
+    let percentageTwo = row.find(".rangeSlideroness").val(); // Second slider value
 
-    $(document).on("input", ".rangeSliderone, .rangeSlideroness", function () {
-        let row = $(this).closest("tr"); // Get the closest table row
-        let percentageOne = row.find(".rangeSliderone").val(); // First slider value
-        let percentageTwo = row.find(".rangeSlideroness").val(); // Second slider value
+    let originalValuesOne = JSON.parse(
+      row.find(".oddsone").attr("data-original")
+    ); // Get original array values
+    let originalValueTwo = parseFloat(
+      row.find(".oddsoness").attr("data-original")
+    ); // Get original value
+    let lastModifiedValuesOne = JSON.parse(
+      row.attr("data-last-modified-values-one") ||
+        JSON.stringify(originalValuesOne)
+    );
+    let lastModifiedValueTwo = parseFloat(
+      row.attr("data-last-modified-value-two") || originalValueTwo
+    );
 
-        let originalValuesOne = JSON.parse(row.find(".oddsone").attr("data-original")); // Get original array values
-        let originalValueTwo = parseFloat(row.find(".oddsoness").attr("data-original")); // Get original value
-        let lastModifiedValuesOne = JSON.parse(row.attr("data-last-modified-values-one") || JSON.stringify(originalValuesOne));
-        let lastModifiedValueTwo = parseFloat(row.attr("data-last-modified-value-two") || originalValueTwo);
+    let scaledValuesOne, scaledValueTwo;
 
-        let scaledValuesOne, scaledValueTwo;
+    // Check if first slider is at 100%, reset to original values
 
-        // Check if first slider is at 100%, reset to original values
-
-        if (percentageOne === "100") {
-            scaledValuesOne = [...originalValuesOne];
-        } else {
-            scaledValuesOne = lastModifiedValuesOne.map((value) => Math.round((value * percentageOne) / 100));
-        }
-
-        row.find(".oddsone").val(JSON.stringify(scaledValuesOne)); // Update input field
-        row.find(".rangeValue").text(percentageOne + "%");
-
-        // Check if second slider is at 100%, reset to original value
-        if (percentageTwo === "100") {
-            scaledValueTwo = originalValueTwo;
-        } else {
-            scaledValueTwo = Math.round((lastModifiedValueTwo * percentageTwo) / 100);
-        }
-
-        row.find(".oddsoness").val(scaledValueTwo); // Update input field
-        row.find(".rangeValues").text(percentageTwo + "%");
-
-        // // Store updated values
-        row.attr("data-updated-percentage-one", percentageOne);
-        row.attr("data-updated-percentage-two", percentageTwo);
-        row.attr("data-updated-values-one", JSON.stringify(scaledValuesOne));
-        row.attr("data-updated-value-two", scaledValueTwo);
-        // console.log(row.attr("ata-updated-values-one"))
-         console.log(row.attr("data-updated-value-two"))
-    });
-
-    // Reset checkbox functionality
-    $(document).on("change", ".resetCheckbox", function () {
-        let row = $(this).closest("tr");
-        let isChecked = $(this).is(":checked");
-        let gametypeId = $(this).val();
-        let gamemodel = $(this).attr("datas");
-        row.find(".rangeSlideroness").prop("disabled", !isChecked);
-
-        // console.log(gametypeId,gamemodel)
-
-        if (!isChecked) {
-            row.find(".rangeSlideroness").val(100);
-            row.find(".rangeValues").text("100%");
-            row.find(".oddsoness").val(row.find(".oddsoness").attr("data-original"));
-
-            // Getting the values
-            let rangeSliderValue = row.find(".rangeSlideroness").val();
-            // let rangeTextValue = row.find(".rangeValues").text();
-            let toatalbetValue = row.find(".oddsoness").val();
-
-            resettotalbet(gametypeId, gamemodel, rangeSliderValue, toatalbetValue);
-        }
-    });
-
- 
-    async function resettotalbet(gametypeId, gamemodel, toatalbetValue, rangeSliderValue) {
-        try {
-            const response = await fetch(`../admin/resettotalbet/${gametypeId}/${gamemodel}/${toatalbetValue}/${rangeSliderValue}`);
-            const data = await response.json();
-            if (data) {
-                showToast("Success", "updated succesfully", "success");
-                // getLotteryGames(gametypeId, gamemodel)
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
+    if (percentageOne === "100") {
+      scaledValuesOne = [...originalValuesOne];
+    } else {
+      scaledValuesOne = lastModifiedValuesOne.map((value) =>
+        Math.round((value * percentageOne) / 100)
+      );
     }
 
-    // Save button functionality
-    $(document).on("click", ".saveBtn", function () {
-        let row = $(this).closest("tr");
-        let percentageOne = row.attr("data-updated-percentage-one");
-        if (percentageOne == undefined) {
-            showToast("Success", "no changes made", "info");
-            return;
-        }
-        let percentageTwo = row.attr("data-updated-percentage-two");
-        let scaledValuesOne = JSON.parse(row.attr("data-updated-values-one") || row.find(".oddsone").attr("data-original"));
-        let scaledValueTwo = row.attr("data-updated-value-two") || row.find(".oddsoness").attr("data-original");
-        let gametypeId = $(this).val();
-        let gamemodel = $(this).attr("datas");
-        // console.log("Saving:", { percentageOne,scaledValuesOne});
-        updateoddstotalbets(gametypeId, gamemodel, percentageOne, scaledValuesOne, percentageTwo, scaledValueTwo);
+    row.find(".oddsone").val(JSON.stringify(scaledValuesOne)); // Update input field
+    row.find(".rangeValue").text(percentageOne + "%");
 
-        //getLotteryGames(gametypeId, gamemodel)
-    });
-
-  
-
-    async function updateoddstotalbets(gametypeId, gamemodel, percentageOne, scaledValuesOne, percentageTwo, scaledValueTwo) {
-        try {
-            const response = await fetch(`../admin/updateoddstotalbets/${gametypeId}/${gamemodel}/${percentageOne}/${scaledValuesOne}/${percentageTwo}/${scaledValueTwo}`);
-            const data = await response.json();
-            if (data) {
-                showToast("Success", "updated succesfully", "success");
-                // getLotteryGames(gametypeId, gamemodel);
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
+    // Check if second slider is at 100%, reset to original value
+    if (percentageTwo === "100") {
+      scaledValueTwo = originalValueTwo;
+    } else {
+      scaledValueTwo = Math.round((lastModifiedValueTwo * percentageTwo) / 100);
     }
 
-    // Game status
-    $(document).on("change", ".gamestatus", function () {
-        let isChecked = $(this).is(":checked") ? "active" : "inactive"; // Determine status
-        let gametypeId = $(this).val();
-        let gamemodel = $(this).attr("datas");
-        //console.log(gametypeId, gamemodel, isChecked);
-        updateGameStatus(gametypeId, gamemodel, isChecked);
-        
-    });
+    row.find(".oddsoness").val(scaledValueTwo); // Update input field
+    row.find(".rangeValues").text(percentageTwo + "%");
 
-    async function updateGameStatus(gametypeId, gamemodel, isChecked) {
-        try {
-            const response = await fetch(`../admin/updategamestatus/${gametypeId}/${gamemodel}/${isChecked}`);
-            const data = await response.json();
-            // console.log(data);
-            if (data.success) {
-                // Ensure the backend sends { success: true } when the update is successful
-                showToast("Success", "Game state updated", "info");
-            } else {
-                return false;
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
+    // // Store updated values
+    row.attr("data-updated-percentage-one", percentageOne);
+    row.attr("data-updated-percentage-two", percentageTwo);
+    row.attr("data-updated-values-one", JSON.stringify(scaledValuesOne));
+    row.attr("data-updated-value-two", scaledValueTwo);
+    // console.log(row.attr("ata-updated-values-one"))
+    console.log(row.attr("data-updated-value-two"));
+  });
+
+  // Reset checkbox functionality
+  $(document).on("change", ".resetCheckbox", function () {
+    let row = $(this).closest("tr");
+    let isChecked = $(this).is(":checked");
+    let gametypeId = $(this).val();
+    let gamemodel = $(this).attr("datas");
+    row.find(".rangeSlideroness").prop("disabled", !isChecked);
+
+    // console.log(gametypeId,gamemodel)
+
+    if (!isChecked) {
+      row.find(".rangeSlideroness").val(100);
+      row.find(".rangeValues").text("100%");
+      row.find(".oddsoness").val(row.find(".oddsoness").attr("data-original"));
+
+      // Getting the values
+      let rangeSliderValue = row.find(".rangeSlideroness").val();
+      // let rangeTextValue = row.find(".rangeValues").text();
+      let toatalbetValue = row.find(".oddsoness").val();
+
+      resettotalbet(gametypeId, gamemodel, rangeSliderValue, toatalbetValue);
     }
+  });
+
+  async function resettotalbet(
+    gametypeId,
+    gamemodel,
+    toatalbetValue,
+    rangeSliderValue
+  ) {
+    try {
+      const response = await fetch(
+        `../admin/resettotalbet/${gametypeId}/${gamemodel}/${toatalbetValue}/${rangeSliderValue}`
+      );
+      const data = await response.json();
+      if (data) {
+        // showToast("Success", "updated succesfully", "success");
+        showToast(SUCCESS_TEXT, UPDATED_SUCCESSFULLY, "success");
 
 
-    // $(document).on("change", "#allGameNamesLottery", function () {
-    //     let selectedValue = $(this).val(); // Get selected value
+        // getLotteryGames(gametypeId, gamemodel)
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
 
-    //     let optionsMap = {
-    //         "1": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Roadbet", "Fantan"],
-    //         "2": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
-    //         "3": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Fantan"],
-    //         "5": ["Standard", "Twosides", "Logdragon", "Roadbet"],
-    //         "6": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Roadbet"],
-    //         "8": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
-    //         "10": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
-    //     };
+  // Save button functionality
+  $(document).on("click", ".saveBtn", function () {
+    let row = $(this).closest("tr");
+    let percentageOne = row.attr("data-updated-percentage-one");
+    if (percentageOne == undefined) {
+      // showToast("Success", "no changes made", "info");
 
-    //     let options = optionsMap[selectedValue] || []; // Get corresponding options or empty
-
-    //     // Populate second dropdown
-    //     let secondDropdown = $("#allmodels");
-    //     secondDropdown.empty(); // Clear existing options
-    //     $.each(options, function (index, value) {
-    //         secondDropdown.append(new Option(value, value.toLowerCase())); // Add new options
-    //     });
-    // });
-
-    // function tableScrollBonus() {
-    //     const tableContainerBonus = document.querySelector(".table-wrapperbonus");
-    //     const headerRowBonus = document.querySelector(".headrowbonus");
-
-    //     tableContainerBonus.addEventListener("scroll", function () {
-    //         if (tableContainerBonus.scrollTop > 0) {
-    //             headerRowBonus.classList.add("sticky-headerbonus");
-    //         } else {
-    //             headerRowBonus.classList.remove("sticky-headerbonus");
-    //         }
-    //     });
-    // }
-
-    // tableScrollBonus();
+showToast(SUCCESS_TEXT, NO_CHANGES_MADE, "info");
 
 
-    $(document).on("change", "#allGameNamesLottery", function () {
+
+      return;
+    }
+    let percentageTwo = row.attr("data-updated-percentage-two");
+    let scaledValuesOne = JSON.parse(
+      row.attr("data-updated-values-one") ||
+        row.find(".oddsone").attr("data-original")
+    );
+    let scaledValueTwo =
+      row.attr("data-updated-value-two") ||
+      row.find(".oddsoness").attr("data-original");
+    let gametypeId = $(this).val();
+    let gamemodel = $(this).attr("datas");
+    // console.log("Saving:", { percentageOne,scaledValuesOne});
+    updateoddstotalbets(
+      gametypeId,
+      gamemodel,
+      percentageOne,
+      scaledValuesOne,
+      percentageTwo,
+      scaledValueTwo
+    );
+
+    //getLotteryGames(gametypeId, gamemodel)
+  });
+
+  async function updateoddstotalbets(
+    gametypeId,
+    gamemodel,
+    percentageOne,
+    scaledValuesOne,
+    percentageTwo,
+    scaledValueTwo
+  ) {
+    try {
+      const response = await fetch(
+        `../admin/updateoddstotalbets/${gametypeId}/${gamemodel}/${percentageOne}/${scaledValuesOne}/${percentageTwo}/${scaledValueTwo}`
+      );
+      const data = await response.json();
+      if (data) {
+        // showToast("Success", "updated succesfully", "success");
+        showToast(SUCCESS_TEXT, UPDATED_SUCCESSFULLY, "success");
+
+        // getLotteryGames(gametypeId, gamemodel);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  // Game status
+  $(document).on("change", ".gamestatus", function () {
+    let isChecked = $(this).is(":checked") ? "active" : "inactive"; // Determine status
+    let gametypeId = $(this).val();
+    let gamemodel = $(this).attr("datas");
+    //console.log(gametypeId, gamemodel, isChecked);
+    updateGameStatus(gametypeId, gamemodel, isChecked);
+  });
+
+  async function updateGameStatus(gametypeId, gamemodel, isChecked) {
+    try {
+      const response = await fetch(
+        `../admin/updategamestatus/${gametypeId}/${gamemodel}/${isChecked}`
+      );
+      const data = await response.json();
+      // console.log(data);
+      if (data.success) {
+        // Ensure the backend sends { success: true } when the update is successful
+        // showToast("Success", "Game state updated", "info");
+     
+showToast(SUCCESS_TEXT, GAME_STATE_UPDATED, "info");
+
+
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  // $(document).on("change", "#allGameNamesLottery", function () {
+  //     let selectedValue = $(this).val(); // Get selected value
+
+  //     let optionsMap = {
+  //         "1": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Roadbet", "Fantan"],
+  //         "2": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
+  //         "3": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Fantan"],
+  //         "5": ["Standard", "Twosides", "Logdragon", "Roadbet"],
+  //         "6": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Roadbet"],
+  //         "8": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
+  //         "10": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
+  //     };
+
+  //     let options = optionsMap[selectedValue] || []; // Get corresponding options or empty
+
+  //     // Populate second dropdown
+  //     let secondDropdown = $("#allmodels");
+  //     secondDropdown.empty(); // Clear existing options
+  //     $.each(options, function (index, value) {
+  //         secondDropdown.append(new Option(value, value.toLowerCase())); // Add new options
+  //     });
+  // });
+
+  // function tableScrollBonus() {
+  //     const tableContainerBonus = document.querySelector(".table-wrapperbonus");
+  //     const headerRowBonus = document.querySelector(".headrowbonus");
+
+  //     tableContainerBonus.addEventListener("scroll", function () {
+  //         if (tableContainerBonus.scrollTop > 0) {
+  //             headerRowBonus.classList.add("sticky-headerbonus");
+  //         } else {
+  //             headerRowBonus.classList.remove("sticky-headerbonus");
+  //         }
+  //     });
+  // }
+
+  // tableScrollBonus();
+
+  $(document).on("change", "#allGameNamesLottery", function () {
     let selectedValue = $(this).val();
 
     // Helper to get translated value
@@ -345,13 +403,56 @@ html += `<option>${translatedSelectGame}</option>`;
 
     // Original mapping
     const optionsMap = {
-      "1": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Roadbet", "Fantan"],
-      "2": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
-      "3": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Fantan"],
-      "5": ["Standard", "Twosides", "Logdragon", "Roadbet"],
-      "6": ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Roadbet"],
-      "8": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
-      "10": ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
+      1: [
+        "Standard",
+        "Twosides",
+        "Logdragon",
+        "BoardGames",
+        "Manytables",
+        "Roadbet",
+        "Fantan"
+      ],
+      2: [
+        "Standard",
+        "Twosides",
+        "Logdragon",
+        "BoardGames",
+        "Roadbet",
+        "Fantan"
+      ],
+      3: [
+        "Standard",
+        "Twosides",
+        "Logdragon",
+        "BoardGames",
+        "Manytables",
+        "Fantan"
+      ],
+      5: ["Standard", "Twosides", "Logdragon", "Roadbet"],
+      6: [
+        "Standard",
+        "Twosides",
+        "Logdragon",
+        "BoardGames",
+        "Manytables",
+        "Roadbet"
+      ],
+      8: [
+        "Standard",
+        "Twosides",
+        "Logdragon",
+        "BoardGames",
+        "Roadbet",
+        "Fantan"
+      ],
+      10: [
+        "Standard",
+        "Twosides",
+        "Logdragon",
+        "BoardGames",
+        "Roadbet",
+        "Fantan"
+      ]
     };
 
     // Get matching games for selected value

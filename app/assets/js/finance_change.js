@@ -11,6 +11,40 @@ $(function () {
       });
     }
 
+
+       
+const translations = {
+  headsUp: document.getElementById("trans-heads-up").dataset.translation,
+  failedInactive: document.getElementById("trans-failed-inactive").dataset.translation,
+  inactiveSuccess: document.getElementById("trans-inactive-success").dataset.translation,
+  selectFields: document.getElementById("trans-select-fields").dataset.translation,
+  success: document.getElementById("trans-success").dataset.translation,
+};
+
+// showToast(translations.headsUp, translations.failedInactive, "danger");
+
+// showToast(translations.headsUp, translations.inactiveSuccess, "success");
+
+// showToast(translations.headsUp, translations.selectFields, "info");
+
+
+
+const alertTitle = document.getElementById("trans-alert").dataset.translation;
+const userDoesNotExist = document.getElementById("trans-user-does-not-exist").dataset.translation;
+
+// showToast(alertTitle, userDoesNotExist, "info");
+const headsUp = document.getElementById("trans-heads-up").dataset.translation;
+const allFieldsRequired = document.getElementById("trans-all-fields-required").dataset.translation;
+
+const headsUpText = document.getElementById("trans-heads-up").textContent;
+const selectFieldsText = document.getElementById("trans-select-fields").textContent;
+
+
+
+// showToast(headsUp, allFieldsRequired, "info");
+
+
+
     function formatMoney(money) { 
       let moneyStr = String(money); 
       if (moneyStr.includes(".")) { 
@@ -165,7 +199,10 @@ $(function () {
     
       if ($("#financefunds").val() == "" && $(".financetype").val() == "" && $(".startfinances").val() == "" ) {
         // $("#danger-finance").modal("show");
-        showToast("Heads up!!","Select one or more data fields to filter","info")
+        // showToast("Heads up!!","Select one or more data fields to filter","info")
+
+     
+        showToast(headsUpText, selectFieldsText, "info");
         return;
     }
       const financetype = $(".financetype").val();
@@ -271,7 +308,10 @@ $(function () {
       const review = $(".review").val();
       const approvedby = $(".approved").val()
       if (amount === "" || review === "" || usernames === "" || approvedby === "") {
-        showToast("Heads up!!", "All field are required", "info");
+        // showToast("Heads up!!", "All field are required", "info");
+        
+showToast(headsUp, allFieldsRequired, "info");
+
         return false;
       }
       $("#addfinancemodal").modal("hide");  

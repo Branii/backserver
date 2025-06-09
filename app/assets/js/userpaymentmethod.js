@@ -9,6 +9,27 @@ $(function () {
     });
   }
 
+const translations = {
+  headsUp: document.getElementById("trans-heads-up").dataset.translation,
+  failedInactive: document.getElementById("trans-failed-inactive").dataset.translation,
+  inactiveSuccess: document.getElementById("trans-inactive-success").dataset.translation,
+  selectFields: document.getElementById("trans-select-fields").dataset.translation,
+  success: document.getElementById("trans-success").dataset.translation,
+};
+
+// showToast(translations.headsUp, translations.failedInactive, "danger");
+
+// showToast(translations.headsUp, translations.inactiveSuccess, "success");
+
+// showToast(translations.headsUp, translations.selectFields, "info");
+
+const headsUpText = document.getElementById("trans-heads-up").textContent;
+const selectFieldsText = document.getElementById("trans-select-fields").textContent;
+
+// showToast(headsUpText, selectFieldsText, "info");
+
+
+
   const usercarddata = (data) => {
     let html = "";
 
@@ -112,12 +133,14 @@ const inactiveText = document.getElementById("inactive-text")?.dataset.translati
       method: "POST",
       success: function (response) {
         $("#Userpaymentmodal").modal("hide");
-        showToast( "Heads up!!","Payment method set to inactive successfully!","success");
+        // showToast( "Heads up!!","Payment method set to inactive successfully!","success");
+        showToast(translations.headsUp, translations.inactiveSuccess, "success");
         fetchuserpayment(currentPage, pageLimit);
       },
       error: function () {
         $("#Userpaymentmodal").modal("hide");
-        showToast("Heads up!!", "Failed to set inactive.", "danger");
+        // showToast("Heads up!!", "Failed to set inactive.", "danger");
+        showToast(translations.headsUp, translations.failedInactive, "danger");
       }
     });
   });
@@ -149,7 +172,9 @@ const inactiveText = document.getElementById("inactive-text")?.dataset.translati
     const pageNumber = 1;
     const limit = 20;
     if (username === "") {
-      showToast("Heads up!!","Select one or more data fields to filter","info");
+      // showToast("Heads up!!","Select one or more data fields to filter","info");
+  showToast(headsUpText, selectFieldsText, "info");
+
       return;
     }
 
@@ -251,7 +276,7 @@ const inactiveText = document.getElementById("inactive-text")?.dataset.translati
         try {
           response =
             typeof response === "string" ? JSON.parse(response) : response;
-          console.log("Fetched users:", response);
+          // console.log("Fetched users:", response);
           response.forEach((user) => {
             const regtype = (user.regtype || "").toLowerCase();
             const username = user.username?.trim() || "";

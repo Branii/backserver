@@ -225,6 +225,51 @@
 
 </style>
 
+
+
+<!-- toast messages -->
+<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp']; ?>" style="display:none;"></span>
+<span id="trans-failed-inactive" data-translation="<?= $translator['FailedToSetInactive']; ?>" style="display:none;"></span>
+<span id="trans-inactive-success" data-translation="<?= $translator['SetInactiveSuccess']; ?>" style="display:none;"></span>
+<span id="trans-select-fields" data-translation="<?= $translator['Select One Or More Fields']; ?>" style="display:none;"></span>
+<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display:none;"></span>
+<span id="trans-alert" data-translation="<?= $translator['Alert']; ?>" style="display:none;"></span>
+<span id="trans-user-does-not-exist" data-translation="<?= $translator['UserDoesNotExist']; ?>" style="display:none;"></span>
+
+<span id="trans-no-changes-made" data-translation="<?= $translator['NoChangesMade']; ?>" style="display:none;"></span>
+<span id="trans-error" data-translation="<?= $translator['Error']; ?>" style="display:none;"></span>
+<span id="trans-generic-error" data-translation="<?= $translator['GenericErrorMessage']; ?>" style="display:none;"></span>
+<span id="trans-no-pages" data-translation="<?= $translator['NoPages']; ?>" style="display:none;"></span>
+<span id="trans-main-page-notice" data-translation="<?= $translator['MainPageNotice']; ?>" style="display:none;"></span>
+
+<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display:none;"></span>
+<span id="trans-agent-added" data-translation="<?= $translator['AgentAdded']; ?>" style="display:none;"></span>
+<span id="trans-quota-updated" data-translation="<?= $translator['QuotaUpdated']; ?>" style="display:none;"></span>
+<span id="trans-blocked" data-translation="<?= $translator['Blocked']; ?>" style="display:none;"></span>
+<span id="trans-already-blocked" data-translation="<?= $translator['AlreadyBlocked']; ?>" style="display:none;"></span>
+<span id="trans-delete" data-translation="<?= $translator['Delete']; ?>" style="display:none;"></span>
+<span id="trans-invalid-operation" data-translation="<?= $translator['InvalidOperation']; ?>" style="display:none;"></span>
+<span id="trans-error" data-translation="<?= $translator['Error']; ?>" style="display:none;"></span>
+<span id="trans-generic-error" data-translation="<?= $translator['GenericError']; ?>" style="display:none;"></span>
+<span id="trans-request-error" data-translation="<?= $translator['RequestError']; ?>" style="display:none;"></span>
+<span id="trans-enabled" data-translation="<?= $translator['Enabled']; ?>" style="display:none;"></span>
+<span id="trans-lottery-enabled" data-translation="<?= $translator['LotteryEnabled']; ?>" style="display:none;"></span>
+<span id="trans-disabled" data-translation="<?= $translator['Disabled']; ?>" style="display:none;"></span>
+<span id="trans-lottery-disabled" data-translation="<?= $translator['LotteryDisabled']; ?>" style="display:none;"></span>
+<span id="trans-error-processing" data-translation="<?= $translator['ErrorProcessing']; ?>" style="display:none;"></span>
+<span id="trans-successful" data-translation="<?= $translator['Successful']; ?>" style="display:none;"></span>
+<span id="trans-records-updated" data-translation="<?= $translator['RecordsUpdated']; ?>" style="display:none;"></span>
+<span id="trans-not-done" data-translation="<?= $translator['NotDone']; ?>" style="display:none;"></span>
+<span id="trans-ip-updated" data-translation="<?= $translator['IPUpdated']; ?>" style="display:none;"></span>
+<span id="trans-no-agent" data-translation="<?= $translator['NoAgent']; ?>" style="display:none;"></span>
+<span id="trans-no-agent-message" data-translation="<?= $translator['NoAgentMessage']; ?>" style="display:none;"></span>
+
+<span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
+<span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
+
+
+<!-- toast messages ends here -->
+
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">

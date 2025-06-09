@@ -220,6 +220,17 @@
 
 </style>
 
+
+<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp']; ?>" style="display:none;"></span>
+<span id="trans-select-fields" data-translation="<?= $translator['SelectFieldss']; ?>" style="display:none;"></span>
+<!-- Hidden translation spans -->
+<span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
+<span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
+
+
+
+
+
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">

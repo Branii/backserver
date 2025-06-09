@@ -34,11 +34,21 @@ class adminController extends Controller
         $this->view->render();
     }
 
+    // public function admins($data)
+    // {
+    //     $this->view('exec/admins_exec', ['flag' => 'addNewAdmin', 'data' => $data]);
+    //     $this->view->render();
+    // }
+
     public function admins($data)
     {
-        $this->view('exec/admins_exec', ['flag' => 'addNewAdmin', 'data' => $data]);
-        $this->view->render();
+        $view = $this->view('exec/admins_exec', [
+            'flag' => 'addNewAdmin',
+            'data' => $data
+        ]);
+        $view->render();
     }
+
 
     public function alladmins($pageNumber, $limit)
     {
@@ -46,11 +56,16 @@ class adminController extends Controller
         $this->view->render();
     }
 
+    // update permissions
     public function permissions($data, $adminId)
     {
-        $this->view('exec/admins_exec', ['flag' => 'permissions', 'permissionsData' => $data, 'userId' => $adminId]);
+        // Decode the JSON from the URL
+        $decodedData = urldecode($data);
+        $this->view('exec/admins_exec', ['flag' => 'permissions', 'permissionsData' => $decodedData, 'userId' => $adminId]);
         $this->view->render();
     }
+
+
 
     public function adminlogs($pageNumber, $limit, $adminId)
     {
@@ -98,7 +113,7 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function getSpecificDraws($partnerID,$gameId, $issue_number, $status, $start_date, $end_date, $pageNumber, $limit)
+    public function getSpecificDraws($partnerID, $gameId, $issue_number, $status, $start_date, $end_date, $pageNumber, $limit)
     {
 
         $this->view('exec/game_management', [
@@ -994,7 +1009,8 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function mobile(){
+    public function mobile()
+    {
         $this->view('html/tabs/auth/mobile');
         $this->view->render();
     }
@@ -1005,14 +1021,16 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    
-        public function checkotpstatus(){
-        $this->view('exec/googletwofa',['flag' => 'checkotpstatus']);
+
+    public function checkotpstatus()
+    {
+        $this->view('exec/googletwofa', ['flag' => 'checkotpstatus']);
         $this->view->render();
-     }
-    
-     public function activateotp($email){
-        $this->view('exec/googletwofa',['email'=>$email,'flag' => 'twofaenable']);
+    }
+
+    public function activateotp($email)
+    {
+        $this->view('exec/googletwofa', ['email' => $email, 'flag' => 'twofaenable']);
         $this->view->render();
     }
     public function verifyotp($otpcode)
@@ -1020,38 +1038,45 @@ class adminController extends Controller
         $this->view('exec/googletwofa', ['otpcode' => $otpcode, 'flag' => 'verifyotp']);
         $this->view->render();
     }
-    
-    public function verifyloginotp($otpcodes,$flagtype){
-        $this->view('exec/googletwofa',['flagtype'=>$flagtype,'otpcodes'=>$otpcodes,'flag' =>'verifyloginotp']);
-        $this->view->render();
-    }
-    
-        
-    public function verifycodebyemail ($email){
-        $this->view('exec/googletwofa',['email'=>$email,'flag' =>'verifycodebyemail']);
-        $this->view->render();
-    }
-      public function verifycodebycontact($contact){
-         $this->view('exec/googletwofa',['contact'=>$contact,'flag' =>'verifycodebycontact']);
+
+    public function verifyloginotp($otpcodes, $flagtype)
+    {
+        $this->view('exec/googletwofa', ['flagtype' => $flagtype, 'otpcodes' => $otpcodes, 'flag' => 'verifyloginotp']);
         $this->view->render();
     }
 
-    public function verifyoption($otpcodes,$flagtype){
-         $this->view('exec/googletwofa',['flags'=>$flagtype,'otpcodes'=>$otpcodes,'flag' =>'verifyoption']);
+
+    public function verifycodebyemail($email)
+    {
+        $this->view('exec/googletwofa', ['email' => $email, 'flag' => 'verifycodebyemail']);
+        $this->view->render();
+    }
+    public function verifycodebycontact($contact)
+    {
+        $this->view('exec/googletwofa', ['contact' => $contact, 'flag' => 'verifycodebycontact']);
         $this->view->render();
     }
 
-    public function activateotpmobile($email){
-        $this->view('exec/googletwofa',['email'=>$email,'flag' => 'twofaenables']);
+    public function verifyoption($otpcodes, $flagtype)
+    {
+        $this->view('exec/googletwofa', ['flags' => $flagtype, 'otpcodes' => $otpcodes, 'flag' => 'verifyoption']);
         $this->view->render();
     }
-    public function getcodeverify(){
-        $this->view('exec/googletwofa',['flag' => 'getcodeverify']);
+
+    public function activateotpmobile($email)
+    {
+        $this->view('exec/googletwofa', ['email' => $email, 'flag' => 'twofaenables']);
         $this->view->render();
     }
-    
-    public function resetauth(){
-        $this->view('exec/googletwofa',['flag' => 'resetauth']);
+    public function getcodeverify()
+    {
+        $this->view('exec/googletwofa', ['flag' => 'getcodeverify']);
+        $this->view->render();
+    }
+
+    public function resetauth()
+    {
+        $this->view('exec/googletwofa', ['flag' => 'resetauth']);
         $this->view->render();
     }
 
@@ -1071,7 +1096,7 @@ class adminController extends Controller
     //Inactiveuserpaymentmethod
     public function Inactiveuserpaymentmethod($uid, $bank_id)
     {
-        $this->view('exec/userbank_manage', [ 'uid' => $uid,'bank_id' => $bank_id,'flag' => 'inactivepayment']);
+        $this->view('exec/userbank_manage', ['uid' => $uid, 'bank_id' => $bank_id, 'flag' => 'inactivepayment']);
         $this->view->render();
     }
 
@@ -1080,6 +1105,14 @@ class adminController extends Controller
     public function searchusernames($username)
     {
         $this->view('exec/userbank_manage', ['username' => $username, 'flag' => 'searchusername']);
+        $this->view->render();
+    }
+
+
+    //searchadmin names
+    public function searchusernamesss($username)
+    {
+        $this->view('exec/admins_exec', ['username' => $username, 'flag' => 'searchusernamess']);
         $this->view->render();
     }
 
@@ -1097,4 +1130,19 @@ class adminController extends Controller
         ]);
         $this->view->render();
     }
+
+    public function filteradmindata($username, $uid, $pageNumber, $limit)
+    {
+        $this->view('exec/admins_exec', [
+            'username' => $username,
+            'uid' => $uid, // still using 'uid' as the key passed into the view
+            'flag' => 'filteradminpayments',
+            'page' => $pageNumber,
+            'limit' => $limit,
+        ]);
+        $this->view->render();
+    }
+
+
+    //filteradmindata
 }
