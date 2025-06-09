@@ -239,13 +239,15 @@ $(function () {
 
    $(document).on('click', '#addsmssettings', function () {
      $.post(`../admin/savessmsstaes`, function (response) {
+      console.log(response);
+      //  return
         let data = typeof response === "string" ? JSON.parse(response)[0] : response;
    
         $(".depositSwitch").prop("checked", data.deposit == 1);
         $("#withdrawSwitch").prop("checked", data.withdraw == 1);
         // $("#securitySwitch").prop("checked", data.security == 1);
         // $("#promoSwitch").prop("checked", data.promo == 1);
-        //  $("#gameSwitch").prop("checked", data.gamewon == 1);
+          $("#gameSwitch").prop("checked", data.gamewon == 1);
         // $("#vipSwitch").prop("checked", data.vip == 1);
         $("#provider").val(data.sms_provider);
 
@@ -360,8 +362,8 @@ $(function () {
                   gamewon: $("#gameSwitch").is(":checked"),
                 // vip: $("#vipSwitch").is(":checked")
             };
-         ///  localStorage.setItem("smsPreferences", JSON.stringify(payload));
-        $(".loaderpayanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
+         //  localStorage.setItem("smsPreferences", JSON.stringify(payload));
+       // $(".loaderpayanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
 
          $.ajax({
                 url: `../admin/smspreferences`,
