@@ -5,7 +5,7 @@ use Kicken\Gearman\Worker as worker;
 use Kicken\Gearman\Job\WorkerJob as jobs;
 class GearmanWorker  extends MEDOOHelper {
 
-public static function ProccessDEPOSIT($workload) {
+public static function ProccessGamesWon($workload) {
        echo "Processing deposit: " . $workload . PHP_EOL;
       //   $message =  "Your deposit has been successfully processed. Thank you!";
         $users=  self::SmsDpositinfo($workload);
@@ -30,7 +30,7 @@ public  static function SmsDpositinfo($column){
     INNER JOIN users_test u ON u.uid = d.user_id
     CROSS JOIN sms_preferences p
     WHERE p.$column = 1 AND d.sms_sent = 'pending'
-    LIMIT 10");
+    LIMIT 100");
     return   $users = parent::query($sql); 
 }
 

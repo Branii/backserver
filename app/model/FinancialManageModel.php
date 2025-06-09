@@ -208,18 +208,17 @@ class FinancialManageModel extends MEDOOHelper
             'approved_by' => $username,
             'desposit_channel' => '1',
         ];
-        $res =  $inserdata = parent::insert("deposit_new", $params);
-        if($res){
-             $amounts = number_format($amount, 2); 
-            $message = [
-                'message' => "Your deposit of $amounts has been successfully processed. Thank you",
-                'mobile' => $contact,
-                "uid" => $uid
-            ];
-            (new Publisher)->publish('deposit',$message);
+           $res =  $inserdata = parent::insert("deposit_new", $params);
+           $provider = PLatFormSettingModel::getActiveProvider('deposit');
+           if($provider == 'default'){
+             return $res;
+           }
+          if($res){
+             $formattedAmount = number_format($amount, 2);
+             $message = "Your deposit of $formattedAmount has been successfully processed. Thank you!";
+            PLatFormSettingModel::smsOptionToUse($provider,$message , $contact);
+          }
             return $res;
-    
-        }
     }
 
     public static function insertIntoWithdrawManage($uid, $amount, $username,$contact)
@@ -255,19 +254,17 @@ class FinancialManageModel extends MEDOOHelper
         ];
 
          $res = parent::insert("withdrawal_manage", $params);
-         if($res){
-             $amounts = number_format($amount, 2); 
-            $message = [
-                'message' => "Your withrawal of $amounts has been successfully processed. Thank you",
-                'mobile' => $contact,
-                "uid" => $uid
-            ];
-            (new Publisher)->publish('withdrawal',$message);
-            return $res;
-    
-        }
+          $provider = PLatFormSettingModel::getActiveProvider('withdrawal');
+           if($provider == 'default'){
+             return $res;
+           }
+          if($res){
+             $formattedAmount = number_format($amount, 2);
+             $message = "Your withdrawal of $formattedAmount has been successfully processed. Thank you!";
+            PLatFormSettingModel::smsOptionToUse($provider,$message,$contact);
+          }
+            return $res;   
     }
-
 
     public static function timezoneConverter(string $otherTzName = ""){
         date_default_timezone_set("Africa/Accra");  
@@ -321,7 +318,6 @@ class FinancialManageModel extends MEDOOHelper
 
     //NOTE -
     //////////////Deposit Records -//////////
-    //
 
     public static function DepositDataRecords($page, $limit): array
     {
@@ -413,12 +409,6 @@ class FinancialManageModel extends MEDOOHelper
         $totalRecords = $totalRecordsResults[0]['totals_count'];
 
         return ['data' => $data, 'total' => $totalRecords];
-    }
-
-    public static function me($userData): array
-    {
-        echo "ksldfa";
-        return [];
     }
 
     //NOTE -

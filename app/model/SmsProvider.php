@@ -7,9 +7,9 @@ class SmsProvider  extends GearmanWorker{
         $this->provider = $provider;
     }
 
-    public  function sendsms($params){
+    public  function sendsms($mesage,$phonenumber){
         return match($this->provider){
-            'smsonlinegh' => self::sendSmsGonline($params['message'], $params['mobile']),
+            'smsonlinegh' => self::sendSmsGonline($mesage, $phonenumber),
         };
     }
 
