@@ -5,25 +5,22 @@ $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 
 if($flag == "fetchsms"){
 
- $page  = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
-        $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-        $smsResult = PLatFormSettingModel::FetchSms($page, $limit);
-        $smsRecords = $smsResult['data'] ?? [];
-        $totalCount = $smsResult['total'] ?? 0;
-        $sms_id = $smsRecords[0]['sms_id'];
-       foreach ($smsRecords as &$record) {
-        $provider = $record['sms_provider'] ?? '';
-          if($provider === "smsonlinegh" ) {
-              SmsProvider::getSmsGHBalance($provider);
-           //  (new SmsProvider)->getSmsGHBalance($provider);
-              $smsResult = PLatFormSettingModel::FetchSms($page, $limit);
-          }  
-
-       }
-       echo json_encode([
-                'sms' => $smsResult['data'] ,
-                'totalPages' => ceil($totalCount / $limit)
-            ]);           
+    $page  = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $smsResult = PLatFormSettingModel::FetchSms($page, $limit);
+    $smsRecords = $smsResult['data'] ?? [];
+    $totalCount = $smsResult['total'] ?? 0;
+    $sms_id = $smsRecords[0]['sms_id'];
+    foreach ($smsRecords as &$record) {
+    $provider = $record['sms_provider'] ?? '';
+        if($provider === "smsonlinegh" ) {
+            SmsProvider::getSmsGHBalance($provider);  
+        }
+    }
+    echo json_encode([
+            'sms' => $smsRecords,
+            'totalPages' => ceil($totalCount / $limit)
+        ]);           
 }
 
 

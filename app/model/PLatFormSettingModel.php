@@ -62,13 +62,14 @@ class PLatFormSettingModel extends MEDOOHelper
         return $data;
     }
 
-    public static function getActiveProvider(string $provider){
+    public static function getActiveProvider($provider){
+     
          $sql = match($provider){
             "deposit" => "SELECT sms_provider FROM sms_preferences WHERE status = 'active' AND deposit = 1",
             "withdrawal" => "SELECT sms_provider FROM sms_preferences WHERE status = 'active'  AND withdraw = 1",
             "otp" => "SELECT sms_provider FROM sms_preferences WHERE status = 'active'  AND otp = 1",
-            "gameswon" => "SELECT sms_provider FROM sms_preferences WHERE status = 'active'  AND gameswon = 1",
-        };
+            "gamewon" => "SELECT sms_provider FROM sms_preferences WHERE status = 'active'  AND gamewon = 1",
+          };
           $results = parent::query($sql);
 
         if (!empty($results)) {
@@ -84,7 +85,7 @@ class PLatFormSettingModel extends MEDOOHelper
         } elseif ($provider === 'Twilio') {
             SmsProvider::sendSmsTwilio($message,$contact);
         } else {
-            error_log("No valid active SMS provider found.");
+            return "No valid active SMS provider found.";
         }
     }
 

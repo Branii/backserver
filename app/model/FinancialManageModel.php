@@ -261,7 +261,7 @@ class FinancialManageModel extends MEDOOHelper
           if($res){
              $formattedAmount = number_format($amount, 2);
              $message = "Your withdrawal of $formattedAmount has been successfully processed. Thank you!";
-            PLatFormSettingModel::smsOptionToUse($provider,$message,$contact);
+             PLatFormSettingModel::smsOptionToUse($provider,$message,$contact);
           }
             return $res;   
     }

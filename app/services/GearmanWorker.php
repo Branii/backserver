@@ -6,9 +6,9 @@ use Kicken\Gearman\Job\WorkerJob as jobs;
 class GearmanWorker  extends MEDOOHelper {
 
 public static function ProccessGamesWon($workload) {
-       echo "Processing deposit: " . $workload . PHP_EOL;
-      //   $message =  "Your deposit has been successfully processed. Thank you!";
-        $users=  self::SmsDpositinfo($workload);
+       echo "Processing games won: " . $workload . PHP_EOL;
+        $provider = PLatFormSettingModel::getActiveProvider($workload);
+        $users=  self::SmsgamesWon($workload);
         echo "Sending [$workload] SMS to " . count($users) . " users...\n";
         foreach ($users as $user) {
             if (strtolower($user['sms_sent']) !== 'pending') {
@@ -16,20 +16,15 @@ public static function ProccessGamesWon($workload) {
                 return;
                 }
 
-             $amount = number_format($user['amount_recieved'], 2); 
-             $message = "Your deposit of $amount has been successfully processed. Thank you!";
-             //SmsProvider::sendSmsGonline($message,$user['contact']);
-             self::smsOptionToUse($message,$user['contact']);
-          ///  self::sendSms($user['contact'], $message);
-            $sql = ("UPDATE deposit_new SET sms_sent = 'sent' WHERE user_id = :user_id");
-            $data = parent::query($sql, ['user_id' =>$user['user_id']]);
+              PLatFormSettingModel::smsOptionToUse($provider,$user['message'],$user['contact']);
+             $sql = ("UPDATE notifications SET sms_sent = 'sent' WHERE user_id = :user_id");
+             $data = parent::query($sql, ['user_id' =>$user['user_id']]);
         }
 }
-public  static function SmsDpositinfo($column){
-    $sql = ("SELECT d.user_id, u.contact, d.sms_sent, d.amount_recieved FROM deposit_new d
-    INNER JOIN users_test u ON u.uid = d.user_id
+public  static function SmsgamesWon($column){
+    $sql = ("SELECT n.user_id, n.contact, n.sms_sent, n.message FROM notifications n
     CROSS JOIN sms_preferences p
-    WHERE p.$column = 1 AND d.sms_sent = 'pending'
+    WHERE p.$column = 1 AND n.sms_sent = 'pending'
     LIMIT 100");
     return   $users = parent::query($sql); 
 }
@@ -67,37 +62,37 @@ public  static function SmsDpositinfo($column){
 // }
 
 
-public static function ProccessWithdrawal($workload) {
-       echo "Processing withrawal sms: " . $workload . PHP_EOL;
-        $message = "Your withdrawal has been processed successfully.";
+// public static function ProccessWithdrawal($workload) {
+//        echo "Processing withrawal sms: " . $workload . PHP_EOL;
+//         $message = "Your withdrawal has been processed successfully.";
         
-        $users =self::SmsWithdrawinfo($workload);
-        echo "Sending [$workload] SMS to " . count($users) . " users...\n";
-       foreach ($users as $user) {
-        if (strtolower($user['sms_sent']) !== 'pending') {
-            echo "No users with status 'new'\n";
-            return;
-        }
-            $amount = number_format($user['actual_withdrawal_amount'], 2); 
-            $message = "Your withrawal of $amount has been successfully processed. Thank you!";
-            // self::sendSms($user['contact'], $message);
-         //SmsProvider::sendSmsGonline($message,$user['contact'],);
-        $sql = ("UPDATE withdrawal_manage SET sms_sent = 'sent' WHERE uid = :uid");
-        $data = parent::query($sql, ['uid' =>$user['uid']]);
+//         $users =self::SmsWithdrawinfo($workload);
+//         echo "Sending [$workload] SMS to " . count($users) . " users...\n";
+//        foreach ($users as $user) {
+//         if (strtolower($user['sms_sent']) !== 'pending') {
+//             echo "No users with status 'new'\n";
+//             return;
+//         }
+//             $amount = number_format($user['actual_withdrawal_amount'], 2); 
+//             $message = "Your withrawal of $amount has been successfully processed. Thank you!";
+//             // self::sendSms($user['contact'], $message);
+//          //SmsProvider::sendSmsGonline($message,$user['contact'],);
+//         $sql = ("UPDATE withdrawal_manage SET sms_sent = 'sent' WHERE uid = :uid");
+//         $data = parent::query($sql, ['uid' =>$user['uid']]);
 
-      }
-}
+//       }
+// }
 
 
-public  static function SmsWithdrawinfo($column){
-    $sql = ("SELECT w.uid, u.contact, w.sms_sent,w.actual_withdrawal_amount FROM withdrawal_manage w
-    INNER JOIN users_test u ON u.uid = w.uid
-    CROSS JOIN sms_preferences p
-    WHERE p.$column = 1 AND w.sms_sent = 'pending'
-    LIMIT 10");
-    return   $users = parent::query($sql); 
+// public  static function SmsWithdrawinfo($column){
+//     $sql = ("SELECT w.uid, u.contact, w.sms_sent,w.actual_withdrawal_amount FROM withdrawal_manage w
+//     INNER JOIN users_test u ON u.uid = w.uid
+//     CROSS JOIN sms_preferences p
+//     WHERE p.$column = 1 AND w.sms_sent = 'pending'
+//     LIMIT 10");
+//     return   $users = parent::query($sql); 
             
-}
+// }
 
 // public static function smsOptionToUse($message,$contact) {  
 //     $sql = "SELECT sms_provider FROM sms_preferences WHERE status = 'active'";

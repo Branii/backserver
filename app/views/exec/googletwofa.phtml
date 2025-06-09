@@ -72,9 +72,11 @@ if($flag =="verifycodebycontact"){
      $phone = isset($this->viewData['contact']) ? $this->viewData['contact'] : "";
      $code = rand(100000, 999999); 
      $message = 'Verification Code: ' . $code;
-     $provider ="smsonlinegh";
+    // $provider ="smsonlinegh";
+      $provider = PLatFormSettingModel::getActiveProvider('otp');
+      PLatFormSettingModel::smsOptionToUse($provider,$message,$contact);
      // SmsProvider::sendSmsGonline($message,$phone);
-     (new SmsProvider($provider))->sendSmsGonline($message,$phone);
+     // (new SmsProvider($provider))->sendSmsGonline($message,$phone);
      $adminEmail = (new Controller)->getSeesion("userauthmethosid");
      GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
 }
@@ -98,9 +100,10 @@ if($flag == "getcodeverify"){
      $phone = GoogleAuthenticateModel::GetOtpCode($adminEmail);
      $code = rand(100000, 999999); 
      $message = 'Verification Code: ' . $code;
-     $provider ="smsonlinegh";
+     $provider = PLatFormSettingModel::getActiveProvider('otp');
+      PLatFormSettingModel::smsOptionToUse($provider,$message,$contact);
      // SmsProvider::sendSmsGonline($message,$phone);
-     (new SmsProvider($provider))->sendSmsGonline($message,$phone);
+     // (new SmsProvider($provider))->sendSmsGonline($message,$phone);
      $adminEmail = (new Controller)->getSeesion("userauthmethosid");
      GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
 }

@@ -48,8 +48,7 @@ class SmsProvider  extends GearmanWorker{
             return ['Could not send OTP'];
         }
     }
-
-    public static function getSmsGHBalance($provider)
+    public  static function getSmsGHBalance($provider)
     {
         $endPoint = 'https://api.smsonlinegh.com/v5/account/balance';
 
@@ -88,6 +87,4 @@ class SmsProvider  extends GearmanWorker{
             echo json_encode(['error' => 'Failed to fetch balance']);
         }
     }
-
-    
 }

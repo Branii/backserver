@@ -27,28 +27,18 @@ class SmsPreferenceScheduler extends MEDOOHelper
     public function checkAndSubmitJob(): void
     {
         $client = new Client('127.0.0.1:4730');
-        $sql = "SELECT deposit, withdraw FROM sms_preferences WHERE id = 1";
+        $sql = "SELECT gamewon FROM sms_preferences WHERE id = 1";
         $prefs = parent::query($sql);
         
-            if ($prefs[0]['deposit'] == 1) {
-                $eventTypes = 'deposit';
+            if ($prefs[0]['gamewon'] == 1) {
+                $eventTypes = "gamewon";
                 if (!empty($eventTypes)) {
-                    $client->submitBackgroundJob('sms_deposit', json_encode($eventTypes));
+                    $client->submitBackgroundJob('sms_gameswon', $eventTypes);
                     echo "Job submitted for: " .  $eventTypes . "\n";
                 } else {
                     echo "No enabled event types. Job not sent.\n";
                 }
-            }
-
-            if ($prefs[0]['withdraw'] == 1) {
-                $eventTypes = 'withdraw';
-                if (!empty($eventTypes)) {
-                    $client->submitBackgroundJob('sms_withdrawal', json_encode($eventTypes));
-                    echo "Job submitted for: " .  $eventTypes . "\n";
-                } else {
-                    echo "No enabled event types. Job not sent.\n";
-                }
-            }
+            } 
     }
 
 }
