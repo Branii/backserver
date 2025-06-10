@@ -604,52 +604,52 @@ $(() => {
 
 
 
-  $(document).on("click", ".fetch-lotter-basic-records", function () {
-    // const lottery_id = $("#lottery").val();
+  // $(document).on("click", ".fetch-lotter-basic-records", function () {
+  //   // const lottery_id = $("#lottery").val();
 
-    // $.ajax({
-    //   url: `../admin/fetch_lottery_basic_params/${lottery_id}/${page}`,
-    //   type: "POST",
-    //   beforeSend: function () {
-    //     $("#lottery-draw-loader").css({ display: "flex" });
-    //   },
-    //   success: function (response) {
-    //     response = JSON.parse(response);
-    //   //  console.log(response);
-    //     const data = response.data;
-    //     const totalCount = response.totalCount;
-    //   //  console.log(data);
+  //   // $.ajax({
+  //   //   url: `../admin/fetch_lottery_basic_params/${lottery_id}/${page}`,
+  //   //   type: "POST",
+  //   //   beforeSend: function () {
+  //   //     $("#lottery-draw-loader").css({ display: "flex" });
+  //   //   },
+  //   //   success: function (response) {
+  //   //     response = JSON.parse(response);
+  //   //   //  console.log(response);
+  //   //     const data = response.data;
+  //   //     const totalCount = response.totalCount;
+  //   //   //  console.log(data);
 
-    //     if (response.length === 0) {
-    //       $("#lot-basic-dtholder").html(
-    //         `<tr class="no-results"> <td colspan="9"><img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`
-    //       );
-    //       $("#lottery-draws-pages-wrapper").html("");
-    //       return;
-    //     }
-    //     let rowsMarkup = "";
-    //     //console.log(data);
-    //     data.forEach((row) => {
-    //       rowsMarkup += lotteryBasicParametersMarkup(row);
-    //     });
-    //   //  console.log(rowsMarkup);
-    //     $("#lot-basic-dtholder").html(rowsMarkup);
-    //     const totalPages = Math.ceil(totalCount / 20);
-    //     renderPaginationlist(totalPages,1,() => );
-    //   },
-    //   error: function (res, status, error) {
-    //     $(".dataholder").html(
-    //       "<tr><td colspan='12' style='text-align:center;'>An error occured, please try again later.</td></tr>"
-    //     );
-    //     console.log("An error occured: " + status + " - " + error);
-    //   },
-    //   complete: function () {
-    //     $("#lottery-draw-loader").css({ display: "none" });
-    //   },
-    // });
-    fetchLotteryBasicParams(1,this);
+  //   //     if (response.length === 0) {
+  //   //       $("#lot-basic-dtholder").html(
+  //   //         `<tr class="no-results"> <td colspan="9"><img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`
+  //   //       );
+  //   //       $("#lottery-draws-pages-wrapper").html("");
+  //   //       return;
+  //   //     }
+  //   //     let rowsMarkup = "";
+  //   //     //console.log(data);
+  //   //     data.forEach((row) => {
+  //   //       rowsMarkup += lotteryBasicParametersMarkup(row);
+  //   //     });
+  //   //   //  console.log(rowsMarkup);
+  //   //     $("#lot-basic-dtholder").html(rowsMarkup);
+  //   //     const totalPages = Math.ceil(totalCount / 20);
+  //   //     renderPaginationlist(totalPages,1,() => );
+  //   //   },
+  //   //   error: function (res, status, error) {
+  //   //     $(".dataholder").html(
+  //   //       "<tr><td colspan='12' style='text-align:center;'>An error occured, please try again later.</td></tr>"
+  //   //     );
+  //   //     console.log("An error occured: " + status + " - " + error);
+  //   //   },
+  //   //   complete: function () {
+  //   //     $("#lottery-draw-loader").css({ display: "none" });
+  //   //   },
+  //   // });
+  //   fetchLotteryBasicParams(1,this);
 
-  });
+  // });
 
  
 

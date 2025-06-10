@@ -186,8 +186,8 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
         }
     });
   
-    $(".refreshlogs").click(function () {
-        $(".queryholderlogs").val("");
+    $(".refreshoverview").click(function () {
+        $(".queryholderoverview").val("");
         $("#maskoverview").LoadingOverlay("show", {
             background: "rgb(90,106,133,0.1)",
             size: 3,
