@@ -72,7 +72,7 @@
         cursor: pointer;
     }
 
-    .table-wrappersms {
+    .table-wrapperemail {
         overflow: hidden;
         /* Hide the default scrollbar */
         white-space: nowrap;
@@ -135,27 +135,27 @@
     }
 
     /* Custom Scrollbar for Webkit Browsers */
-    .table-wrappersms::-webkit-scrollbar {
+    .table-wrapperemail::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
         /* Slimmer scrollbar height for horizontal scrolling */
     }
 
-    .table-wrappersms::-webkit-scrollbar-track {
+    .table-wrapperemail::-webkit-scrollbar-track {
         background: #f1f1f1;
         /* Lighter background for track */
         border-radius: 5px;
     }
 
-    .table-wrappersms::-webkit-scrollbar-thumb {
+    .table-wrapperemail::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .table-wrappersms::-webkit-scrollbar-thumb:hover {
+    .table-wrapperemail::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
         /* Darker blue on hover */
     }
@@ -175,7 +175,7 @@
         display: none;
     }
 
-    .queryholdersms {
+    .queryholderemail {
         width: 25%;
         margin-right: 10px;
         background-color: #fff;
@@ -230,7 +230,7 @@
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0"><?= $translator['SMS Configuration']; ?></h4>
+        <h4 class="card-title mb-0"><?= $translator['Email Configuration']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
@@ -242,18 +242,18 @@
          
                 </select> -->
 
-                <select name="betsate" class="form-control form-select queryholdersms selectsmsprovider" data-bs-placeholder="Select Type">
+                <select name="betsate" class="form-control form-select queryholderemail selectemailprovider" data-bs-placeholder="Select Type">
                    
                 </select>
-                <select name="lotteryname" class="form-control form-select queryholdersms smsstatus">
-                  <option value="">SMS Status</option>
+                <select name="lotteryname" class="form-control form-select queryholderemail emailstatus">
+                  <option value="">Email Status</option>
                   <option value="active">Active</option>
                   <option value="pending">Pending</option>
                 </select>
 
-                <input name="startdate" type="date" class="form-control queryholdersms startsms" placeholder="Name" />
+                <input name="startdate" type="date" class="form-control queryholderemail startemail" placeholder="Name" />
 
-                <input name="enddate" type="date" class="form-control queryholdersms endsms" placeholder="Name" />
+                <input name="enddate" type="date" class="form-control queryholderemail endemail" placeholder="Name" />
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
@@ -261,19 +261,19 @@
         </span>
         <span class="topplist-right" id="paginations" aria-label="Page navigation example">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-                <button type="button" class="btn bg-white-subtle" id="addsmsplatform" value="right" aria-label="Refresh" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add Sms Platform">
+                <button type="button" class="btn bg-white-subtle" id="addemailplatform" value="right" aria-label="Refresh" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add Email Platform">
                 <i class="bx bx-plus" style="font-size: 20px;"></i>
                 </button>
 
-                <button type="button" class="btn bg-white-subtle" id="addsmssettings" value="right" aria-label="Refresh" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="sms settings">
+                <button type="button" class="btn bg-white-subtle" id="addemailsettings" value="right" aria-label="Refresh" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="email settings">
                 <i class="bx bx-cog" style="font-size: 20px;"></i>
                 </button>
 
-                <button type="button" class="btn bg-white-subtle player refreshsms" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                <button type="button" class="btn bg-white-subtle player refreshemail" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle executesms" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                    <i class="bx bx-check-double loadersms" style="font-size: 20px;"></i>
+                <button type="button" class="btn bg-white-subtle executeemail" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                    <i class="bx bx-check-double loaderemail" style="font-size: 20px;"></i>
                 </button>
                 <!-- <button type="button" class="btn bg-white-subtle executedeposit" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                     <i class="bx bx-check-double loaderdeposit" style="font-size: 20px;"></i>
@@ -283,26 +283,26 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrappersms" id="masksms" style="height: 530px; overflow-y: scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperemail" id="maskemail" style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4 tbl-usernotiheadss">
                     <tr class="usernotiheadrowss">
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">SMS Provider</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Email Provider</h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">Sender Name</h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Total SMS</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Total Email</h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Used SMS</h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Used Email</h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">SMS Remaining </h6>
+                            <h6 class="fs-4 fw-semibold mb-0">Email Remaining </h6>
                         </th>
 
                         <th>
@@ -318,7 +318,7 @@
                         </th> -->
                     </tr>
                 </thead>
-                <tbody id="smscontainer">
+                <tbody id="emailcontainer">
                     <tr class="no-resultslist">
                         <td colspan="9">
                             <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
@@ -346,16 +346,16 @@
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
-            <span id="paging_infosms" style="color: #aaa;">---</span>
+            <span id="paging_infoemail" style="color: #aaa;">---</span>
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
-            <select class="left-element form-control numrowsms" style="font-size: 12px;">
+            <select class="left-element form-control numrowemail" style="font-size: 12px;">
                 <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
                 <option value="500">500</option>
             </select>
-            <span class="toplist-right" id="paginationsmss" aria-label="Page navigation example">
+            <span class="toplist-right" id="paginationemails" aria-label="Page navigation example">
                 <!--Dynamic pagination-->
             </span>
         </span>
@@ -363,11 +363,11 @@
 </div>
 
 
-<div id="smsmodal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
+<div id="emailmodal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Add Sms Platform</h5>
+        <h5 class="modal-title">Add Email Platform</h5>
         <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
       </div>
       <div class="scrollable-container">
@@ -377,7 +377,7 @@
           <div class="col-md-12 mb-3">
             <div class="note-title">
               <!-- <label class="form-label">Note Title</label> -->
-              <input type="text" id="smsnameprovider" class="form-control form-reset" minlength="25" placeholder="Sms provider name" />
+              <input type="text" id="emailnameprovider" class="form-control form-reset" minlength="25" placeholder="Email provider name" />
             </div>
           </div>
 
@@ -417,7 +417,7 @@
           <div class="col-md-12 mb-3">
             <div class="note-title">
               <!-- <label class="form-label">Note Title</label> -->
-              <input type="text" class="form-control form-reset"  id="partnamesms" maxlength="9" placeholder="sender name" />
+              <input type="text" class="form-control form-reset"  id="partnameemail" minlength="25" placeholder="partner name" />
               <!-- <select name="lotteryname"  class="form-control form-select selectpartner"> </select> -->
             </div>
           </div>
@@ -453,7 +453,7 @@
               <!-- <label class="form-check-label" for="sf2"><?= $translator['Verify before submit']; ?></label> -->
             </div>
             <div class="mt-3 mt-md-0 ms-auto">
-              <button type="button" class="btn hstack gap-6 savesms" style="border: solid 1px #ccc;" data-bss-dismiss="modal" aria-label="Close">
+              <button type="button" class="btn hstack gap-6 saveemail" style="border: solid 1px #ccc;" data-bss-dismiss="modal" aria-label="Close">
                 <i class="bx bx-send loaderpays"></i>
                 <?= $translator['Submit']; ?>
               </button>
@@ -466,14 +466,13 @@
   <!-- /.modal-dialog -->
 </div>
 
-
 <!-- SMS Modal -->
-<div id="smsModalsettings" class="modal fade" tabindex="-1" aria-labelledby="smsModalLabel" aria-hidden="true">
+<div id="emailModalsettings" class="modal fade" tabindex="-1" aria-labelledby="emailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="mb-0" id="smsModalLabel">SMS Notification Preferences</h4>
+                    <h4 class="mb-0" id="emailModalLabel">SMS Notification Preferences</h4>
                     <i class="bx bx-x" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
                 </div>
 
@@ -508,7 +507,7 @@
                             </div>
                         </div>
 
-                          <!-- Game -->
+                        <!-- Game -->
                         <div class="border-bottom py-3">
                             <div class="d-flex justify-content-between align-items-center flex-wrap w-100 mb-2">
                                 <div>
@@ -550,7 +549,6 @@
                             </div>
                         </div>
 
-                      
                         <!-- VIP -->
                         <div class="border-bottom py-3">
                             <div class="d-flex justify-content-between align-items-center flex-wrap w-100 mb-2">
@@ -576,7 +574,7 @@
                                     <select id="provider" class="form-select">
                                         <option value="">Select...</option>
                                         <option value="ntem">NTEM</option>
-                                        <option value="smsonlinegh">SMSONLINEGH</option>
+                                        <option value="emailonlinegh">SMSONLINEGH</option>
                                         <option value="hubtel">Hubtel</option>
                                     </select>
                                 <!-- </div> -->

@@ -706,7 +706,8 @@ return [
 'Platform Settings' => 'Platform Settings',
 
 //(Basic Platform Configuration)
-'Sms Configuration' =>'Sms Configuration',
+'SMS Configuration' =>'SMS Configuration',
+'Email Configuration' =>'Email Configuration',
 
 // (Game Vendor Settings)游戏厂商设置
 'Game Vendor Settings' => 'Game Vendor Settings',

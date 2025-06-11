@@ -12,18 +12,6 @@ class PLatFormSettingModel extends MEDOOHelper
         return ['data' => $data, 'total' => $totalRecords];
     }
 
-    // public static function getUsernameById(mixed $userId)
-    // {
-    //     $data = parent::query("SELECT username,email,contact,reg_type,uid FROM users_test WHERE uid = :uid", ['uid' => $userId])[0];
-    //     return $data;
-    // }
-    // public static function SpecificUser()
-    // {
-    //     $data = parent::query("SELECT uid FROM users_test WHERE login_count > 0");
-    //     $uids = array_column($data, 'uid');
-    //     return $uids;
-    // }
-  
     public static function InserIntoSms($smsprovider,$sendename)
     {  
           $data = [
@@ -37,7 +25,6 @@ class PLatFormSettingModel extends MEDOOHelper
 
     public static function InserIntoSavePreferences($data)
     {  
-    $pdo = (new Database())->openLink();
 
     $sql = "REPLACE INTO sms_preferences (id, deposit, withdraw,gamewon, sms_provider) VALUES (:id,:deposit,:withdraw,:gamewon,:sms_provider)";
         $id = 1;
@@ -52,7 +39,7 @@ class PLatFormSettingModel extends MEDOOHelper
         return $data ? "failed" : "success";
     }
 
-     public static function SaveStateSmsSettings()
+    public static function SaveStateSmsSettings()
     {  
         $sql = "SELECT deposit, withdraw,gamewon,sms_provider FROM sms_preferences WHERE id = 1";  
         $data = parent::query($sql);
@@ -85,7 +72,12 @@ class PLatFormSettingModel extends MEDOOHelper
             return "No valid active SMS provider found.";
         }
     }
-
+    public static function FetchSmsProviders()
+    {  
+        $sql = "SELECT sms_id,sms_provider FROM sms_config";  
+        $data = parent::query($sql);
+        return $data;
+    }
 
     public static function DeleteAnnoucement($messageid)
     {
@@ -95,16 +87,16 @@ class PLatFormSettingModel extends MEDOOHelper
         return $data ? "Message could not be deleted. Please try again." : "Message deleted successfully.";
     }
 
-    public static function Messagesubquery($username, $messagetype, $startdate, $enddate)
+    public static function Smssubquery($smsprovider,$smsstatus,$startdate,$enddate)
     {
         $filterConditions = [];
 
-        if (!empty($username)) {
-            $filterConditions[] = "audience= '$username'";
+        if (!empty($smsprovider)) {
+            $filterConditions[] = "sms_provider= '$smsprovider'";
         }
 
-        if (!empty($messagetype)) {
-            $filterConditions[] = "ms_type = '$messagetype'";
+        if (!empty($smsstatus)) {
+            $filterConditions[] = "status = '$smsstatus'";
         }
 
         if (!empty($startdate) && !empty($enddate)) {
@@ -124,19 +116,17 @@ class PLatFormSettingModel extends MEDOOHelper
         return $subQuery;
     }
 
-    public static function FilterMessageData($subquery, $page, $limit)
+    public static function FilterSmsData($subquery, $page, $limit)
     {
         try {
             $startpoint = ($page - 1) * $limit;
-            $sql = " SELECT *  FROM notices WHERE $subquery LIMIT :offset, :limit";
+            $sql = " SELECT *  FROM sms_config WHERE $subquery LIMIT :offset, :limit";
             $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
 
-            $countSql1 = "SELECT COUNT(*) AS total_results FROM notices WHERE $subquery";
-
-            // Execute the count query
+            $countSql1 = "SELECT COUNT(*) AS total_results FROM sms_config WHERE $subquery";
             $totalRecords = parent::query($countSql1);
-            $totalRecords = $totalRecords[0]['total_results'];
 
+            $totalRecords = $totalRecords[0]['total_results'];
             return ['data' => $data, 'total' => $totalRecords];
         } catch (Exception $e) {
             // Log the error message for debugging purposes
@@ -144,6 +134,17 @@ class PLatFormSettingModel extends MEDOOHelper
         }
     }
 
+
+    //Email codes
+
+    public static function fetchEmailData($page, $limit): array
+    {
+        $startpoint = $page * $limit - $limit;
+        $data = parent::query("SELECT * FROM email_config ORDER BY sms_id DESC LIMIT :offset, :limit", ['offset' => $startpoint, 'limit' => $limit]);
+        $totalRecords = parent::count('email_config');
+        return ['data' => $data, 'total' => $totalRecords];
+    }
+    
     public static function EditMessageData($mgid)
     {
         $sql = "SELECT msg_id,subject,message FROM notices WHERE msg_id = :mgid";

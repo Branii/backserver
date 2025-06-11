@@ -23,7 +23,6 @@ if($flag == "fetchsms"){
         ]);           
 }
 
-
 if($flag == "addprovider"){
      $smsprovider = isset($this->viewData['smsprovider']) ? $this->viewData['smsprovider'] : "";
      $sendename   = urlencode(isset($this->viewData['sendename']))  ?  urlencode($this->viewData['sendename']) : "";
@@ -42,43 +41,47 @@ if($flag == "savessmsstaes"){
      echo json_encode($result); 
 }
 
-// if($flag =="verifycodebycontact"){
-//     $phone = isset($this->viewData['contact']) ? $this->viewData['contact'] : "";
-//     $code = rand(100000, 999999);
-    
-//     try {
-//         $request = new SMSRequest();
-//         $request->setHost("api.smsonlinegh.com");
-//         $request->setAuthModel(AuthModel::API_KEY);
-//         $request->setAuthApiKey("a49c61c65a8166d35b55fbcdcef25771399768bab912caf0cc987c33216d3b9c"); // Replace with your actual API key
+if($flag =="fetchsmsprovider"){
+    $results = PLatFormSettingModel::FetchSmsProviders();
+    echo json_encode($results);
+}
 
-//         $request->setSender("LIMVO APP"); // Replace with your approved sender ID
-//         $request->setMessage( "Verfication Code"."  ".$code);
-//         $request->addDestination($phone);
+if($flag == "filtersms"){
+    $smsprovider = isset($this->viewData['smsprovider']) ?  $this->viewData['smsprovider'] : "";
+    $smsstatus = isset($this->viewData['smsstatus']) ?  $this->viewData['smsstatus'] : "";
+    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
+    $enddate = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+      $subquery = PLatFormSettingModel::Smssubquery($smsprovider,$smsstatus,$startdate,$enddate) ?? [];
+      $result   = PLatFormSettingModel::FilterSmsData($subquery,$page,$limit) ?? [];
+    echo json_encode([
+        'sms' => $result['data'],
+         'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
 
-//         $response = $request->submit();
 
-//         if ($response instanceof MessageResponse) {
-//             echo "SMS sent successfully to $phone!";
-//             $adminEmail = (new Controller)->getSeesion("userauthmethosid");
-//              GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
-//         } else {
-//             echo "Failed to send SMS. Reason: " . $response->getResponseMessage();
-//         }
-//         } catch (Exception $ex) {
-//             echo "Error: " . $ex->getMessage();
-//         }
 
-// }
+if($flag == "fetchemaildata"){
 
-// if($flag == "verifyoption"){
-//    $adminEmail = (new Controller)->getSeesion("userauthmethosid");
-//    $otpcodes = isset($this->viewData['otpcodes']) ? $this->viewData['otpcodes'] : "";
-//    $flagtype = isset($this->viewData['flags']) ? $this->viewData['flags'] : "";
-//    $result = GoogleAuthenticateModel::SignOptionVerify($adminEmail,$otpcodes,$flagtype); 
-//    echo json_encode($result);
-// }
-
+    $page  = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+    $smsResult = PLatFormSettingModel::fetchEmailData($page, $limit);
+    $smsRecords = $smsResult['data'] ?? [];
+    // $totalCount = $smsResult['total'] ?? 0;
+    // $sms_id = $smsRecords[0]['sms_id'];
+    // foreach ($smsRecords as &$record) {
+    // $provider = $record['sms_provider'] ?? '';
+    //     if($provider === "smsonlinegh" ) {
+    //         SmsProvider::getSmsGHBalance($provider);  
+    //     }
+    // }
+    echo json_encode([
+            'email' => $smsRecords,
+            'totalPages' => ceil($totalCount / $limit)
+        ]);           
+}
 // if($flag == "twofaenables"){
 //      $email = isset($this->viewData['email']) ?  $this->viewData['email'] : "";
 //      $result = GoogleAuthenticateModel::UpdatemobileAuth($email) ?? [];

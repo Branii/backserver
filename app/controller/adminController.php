@@ -432,14 +432,12 @@ class adminController extends Controller
     }
     public function  fetchPaymentPlatforms($page, $limit)
     {
-
         $this->view('exec/payment_platforms', ['partner_id' => $partnerID, 'flag' => 'fetchpaymentplatforms']);
         $this->view->render();
     }
 
     public function  fetchPartnersNames($partnerID, $page, $limit)
     {
-
         $this->view('exec/partners', ['partner_id' => $partnerID, 'flag' => 'fetchPartnersNames']);
         $this->view->render();
     }
@@ -1075,14 +1073,13 @@ class adminController extends Controller
         $this->view->render();
     }
     
-   public function changerAdminpassword($email, $repeatPassword){
+    public function changerAdminpassword($email, $repeatPassword){
       $this->view('exec/admins_exec', ['email' => $email, 'repeatPassword' => $repeatPassword, 'flag' => 'changeadminpassword']);
         $this->view->render();
     }
 
-
     //sms configuration
-     public function fetchsmsplatform($page, $pageLimit){
+    public function fetchsmsplatform($page, $pageLimit){
       $this->view('exec/platform_settings', ['page' => $page, 'pageLimit' => $pageLimit, 'flag' => 'fetchsms']);
       $this->view->render();
     }
@@ -1099,10 +1096,27 @@ class adminController extends Controller
       $this->view('exec/platform_settings', ['flag' => 'savessmsstaes']);
       $this->view->render();
     }
-    
+     public function fetchsmsprovider(){
+      $this->view('exec/platform_settings', ['flag' => 'fetchsmsprovider']);
+      $this->view->render();
+     }
 
-    
+     public function  filtersms($smsprovider,$smsstatus,$startdate,$enddate,$page,$limit){
+      $this->view('exec/platform_settings', [
+        'smsprovider'=>$smsprovider,
+        'smsstatus'=>$smsstatus,
+        'startdate'=>$startdate,
+        'enddate'=>$enddate,
+        'page'=>$page,
+        'limit'=>$limit,
+        'flag' => 'filtersms']);
+      $this->view->render();
+     }
 
-
+   //email configuration
+      public function fetchemaildata($page, $pageLimit){
+      $this->view('exec/platform_settings', ['page' => $page, 'pageLimit' => $pageLimit, 'flag' => 'fetchemaildata']);
+      $this->view->render();
+    }
     
 }

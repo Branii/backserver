@@ -8,7 +8,7 @@ class GearmanWorker  extends MEDOOHelper {
 public static function ProccessGamesWon($workload) {
        echo "Processing games won: " . $workload . PHP_EOL;
         $provider = PLatFormSettingModel::getActiveProvider($workload);
-        $users=  self::SmsgamesWon($workload);
+        $users =  self::SmsgamesWon($workload);
         echo "Sending [$workload] SMS to " . count($users) . " users...\n";
         foreach ($users as $user) {
             if (strtolower($user['sms_sent']) !== 'pending') {
@@ -16,7 +16,7 @@ public static function ProccessGamesWon($workload) {
                 return;
                 }
 
-              PLatFormSettingModel::smsOptionToUse($provider,$user['message'],$user['contact']);
+            PLatFormSettingModel::smsOptionToUse($provider,$user['message'],$user['contact']);
              $sql = ("UPDATE notifications SET sms_sent = 'sent' WHERE user_id = :user_id");
              $data = parent::query($sql, ['user_id' =>$user['user_id']]);
         }
@@ -26,7 +26,9 @@ public  static function SmsgamesWon($column){
     CROSS JOIN sms_preferences p
     WHERE p.$column = 1 AND n.sms_sent = 'pending'
     LIMIT 100");
-    return   $users = parent::query($sql); 
+    return  $users = parent::query($sql); 
+    //  return $trasationIds = array_column($data, 'user_id');
+
 }
 
 // public static function sendSms(string $phone, string $message): void

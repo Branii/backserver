@@ -21,14 +21,14 @@ $(function () {
       return moneyStr; 
     }
       const states = {
-        1: "Manual sms",
+        1: "Manual email",
         2: "Bank Transfer",
         3: "Momo",
         5: "Crypto",
       };
 
 
-    const smsdata = (data) => { 
+    const emaildata = (data) => { 
  
     
         let html = "";
@@ -42,11 +42,11 @@ $(function () {
           
           html += `
                       <tr>
-                          <td>${item.sms_provider}</td>
+                          <td>${item.email_provider}</td>
                           <td>${item.sender_name}</td>
-                          <td>${item.total_sms}</td>
-                          <td>${item.sms_used}</td>
-                          <td>${item.current_sms}</td>
+                          <td>${item.total_email}</td>
+                          <td>${item.email_used}</td>
+                          <td>${item.current_email}</td>
                           <td>${item.created_at}</td>
                           <td>${item.status}</td>
                           
@@ -56,7 +56,7 @@ $(function () {
                             <i class='bx bx-dots-vertical-rounded'></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"> 
-                             <a class="dropdown-item deletesms cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="">
+                             <a class="dropdown-item deleteemail cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="">
                                 <i class="bx bx-trash fs-5"></i>Delete
                             </a>
                             </div>
@@ -69,32 +69,32 @@ $(function () {
         return html;
     };
   
-    const rendersms = (data) => {
-      var html = smsdata(data);
-      $("#smscontainer").html(html);
+    const renderemail = (data) => {
+      var html = emaildata(data);
+      $("#emailcontainer").html(html);
     };
   
     let currentPage = 1;
     let pageLimit = 20;
  
-    async function fetchsmsplatform(page,pageLimit) {
+    async function fetchemaildata(page,pageLimit) {
       try {
-        const response = await fetch( `../admin/fetchsmsplatform/${page}/${pageLimit}`);
+        const response = await fetch( `../admin/fetchemaildata/${page}/${pageLimit}`);
         const data = await response.json();
           // console.log(data)
       //   return
-        $("#masksms").LoadingOverlay("hide");
-        rendersms(data.sms);
-        rendersmsPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchsmsplatform(newPage, pageLimit));
-        document.getElementById("paging_infosms").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+        $("#maskemail").LoadingOverlay("hide");
+        renderemail(data.email);
+        renderemailPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchemaildata(newPage, pageLimit));
+        document.getElementById("paging_infoemail").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
     
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
-    fetchsmsplatform(currentPage,pageLimit)
+    fetchemaildata(currentPage,pageLimit)
 
-  function rendersmsPagination(totalPages, currentPage, pageLimit, callback) {
+  function renderemailPagination(totalPages, currentPage, pageLimit, callback) {
       const createPageLink = (i, label = i, disabled = false, active = false) =>
           `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
               <a class='page-link' href='#' data-page='${i}'>${label}</a>
@@ -117,67 +117,67 @@ $(function () {
       pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
       pagLink += "</ul>";
   
-      document.getElementById("paginationsmss").innerHTML = pagLink;
+      document.getElementById("paginationemails").innerHTML = pagLink;
   
       // Add click event listeners
-      document.querySelectorAll("#paginationsmss .page-link").forEach((link) => {
+      document.querySelectorAll("#paginationemails .page-link").forEach((link) => {
           link.addEventListener("click", function (e) {
               e.preventDefault();
               const newPage = +this.getAttribute("data-page");
               if (newPage > 0 && newPage <= totalPages) {
                   currentPage = newPage; // Update currentPage when a page link is clicked
-                  $("#masksms").LoadingOverlay("show", {
+                  $("#maskemail").LoadingOverlay("show", {
                       background: "rgb(90,106,133,0.1)",
                       size: 3,
                   });
-                  callback(newPage, pageLimit); // Call fetchsms with the new page and pageLimit
+                  callback(newPage, pageLimit); // Call fetchemail with the new page and pageLimit
               }
           });
       });
   }
   
-  async function  filtersms(smsprovider,smsstatus,startsms,endsms,currentPage,pageLimit) {
+  async function  filteremail(emailprovider,emailstatus,startemail,endemail,currentPage,pageLimit) {
     try {
-        let  response = await fetch(`../admin/filtersms/${smsprovider}/${smsstatus}/${startsms}/${endsms}/${currentPage}/${pageLimit}`);
+        let  response = await fetch(`../admin/filteremail/${emailprovider}/${emailstatus}/${startemail}/${endemail}/${currentPage}/${pageLimit}`);
         const data =  await response.json();
       //  console.log(data)
         ///return
 
-        $(".loadersms").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-        if (data.sms.length < 1) {
+        $(".loaderemail").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+        if (data.email.length < 1) {
             let html = `
           <tr class="no-results">
               <td colspan="9">
                   <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
               </td>
           </tr>`;
-            $("#masksms").LoadingOverlay("hide");
-            $("#smscontainer").html(html);
+            $("#maskemail").LoadingOverlay("hide");
+            $("#emailcontainer").html(html);
             return;
         }
-        $("#masksms").LoadingOverlay("hide");
-        rendersms(data.sms);
-        rendersmsPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filtersms(smsprovider,smsstatus,startsms,endsms,newPage,pageLimit));
-        document.getElementById("paging_infosms").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+        $("#maskemail").LoadingOverlay("hide");
+        renderemail(data.email);
+        renderemailPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filteremail(emailprovider,emailstatus,startemail,endemail,newPage,pageLimit));
+        document.getElementById("paging_infoemail").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
     } catch (error) {
         console.error("Error fetching data:", error);
     }
   }
   
-  $(".refreshsms").click(function () {
-    $(".queryholdersms").val("");
-    $("#masksms").LoadingOverlay("show", {
+  $(".refreshemail").click(function () {
+    $(".queryholderemail").val("");
+    $("#maskemail").LoadingOverlay("show", {
       background: "rgb(90,106,133,0.1)",
       size: 3,
     });
-    fetchsmsplatform(currentPage,pageLimit)
+    fetchemaildata(currentPage,pageLimit)
   });
   
 
-  $(".playersms").click(function () {
+  $(".playeremail").click(function () {
       let direction = $(this).val();
-      const tableWrapper = $(".table-wrappersms");
-      const tableWrappers = document.querySelector(".table-wrappersms");
+      const tableWrapper = $(".table-wrapperemail");
+      const tableWrappers = document.querySelector(".table-wrapperemail");
       const scrollAmount = 1000; // Adjust as needed
       const scrollOptions = {
       behavior: "smooth",
@@ -205,28 +205,28 @@ $(function () {
       }
   });
 
-  $(document).on('click', '.executesms', function () {
-  if ($(".selectsmsprovider").val() == "" && $(".smsstatus").val() == "" && $(".startsms").val() == "") {
+  $(document).on('click', '.executeemail', function () {
+  if ($(".selectemailprovider").val() == "" && $(".emailstatus").val() == "" && $(".startemail").val() == "") {
     showToast("Heads up!!","Select one or more data fields to filter","info")
     return;
   }
-  const smsprovider = $(".selectsmsprovider").val();
-  const smsstatus = $(".smsstatus").val()
-  const startsms = $(".startsms").val();
-  const endsms = $(".endsms").val();
- //  console.log(smsprovider,smsstatus,startsms,endsms)
-  filtersms(smsprovider,smsstatus,startsms,endsms,currentPage,pageLimit)
+  const emailprovider = $(".selectemailprovider").val();
+  const emailstatus = $(".emailstatus").val()
+  const startemail = $(".startemail").val();
+  const endemail = $(".endemail").val();
+ //  console.log(emailprovider,emailstatus,startemail,endemail)
+  filteremail(emailprovider,emailstatus,startemail,endemail,currentPage,pageLimit)
 
-  $(".loadersms").removeClass('bx-check-double').addClass('bx-loader bx-spin');
+  $(".loaderemail").removeClass('bx-check-double').addClass('bx-loader bx-spin');
 
   });
 
-  $(document).on('click', '#addsmsplatform', function () {
-      $("#smsmodal").modal("show");  
+  $(document).on('click', '#addemailplatform', function () {
+      $("#emailmodal").modal("show");  
   })
 
-  $(document).on('click', '#addsmssettings', function () {
-    $.post(`../admin/savessmsstaes`, function (response) {
+  $(document).on('click', '#addemailsettings', function () {
+    $.post(`../admin/savesemailstaes`, function (response) {
       // console.log(response);
       //  return
         let data = typeof response === "string" ? JSON.parse(response)[0] : response;
@@ -237,11 +237,11 @@ $(function () {
         // $("#promoSwitch").prop("checked", data.promo == 1);
           $("#gameSwitch").prop("checked", data.gamewon == 1);
         // $("#vipSwitch").prop("checked", data.vip == 1);
-        $("#provider").val(data.sms_provider);
+        $("#provider").val(data.email_provider);
 
         // Save to localStorage
         const savedPrefs = {
-            provider: data.sms_provider,
+            provider: data.email_provider,
             deposit: data.deposit == 1,
             withdraw: data.withdraw == 1,
             // security: data.security == 1,
@@ -249,30 +249,30 @@ $(function () {
             gamewon: data.gamewon == 1,
             // vip: data.vip == 1
         };
-        localStorage.setItem("smsPreferences", JSON.stringify(savedPrefs));
+        localStorage.setItem("emailPreferences", JSON.stringify(savedPrefs));
     });
 
-      $("#smsModalsettings").modal("show");
+      $("#emailModalsettings").modal("show");
   });
-    //add new sms platform
-  $(document).on("click", ".savesms", function () {
-      if ($("#smsnameprovider").val() == "" || $("#partnamesms").val() == "") {
+    //add new email platform
+  $(document).on("click", ".saveemail", function () {
+      if ($("#emailnameprovider").val() == "" || $("#partnameemail").val() == "") {
           showToast("Heads up!!","Select one or more data fields to filter","info")
           return;
         }
-      const  smsprovider = $("#smsnameprovider").val()
-      const sendename = $("#partnamesms").val()
+      const  emailprovider = $("#emailnameprovider").val()
+      const sendename = $("#partnameemail").val()
       const approvedby = $(".approved").val()
     
-  //   $(".loadersmss").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
+  //   $(".loaderemails").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
   //   $(".form-reset").val('');
-    $.post(`../admin/addprovider/${smsprovider}/${sendename}`, function (response){
+    $.post(`../admin/addprovider/${emailprovider}/${sendename}`, function (response){
       const results = JSON.parse(response)
       //  console.log(results)
       if(results == "success"){
-        $("#smsmodal").modal("hide"); 
+        $("#emailmodal").modal("hide"); 
         showToast("Heads up!!","Sms provider added successfully","success")
-        fetchsmsplatform(currentPage,pageLimit)
+        fetchemailplatform(currentPage,pageLimit)
       }else{
         showToast("Heads up!!","Sms provider added successfully","info")
       }
@@ -283,9 +283,9 @@ $(function () {
   });
   
   //delete message
-  $(document).on("click", ".deletesms", function () {
-      const smsid = $(this).attr("datas");
-      $.post(`../admin/deletesms/${smsid}`, function (response) {
+  $(document).on("click", ".deleteemail", function () {
+      const emailid = $(this).attr("datas");
+      $.post(`../admin/deleteemail/${emailid}`, function (response) {
       if (response) {
           showToast("Success",JSON.parse(response), "success");
           fetchPaymentPlatform(currentPage,pageLimit)
@@ -296,14 +296,14 @@ $(function () {
   });
 
     //edit message
-  $(document).on("click", ".editsms", function () {
-      $("#editsmsplatform").modal("show");
-      const smsid = $(this).attr("datas");
-      $.post(`../admin/editsms/${smsid}`, function (response) {
+  $(document).on("click", ".editemail", function () {
+      $("#editemailplatform").modal("show");
+      const emailid = $(this).attr("datas");
+      $.post(`../admin/editemail/${emailid}`, function (response) {
           const data = JSON.parse(response)[0];
           $("#maxiamounts").val(data.max_withdrawal);
           $("#minamount").val(data.max_deposit);
-          $("#smsids").val(data.bankid);
+          $("#emailids").val(data.bankid);
           const currencys = data.currency_type;
           if ($(`.typecurrency option[value="${currencys}"]`).length === 0) {
               $(".typecurrency").append(new Option(currencys, currencys));
@@ -318,19 +318,19 @@ $(function () {
       });
   });
 
-  $(document).on("click", ".updatesmsbtn", function () {
+  $(document).on("click", ".updateemailbtn", function () {
       const typecurrency = $(".typecurrency").val();
       const maxiamounts  = $("#maxiamounts").val();
       const minamount    = $("#minamount").val();
       const statecurrent = $(".statecurrent").val();
-      const  smsids  = $("#smsids").val();
-      $(".loadersmsanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
-      $.post(`../admin/updateplatform/${typecurrency}/${maxiamounts}/${minamount}/${statecurrent}/${smsids}`, 
+      const  emailids  = $("#emailids").val();
+      $(".loaderemailanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
+      $.post(`../admin/updateplatform/${typecurrency}/${maxiamounts}/${minamount}/${statecurrent}/${emailids}`, 
       function (response) {
-      $(".loadersmsanup").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+      $(".loaderemailanup").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
       if (response) {
           showToast("Success", JSON.parse(response), "success");
-          $("#editsmsplatform").modal("hide");
+          $("#editemailplatform").modal("hide");
           fetchPaymentPlatform(currentPage,pageLimit)
       } else {
           showToast("Heads up!!", JSON.parse(response), "info");
@@ -339,7 +339,7 @@ $(function () {
   });
 
   $(document).on("click", "#sendSMSBtn", function () {
-    const smsload = {
+    const emailload = {
             provider: $("#provider").val(),
             deposit: $(".depositSwitch").is(":checked"),
             withdraw: $("#withdrawSwitch").is(":checked"),
@@ -348,19 +348,19 @@ $(function () {
               gamewon: $("#gameSwitch").is(":checked"),
             // vip: $("#vipSwitch").is(":checked")
         };
-      //  localStorage.setItem("smsPreferences", JSON.stringify(smsload));
-    // $(".loadersmsanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
+      //  localStorage.setItem("emailPreferences", JSON.stringify(emailload));
+    // $(".loaderemailanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
 
       $.ajax({
-            url: `../admin/smspreferences`,
+            url: `../admin/emailpreferences`,
             method: "POST",
             contentType: "application/json",
-            data: JSON.stringify(smsload),
+            data: JSON.stringify(emailload),
               success: function (response) {
               let res = typeof response === "string" ? JSON.parse(response) : response;
                 if(res === "success"){
                   showToast("Heads up!!","Sms settings saved","success")
-                  $("#smsModalsettings").modal("hide");
+                  $("#emailModalsettings").modal("hide");
            
                 }else{
                 showToast("Heads up!!","Sms settings not saved","info")
@@ -372,9 +372,9 @@ $(function () {
       
   });
 
-  async function fetchsmsprovider() {
+  async function fetchemailprovider() {
         try {
-            const response = await fetch(`../admin/fetchsmsprovider`); // Await the fetch call
+            const response = await fetch(`../admin/fetchemailprovider`); // Await the fetch call
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -384,30 +384,30 @@ $(function () {
           // return
            
             let html = `<option value="">Sms Provider</option>`;
-            data.forEach((smsprovider) => {
-                html += `<option value="${smsprovider.sms_provider}">${smsprovider.sms_provider}</option>`;
+            data.forEach((emailprovider) => {
+                html += `<option value="${emailprovider.email_provider}">${emailprovider.email_provider}</option>`;
             });
-            $(".selectsmsprovider").html(html);
+            $(".selectemailprovider").html(html);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
   }
-   fetchsmsprovider();
+   fetchemailprovider();
 
 
-    // function tableScrollsms() {
-    //     const tableContainersms= document.querySelector(".table-wrappersms");
-    //     const headerRowsms= document.querySelector(".smsheaderrow");
+    // function tableScrollemail() {
+    //     const tableContaineremail= document.querySelector(".table-wrapperemail");
+    //     const headerRowemail= document.querySelector(".emailheaderrow");
 
-    //     tableContainersms.addEventListener("scroll", function () {
-    //         if (tableContainersms.scrollTop > 0) {
-    //             headerRowsms.classList.add("sticky-smsheader");
+    //     tableContaineremail.addEventListener("scroll", function () {
+    //         if (tableContaineremail.scrollTop > 0) {
+    //             headerRowemail.classList.add("sticky-emailheader");
     //         } else {
-    //             headerRowsms.classList.remove("sticky-smsheader");
+    //             headerRowemail.classList.remove("sticky-emailheader");
     //         }
     //     });
     // }
-    // tableScrollsms();
+    // tableScrollemail();
 
 });
   
