@@ -1543,5 +1543,6 @@ return [
   'SETTLED' => '已结算',
   'UNSETTLED' => '未结算',
   'PENDING' => '待定',
+   'off'=>'离开',
 
 ];

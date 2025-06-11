@@ -1442,6 +1442,7 @@ return [
 'SETTLED' => 'Settled',
   'UNSETTLED' => 'Unsettled',
   'PENDING' => 'Pending',
-   'HEADS_UP_TITLE' => 'Headsup！',
+   'HEADS_UP_TITLE' => 'Heads Up！',
     'SELECT_ADMIN_MSG' => 'Please select or enter an administrator to search.',
+    'off'=>'off',
 ];
