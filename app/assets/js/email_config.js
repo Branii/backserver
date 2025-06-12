@@ -255,32 +255,32 @@ $(function () {
       $("#emailModalsettings").modal("show");
   });
     //add new email platform
-  $(document).on("click", ".saveemail", function () {
-      if ($("#emailnameprovider").val() == "" || $("#partnameemail").val() == "") {
-          showToast("Heads up!!","Select one or more data fields to filter","info")
-          return;
-        }
-      const  emailprovider = $("#emailnameprovider").val()
-      const sendename = $("#partnameemail").val()
-      const approvedby = $(".approved").val()
+  // $(document).on("click", ".saveemail", function () {
+  //     if ($("#emailnameprovider").val() == "" || $("#partnameemail").val() == "") {
+  //         showToast("Heads up!!","Select one or more data fields to filter","info")
+  //         return;
+  //       }
+  //     const  emailprovider = $("#emailnameprovider").val()
+  //     const sendename = $("#partnameemail").val()
+  //     const approvedby = $(".approved").val()
     
-  //   $(".loaderemails").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
-  //   $(".form-reset").val('');
-    $.post(`../admin/addprovider/${emailprovider}/${sendename}`, function (response){
-      const results = JSON.parse(response)
-      //  console.log(results)
-      if(results == "success"){
-        $("#emailmodal").modal("hide"); 
-        showToast("Heads up!!","Sms provider added successfully","success")
-        fetchemailplatform(currentPage,pageLimit)
-      }else{
-        showToast("Heads up!!","Sms provider added successfully","info")
-      }
+  // //   $(".loaderemails").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
+  // //   $(".form-reset").val('');
+  //   $.post(`../admin/addprovider/${emailprovider}/${sendename}`, function (response){
+  //     const results = JSON.parse(response)
+  //     //  console.log(results)
+  //     if(results == "success"){
+  //       $("#emailmodal").modal("hide"); 
+  //       showToast("Heads up!!","Sms provider added successfully","success")
+  //       fetchemailplatform(currentPage,pageLimit)
+  //     }else{
+  //       showToast("Heads up!!","Sms provider added successfully","info")
+  //     }
   
-    })
+  //   })
 
   
-  });
+  // });
   
   //delete message
   $(document).on("click", ".deleteemail", function () {

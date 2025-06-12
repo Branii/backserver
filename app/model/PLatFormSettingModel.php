@@ -17,7 +17,7 @@ class PLatFormSettingModel extends MEDOOHelper
           $data = [
             "sms_provider" => $smsprovider,
             "sender_name" => $sendename,
-            "date_created" => date("Y-m-d / H:i:s"),
+            "created_at" => date("Y-m-d / H:i:s"),
           ];
            $data = parent::insert("sms_config", $data);
           return $data ? "success" : "failed";
@@ -66,8 +66,8 @@ class PLatFormSettingModel extends MEDOOHelper
     public static function smsOptionToUse($provider,$message,$contact) {  
         if ($provider === 'smsonlinegh') {
         (new SmsProvider($provider))->sendSmsGonline($message,$contact);
-        } elseif ($provider === 'Twilio') {
-            SmsProvider::sendSmsTwilio($message,$contact);
+        } elseif ($provider === 'smsarkesel') {
+         (new SmsProvider($provider))->sendArkeselSMS($message,$contact);
         } else {
             return "No valid active SMS provider found.";
         }

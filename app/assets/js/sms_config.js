@@ -383,7 +383,7 @@ $(function () {
            // console.log(data)
           // return
            
-            let html = `<option value="">Sms Provider</option>`;
+            let html = `<option value="">SMS Provider</option>`;
             data.forEach((smsprovider) => {
                 html += `<option value="${smsprovider.sms_provider}">${smsprovider.sms_provider}</option>`;
             });

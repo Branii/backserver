@@ -13,11 +13,19 @@ if($flag == "fetchsms"){
     $sms_id = $smsRecords[0]['sms_id'];
     foreach ($smsRecords as &$record) {
     $provider = $record['sms_provider'] ?? '';
-        if($provider === "smsonlinegh" ) {
-            SmsProvider::getSmsGHBalance($provider);  
+        switch ($provider) {
+            case 'smsonlinegh':
+                SmsProvider::getSmsGHBalance($provider);
+                break;
+            case 'smsarkesel':
+                SmsProvider::getArkeselSMSBalance($provider);
+                break;
+            default:
+                error_log("Unknown SMS provider: " . $provider);
+                break;
+          }
         }
-    }
-    echo json_encode([
+     echo json_encode([
             'sms' => $smsRecords,
             'totalPages' => ceil($totalCount / $limit)
         ]);           
@@ -25,7 +33,9 @@ if($flag == "fetchsms"){
 
 if($flag == "addprovider"){
      $smsprovider = isset($this->viewData['smsprovider']) ? $this->viewData['smsprovider'] : "";
-     $sendename   = urlencode(isset($this->viewData['sendename']))  ?  urlencode($this->viewData['sendename']) : "";
+     $sendename = isset($this->viewData['sendename']) ?($this->viewData['sendename']) : "";
+     $sendename =  urldecode($sendename);
+   //  strtoupper(urldecode($sendename))
      $result  = PLatFormSettingModel::InserIntoSms($smsprovider,$sendename);
      echo json_encode($result);
 }
