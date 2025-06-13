@@ -28,7 +28,6 @@ public  static function SmsgamesWon($column){
     LIMIT 100");
     return  $users = parent::query($sql); 
     //  return $trasationIds = array_column($data, 'user_id');
-
 }
 
 // public static function sendSms(string $phone, string $message): void
@@ -132,8 +131,8 @@ public  static function SmsgamesWon($column){
 //     $contacts = array_column($users, 'contact');
 //     $messages = array_column($users, 'message'); // Assuming all messages are same OR you’ll structure it differently
 
-//     // Send bulk SMS (you need to modify smsOptionToUse to accept arrays)
-//     PlatformSettingModel::smsOptionToUse($provider, $messages, $contacts);
+//     // // Send bulk SMS (you need to modify smsOptionToUse to accept arrays)
+//     self::sendArkeselSMS($messages,$contacts);
 
 //     // Collect user_ids for batch update
 //     $userIds = array_column($users, 'user_id');
@@ -170,27 +169,32 @@ public  static function SmsgamesWon($column){
 // }
 
 //
-// function sendArkeselBulkSMS($message, array $recipients, $sender = 'LIMVO APP') {
-//     $apiKey = 'your_arkesel_api_key';
-
-//     $payload = [
-//         'sender' => $sender,
+// public static function sendArkeselSMS(string $message,array $recipients): string {
+//     $postData = array_merge([
+//         'sender' => 'Helloworld',
 //         'message' => $message,
-//         'recipients' => $recipients  // array of numbers e.g. ["233243403313", "233553812349"]
-//     ];
+//         'recipients' => $recipients,
+//     ], $options); // Merge any optional params like scheduled_date or callback_url
 
-//     $ch = curl_init('https://sms.arkesel.com/api/v2/sms/send');
-//     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-//         'Authorization: Bearer ' . $apiKey,
-//         'Content-Type: application/json'
+//     $curl = curl_init();
+
+//     curl_setopt_array($curl, [
+//         CURLOPT_URL => 'https://sms.arkesel.com/api/v2/sms/send',
+//         CURLOPT_HTTPHEADER => ['api-key: cE9QRUkdjsjdfjkdsj9kdiieieififiw='],
+//         CURLOPT_RETURNTRANSFER => true,
+//         CURLOPT_ENCODING => '',
+//         CURLOPT_MAXREDIRS => 10,
+//         CURLOPT_TIMEOUT => 0,
+//         CURLOPT_FOLLOWLOCATION => true,
+//         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//         CURLOPT_CUSTOMREQUEST => 'POST',
+//         CURLOPT_POSTFIELDS => http_build_query($postData),
 //     ]);
-//     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
 
-//     $response = curl_exec($ch);
-//     curl_close($ch);
+//     $response = curl_exec($curl);
+//     curl_close($curl);
 
-//     return json_decode($response, true);
+//     return $response;
 // }
 
   

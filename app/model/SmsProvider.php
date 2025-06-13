@@ -126,7 +126,7 @@ public  function sendArkeselSMS($message, $contact) {
     $response = curl_exec($curl);
     curl_close($curl);
     // Output or return response
-    echo $response;
+   // echo $response;
 }
 
 public static function getArkeselSMSBalance($provider)
