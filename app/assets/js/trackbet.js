@@ -1,5 +1,8 @@
+
 $(function () {
     const partnerID = $("#partner-holder").attr("data-partner-id");
+    //NOTE -
+    ////////////// LOTTERY BETTING-//////////
     function showToast(title, message, type) {
         $.toast({
             position: "bottom-right",
@@ -9,29 +12,6 @@ $(function () {
             duration: 3000, // auto-dismiss after 3s
         });
     }
-
-    const translations = {
-        headsUp: document.getElementById("trans-heads-up").dataset.translation,
-        failedInactive: document.getElementById("trans-failed-inactive").dataset.translation,
-        inactiveSuccess: document.getElementById("trans-inactive-success").dataset.translation,
-        selectFields: document.getElementById("trans-select-fields").dataset.translation,
-        success: document.getElementById("trans-success").dataset.translation,
-    };
-
-    // showToast(translations.headsUp, translations.failedInactive, "danger");
-
-    // showToast(translations.headsUp, translations.inactiveSuccess, "success");
-
-    // showToast(translations.headsUp, translations.selectFields, "info");
-
-    const alertTitle = document.getElementById("trans-alert").dataset.translation;
-    const userDoesNotExist = document.getElementById("trans-user-does-not-exist").dataset.translation;
-
-    const headsUpText = document.getElementById("trans-heads-up").textContent;
-    const selectFieldsText = document.getElementById("trans-select-fields").textContent;
-
-    // showToast(alertTitle, userDoesNotExist, "info");
-
     function formatMoney(money) {
         let moneyStr = String(money);
         if (moneyStr.includes(".")) {
@@ -78,7 +58,7 @@ $(function () {
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
             let trackrule = item.track_rule == "no_rule" ? "No Rule" : item.track_rule == "stop_if_not_win" ? "Stop If Not Win" : item.track_rule == "stop_if_win" ? "Stop If Win" : "";
             let timezone = item.timezone.split(" ");
-            timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
+            timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
             htmls += `
                     <tr>
                         <td>${item.track_token}</td>
@@ -99,16 +79,17 @@ $(function () {
         return htmls;
     };
 
-    const Showtrackbets = (data, obj) => {
+    const Showtrackbet = (data, obj) => {
         let htmlbet = "";
         Object.entries(data).forEach(([key, value]) => {
             let test = value !== translator["Bet Selection"] && langMap[value] ? langMap[value] : translator["Bet Selection"];
+
             if (value == test) {
-                htmlbet += `
+                 htmlbet += `
                   <td>${value}</td>
                    <td class="${key === "user_selection" ? "bet_userSelection" : ""}">
                     <textarea class="form-control"   readonly style="height: 75px;">${obj[key]}</textarea>
-                    </td>`;
+                    </td>`
             } else {
                 htmlbet += `
            <tr>
@@ -125,35 +106,36 @@ $(function () {
     };
 
     const langMap = {
-        "投注选择:": "Bet Selection",
-    };
-
-    const firstRowtracks = {
-        bet_code: `${translator["Bet Order ID"]}`,
+        '投注选择:' :'Bet Selection',
+    }
+    
+    const firstRowtrack = {
+        bet_code:    `${translator["Bet Order ID"]}`,
         draw_period: `${translator["Issue Number"]}`,
-        bet_time: `${translator["Bet Time"]}`,
-        bet_number: `${translator["Total Bets"]}`,
-        unit_stake: `${translator["Unit Stake"]}`,
-        multiplier: `${translator["Multiplier"]}`,
-        bet_amount: `${translator["Total Bet Amount"]}`,
-        win_bonus: `${translator["Win Amount"]}`,
-        rebate_amount: `${translator["Rebate Amount"]}`,
-        num_wins: `${translator["Number of Wins"]}`,
-        draw_number: `${translator["Draw Results"]}`,
+        bet_time:    `${translator["Bet Time"]}`,
+        bet_number:  `${translator["Total Bets"]}`,
+        unit_stake:  `${translator["Unit Stake"]}`,
+        multiplier:  `${translator["Multiplier"]}`,
+        bet_amount:  `${translator["Total Bet Amount"]}`,
+        win_bonus:   `${translator["Win Amount"]}`,
+        rebate_amount:`${translator["Rebate Amount"]}`,
+        num_wins:     `${translator["Number of Wins"]}`,
+        draw_number:  `${translator["Draw Results"]}`,
     };
-
+    
     const secondRowtrack = {
-        reg_type: `${translator["Username"]}`,
+        reg_type:   `${translator["Username"]}`,
         ip_address: `${translator["IP"]}`,
-        game_type: `${translator["Lottery Type"]}`,
+        game_type:  `${translator["Lottery Type"]}`,
         game_label: `${translator["Game Label"]}`,
-        bettype: `${translator["Bet Type"]}`,
+        bettype:    `${translator["Bet Type"]}`,
         game_model: `${translator["Game Model"]}`,
-        closing_time: `${translator["Closing Time"]}`,
-        opening_time: `${translator["Draw Time"]}`,
-        bet_status: `${translator["Bet Status"]}`,
+        closing_time:`${translator["Closing Time"]}`,
+        opening_time:`${translator["Draw Time"]}`,
+        bet_status:  `${translator["Bet Status"]}`,
         user_selection: `${translator["Bet Selection"]}`,
     };
+     
 
     const rendertrack = (data) => {
         var htmls = Trackbetdata(data);
@@ -167,7 +149,7 @@ $(function () {
         try {
             const response = await fetch(`../admin/trackdata/${page}/${pageLimit}`);
             const data = await response.json();
-
+    
             $("#masktrack").LoadingOverlay("hide");
             rendertrack(data.trackbet);
             // Render pagination
@@ -184,8 +166,7 @@ $(function () {
 
             const data = await response.json();
             if (data.response == "error") {
-                // showToast("Alert", "User does not exist", "info");
-                showToast(alertTitle, userDoesNotExist, "info");
+                showToast("Alert", "User does not exist", "info");
                 $(".loader").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
                 return;
             }
@@ -255,7 +236,7 @@ $(function () {
         });
     }
 
-    fetchtrackdata(currentPagetrack, pageLimit);
+     fetchtrackdata(currentPagetrack, pageLimit);
 
     $(".playertrack").click(function () {
         let direction = $(this).val();
@@ -284,173 +265,172 @@ $(function () {
             }
         }
     });
+    
 
-$(document).on("click", ".trackinfo", function () {
-    $("#viewtrackmodal").modal("show");
-    const tracktoken = $(this).attr("value");
-    // console.log(tracktoken);
-
-    $("#row1").empty();
-    $("#row2").empty();
-    fetchTrackDeatails(tracktoken);
-    fetchAllToken(tracktoken);
-    tableScrolltracker();
-});
-fetchtrackdata(currentPagetrack, pageLimit);
-});
-
-$(".numrowstrack").change(function () {
-    $("#masktrack").LoadingOverlay("show", {
-        background: "rgb(90,106,133,0.1)",
-        size: 3,
-    });
-    const numrows = $(this).val();
-    fetchtrackdata(currentPagetrack, numrows);
-});
-
-$(".executetrack").click(function () {
-    if ($("#trackinput").val() == "" && $(".trackstatus").val() == "" && $(".tracklotery").val() == "" && $(".startdatetrack").val() == "" && $("#trackcode").val() == "") {
-        // showToast("Heads up!!", "Select one or more data fields to filter", "info");
-        showToast(headsUpText, selectFieldsText, "info");
-
-        return;
-    }
-    const usernames = $("#trackinput").val();
-    const trackstatus = $(".trackstatus").val();
-    const tracklotery = $(".tracklotery").val();
-    const trackcode = $("#trackcode").val();
-    const startdatetrack = $(".startdatetrack").val();
-    const enddatetrack = $(".enddatetrack").val();
-
-    filterTrack(usernames, trackstatus, tracklotery, trackcode, startdatetrack, enddatetrack, currentPagetrack, pageLimit);
-    $(".loadertrack").remove("bx bx-check-double").addClass("bx bx-loader bx-spin");
-});
-
-async function fetchLotteryname() {
-    try {
-        const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json(); // Parse JSON response
-        // console.log(data);
-        let html = `<option value="">${translator["Lottery Type"]}</option>`;
-        data.forEach((lottery) => {
-            html += `<option value="${lottery.gt_id}" class="">${lottery.name}</option>`;
+    $(".refreshtrack").click(function () {
+        $(".queryholderlist").val("");
+        $("#masktrack").LoadingOverlay("show", {
+            background: "rgb(90,106,133,0.1)",
+            size: 3,
         });
+        fetchtrackdata(currentPagetrack, pageLimit);
+    });
 
-        $(".selectlottery").html(html);
-    } catch (error) {
-        console.error("Error fetching data:", error);
+    $(".numrowstrack").change(function () {
+        $("#masktrack").LoadingOverlay("show", {
+            background: "rgb(90,106,133,0.1)",
+            size: 3,
+        });
+        const numrows = $(this).val();
+        fetchtrackdata(currentPagetrack, numrows);
+    });
+
+    $(".executetrack").click(function () {
+        if ($("#trackinput").val() == "" && $(".trackstatus").val() == "" && $(".tracklotery").val() == "" && $(".startdatetrack").val() == "" && $("#trackcode").val() == "") {
+            showToast("Heads up!!", "Select one or more data fields to filter", "info");
+            return;
+        }
+        const usernames = $("#trackinput").val();
+        const trackstatus = $(".trackstatus").val();
+        const tracklotery = $(".tracklotery").val();
+        const trackcode = $("#trackcode").val();
+        const startdatetrack = $(".startdatetrack").val();
+        const enddatetrack = $(".enddatetrack").val();
+
+        filterTrack(usernames, trackstatus, tracklotery, trackcode, startdatetrack, enddatetrack, currentPagetrack, pageLimit);
+        $(".loadertrack").remove("bx bx-check-double").addClass("bx bx-loader bx-spin");
+    });
+
+    async function fetchLotteryname() {
+        try {
+            const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json(); // Parse JSON response
+            // console.log(data);
+            let html = `<option value="">${translator['Lottery Type']}</option>`;
+            data.forEach((lottery) => {
+                html += `<option value="${lottery.gt_id}" class="">${lottery.name}</option>`;
+            });
+
+            $(".selectlottery").html(html);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     }
-}
-fetchLotteryname();
+    fetchLotteryname();
 
-$(document).on("click", ".trackinfo", function () {
-    $("#viewtrackmodal").modal("show");
-    const tracktoken = $(this).attr("value");
-    console.log(tracktoken);
+    $(document).on("click", ".trackinfo", function () {       
+        $("#viewtrackmodal").modal("show");
+        const tracktoken = $(this).attr("value");
+       // console.log(tracktoken);
 
-    $("#row1").empty();
-    $("#row2").empty();
-    fetchTrackDeatails(tracktoken);
-    fetchAllToken(tracktoken);
-});
+        $("#row1").empty();
+        $("#row2").empty();
+        fetchTrackDeatails(tracktoken);
+        fetchAllToken(tracktoken);
+        tableScrolltracker();
+    });
 
-async function fetchAllToken(tracktoken) {
-    try {
-        const response = await fetch(`../admin/getAllTokenbet/${tracktoken}`);
-        const data = await response.json();
-        const tableBody = document.getElementById("trackbetTableBody");
-        tableBody.innerHTML = "";
-        data.forEach((item) => {
-            const row = document.createElement("tr");
+    async function fetchAllToken(tracktoken) {
+        try {
+            const response = await fetch(`../admin/getAllTokenbet/${tracktoken}`);
+            const data = await response.json();
+            const tableBody = document.getElementById("trackbetTableBody");
+            tableBody.innerHTML = "";
+            data.forEach((item) => {
+                const row = document.createElement("tr");
 
-            const betstatus = {
-                2: translator["Win"],
-                3: translator["Loss"],
-                5: translator["Pending"],
-                6: translator["Void"],
-                7: translator["Refund"],
-            };
+                const betstatus = {
+                    2: translator["Win"],
+                    3: translator["Loss"],
+                    5: translator["Pending"],
+                    6: translator["Void"],
+                    7: translator["Refund"],
+                };
 
-            const states = {
-                1: "Settled",
-                2: "Unsettled",
-                4: "Cancelled",
-                7: translator["Refund"],
-            };
-            row.innerHTML = `
+                const states = {
+                    1: "Settled",
+                    2: "Unsettled",
+                    4: "Cancelled",
+                    7: translator["Refund"]
+                };
+                row.innerHTML = `
                 <td>${item.draw_number || "N/A"}</td>     
                 <td>${item.draw_period || "N/A"}</td> 
                 <td>${item.multiplier || "N/A"}</td>       
                 <td>${item.bet_amount || "N/A"}</td> 
-                <td>${states[item.state] || "N/A"}</td>
+                <td>${states[item.state]|| "N/A"}</td>
                 <td>${betstatus[item.bet_status] || "N/A"}</td>    
             `;
-            // Append the row to the table body
-            tableBody.appendChild(row);
+                // Append the row to the table body
+                tableBody.appendChild(row);
+            });
+        } catch (error) {
+            console.error("Error fetching or rendering data:", error);
+        }
+    }
+
+    async function fetchTrackDeatails(tracktoken) {
+        try {
+            const response = await fetch(`../admin/getTrackbet/${tracktoken}`);
+            const data = await response.json();
+            $("#row1").empty();
+            $("#row2").empty();
+            let html1 = Showtrackbet(firstRowtrack, data);
+            let html2 = Showtrackbet(secondRowtrack, data);
+            $("#rowtrack").html(html1);
+            $("#rowtrack1").html(html2);
+         
+            // }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
+    let debounceTimeout = null;
+    $(document).ready(function () {
+        // Event listener for keyup on #myInput
+        $(document).on("keyup", "#trackinput", function () {
+            const query = $(this).val().trim();
+
+            // Only trigger if input is more than 2 characters
+            if (query.length > 1) {
+                clearTimeout(debounceTimeout); // Clear any existing timeout
+                debounceTimeout = setTimeout(fetchbetUser, 500, query); // Call fetchUsers with the query after 500ms delay
+            } else {
+                $(".trackdown").hide(); // Hide dropdown if input is less than 3 characters
+            }
         });
-    } catch (error) {
-        console.error("Error fetching or rendering data:", error);
-    }
-}
 
-async function fetchTrackDeatails(tracktoken) {
-    try {
-        const response = await fetch(`../admin/getTrackbet/${tracktoken}`);
-        const data = await response.json();
-        $("#row1").empty();
-        $("#row2").empty();
-        let html1 = Showtrackbets(firstRowtrack, data);
-        let html2 = Showtrackbet(secondRowtrack, data);
-        $("#rowtrack").html(html1);
-        $("#rowtrack1").html(html2);
-        // }
-    } catch (error) {
-        console.error("Error fetching data:", error);
-    }
-}
+        // Handle dropdown item selection
+        $(document).on("change", ".trackdown", function () {
+            const selectedOption = $(this).find("option:selected");
+            const selectedUserId = selectedOption.val();
+            const selectedUsername = selectedOption.data("username");
 
-let debounceTimeout = null;
-$(document).ready(function () {
-    // Event listener for keyup on #myInput
-    $(document).on("keyup", "#trackinput", function () {
-        const query = $(this).val().trim();
-        if (query.length > 1) {
-            clearTimeout(debounceTimeout); // Clear any existing timeout
-            debounceTimeout = setTimeout(fetchbetUser, 500, query); // Call fetchUsers with the query after 500ms delay
-        } else {
-            $(".trackdown").hide(); // Hide dropdown if input is less than 3 characters
-        }
-    });
+            if (selectedUserId) {
+                $("#trackinput").val(selectedUsername);
+                $(".userIdbet").val(selectedUserId);
+                $(".trackdown").hide();
+            }
+        });
 
-    // Handle dropdown item selection
-    $(document).on("change", ".trackdown", function () {
-        const selectedOption = $(this).find("option:selected");
-        const selectedUserId = selectedOption.val();
-        const selectedUsername = selectedOption.data("username");
+        $(document).on("click", function (e) {
+            const $dropdownbet = $("#usertrackDropdown");
+            if (!$(e.target).closest("#trackinput, #usertrackDropdown").length) {
+                $dropdownbet.hide();
+            }
+        });
 
-        if (selectedUserId) {
-            $("#trackinput").val(selectedUsername);
-            $(".userIdbet").val(selectedUserId);
-            $(".trackdown").hide();
-        }
-    });
-
-    $(document).on("click", function (e) {
-        const $dropdownbet = $("#usertrackDropdown");
-        if (!$(e.target).closest("#trackinput, #usertrackDropdown").length) {
-            $dropdownbet.hide();
-        }
-    });
-
-    // Handle manual input clearing
-    $(document).on("input", "#trackinput", function () {
-        if (!$(this).val()) {
-            $(".userIdbet").val(""); // Reset user ID if input is cleared
-        }
+        // Handle manual input clearing
+        $(document).on("input", "#trackinput", function () {
+            if (!$(this).val()) {
+                $(".userIdbet").val(""); // Reset user ID if input is cleared
+            }
+        });
     });
 
     // Function to fetch and display users
@@ -458,7 +438,9 @@ $(document).ready(function () {
         $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
+
                 let optionsHtml = "";
+
                 response.forEach((user) => {
                     let displayValuebet;
                     let regnamebet;
@@ -505,18 +487,18 @@ $(document).ready(function () {
     tableScrolltrack();
 
     function tableScrolltracker() {
-         const tableContainerTracker = document.querySelector(".trackertable");
-         const headerRowTracker = document.querySelector(".trackerheasrow");
+        const tableContainerTracker = document.querySelector(".table-trackertable");
+        const headerRowTracker = document.querySelector(".trackerheasrow");
 
         tableContainerTracker.addEventListener("scroll", function () {
-          if (tableContainerTracker.scrollTop > 0) {
-            headerRowTracker.classList.add("sticky-trackerhead");
-          } else {
-            headerRowTracker.classList.remove("sticky-trackerhead");
-          }
+            if (tableContainerTracker.scrollTop > 0) {
+                headerRowTracker.classList.add("sticky-trackerhead");
+            } else {
+                headerRowTracker.classList.remove("sticky-trackerhead");
+            }
         });
     }
-    tableScrolltracker();
+
 
     $(".clearitem").on("dblclick", function () {
         $(this).val(""); // Clears the input field
