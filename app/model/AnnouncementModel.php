@@ -260,5 +260,22 @@ class AnnouncementModel extends MEDOOHelper
         }
     }
 
-    
+
+    //send sms to user won games
+
+     public static  function SendSmsGameswon (){
+        $sql = "SELECT notifications.user_id, notifications.message, users_test.contact 
+            FROM notifications 
+            INNER JOIN users_test ON users_test.uid = notifications.user_id";
+        $data = parent::query($sql);
+        foreach ($data as $user) {
+            $message = [
+                'message' => $user['message'],
+                'mobile' => $user['contact'],
+            ];
+
+           // (new Publisher)->publish('gamewon', $message);
+        }
+    }
+
 }

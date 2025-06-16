@@ -325,12 +325,13 @@ $(function () {
     $(document).on("click", ".trackinfo", function () {       
         $("#viewtrackmodal").modal("show");
         const tracktoken = $(this).attr("value");
-        console.log(tracktoken);
+       // console.log(tracktoken);
 
         $("#row1").empty();
         $("#row2").empty();
         fetchTrackDeatails(tracktoken);
         fetchAllToken(tracktoken);
+        tableScrolltracker();
     });
 
     async function fetchAllToken(tracktoken) {
@@ -382,6 +383,7 @@ $(function () {
             let html2 = Showtrackbet(secondRowtrack, data);
             $("#rowtrack").html(html1);
             $("#rowtrack1").html(html2);
+         
             // }
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -485,8 +487,8 @@ $(function () {
     tableScrolltrack();
 
     function tableScrolltracker() {
-        const tableContainerTracker = document.querySelector(".trackertable");
-        const headerRowTrack = document.querySelector(".trackerheasrow");
+        const tableContainerTracker = document.querySelector(".table-trackertable");
+        const headerRowTracker = document.querySelector(".trackerheasrow");
 
         tableContainerTracker.addEventListener("scroll", function () {
             if (tableContainerTracker.scrollTop > 0) {
@@ -496,7 +498,7 @@ $(function () {
             }
         });
     }
-    tableScrolltracker();
+
 
     $(".clearitem").on("dblclick", function () {
         $(this).val(""); // Clears the input field
