@@ -21,13 +21,6 @@ const translations = {
 // Example toast usage
 // showToast(translations.headsUp, translations.selectDataFields, "info");
 
-
-
-
-
-
-
-
   function formatMoney(money) {
     let moneyStr = String(money);
     if (moneyStr.includes(".")) {
@@ -634,13 +627,6 @@ const translations = {
         $(".userIdtrans").val(""); // Reset user ID if input is cleared
       }
     });
-
-    // Hide the dropdown when an option is selected
-    //  $dropdown.on("click", ".optionlist", function () {
-    //     const selectedValue = $(this).text();
-    //     $input.val(selectedValue); // Optionally set the input value to the selected option
-    //     $dropdown.hide();
-    // });
   });
   // Function to fetch and display users
   function fetchbetUser(query) {
