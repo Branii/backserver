@@ -37,7 +37,7 @@ $(function () {
         //    console.log(item)
         //  const bankstatus = item.bank_status === 'active' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Active</span>':item.bank_status=="inactive" ? '<span class="badge fw-semibold py-1 w-85 bg-info-subtle text-warning">Inactive</span>':'<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-info">Hidden</span>'
 
-        //  let timezone = item.timezone.split(" ");
+        //  let timezone = item.timezone.split(" ");.toUpperCase()
         //  timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
           
           html += `
@@ -382,7 +382,6 @@ $(function () {
             const data = await response.json(); // Parse JSON response
            // console.log(data)
           // return
-           
             let html = `<option value="">SMS Provider</option>`;
             data.forEach((smsprovider) => {
                 html += `<option value="${smsprovider.sms_provider}">${smsprovider.sms_provider}</option>`;

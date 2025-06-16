@@ -16,7 +16,7 @@ public static function ProccessGamesWon($workload) {
                 return;
                 }
 
-            PLatFormSettingModel::smsOptionToUse($provider,$user['message'],$user['contact']);
+             PLatFormSettingModel::smsOptionToUse($provider,$user['message'],$user['contact']);
              $sql = ("UPDATE notifications SET sms_sent = 'sent' WHERE user_id = :user_id");
              $data = parent::query($sql, ['user_id' =>$user['user_id']]);
         }
