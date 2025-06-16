@@ -447,14 +447,12 @@ class adminController extends Controller
     }
     public function  fetchPaymentPlatforms($partnerID, $page, $limit)
     {
-
         $this->view('exec/payment_platforms', ['partner_id' => $partnerID, 'flag' => 'fetchpaymentplatforms']);
         $this->view->render();
     }
 
     public function  fetchPartnersNames($partnerID, $page, $limit)
     {
-
         $this->view('exec/partners', ['partner_id' => $partnerID, 'flag' => 'fetchPartnersNames']);
         $this->view->render();
     }
@@ -1100,7 +1098,7 @@ class adminController extends Controller
         $this->view->render();
     }
 
-
+ 
     //search name inputs
     public function searchusernames($username)
     {
@@ -1108,6 +1106,47 @@ class adminController extends Controller
         $this->view->render();
     }
 
+    //sms configuration
+    public function fetchsmsplatform($page, $pageLimit){
+      $this->view('exec/platform_settings', ['page' => $page, 'pageLimit' => $pageLimit, 'flag' => 'fetchsms']);
+      $this->view->render();
+    }
+    public function addprovider($smsprovider,$sendename){
+      $this->view('exec/platform_settings', ['smsprovider' => $smsprovider, 'sendename' => $sendename, 'flag' => 'addprovider']);
+      $this->view->render();
+    }
+
+     public function smspreferences(){
+      $this->view('exec/platform_settings', ['flag' => 'savepreferences']);
+      $this->view->render();
+    }
+    public function savessmsstaes(){
+      $this->view('exec/platform_settings', ['flag' => 'savessmsstaes']);
+      $this->view->render();
+    }
+     public function fetchsmsprovider(){
+      $this->view('exec/platform_settings', ['flag' => 'fetchsmsprovider']);
+      $this->view->render();
+     }
+
+     public function  filtersms($smsprovider,$smsstatus,$startdate,$enddate,$page,$limit){
+      $this->view('exec/platform_settings', [
+        'smsprovider'=>$smsprovider,
+        'smsstatus'=>$smsstatus,
+        'startdate'=>$startdate,
+        'enddate'=>$enddate,
+        'page'=>$page,
+        'limit'=>$limit,
+        'flag' => 'filtersms']);
+      $this->view->render();
+     }
+
+   //email configuration
+      public function fetchemaildata($page, $pageLimit){
+      $this->view('exec/platform_settings', ['page' => $page, 'pageLimit' => $pageLimit, 'flag' => 'fetchemaildata']);
+      $this->view->render();
+    }
+    
 
     //searchadmin names
     public function searchusernamesss($username)
@@ -1120,7 +1159,6 @@ class adminController extends Controller
 
     public function filterpaymentdata($username, $uid, $pageNumber, $limit)
     {
-
         $this->view('exec/userbank_manage', [
             'username' => $username,
             'uid' => $uid,
@@ -1135,14 +1173,13 @@ class adminController extends Controller
     {
         $this->view('exec/admins_exec', [
             'username' => $username,
-            'uid' => $uid, // still using 'uid' as the key passed into the view
+            'uid' => $uid,
             'flag' => 'filteradminpayments',
             'page' => $pageNumber,
             'limit' => $limit,
         ]);
         $this->view->render();
     }
-
 
     //filteradmindata
 }

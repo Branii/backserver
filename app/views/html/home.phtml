@@ -721,17 +721,25 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab unotification">
             <?php include "tabs/announcement/usernotification.php" ?>
           </div>
-          <!--paymentplstform-->
-          <div class="chrome__tab payment_platform">
-            <?php include "tabs/payment_platform/payment_platforms.php" ?>
-          </div>
-
+         
           <div class="chrome__tab partners">
             <?php include "tabs/partners/partners.php" ?>
           </div>
 
+           <div class="chrome__tab smsconfig">
+            <?php include "tabs/plartform_manage/smscofigure.php" ?>
+          </div>
 
+           <div class="chrome__tab  emailconfigure">
+            <?php include "tabs/plartform_manage/emailconfigure.php" ?>
+          </div>
 
+           <!--paymentplstform-->
+          <div class="chrome__tab payment_platform">
+            <?php include "tabs/payment_platform/payment_platforms.php" ?>
+          </div>
+
+    
         </div>
       </div>
       <script>
@@ -744,10 +752,6 @@ $fullname = (new Controller)->getUsername($adminEmail);
     <script src="<?php echo BASE_URL; ?>assets/js/vendor.min.js"></script>
     <!-- Import Js Files -->
     <script src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script src="<?php echo BASE_URL; ?>assets/js/draggabilly.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/libs/simplebar/dist/simplebar.min.js"></script>
@@ -792,14 +796,8 @@ $fullname = (new Controller)->getUsername($adminEmail);
     <script src="<?php echo BASE_URL; ?>assets/js/usernotification.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/useroverview.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/googletwofa.js"></script>
-    <script>
-  const langStrings = {
-    inactive: "<?= $translator['Inactive']; ?>"
-  };
-</script>
     <script src="<?php echo BASE_URL; ?>assets/js/userpaymentmethod.js"></script>
-
-
+    <script src="<?php echo BASE_URL; ?>assets/js/sms_config.js"></script>
 
     <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.init.js"></script>
@@ -807,11 +805,10 @@ $fullname = (new Controller)->getUsername($adminEmail);
     <!-- Bootstrap 5 CSS (in the <head> of your HTML) -->
     <!-- Your HTML content goes here -->
     <!-- solar icons -->
-    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/iconify-icon.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/libs/apexcharts/dist/apexcharts.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/dashboard.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
-
+    <script src="<?php echo BASE_URL; ?>assets/js/loadingoverlay.min.js"></script>
     <script>
       // const themeToggle = document.getElementById('theme-toggle');
       //   const html = document.documentElement;

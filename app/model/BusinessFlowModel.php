@@ -14,7 +14,7 @@ class BusinessFlowModel extends MEDOOHelper
          ['offset' => $startpoint, 'limit' => $limit]
       );
        $totalRecords = parent::count('transaction');
-      $trasationIds = array_column($data, 'order_id');
+       $trasationIds = array_column($data, 'order_id');
       return ['data' => $data, 'total' => $totalRecords, 'transactionIds' => $trasationIds];
    }
    public static function FilterTransactionDataSubQuery($username, $orderid,$ordertype,$patneruid, $startdate, $enddate)
@@ -68,10 +68,10 @@ class BusinessFlowModel extends MEDOOHelper
             LIMIT :offset, :limit";
 
             $data = parent::query($sql, ['offset' => $startpoint,'limit' => $limit]);
-
-            $countSql = "SELECT COUNT(*) AS total_count FROM transaction WHERE $subQuery";
-            $totalRecord = parent::query($countSql);
-            $totalRecords = $totalRecord[0]['total_count'] ?? 0;
+                  
+           $countSql = "SELECT COUNT(*) AS total_count FROM transaction WHERE $subQuery";
+           $totalRecord = parent::query($countSql);
+           $totalRecords = $totalRecord[0]['total_count'] ?? 0;
 
             // Retrieve last executed SQL
           //  $lastQuery = MedooOrm::openLink()->log();
@@ -213,7 +213,7 @@ class BusinessFlowModel extends MEDOOHelper
       $totalRecords = $countStmt->fetchColumn();
 
       // Prepare to fetch paginated data
-      $dataStmt = $pdo->prepare("$mergedQuery LIMIT $limit OFFSET $offset");
+      $dataStmt = $pdo->prepare("$mergedQuery ORDER BY server_date DESC, server_time DESC LIMIT $limit OFFSET $offset");
       $dataStmt->execute($subquery['params']);
       $data =  $dataStmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -353,7 +353,7 @@ class BusinessFlowModel extends MEDOOHelper
          $subQuery = implode(' AND ', $filterConditions);
       }
       // Add ordering and limit to the query
-       $subQuery .= " ORDER BY trackbet.server_date DESC";
+       $subQuery .= "ORDER BY trackbet.server_date DESC";
 
       return $subQuery;
    }

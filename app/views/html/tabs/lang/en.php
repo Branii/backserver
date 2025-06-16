@@ -706,8 +706,10 @@ return [
   'Action' => 'Action',
   //（Platform Settings）平台设置
   'Platform Settings' => 'Platform Settings',
-  //(Basic Platform Configuration)
-  'Basic Platform Configuration' => 'Basic Platform Configuration',
+  
+//(Basic Platform Configuration)
+  'SMS Configuration' =>'SMS Configuration',
+'Email Configuration' => 'Email Configuration',
   // (Game Vendor Settings)游戏厂商设置
   'Game Vendor Settings' => 'Game Vendor Settings',
   'Vendor' => 'Vendor',

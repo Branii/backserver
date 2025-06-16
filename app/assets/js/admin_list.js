@@ -529,6 +529,7 @@ $(function () {
           <div class="accordion-header">
              <span class='maintext'>${sidebarMain[key].category}</span>
           </div>
+      
              <div class="accordion-contentt">
               <ul class="custom-list">`;
             // Check if the permissions object has the key
