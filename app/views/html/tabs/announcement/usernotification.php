@@ -233,6 +233,25 @@
     }
 </style>
 
+
+
+<span id="Editt-text" data-translation="<?= $translator['Edit'] ?? 'Edit'; ?>" style="display:none;"></span>
+<span id="Deletee-text" data-translation="<?= $translator['Delete'] ?? 'Delete'; ?>" style="display:none;"></span>
+  
+<!-- Hidden translation spans -->
+<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp'] ?? 'Heads up!!'; ?>" style="display:none;"></span>
+<span id="trans-select-fields" data-translation="<?= $translator['Select one or more data fields to filter'] ?? 'Select one or more data fields to filter'; ?>" style="display:none;"></span>
+<span id="trans-all-fields" data-translation="<?= $translator['AllFieldsRequired'] ?? 'All fields are required'; ?>" style="display:none;"></span>
+<span id="trans-failed" data-translation="<?= $translator['Failed'] ?? 'Failed'; ?>" style="display:none;"></span>
+
+<span id="trans-no-user-selected-title" style="display: none;"><?php echo $translator['NO_USER_SELECTED_TITLE']; ?></span>
+<span id="trans-no-user-selected-msg" style="display: none;"><?php echo $translator['NO_USER_SELECTED_MSG']; ?></span>
+
+<span id="trans-read" style="display: none;"><?php echo $translator['READ']; ?></span>
+<span id="trans-unread" style="display: none;"><?php echo $translator['UNREAD']; ?></span>
+
+
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['User Notification']; ?></h4>

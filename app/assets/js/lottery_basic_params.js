@@ -411,6 +411,18 @@ $(() => {
     });
   }
 
+const ERROR_TEXT = document.getElementById("error_text").innerText;
+const SUCCESS_TEXT = document.getElementById("success_text").innerText;
+const LOTTERY_ALREADY = document.getElementById("lottery_already_text").innerText;
+const TURNED_ON = document.getElementById("turned_on_text").innerText;
+const TURNED_OFF = document.getElementById("turned_off_text").innerText;
+const LOTTERY_STATUS_UPDATED = document.getElementById("lottery_status_updated_text").innerText;
+const LOTTERY_UPDATED = document.getElementById("lottery_updated_text").innerText;
+const CONFIRM_TOGGLE_TEXT = document.getElementById("confirm_toggle_text").innerText;
+const TURN_ON_TEXT = document.getElementById("turn_on_text").innerText;
+const TURN_OFF_TEXT = document.getElementById("turn_off_text").innerText;
+
+
   // filter user name
 
   $(document).on("keyup", "#ld-lottery", function () {
@@ -487,7 +499,13 @@ $(() => {
         response = JSON.parse(response);
         const data = response.data;
         if (response.status === "error") {
-          showToast("Error", "Lottery Data Successfully Updated.","error");
+          // showToast("Error", "Lottery Data Successfully Updated.","error");
+
+
+
+showToast(ERROR_TEXT, LOTTERY_UPDATED, "error");
+
+
           return;
         }
   
@@ -536,18 +554,31 @@ $(() => {
         response = JSON.parse(response);
         const data = response.data;
         if (response.status === "error") {
-          showToast("Error", "Lottery Data Successfully Updated.","error");
+          // showToast("Error", "Lottery Data Successfully Updated.","error");
+
+
+showToast(ERROR_TEXT, LOTTERY_UPDATED, "error");
+
+
           return;
         }
 
         if(data == 0){
-          showToast("Error", "This lottery has already being " + (status === "gameon" ? " Turned On " : " Turned Off "),"error");
+          // showToast("Error", "This lottery has already being " + (status === "gameon" ? " Turned On " : " Turned Off "),"error");
+            showToast(ERROR_TEXT, LOTTERY_ALREADY + (status === "gameon" ? " " + TURNED_ON : " " + TURNED_OFF), "error");
+
+
+
           $('.lb-tclose').click();
           return;
         }
   
        $('.lb-tclose').click();
-       showToast("Success", "Lottery " + (status === "gameon" ? " Turned On " : " Turned Off ") + " Successfully.","info");
+      //  showToast("Success", "Lottery " + (status === "gameon" ? " Turned On " : " Turned Off ") + " Successfully.","info");
+      
+showToast(SUCCESS_TEXT, LOTTERY_STATUS_UPDATED + (status === "gameon" ? " " + TURNED_ON : " " + TURNED_OFF) + " Successfully.", "info");
+
+
        $("#state-" + lotteryID).text(status === "gameon" ? "Turned On" : "Turned Off");
       },
       error: function (res, status, error) {
@@ -564,21 +595,38 @@ $(() => {
     
   });
 
-  $(document).on('click','.gameon,.gameoff',function(){
+  // $(document).on('click','.gameon,.gameoff',function(){
 
-    $("#lb-toggle-lottery").addClass("show");
-    $("#lb-toggle-lottery").css("display", "block");
+  //   $("#lb-toggle-lottery").addClass("show");
+  //   $("#lb-toggle-lottery").css("display", "block");
 
-   const lotteryName =  $($($(this).parents("tr")[0]).find("td:eq(3)")[0]).text();
+  //  const lotteryName =  $($($(this).parents("tr")[0]).find("td:eq(3)")[0]).text();
+
+  //   $("#lb-id-holder").val($(this).attr("data-target"));
+  //   let status = $(this).attr("class").split(" ")[1];
+  //   $("#toggle-lottery-msg").html(`Are you sure you want to  ${status === "gameon" ? " <span style='color:#2aa96b;'> Turn On </span> " : " <span style='color:#e60e38;'> Turn Off </span> " }  <span style="font-weight: 900;">${lotteryName}</span> ? `);
+  //   $("#lb-toggle-lottery").attr({"data-status": status});
+
+
+
+  // });
+$(document).on('click', '.gameon, .gameoff', function () {
+    $("#lb-toggle-lottery").addClass("show").css("display", "block");
+
+    const lotteryName = $($(this).parents("tr")[0]).find("td:eq(3)").text();
 
     $("#lb-id-holder").val($(this).attr("data-target"));
+
     let status = $(this).attr("class").split(" ")[1];
-    $("#toggle-lottery-msg").html(`Are you sure you want to  ${status === "gameon" ? " <span style='color:#2aa96b;'> Turn On </span> " : " <span style='color:#e60e38;'> Turn Off </span> " }  <span style="font-weight: 900;">${lotteryName}</span> ? `);
-    $("#lb-toggle-lottery").attr({"data-status": status});
+    
+    const actionText = status === "gameon"
+        ? `<span style='color:#2aa96b;'> ${TURN_ON_TEXT} </span>`
+        : `<span style='color:#e60e38;'> ${TURN_OFF_TEXT} </span>`;
 
+    $("#toggle-lottery-msg").html(`${CONFIRM_TOGGLE_TEXT} ${actionText} <span style="font-weight: 900;">${lotteryName}</span>?`);
 
-
-  });
+    $("#lb-toggle-lottery").attr({ "data-status": status });
+});
 
 
 
@@ -604,52 +652,52 @@ $(() => {
 
 
 
-  $(document).on("click", ".fetch-lotter-basic-records", function () {
-    // const lottery_id = $("#lottery").val();
+  // $(document).on("click", ".fetch-lotter-basic-records", function () {
+  //   // const lottery_id = $("#lottery").val();
 
-    // $.ajax({
-    //   url: `../admin/fetch_lottery_basic_params/${lottery_id}/${page}`,
-    //   type: "POST",
-    //   beforeSend: function () {
-    //     $("#lottery-draw-loader").css({ display: "flex" });
-    //   },
-    //   success: function (response) {
-    //     response = JSON.parse(response);
-    //   //  console.log(response);
-    //     const data = response.data;
-    //     const totalCount = response.totalCount;
-    //   //  console.log(data);
+  //   // $.ajax({
+  //   //   url: `../admin/fetch_lottery_basic_params/${lottery_id}/${page}`,
+  //   //   type: "POST",
+  //   //   beforeSend: function () {
+  //   //     $("#lottery-draw-loader").css({ display: "flex" });
+  //   //   },
+  //   //   success: function (response) {
+  //   //     response = JSON.parse(response);
+  //   //   //  console.log(response);
+  //   //     const data = response.data;
+  //   //     const totalCount = response.totalCount;
+  //   //   //  console.log(data);
 
-    //     if (response.length === 0) {
-    //       $("#lot-basic-dtholder").html(
-    //         `<tr class="no-results"> <td colspan="9"><img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`
-    //       );
-    //       $("#lottery-draws-pages-wrapper").html("");
-    //       return;
-    //     }
-    //     let rowsMarkup = "";
-    //     //console.log(data);
-    //     data.forEach((row) => {
-    //       rowsMarkup += lotteryBasicParametersMarkup(row);
-    //     });
-    //   //  console.log(rowsMarkup);
-    //     $("#lot-basic-dtholder").html(rowsMarkup);
-    //     const totalPages = Math.ceil(totalCount / 20);
-    //     renderPaginationlist(totalPages,1,() => );
-    //   },
-    //   error: function (res, status, error) {
-    //     $(".dataholder").html(
-    //       "<tr><td colspan='12' style='text-align:center;'>An error occured, please try again later.</td></tr>"
-    //     );
-    //     console.log("An error occured: " + status + " - " + error);
-    //   },
-    //   complete: function () {
-    //     $("#lottery-draw-loader").css({ display: "none" });
-    //   },
-    // });
-    fetchLotteryBasicParams(1,this);
+  //   //     if (response.length === 0) {
+  //   //       $("#lot-basic-dtholder").html(
+  //   //         `<tr class="no-results"> <td colspan="9"><img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`
+  //   //       );
+  //   //       $("#lottery-draws-pages-wrapper").html("");
+  //   //       return;
+  //   //     }
+  //   //     let rowsMarkup = "";
+  //   //     //console.log(data);
+  //   //     data.forEach((row) => {
+  //   //       rowsMarkup += lotteryBasicParametersMarkup(row);
+  //   //     });
+  //   //   //  console.log(rowsMarkup);
+  //   //     $("#lot-basic-dtholder").html(rowsMarkup);
+  //   //     const totalPages = Math.ceil(totalCount / 20);
+  //   //     renderPaginationlist(totalPages,1,() => );
+  //   //   },
+  //   //   error: function (res, status, error) {
+  //   //     $(".dataholder").html(
+  //   //       "<tr><td colspan='12' style='text-align:center;'>An error occured, please try again later.</td></tr>"
+  //   //     );
+  //   //     console.log("An error occured: " + status + " - " + error);
+  //   //   },
+  //   //   complete: function () {
+  //   //     $("#lottery-draw-loader").css({ display: "none" });
+  //   //   },
+  //   // });
+  //   fetchLotteryBasicParams(1,this);
 
-  });
+  // });
 
  
 
@@ -700,6 +748,11 @@ $(() => {
               </tr>`;
   }
   
+  // Read the translations from hidden span elements
+const turnOnText = document.getElementById("turnon-text")?.dataset.translation || "Turn On";
+const turnOffText = document.getElementById("turnoff-text")?.dataset.translation || "Turn Off";
+const EditText = document.getElementById("Edit-text")?.dataset.translation || "Edit";
+
   function lotteryBasicParametersMarkup(data) {
     return `
   <tr>
@@ -735,7 +788,7 @@ $(() => {
                          closing_time="${data.clsing}" 
                          game-id="${data.id}" 
                          id="edit-${data.id}" >
-                          Edit
+                         ${EditText}
                       </a>
                   </li>
                   <li class="action-btn" style="cursor:pointer;">
@@ -743,17 +796,19 @@ $(() => {
                          data-target="${data.id}" 
                          data-bs-target="#confirm-state-modal-gameon" 
                          data-bs-toggle="modal" >
-                          Turn On
+                          ${turnOnText}
                       </a>
                   </li>
                   <li class="action-btn" style="cursor:pointer;">
                       <a class="dropdown-item gameoff" 
                          data-target="${data.id}" 
                          data-bs-target="#confirm-state-modal-gameoff" 
-                         data-bs-toggle="modal" >
-                          Turn Off
+                         data-bs-toggle="modal">
+                          ${turnOffText}
                       </a>
                   </li>
+
+                   
               </ul>
           </div>
       </td>

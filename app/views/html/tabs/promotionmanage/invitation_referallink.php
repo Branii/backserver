@@ -202,6 +202,16 @@
 
 </style>
 
+<!-- Title -->
+<span id="trans-heads-up" data-translation="<?= htmlspecialchars($translator['HeadsUp'] ?? 'Heads up!') ?>" style="display:none;"></span>
+
+<!-- Store translated and original text for "select fields" -->
+<span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
+<span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
+
+
+
+
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">

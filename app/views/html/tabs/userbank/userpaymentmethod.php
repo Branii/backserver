@@ -260,7 +260,35 @@
         /* Ensure it doesn't interfere with content */
         z-index: 10;
     }
+
+    .queryholderuserpayment {
+        background-color: white;
+        border: 1px solid #ccc;
+        color: #333;
+        z-index: 1000;
+        position: absolute;
+        width: 65%;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .queryholderuserpayment {
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
 </style>
+
+<!-- toast messages -->
+<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp']; ?>" style="display:none;"></span>
+<span id="trans-failed-inactive" data-translation="<?= $translator['FailedToSetInactive']; ?>" style="display:none;"></span>
+<span id="trans-inactive-success" data-translation="<?= $translator['SetInactiveSuccess']; ?>" style="display:none;"></span>
+<span id="trans-select-fields" data-translation="<?= $translator['Select One Or More Fields']; ?>" style="display:none;"></span>
+<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display:none;"></span>
+
+<span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
+<span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
+
+<!-- toast messages ends here -->
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
@@ -269,11 +297,14 @@
 
     <div class="px-4 py-3 border-bottom pagerlist1">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 120%;">
-                <input id="usernames" type="hidden" value="" />
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 150%;">
+
+
+                <input type="hidden" class="userIdtrans" />
                 <div style="width: 65%;">
                     <input name="transuserpayment" class="form-control bring-forward" id="transuserpayment" data-user-id=""
-                        placeholder="<?= $translator['Search usernames']; ?>" autocomplete="off" style="width: 97%;" />
+                        placeholder="<?= $translator['Search usernames']; ?>" autocomplete="off"  >
+
                     <select class="form-control queryholderuserpayment" size="5" style="display: none;" id="userpaymentAccountDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>
@@ -319,7 +350,7 @@
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle bl-search   Searchuserpaymentrans" value="" aria-label="Searchuserpayment"
+                <button type="button" class="btn bg-white-subtle  Searchuserpaymentrans" value="" aria-label="Searchuserpayment"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Searchuserpayment">
                     <i class="bx loaderlist bx-check-double" style="font-size: 20px;"></i>
                 </button>
@@ -327,6 +358,9 @@
         </span>
     </div>
 
+<!-- language tranlate relates with js file start -->
+    <span id="inactive-text" data-translation="<?= $translator['Inactive']; ?>" style="display:none;"></span>
+<!-- language tranlate relates with js file end   -->
     <div class="card-body p-4">
         <div class="table-responsive mb-4 border rounded-1 table-wrapperuserpaymentcard" id="maskuserpayment"
             style="height: 530px; overflow-y: scroll;">
@@ -409,7 +443,7 @@
         <div class="modal-content">
             <div class="modal-header d-flex align-items-center">
                 <div>
-                    <h5>User Payment Method</h5>
+                    <h5><?= $translator['User Payment Method']; ?></h5>
                 </div>
                 <div><i class="bx bx-message-square-x tclose"
                         style="color: #868c87; font-size: 25px; cursor: pointer;"></i></div>
@@ -421,8 +455,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-3 contact-location">
-                                        <input type="text" id="c-b-bankcardu" class="form-control"
-                                            placeholder="Update all User Payment Method" />
+                                        <input type="text" id="c-b-bankcard" class="form-control"
+                                            placeholder="Update all User Payment Method<?= $translator['Timezone/Hrs']; ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -448,7 +482,7 @@
             <div class="modal-body">
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between">
-                        <div>Bank Payment Method</div>
+                        <div><?= $translator['Bank Payment Method']; ?></div>
                         <div><i class="bx bx-message-square-x tclose"
                                 style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
                                 aria-label="Close"></i></div>
@@ -479,10 +513,10 @@
                         <thead>
                             <tr>
                                 <!-- <th class="font-weight-normal">#</th> -->
-                                <th class="font-weight-normal">Payment Method</th>
-                                <th class="font-weight-normal">Payment Type</th>
-                                <th class="font-weight-normal">Status</th>
-                                <th class="font-weight-normal">Action</th>
+                                <th class="font-weight-normal"><?= $translator['Payment Method']; ?></th>
+                                <th class="font-weight-normal"><?= $translator['Payment Type']; ?></th>
+                                <th class="font-weight-normal"><?= $translator['Status']; ?></th>
+                                <th class="font-weight-normal"><?= $translator['Action']; ?></th>
 
                             </tr>
                         </thead>

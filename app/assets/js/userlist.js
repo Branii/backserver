@@ -11,6 +11,105 @@ $(function () {
         });
     };
 
+      const translations = {
+  headsUp: document.getElementById("trans-heads-up").dataset.translation,
+  failedInactive: document.getElementById("trans-failed-inactive").dataset.translation,
+  inactiveSuccess: document.getElementById("trans-inactive-success").dataset.translation,
+  selectFields: document.getElementById("trans-select-fields").dataset.translation,
+  success: document.getElementById("trans-success").dataset.translation,
+  noChanges: document.getElementById("trans-no-changes-made").dataset.translation,
+  alertTitle: document.getElementById("trans-alert").dataset.translation,
+  userDoesNotExist: document.getElementById("trans-user-does-not-exist").dataset.translation,
+  errorTitle: document.getElementById("trans-error").dataset.translation,
+  errorMessage: document.getElementById("trans-generic-error").dataset.translation,
+  noPages: document.getElementById("trans-no-pages").dataset.translation,
+  mainPageNotice: document.getElementById("trans-main-page-notice").dataset.translation,
+  success: document.getElementById("trans-success").dataset.translation,
+  agentAdded: document.getElementById("trans-agent-added").dataset.translation,
+  quotaUpdated: document.getElementById("trans-quota-updated").dataset.translation,
+  blocked: document.getElementById("trans-blocked").dataset.translation,
+  alreadyBlocked: document.getElementById("trans-already-blocked").dataset.translation,
+  delete: document.getElementById("trans-delete").dataset.translation,
+  invalidOperation: document.getElementById("trans-invalid-operation").dataset.translation,
+  error: document.getElementById("trans-error").dataset.translation,
+  genericError: document.getElementById("trans-generic-error").dataset.translation,
+  requestError: document.getElementById("trans-request-error").dataset.translation,
+  enabled: document.getElementById("trans-enabled").dataset.translation,
+  lotteryEnabled: document.getElementById("trans-lottery-enabled").dataset.translation,
+  disabled: document.getElementById("trans-disabled").dataset.translation,
+  lotteryDisabled: document.getElementById("trans-lottery-disabled").dataset.translation,
+  errorProcessing: document.getElementById("trans-error-processing").dataset.translation,
+  successful: document.getElementById("trans-successful").dataset.translation,
+  recordsUpdated: document.getElementById("trans-records-updated").dataset.translation,
+  notDone: document.getElementById("trans-not-done").dataset.translation,
+  ipUpdated: document.getElementById("trans-ip-updated").dataset.translation,
+  noAgent: document.getElementById("trans-no-agent").dataset.translation,
+  noAgentMessage: document.getElementById("trans-no-agent-message").dataset.translation,
+   emailExists: document.getElementById("trans-email-exists").dataset.translation,
+  usernamePattern: document.getElementById("trans-username-pattern").dataset.translation,
+  invalidEmail: document.getElementById("trans-invalid-email").dataset.translation,
+  passwordNumber: document.getElementById("trans-password-number").dataset.translation,
+  passwordCase: document.getElementById("trans-password-case").dataset.translation,
+  passwordSpecial: document.getElementById("trans-password-special").dataset.translation,
+  confirmPassword: document.getElementById("trans-confirm-password").dataset.translation,
+  passwordLength: document.getElementById("trans-password-length").dataset.translation,
+  passwordRequired: document.getElementById("trans-password-required").dataset.translation,
+  
+};
+
+const headsUpText = document.getElementById("trans-heads-up").textContent;
+const selectFieldsText = document.getElementById("trans-select-fields").textContent;
+
+// showToast(headsUpText, selectFieldsText, "info");
+
+
+// Use the correct object properties:
+// showToast(translations.noPages, translations.mainPageNotice, "info");
+
+
+// showToast(title, message, "info");
+
+
+
+// showToast(errorTitle, errorMessage, "info");
+
+
+// showToast(headsUp, noChanges, "info");
+
+
+// showToast(translations.headsUp, translations.failedInactive, "danger");
+
+// showToast(translations.headsUp, translations.inactiveSuccess, "success");
+
+// showToast(translations.headsUp, translations.selectFields, "info");
+
+
+
+
+
+// showToast(alertTitle, userDoesNotExist, "info");
+
+
+
+// showToast(headsUp, allFieldsRequired, "info");
+
+// showToast(translations.success, translations.agentAdded, "success");
+// showToast(translations.success, translations.quotaUpdated, "success");
+// showToast(translations.blocked, translations.alreadyBlocked, "info");
+// showToast(translations.delete, translations.invalidOperation, "error");
+// showToast(translations.error, translations.invalidOperation, "error");
+// showToast(translations.error, translations.genericError, "info");
+// showToast(translations.error, translations.requestError, "error");
+// showToast(translations.enabled, translations.lotteryEnabled, "info");
+// showToast(translations.disabled, translations.lotteryDisabled, "error");
+// showToast(translations.error, translations.errorProcessing, "error");
+// showToast(translations.successful, translations.recordsUpdated, "info");
+// showToast(translations.notDone, translations.alreadyBlocked, "info");
+// showToast(translations.completed, translations.ipUpdated, "info");
+// showToast(translations.noAgent, translations.noAgentMessage, "info");
+
+
+
     // editting the user from the userlist table
     $(document).on("click", ".manage-user-btn,.user-restrictions-btn", function () {
         let userID = $("#idHolder").val();
@@ -108,7 +207,8 @@ $(function () {
                 // renderwithdrawPagination(totalPages,parseInt(currentPage),'page-agent-subs');
             },
             error: function (xhr, status, error) {
-                showToast("Error", "An Error occured, please try again later.", "info");
+                // showToast("Error", "An Error occured, please try again later.", "info");
+                showToast(errorTitle, errorMessage, "info");
             },
             complete: function () {
                 $("#wl-tbl-wrapper").LoadingOverlay("hide");
@@ -117,6 +217,21 @@ $(function () {
             },
         });
     };
+
+
+function getTranslation(id, fallback) {
+    return document.getElementById(id)?.dataset.translation || fallback;
+}
+
+const viewText = document.getElementById("view-text")?.dataset.translation || "View";
+     
+const quotaText = getTranslation("quota-text", "Quota");
+const subsText = getTranslation("subs-text", "Subs");
+const accountChangeText = getTranslation("account-change-text", "Account Change");
+const lotteryNameText = getTranslation("lottery-name-text", "Lottery Name");
+const whiteListText = getTranslation("whitelist-text", "White List");
+const deleteUserText = getTranslation("delete-user-text", "Delete User");
+const deactivateUserText = getTranslation("deactivate-user-text", "Deactivate User");
 
     function formatMoney(money) {
         let moneyStr = String(money);
@@ -151,6 +266,7 @@ $(function () {
             3: "bank card",
             4: "crypto", // Red
         };
+
 
         data.forEach((item) => {
             //  // console.log(item)
@@ -213,7 +329,7 @@ $(function () {
                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${
                                         item.uid
                                     }">
-                                      <i class="bx bx-show fs-5"></i>View
+                                      <i class="bx bx-show fs-5"></i>${viewText}
                                     </a>
                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
                                       <i class="bx bx-show fs-5" ></i>Quota
@@ -225,7 +341,7 @@ $(function () {
                                       <i class="bx bx-money fs-5"></i>Account Change
                                     </a>
                                      <a class="dropdown-item usr-deactivate-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                      <i class="bx bx-trash fs-5"></i>Deactivate User
+                                      <i class="bx bx-trash fs-5"></i>${viewText}
                                     </a> <a class="dropdown-item user-lottery-name cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                       <i class="bx bx-trash fs-5"></i>Lottery Name
                                     </a>
@@ -581,7 +697,8 @@ $(function () {
         const enddate = $("#usrl-end-date").val();
 
         if (uid == "" && state == "" && rechargeLevel == "" && startdate == "" && enddate == "") {
-            showToast("Heads up!!", "Select one or more data fields to filter", "info");
+            // showToast("Heads up!!", "Select one or more data fields to filter", "info");
+           showToast(headsUpText, selectFieldsText, "info");
             return;
         }
 
@@ -660,34 +777,35 @@ $(function () {
             const data = await response.json();
 
             const errorMessages = {
-                emailexist: "Email already exists",
-                usernamePattern: "Username must  Contain only letters\n, numbers, and underscores\n Start with a letter",
-                username: "Username must contain only letters, numbers, and underscores and start with a letter",
-                email: "Email address is invalid",
-                passwordNumber: "Password must contain at least one number",
-                passwordCaseSensitive: "Password must contain at least one uppercase and\n lowercase letter",
-                passwordSpecialChar: "Password must contain at least one special symbol",
-                confirmPassword: "Password does not match",
-                passwordLength: "Password must be at least 8 characters",
-                passwordRequired: "Password is required",
-            };
-            let message = null;
-            // Loop through error keys to find the first error
-            for (const [key, errorMessage] of Object.entries(errorMessages)) {
+                emailexist: translations.emailExists,
+                usernamePattern: translations.usernamePattern,
+                username: translations.usernamePattern, // using same translation
+                email: translations.invalidEmail,
+                passwordNumber: translations.passwordNumber,
+                passwordCaseSensitive: translations.passwordCase,
+                passwordSpecialChar: translations.passwordSpecial,
+                confirmPassword: translations.confirmPassword,
+                passwordLength: translations.passwordLength,
+                passwordRequired: translations.passwordRequired,
+                };
+
+                let message = null;
+                for (const [key, errorMessage] of Object.entries(errorMessages)) {
                 if (data[key]) {
                     message = errorMessage;
                     break;
                 }
-            }
-            if (message) {
-                showToast("Heads up!!", message, "info");
+                }
+                if (message) {
+                showToast(translations.headsUp, message, "info");
                 return;
-            } else {
+                } else {
                 $(".loaders").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
                 setTimeout(function () {
                     $(".loaders").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
 
-                    showToast("Success", "agent added sucessfully", "success");
+                    // showToast("Success", "agent added sucessfully", "success");
+                    showToast(translations.success, translations.agentAdded, "success");
                     $("#addagentmodal").modal("hide");
                     fetchUserlist(currentPage, pageLimit);
                     $("#agentform")[0].reset();
@@ -810,9 +928,11 @@ $(function () {
                     $(".loaderquota").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
                     if (result) {
                         $("#viewquota").modal("hide");
-                        showToast("Success", "quota updated successfullly", "success");
+                        // showToast("Success", "quota updated successfullly", "success");
+                        showToast(translations.success, translations.quotaUpdated, "success");
                     } else {
-                        showToast("Heads up !!", "no changes made", "info");
+                        // showToast("Heads up !!", "no changes made", "info");
+                        showToast(headsUp, noChanges, "info");
                     }
                 }, 500); // Duration before showing the toast
             }
@@ -978,27 +1098,27 @@ $(function () {
                                 <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${
                                     item.uid
                                 }">
-                                  <i class="bx bx-show fs-5"></i>View
+                                  <i class="bx bx-show fs-5"></i>${viewText}
                                 </a>
                                 <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
-                                  <i class='bx bx-list-minus'></i>Quota
+                                  <i class='bx bx-list-minus'></i>${quotaText}
                                 </a>
                                  <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewsub" data-agent-id="${item.uid}" href="javascript:void(0);"data-uid="${item.subordinates}"> 
-                                  <i class='bx bx-git-merge'></i>Subs
+                                  <i class='bx bx-git-merge'></i>${subsText}
                                 </a>
                                 <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1 acountbtn" href="javascript:void(0);"data-uid="${item.uid}">
-                                  <i class="bx bx-money fs-5"></i>Account Change
+                                  <i class="bx bx-money fs-5"></i>${accountChangeText}
                                 </a>
                                  <a class="dropdown-item usr-deactivate-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class='bx bx-user-x' ></i>Deactivate User
+                                  <i class='bx bx-user-x' ></i>${deactivateUserText}
                                 </a> <a class="dropdown-item user-lottery-name cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class='bx bx-filter' ></i>Lottery Name
+                                  <i class='bx bx-filter' ></i>${lotteryNameText}
                                 </a>
                                  <a class="dropdown-item usr-white-list cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class="bx bx-trash fs-5"></i>White List
+                                  <i class="bx bx-trash fs-5"></i>${whiteListText}
                                 </a>
                                  <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class='bx bx-user-minus' ></i>Delete User
+                                  <i class='bx bx-user-minus' ></i>${deleteUserText}
                                 </a>
                               </div>
                             </div>
@@ -1020,8 +1140,9 @@ $(function () {
 
     $("#backButton").on("click", function () {
         if (navigationHistory.length === 0) {
-            showToast("No Pages", "Please you are on the main page", "info");
-
+            //  showToast("No Pages", "Please you are on the main page", "info");
+            
+showToast(translations.noPages, translations.mainPageNotice, "info");
             return;
         }
         const obj = navigationHistory.pop();
@@ -1083,11 +1204,14 @@ $(function () {
                 }
 
                 if (response.data == 0 && flag == "blockUser") {
-                    showToast("Blocked", "Please this User has already being blocked.", "info");
+                    // showToast("Blocked", "Please this User has already being blocked.", "info");
+                    showToast(translations.blocked, translations.alreadyBlocked, "info");
+
                     return;
                 }
                 if (response.data == 0 && flag == "deleteUser") {
-                    showToast("Delete", "Operation Invalid", "error");
+                    // showToast("Delete", "Operation Invalid", "error");
+                    showToast(translations.delete, translations.invalidOperation, "error");
                     return;
                 }
 
@@ -1111,13 +1235,15 @@ $(function () {
                         msg = "";
                 }
                 if (msg.length == 0) {
-                    showToast("Error", "Invalid operation.", "error");
+                    // showToast("Error", "Invalid operation.", "error");
+                    showToast(translations.error, translations.invalidOperation, "error");
                     return;
                 }
                 showToast("Completed", msg, "success");
             },
             error: function (xhr, status, error) {
-                showToast("Error", "An Error occured, please try again later.", "info");
+                // showToast("Error", "An Error occured, please try again later.", "info");
+                showToast(translations.error, translations.genericError, "info");
             },
             complete: function () {
                 $("#wl-tbl-wrapper").LoadingOverlay("hide");
@@ -1197,13 +1323,18 @@ $(function () {
                 }
 
                 if (response.data == 0) {
-                    showToast("Error", `Request Error`, "error");
+                    // showToast("Error", `Request Error`, "error");
+                    showToast(translations.error, translations.requestError, "error");
+
                 }
 
                 if (toggle) {
-                    showToast("Enabled", `Lottery Enabled`, "info");
+                    // showToast("Enabled", `Lottery Enabled`, "info");
+                    showToast(translations.enabled, translations.lotteryEnabled, "info");
+
                 } else {
-                    showToast("Disabled", `Lottery  Disabled.`, "error");
+                    // showToast("Disabled", `Lottery  Disabled.`, "error");
+                    showToast(translations.disabled, translations.lotteryDisabled, "error");
                 }
             },
             error: function (res, status, error) {},
@@ -1234,11 +1365,14 @@ $(function () {
                 }
 
                 if (res.data == 0) {
-                    showToast("Error", "Error processing request", "error");
+                    // showToast("Error", "Error processing request", "error");
+                    showToast(translations.error, translations.errorProcessing, "error");
+
                     return;
                 }
                 $(".close-modal").click();
-                showToast("Successful", "Records succesfully updated.", "info");
+                // showToast("Successful", "Records succesfully updated.", "info");
+                showToast(translations.successful, translations.recordsUpdated, "info");
             },
             error: function (res, status, error) {},
             complete: function () {
@@ -1312,11 +1446,15 @@ $(function () {
                 }
 
                 if (response.data == 0) {
-                    showToast("Not Done", "Already blocked", "info");
+                    // showToast("Not Done", "Already blocked", "info");
+                    showToast(translations.notDone, translations.alreadyBlocked, "info");
+
                     return;
                 }
 
-                showToast("Completed", "IP state updated successfully.", "info");
+                // showToast("Completed", "IP state updated successfully.", "info");
+                showToast(translations.completed, translations.ipUpdated, "info");
+
             },
             error: function (res, status, error) {},
             complete: function () {
@@ -1367,7 +1505,8 @@ $(function () {
 
     $(document).on("click", ".show-user-rel", function () {
         if ($(this).hasClass("no-agent")) {
-            showToast("No Agent", "This user has no relationship.", "info");
+            // showToast("No Agent", "This user has no relationship.", "info");
+            showToast(translations.noAgent, translations.noAgentMessage, "info");
             return;
         }
         showDialog("usrl-relationship-dialog");
@@ -1614,7 +1753,9 @@ $(function () {
 
     $(document).on("click", ".searchuseraccount", function () {
         if ($(".orderuserchange").val() == "" && $(".startdateusers").val() == "") {
-            showToast("Heads up!!", "Select one or more data fields to filter", "info");
+            // showToast("Heads up!!", "Select one or more data fields to filter", "info");
+            //  showToast(translations.headsUp, translations.selectFields, "info");
+             showToast(headsUpText, selectFieldsText, "info");
             return;
         }
         const ordertype = $(".orderuserchange").val();

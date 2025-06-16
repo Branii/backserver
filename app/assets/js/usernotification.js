@@ -10,25 +10,68 @@ $(function () {
           duration: 3000, // auto-dismiss after 3s
       });
   }
-  const usernotiData = (data) => {
-     let html = ""
-      data.forEach((item) => {
-        const readstatus = item.read_status === 'read' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Read</span>'  : '<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-warning">Unread</span>'
-        let timezone = item.timezone.split(" ");
-        timezone = `${timezone}<span style="margin-left: 1rem;">UTC${timezone[1]}</span>`
-        html += `
-            <tr>
-                <td>${item.username}</td>
-                <td>${item.subject}</td>
-                <td style ="max-width: 300px;word-wrap: break-word;overflow-wrap: break-word; white-space: normal;">${item.message}</td>
-                <td>${item.created_at}</td> 
-                <td>${timezone}</td> 
-                <td> ${readstatus}</td>                               
-            </tr>
-            `;
-      });
-      return html;
-  };
+
+
+   function getTranslation(id, fallback) {
+    return document.getElementById(id)?.dataset.translation || fallback;
+}
+
+const EdittText = document.getElementById("Editt-text")?.dataset.translation || "Edit";
+const DeleteeText = getTranslation("Deletee-text", "Delete");
+
+
+// Get translations
+
+const allFieldsText = getTranslation("trans-all-fields", "All fields are required");
+const failedText = getTranslation("trans-failed", "Failed");
+ const headsUpText = document.getElementById("trans-heads-up").textContent;
+  const selectFieldsText = document.getElementById(
+    "trans-select-fields"
+  ).textContent;
+
+
+
+
+
+
+
+
+
+// showToast(headsUpText, selectFieldsText, "info");
+// showToast(headsUpText, allFieldsText, "info");
+// showToast(headsUpText, failedText, "info");
+
+
+const usernotiData = (data) => {
+  let html = "";
+
+  // Get translated text from hidden spans
+  const transRead = document.getElementById("trans-read").textContent;
+  const transUnread = document.getElementById("trans-unread").textContent;
+
+  data.forEach((item) => {
+    const readstatus = item.read_status === 'read'
+      ? `<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${transRead}</span>`
+      : `<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-warning">${transUnread}</span>`;
+
+    let timezoneParts = item.timezone.split(" ");
+    let timezone = `${timezoneParts[0]}<span style="margin-left: 1rem;">UTC${timezoneParts[1]}</span>`;
+
+    html += `
+      <tr>
+        <td>${item.username}</td>
+        <td>${item.subject}</td>
+        <td style="max-width: 300px; word-wrap: break-word; overflow-wrap: break-word; white-space: normal;">${item.message}</td>
+        <td>${item.created_at}</td>
+        <td>${timezone}</td>
+        <td>${readstatus}</td>
+      </tr>
+    `;
+  });
+
+  return html;
+};
+
 
   const renderusernoti = (data) => {
       var html = usernotiData(data);
@@ -108,7 +151,8 @@ $(function () {
    $(document).on('click','.executenoti',function(){
         if ($("#usernotifys").val() == "" && $(".messagesread").val() == "" && $(".startnotfys").val() == "") {
             // $("#danger-finance").modal("show");
-            showToast("Heads up!!", "Select one or more data fields to filter", "info");
+            // showToast("Heads up!!", "Select one or more data fields to filter", "info");
+             showToast(headsUpText, selectFieldsText, "info");
             return;
         }
         const username = $("#usernotifys").val();

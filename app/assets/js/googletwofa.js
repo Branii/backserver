@@ -22,36 +22,56 @@ $(function () {
   //updatepassword
 
   $(document).on("submit", "#passwordChangeForm", function (e) {
-    e.preventDefault(); // Prevent default form submission
-
+    e.preventDefault();
     const email = $("#adminEmail").val().trim();
     const currentPassword = $("#currentPassword").val().trim();
     const repeatPassword = $("#repeatPassword").val().trim();
-    if (!email || !currentPassword || !repeatPassword) {
-      showToast("Error!", "All fields are required!", "error");
-      return;
-    }
-
-    if (currentPassword !== repeatPassword) {
-      showToast("Error!", "Passwords do not match!", "error");
-      return;
-    }
-
-    $("#authopassword").modal("hide");
-
-    $.ajax({
-      type: "POST",
-      url: `../admin/changerAdminpassword/${email}/${repeatPassword}`,
-      success: function (response) {
-        const result = JSON.parse(response);
-        if (result.success) {
-          showToast( "Success!",result.message || "Password changed successfully!","success");
-          $("#passwordChangeForm")[0].reset();
-        } else {
-          showToast( "Error!",result.message || "Failed to change password!", "error" );
-        }
+    const $spinner = $("#spinner");
+    const $submitBtn = $("#submitBtn");
+    $spinner.removeClass("d-none");
+    $submitBtn.prop("disabled", true);
+    setTimeout(() => {
+      if (!email || !currentPassword || !repeatPassword) {
+        showToast("Error!", "All fields are required!", "error");
+        resetButton();
+        return;
       }
-    });
+      if (currentPassword !== repeatPassword) {
+        showToast("Error!", "Passwords do not match!", "error");
+        resetButton();
+        return;
+      }
+      $("#authopassword").modal("hide");
+
+      $.ajax({
+        type: "POST",
+        url: `../admin/changerAdminpassword/${email}/${repeatPassword}`,
+        success: function (response) {
+          setTimeout(() => {
+            const result = JSON.parse(response);
+            if (result.success) {
+              showToast("Success!",result.message || "Password changed successfully!", "success"
+              );
+              $("#passwordChangeForm")[0].reset();
+            } else {
+              showToast("Error!",  result.message || "Failed to change password!","error" );
+            }
+            resetButton();
+          }, 2000);
+        },
+        error: function () {
+          setTimeout(() => {
+            showToast("Error!", "Something went wrong!", "error");
+            resetButton();
+          }, 2000);
+        }
+      });
+    }, 2000);
+
+    function resetButton() {
+      $spinner.addClass("d-none");
+      $submitBtn.prop("disabled", false);
+    }
   });
 
   $(document).on("click", ".settingsbtn", function () {

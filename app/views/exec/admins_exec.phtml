@@ -4,28 +4,25 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
-
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 
 if ($flag == "addNewAdmin") {
     $page   = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit  = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
     $data   = isset($this->viewData['data']) ? $this->viewData['data'] : '';
-    parse_str($data,$formData);
+    parse_str($data, $formData);
     $formData['username'] = generateUsername();
     $formData['password_hash'] = password_hash('1234', PASSWORD_BCRYPT);
     $result = (new AdminModel())->addNewAdmin($formData);
-    if($result){
+    if ($result) {
         $result = (new AdminModel())->viewAllAdmin($page, $limit);
-        echo json_encode(['type'=>'success','message'=>'User added successfully','admins' => $result['data'],'totalPages' => ceil($result['total'] / $limit)]);
+        echo json_encode(['type' => 'success', 'message' => 'User added successfully', 'admins' => $result['data'], 'totalPages' => ceil($result['total'] / $limit)]);
     } else {
-        echo json_encode(['type'=>'error','message'=>'Some error occured']);
+        echo json_encode(['type' => 'error', 'message' => 'Some error occured']);
     }
+}
 
-} 
-
-if($flag == "viewAdmins") {
+if ($flag == "viewAdmins") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $result = (new AdminModel())->viewAllAdmin($page, $limit);
@@ -34,18 +31,41 @@ if($flag == "viewAdmins") {
         'admins' => $result['data'],
         'totalPages' => ceil($result['total'] / $limit),
     ]);
-    
 }
 
-if($flag == "permissions") {
+// updating permissions
+
+// if ($flag == "permissions") {
+//     $encodedString = isset($this->viewData['permissionsData']) ? $this->viewData['permissionsData'] : '';
+//     $userId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
+//     $permissionsData = urldecode($encodedString);
+//     $result = (new AdminModel())->updatePermissions($permissionsData, $userId);
+//     echo $result >= 1 ? json_encode(['Updated successfully']) : json_encode(['Nothing updated']);
+// }
+
+
+if ($flag == "permissions") {
     $encodedString = isset($this->viewData['permissionsData']) ? $this->viewData['permissionsData'] : '';
     $userId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
+    // Decode URL-encoded string
     $permissionsData = urldecode($encodedString);
-    $result = (new AdminModel())->updatePermissions($permissionsData, $userId);
-    echo $result >= 1 ? json_encode(['Updated successfully']) : json_encode(['Nothing updated']);
+    // Decode JSON string into array
+    $permissionsArray = json_decode($permissionsData, true);
+    // Validate
+
+    // Re-encode clean JSON for database
+    $finalJson = json_encode($permissionsArray);
+    // Save to DB
+    $result = (new AdminModel())->updatePermissions($finalJson, $userId);
+   echo json_encode(
+        $result >= 1 ? ['status' => 'success', 'message' => 'Permissions updated successfully.']: ['status' => 'error', 'message' => 'Nothing was updated.']);
+    exit;
 }
 
-if($flag == "adminlogs") {
+
+
+
+if ($flag == "adminlogs") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
     $userId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
@@ -56,7 +76,7 @@ if($flag == "adminlogs") {
     ]);
 }
 
-if($flag == "filterAdminLogs") {
+if ($flag == "filterAdminLogs") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
     $adminId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
@@ -71,7 +91,7 @@ if($flag == "filterAdminLogs") {
     ]);
 }
 
-if($flag == "searchlogs") {
+if ($flag == "searchlogs") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
     $adminId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
@@ -85,9 +105,9 @@ if($flag == "searchlogs") {
     ]);
 }
 
-if($flag == "backup") {
+if ($flag == "backup") {
 
-    $host = "192.168.1.51"; 
+    $host = "192.168.1.51";
     $username = "enzerhub";
     $password = "enzerhub";
     $database = "lottery_test";
@@ -102,7 +122,7 @@ if($flag == "backup") {
             exit;
         }
         $inserted = (new AdminModel())->createNewBackup($backupFile, getFileSize($backupFile));
-        $result = (new AdminModel())->getAllBackups(1,50);
+        $result = (new AdminModel())->getAllBackups(1, 50);
         echo json_encode([
             'backups' => $result['data'],
             'totalPages' => ceil($result['total'] / 50),
@@ -110,10 +130,9 @@ if($flag == "backup") {
     } catch (Exception $e) {
         echo "Backup failed: " . $e->getMessage();
     }
-
 }
 
-if($flag == "getAllBackups") {
+if ($flag == "getAllBackups") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 50;
     $result = (new AdminModel())->getAllBackups($page, $limit);
@@ -123,31 +142,83 @@ if($flag == "getAllBackups") {
     ]);
 }
 
-
 //change Admin password   changeadminpassword
 
 if ($flag  == "changeadminpassword") {
     $email = isset($this->viewData['email']) ? $this->viewData['email'] : "";
     $repeatPassword = isset($this->viewData['repeatPassword']) ? $this->viewData['repeatPassword'] : "";
-    $result = AdminModel::Updatepasswordbyemail($email,$repeatPassword);
+    $result = AdminModel::Updatepasswordbyemail($email, $repeatPassword);
     echo json_encode($result);
+}
 
+//search for admin data
+if ($flag == "searchusernamess") {
+    $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
+    $result = (new AdminModel())->Searchusernames($username);
+
+    $results = [];
+    foreach ($result as $value) {
+        $data = [
+            'uid' => $value['admin_id'],
+            'username' => $value['username'],
+            'email' => $value['email'],
+            'contact' => $value['phone_number'],
+            'fullname' => $value['full_name'],
+        ];
+        $results[] = $data;
+    }
+
+    if (!empty($results)) {
+        echo json_encode($results);
+    } else {
+        echo json_encode([['username' => '', 'empty' => true]]);
+    }
+}
+
+//filter admin data
+if ($flag == "filteradminpayments") {
+    $username = isset($this->viewData['username']) ? trim($this->viewData['username']) : '';
+    $adminId = isset($this->viewData['uid']) ? trim($this->viewData['uid']) : ''; // backward compatibility
+
+    // // Debugging (remove this block when done)
+    $page = isset($this->viewData['page']) ? (int)$this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int)$this->viewData['limit'] : 20;
+    // Resolve Admin ID and Username
+    $userCheck = (new AdminModel())->getAdminIdByUsername($username);
+    if (!empty($userCheck)) {
+        $adminId = $userCheck[0]['admin_id'];
+        $username = $userCheck[0]['username'];
+    }
+    // Fetch payment data
+    $result = (new AdminModel())->filteradmindata($adminId, $page, $limit);
+    $data = isset($result['data']) && is_array($result['data']) ? $result['data'] : [];
+    // var_dump($data);
+    // exit;
+    $response = [
+        'status' => true,
+        'username' => $username,
+        'admin_id' => $adminId,
+        'data' => $data,
+        'totalPages' => ceil(($result['total'] ?? 0) / $limit),
+    ];
+
+    echo json_encode($response); // ✅ Return the result to frontend
 }
 
 function generateUsername()
 {
-    $adjectives = ['Swift', 'Mighty', 'Brave', 'Silent', 'Clever', 'Witty', 'Bold', 'Sharp','Logos','Botafogo','Royal','Senior','Speed','Fast','Steel'];
-    $nouns = ['Tiger', 'Eagle', 'Wolf', 'Lion', 'Hawk', 'Bear', 'Shark', 'Panther','Purple','Hagar','Bull','Pecker','Deer','Wulder','Bender','Weaver'];
+    $adjectives = ['Swift', 'Mighty', 'Brave', 'Silent', 'Clever', 'Witty', 'Bold', 'Sharp', 'Logos', 'Botafogo', 'Royal', 'Senior', 'Speed', 'Fast', 'Steel'];
+    $nouns = ['Tiger', 'Eagle', 'Wolf', 'Lion', 'Hawk', 'Bear', 'Shark', 'Panther', 'Purple', 'Hagar', 'Bull', 'Pecker', 'Deer', 'Wulder', 'Bender', 'Weaver'];
     $adjective = $adjectives[array_rand($adjectives)];
     $noun = $nouns[array_rand($nouns)];
     $randomNumber = rand(10, 10000);
     return $adjective . $noun . $randomNumber;
 }
 
-function getFileSize($backupFile){
-        // Get the size of the backup file
+function getFileSize($backupFile)
+{
+    // Get the size of the backup file
     $backupSize = filesize($backupFile);
-
     // Convert size to human-readable format
     $sizeUnits = ['B', 'KB', 'MB', 'GB', 'TB'];
     $unitIndex = 0;
@@ -157,7 +228,3 @@ function getFileSize($backupFile){
     }
     return $humanReadableSize = round($backupSize, 2) . ' ' . $sizeUnits[$unitIndex];
 }
-
-
-
-

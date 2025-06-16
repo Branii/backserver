@@ -10,6 +10,40 @@ $(function () {
         duration: 3000, // auto-dismiss after 3s
     });
     }
+
+
+    function getTranslation(id, fallback) {
+    return document.getElementById(id)?.dataset.translation || fallback;
+}
+
+const EdittText = document.getElementById("Editt-text")?.dataset.translation || "Edit";
+const DeleteeText = getTranslation("Deletee-text", "Delete");
+
+
+// Get translations
+
+const allFieldsText = getTranslation("trans-all-fields", "All fields are required");
+const failedText = getTranslation("trans-failed", "Failed");
+
+ const headsUpText = document.getElementById("trans-heads-up").textContent;
+  const selectFieldsText = document.getElementById(
+    "trans-select-fields"
+  ).textContent;
+
+const title = document.getElementById("all_fields_required_text").textContent;
+const message = document.getElementById("cannot_update_if_empty_text").textContent;
+// showToast(title, message, "error");
+
+
+
+
+// showToast(headsUpText, selectFieldsText, "info");
+// showToast(headsUpText, allFieldsText, "info");
+// showToast(headsUpText, failedText, "info");
+  // showToast(alertTitle, userDoesNotExist, "info");
+
+
+
     function getTimeDifferenceFromNow(dateTime) {
     const now = new Date(); // Get the current date and time
     const difference = now - new Date(dateTime); // Calculate the difference in milliseconds
@@ -67,11 +101,11 @@ $(function () {
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
                         
                         <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 editmsg" href="javascript:void(0);" datas ="${item.msg_id}"> 
-                            <i class="bx bx-edit fs-5" ></i>Edit
+                            <i class="bx bx-edit fs-5" ></i>${EdittText}
                         </a>
                         
                             <a class="dropdown-item deletemessage cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="${item.msg_id}">
-                            <i class="bx bx-trash fs-5"></i>Delete
+                            <i class="bx bx-trash fs-5"></i>${DeleteeText}
                         </a>
                         </div>
                     </div>
@@ -191,7 +225,8 @@ $(function () {
     $(document).on("click", ".executemessage", function () {
     if ($("#financeDropdownnotify").val() == "" && $(".messagestype").val() == "" && $(".startfmessage").val() == "") {
     // $("#danger-finance").modal("show");
-    showToast("Heads up!!", "Select one or more data fields to filter", "info");
+    // showToast("Heads up!!", "Select one or more data fields to filter", "info");
+  showToast(headsUpText, selectFieldsText, "info");
     return;
     }
     const messagestype = $(".messagestype").val();
@@ -242,7 +277,9 @@ $(function () {
         const notienddates = $(".notienddates").val();
         // console.log(usernames + "" + messagetype +""+messagetitle +""+description+""+sendby + ""+combinedates)
         if (messagetitle === "" || description === "" || sendby === "") {
-        showToast("Heads up!!", "All field are required", "info");
+        // showToast("Heads up!!", "All field are required", "info");
+
+        showToast(headsUpText, allFieldsText, "info");
         return false;
         }
 
@@ -255,7 +292,8 @@ $(function () {
             showToast("Success", response, "success");
             fetchmessage(currentPage, pageLimit);
         } else {
-            showToast("Heads up!!", "failed", "info");
+            // showToast("Heads up!!", "failed", "info");
+            showToast(headsUpText, failedText, "info");
         }
         });
     });
@@ -285,22 +323,59 @@ $(function () {
         });
     });
 
+    // $(document).on("click", ".updatemessagebtn", function () {
+    //     const msgtitle = $("#note-has-titles").val();
+    //     const msgcontent = encodeURIComponent($("#descriptions").val());
+    //     const updatemsgid = $("#updatemsgid").val();
+    //     $(".loaderfinanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
+    //     $("#editmessage").modal("hide");
+    //     $.post(`../admin/updateannoucement/${msgtitle}/${msgcontent}/${updatemsgid}`, function (response) {
+    //     $(".loaderfinanup").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+    //     if (response) {
+    //         showToast("Success", response, "success");
+    //         fetchmessage(currentPage, pageLimit);
+    //     } else {
+    //         showToast("Heads up!!", response, "info");
+    //     }
+    //     });
+    // });
+
+
+
+
     $(document).on("click", ".updatemessagebtn", function () {
-        const msgtitle = $("#note-has-titles").val();
-        const msgcontent = encodeURIComponent($("#descriptions").val());
-        const updatemsgid = $("#updatemsgid").val();
-        $(".loaderfinanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
-        $("#editmessage").modal("hide");
-        $.post(`../admin/updateannoucement/${msgtitle}/${msgcontent}/${updatemsgid}`, function (response) {
+    const msgtitle = $("#note-has-titles").val().trim();
+    const msgcontent = $("#descriptions").val().trim();
+    const updatemsgid = $("#updatemsgid").val().trim();
+
+    // ✅ Check for empty fields
+    if (msgtitle === "" || msgcontent === "" || updatemsgid === "") {
+        // showToast("All Fields Required", "Cannot update if fields empty.", "error");
+        showToast(title, message, "error");
+        return;
+    }
+
+    // Show loader icon
+    $(".loaderfinanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
+
+    // Hide modal
+    $("#editmessage").modal("hide");
+
+    // Send data
+    $.post(`../admin/updateannoucement/${encodeURIComponent(msgtitle)}/${encodeURIComponent(msgcontent)}/${updatemsgid}`, function (response) {
         $(".loaderfinanup").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+        
         if (response) {
-            showToast("Success", response, "success");
+            // showToast("Success", response, "success");
+            showToast(SUCCESS_TEXT, response, "success");
             fetchmessage(currentPage, pageLimit);
         } else {
-            showToast("Heads up!!", response, "info");
+            // showToast("Heads up!!", response, "info");
+            showToast(HEADSUP_TEXT, response, "info");
         }
-        });
     });
+});
+
 
     //modal
     $(document).on("click", ".messagemodal", function () {
