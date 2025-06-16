@@ -199,23 +199,51 @@ $(function () {
         return el?.dataset.msg || fallback;
     }
 
-    const updatePermissions = (url) => {
+    // const updatePermissions = (url) => {
+    //     $.post(url, function (result) {
+    //         const data = JSON.parse(result);
+    //         console.log(data);
+    //         graph = {};
+
+    //         if (data.status === "success") {
+    //             showToast(getMsg("msg-title-success", "Success"), getMsg("msg-success", data.message), "success");
+    //             $("#view-permissions").modal("hide");
+
+    //             const updatedPermissions = JSON.stringify(graph);
+    //             $(`.admin_per[value*='"admin_id":${userId}']`).each(function () {
+    //                 let current = JSON.parse($(this).val());
+    //                 current.permissions = updatedPermissions;
+    //                 $(this).val(JSON.stringify(current));
+    //             });
+    //         } else {
+    //             showToast(getMsg("msg-title-error", "Error"), getMsg("msg-error", data.message), "error");
+    //         }
+    //     });
+    // };
+
+    const updatePermissions = (url, newGraph = {}) => {
         $.post(url, function (result) {
             const data = JSON.parse(result);
             console.log(data);
-            graph = {};
+
+            graph = {}; // always clear local graph after update
 
             if (data.status === "success") {
+                // Show translated toast messages
                 showToast(getMsg("msg-title-success", "Success"), getMsg("msg-success", data.message), "success");
+
+                // Close modal after success
                 $("#view-permissions").modal("hide");
 
-                const updatedPermissions = JSON.stringify(graph);
+                // Update permission data inside the button value dynamically
+                const updatedPermissions = JSON.stringify(newGraph);
                 $(`.admin_per[value*='"admin_id":${userId}']`).each(function () {
                     let current = JSON.parse($(this).val());
                     current.permissions = updatedPermissions;
                     $(this).val(JSON.stringify(current));
                 });
             } else {
+                // Show error toast with translation support
                 showToast(getMsg("msg-title-error", "Error"), getMsg("msg-error", data.message), "error");
             }
         });
@@ -455,6 +483,23 @@ $(function () {
         });
     }
 
+    function updateSelectAllState() {
+        const total = $(".chk").length;
+        const checked = $(".chk:checked").length;
+
+        const selectAll = $("#selectAllPermissions")[0];
+        if (checked === total) {
+            selectAll.checked = true;
+            selectAll.indeterminate = false;
+        } else if (checked === 0) {
+            selectAll.checked = false;
+            selectAll.indeterminate = false;
+        } else {
+            selectAll.checked = false;
+            selectAll.indeterminate = true;
+        }
+    }
+
     let bigArr = [];
     let originalPermissions = []; //permission array
     let graph = {};
@@ -529,7 +574,6 @@ $(function () {
           <div class="accordion-header">
              <span class='maintext'>${sidebarMain[key].category}</span>
           </div>
-      
              <div class="accordion-contentt">
               <ul class="custom-list">`;
             // Check if the permissions object has the key
@@ -564,71 +608,54 @@ $(function () {
         $(".adminName").text(userdata.full_name + " [Permissions]");
 
         applyCustomScrollbarsToTabs();
-        
+        updateSelectAllState();
     });
 
-
-    
-    $(document).on("click", ".chk", function () {
+    $(document).on("change", ".chk", function () {
         const val = $(this).val();
-
         if ($(this).is(":checked")) {
             if (!bigArr.includes(val)) bigArr.push(val);
         } else {
             bigArr = bigArr.filter((item) => item !== val);
         }
-
-        // console.log("Updated bigArr:", bigArr);
+        updateSelectAllState();
     });
 
-
-    
-
+    // When clicking Select All Permissions checkbox
     $(document).on("change", "#selectAllPermissions", function () {
         const isChecked = $(this).is(":checked");
-
-        bigArr = []; // Always reset and rebuild the array
+        bigArr = [];
 
         $(".chk").each(function () {
             $(this).prop("checked", isChecked);
             const val = $(this).val();
-            if (isChecked) {
-                if (!bigArr.includes(val)) bigArr.push(val);
+            if (isChecked && !bigArr.includes(val)) {
+                bigArr.push(val);
             }
         });
+
+        updateSelectAllState();
     });
 
+    $(document).on("click", ".updateperm", function () {
+        const graph = {};
 
-
-    
-
-
-$(document).on("click", ".updateperm", function () {
-    const graph = {};
-
-    // Get translated messages
-    const infoTitle = document.getElementById("translation-info")?.dataset.msg || "Information";
-    const noPermMsg = document.getElementById("translation-noperm")?.dataset.msg || "No permissions selected. Update not sent.";
-
-    if (bigArr.length === 0) {
- 
-        const emptyGraph = {};
-        updatePermissions(`../admin/permissions/${encodeURIComponent(JSON.stringify(emptyGraph))}/${userId}`);
-        return;
-    }
-
-    bigArr.forEach((pair) => {
-        const [node, connection] = pair.split(" ");
-        const connNum = Number(connection);
-        if (!graph[node]) graph[node] = [];
-        if (!isNaN(connNum) && !graph[node].includes(connNum)) {
-            graph[node].push(connNum);
+        if (bigArr.length === 0) {
+            updatePermissions(`../admin/permissions/${encodeURIComponent(JSON.stringify({}))}/${userId}`, {});
+            return;
         }
+
+        bigArr.forEach((pair) => {
+            const [node, connection] = pair.split(" ");
+            const connNum = Number(connection);
+            if (!graph[node]) graph[node] = [];
+            if (!isNaN(connNum) && !graph[node].includes(connNum)) {
+                graph[node].push(connNum);
+            }
+        });
+
+        updatePermissions(`../admin/permissions/${encodeURIComponent(JSON.stringify(graph))}/${userId}`, graph);
     });
-
-    updatePermissions(`../admin/permissions/${encodeURIComponent(JSON.stringify(graph))}/${userId}`);
-});
-
 
 
     const viewPermissionsModal = document.getElementById("view-permissions");
@@ -653,8 +680,6 @@ $(document).on("click", ".updateperm", function () {
     });
 
     //chekers
-
-    
 
     $(document).on("change", "#selectAllPermissions", function () {
         const isChecked = $(this).is(":checked");

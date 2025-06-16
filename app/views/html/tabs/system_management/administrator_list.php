@@ -782,7 +782,12 @@
           <i class='bx bx-message-square-x tclose ms-3' style='color:#868c87; font-size:25px; cursor:pointer;'data-bs-dismiss="modal" aria-label="Close"></i>
         </div>
       </div>
-      <input class="form-check-input" type="checkbox" id="selectAllPermissions" name="permissions[]" value="view_users">
+      <p></p>
+       <div class="form-check d-flex align-items-center justify-content-end">
+    <input class="form-check-input me-1" type="checkbox" id="selectAllPermissions" name="permissions[]" value="view_users">
+    <label class="form-check-label" for="selectAllPermissions" style="font-size: 14px;">Check All Permissions</label>
+</div>
+
       <p></p>
       <div class="permissionholder" style="overflow-y:scroll; max-height:500px;">
         <!-- Permissions content goes here -->
