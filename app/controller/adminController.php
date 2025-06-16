@@ -1181,5 +1181,11 @@ class adminController extends Controller
         $this->view->render();
     }
 
+    public function changerAdminpassword($email, $repeatPassword){
+      $this->view('exec/admins_exec', ['email' => $email, 'repeatPassword' => $repeatPassword, 'flag' => 'changeadminpassword']);
+        $this->view->render();
+    }
+
+
     //filteradmindata
 }
