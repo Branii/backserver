@@ -312,15 +312,15 @@
           <option value="">-<?= $translator['Currency']; ?>-</option>
         </select>
 
-        <select name="betsate" id="platformStatus" class="form-control form-select queryholderlistt messagestype " data-bs-placeholder="Select Type">
+        <!-- <select name="betsate" id="platformStatus" class="form-control form-select queryholderlistt messagestype " data-bs-placeholder="Select Type">
           <option value="">-<?= $translator['Status']; ?>-</option>
           <option value="active"><?= $translator['Active']; ?></option>
           <option value="hidden"><?= $translator['Hidden']; ?></option>
           </option>
           <option value="inactive"><?= $translator['Inactive']; ?></option>
-          </option>
+          </option> -->
 
-       <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 100%;">
+        <!-- <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 100%;"> -->
 
             <select name="betsate" id="platformStatuss" class="form-control form-select queryholderlistt messagestype" data-bs-placeholder="Select Type">
               <option value="">-<?= $translator['Select Payment Type']; ?>-</option>
@@ -570,89 +570,8 @@
             <h4 class="card-title">Enzerhub <?= $translator['Payment Platforms']; ?></h4>
             <form id="pp-personalDetailsForm">
               <div class="row">
-                <div class="col-lg-6">
-                  <div class="mb-3">
-                    <label for="userName" class="form-label"><?= $translator['Partner']; ?> (<span style="color: #a01616;">*</span>)</label>
-                    <input type="text" class="form-control" id="pp-contact" placeholder="Enzerhub" disabled="">
-                  </div>
-                  <div class="mb-3">
-                    <label for="pp-currency-edit" class="form-label"><?= $translator['Currency']; ?> (<span style="color: #a01616;">*</span>)</label>
-                    <select id="pp-currency-edit" class="form-select currency-list"></select>
-                  </div>
-
-
-                  <div class="mb-3">
-                    <label for="pp-status-edit" class="form-label"><?= $translator['Status']; ?> (<span style="color: #a01616;">*</span>)</label>
-                    <select id="pp-status-edit" class="form-select">
-                      <option value="active"><?= $translator['Active']; ?></option>
-                      <option value="hidden"><?= $translator['Hidden']; ?></option>
-                      <option value="inactive"><?= $translator['Inactive']; ?></option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-
-
-                  <div class="mb-3">
-                    <label for="pp-payment-type-edit" class="form-label"><?= $translator['Payment Type']; ?> (<span style="color: #a01616;">*</span>)</label>
-                    <select id="pp-payment-type-edit" class="form-select pp-payment-types"></select>
-                  </div>
-                  <div class="mb-3">
-                    <label for="pp-fee-edit" class="form-label"><?= $translator['Fee']; ?> (%) (<span style="color: #a01616;">*</span>)</label>
-                    <input type="text" class="form-control" id="pp-fee-edit" placeholder="<?= $translator['Fee']; ?>  (%)">
-                  </div>
-                  <div class="mb-3">
-                    <label for="pp-priority-edit" class="form-label"><?= $translator['Priority']; ?></label>
-                    <input type="text" class="form-control" id="pp-priority-edit" placeholder="<?= $translator['Priority']; ?>">
-                  </div>
-                </div>
-                <div class="col-6">
-
-                  <div class="mb-3">
-                    <label for="pp-info-edit" class="form-label"><?= $translator['Info/Description']; ?></label>
-                    <textarea type="text" class="form-control" id="pp-info-edit" cols="15" rows="10" placeholder="<?= $translator['Info/Description']; ?>" style="height: 235px;"></textarea>
-                  </div>
-                  <div class="mb-3">
-                    <label for="pp-site-url-edit" class="form-label"><?= $translator['Site Url']; ?></label>
-                    <input type="text" class="form-control" id="pp-site-url-edit" placeholder="<?= $translator['Site Url']; ?>e.g www.enzerhub.com">
-                  </div>
-                  <div class="mb-3">
-                    <label for="pp-admin-site-url-edit" class="form-label"><?= $translator['Admin Site Url']; ?></label>
-                    <input type="text" class="form-control" id="pp-admin-site-url-edit" placeholder="<?= $translator['Admin Site Url']; ?>e.g www.enzerhub.com">
-                  </div>
-                </div>
-                <div class="col-6">
-
-                  <div class="mb-3">
-                    <label for="pp-min-amount-edit" class="form-label"><?= $translator['Min. Amount']; ?></label>
-                    <input type="text" class="form-control" id="pp-min-amount-edit" placeholder="<?= $translator['Min. Amount']; ?>">
-                  </div>
-                  <div class="mb-3">
-                    <label for="pp-max-amount-edit" class="form-label"><?= $translator['Max. Amount']; ?></label>
-                    <input type="text" class="form-control" id="pp-max-amount-edit" placeholder="<?= $translator['Min. Amount']; ?>">
-                  </div>
-                  <div class="mb-3">
-                    <label for="pp-countries-edit" class="form-label"><?= $translator['Countries']; ?></label>
-                    <div class="modal-body scrollable-container">
-                      <div style="overflow: scroll;height: 256px;">
-                        <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
-                          <tbody class="pp-payment-countries-edit" id="edit-countries-tbody"></tbody>
-
-                        </table>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-              <div class="d-flex justify-content-end gap-2">
-                <button type="button" class="btn btn-primary" id="editPaymentPlatformBtn"><?= $translator['Save']; ?></button>
-                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
-              </div>
-            </form>
-          </div>
-
-
+                
+                  
           <div class="modal-body">
             <!-- Modal Header -->
             <div class="text-center mt-2 mb-4">

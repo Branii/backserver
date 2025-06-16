@@ -15,8 +15,7 @@ $(function () {
   }
 
   const viewprofile_text =
-    document.getElementById("viewprofile-text")?.dataset.translation ||
-    "View Profile";
+    document.getElementById("viewprofile-text")?.dataset.translation ||"View Profile";
 
   const activity_text = getTranslation("activity-text", "Activity Logs");
   const permission_text = getTranslation("permission-text", "Permissions");
@@ -169,10 +168,8 @@ switch (status) {
 
   async function fetchAdmins(currentPage, pageLimit) {
     try {
-      const response = await fetch(
-        `../admin/alladmins/${currentPage}/${pageLimit}`
+      const response = await fetch(`../admin/alladmins/${currentPage}/${pageLimit}`
       );
-
       const data = await response.json();
       renderAdmin(data.admins);
       // Render pagination
@@ -192,7 +189,6 @@ switch (status) {
   };
 
   fetchAdmins(currentPage, pageLimit);
-
   const request = (url) => {
     $.post(url, function (result) {
       const data = JSON.parse(result);
@@ -581,8 +577,7 @@ const updatePermissions = (url) => {
   $(document).on("click", ".admin_pro", function () {
     const adminObject = JSON.parse($(this).attr("value"));
     // console.log(adminObject);
-    $("#adminprofile").attr(
-      "src","http://localhost/admin/app/assets/images/profile/" +
+    $("#adminprofile").attr("src","http://localhost/admin/app/assets/images/profile/" +
         adminObject.profile_picture
     );
     $("#pro_fullname").text(adminObject.full_name);
@@ -629,8 +624,7 @@ const updatePermissions = (url) => {
 
     const sidebarMenu = {
       1: {
-        title: "Account Transaction Details",
-        content: "account_transaction"
+        title: "Account Transaction Details",content: "account_transaction"
       },
       2: { title: "Game Betting Statistics", content: "Game" },
       3: { title: "Lottery Betting Record", content: "Lottery" },
@@ -663,7 +657,7 @@ const updatePermissions = (url) => {
       22: { title: "Add Payment Platform", content: "annouces" },
       23: { title: "Partners", content: "Partners" },
       24: { title: "User Overview", content: "overview" },
-      25: { title: "User Payment Method", content: "usernotsi" }
+      25: { title: "User Payment Method", content: "usernotsi" },
       26: { title: "Sms Config", content: "smsconfig" },
     };
     const sidebarMain = {
@@ -681,6 +675,7 @@ const updatePermissions = (url) => {
       12: { category: "Partner Management", items: [23] },
       13: { category: "Sms Configuration", items: [26] },
     };
+
     let html = "";
     for (let key in sidebarMain) {
       html += `
@@ -707,17 +702,15 @@ const updatePermissions = (url) => {
           html += `
                     <li id="tab1" class="item " value="" style="display: flex; justify-content: space-between;">
                       ${sidebarMenu[item].title}
-                      <input class="form-check-input chk" type="checkbox" value="${
-                        key + " " + item
-                      }"  ${checked}/>
+                      <input class="form-check-input chk" type="checkbox" value="${ key + " " + item}" ${checked}/>
                     </li>`;
         });
       }
 
       html += `
-                      </ul>
-                      </div>
-                </div>
+           </ul>
+          </div>
+          </div>
       `;
     }
 

@@ -278,7 +278,7 @@
     }
   }
 </style>
-
+<!-- 
 <style>
   /* Zoom animation */
   .modal.zoom .modal-dialog {
@@ -317,7 +317,7 @@
       transform: translateX(10px);
     }
   }
-</style>
+</style> -->
 
 
 <span id="translation-type-admin" data-translation="<?= $translator['Please select or type an admin to search']; ?>" style="display:none;"></span>
@@ -773,25 +773,10 @@
       <div class="d-flex justify-content-between">
         <h4 class="card-title adminName"></h4>
         <div class="d-flex align-items-center">
-          <input class="form-check-input" type="checkbox" id="selectAllPermissions" name="permissions[]" value="view_users">
-          <i class='bx bx-message-square-x tclose ms-3'
-            style='color:#868c87; font-size:25px; cursor:pointer;'
-            data-bs-dismiss="modal"
-            aria-label="Close"></i>
+          <i class='bx bx-message-square-x tclose ms-3' style='color:#868c87; font-size:25px; cursor:pointer;'data-bs-dismiss="modal" aria-label="Close"></i>
         </div>
       </div>
-       <div class="d-flex justify-content-end mt-3">
-        <label class="d-flex align-items-center gap-2">
-          <input type="checkbox" id="checkAll">
-          Check/Uncheck All
-        </label>
-      </div>
-       <div class="d-flex justify-content-end mt-3">
-        <label class="d-flex align-items-center gap-2">
-          <input type="checkbox" id="checkAll">
-          Check/Uncheck All
-        </label>
-      </div>
+      <input class="form-check-input" type="checkbox" id="selectAllPermissions" name="permissions[]" value="view_users">
       <p></p>
       <div class="permissionholder" style="overflow-y:scroll; max-height:500px;">
         <!-- Permissions content goes here -->
@@ -862,44 +847,44 @@
 
       </div>
 
-      <div class="modal-body" style="overflow-y:scroll;max-height:500px;">
-        <table class="table text-nowrap align-middle table-bordered">
-          <thead class="text-dark fs-4">
-            <tr>
-              <!-- <th>
-                        <h6 class="fs-4 fw-semibold mb-0">Id</h6>
-                      </th> -->
-              <th>
-                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Action']; ?></h6>
-              </th>
-              <th>
-                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Date']; ?></h6>
-              </th>
-              <th>
-                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time']; ?></h6>
-              </th>
-              <th>
-                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Ip Address']; ?></h6>
-              </th>
-              <th>
-                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Affected']; ?></h6>
-              </th>
-              <th>
-                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Old Value']; ?></h6>
-              </th>
-              <th>
-                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['New Value']; ?></h6>
-              </th>
-              <th>
-                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
-              </th>
-            </tr>
-          </thead>
-          <tbody id="adminLogsContainer">
+        <div class="modal-body" style="overflow-y:scroll;max-height:500px;">
+          <table class="table text-nowrap align-middle table-bordered">
+            <thead class="text-dark fs-4">
+              <tr>
+                <!-- <th>
+                          <h6 class="fs-4 fw-semibold mb-0">Id</h6>
+                        </th> -->
+                <th>
+                  <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Action']; ?></h6>
+                </th>
+                <th>
+                  <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Date']; ?></h6>
+                </th>
+                <th>
+                  <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time']; ?></h6>
+                </th>
+                <th>
+                  <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Ip Address']; ?></h6>
+                </th>
+                <th>
+                  <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Affected']; ?></h6>
+                </th>
+                <th>
+                  <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Old Value']; ?></h6>
+                </th>
+                <th>
+                  <h6 class="fs-4 fw-semibold mb-0"><?= $translator['New Value']; ?></h6>
+                </th>
+                <th>
+                  <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="adminLogsContainer">
 
-          </tbody>
-        </table>
-      </div>
+            </tbody>
+          </table>
+        </div>
       <div class="modal-footer" id="paginationAdminLogs" style="border-top:solid 1px #eee;">
         <button type="button" class="btn bg-danger-subtle text-danger  waves-effect text-start" data-bs-dismiss="modal">
           Close

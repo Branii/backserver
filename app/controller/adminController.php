@@ -1148,15 +1148,6 @@ class adminController extends Controller
     }
     
 
-
-    //search name inputs
-    public function searchusernames($username)
-    {
-        $this->view('exec/userbank_manage', ['username' => $username, 'flag' => 'searchusername']);
-        $this->view->render();
-    }
-
-
     //searchadmin names
     public function searchusernamesss($username)
     {
@@ -1168,7 +1159,6 @@ class adminController extends Controller
 
     public function filterpaymentdata($username, $uid, $pageNumber, $limit)
     {
-
         $this->view('exec/userbank_manage', [
             'username' => $username,
             'uid' => $uid,
@@ -1183,14 +1173,13 @@ class adminController extends Controller
     {
         $this->view('exec/admins_exec', [
             'username' => $username,
-            'uid' => $uid, // still using 'uid' as the key passed into the view
+            'uid' => $uid,
             'flag' => 'filteradminpayments',
             'page' => $pageNumber,
             'limit' => $limit,
         ]);
         $this->view->render();
     }
-
 
     //filteradmindata
 }
