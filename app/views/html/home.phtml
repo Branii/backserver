@@ -721,11 +721,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab unotification">
             <?php include "tabs/announcement/usernotification.php" ?>
           </div>
-          <!--paymentplstform-->
-          <div class="chrome__tab payment_platform">
-            <?php include "tabs/payment_platform/payment_platforms.php" ?>
-          </div>
-
+         
           <div class="chrome__tab partners">
             <?php include "tabs/partners/partners.php" ?>
           </div>
@@ -737,7 +733,13 @@ $fullname = (new Controller)->getUsername($adminEmail);
            <div class="chrome__tab  emailconfigure">
             <?php include "tabs/plartform_manage/emailconfigure.php" ?>
           </div>
-      
+
+           <!--paymentplstform-->
+          <div class="chrome__tab payment_platform">
+            <?php include "tabs/payment_platform/payment_platforms.php" ?>
+          </div>
+
+    
         </div>
       </div>
       <script>
@@ -794,15 +796,8 @@ $fullname = (new Controller)->getUsername($adminEmail);
     <script src="<?php echo BASE_URL; ?>assets/js/usernotification.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/useroverview.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/googletwofa.js"></script>
-    <script>
-  const langStrings = {
-    inactive: "<?= $translator['Inactive']; ?>"
-  };
-</script>
     <script src="<?php echo BASE_URL; ?>assets/js/userpaymentmethod.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/sms_config.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/email_configs.js"></script>
-    
 
     <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.init.js"></script>
