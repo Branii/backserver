@@ -263,9 +263,7 @@
 
 <!-- For dynamic field required message -->
 <span 
-  id="trans-field-required" 
-  data-translation="<?= $translator['FieldRequired'] ?? 'Field {field} is required.'; ?>" 
-  style="display:none;">
+  id="trans-field-required" data-translation="<?= $translator['FieldRequired'] ?? 'Field {field} is required.'; ?>" style="display:none;">
 </span>
 
 
@@ -308,19 +306,9 @@
           <input name="usernames" type="hidden" id="selectedID" value="">
         </div>
 
-        <select name="betsate" id="platformCurrency" class="form-control form-select queryholderlistt messagestype currency-list" data-bs-placeholder="Select Type">
-          <option value="">-<?= $translator['Currency']; ?>-</option>
-        </select>
-
-        <!-- <select name="betsate" id="platformStatus" class="form-control form-select queryholderlistt messagestype " data-bs-placeholder="Select Type">
-          <option value="">-<?= $translator['Status']; ?>-</option>
-          <option value="active"><?= $translator['Active']; ?></option>
-          <option value="hidden"><?= $translator['Hidden']; ?></option>
-          </option>
-          <option value="inactive"><?= $translator['Inactive']; ?></option>
-          </option> -->
-
-        <!-- <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 100%;"> -->
+          <select name="betsate" id="platformCurrency" class="form-control form-select queryholderlistt messagestype currency-list" data-bs-placeholder="Select Type">
+            <option value="">-<?= $translator['Currency']; ?>-</option>
+          </select>
 
             <select name="betsate" id="platformStatuss" class="form-control form-select queryholderlistt messagestype" data-bs-placeholder="Select Type">
               <option value="">-<?= $translator['Select Payment Type']; ?>-</option>
@@ -452,126 +440,115 @@
 
 <!-- Modal -->
 <div id="payplatmodal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"> <?= $translator['Add Payment Platform']; ?></h5>
-        <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
-      </div>
-      <div class="scrollable-container">
-
-        <form>
-
-          <div class="col-md-12 mb-3">
-            <div class="note-title">
-              <!-- <label class="form-label">Note Title</label> -->
-              <input type="text" id="paymentname" class="form-control form-reset" minlength="25" placeholder="<?= $translator['payment name']; ?>" />
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><?= $translator['Add Payment Platform']; ?></h5>
+                <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
-          </div>
+            <div class="scrollable-container">
+                <form>
+                    <div class="col-md-12 mb-3">
+                        <div class="note-title">
+                            <!-- <label class="form-label">Note Title</label> -->
+                            <input type="text" id="paymentname" class="form-control form-reset" minlength="25" placeholder="<?= $translator['payment name']; ?>" />
+                        </div>
+                    </div>
 
-          <div class="form-floating mb-3">
-            <select name="deposit" class="form-select form-control borders border-infos currencytype form-reset">
-              <option value="">-<?= $translator['Select Payment Type']; ?>-</option>
-              <option value="momo"><?= $translator['Mobile Money']; ?></option>
-              <option value="bank"><?= $translator['Bank']; ?></option>
-              <option value="crypto"><?= $translator['Crypto']; ?></option>
+                    <div class="form-floating mb-3">
+                        <select name="deposit" class="form-select form-control borders border-infos currencytype form-reset">
+                            <option value="">-<?= $translator['Select Payment Type']; ?>-</option>
+                            <option value="momo"><?= $translator['Mobile Money']; ?></option>
+                            <option value="bank"><?= $translator['Bank']; ?></option>
+                            <option value="crypto"><?= $translator['Crypto']; ?></option>
+                        </select>
+                        <label>
+                            <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
+                            <span class="border-start ps-3"><?= $translator['Payment Type']; ?></span>
+                        </label>
+                    </div>
 
-            </select>
-            <label>
-              <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
-              <span class="border-start ps-3"><?= $translator['Payment Type']; ?></span>
-            </label>
-          </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="note-title">
+                            <!-- <label class="form-label">Note Title</label> -->
+                            <input type="text" id="paylogo" class="form-control paylogo form-reset" minlength="25" placeholder="<?= $translator['payment logo url']; ?>" />
+                        </div>
+                    </div>
 
-          <div class="col-md-12 mb-3">
-            <div class="note-title">
-              <!-- <label class="form-label">Note Title</label> -->
-              <input type="text" id="paylogo" class="form-control paylogo form-reset" minlength="25" placeholder="<?= $translator['payment logo url']; ?>" />
+                    <div class="form-floating mb-3">
+                        <select name="deposit" class="form-select form-control borders border-infos currencystate form-reset">
+                            <option value="">-<?= $translator['Select Status']; ?>-</option>
+                            <option value="active"><?= $translator['Active']; ?></option>
+                            <option value="inactive"><?= $translator['Inactive']; ?></option>
+                            <option value="hidden"><?= $translator['Hidden']; ?></option>
+                        </select>
+                        <label>
+                            <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
+                            <span class="border-start ps-3"><?= $translator['Status']; ?></span>
+                        </label>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <div class="note-title">
+                            <!-- <label class="form-label">Note Title</label> -->
+                            <input type="text" id="maxiamount" class="form-control form-reset" minlength="25" placeholder="<?= $translator['maximum amount']; ?>" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <div class="note-title">
+                            <!-- <label class="form-label">Note Title</label> -->
+                            <input type="text" id="miniamount" class="form-control form-reset" minlength="25" placeholder="<?= $translator['minimum amount']; ?>" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <div class="note-title">
+                            <select id="currency-select" class="form-select form-control border border-infos currency-select form-reset">
+                                <option value="">
+                                    --
+                                    <?= $translator['Select Currency']; ?>--
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <p></p>
+                    <div class="form-floating mb-3">
+                        <input name="agentname" type="text" class="form-control border sendby form-reset" placeholder="Approved by" value="<?php echo $fullname['full_name']; ?>" readonly />
+                        <label>
+                            <!-- <i class="bx bx-message me-2 fs-4 text-infod"></i> -->
+                            <span class="border-start ps-3"><?= $translator['Approved By']; ?></span>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-md-flex align-items-center">
+                        <div class="form-check">
+                            <!-- <input type="checkbox" class="form-check-input" id="sf2" value="check" /> -->
+                            <!-- <label class="form-check-label" for="sf2"><?= $translator['Verify before submit']; ?></label> -->
+                        </div>
+                        <div class="mt-3 mt-md-0 ms-auto">
+                            <button type="button" class="btn hstack gap-6 savemoneybtn" style="border: solid 1px #ccc;" data-bss-dismiss="modal" aria-label="Close">
+                                <i class="bx bx-send loaderpays"></i>
+                                <?= $translator['Submit']; ?>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
-
-          <div class="form-floating mb-3">
-            <select name="deposit" class="form-select form-control borders border-infos currencystate form-reset">
-              <option value="">-<?= $translator['Select Status']; ?>-</option>
-              <option value="active"><?= $translator['Active']; ?></option>
-              <option value="inactive"><?= $translator['Inactive']; ?></option>
-              <option value="hidden"><?= $translator['Hidden']; ?></option>
-            </select>
-            <label>
-              <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
-              <span class="border-start ps-3"><?= $translator['Status']; ?></span>
-            </label>
-          </div>
-
-          <div class="col-md-12 mb-3">
-            <div class="note-title">
-              <!-- <label class="form-label">Note Title</label> -->
-              <input type="text" id="maxiamount" class="form-control form-reset" minlength="25" placeholder="<?= $translator['maximum amount']; ?>" />
-            </div>
-          </div>
-
-          <div class="col-md-12 mb-3">
-            <div class="note-title">
-              <!-- <label class="form-label">Note Title</label> -->
-              <input type="text" id="miniamount" class="form-control form-reset" minlength="25" placeholder="<?= $translator['minimum amount']; ?>" />
-            </div>
-          </div>
-
-          <div class="col-md-12 mb-3">
-            <div class="note-title">
-              <select id="currency-select" class="form-select form-control border border-infos currency-select form-reset">
-                <option value="">-- <?= $translator['Select Currency']; ?>--</option>
-              </select>
-            </div>
-          </div>
-
-          <p></p>
-          <div class="form-floating mb-3">
-            <input name="agentname" type="text" class="form-control border sendby form-reset" placeholder="Approved by" value="<?php echo $fullname['full_name']; ?>" readonly />
-            <label>
-              <!-- <i class="bx bx-message me-2 fs-4 text-infod"></i> -->
-              <span class="border-start ps-3"><?= $translator['Approved By']; ?></span>
-            </label>
-          </div>
-
-          <!-- Submit Button -->
-          <div class="d-md-flex align-items-center">
-            <div class="form-check">
-              <!-- <input type="checkbox" class="form-check-input" id="sf2" value="check" /> -->
-              <!-- <label class="form-check-label" for="sf2"><?= $translator['Verify before submit']; ?></label> -->
-            </div>
-            <div class="mt-3 mt-md-0 ms-auto">
-              <button type="button" class="btn hstack gap-6 savemoneybtn" style="border: solid 1px #ccc;" data-bss-dismiss="modal" aria-label="Close">
-                <i class="bx bx-send loaderpays"></i>
-                <?= $translator['Submit']; ?>
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+        </div>
     </div>
-  </div>
-  <!-- /.modal-dialog -->
+    <!-- /.modal-dialog -->
 </div>
-
 
 
 <div id="editpayplatform" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
-
       <div class="modal-header">
-        <h5 class="modal-title"><?= $translator['Add Payment Platform']; ?></h5>
-        <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
-      </div>
-      <div class="scrollable-container">
-        <div class="card border mb-4">
-          <div class="card-body">
-            <h4 class="card-title">Enzerhub <?= $translator['Payment Platforms']; ?></h4>
-            <form id="pp-personalDetailsForm">
-              <div class="row">
-                
-                  
+      <!-- <div class="scrollable-container"> -->
+             
           <div class="modal-body">
             <!-- Modal Header -->
             <div class="text-center mt-2 mb-4">
@@ -821,4 +798,4 @@
         </div>
       </div>
       <!-- /.modal-dialog -->
-    </div>
+</div>

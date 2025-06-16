@@ -99,7 +99,7 @@ $(function () {
         return htmls;
     };
 
-    const Showtrackbet = (data, obj) => {
+    const Showtrackbets = (data, obj) => {
         let htmlbet = "";
         Object.entries(data).forEach(([key, value]) => {
             let test = value !== translator["Bet Selection"] && langMap[value] ? langMap[value] : translator["Bet Selection"];
@@ -128,7 +128,7 @@ $(function () {
         "投注选择:": "Bet Selection",
     };
 
-    const firstRowtrack = {
+    const firstRowtracks = {
         bet_code: `${translator["Bet Order ID"]}`,
         draw_period: `${translator["Issue Number"]}`,
         bet_time: `${translator["Bet Time"]}`,
@@ -403,7 +403,7 @@ async function fetchTrackDeatails(tracktoken) {
         const data = await response.json();
         $("#row1").empty();
         $("#row2").empty();
-        let html1 = Showtrackbet(firstRowtrack, data);
+        let html1 = Showtrackbets(firstRowtrack, data);
         let html2 = Showtrackbet(secondRowtrack, data);
         $("#rowtrack").html(html1);
         $("#rowtrack1").html(html2);
@@ -505,15 +505,15 @@ $(document).ready(function () {
     tableScrolltrack();
 
     function tableScrolltracker() {
-        const tableContainerTracker = document.querySelector(".trackertable");
-        const headerRowTracker = document.querySelector(".trackerheasrow");
+         const tableContainerTracker = document.querySelector(".trackertable");
+         const headerRowTracker = document.querySelector(".trackerheasrow");
 
         tableContainerTracker.addEventListener("scroll", function () {
-            if (tableContainerTracker.scrollTop > 0) {
-                headerRowTracker.classList.add("sticky-trackerhead");
-            } else {
-                headerRowTracker.classList.remove("sticky-trackerhead");
-            }
+          if (tableContainerTracker.scrollTop > 0) {
+            headerRowTracker.classList.add("sticky-trackerhead");
+          } else {
+            headerRowTracker.classList.remove("sticky-trackerhead");
+          }
         });
     }
     tableScrolltracker();
