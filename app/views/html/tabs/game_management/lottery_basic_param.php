@@ -192,6 +192,18 @@
 <span id="turnoff-text" data-translation="<?= $translator['Turn Off']; ?>" style="display:none;"></span>
 <span id="Edit-text" data-translation="<?= $translator['Edit']; ?>" style="display:none;"></span>
 
+<span id="error_text" style="display:none;"><?= $translator['ERROR']; ?></span>
+<span id="success_text" style="display:none;"><?= $translator['SUCCESS']; ?></span>
+<span id="lottery_already_text" style="display:none;"><?= $translator['LOTTERY_ALREADY']; ?></span>
+<span id="turned_on_text" style="display:none;"><?= $translator['TURNED_ON']; ?></span>
+<span id="turned_off_text" style="display:none;"><?= $translator['TURNED_OFF']; ?></span>
+<span id="lottery_status_updated_text" style="display:none;"><?= $translator['LOTTERY_STATUS_UPDATED']; ?></span>
+<span id="lottery_updated_text" style="display:none;"><?= $translator['LOTTERY_UPDATED']; ?></span>
+
+
+<span id="confirm_toggle_text" style="display:none"><?= $translator['CONFIRM_TOGGLE']; ?></span>
+<span id="turn_on_text" style="display:none"><?= $translator['TURN_ON']; ?></span>
+<span id="turn_off_text" style="display:none"><?= $translator['TURN_OFF']; ?></span>
 
 
 

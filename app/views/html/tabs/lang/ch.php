@@ -1544,5 +1544,18 @@ return [
   'UNSETTLED' => '未结算',
   'PENDING' => '待定',
    'off'=>'离开',
+    'Turned On'=>'已开启',
+'Turned Off'=>' 已关闭',
+'ERROR' => '错误',
+  'SUCCESS' => '成功',
+  'LOTTERY_ALREADY' => '此彩票已被',
+  'TURNED_ON' => '开启',
+  'TURNED_OFF' => '关闭',
+  'LOTTERY_STATUS_UPDATED' => '彩票',
+  'LOTTERY_UPDATED' => '彩票数据已成功更新。',
+  'CONFIRM_TOGGLE' => '您确定要',
+  'TURN_ON' => '开启',
+  'TURN_OFF' => '关闭',
+   
 
 ];
