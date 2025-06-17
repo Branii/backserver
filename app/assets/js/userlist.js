@@ -381,11 +381,13 @@ const deactivateUserText = getTranslation("deactivate-user-text", "Deactivate Us
         $("#idHolder").val($(this).attr("data-uid"));
         fetchUserLogs();
     });
+
     $(document).on("click", ".user-lottery-name", function () {
         showDialog("usl-lottery-name-modal");
         $("#idHolder").val($(this).attr("data-uid"));
         fetchLotteryTypes();
     });
+
     $(document).on("click", ".usr-delete-user,.usrl-delete-userbtn", function () {
         showDialog("usl-delete-user-dialog");
         if ($(this).hasClass("usr-delete-user")) {
@@ -1189,7 +1191,7 @@ showToast(translations.noPages, translations.mainPageNotice, "info");
         const userID = $("#idHolder").val();
         const lotteryID = "all";
         $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {
                 //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -1258,7 +1260,7 @@ showToast(translations.noPages, translations.mainPageNotice, "info");
         const lotteryID = "all";
         let flag = "fetchUserLotteries";
         $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1311,7 +1313,7 @@ showToast(translations.noPages, translations.mainPageNotice, "info");
         let flag = "updateLotteryState";
 
         $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1388,7 +1390,7 @@ showToast(translations.noPages, translations.mainPageNotice, "info");
         const lotteryID = "all";
 
         $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1432,7 +1434,7 @@ showToast(translations.noPages, translations.mainPageNotice, "info");
         let flag = "blockUserIp";
 
         $.ajax({
-            url: `../admin/manageUser/${userID}/${ulogID}/${flag}`,
+            url: `../admin/manageUser/${partnerID}/${userID}/${ulogID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1470,7 +1472,7 @@ showToast(translations.noPages, translations.mainPageNotice, "info");
         const lotteryID = "all";
 
         $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            url: `../admin/manageUser/${partnerID}/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
