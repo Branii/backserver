@@ -433,7 +433,7 @@ class UserManageModel extends MEDOOHelper
 
     public static function blockUserData(int $userId)
     {
-        $db = parent::getLink();
+        $db = parent::openLink();
         $params = [":userid" => intval($userId)];
         try {
             $sql = "UPDATE users_test SET user_state = 4 WHERE uid = :userid";
@@ -447,7 +447,7 @@ class UserManageModel extends MEDOOHelper
         } catch (PDOException $pDOException) {
             return ['status' => 'error', 'message' => $pDOException];
         }
-        }
+    }
     // public static function FilterUserlistDataSubQuery($username = '', $states = '', $from = '', $to = '')
     // {
     //     $conditions = [];
@@ -686,6 +686,23 @@ class UserManageModel extends MEDOOHelper
             return ['status' => 'error', 'msg' => 'Error Blocking Lottery for User.' . $e->getMessage()];
         }
     }
+
+
+    public static function fetchUserLogs($user_id, $page = 1, $limit = 100): array
+    {
+        try {
+            $db = parent::openLink();
+            $offset = ($page - 1) * $limit;
+            $sql =
+                "SELECT ulog_id,uid,ip,login_date,login_time,(SELECT COUNT(ulog_id) FROM user_logs WHERE uid=:user_id) as totalPages, CASE ip_state WHEN 1 THEN 'allowed' ELSE 'unknown' END AS ip_state FROM user_logs WHERE uid=:user_id LIMIT :offset, :limit";
+            $stmt = $db->query($sql, [":user_id" => $user_id, ":offset" => $offset, ":limit" => $limit]);
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return ['status' => 'success', "data" => $data];
+        } catch (Exception $e) {
+            return ["status" => "error", "data" => "Internal Server Error."];
+        }
+    }
+
 
     ////////////// USERLIST LIST END -//////////
     //NOTE -
