@@ -629,6 +629,29 @@ class UserManageModel extends MEDOOHelper
         return $nickname;
     }
 
+      public static function fetchUserLotteries($user_id)
+    {
+        try {
+            $db = parent::openLink();
+            $sql = "SELECT lt_id,name,(SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id ) as blockedLotteries FROM `lottery_type`";
+            $stmt = $db->query($sql, [":user_id" => $user_id]);
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+            if (empty($data)) {
+                return ["status" => "error", "data", "No Lotteries registered"];
+            }
+            $blocked_lotteries = $data[0]->blockedLotteries;
+            if ($blocked_lotteries != null && $blocked_lotteries != "*****") {
+                $data[0]->blockedLotteries = unserialize($blocked_lotteries);
+            }
+
+            return ["status" => "success", "data" => $data];
+        } catch (Exception $e) {
+            return ["status" => "error", "data" => "Internal Server Error." . $e->getMessage()];
+        }
+        // return ['lotteries' => $lotteries, 'blockedLotteries' => empty($data->blocked_lotteries) ? [] : unserialize($data->blocked_lotteries)];
+    }
+
+
     ////////////// USERLIST LIST END -//////////
     //NOTE -
 
