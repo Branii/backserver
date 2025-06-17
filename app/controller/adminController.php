@@ -586,9 +586,9 @@ class adminController extends Controller
         ]);
         $this->view->render();
     }
-    public function manageUser($partnerID, $userID, $lotteryID, $flag)
+    public function manageUser($userID, $lotteryID, $flag)
     {
-        $this->view('exec/account_manage', ['partner_id' => $partnerID, 'user_id' => $userID, 'ulog_id' => $lotteryID, 'lottery_id' => $lotteryID, "flag" => $flag]);
+        $this->view('exec/account_manage', ['user_id' => $userID, 'ulog_id' => $lotteryID, 'lottery_id' => $lotteryID, "flag" => $flag]);
         $this->view->render();
     }
     public function fetchLotteries($partnerID, $flag)
