@@ -704,6 +704,20 @@ class UserManageModel extends MEDOOHelper
     }
 
 
+    public static function FetchUserData(int $user_id)
+    {
+        try {
+            $db = parent::openLink();
+            $sql = "SELECT * FROM users_test WHERE uid = :user_id";
+            $stmt = $db->query($sql, [":user_id" => $user_id]);
+            $data = $stmt->fetch(PDO::FETCH_OBJ);
+            return ["status" => "success", "data" => $data];
+        } catch (Exception $e) {
+            return ["status" => "error", "data" => $e->getMessage()];
+        }
+    }
+
+
     ////////////// USERLIST LIST END -//////////
     //NOTE -
 

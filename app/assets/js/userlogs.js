@@ -123,7 +123,7 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
           timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
           html += `
                   <tr>
-                      <td>${typeof username === "string" || typeof username === "number" ? String(username).charAt(0).toUpperCase() + String(username).slice(1) : "N/A"}</td>
+                      <td>${username}</td>
                       <td>${item.login_date + " / " + item.login_time}</td>
                       <td>${timezone}</td>
                       <td>${item.ip}</td>
