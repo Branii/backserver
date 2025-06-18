@@ -216,12 +216,11 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function fetchAgentSubs($agent_id, $page = 1, $limit = 20): array
+    public static function fetchAgentSubs($partner,$agent_id, $page = 1, $limit = 20): array
     {
         try {
-        $all_subs = DataReportModel::allSubs($agent_id, $page, $limit);
-        //  print_r($all_subs);
-        //  exit;
+        $all_subs = DataReportModel::allSubs($partner,$agent_id, $page, $limit);
+  
             if (empty($all_subs["data"])) {
                 return ["status" => "success", "data" => []];
             }
@@ -414,7 +413,6 @@ class UserManageModel extends MEDOOHelper
                 $params[':end_date'] = $end;
             }
 
-            
             $whereClause = empty($whereClause) ? " " : " WHERE  {$whereClause} ";
 
             $sql = "SELECT *,(SELECT COUNT(*) FROM users_test {$whereClause}) AS total_records FROM users_test {$whereClause}  ORDER BY uid DESC LIMIT :offset, :limit";

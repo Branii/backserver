@@ -240,7 +240,9 @@ class DataReportModel extends MedooOrm
       }
    }
 
-   public static function allSubs($agent_id, int $currentPage = 1, int $limit = 10, bool $addAgent = false)
+
+
+   public static function allSubs($paretner,$agent_id, int $currentPage = 1, int $limit = 10, bool $addAgent = false)
    {
       try {
          $table_name = "users_test";
