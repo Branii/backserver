@@ -651,7 +651,7 @@ $(function () {
          showToast(headsUpText, selectFieldsText, "info");
          return;
       }
-    $(".loaderlist").removeClass("bx-check-double").addClass("bx-loader bx-spin");
+     $(".loaderlist").removeClass("bx-check-double").addClass("bx-loader bx-spin");
       fetchUserlist();
 
       // searchUserListData(uid,rechargeLevel,states,startdate,enddate);

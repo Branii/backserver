@@ -1146,6 +1146,12 @@ class adminController extends Controller
       $this->view('exec/platform_settings', ['page' => $page, 'pageLimit' => $pageLimit, 'flag' => 'fetchemaildata']);
       $this->view->render();
     }
+
+     public function emailaddprovider($emailprovider,$sendename){
+      $this->view('exec/platform_settings', ['emailprovider' =>$emailprovider, 'sendename' => $sendename, 'flag' => 'emailaddprovider']);
+      $this->view->render();
+    }
+
     
 
     //searchadmin names

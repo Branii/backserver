@@ -44,9 +44,9 @@ $(function () {
                       <tr>
                           <td>${item.email_provider}</td>
                           <td>${item.sender_name}</td>
-                          <td>${item.total_email}</td>
+                          <td>${item.total_emails}</td>
                           <td>${item.email_used}</td>
-                          <td>${item.current_email}</td>
+                          <td>${item.current_emails}</td>
                           <td>${item.created_at}</td>
                           <td>${item.status}</td>
                           
@@ -81,7 +81,7 @@ $(function () {
       try {
         const response = await fetch( `../admin/fetchemaildata/${page}/${pageLimit}`);
         const data = await response.json();
-          // console.log(data)
+           console.log(data)
       //   return
         $("#maskemail").LoadingOverlay("hide");
         renderemail(data.email);
@@ -255,32 +255,32 @@ $(function () {
       $("#emailModalsettings").modal("show");
   });
     //add new email platform
-  // $(document).on("click", ".saveemail", function () {
-  //     if ($("#emailnameprovider").val() == "" || $("#partnameemail").val() == "") {
-  //         showToast("Heads up!!","Select one or more data fields to filter","info")
-  //         return;
-  //       }
-  //     const  emailprovider = $("#emailnameprovider").val()
-  //     const sendename = $("#partnameemail").val()
-  //     const approvedby = $(".approved").val()
+  $(document).on("click", ".saveemail", function () {
+      if ($("#emailnameprovider").val() == "" || $("#partnameemail").val() == "") {
+          showToast("Heads up!!","Select one or more data fields to filter","info")
+          return;
+        }
+      const  emailprovider = $("#emailnameprovider").val()
+      const sendename = $("#partnameemail").val()
+      const approvedby = $(".approved").val()
     
-  // //   $(".loaderemails").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
-  // //   $(".form-reset").val('');
-  //   $.post(`../admin/addprovider/${emailprovider}/${sendename}`, function (response){
-  //     const results = JSON.parse(response)
-  //     //  console.log(results)
-  //     if(results == "success"){
-  //       $("#emailmodal").modal("hide"); 
-  //       showToast("Heads up!!","Sms provider added successfully","success")
-  //       fetchemailplatform(currentPage,pageLimit)
-  //     }else{
-  //       showToast("Heads up!!","Sms provider added successfully","info")
-  //     }
+  //   $(".loaderemails").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
+  //   $(".form-reset").val('');
+    $.post(`../admin/emailaddprovider/${emailprovider}/${sendename}`, function (response){
+      const results = JSON.parse(response)
+      //  console.log(results)
+      if(results == "success"){
+        $("#emailmodal").modal("hide"); 
+        showToast("Heads up!!","Email provider added successfully","success")
+        fetchemailplatform(currentPage,pageLimit)
+      }else{
+        showToast("Heads up!!","Email provider added successfully","info")
+      }
   
-  //   })
+    })
 
   
-  // });
+  });
   
   //delete message
   $(document).on("click", ".deleteemail", function () {

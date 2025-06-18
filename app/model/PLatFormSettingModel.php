@@ -26,7 +26,7 @@ class PLatFormSettingModel extends MEDOOHelper
     public static function InserIntoSavePreferences($data)
     {  
 
-    $sql = "REPLACE INTO sms_preferences (id, deposit, withdraw,gamewon, sms_provider) VALUES (:id,:deposit,:withdraw,:gamewon,:sms_provider)";
+     $sql = "REPLACE INTO sms_preferences (id, deposit, withdraw,gamewon, sms_provider) VALUES (:id,:deposit,:withdraw,:gamewon,:sms_provider)";
         $id = 1;
         $params = [
             ':id' => $id,
@@ -79,13 +79,13 @@ class PLatFormSettingModel extends MEDOOHelper
         return $data;
     }
 
-    public static function DeleteAnnoucement($messageid)
-    {
-        $params = ['messageid' => $messageid]; // Correct parameter key
-        $data = parent::query("DELETE FROM notices WHERE msg_id = :messageid", $params);
-        $data = parent::query("DELETE FROM notice_users WHERE msg_id = :messageid", $params);
-        return $data ? "Message could not be deleted. Please try again." : "Message deleted successfully.";
-    }
+    // public static function DeleteAnnoucement($messageid)
+    // {
+    //     $params = ['messageid' => $messageid]; // Correct parameter key
+    //     $data = parent::query("DELETE FROM notices WHERE msg_id = :messageid", $params);
+    //     $data = parent::query("DELETE FROM notice_users WHERE msg_id = :messageid", $params);
+    //     return $data ? "Message could not be deleted. Please try again." : "Message deleted successfully.";
+    // }
 
     public static function Smssubquery($smsprovider,$smsstatus,$startdate,$enddate)
     {
@@ -140,9 +140,20 @@ class PLatFormSettingModel extends MEDOOHelper
     public static function fetchEmailData($page, $limit): array
     {
         $startpoint = $page * $limit - $limit;
-        $data = parent::query("SELECT * FROM email_config ORDER BY sms_id DESC LIMIT :offset, :limit", ['offset' => $startpoint, 'limit' => $limit]);
+        $data = parent::query("SELECT * FROM email_config ORDER BY email_id DESC LIMIT :offset, :limit", ['offset' => $startpoint, 'limit' => $limit]);
         $totalRecords = parent::count('email_config');
         return ['data' => $data, 'total' => $totalRecords];
+    }
+
+    public static function InserIntoEmail($emaiprovider,$sendename)
+    {  
+          $data = [
+            "email_provider" => $emaiprovider,
+            "sender_name" => $sendename,
+            "created_at" => date("Y-m-d / H:i:s"),
+          ];
+           $data = parent::insert("email_config", $data);
+          return $data ? "success" : "failed";
     }
     
     public static function EditMessageData($mgid)
