@@ -896,7 +896,7 @@ $(function () {
 
    const fetchsubagent = (userID, currentPage, pageLimit, element) => {
       $.ajax({
-         url: `../admin/agent_subordinate/${partnerID}/${userID}/${currentPage}/${pageLimit}`,
+         url: `../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
          type: "POST",
          beforeSend: function () {
             //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

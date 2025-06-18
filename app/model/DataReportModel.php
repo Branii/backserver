@@ -217,16 +217,19 @@ class DataReportModel extends MedooOrm
 
    
 
-public static function allSubs($partnerID,$agent_id, int $currentPage = 1, int $limit = 10, bool $addAgent = false) {
+public static function allSubs($agent_id, int $currentPage = 1, int $limit = 10, bool $addAgent = false) {
     try{
         $table_name = "users_test";
         $db = parent::openLink();
         $offset = ($currentPage - 1) * $limit;
         $include_agent = $addAgent ? " || uid=:agent_id " : " AND uid !=:agent_id " ;
-        // Construct raw SQL query
-         $sql = "SELECT *,(SELECT COUNT(*) FROM {$table_name} WHERE {$table_name}.agent_id=:agent_id AND uid !=:agent_id) AS total_records FROM {$table_name} WHERE {$table_name}.agent_id = :agent_id {$include_agent} ORDER BY uid DESC 
-                LIMIT :offset, :limit ";
-
+       // Construct raw SQL query
+          $sql = "SELECT *,
+            (SELECT COUNT(*) FROM {$table_name} WHERE {$table_name}.agent_id=:agent_id AND uid !=:agent_id) AS total_records 
+            FROM {$table_name} 
+            WHERE {$table_name}.agent_id = :agent_id {$include_agent} 
+            ORDER BY uid DESC 
+            LIMIT :offset, :limit";
         // Execute the query using Medoo's `query` method
         $stmt = $db->query($sql, [
             ':agent_id' => $agent_id,
@@ -241,7 +244,7 @@ public static function allSubs($partnerID,$agent_id, int $currentPage = 1, int $
         
         return self::response("Internal Server Error.". $e->getMessage(),false);
     }
-    }
+}
    
 
 public static function fetchFullHierarchy($agent_id) {
@@ -939,7 +942,9 @@ public static function v2($partnerID,$user_id,$bet_tables,$userData):array{
     
     return $formatted;
 }
-    public static function response($data,$type = true) {  return ["status" => $type ? "success" : "error" , "data" => $data];  }
+ public static function response($data,$type = true) {  
+  return ["status" => $type ? "success" : "error" , "data" => $data]; 
+ }
 
 }
 

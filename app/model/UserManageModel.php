@@ -219,10 +219,13 @@ class UserManageModel extends MEDOOHelper
     public static function fetchAgentSubs($agent_id, $page = 1, $limit = 20): array
     {
         try {
-            $all_subs = DataReportModel::allSubs($agent_id, $page, $limit);
+        $all_subs = DataReportModel::allSubs($agent_id, $page, $limit);
+        //  print_r($all_subs);
+        //  exit;
             if (empty($all_subs["data"])) {
                 return ["status" => "success", "data" => []];
             }
+
             $all_subs = $all_subs["data"];
 
             $uids = array_column($all_subs, 'uid');

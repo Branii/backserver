@@ -597,9 +597,9 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function agent_subordinate($partnerID, $user_id, $pageNumber, $limit)
+    public function agent_subordinate($user_id, $pageNumber, $limit)
     {
-        $this->view('exec/account_manage', ['partner_id' => $partnerID, 'user_id' => $user_id, 'flag' => 'fetchsubagent', 'page' => $pageNumber, 'limit' => $limit,]);
+        $this->view('exec/account_manage', ['user_id' => $user_id, 'flag' => 'fetchsubagent', 'page' => $pageNumber, 'limit' => $limit,]);
         $this->view->render();
     }
     public function useraccountchange($uid, $pageNumber, $limit)
