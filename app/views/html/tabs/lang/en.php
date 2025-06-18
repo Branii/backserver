@@ -1457,4 +1457,32 @@ return [
   'CONFIRM_TOGGLE' => 'Are you sure you want to',
   'TURN_ON' => 'Turn On',
   'TURN_OFF' => 'Turn Off',
+  'main_info' => 'Main Info',
+  'payment_settings' => 'Payment Settings',
+  'product_settings' => 'Product Settings',
+  'currency_settings' => 'Currency Settings',
+  'language_settings' => 'Language Settings',
+  'Creation By' => 'Creation By',
+  'View/Edit' => 'View/Edit',
+  'partners_label' => '--Partners--',
+  'Main Info' => 'Main Info',
+ 'Client Min Age' => 'Client Min Age',
+  'Verification Type' => 'Verification Type',
+'Unused Amount Withdraw' => 'Unused Amount Withdraw',
+'Payment Settings' => 'Payment Settings',
+'Min. Deposit' => 'Min. Deposit',
+'Max. Deposit' => 'Max. Deposit',
+'Min. Withdrawal' => 'Min. Withdrawal',
+'Max. Withdrawal' => 'Max. Withdrawal',
+'Block' => 'Block',
+
+
+
+
+
+
+  
+  
+  
+ 
 ];
