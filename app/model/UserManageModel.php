@@ -628,8 +628,7 @@ class UserManageModel extends MEDOOHelper
 
         return $nickname;
     }
-
-      public static function fetchUserLotteries($user_id)
+    public static function fetchUserLotteries($user_id)
     {
         try {
             $db = parent::openLink();
@@ -650,7 +649,6 @@ class UserManageModel extends MEDOOHelper
         }
         // return ['lotteries' => $lotteries, 'blockedLotteries' => empty($data->blocked_lotteries) ? [] : unserialize($data->blocked_lotteries)];
     }
-
     public static function update_lottery_stat_for_user($user_id, $lottery_id)
     {
         try {
@@ -686,8 +684,6 @@ class UserManageModel extends MEDOOHelper
             return ['status' => 'error', 'msg' => 'Error Blocking Lottery for User.' . $e->getMessage()];
         }
     }
-
-
     public static function fetchUserLogs($user_id, $page = 1, $limit = 100): array
     {
         try {
@@ -702,8 +698,6 @@ class UserManageModel extends MEDOOHelper
             return ["status" => "error", "data" => "Internal Server Error."];
         }
     }
-
-
     public static function FetchUserData(int $user_id)
     {
         try {
@@ -714,6 +708,21 @@ class UserManageModel extends MEDOOHelper
             return ["status" => "success", "data" => $data];
         } catch (Exception $e) {
             return ["status" => "error", "data" => $e->getMessage()];
+        }
+    }
+    public static function deleteUserData(int $userId)
+    {
+        try {
+            $db = parent::openLink();
+            $sql = "DELETE FROM users_test WHERE uid = :userid";
+            $stmt = $db->query($sql, [":userid" => intval($userId)]);
+            if ($stmt->rowCount() > 0) {
+                return ['status' => 'success', 'data' => $stmt->rowCount()];
+            } else {
+                return ['status' => 'success', 'data' => 0];
+            }
+        } catch (Exception $e) {
+            return ["status" => "error", "data" => "Internal Server Error."];
         }
     }
 
