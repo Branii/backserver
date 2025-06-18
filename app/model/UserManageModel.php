@@ -356,7 +356,7 @@ class UserManageModel extends MEDOOHelper
     public static function fetchTopAgents(array $filters, $page = 1, $limit = 20): array
     {
         try {
-            $top_agents = self::filter_top_agents($filters, $page, $limit);
+           $top_agents = self::filter_top_agents($filters, $page, $limit);
             if (empty($top_agents["data"])) {
                 return ["status" => "success", "data" => [], "login_counts" => [], "direct_subs_count" => []];
             }

@@ -776,7 +776,7 @@ $(function () {
       // console.log(pageLimit);
       try {
          $.ajax({
-            url: `../admin/fetchTopAgent/${partnerID}/${rechargeLevel}/${state}/${startDate}/${endDate}/${page}/${pageLimit}`,
+            url: `../admin/fetchTopAgent/${rechargeLevel}/${state}/${startDate}/${endDate}/${page}/${pageLimit}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
