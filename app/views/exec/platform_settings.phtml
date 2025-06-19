@@ -70,6 +70,11 @@ if($flag == "filtersms"){
          'totalPages' => ceil($result['total'] / $limit),
     ]);
 }
+if($flag == "deletesms"){
+     $smsid = isset($this->viewData['sms']) ? $this->viewData['sms'] : "";
+     $result  = PLatFormSettingModel::DeleteSms($smsid);
+     echo json_encode($result);
+}
 
 
 
@@ -113,10 +118,10 @@ if($flag == "emailaddprovider"){
 //      echo json_encode($result); 
 // }
 
-// if($flag =="fetchemailprovider"){
-//     $results = PLatFormSettingModel::FetchSmsProviders();
-//     echo json_encode($results);
-// }
+if($flag =="fetchemailprovider"){
+    $results = PLatFormSettingModel::FetchEmailProviders();
+    echo json_encode($results);
+}
 
 // if($flag == "filteremail"){
 //     $smsprovider = isset($this->viewData['smsprovider']) ?  $this->viewData['smsprovider'] : "";

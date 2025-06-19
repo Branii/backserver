@@ -56,7 +56,7 @@ $(function () {
                             <i class='bx bx-dots-vertical-rounded'></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"> 
-                             <a class="dropdown-item deletesms cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="">
+                             <a class="dropdown-item deletesms cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="${item.sms_id}">
                                 <i class="bx bx-trash fs-5"></i>Delete
                             </a>
                             </div>
@@ -285,10 +285,12 @@ $(function () {
   //delete message
   $(document).on("click", ".deletesms", function () {
       const smsid = $(this).attr("datas");
+      // console.log(smsid)
+      // return
       $.post(`../admin/deletesms/${smsid}`, function (response) {
       if (response) {
           showToast("Success",JSON.parse(response), "success");
-          fetchPaymentPlatform(currentPage,pageLimit)
+            fetchsmsplatform(currentPage,pageLimit)
       } else {
           showToast("Heads up!!", "failed", "info");
       }

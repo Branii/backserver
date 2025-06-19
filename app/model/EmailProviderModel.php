@@ -37,6 +37,11 @@ class EmailProviderModel  extends GearmanWorker{
             $mail->Body    = "Your verification code is: $code";
             $mail->send();
              echo "Verification code sent to your email.";
+            //  $initialTotal = 200;
+            //  $currentBalance = 195;
+              
+            // $used = $initialTotal - $currentBalance;
+            // PLatFormSettingModel::UpdateSms($initialTotal, $used, $currentBalance, $provider);
         } catch (Exception $e) {
             http_response_code(500);
             echo "Email failed: {$mail->ErrorInfo}";

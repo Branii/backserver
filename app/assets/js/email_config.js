@@ -272,7 +272,7 @@ $(function () {
       if(results == "success"){
         $("#emailmodal").modal("hide"); 
         showToast("Heads up!!","Email provider added successfully","success")
-        fetchemailplatform(currentPage,pageLimit)
+        fetchemaildata(currentPage,pageLimit)
       }else{
         showToast("Heads up!!","Email provider added successfully","info")
       }
@@ -283,17 +283,17 @@ $(function () {
   });
   
   //delete message
-  $(document).on("click", ".deleteemail", function () {
-      const emailid = $(this).attr("datas");
-      $.post(`../admin/deleteemail/${emailid}`, function (response) {
-      if (response) {
-          showToast("Success",JSON.parse(response), "success");
-          fetchPaymentPlatform(currentPage,pageLimit)
-      } else {
-          showToast("Heads up!!", "failed", "info");
-      }
-      });
-  });
+  // $(document).on("click", ".deleteemail", function () {
+  //     const emailid = $(this).attr("datas");
+  //     $.post(`../admin/deleteemail/${emailid}`, function (response) {
+  //     if (response) {
+  //         showToast("Success",JSON.parse(response), "success");
+  //         fetchPaymentPlatform(currentPage,pageLimit)
+  //     } else {
+  //         showToast("Heads up!!", "failed", "info");
+  //     }
+  //     });
+  // });
 
     //edit message
   $(document).on("click", ".editemail", function () {
@@ -383,7 +383,7 @@ $(function () {
            // console.log(data)
           // return
            
-            let html = `<option value="">Sms Provider</option>`;
+            let html = `<option value="">Email Provider</option>`;
             data.forEach((emailprovider) => {
                 html += `<option value="${emailprovider.email_provider}">${emailprovider.email_provider}</option>`;
             });

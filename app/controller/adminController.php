@@ -1129,6 +1129,12 @@ class adminController extends Controller
       $this->view->render();
      }
 
+     public function deletesms($smsid){
+      $this->view('exec/platform_settings', ['sms'=>$smsid,'flag' => 'deletesms']);
+      $this->view->render();
+     }
+     
+
      public function  filtersms($smsprovider,$smsstatus,$startdate,$enddate,$page,$limit){
       $this->view('exec/platform_settings', [
         'smsprovider'=>$smsprovider,
@@ -1151,6 +1157,12 @@ class adminController extends Controller
       $this->view('exec/platform_settings', ['emailprovider' =>$emailprovider, 'sendename' => $sendename, 'flag' => 'emailaddprovider']);
       $this->view->render();
     }
+
+     public function fetchemailprovider(){
+      $this->view('exec/platform_settings', ['flag' => 'fetchemailprovider']);
+      $this->view->render();
+     }
+
 
     
 

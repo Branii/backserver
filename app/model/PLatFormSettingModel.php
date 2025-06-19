@@ -62,7 +62,6 @@ class PLatFormSettingModel extends MEDOOHelper
          return 'default'; 
     }
 
-
     public static function smsOptionToUse($provider,$message,$contact) {  
         if ($provider === 'smsonlinegh') {
         (new SmsProvider($provider))->sendSmsGonline($message,$contact);
@@ -79,13 +78,12 @@ class PLatFormSettingModel extends MEDOOHelper
         return $data;
     }
 
-    // public static function DeleteAnnoucement($messageid)
-    // {
-    //     $params = ['messageid' => $messageid]; // Correct parameter key
-    //     $data = parent::query("DELETE FROM notices WHERE msg_id = :messageid", $params);
-    //     $data = parent::query("DELETE FROM notice_users WHERE msg_id = :messageid", $params);
-    //     return $data ? "Message could not be deleted. Please try again." : "Message deleted successfully.";
-    // }
+    public static function DeleteSms($smsid)
+    {
+        $params = ['sms_id' => $smsid]; // Correct parameter key
+        $data = parent::query("DELETE FROM sms_config WHERE sms_id = :sms_id", $params);
+        return $data ? "Data could not be deleted. Please try again." : "Data deleted successfully.";
+    }
 
     public static function Smssubquery($smsprovider,$smsstatus,$startdate,$enddate)
     {
@@ -154,6 +152,12 @@ class PLatFormSettingModel extends MEDOOHelper
           ];
            $data = parent::insert("email_config", $data);
           return $data ? "success" : "failed";
+    }
+     public static function FetchEmailProviders()
+    {  
+        $sql = "SELECT email_id,email_provider FROM email_config";  
+        $data = parent::query($sql);
+        return $data;
     }
     
     public static function EditMessageData($mgid)
