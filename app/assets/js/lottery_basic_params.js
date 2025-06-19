@@ -489,6 +489,7 @@ const TURN_OFF_TEXT = document.getElementById("turn_off_text").innerText;
     const lockTimeForClosingBet =     $(`#lb-dialog-clsing`).val();
     const sortingWeight =     $(`#lb-dialog-sorting-weight`).val();
     const  lotteryType =     $(`#lb-lottery-type`).val();
+
     $.ajax({
       url: `../admin/updateLottery/${maxPrizeAmount}/${maxBetAmountPerIssue}/${maxWinPerPersonPerIssue}/${minBetAmountPerIssue}/${lockTimeForClosingBet}/${sortingWeight}/${lotteryType}/${lotteryID}`,
       type: "POST",
@@ -775,7 +776,6 @@ const EditText = document.getElementById("Edit-text")?.dataset.translation || "E
                   <li class="action-btn" style="cursor:pointer;">
                       <a class="dropdown-item edit-params-act-btn" 
                         data-lottery-type="${data.lottery_id}"
-                         
                          max-prize-amt-per-bet="${data.max_prize_per_bet}" 
                          maximum_win_per_issue="${data.max_win}" 
                          maximum_amount_per_issue="${data.max_amt_per_issue}"  
