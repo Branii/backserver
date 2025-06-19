@@ -500,12 +500,7 @@ const TURN_OFF_TEXT = document.getElementById("turn_off_text").innerText;
         const data = response.data;
         if (response.status === "error") {
           // showToast("Error", "Lottery Data Successfully Updated.","error");
-
-
-
-showToast(ERROR_TEXT, LOTTERY_UPDATED, "error");
-
-
+          showToast(ERROR_TEXT, LOTTERY_UPDATED, "error");
           return;
         }
   
