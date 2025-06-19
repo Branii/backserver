@@ -372,12 +372,12 @@
         <!-- <input type="hidden" class="userIdtrans" /> -->
         <div class="input-group mb-3">
           <!-- <span class="input-group-text  Searchuseradmintrans" id="basic-addon1" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bx-search Searchuseradmintrans' style="font-size:18px;"></i></span> -->
-          <span class="input-group-text search-icon-wrapper" id="basic-addon1" style="background-color:rgb(238,238,238,.4); border:solid 1px #ddd;">
+          <!-- <span class="input-group-text search-icon-wrapper" id="basic-addon1" style="background-color:rgb(238,238,238,.4); border:solid 1px #ddd;">
             <i class='bx bx-search search-icon' style="font-size:18px;"></i>
             <div class="search-icon-overlay">
               <div class="spinner"></div>
             </div>
-          </span>
+          </span> -->
 
 
           <!-- <input type="text" class="form-control queryholder" placeholder="<?= $translator['Search']; ?>..." aria-label="Username" aria-describedby="basic-addon1" /> -->
@@ -410,7 +410,7 @@
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PDF">
           <i class='bx bx-file' style="font-size:20px"></i>
         </button>
-        <button type="button" class="btn bg-white-subtle " value="right" aria-label="Refresh"
+        <button type="button" class="btn bg-white-subtle  " value="right" aria-label="Refresh"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="XLS">
           <i class='bx bx-file-blank' style="font-size:20px"></i>
         </button>
@@ -421,8 +421,14 @@
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
           <i class="bx bx-refresh" style="font-size: 20px;"></i>
         </button>
-
-
+<!-- search button starts -->
+ <button type="button" class="btn bg-white-subtle search-icon-wrapper" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                    <i class="bx bx-check-double loadernotfys" style="font-size: 20px;"></i>
+                     <div class="search-icon-overlay">
+              <div class="spinner"></div>
+            </div>
+                </button>
+                <!-- search button sends -->
         <button type="button" class="btn bg-white-subtle" value="end" aria-label="Execute" data-bs-toggle="modal" data-bs-target="#add-new"
           data-bs-placement="top" data-bs-title="Add new">
           <i class='bx bx-plus' style="font-size:20px"></i>
@@ -776,7 +782,12 @@
           <i class='bx bx-message-square-x tclose ms-3' style='color:#868c87; font-size:25px; cursor:pointer;'data-bs-dismiss="modal" aria-label="Close"></i>
         </div>
       </div>
-      <input class="form-check-input" type="checkbox" id="selectAllPermissions" name="permissions[]" value="view_users">
+      <p></p>
+       <div class="form-check d-flex align-items-center justify-content-end">
+    <input class="form-check-input me-1" type="checkbox" id="selectAllPermissions" name="permissions[]" value="view_users">
+    <label class="form-check-label" for="selectAllPermissions" style="font-size: 14px;">Check All Permissions</label>
+</div>
+
       <p></p>
       <div class="permissionholder" style="overflow-y:scroll; max-height:500px;">
         <!-- Permissions content goes here -->

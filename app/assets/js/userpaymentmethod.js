@@ -9,26 +9,29 @@ $(function () {
     });
   }
 
-const translations = {
-  headsUp: document.getElementById("trans-heads-up").dataset.translation,
-  failedInactive: document.getElementById("trans-failed-inactive").dataset.translation,
-  inactiveSuccess: document.getElementById("trans-inactive-success").dataset.translation,
-  selectFields: document.getElementById("trans-select-fields").dataset.translation,
-  success: document.getElementById("trans-success").dataset.translation,
-};
+  const translations = {
+    headsUp: document.getElementById("trans-heads-up").dataset.translation,
+    failedInactive: document.getElementById("trans-failed-inactive").dataset
+      .translation,
+    inactiveSuccess: document.getElementById("trans-inactive-success").dataset
+      .translation,
+    selectFields: document.getElementById("trans-select-fields").dataset
+      .translation,
+    success: document.getElementById("trans-success").dataset.translation
+  };
 
-// showToast(translations.headsUp, translations.failedInactive, "danger");
+  // showToast(translations.headsUp, translations.failedInactive, "danger");
 
-// showToast(translations.headsUp, translations.inactiveSuccess, "success");
+  // showToast(translations.headsUp, translations.inactiveSuccess, "success");
 
-// showToast(translations.headsUp, translations.selectFields, "info");
+  // showToast(translations.headsUp, translations.selectFields, "info");
 
-const headsUpText = document.getElementById("trans-heads-up").textContent;
-const selectFieldsText = document.getElementById("trans-select-fields").textContent;
+  const headsUpText = document.getElementById("trans-heads-up").textContent;
+  const selectFieldsText = document.getElementById(
+    "trans-select-fields"
+  ).textContent;
 
-// showToast(headsUpText, selectFieldsText, "info");
-
-
+  // showToast(headsUpText, selectFieldsText, "info");
 
   const usercarddata = (data) => {
     let html = "";
@@ -55,36 +58,33 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
     $("#usercardContainer").html(html);
   };
 
-
-
   let currentPage = 1;
   let pageLimit = 20;
 
-async function fetchuserpayment(page, pageLimit) {
-  try {
-    const response = await fetch(
-      `../admin/fetchuserpaymentmethod/${page}/${pageLimit}`
-    );
-    const jsonData = await response.json();
+  async function fetchuserpayment(page, pageLimit) {
+    try {
+      const response = await fetch(
+        `../admin/fetchuserpaymentmethod/${page}/${pageLimit}`
+      );
+      const jsonData = await response.json();
 
-    if (jsonData && jsonData.data) {
-      renderuserpayment(jsonData.data);
-    } else {
+      if (jsonData && jsonData.data) {
+        renderuserpayment(jsonData.data);
+      } else {
+        renderuserpayment([]);
+      }
+      $("#maskuserpayment").LoadingOverlay("hide");
+    } catch (error) {
+      console.error("Error fetching data:", error);
       renderuserpayment([]);
+      $("#maskuserpayment").LoadingOverlay("hide");
     }
-    $("#maskuserpayment").LoadingOverlay("hide");
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    renderuserpayment([]);
-    $("#maskuserpayment").LoadingOverlay("hide");
   }
-}
 
-fetchuserpayment(currentPage, pageLimit);
+  fetchuserpayment(currentPage, pageLimit);
 
-
-
-const inactiveText = document.getElementById("inactive-text")?.dataset.translation || "Inactive";
+  const inactiveText =
+    document.getElementById("inactive-text")?.dataset.translation || "Inactive";
   $(document).on("click", ".tuserpayment", function () {
     const uid = $(this).data("uid");
     $("#Userpaymentmodal").modal("show");
@@ -134,7 +134,11 @@ const inactiveText = document.getElementById("inactive-text")?.dataset.translati
       success: function (response) {
         $("#Userpaymentmodal").modal("hide");
         // showToast( "Heads up!!","Payment method set to inactive successfully!","success");
-        showToast(translations.headsUp, translations.inactiveSuccess, "success");
+        showToast(
+          translations.headsUp,
+          translations.inactiveSuccess,
+          "success"
+        );
         fetchuserpayment(currentPage, pageLimit);
       },
       error: function () {
@@ -173,7 +177,7 @@ const inactiveText = document.getElementById("inactive-text")?.dataset.translati
     const limit = 20;
     if (username === "") {
       // showToast("Heads up!!","Select one or more data fields to filter","info");
-  showToast(headsUpText, selectFieldsText, "info");
+      showToast(headsUpText, selectFieldsText, "info");
 
       return;
     }
@@ -324,5 +328,4 @@ const inactiveText = document.getElementById("inactive-text")?.dataset.translati
       $(".queryholderuserpayment").hide();
     });
   }
-
 });

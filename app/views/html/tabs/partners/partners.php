@@ -264,9 +264,17 @@
     }
 </style>
 
+<span id="lang-main-info" style="display: none;"><?php echo $translator['main_info']; ?></span>
+<span id="lang-payment-settings" style="display: none;"><?php echo $translator['payment_settings']; ?></span>
+<span id="lang-product-settings" style="display: none;"><?php echo $translator['product_settings']; ?></span>
+<span id="lang-currency-settings" style="display: none;"><?php echo $translator['currency_settings']; ?></span>
+<span id="lang-language-settings" style="display: none;"><?php echo $translator['language_settings']; ?></span>
+
+<span id="lang-partners-label" style="display: none;"><?php echo $translator['partners_label']; ?></span>
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0">Partners</h4>
+        <h4 class="card-title mb-0"><?= $translator['Partners']; ?></h4>
     </div>
     <input name="data-holder" id="data-holder" type="hidden" data-row-id="" data-payment-platform-id="" />
     <div class="px-4 py-3 border-bottom pagerlist">
@@ -275,11 +283,12 @@
                 <select name="betsate" id="ptns-partners" class="form-control form-select queryholderlistt messagestype" data-bs-placeholder="Select Type"></select>
 
                 <select name="betsate" id="ptns-partnerState" class="form-control form-select queryholderlistt messagestype" data-bs-placeholder="Select Type">
-                    <option value="">-State-</option>
-                    <option value="active">Active</option>
-                    <option value="blocked">Blocked</option>
-                    <option value="inactive">Inactive</option>
+                    <option value="">-<?= $translator['State']; ?>-</option>
+                    <option value="active"><?= $translator['Block']; ?></option>
+                    <option value="blocked"><?= $translator['Active']; ?></option>
+                    <option value="inactive"><?= $translator['Inactive']; ?></option>
                 </select>
+
                 <input name="startdate" id="ptns-partnerStartDate" type="date" class="form-control queryholderlistt startfmessage" placeholder="Name" />
 
                 <input name="enddate" id="ptns-partnerEndDate" type="date" class="form-control queryholderlistt endmessage" placeholder="Name" />
@@ -317,38 +326,38 @@
                             <h6 class="fs-4 fw-semibold mb-0">ID</h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Name</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Name']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Currency</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Currency']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Site Url</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Site Url']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Admin Site Url</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Admin Site Url']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Status</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Admin Site Url']; ?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Creation Time</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Creation Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Timezone/Hrs']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Creation By</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Creation By']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Last Updated</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Updated']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Last Update By</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Update By']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">View/Edit</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['View/Edit']; ?></h6>
                         </th>
                     </tr>
                 </thead>
@@ -439,8 +448,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="ptns-addNewPartnerBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="ptns-addNewPartnerBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -532,8 +541,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="ptns-editPaymentpartnerBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="ptns-editPaymentpartnerBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -1563,8 +1572,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="addNewPaymentPlatformBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="addNewPaymentPlatformBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -1656,8 +1665,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="editPaymentPlatformBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="editPaymentPlatformBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -1671,13 +1680,13 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content" style="">
             <div class="modal-header">
-                <h5 class="modal-title">Main Info</h5>
+                <h5 class="modal-title"><?= $translator['Main Info']; ?></h5>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container">
                 <div class="card border mb-4">
                     <div class="card-body">
-                        <h4 class="card-title">Main Info</h4>
+                        <h4 class="card-title"><?= $translator['Main Info']; ?></h4>
                         <form id="pp-ersonalDetailsForm">
                             <div class="row">
                                 <div class="col-lg-6">
@@ -1686,71 +1695,83 @@
                                         <input type="text" class="form-control" id="ptns-partner-id" placeholder="Enzerhub" disabled />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="ptns-partner-name-edit" class="form-label">Name (<span class="dark-red">*</span>)</label>
+                                        <label for="ptns-partner-name-edit" class="form-label">
+                                            <?= $translator['Name']; ?>
+                                            (<span class="dark-red">*</span>)
+                                        </label>
 
-                                        <input type="text" class="form-control" id="ptns-partner-name-edit" placeholder="Name" />
+                                        <input type="text" class="form-control" id="ptns-partner-name-edit" placeholder="<?= $translator['Name']; ?>" />
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="ptns-site-url-edit" class="form-label">Site Url (<span class="dark-red">*</span>)</label>
+                                        <label for="ptns-site-url-edit" class="form-label">
+                                            <?= $translator['Site Url']; ?>
+                                            (<span class="dark-red">*</span>)
+                                        </label>
                                         <input type="text" class="form-control" id="ptns-site-url-edit" placeholder="e.g www.enzerhub.com" />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="ptns-admin-site-url-edit" class="form-label">Admin Site Url (<span class="dark-red">*</span>)</label>
+                                        <label for="ptns-admin-site-url-edit" class="form-label"> <?= $translator['Admin Site Url']; ?>(<span class="dark-red">*</span>)</label>
                                         <input type="text" class="form-control" id="ptns-admin-site-url-edit" placeholder="e.g www.enzerhub.com" />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="ptns-client-min-age" class="form-label">Client Min Age </label>
+                                        <label for="ptns-client-min-age" class="form-label"><?= $translator['Client Min Age']; ?> </label>
                                         <input type="text" value="18" class="form-control" id="ptns-client-min-age" placeholder="18" />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="ptns-verification-type-edit" class="form-label">Verification Type </label>
+                                        <label for="ptns-verification-type-edit" class="form-label"><?= $translator['Verification Type']; ?> </label>
 
                                         <select id="ptns-verification-type-edit" class="form-select">
-                                            <option value="email">Email</option>
-                                            <option value="phone">Phone</option>
-                                            <option value="emailandphone">Email & Phone</option>
+                                            <option value="email"><?= $translator['Email']; ?></option>
+                                            <option value="phone"><?= $translator['Phone']; ?></option>
+                                            <option value="emailandphone"><?= $translator['Email & Phone']; ?></option>
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="ptns-unused-withdrawal-amount" class="form-label">Unused Amount Withdraw</label>
+                                        <label for="ptns-unused-withdrawal-amount" class="form-label"><?= $translator['Unused Amount Withdraw']; ?></label>
                                         <input type="text" value="10" class="form-control" id="ptns-unused-withdrawal-amount" placeholder="e.g 10" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="ptns-priority-edit" class="form-label">Priority</label>
+                                        <label for="ptns-priority-edit" class="form-label"><?= $translator['Priority']; ?></label>
                                         <input type="text" value="6" class="form-control" id="ptns-priority-edit" placeholder="e.g 6" />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="ptns-state-edit" class="form-label">State (<span class="dark-red">*</span>)</label>
+                                        <label for="ptns-state-edit" class="form-label">
+                                            <?= $translator['State']; ?>
+                                            (<span class="dark-red">*</span>)
+                                        </label>
                                         <select id="ptns-state-edit" class="form-select">
-                                            <option value="active">Active</option>
-                                            <option value="hidden">Hidden</option>
-                                            <option value="inactive">Inactive</option>
+                                            <option value="active"><?= $translator['Active']; ?></option>
+                                            <option value="hidden"><?= $translator['Hidden']; ?></option>
+                                            <option value="inactive"><?= $translator['Inactive']; ?></option>
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="ptns-currency-edit" class="form-label">Currency (<span class="dark-red">*</span>)</label>
+                                        <label for="ptns-currency-edit" class="form-label">
+                                            <?= $translator['Currency']; ?>
+                                            (<span class="dark-red">*</span>)
+                                        </label>
                                         <select id="ptns-currency-edit" class="form-select currency-list">
-                                            <option value="">--Currency--</option>
+                                            <option value="">--<?= $translator['Currency']; ?>--</option>
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="ptns-creation-time-edit" class="form-label">Creation Time</label>
+                                        <label for="ptns-creation-time-edit" class="form-label"><?= $translator['Creation Time']; ?></label>
                                         <input type="text" class="form-control" id="ptns-creation-time-edit" disabled />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="ptns-created-by-edit" class="form-label">Created By</label>
+                                        <label for="ptns-created-by-edit" class="form-label"><?= $translator['Created By']; ?></label>
                                         <input type="text" class="form-control" id="ptns-created-by-edit" disabled />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="ptns-last-update-edit" class="form-label">Last Update</label>
+                                        <label for="ptns-last-update-edit" class="form-label"><?= $translator['Last Update']; ?></label>
                                         <input type="text" class="form-control" id="ptns-last-update-edit" disabled />
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="ptns-update-by-edit" class="form-label">Update By</label>
+                                        <label for="ptns-update-by-edit" class="form-label"><?= $translator['Update By']; ?></label>
                                         <input type="text" class="form-control" id="ptns-update-by-edit" disabled />
                                     </div>
                                 </div>
@@ -1758,8 +1779,8 @@
                                 <div class="col-6"></div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="editPartnerMainInfoBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="editPartnerMainInfoBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -1773,14 +1794,14 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content" style="width: 90rem; right: 227px;">
             <div class="modal-header">
-                <h5 class="modal-title">Payment Settings</h5>
+                <h5 class="modal-title"><?= $translator['Payment Settings']; ?></h5>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container" style="">
                 <div class="card w-100 position-relative overflow-hidden" style="/* display:none; */">
-                    <div class="px-4 py-3 border-bottom">
-                        <h4 class="card-title mb-0">Payment Settings</h4>
-                    </div>
+                    <!-- <div class="px-4 py-3 border-bottom">
+                        <h4 class="card-title mb-0"><?= $translator['Payment Settings']; ?></h4>
+                    </div> -->
 
                     <div class="px-4 py-3 border-bottom pagerlist">
                         <span class="top-left-btn" style="width: 70%;">
@@ -1792,14 +1813,14 @@
                                 </div>
 
                                 <select name="betsate" id="platformCurrency" class="form-control form-select queryholderlistt messagestype currency-list" data-bs-placeholder="Select Type">
-                                    <option value="">-Currency-</option>
+                                    <option value="">-<?= $translator['PaymentSettings']; ?>-</option>
                                 </select>
 
                                 <select name="betsate" id="platformStatus" class="form-control form-select queryholderlistt messagestype" data-bs-placeholder="Select Type">
-                                    <option value="">-Status-</option>
-                                    <option value="active">Active</option>
-                                    <option value="hidden">Hidden</option>
-                                    <option value="inactive">Inactive</option>
+                                    <option value="">-<?= $translator['Status']; ?>-</option>
+                                    <option value="active"><?= $translator['Active']; ?></option>
+                                    <option value="hidden"><?= $translator['Hidden']; ?></option>
+                                    <option value="inactive"><?= $translator['Inactive']; ?></option>
                                 </select>
                                 <input name="startdate" id="platformStartDate" type="date" class="form-control queryholderlistt startfmessage" placeholder="Name" />
 
@@ -1839,54 +1860,54 @@
                                 <thead class="text-dark fs-4 tbl-financeheads">
                                     <tr class="financeheadrows">
                                         <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Payment Name</h6>
+                                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Payment Name']; ?></h6>
                                         </th>
                                         <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Payment Type</h6>
+                                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Payment Type']; ?></h6>
                                         </th>
                                         <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Currency</h6>
+                                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Currency']; ?></h6>
                                         </th>
                                         <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Site Url</h6>
+                                            <h6 class="fs-4 fw-semibold mb-0">Site Url<?= $translator['Payment Name']; ?></h6>
                                         </th>
                                         <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Admin Site Url</h6>
+                                            <h6 class="fs-4 fw-semibold mb-0">Admin Site Url<?= $translator['Payment Name']; ?></h6>
                                         </th>
                                         <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Fees</h6>
+                                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Fees']; ?></h6>
                                         </th>
                                         <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Min. Deposit</h6>
+                                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Min. Deposit']; ?></h6>
                                         </th>
                                         <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Max. Deposit</h6>
+                                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Max. Deposit']; ?></h6>
                                         </th>
                                         <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Min. Withdrawal</h6>
+                                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Min. Withdrawal']; ?></h6>
                                         </th>
                                         <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Max. Withdrawal</h6>
+                                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Max. Withdrawal']; ?></h6>
                                         </th>
                                         <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Date Created</h6>
+                                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Date Created']; ?></h6>
                                         </th>
                                         <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
-                                        </th>
-
-                                        <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Created By</h6>
-                                        </th>
-                                        <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Last Updated</h6>
-                                        </th>
-                                        <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Last Update By</h6>
+                                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Payment Name']; ?></h6>
                                         </th>
 
                                         <th>
-                                            <h6 class="fs-4 fw-semibold mb-0">Status</h6>
+                                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Created By']; ?></h6>
+                                        </th>
+                                        <th>
+                                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Updated']; ?></h6>
+                                        </th>
+                                        <th>
+                                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Update By']; ?></h6>
+                                        </th>
+
+                                        <th>
+                                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
                                         </th>
 
                                         <th>
@@ -1946,18 +1967,18 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content" style="width: 30rem; left: 11rem;">
             <div class="modal-header">
-                <h5 class="modal-title">Product Settings</h5>
+                <h5 class="modal-title"><?= $translator['Product Settings']; ?></h5>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container">
                 <div class="card border mb-4">
                     <div class="card-body">
-                        <h4 class="card-title">Product Settings</h4>
+                        <h4 class="card-title"><?= $translator['Product Settings']; ?></h4>
                         <form id="pp-personalDetalForm">
                             <div class="row">
                                 <div class="col-6" style="width: 100%;">
                                     <div class="mb-3">
-                                        <label for="pp-site-url" class="form-label">Lotteries </label>
+                                        <label for="pp-site-url" class="form-label"><?= $translator['Lotteries']; ?> </label>
                                         <div class="modal-body scrollable-container">
                                             <div style="overflow: scroll; height: 100%;">
                                                 <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
@@ -1969,8 +1990,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="editPartnerLotteriesBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="editPartnerLotteriesBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -1984,13 +2005,13 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content" style="width: 30rem; left: 11rem;">
             <div class="modal-header">
-                <h5 class="modal-title">Currency Settings</h5>
+                <h5 class="modal-title"><?= $translator['Currency Settings']; ?></h5>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container">
                 <div class="card border mb-4">
                     <div class="card-body">
-                        <h4 class="card-title">Currency Settings</h4>
+                        <h4 class="card-title"><?= $translator['Currency Settings']; ?></h4>
                         <form id="pp-personalDetailForm">
                             <div class="row">
                                 <div class="col-6" style="width: 100%;">
@@ -2006,8 +2027,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="editCurrencySettingsBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="editCurrencySettingsBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -2021,13 +2042,13 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content" style="width: 30rem; left: 11rem;">
             <div class="modal-header">
-                <h5 class="modal-title">Languages Settings</h5>
+                <h5 class="modal-title"><?= $translator['Languages Settings']; ?></h5>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container">
                 <div class="card border mb-4">
                     <div class="card-body">
-                        <h4 class="card-title">Languages Settings</h4>
+                        <h4 class="card-title"><?= $translator['Languages Settings']; ?></h4>
                         <form id="p-personalDetailsForm">
                             <div class="row">
                                 <div class="col-6" style="width: 100%;">
@@ -2043,8 +2064,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="editLanguageSettingsBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="editLanguageSettingsBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -2305,8 +2326,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="addNewPaymentPlatformBtnt">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="addNewPaymentPlatformBtnt"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -2315,4 +2336,3 @@
         </div>
     </div>
 </div>
-

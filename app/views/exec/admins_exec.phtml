@@ -33,23 +33,13 @@ if ($flag == "viewAdmins") {
     ]);
 }
 
-// updating permissions
-
-// if ($flag == "permissions") {
-//     $encodedString = isset($this->viewData['permissionsData']) ? $this->viewData['permissionsData'] : '';
-//     $userId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
-//     $permissionsData = urldecode($encodedString);
-//     $result = (new AdminModel())->updatePermissions($permissionsData, $userId);
-//     echo $result >= 1 ? json_encode(['Updated successfully']) : json_encode(['Nothing updated']);
-// }
-
 
 if ($flag == "permissions") {
     $encodedString = isset($this->viewData['permissionsData']) ? $this->viewData['permissionsData'] : '';
     $userId = isset($this->viewData['userId']) ? $this->viewData['userId'] : '';
     // Decode URL-encoded string
     $permissionsData = urldecode($encodedString);
-    // Decode JSON string into array
+
     $permissionsArray = json_decode($permissionsData, true);
     // Validate
 
@@ -61,6 +51,7 @@ if ($flag == "permissions") {
         $result >= 1 ? ['status' => 'success', 'message' => 'Permissions updated successfully.']: ['status' => 'error', 'message' => 'Nothing was updated.']);
     exit;
 }
+
 
 
 

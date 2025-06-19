@@ -480,15 +480,19 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function  addNewPartner($partnerID, $partnerName, $currency, $encodedSiteUrl, $encodedAdminSiteUrl)
+
+      public function  addNewPartner($partnerName, $currency, $encodedSiteUrl, $encodedAdminSiteUrl)
     {
 
-        $this->view('exec/partners', ['partner_id' => $partnerID, "partner_name" => $partnerName, "currency" => $currency, "site_url" => $encodedSiteUrl, "admin_site_url" => $encodedAdminSiteUrl, 'flag' => 'addNewPartner']);
+        
+        $this->view('exec/partners', ["partner_name" => $partnerName, "currency" => $currency, "site_url" => $encodedSiteUrl, "admin_site_url" => $encodedAdminSiteUrl, 'flag' => 'addNewPartner']);
         $this->view->render();
     }
 
+
     public function  editPartnerMainInfo($partnerID, $partnerName, $siteUrl, $adminSiteUrl, $clientMinAge, $verificationType, $unusedWithdrawalAmount, $priority, $state, $currency)
     {
+
         $this->view('exec/partners', ["partner_id" => $partnerID, "partner_name" => $partnerName, "currency" => $currency, "site_url" => $siteUrl, "admin_site_url" => $adminSiteUrl, "client_min_age" => $clientMinAge, "verification_type" => $verificationType, "unused_withdrawal_amount" => $unusedWithdrawalAmount, "priority" => $priority, "state" => $state, 'flag' => 'editPartnerMainInfo']);
         $this->view->render();
     }
@@ -903,20 +907,11 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function filteruserNotifys($username, $messagestype, $startdepo, $enddepo, $page, $pageLimit)
+       public function filteruserNotifys($username, $messagestype, $startdepo, $enddepo, $page, $pageLimit)
     {
-        $this->view('exec/annoucement_management', [
-            'username' => $username,
-            'messagestype' => $messagestype,
-            'startdate' => $startdepo,
-            'enddate' => $enddepo,
-            'page' => $page,
-            'limit' => $pageLimit,
-            'flag' => 'filterusernotfys'
-        ]);
+        $this->view('exec/annoucement_management', [ 'username' => $username, 'messagestype' => $messagestype,'startdate' => $startdepo, 'enddate' => $enddepo,'page' => $page, 'limit' => $pageLimit,'flag' => 'filterusernotfys' ]);
         $this->view->render();
     }
-
 
 
     //Payment Platform
