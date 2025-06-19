@@ -314,7 +314,7 @@
     <div class="px-4 py-3 border-bottom pagerlist1">
         <form action="" class="betform">
             <span class="top-left-btn">
-                <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
+                <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5pxh; width: auto;">
                     <input type="text" id="myInput" class="form-control queryholderbet usernames" placeholder="<?= $translator['Search Username']; ?>" />
                     <input name="usernames" type="hidden" class="userIdbet" />
                     <input type="text" id="lot-betID" class="form-control queryholderbet search-betID" placeholder="<?= $translator['Search Bet Order ID']; ?>" />
@@ -322,7 +322,7 @@
                         <!-- Options will be populated dynamically -->
                     </select>
             
-                        <select name="lotteryname" class="form-control form-select custom-dropdown queryholderbet typelottery selectlottery" data-bs-placeholder="Select Type"> 
+                        <select name="lotteryname" class="form-control form-select queryholderbet typelottery selectlottery" data-bs-placeholder="Select Type"> 
 
                         </select>
 

@@ -356,9 +356,9 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function updateLottery($partnerID, $maxPrizeAmountPerBet, $maxAmtPerIssue, $maxWinPerPersonPerIssue, $minBetAmtPerIssue, $lockTimeForClsing, $sortingWeight, $lotteryType, $game_type_id)
+    public function updateLottery($maxPrizeAmountPerBet, $maxAmtPerIssue, $maxWinPerPersonPerIssue, $minBetAmtPerIssue, $lockTimeForClsing, $sortingWeight, $lotteryType, $game_type_id)
     {
-        $this->view('exec/lottery_basic_params', ['partner_id' => $partnerID, 'maxPrizeAmountPerBet' => $maxPrizeAmountPerBet, 'maxAmtPerIssue' => $maxAmtPerIssue, 'maxWinPerPersonPerIssue' => $maxWinPerPersonPerIssue, 'minBetAmtPerIssue' => $minBetAmtPerIssue, 'lockTimeForClsing' => $lockTimeForClsing, 'sortingWeight' => $sortingWeight, 'lottery_type' => $lotteryType, 'game_type_id' => $game_type_id, 'flag' => 'updateLottery']);
+        $this->view('exec/lottery_basic_params', ['maxPrizeAmountPerBet' => $maxPrizeAmountPerBet, 'maxAmtPerIssue' => $maxAmtPerIssue, 'maxWinPerPersonPerIssue' => $maxWinPerPersonPerIssue, 'minBetAmtPerIssue' => $minBetAmtPerIssue, 'lockTimeForClsing' => $lockTimeForClsing, 'sortingWeight' => $sortingWeight, 'lottery_type' => $lotteryType, 'game_type_id' => $game_type_id, 'flag' => 'updateLottery']);
         $this->view->render();
     }
     public function updateLotteryStatus($partnerID, $game_type_id, $status)
@@ -590,9 +590,9 @@ class adminController extends Controller
         ]);
         $this->view->render();
     }
-    public function manageUser($partnerID, $userID, $lotteryID, $flag)
+    public function manageUser($userID, $lotteryID, $flag)
     {
-        $this->view('exec/account_manage', ['partner_id' => $partnerID, 'user_id' => $userID, 'ulog_id' => $lotteryID, 'lottery_id' => $lotteryID, "flag" => $flag]);
+        $this->view('exec/account_manage', ['user_id' => $userID, 'ulog_id' => $lotteryID, 'lottery_id' => $lotteryID, "flag" => $flag]);
         $this->view->render();
     }
     public function fetchLotteries($partnerID, $flag)
@@ -601,9 +601,9 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function agent_subordinate($partnerID, $user_id, $pageNumber, $limit)
+    public function agent_subordinate($user_id, $pageNumber, $limit)
     {
-        $this->view('exec/account_manage', ['partner_id' => $partnerID, 'user_id' => $user_id, 'flag' => 'fetchsubagent', 'page' => $pageNumber, 'limit' => $limit,]);
+        $this->view('exec/account_manage', ['user_id' => $user_id, 'flag' => 'fetchsubagent', 'page' => $pageNumber, 'limit' => $limit,]);
         $this->view->render();
     }
     public function useraccountchange($uid, $pageNumber, $limit)
@@ -1124,6 +1124,12 @@ class adminController extends Controller
       $this->view->render();
      }
 
+     public function deletesms($smsid){
+      $this->view('exec/platform_settings', ['sms'=>$smsid,'flag' => 'deletesms']);
+      $this->view->render();
+     }
+     
+
      public function  filtersms($smsprovider,$smsstatus,$startdate,$enddate,$page,$limit){
       $this->view('exec/platform_settings', [
         'smsprovider'=>$smsprovider,
@@ -1141,6 +1147,18 @@ class adminController extends Controller
       $this->view('exec/platform_settings', ['page' => $page, 'pageLimit' => $pageLimit, 'flag' => 'fetchemaildata']);
       $this->view->render();
     }
+
+     public function emailaddprovider($emailprovider,$sendename){
+      $this->view('exec/platform_settings', ['emailprovider' =>$emailprovider, 'sendename' => $sendename, 'flag' => 'emailaddprovider']);
+      $this->view->render();
+    }
+
+     public function fetchemailprovider(){
+      $this->view('exec/platform_settings', ['flag' => 'fetchemailprovider']);
+      $this->view->render();
+     }
+
+
     
 
     //searchadmin names

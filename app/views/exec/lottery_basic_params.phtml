@@ -61,9 +61,7 @@ if ($flag == "update-params") {
     }
 }else if($flag === "updateLottery"){
    
-    try{
-
-    
+    try{    
 
     $maxPrizeAmountPerBet = isset($this->viewData['maxPrizeAmountPerBet']) ? $this->viewData['maxPrizeAmountPerBet'] : "";
     $maxAmtPerIssue = isset($this->viewData['maxAmtPerIssue']) ? $this->viewData['maxAmtPerIssue'] : ""; // Ensure valid page number
@@ -73,9 +71,6 @@ if ($flag == "update-params") {
     $sortingWeight = isset($this->viewData['sortingWeight']) ? $this->viewData['sortingWeight']: ""; // Sorting Weight 
     $game_type_id = isset($this->viewData['game_type_id']) ? $this->viewData['game_type_id']: ""; // Ensure valid limit 
     $lottery_type = isset($this->viewData['lottery_type']) ? $this->viewData['lottery_type']: ""; // Ensure valid limit 
-
-
-
 
     $results = GameManageModel::updateLotteryData($maxPrizeAmountPerBet,$maxAmtPerIssue, $maxWinPerPersonPerIssue,$minBetAmtPerIssue,$lockTimeForClsing,$sortingWeight,$lottery_type,$game_type_id);
 

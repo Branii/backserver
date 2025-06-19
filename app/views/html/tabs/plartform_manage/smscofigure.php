@@ -573,11 +573,11 @@
                                     <p class="mb-0 text-muted">For sending messages to clients.</p>
                                 </div>
                                 <!-- <div class="ms-auto" style="min-width: 250px;"> -->
-                                    <select id="provider" class="form-select">
-                                        <option value="">Select...</option>
+                                    <select id="provider" class="form-select selectsmsprovider">
+                                        <!-- <option value="">Select...</option>
                                         <option value="ntem">NTEM</option>
                                         <option value="smsonlinegh">SMSONLINEGH</option>
-                                        <option value="smsarkesel">SMSARKESEL</option>
+                                        <option value="smsarkesel">SMSARKESEL</option> -->
                                     </select>
                                 <!-- </div> -->
                             </div>

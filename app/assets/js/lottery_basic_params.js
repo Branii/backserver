@@ -489,6 +489,7 @@ const TURN_OFF_TEXT = document.getElementById("turn_off_text").innerText;
     const lockTimeForClosingBet =     $(`#lb-dialog-clsing`).val();
     const sortingWeight =     $(`#lb-dialog-sorting-weight`).val();
     const  lotteryType =     $(`#lb-lottery-type`).val();
+
     $.ajax({
       url: `../admin/updateLottery/${maxPrizeAmount}/${maxBetAmountPerIssue}/${maxWinPerPersonPerIssue}/${minBetAmountPerIssue}/${lockTimeForClosingBet}/${sortingWeight}/${lotteryType}/${lotteryID}`,
       type: "POST",
@@ -500,12 +501,11 @@ const TURN_OFF_TEXT = document.getElementById("turn_off_text").innerText;
         const data = response.data;
         if (response.status === "error") {
           // showToast("Error", "Lottery Data Successfully Updated.","error");
-
-
-
-showToast(ERROR_TEXT, LOTTERY_UPDATED, "error");
-
-
+          $("#lb-edit").removeClass("show");
+           $("#lb-edit").css("display","none");
+          showToast(ERROR_TEXT, LOTTERY_UPDATED, "info");
+          fetchLotteryBasicParams(1);
+          //$("#lb-edit").modal("hide");
           return;
         }
   
@@ -528,6 +528,9 @@ showToast(ERROR_TEXT, LOTTERY_UPDATED, "error");
       
        $('.tclose').click();
        showToast("Success", "Lottery Data Successfully Updated.","info");
+        $("#lb-edit").removeClass("show");
+        $("#lb-edit").css("display","none");
+        fetchLotteryBasicParams(1);
       },
       error: function (res, status, error) {
         $(".dataholder").html(
@@ -576,7 +579,7 @@ showToast(ERROR_TEXT, LOTTERY_UPDATED, "error");
        $('.lb-tclose').click();
       //  showToast("Success", "Lottery " + (status === "gameon" ? " Turned On " : " Turned Off ") + " Successfully.","info");
       
-showToast(SUCCESS_TEXT, LOTTERY_STATUS_UPDATED + (status === "gameon" ? " " + TURNED_ON : " " + TURNED_OFF) + " Successfully.", "info");
+        showToast(SUCCESS_TEXT, LOTTERY_STATUS_UPDATED + (status === "gameon" ? " " + TURNED_ON : " " + TURNED_OFF) + " Successfully.", "info");
 
 
        $("#state-" + lotteryID).text(status === "gameon" ? "Turned On" : "Turned Off");
@@ -780,7 +783,6 @@ const EditText = document.getElementById("Edit-text")?.dataset.translation || "E
                   <li class="action-btn" style="cursor:pointer;">
                       <a class="dropdown-item edit-params-act-btn" 
                         data-lottery-type="${data.lottery_id}"
-                         
                          max-prize-amt-per-bet="${data.max_prize_per_bet}" 
                          maximum_win_per_issue="${data.max_win}" 
                          maximum_amount_per_issue="${data.max_amt_per_issue}"  
