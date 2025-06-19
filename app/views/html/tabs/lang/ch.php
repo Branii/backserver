@@ -262,6 +262,9 @@ return [
     'state' => '状态',
     'Success' => '成功',
     'Failed' => '失败',
+    'Email Configuration' =>'电子邮件配置',
+    'SMS Configuration' =>'短信配置',
+    'Lock Time For Closing Bets' => '封盘时间',
 
     //'Withdrawal Management'=> '出款管理',
     'Withdrawal Records' => '提款记录',
