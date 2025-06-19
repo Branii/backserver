@@ -448,8 +448,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="ptns-addNewPartnerBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="ptns-addNewPartnerBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -541,8 +541,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="ptns-editPaymentpartnerBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="ptns-editPaymentpartnerBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -1572,8 +1572,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="addNewPaymentPlatformBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="addNewPaymentPlatformBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -1665,8 +1665,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="editPaymentPlatformBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="editPaymentPlatformBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -1967,18 +1967,18 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content" style="width: 30rem; left: 11rem;">
             <div class="modal-header">
-                <h5 class="modal-title">Product Settings</h5>
+                <h5 class="modal-title"><?= $translator['Product Settings']; ?></h5>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container">
                 <div class="card border mb-4">
                     <div class="card-body">
-                        <h4 class="card-title">Product Settings</h4>
+                        <h4 class="card-title"><?= $translator['Product Settings']; ?></h4>
                         <form id="pp-personalDetalForm">
                             <div class="row">
                                 <div class="col-6" style="width: 100%;">
                                     <div class="mb-3">
-                                        <label for="pp-site-url" class="form-label">Lotteries </label>
+                                        <label for="pp-site-url" class="form-label"><?= $translator['Lotteries']; ?> </label>
                                         <div class="modal-body scrollable-container">
                                             <div style="overflow: scroll; height: 100%;">
                                                 <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
@@ -1990,8 +1990,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="editPartnerLotteriesBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="editPartnerLotteriesBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -2005,13 +2005,13 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content" style="width: 30rem; left: 11rem;">
             <div class="modal-header">
-                <h5 class="modal-title">Currency Settings</h5>
+                <h5 class="modal-title"><?= $translator['Currency Settings']; ?></h5>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container">
                 <div class="card border mb-4">
                     <div class="card-body">
-                        <h4 class="card-title">Currency Settings</h4>
+                        <h4 class="card-title"><?= $translator['Currency Settings']; ?></h4>
                         <form id="pp-personalDetailForm">
                             <div class="row">
                                 <div class="col-6" style="width: 100%;">
@@ -2027,8 +2027,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="editCurrencySettingsBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="editCurrencySettingsBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -2042,13 +2042,13 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content" style="width: 30rem; left: 11rem;">
             <div class="modal-header">
-                <h5 class="modal-title">Languages Settings</h5>
+                <h5 class="modal-title"><?= $translator['Languages Settings']; ?></h5>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container">
                 <div class="card border mb-4">
                     <div class="card-body">
-                        <h4 class="card-title">Languages Settings</h4>
+                        <h4 class="card-title"><?= $translator['Languages Settings']; ?></h4>
                         <form id="p-personalDetailsForm">
                             <div class="row">
                                 <div class="col-6" style="width: 100%;">
@@ -2064,8 +2064,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="editLanguageSettingsBtn">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="editLanguageSettingsBtn"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
@@ -2326,8 +2326,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-primary" id="addNewPaymentPlatformBtnt">Save</button>
-                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="addNewPaymentPlatformBtnt"><?= $translator['Save']; ?></button>
+                                <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal"><?= $translator['Cancel']; ?></button>
                             </div>
                         </form>
                     </div>
