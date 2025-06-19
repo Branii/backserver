@@ -237,13 +237,20 @@ class PLatFormSettingModel extends MEDOOHelper
         }
     }
     
-    // public static function EditMessageData($mgid)
-    // {
-    //     $sql = "SELECT msg_id,subject,message FROM notices WHERE msg_id = :mgid";
-    //     $data = parent::query($sql, ['mgid' => $mgid]);
-    //     return $data;
-    // }
+    public static function getEmailBalance($provider)
+    {
+        $sql = "SELECT current_emails,email_used FROM email_config WHERE email_provider = :email_provider";
+        $data = parent::query($sql, ['email_provider' => $provider])[0];
+        return $data;
+    }
 
+
+      public static function UpdateEmail($initialTotal,$used,$currentBalance,$sms_provider)
+    {
+        $sql = "UPDATE email_config SET total_emails =:total_emails, email_used=:email_used,current_emails=:current_emails  WHERE email_provider = :email_provider";
+        $data = parent::query($sql, ['total_emails' => $initialTotal, 'email_used' => $used,'current_emails'=>$currentBalance, 'email_provider' => $sms_provider]);
+        return $data ? "Message could not be updated. Please try again." : "Message updated successfully.";
+    }
     public static function UpdateSms($initialTotal,$used,$currentBalance,$sms_provider)
     {
         $sql = "UPDATE sms_config SET total_sms =:total_sms, sms_used=:sms_used,current_sms=:current_sms  WHERE sms_provider = :sms_provider";

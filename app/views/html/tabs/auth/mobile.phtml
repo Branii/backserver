@@ -168,7 +168,7 @@
                     <button class="btn btn-success verifybtn">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         <span class="btn-text">Verify Code</span>
-                        <i class="bx bx-loader-circle bx-spin bx-rotate-90" style="color: #0c0c0c; display: none;"></i>
+                        <i class="spinner bx bx-loader-circle bx-spin bx-rotate-90" style="color: #0c0c0c; display: none;"></i>
                     </button>
                     <div class="signin-note" style="cursor: pointer;">
                         <strong class="getcode" id="get-code">Get Code</strong>
@@ -184,7 +184,7 @@
                         <label for="contact">Enter your email</label>
                         <p></p>
                         <input type="text" id="contact" name="contact" placeholder="example@email.com " required />
-                        <button class="btn-send-code"><i class="bx bx-loader-circle bx-spin bx-rotate-90 sendmes" style="color: #0c0c0c; display: none;"></i>Send Code</button>
+                        <button class="btn-send-code"><i class="sendcodes bx bx-loader-circle bx-spin bx-rotate-90 sendmes" style="color: #0c0c0c; display: none;"></i>Send Code</button>
                     </div>
                 </div>
             </div>
@@ -222,10 +222,8 @@
         var $btn = $(this);
 
         if ($btn.prop("disabled")) return;
-
         // Disable the button immediately
         $btn.prop("disabled", true).text("Sending...");
-
         // Make the POST request
         $.post("../admin/getcodeverify", function (response) {
             // console.log(response);
@@ -236,10 +234,10 @@
                 countdown--;
                 $btn.text("Wait " + countdown + "s");
 
-                if (countdown <= 0) {
-                    clearInterval(timer);
-                    $btn.text("Code Sent"); // Keep it disabled permanently
-                }
+               if (countdown <= 0) {
+                clearInterval(timer);
+                $btn.prop("disabled", false).text("Get Code"); 
+            }
             }, 1000);
 
             $(".otpstatuss").html(`<p style='color:green;'>${response}</p>`);
@@ -270,7 +268,7 @@
             return;
         }
 
-        // const $btn = $(this);
+         $(".sendcodes").show();
         if (emailRegex.test(input)) {
             $.post(`../admin/verifycodebyemail/${input}`, function (response) {
                 // console.log(response);
@@ -282,9 +280,11 @@
                 // startCooldown($btn);
             }).fail(function () {
                 $(".otpstatuss").html("<p style='color:red;'>Failed to send email. Try again later.</p>");
+                 $(".sendcodes").hide();
             });
         }else {
             $(".otpstatuss").html("<p style='color:red;'>Invalid email or phone number format.</p>");
+             $(".sendcodes").hide();
         }
     });
 
@@ -292,9 +292,7 @@
         const otspcode = $(".otp-box")
             .map(function () {
                 return $(this).val();
-            })
-            .get()
-            .join("");
+            }) .get().join("");
 
         const flagtype = "mobile";
 
@@ -313,19 +311,18 @@
     });
 
     $(document).on("click", ".verifybtn", function () {
+     
         const optcode = $(".otp-box")
             .map(function () {
                 return $(this).val();
-            })
-            .get()
-            .join("");
+            }).get().join("");
 
         if (!optcode) {
             $(".otpstatuss").show();
             $(".otpstatuss").html("<p style='color:red;'>Please enter the OTP code.</p>");
             return;
         }
-        $(".bx-loader-circle").show();
+         $(".spinner").show();
         const flagtype = "mobile";
         $.post(`../admin/verifyloginotp/${optcode}/${flagtype}`, function (response) {
             const result = JSON.parse(response);
@@ -336,7 +333,7 @@
             } else {
                 $(".otpstatuss").html(`<p style='color:red;'>${result.status}</p>`);
                 setTimeout(function () {
-                    $(".bx-loader-circle").hide();
+                    $(".spinner").hide();
                 }, 300);
             }
         });

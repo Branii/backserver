@@ -81,7 +81,7 @@ $(function () {
       try {
         const response = await fetch( `../admin/fetchemaildata/${page}/${pageLimit}`);
         const data = await response.json();
-           console.log(data)
+          // console.log(data)
       //   return
         $("#maskemail").LoadingOverlay("hide");
         renderemail(data.email);
@@ -142,7 +142,6 @@ $(function () {
         const data =  await response.json();
       //  console.log(data)
         ///return
-
         $(".loaderemail").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
         if (data.email.length < 1) {
             let html = `
