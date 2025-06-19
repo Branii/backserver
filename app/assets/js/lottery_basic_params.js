@@ -504,6 +504,7 @@ const TURN_OFF_TEXT = document.getElementById("turn_off_text").innerText;
           $("#lb-edit").removeClass("show");
            $("#lb-edit").css("display","none");
           showToast(ERROR_TEXT, LOTTERY_UPDATED, "info");
+          fetchLotteryBasicParams(1);
           //$("#lb-edit").modal("hide");
           return;
         }
@@ -529,6 +530,7 @@ const TURN_OFF_TEXT = document.getElementById("turn_off_text").innerText;
        showToast("Success", "Lottery Data Successfully Updated.","info");
         $("#lb-edit").removeClass("show");
         $("#lb-edit").css("display","none");
+        fetchLotteryBasicParams(1);
       },
       error: function (res, status, error) {
         $(".dataholder").html(
@@ -577,7 +579,7 @@ showToast(ERROR_TEXT, LOTTERY_UPDATED, "error");
        $('.lb-tclose').click();
       //  showToast("Success", "Lottery " + (status === "gameon" ? " Turned On " : " Turned Off ") + " Successfully.","info");
       
-showToast(SUCCESS_TEXT, LOTTERY_STATUS_UPDATED + (status === "gameon" ? " " + TURNED_ON : " " + TURNED_OFF) + " Successfully.", "info");
+        showToast(SUCCESS_TEXT, LOTTERY_STATUS_UPDATED + (status === "gameon" ? " " + TURNED_ON : " " + TURNED_OFF) + " Successfully.", "info");
 
 
        $("#state-" + lotteryID).text(status === "gameon" ? "Turned On" : "Turned Off");
