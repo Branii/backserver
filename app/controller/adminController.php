@@ -516,13 +516,11 @@ class adminController extends Controller
     }
 
 
-
     public function  editPaymentPlaftorm($partnerID, $paymentType, $paymentTypeName, $currency, $status, $fee, $maxAmount, $minAmount, $siteUrl, $adminSiteUrl, $info, $priority, $countries)
     {
         $this->view('exec/payment_platform', ['partner_id' => $partnerID, "paymentType" => $paymentType, "paymentTypeName" => $paymentTypeName, "currency" => $currency, "status" => $status, "fee" => $fee, "maxAmount" => $maxAmount, "minAmount" => $minAmount, "siteUrl" => $siteUrl, "adminSiteUrl" => $adminSiteUrl, "info" => $info, "priority" => $priority, "countries" => $countries, 'flag' => 'editPaymentPlaftorm']);
         $this->view->render();
     }
-
 
 
     public function  fetchBonusTwoSides($lotteryID, $lotteryGameGroup)
@@ -541,7 +539,6 @@ class adminController extends Controller
     public function updateUsedquota($uid, $bonus_group, $rebate_group, $quata_group, $count_group)
     {
         $this->view('exec/account_manage', [
-
             'uid' => $uid,
             'bonus' => $bonus_group,
             'rebate' => $rebate_group,
@@ -1115,8 +1112,8 @@ class adminController extends Controller
       $this->view('exec/platform_settings', ['flag' => 'savepreferences']);
       $this->view->render();
     }
-    public function savessmsstaes(){
-      $this->view('exec/platform_settings', ['flag' => 'savessmsstaes']);
+    public function savesmspreferencestate(){
+      $this->view('exec/platform_settings', ['flag' => 'savesmspreferencestate']);
       $this->view->render();
     }
      public function fetchsmsprovider(){
@@ -1158,7 +1155,34 @@ class adminController extends Controller
       $this->view->render();
      }
 
+      public function emailpreferences(){
+      $this->view('exec/platform_settings', ['flag' => 'savepreferencesemail']);
+      $this->view->render();
+    }
+    public function savedemailpreferencestate(){
+      $this->view('exec/platform_settings', ['flag' => 'savedemailpreferencestate']);
+      $this->view->render();
+    }
 
+     public function deleteemail($emailid){
+      $this->view('exec/platform_settings', ['email'=>$emailid,'flag' => 'deleteemail']);
+      $this->view->render();
+     }
+     public function  filteremail($emailprovider,$emailstatus,$startdate,$enddate,$page,$limit){
+        $this->view('exec/platform_settings', [
+            'emailprovider'=>$emailprovider,
+            'emailstatus'=>$emailstatus,
+            'startdate'=>$startdate,
+            'enddate'=>$enddate,
+            'page'=>$page,
+            'limit'=>$limit,
+            'flag' => 'filteremail']);
+        $this->view->render();
+     }
+     
+     
+    
+   
     
 
     //searchadmin names
