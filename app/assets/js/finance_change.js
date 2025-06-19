@@ -11,6 +11,11 @@ $(function () {
       });
     }
 
+const langStrings = {
+  Page: document.getElementById("tr_page").textContent,
+  of: document.getElementById("tr_of").textContent,
+  pages: document.getElementById("tr_pages").textContent
+};
 
        
 const translations = {
@@ -100,7 +105,10 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
         $("#maskfinance").LoadingOverlay("hide");
         renderfinace(data.finance);
         renderfinacePagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchfinance(newPage, pageLimit));
-        document.getElementById("paging_infofinance").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+        // document.getElementById("paging_infofinance").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+        document.getElementById("paging_infofinance").innerHTML = 
+  `${langStrings.Page} ${page} ${langStrings.of} ${data.totalPages} ${langStrings.pages}`;
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -181,7 +189,10 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
              renderfinace(data.finances);
           // Render pagination
           renderfinacePagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterfinance(username, financetype, startfinance, endfinance, newPage, pageLimit));
-          document.getElementById("paging_infofinance").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+          // document.getElementById("paging_infofinance").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+          document.getElementById("paging_infofinance").innerHTML = 
+  `${langStrings.Page} ${page} ${langStrings.of} ${data.totalPages} ${langStrings.pages}`;
+
     
           } catch (error) {
             console.error("Error parsing JSON response:", error);

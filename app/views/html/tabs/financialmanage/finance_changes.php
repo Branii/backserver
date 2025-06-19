@@ -250,6 +250,11 @@
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
 
+<span id="tr_page" style="display: none;"><?= $translator['Page'] ?></span>
+<span id="tr_of" style="display: none;"><?= $translator['of'] ?></span>
+<span id="tr_pages" style="display: none;"><?= $translator['pages'] ?></span>
+
+
 
 <!-- toast messages ends here -->
 

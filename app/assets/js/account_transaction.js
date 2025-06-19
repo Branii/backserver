@@ -244,14 +244,7 @@ $(function () {
 
     $(document).on("click", ".executetrans", function () {
         if ($("#transuser").val() == "" && $("#transactionId").val() == "" && $("#ordertypetrans").val() == "" && $("#startdatrans").val() == "" && $(".selectpartner").val() == "") {
-            //   showToast(
-            //     "Heads up!!",
-            //     "Select one or more data fields to filter",
-            //     "info"
-            //   );
-
             showToast(translations.headsUp, translations.selectDataFields, "info");
-
             return;
         }
         const transusername = $("#transuser").val();
@@ -267,7 +260,7 @@ $(function () {
         }, 100);
     });
 
-    async function filterTrasaction(transusername, transactionId, ordertypetrans, partneruid, startdatrans, enddatetrans, currentPage, pageLimit) {
+    async function filterTrasaction(transusername,transactionId,ordertypetrans,partneruid,startdatrans,enddatetrans,currentPage,pageLimit) {
         try {
             const response = await fetch(`../admin/filtertransactions/${transusername}/${transactionId}/${ordertypetrans}/${partneruid}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
 

@@ -156,8 +156,9 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function filtertransactions($username, $orderid, $ordertype, $partneruid, $startdate, $enddate, $pageNumber, $limit)
+     public function filtertransactions($username, $orderid, $ordertype, $partneruid, $startdate, $enddate, $pageNumber, $limit)
     {
+
         $this->view('exec/businessflow', [
             'username' => $username,
             'orderid' => $orderid,
@@ -612,10 +613,10 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function updateUserData($partnerID, $userID, $depositLimit, $withdrawalLimit, $rebate, $state, $dailyBettingLimit, $flag)
+    public function updateUserData( $userID, $depositLimit, $withdrawalLimit, $rebate, $state, $dailyBettingLimit)
     {
 
-        $this->view('exec/account_manage', ['partner_id' => $partnerID, 'user_id' => $userID, 'depositLimit' => $depositLimit, 'withdrawalLimit' => $withdrawalLimit, 'rebate' => $rebate, "state" => $state, "dailyBettingTotalLimit" => $dailyBettingLimit, 'flag' => 'updateUserData',]);
+        $this->view('exec/account_manage', ['user_id' => $userID, 'depositLimit' => $depositLimit, 'withdrawalLimit' => $withdrawalLimit, 'rebate' => $rebate, "state" => $state, "dailyBettingTotalLimit" => $dailyBettingLimit, 'flag' => 'updateUserData',]);
         $this->view->render();
     }
 

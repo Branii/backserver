@@ -1471,5 +1471,8 @@ return [
     'Max Prize Many Tickets' => 'Max Prize Many Tickets',
     'Max Bet Amount Per Ticket' => 'Max Bet Amount Per Ticket',
     'Min Bet Amount Per Ticket' => 'Min Bet Amount Per Ticket',
+    'Page' => 'Page',
+    'of' => 'of',
+    'pages' => 'pages',
 
 ];

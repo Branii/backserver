@@ -1570,5 +1570,8 @@ return [
 'Max Prize Many Tickets' => '多张票的最高奖金',
 'Max Bet Amount Per Ticket' => '每张票的最高投注金额',
 'Min Bet Amount Per Ticket' => '每张票的最低投注金额',
+'Page' => '第',
+    'of' => '共',
+    'pages' => '页',
 
 ];

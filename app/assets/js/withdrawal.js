@@ -23,6 +23,12 @@ $(function () {
           duration: 3000, // auto-dismiss after 3s
       });
   }
+
+  const langStrings = {
+  Page: document.getElementById("tr_page").textContent,
+  of: document.getElementById("tr_of").textContent,
+  pages: document.getElementById("tr_pages").textContent
+};
   const withdrawdata = (data) => {
       let html = "";
       const status = { 1: "Pending", 2: "Success", 3: "Failed" };
@@ -121,7 +127,11 @@ $(function () {
 
       pagLink += "</ul>";
       document.getElementById("paginationwithdraw").innerHTML = pagLink;
-      $("#paging_infowithdraw").text(`Page ${currentPagewithdraw} of ${totalPages} ${totalPages === 1 ? " Page " : " Pages "} `);
+    //   $("#paging_infowithdraw").text(`Page ${currentPagewithdraw} of ${totalPages} ${totalPages === 1 ? " Page " : " Pages "} `);
+      $("#paging_infowithdraw").text(`${langStrings.Page} ${currentPagewithdraw} ${langStrings.of} ${totalPages} ${langStrings.pages}`);
+
+//       document.getElementById("paginationwithdraw").innerHTML = pagLink;
+// $("#paging_infowithdraw").text(`Page ${currentPagewithdraw} of ${totalPages} ${totalPages === 1 ? " Page " : " Pages "} `);
       // Add click event listeners to pagination links
       // document.querySelectorAll("#paginationwithdraw .page-link").forEach((link) => {
       //   link.addEventListener("click", function (e) {

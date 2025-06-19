@@ -201,6 +201,11 @@
     }
 </style>
 
+
+
+<span id="tr_page" style="display:none"><?= $translator['Page'] ?></span>
+<span id="tr_of" style="display:none"><?= $translator['of'] ?></span>
+<span id="tr_pages" style="display:none"><?= $translator['pages'] ?></span>
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">

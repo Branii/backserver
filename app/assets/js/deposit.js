@@ -10,7 +10,11 @@ $(function () {
       duration: 3000 // auto-dismiss after 3s
     });
   }
-
+const langStrings = {
+  Page: document.getElementById("tr_page").textContent,
+  of: document.getElementById("tr_of").textContent,
+  pages: document.getElementById("tr_pages").textContent
+};
   const translations = {
     failedInactive: document.getElementById("trans-failed-inactive").dataset
       .translation,
@@ -122,8 +126,10 @@ $(function () {
         pageLimit,
         (newPage, pageLimit) => fetchDeposit(newPage, pageLimit)
       );
-      document.getElementById("paging_infodeposit").innerHTML =
-        "Page " + page + " of " + data.totalPages + " pages";
+      // document.getElementById("paging_infodeposit").innerHTML =
+      //   "Page " + page + " of " + data.totalPages + " pages";
+        document.getElementById("paging_infodeposit").innerHTML =
+  `${langStrings.Page} ${page} ${langStrings.of} ${data.totalPages} ${langStrings.pages}`;
     } catch (error) {
       console.error("Error fetching data:", error);
     }
