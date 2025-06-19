@@ -501,7 +501,10 @@ const TURN_OFF_TEXT = document.getElementById("turn_off_text").innerText;
         const data = response.data;
         if (response.status === "error") {
           // showToast("Error", "Lottery Data Successfully Updated.","error");
-          showToast(ERROR_TEXT, LOTTERY_UPDATED, "error");
+          $("#lb-edit").removeClass("show");
+           $("#lb-edit").css("display","none");
+          showToast(ERROR_TEXT, LOTTERY_UPDATED, "info");
+          //$("#lb-edit").modal("hide");
           return;
         }
   
@@ -524,6 +527,8 @@ const TURN_OFF_TEXT = document.getElementById("turn_off_text").innerText;
       
        $('.tclose').click();
        showToast("Success", "Lottery Data Successfully Updated.","info");
+        $("#lb-edit").removeClass("show");
+        $("#lb-edit").css("display","none");
       },
       error: function (res, status, error) {
         $(".dataholder").html(

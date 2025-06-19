@@ -234,7 +234,6 @@ $(function () {
 
     $(".accountrefresh").click(function () {
         $(".queryholdertransaction").val("");
-
         $("#mask").LoadingOverlay("show", {
             background: "rgb(90,106,133,0.1)",
             size: 3,
