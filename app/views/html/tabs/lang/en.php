@@ -643,7 +643,8 @@ return [
     'Maximum Bet Amount Per Issue' => 'Maximum Bet Amount Per Issue',
     'Minimum Bet Amount Per Issue' => 'Minimum Bet Amount Per Issue',
     'Lock Time for Closing Bets' => 'Lock Time for Closing Bets',
-      'Sorting Weight' => 'Sorting Weight',
+    'Lock Time For Closing Bets' => 'Lock Time For Closing Bets',
+    'Sorting Weight' => 'Sorting Weight',
     'Action' => 'Action',
     'Lottery Status' => 'Lottery Status',
     'Sorting Weight' => 'Sorting Weight',
@@ -1465,4 +1466,10 @@ return [
     'Product Settings' => 'Product Settings',
     'Lotteries' => 'Lotteries',
     'Currency Settings' => 'Currency Settings',
+
+    'Max Prize Per Ticket' => 'Max Prize Per Ticket',
+    'Max Prize Many Tickets' => 'Max Prize Many Tickets',
+    'Max Bet Amount Per Ticket' => 'Max Bet Amount Per Ticket',
+    'Min Bet Amount Per Ticket' => 'Min Bet Amount Per Ticket',
+
 ];

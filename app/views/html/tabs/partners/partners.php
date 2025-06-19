@@ -262,6 +262,12 @@
     .dark-red {
         color: #af0404;
     }
+
+    #ptns-maskfinances {
+        position: relative;
+        height: 530px;
+        overflow-y: auto;
+    }
 </style>
 
 <span id="lang-main-info" style="display: none;"><?php echo $translator['main_info']; ?></span>
@@ -307,9 +313,14 @@
                 <button type="button" id="ptns-refresh" class="btn bg-white-subtle player" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" id="ptns-search" class="btn bg-white-subtle" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                <!-- <button type="button" id="ptns-search" class="btn bg-white-subtle" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                     <i class="bx bx-check-double" style="font-size: 20px;"></i>
+                </button> -->
+
+                <button type="button" id="ptns-search" class="btn bg-white-subtle" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                    <i class="bx bx-check-double ptns-loader-icon" style="font-size: 20px;"></i>
                 </button>
+
                 <!-- <button type="button" class="btn bg-white-subtle executedeposit" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                     <i class="bx bx-check-double loaderdeposit" style="font-size: 20px;"></i>
                 </button> -->

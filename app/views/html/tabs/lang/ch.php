@@ -1565,4 +1565,10 @@ return [
     'Lotteries' => '彩票',
     'Currency Settings' => '货币设置',
     'Sorting Weight' => '排序权重',
+    'Lock Time For Closing Bets' => '锁定封盘时间',
+    'Max Prize Per Ticket' => '每张票的最高奖金',
+'Max Prize Many Tickets' => '多张票的最高奖金',
+'Max Bet Amount Per Ticket' => '每张票的最高投注金额',
+'Min Bet Amount Per Ticket' => '每张票的最低投注金额',
+
 ];

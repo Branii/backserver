@@ -241,9 +241,7 @@
     height: 530px;
     overflow-y: auto;
   }
-</style>
 
-<style>
   .search-icon-wrapper {
     position: relative;
     display: inline-block;
@@ -422,17 +420,17 @@
           <i class="bx bx-refresh" style="font-size: 20px;"></i>
         </button>
 <!-- search button starts -->
- <button type="button" class="btn bg-white-subtle search-icon-wrapper" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                    <i class="bx bx-check-double loadernotfys" style="font-size: 20px;"></i>
-                     <div class="search-icon-overlay">
-              <div class="spinner"></div>
-            </div>
-                </button>
-                <!-- search button sends -->
-        <button type="button" class="btn bg-white-subtle" value="end" aria-label="Execute" data-bs-toggle="modal" data-bs-target="#add-new"
+    <button type="button" class="btn bg-white-subtle" value="end" aria-label="Execute" data-bs-toggle="modal" data-bs-target="#add-new"
           data-bs-placement="top" data-bs-title="Add new">
           <i class='bx bx-plus' style="font-size:20px"></i>
         </button>
+ 
+                <!-- search button sends -->
+     
+          <button type="button" class="btn bg-white-subtle  search-icon-wrapper" value="" aria-label="Execute"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                    <i class="bx loaderlist bx-check-double" style="font-size: 20px;"></i>
+                </button>
       </div>
 
     </span>

@@ -380,16 +380,16 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Code']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Max Prize Per Ticket</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Max Prize Per Ticket']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Max Prize Many Tickets</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Max Prize Many Tickets']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Max Bet Amount Per Ticket</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Max Bet Amount Per Ticket']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Min Bet Amount Per Ticket</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Min Bet Amount Per Ticket']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lock Time For Closing Bets']; ?></h6>

@@ -383,9 +383,6 @@ $(() => {
         $("#ptns-currency").val("");
     });
 
-    // $(document).on("click", "#ptns-search", function () {
-    //     searchPaymentPlatforms();
-    // });
     $(document).on("click", "#ptns-search", function () {
         console.log("ptns-search button clicked");
         searchPaymentPlatforms();
@@ -396,11 +393,48 @@ $(() => {
         searchPaymentPlatforms();
     });
 
+    // const searchPaymentPlatforms = (page = 1, limit = 20) => {
+    //     const partnerName = $("#ptns-partners").val();
+    //     const state = $("#ptns-partnerState").val();
+    //     const startDate = $("#ptns-partnerStartDate").val();
+    //     const endDate = $("#ptns-partnerEndDate").val();
+    //     console.log("Search Filters =>", {
+    //         "Partner Name": partnerName,
+    //         Status: state,
+    //         "Start Date": startDate,
+    //         "End Date": endDate,
+    //     });
+
+    //     if (!partnerName && !state && !startDate && !endDate) {
+    //         showToast("Error", "Please select at least one filter", "error");
+    //         return;
+    //     }
+
+    //     $.post(`../admin/searchPartners/${partnerName}/${state}/${startDate}/${endDate}/${page}/${limit}`, function (response) {
+    //         response = typeof response === "string" ? JSON.parse(response) : response;
+
+    //         if (response.status === "error") {
+    //             showToast("Error", "Error loading data for Payment Platforms", "error");
+    //             return;
+    //         }
+
+    //         if (response.data.length === 0) {
+    //             $("#ptns-pp-dtholder").html(`
+    //             <tr class="no-resultslist ptns-no-result">
+    //                 <td colspan="12">
+    //                     <img src="http://localhost/admin/app/assets/images/not_found1.jpg" class="dark-logo"
+    //                         alt="Logo-Dark" width="150px" height="150px" />
+    //                 </td>
+    //             </tr>`);
+    //             return;
+    //         }
+
     const searchPaymentPlatforms = (page = 1, limit = 20) => {
         const partnerName = $("#ptns-partners").val();
         const state = $("#ptns-partnerState").val();
         const startDate = $("#ptns-partnerStartDate").val();
         const endDate = $("#ptns-partnerEndDate").val();
+
         console.log("Search Filters =>", {
             "Partner Name": partnerName,
             Status: state,
@@ -413,7 +447,12 @@ $(() => {
             return;
         }
 
+        // Start icon spinner
+        $(".ptns-loader-icon").removeClass("bx-check-double").addClass("bx-loader bx-spin");
+
         $.post(`../admin/searchPartners/${partnerName}/${state}/${startDate}/${endDate}/${page}/${limit}`, function (response) {
+            $(".ptns-loader-icon").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+
             response = typeof response === "string" ? JSON.parse(response) : response;
 
             if (response.status === "error") {
@@ -479,12 +518,21 @@ $(() => {
     };
     fetchAllPartners();
 
-    $(document).on("click", "#ptns-refresh", function () {
+    $("#ptns-refresh").click(function () {
+        $("#ptns-maskfinances").LoadingOverlay("show", {
+            background: "rgba(90, 106, 133, 0.1)",
+            size: 3,
+        });
+
         $("#ptns-partners").val("");
         $("#ptns-partnerState").val("");
         $("#ptns-partnerStartDate").val("");
         $("#ptns-partnerEndDate").val("");
+        // Call fetch function
         fetchAllPartners();
+        setTimeout(function () {
+            $("#ptns-maskfinances").LoadingOverlay("hide");
+        }, 3000); // 3000ms = 3 seconds
     });
 
     const fetchPartnersNames = () => {
