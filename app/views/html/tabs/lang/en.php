@@ -643,6 +643,7 @@ return [
     'Maximum Bet Amount Per Issue' => 'Maximum Bet Amount Per Issue',
     'Minimum Bet Amount Per Issue' => 'Minimum Bet Amount Per Issue',
     'Lock Time for Closing Bets' => 'Lock Time for Closing Bets',
+      'Sorting Weight' => 'Sorting Weight',
     'Action' => 'Action',
     'Lottery Status' => 'Lottery Status',
     'Sorting Weight' => 'Sorting Weight',

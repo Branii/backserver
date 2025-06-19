@@ -1564,4 +1564,5 @@ return [
     'Product Settings' => '产品设置',
     'Lotteries' => '彩票',
     'Currency Settings' => '货币设置',
+    'Sorting Weight' => '排序权重',
 ];

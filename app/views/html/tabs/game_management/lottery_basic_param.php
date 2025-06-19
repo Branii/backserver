@@ -251,8 +251,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                 <div class="mb-3">
-                                        <label for="lb-dialog-sorting-weight" class="form-label"><?= $translator['Lock Time for Closing Bets']; ?></label>
-                                        <input type="text" class="form-control" id="lb-dialog-sorting-weight" placeholder="<?= $translator['Lock Time for Closing Bets']; ?>">
+                                        <label for="lb-dialog-sorting-weight" class="form-label"><?= $translator['Sorting Weight']; ?></label>
+                                        <input type="text" class="form-control" id="lb-dialog-sorting-weight" placeholder="<?= $translator['Sorting Weight']; ?>">
                                     </div>
                                 </div>
 
