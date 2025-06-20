@@ -379,7 +379,7 @@ $(function () {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const data = await response.json(); // Parse JSON response
-            console.log(data)
+          //  console.log(data)
           //  return
            
             let html = `<option value="">Email Provider</option>`;
