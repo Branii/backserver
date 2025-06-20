@@ -552,6 +552,8 @@ $(function () {
             24: { title: "User Overview", content: "overview" },
             23: { title: "Partners", content: "Partners" },
             25: { title: "User Payment Method", content: "usernotsi" },
+            26: { title: "SMS Configuration", content: "smsconfig" },
+            27: { title: "Email Configuration", content: "emailconfigure" },
         };
         const sidebarMain = {
             1: { category: "Business flow", items: [1, 2, 3, 4] },
@@ -566,6 +568,7 @@ $(function () {
             10: { category: "System Announcement", items: [20, 21] },
             11: { category: "Payment Platform", items: [22] },
             12: { category: "Partner Management", items: [23] },
+            13: { category: "Platform Setting", items: [26,27] },
         };
         let html = "";
         for (let key in sidebarMain) {
