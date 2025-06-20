@@ -8,7 +8,6 @@ $partnerID = isset($this->viewData['partner_id']) ? $this->viewData['partner_id'
 
 if ($flag == "userlistdata") {
 
-  
     $page = isset($this->viewData['page']) ? max((int) $this->viewData['page'], 1) : 1; // Ensure valid page number
     $partnerID = isset($this->viewData['partner_id']) ? max((int) $this->viewData['partner_id'], 0) : 0; // Ensure valid page number
     $limit = isset($this->viewData['limit']) ? max((int) $this->viewData['limit'], 1) : 20; // Ensure valid limit
@@ -304,10 +303,10 @@ if ($flag == "fetchsubagent") {
     $user_id = $this->viewData['user_id'];
     $page = isset($this->viewData['page']) ? max((int) $this->viewData['page'], 1) : 1; // Ensure valid page number
     $limit = isset($this->viewData['limit']) ? max((int) $this->viewData['limit'], 1) : 20; // Ensure valid limit
+    $partner = 1;
 
-        $res = UserManageModel::fetchAgentSubs($user_id);
+        $res = UserManageModel::fetchAgentSubs($partner,$user_id);
         echo json_encode($res);
-
         return;
 
         // $result =  (new UserManageModel())->FetchSubAgents($nickname,$page,$limit);

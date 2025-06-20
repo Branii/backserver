@@ -195,6 +195,11 @@
 
 </style>
 
+<span id="settled_text" style="display:none;"><?= $translator['SETTLED']; ?></span>
+<span id="unsettled_text" style="display:none;"><?= $translator['UNSETTLED']; ?></span>
+<span id="pending_text" style="display:none;"><?= $translator['PENDING']; ?></span>
+
+
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
@@ -261,7 +266,7 @@
   </div>
 
   <div class="card-body p-4">
-    <div class="table-responsive mb-4 border rounded-1 table-wrapper  ld-table-wrapperDraws" id="maskkk" style="height:530px;overflow-y:scroll;">
+    <div class="table-responsive mb-4 border rounded-1 ld-table-wrapperDraws" id="maskkk" style="height:530px;overflow-y:scroll;">
       <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
         <thead class="text-dark fs-4 tbl-headerDraws">
           <tr class="headrowDraws">

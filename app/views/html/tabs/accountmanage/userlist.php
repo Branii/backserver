@@ -493,6 +493,77 @@ section#tooltipp p {
     }
 </style>
 
+
+<!-- toast messages -->
+<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp']; ?>" style="display:none;"></span>
+<span id="trans-failed-inactive" data-translation="<?= $translator['FailedToSetInactive']; ?>" style="display:none;"></span>
+<span id="trans-inactive-success" data-translation="<?= $translator['SetInactiveSuccess']; ?>" style="display:none;"></span>
+<span id="trans-select-fields" data-translation="<?= $translator['SelectFilterFields']; ?>" style="display:none;"></span>
+<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display:none;"></span>
+<span id="trans-alert" data-translation="<?= $translator['Alert']; ?>" style="display:none;"></span>
+<span id="trans-user-does-not-exist" data-translation="<?= $translator['UserDoesNotExist']; ?>" style="display:none;"></span>
+
+<span id="trans-no-changes-made" data-translation="<?= $translator['NoChangesMade']; ?>" style="display:none;"></span>
+<span id="trans-error" data-translation="<?= $translator['Error']; ?>" style="display:none;"></span>
+<span id="trans-generic-error" data-translation="<?= $translator['GenericErrorMessage']; ?>" style="display:none;"></span>
+<span id="trans-no-pages" data-translation="<?= $translator['NoPages']; ?>" style="display:none;"></span>
+<span id="trans-main-page-notice" data-translation="<?= $translator['MainPageNotice']; ?>" style="display:none;"></span>
+
+<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display:none;"></span>
+<span id="trans-agent-added" data-translation="<?= $translator['AgentAdded']; ?>" style="display:none;"></span>
+<span id="trans-quota-updated" data-translation="<?= $translator['QuotaUpdated']; ?>" style="display:none;"></span>
+<span id="trans-blocked" data-translation="<?= $translator['Blocked']; ?>" style="display:none;"></span>
+<span id="trans-already-blocked" data-translation="<?= $translator['AlreadyBlocked']; ?>" style="display:none;"></span>
+<span id="trans-delete" data-translation="<?= $translator['Delete']; ?>" style="display:none;"></span>
+<span id="trans-invalid-operation" data-translation="<?= $translator['InvalidOperation']; ?>" style="display:none;"></span>
+<span id="trans-error" data-translation="<?= $translator['Error']; ?>" style="display:none;"></span>
+<span id="trans-generic-error" data-translation="<?= $translator['GenericError']; ?>" style="display:none;"></span>
+<span id="trans-request-error" data-translation="<?= $translator['RequestError']; ?>" style="display:none;"></span>
+<span id="trans-enabled" data-translation="<?= $translator['Enabled']; ?>" style="display:none;"></span>
+<span id="trans-lottery-enabled" data-translation="<?= $translator['LotteryEnabled']; ?>" style="display:none;"></span>
+<span id="trans-disabled" data-translation="<?= $translator['Disabled']; ?>" style="display:none;"></span>
+<span id="trans-lottery-disabled" data-translation="<?= $translator['LotteryDisabled']; ?>" style="display:none;"></span>
+<span id="trans-error-processing" data-translation="<?= $translator['ErrorProcessing']; ?>" style="display:none;"></span>
+<span id="trans-successful" data-translation="<?= $translator['Successful']; ?>" style="display:none;"></span>
+<span id="trans-records-updated" data-translation="<?= $translator['RecordsUpdated']; ?>" style="display:none;"></span>
+<span id="trans-not-done" data-translation="<?= $translator['NotDone']; ?>" style="display:none;"></span>
+<span id="trans-ip-updated" data-translation="<?= $translator['IPUpdated']; ?>" style="display:none;"></span>
+<span id="trans-no-agent" data-translation="<?= $translator['NoAgent']; ?>" style="display:none;"></span>
+<span id="trans-no-agent-message" data-translation="<?= $translator['NoAgentMessage']; ?>" style="display:none;"></span>
+
+<span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
+<span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
+
+
+<!-- toast messages ends here -->
+
+<!-- //userlist info -->
+
+<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp']; ?>" style="display:none;"></span>
+<span id="trans-email-exists" data-translation="<?= $translator['EmailExists']; ?>" style="display:none;"></span>
+<span id="trans-username-pattern" data-translation="<?= $translator['UsernamePattern']; ?>" style="display:none;"></span>
+<span id="trans-invalid-email" data-translation="<?= $translator['InvalidEmail']; ?>" style="display:none;"></span>
+<span id="trans-password-number" data-translation="<?= $translator['PasswordNumber']; ?>" style="display:none;"></span>
+<span id="trans-password-case" data-translation="<?= $translator['PasswordCase']; ?>" style="display:none;"></span>
+<span id="trans-password-special" data-translation="<?= $translator['PasswordSpecial']; ?>" style="display:none;"></span>
+<span id="trans-confirm-password" data-translation="<?= $translator['ConfirmPassword']; ?>" style="display:none;"></span>
+<span id="trans-password-length" data-translation="<?= $translator['PasswordLength']; ?>" style="display:none;"></span>
+<span id="trans-password-required" data-translation="<?= $translator['PasswordRequired']; ?>" style="display:none;"></span>
+
+<!-- //userlist info ends here -->
+ <!-- button icons -->
+
+<span id="view-text" data-translation="<?= $translator['View'] ?? 'View'; ?>" style="display:none;"></span>
+<span id="quota-text" data-translation="<?= $translator['Quota'] ?? 'Quota'; ?>" style="display:none;"></span>
+<span id="subs-text" data-translation="<?= $translator['Subs'] ?? 'Subs'; ?>" style="display:none;"></span>
+<span id="account-change-text" data-translation="<?= $translator['Account Change'] ?? 'Account Change'; ?>" style="display:none;"></span>
+<span id="lottery-name-text" data-translation="<?= $translator['Lottery Name'] ?? 'Lottery Name'; ?>" style="display:none;"></span>
+<span id="whitelist-text" data-translation="<?= $translator['White List'] ?? 'White List'; ?>" style="display:none;"></span>
+<span id="delete-user-text" data-translation="<?= $translator['Delete User'] ?? 'Delete User'; ?>" style="display:none;"></span>
+<span id="deactivate-user-text" data-translation="<?= $translator['Deactivate User'] ?? 'Deactivate User'; ?>" style="display:none;"></span>
+
+ <!-- button icons -->
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['User List']; ?></h4>
@@ -607,7 +678,7 @@ section#tooltipp p {
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Creation Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Timezone/Hrs']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Last Login']; ?></h6>
@@ -750,7 +821,7 @@ section#tooltipp p {
                             <button type="button" class="btn hstack gap-6 btnaddagent" style="border: solid 1px #ccc;"
                                 data-bs-dismissz="modal" aria-label="Close">
                                 <i class="bx bx-send loaders"></i>
-                                Submit
+                                <?= $translator['Submit']; ?>
                             </button>
                         </div>
                     </div>
@@ -786,25 +857,25 @@ section#tooltipp p {
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label for="userName" class="form-label"><?= $translator['Contact']; ?></label>
-                                        <input type="text" class="form-control" id="usrl-contact" placeholder="Contact"
+                                        <input type="text" class="form-control" id="usrl-contact" placeholder="<?= $translator['Contact']; ?>"
                                             disabled />
                                     </div>
                                     <div class="mb-3">
                                         <label for="userEmail" class="form-label"><?= $translator['Whatsapp']; ?></label>
                                         <input type="email" class="form-control" id="usrl-whatsapp"
-                                            placeholder="whatsapp" disabled />
+                                            placeholder="<?= $translator['Whatsapp']; ?>" disabled />
                                     </div>
                                     <div class="mb-3">
                                         <label for="userEmail" class="form-label"><?= $translator['Username']; ?></label>
                                         <input type="email" class="form-control" id="usrl-username"
-                                            placeholder="username" disabled />
+                                            placeholder="<?= $translator['Username']; ?>" disabled />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label for="storeName" class="form-label"><?= $translator['Account Type']; ?></label>
                                         <input type="text" class="form-control" id="usrl-account-type"
-                                            placeholder="Account Type" disabled />
+                                            placeholder="<?= $translator['Account Type']; ?>" disabled />
                                     </div>
                                     <div class="mb-3">
                                         <label for="usrl-state" class="form-label"><?= $translator['State']; ?></label>
@@ -865,13 +936,13 @@ section#tooltipp p {
                                     <div class="mb-3">
                                         <label for="usrl-login-password" class="form-label"><?= $translator['Login Password']; ?></label>
                                         <input type="password" class="form-control" id="usrl-login-password"
-                                            placeholder="Login Password<?= $translator['Login Password']; ?>" disabled />
+                                            placeholder="<?= $translator['Login Password']; ?>" disabled />
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="usrl-withdrawal-password" class="form-label"><?= $translator['Withdrawal Password']; ?></label>
                                         <input type="password" class="form-control" id="usrl-withdrawal-password"
-                                            placeholder="Withdrawal Password<?= $translator['Withdrawal Password']; ?>" disabled />
+                                            placeholder="<?= $translator['Withdrawal Password']; ?>" disabled />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -970,7 +1041,7 @@ section#tooltipp p {
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="text-infos" style="color: #e60e38;"> <?= $translator['Deactivate User ']; ?></h5>
+                        <h5 class="text-infos" style="color: #e60e38;"> <?= $translator['Deactivate User']; ?></h5>
                         <i class="bx bx-message-square-x usrl-listclose"
                             style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
                             aria-label="Close"></i>
@@ -982,7 +1053,7 @@ section#tooltipp p {
 
                     <div class="modal-body scrollable-container">
                         <div style="overflow: hidden;text-align: center;font-size: large;font-weight: bold;">
-                            <p>Are you sure you want to <?= $translator['Deactivate User ']; ?><span style="color: #e60e38;">Deactivate Agent 1 ? <?= $translator['Deactivate User ']; ?></span></p>
+                            <p><?= $translator['Are you sure you want to']; ?><span style="color: #e60e38;"><?= $translator['Deactivate Agent 1 ?']; ?></span></p>
                         </div>
                     </div>
                     <div class="d-md-flex align-items-center">
@@ -990,7 +1061,7 @@ section#tooltipp p {
                         <div class="mt-3 mt-md-0 ms-auto">
                             <button type="button" class="btn hstack gap-6 block-userbtn"
                                 style="border: solid 1px #ccc;color: #e60e38!important;">
-                                <i class="bx bx-user-x loaderquota"></i>Deactivate User</button>
+                                <i class="bx bx-user-x loaderquota"></i><?= $translator['Deactivate User']; ?></button>
                         </div>
                     </div>
                 </form>
@@ -1007,7 +1078,7 @@ section#tooltipp p {
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="text-infos">Lottery Name</h5>
+                        <h5 class="text-infos"><?= $translator['Lottery Name']; ?></h5>
                         <i class="bx bx-message-square-x usrl-listclose"
                             style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
                             aria-label="Close"></i>
@@ -1022,9 +1093,9 @@ section#tooltipp p {
                             <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
                                 <thead>
                                     <tr>
-                                        <th class="font-weight-normal">Lottery Name</th>
-                                        <th class="font-weight-normal">Status</th>
-                                        <th class="font-weight-normal">Action</th>
+                                        <th class="font-weight-normal"><?= $translator['Lottery Name']; ?></th>
+                                        <th class="font-weight-normal"><?= $translator['Status']; ?></th>
+                                        <th class="font-weight-normal"><?= $translator['Action']; ?></th>
                                     </tr>
                                 </thead>
                                 <tbody id="usrl-lot-dtholder"></tbody>
@@ -1036,7 +1107,7 @@ section#tooltipp p {
                         <div class="mt-3 mt-md-0 ms-auto">
                             <button type="button" class="btn hstack gap-6 usrl-listclose"
                                 style="border: solid 1px #ccc;">
-                                <i class="bx bx-x-circle loaderquota"></i>Close</button>
+                                <i class="bx bx-x-circle loaderquota"></i><?= $translator['Close']; ?></button>
                         </div>
                     </div>
                 </form>
@@ -1053,7 +1124,7 @@ section#tooltipp p {
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="text-infos" style="color: #e60e38;">Delete User</h5>
+                        <h5 class="text-infos" style="color: #e60e38;"><?= $translator['Delete User']; ?></h5>
                         <i class="bx bx-message-square-x usrl-listclose"
                             style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
                             aria-label="Close"></i>
@@ -1065,7 +1136,7 @@ section#tooltipp p {
 
                     <div class="modal-body scrollable-container">
                         <div style="overflow: hidden;text-align: center;font-size: large;font-weight: bold;">
-                            <p>Are you sure you want to <span style="color: #e60e38;">Delete Agent 1 ? </span></p>
+                            <p><?= $translator['Are you sure you want to']; ?> <span style="color: #e60e38;"><?= $translator['Delete Agent 1 ?']; ?></span></p>
                         </div>
                     </div>
                     <div class="d-md-flex align-items-center">
@@ -1073,7 +1144,7 @@ section#tooltipp p {
                         <div class="mt-3 mt-md-0 ms-auto">
                             <button type="button" class="btn hstack gap-6 usrl-delete-userbtn"
                                 style="border: solid 1px #ccc;color: #e60e38!important;">
-                                <i class="bx bx-trash loaderquota"></i>Delete User</button>
+                                <i class="bx bx-trash loaderquota"></i><?= $translator['Delete User']; ?></button>
                         </div>
                     </div>
                 </form>
@@ -1090,7 +1161,7 @@ section#tooltipp p {
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="text-infos">White List Ips</h5>
+                        <h5 class="text-infos"><?= $translator['White List Ips']; ?></h5>
                         <i class="bx bx-message-square-x usrl-listclose"
                             style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
                             aria-label="Close"></i>
@@ -1106,9 +1177,9 @@ section#tooltipp p {
                                 <thead>
                                     <tr>
                                         <th class="font-weight-normal">IPs</th>
-                                        <th class="font-weight-normal">Time</th>
-                                        <th class="font-weight-normal">Status</th>
-                                        <th class="font-weight-normal">Action</th>
+                                        <th class="font-weight-normal"><?= $translator['Time']; ?></th>
+                                        <th class="font-weight-normal"><?= $translator['Status']; ?></th>
+                                        <th class="font-weight-normal"><?= $translator['Action']; ?></th>
                                     </tr>
                                 </thead>
                                 <tbody id="usrl-ipsholder">
@@ -1130,7 +1201,7 @@ section#tooltipp p {
                             <button type="button" class="btn hstack gap-6 usrl-listclose"
                                 style="border: solid 1px #ccc;">
                                 <i class="bx bx-x-circle loaderquota"></i>
-                                Close
+                                <?= $translator['Close']; ?>
                             </button>
                         </div>
                     </div>
@@ -1185,7 +1256,7 @@ section#tooltipp p {
             <div class="modal-body">
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between">
-                        <div>Account Change Info</div>
+                        <div><?= $translator['Account Change Info']; ?></div>
                         <div><i class="bx bx-message-square-x tclose"
                                 style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
                                 aria-label="Close"></i></div>
@@ -1269,7 +1340,7 @@ section#tooltipp p {
                                                 <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Balance']; ?></h6>
                                             </th>
                                             <th>
-                                                <h6 class="fs-4 fw-semibold mb-0">Transaction Time
+                                                <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Time']; ?>
                                                 </h6>
                                             </th>
                                             <th>

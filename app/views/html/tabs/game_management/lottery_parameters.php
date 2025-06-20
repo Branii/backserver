@@ -509,6 +509,23 @@ input:checked + .lpd-slider:after {
     }
 </style>
 
+<?php
+$gameOptions = ['Standard', 'Fantan', 'BoardGames', 'Manytables', 'Logdragon', 'Roadbet', 'Twosides'];
+foreach ($gameOptions as $game) {
+    $translation = $translator[$game] ?? $game; // use your translation array
+    echo "<span id=\"trans-$game\" data-translation=\"$translation\" style=\"display:none;\"></span>";
+}
+?>
+<span id="trans-partner-name" data-translation="<?= htmlspecialchars($translator['Partner Name'] ?? 'Partner Name') ?>" style="display:none;"></span>
+<span id="trans-SelectGame" data-translation="<?= $translator['Select Game'] ?>"></span>
+
+<span id="success_text" style="display: none;"><?= $translator['SUCCESS']; ?></span>
+<span id="updated_successfully" style="display: none;"><?= $translator['UPDATED_SUCCESSFULLY']; ?></span>
+<span id="game_state_updated" style="display: none;"><?= $translator['GAME_STATE_UPDATED']; ?></span>
+<span id="no_changes_made" style="display: none;"><?= $translator['NO_CHANGES_MADE']; ?></span>
+
+
+<span id="savee-text" data-translation="<?= $translator['Save'] ?? 'Save'; ?>" style="display:none;"></span>
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
@@ -628,7 +645,7 @@ input:checked + .lpd-slider:after {
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?> Two Sides headed </h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?> </h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Play Group']; ?></h6>
@@ -669,7 +686,7 @@ input:checked + .lpd-slider:after {
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?> Two Sides headed </h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?>  </h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Play Group']; ?></h6>
@@ -710,7 +727,7 @@ input:checked + .lpd-slider:after {
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?> Two Sides headed </h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?>  </h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Play Group']; ?></h6>

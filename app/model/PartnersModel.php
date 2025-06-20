@@ -146,20 +146,17 @@ class PartnersModel extends MedooOrm{
 
 
 
-    public static function searchPartnersNames($partnerName): Mixed{
-        try{
+    
 
+    public static function searchPartnersNames($partnerName): Mixed {
+    try {
         echo $partnerName;
-        // $query = trim($partnerName); 
         return [];
-        // $query = parent::openLink()->query("SELECT * FROM partner WHERE name LIKE :search LIMIT 50", ['search' => "%$query%"]);
-        // $data = $query->fetchAll(PDO::FETCH_OBJ);
-        // return ["status" => "success","data" => $data];
-    }catch(Exception $e){
-        return self::response("Internal Server Error.".$e->getMessage(),false,);
+    } catch(Exception $e) {
+        return self::response("Internal Server Error.".$e->getMessage(), false);
     }
+}
 
-    }
     public static function fetchDifferentCurrency(): Mixed{
         try{
 

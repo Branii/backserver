@@ -1,6 +1,4 @@
-
 $(function () {
-    
     const partnerID = $("#partner-holder").attr("data-partner-id");
 
     function showToast(title, message, type) {
@@ -12,6 +10,16 @@ $(function () {
             duration: 3000, // auto-dismiss after 3s
         });
     }
+    const translations = {
+        headsUp: document.getElementById("trans-heads-up").dataset.translation,
+        selectDataFields: document.getElementById("trans-select-data-fields").dataset.translation,
+        failedInactive: document.getElementById("trans-failed-inactive").dataset.translation,
+        inactiveSuccess: document.getElementById("trans-inactive-success").dataset.translation,
+        success: document.getElementById("trans-success").dataset.translation,
+    };
+
+    // Example toast usage
+    // showToast(translations.headsUp, translations.selectDataFields, "info");
 
     function formatMoney(money) {
         let moneyStr = String(money);
@@ -25,8 +33,8 @@ $(function () {
         return moneyStr;
     }
 
-    const translatorScript = document.querySelector(".translations"); 
-    const translator = JSON.parse(translatorScript.textContent); 
+    const translatorScript = document.querySelector(".translations");
+    const translator = JSON.parse(translatorScript.textContent);
     const AccountTransactions = (data) => {
         let html = "";
 
@@ -42,7 +50,7 @@ $(function () {
             9: { title: translator["Sending Red Envelope"], color: "#FF5722" }, // Deep Orange
             10: { title: translator["Red Envelope Receive"], color: "#795548" }, // Brown
             11: { title: translator["Bet Refund"], color: "#FFC107" }, // Amber
-            // 12: { title: translator["Bet Lost"], color: "#FFC107" } // Amber
+            13: { title: translator["Profit Limit"], color: "#FFC106" } // Amber
         };
 
         let completes = translator["Completed"];
@@ -52,7 +60,7 @@ $(function () {
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
             if (item.order_type === 12) return;
             let timezone = item.timezone.split(" ");
-            timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
+            timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
             html += `
                       <tr class="trow">
                         <td>${"TR" + item.order_id.substring(0, 7)}</td>
@@ -77,7 +85,6 @@ $(function () {
         let html = ""; // Initialize the HTML string
 
         Object.entries(transactiondata).forEach(([key, value]) => {
-
             let test = value !== translator["Bet Selection"] && langMap[value] ? langMap[value] : translator["Bet Selection"];
             if (value == test) {
                 html += `
@@ -98,13 +105,13 @@ $(function () {
             }
         });
 
-        return html; 
+        return html;
     };
 
     const langMap = {
-        '投注选择:' :'Bet Selection',
-    }
-    
+        "投注选择:": "Bet Selection",
+    };
+
     const firstRow = {
         bet_code: `${translator["Bet Order ID"]}`,
         draw_period: `${translator["Issue Number"]}`,
@@ -144,6 +151,7 @@ $(function () {
         try {
             const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
             const data = await response.json();
+            console.lo
             $("#mask").LoadingOverlay("hide");
             render(data.transaction);
             renderPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchTrasaction(newPage, pageLimit));
@@ -227,7 +235,6 @@ $(function () {
 
     $(".accountrefresh").click(function () {
         $(".queryholdertransaction").val("");
-
         $("#mask").LoadingOverlay("show", {
             background: "rgb(90,106,133,0.1)",
             size: 3,
@@ -237,9 +244,15 @@ $(function () {
     });
 
     $(document).on("click", ".executetrans", function () {
-        if ($("#transuser").val() == "" && $("#transactionId").val() == "" && $("#ordertypetrans").val() == ""
-         && $("#startdatrans").val() == "" && $(".selectpartner").val() == "") {
-            showToast("Heads up!!", "Select one or more data fields to filter", "info");
+        if ($("#transuser").val() == "" && $("#transactionId").val() == "" && $("#ordertypetrans").val() == "" && $("#startdatrans").val() == "" && $(".selectpartner").val() == "") {
+            //   showToast(
+            //     "Heads up!!",
+            //     "Select one or more data fields to filter",
+            //     "info"
+            //   );
+
+            showToast(translations.headsUp, translations.selectDataFields, "info");
+
             return;
         }
         const transusername = $("#transuser").val();
@@ -248,18 +261,17 @@ $(function () {
         const partneruid = $(".selectpartner").val();
         const startdatrans = $("#startdatrans").val();
         const enddatetrans = $("#enddatetrans").val();
-       
+
         $(".loadertrans").removeClass("bx-check-double").addClass("bx-loader bx-spin");
         setTimeout(() => {
-            filterTrasaction(transusername, transactionId, ordertypetrans,partneruid, startdatrans, enddatetrans, currentPage, pageLimit);
+            filterTrasaction(transusername, transactionId, ordertypetrans, partneruid, startdatrans, enddatetrans, currentPage, pageLimit);
         }, 100);
     });
 
-    async function filterTrasaction(transusername, transactionId, ordertypetrans,partneruid, startdatrans, enddatetrans, currentPage, pageLimit) {
+    async function filterTrasaction(transusername, transactionId, ordertypetrans, partneruid, startdatrans, enddatetrans, currentPage, pageLimit) {
         try {
             const response = await fetch(`../admin/filtertransactions/${transusername}/${transactionId}/${ordertypetrans}/${partneruid}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
-           
-           
+
             const data = await response.json();
             $(".loadertrans").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
             if (data.transactions.length < 1) {
@@ -277,7 +289,7 @@ $(function () {
             render(data.transactions);
 
             // Render pagination"Page " + currentPage + " of " + data.totalPages + " pages"
-            renderPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterTrasaction(transusername, transactionId, ordertypetrans,partneruid, startdatrans, enddatetrans, newPage, pageLimit));
+            renderPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterTrasaction(transusername, transactionId, ordertypetrans, partneruid, startdatrans, enddatetrans, newPage, pageLimit));
             document.getElementById("paging_info").innerHTML = `${translator["Page"]} ${currentPage} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -467,7 +479,7 @@ $(function () {
                 clearTimeout(debounceTimeout); // Clear any existing timeout
                 debounceTimeout = setTimeout(fetchbetUser, 500, query); // Call fetchUsers with the query after 500ms delay
             } else {
-                $(".useraccount").hide(); 
+                $(".useraccount").hide();
             }
         });
 
@@ -562,6 +574,11 @@ $(function () {
         }, 0);
     });
 
+    function getTranslation(key) {
+        const span = document.getElementById(`trans-${key.toLowerCase().replace(/\s+/g, "-")}`);
+        return span?.dataset.translation || key;
+    }
+
     async function fetchPartnername() {
         try {
             const response = await fetch(`../admin/fetchPartnername/${partnerID}`); // Await the fetch call
@@ -571,8 +588,9 @@ $(function () {
             }
             const data = await response.json(); // Parse JSON response
             //console.log(data)
-           
-            let html = `<option value="">Partner Name</option>`;
+
+            let html = `<option value="">${getTranslation("Partner Name")}</option>`;
+
             data.forEach((partner) => {
                 html += `<option value="${partner.partner_id}">${partner.name}</option>`;
             });
@@ -582,5 +600,4 @@ $(function () {
         }
     }
     fetchPartnername();
-
 });

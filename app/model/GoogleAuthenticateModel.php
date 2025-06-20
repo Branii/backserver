@@ -130,12 +130,12 @@ class GoogleAuthenticateModel extends MEDOOHelper
     return $secretcode = $data[0]['phone_number'];
   }
 
-   public static function CheckotpStatus($email){
+  public static function CheckotpStatus($email){
     $data = parent::query( "SELECT two_factor_enabled, FROM system_administrators WHERE email = :email",['email' => $email]);
     return $secretcode = $data[0]['phone_number'];
   }
   
-   public static function ResetAuthentication($email){
+  public static function ResetAuthentication($email){
     $params = ['email' =>$email,'two_factor_method' =>'default'];
     $sql = "UPDATE system_administrators SET two_factor_method = :two_factor_method WHERE email = :email";
     $updated = parent::query($sql,$params);
@@ -143,8 +143,5 @@ class GoogleAuthenticateModel extends MEDOOHelper
         return ['status' => 'success'];
       }
   }
-  
-
-  
-
+   
 }

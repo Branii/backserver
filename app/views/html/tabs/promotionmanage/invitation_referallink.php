@@ -91,9 +91,8 @@
     .queryholderlogss {
         width: 33%;
         margin-right: 5px;
-        background-color: #FFF;
+        background-color: #fff;
     }
-
 
     .optionlist {
         text-align: left;
@@ -104,7 +103,6 @@
     .optionlist:hover {
         background-color: #eee;
     }
-
 
     .no-resultslist {
         text-align: center;
@@ -119,7 +117,6 @@
     .no-resultslist img {
         position: relative;
         top: 100px;
-
     }
 
     /* Custom Scrollbar for Webkit Browsers */
@@ -163,8 +160,8 @@
         display: none;
     }
 
-     /* Style for the scrollbar */
-     .linkDropdown::-webkit-scrollbar {
+    /* Style for the scrollbar */
+    .linkDropdown::-webkit-scrollbar {
         width: 3px;
         /* Width of the scrollbar */
     }
@@ -189,72 +186,62 @@
     }
 
     .tbl-headerlinks {
-    position: sticky;
-    top: 0;
+        position: sticky;
+        top: 0;
     }
 
     .sticky-headerlinks {
-    position: relative;
-    bottom: 1px;
-    background-color: red;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+        position: relative;
+        bottom: 1px;
+        background-color: red;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
     }
-
 </style>
 
-<div class="card w-100 position-relative overflow-hidden">
+<!-- Title -->
+<span id="trans-heads-up" data-translation="<?= htmlspecialchars($translator['HeadsUp'] ?? 'Heads up!') ?>" style="display: none;"></span>
 
+<!-- Store translated and original text for "select fields" -->
+<span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
+<span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
+
+<div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Invitation & Referral Links']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:120%;">
-
-              <input type="text" id="linkinput" class="form-control queryholderlogss " placeholder="<?= $translator['Search usernames']; ?>" />
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 120%;">
+                <input type="text" id="linkinput" class="form-control queryholderlogss" placeholder="<?= $translator['Search usernames']; ?>" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
                 <select class="form-control linkDropdown" size="5" style="display: none;" id="linkinputdowns">
                     <!-- Options will be populated dynamically -->
                 </select>
 
-                 <select name="lotteryname" class="form-control form-select queryholderlogss selectpartner"> 
+                <select name="lotteryname" class="form-control form-select queryholderlogss selectpartner"> </select>
+                <input type="date" class="form-control queryholderlogss linkstart" aria-describedby="name" placeholder="Name" />
 
-                 </select>
-                 <input type="date" class="form-control queryholderlogss linkstart"  aria-describedby="name"
-                    placeholder="Name" />
-
-
-                <input type="date" class="form-control queryholderlogss linkenddate"  aria-describedby="name"
-                    placeholder="Name" />
-
-
-
+                <input type="date" class="form-control queryholderlogss linkenddate" aria-describedby="name" placeholder="Name" />
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
             <!--enter is free-->
         </span>
         <span class="topplist-right" id="paginations" aria-label="Page navigation example">
-
-            <div class="btn-group mb-2" role="group" aria-label="Basic example"
-                style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle player refreshreferal" value="right" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
-                    <i class='bx bx-refresh' style="font-size:20px"></i>
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                <button type="button" class="btn bg-white-subtle player refreshreferal" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                    <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle executeusereferal" value="end" aria-label="Execute"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                    <i class='bx bx-check-double loaderreferal' style="font-size:20px"></i>
+                <button type="button" class="btn bg-white-subtle executeusereferal" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                    <i class="bx bx-check-double loaderreferal" style="font-size: 20px;"></i>
                 </button>
             </div>
-
         </span>
-
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperlistlinks" id="maskreferal" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperlistlinks" id="maskreferal" style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4 tbl-headerlinks">
                     <tr class="headrowlinks">
@@ -279,37 +266,33 @@
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Reviews']; ?></h6>
                         </th>
-                       
-                        
+
                         <!-- <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
                         </th> -->
                     </tr>
                 </thead>
                 <tbody id="linksContainer">
-
                     <tr class="no-resultslist">
                         <td colspan="9">
                             <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
                         </td>
                     </tr>
-
                 </tbody>
             </table>
         </div>
     </div>
     <div class="px-4 py-3 border-top pagerlist">
         <span class="toplist-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example"
-                style="border:solid 1px #eee;color:#bbb;background-color:#fff">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
                 <!-- <button type="button" class="btn bg-white-subtle playerlinks" value="startlinks">
                     <i class='bx bx-chevrons-left' style="font-size:20px"></i>
                 </button> -->
                 <button type="button" class="btn bg-white-subtle playerlinks" value="leftlinks">
-                    <i class='bx bx-chevron-left' style="font-size:20px"></i>
+                    <i class="bx bx-chevron-left" style="font-size: 20px;"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle playerlinks" value="rightlinks">
-                    <i class='bx bx-chevron-right' style="font-size:20px"></i>
+                    <i class="bx bx-chevron-right" style="font-size: 20px;"></i>
                 </button>
                 <!-- <button type="button" class="btn bg-white-subtle playerlinks" value="endlinks">
                     <i class='bx bx-chevrons-right' style="font-size:20px"></i>
@@ -317,17 +300,10 @@
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
-
-            <span id="paging_inforeferal" style="color:#aaa">---</span>
-
+            <span id="paging_inforeferal" style="color: #aaa;">---</span>
         </span>
         <span class="toplist-right" id="paginationreferal" aria-label="Page navigation example">
-
             <!--Dynamic pagination-->
-
         </span>
-
     </div>
-
 </div>
-
