@@ -79,14 +79,6 @@ const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
                     </label>
                 </td>
 
-                  <td>
-                   <label class="switch">
-                    <input type="checkbox"  class="form-check-input gamestatus" value ='${item.gn_id}'  datas= '${item.model}' role="switch" ${isChecked}>
-                    <span class="slider"></span>
-                    </label>
-                 </td>
-
-         
                 <td> <button type="button" class="btn btn-light updatethis saveBtn" value ='${item.gn_id}' datas= '${item.model}' >${SaveText}</button></td>
              </tr>
       `;
