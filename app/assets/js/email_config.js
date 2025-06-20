@@ -44,9 +44,9 @@ $(function () {
                       <tr>
                           <td>${item.email_provider}</td>
                           <td>${item.sender_name}</td>
-                          <td>${item.total_email}</td>
+                          <td>${item.total_emails}</td>
                           <td>${item.email_used}</td>
-                          <td>${item.current_email}</td>
+                          <td>${item.current_emails}</td>
                           <td>${item.created_at}</td>
                           <td>${item.status}</td>
                           
@@ -56,7 +56,7 @@ $(function () {
                             <i class='bx bx-dots-vertical-rounded'></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"> 
-                             <a class="dropdown-item deleteemail cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="">
+                             <a class="dropdown-item deleteemail cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="${item.email_id}">
                                 <i class="bx bx-trash fs-5"></i>Delete
                             </a>
                             </div>
@@ -142,7 +142,6 @@ $(function () {
         const data =  await response.json();
       //  console.log(data)
         ///return
-
         $(".loaderemail").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
         if (data.email.length < 1) {
             let html = `
@@ -173,7 +172,6 @@ $(function () {
     fetchemaildata(currentPage,pageLimit)
   });
   
-
   $(".playeremail").click(function () {
       let direction = $(this).val();
       const tableWrapper = $(".table-wrapperemail");
@@ -226,18 +224,18 @@ $(function () {
   })
 
   $(document).on('click', '#addemailsettings', function () {
-    $.post(`../admin/savesemailstaes`, function (response) {
+    $.post(`../admin/savedemailpreferencestate`, function (response) {
       // console.log(response);
       //  return
         let data = typeof response === "string" ? JSON.parse(response)[0] : response;
   
         $(".depositSwitch").prop("checked", data.deposit == 1);
-        $("#withdrawSwitch").prop("checked", data.withdraw == 1);
+        $("#withdrawSwitchs").prop("checked", data.withdraw == 1);
         // $("#securitySwitch").prop("checked", data.security == 1);
         // $("#promoSwitch").prop("checked", data.promo == 1);
-          $("#gameSwitch").prop("checked", data.gamewon == 1);
+          $("#gameSwitchs").prop("checked", data.gamewon == 1);
         // $("#vipSwitch").prop("checked", data.vip == 1);
-        $("#provider").val(data.email_provider);
+        $("#providers").val(data.email_provider);
 
         // Save to localStorage
         const savedPrefs = {
@@ -255,32 +253,32 @@ $(function () {
       $("#emailModalsettings").modal("show");
   });
     //add new email platform
-  // $(document).on("click", ".saveemail", function () {
-  //     if ($("#emailnameprovider").val() == "" || $("#partnameemail").val() == "") {
-  //         showToast("Heads up!!","Select one or more data fields to filter","info")
-  //         return;
-  //       }
-  //     const  emailprovider = $("#emailnameprovider").val()
-  //     const sendename = $("#partnameemail").val()
-  //     const approvedby = $(".approved").val()
+  $(document).on("click", ".saveemail", function () {
+      if ($("#emailnameprovider").val() == "" || $("#partnameemail").val() == "") {
+          showToast("Heads up!!","Select one or more data fields to filter","info")
+          return;
+        }
+      const  emailprovider = $("#emailnameprovider").val()
+      const sendename = $("#partnameemail").val()
+      const approvedby = $(".approved").val()
     
-  // //   $(".loaderemails").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
-  // //   $(".form-reset").val('');
-  //   $.post(`../admin/addprovider/${emailprovider}/${sendename}`, function (response){
-  //     const results = JSON.parse(response)
-  //     //  console.log(results)
-  //     if(results == "success"){
-  //       $("#emailmodal").modal("hide"); 
-  //       showToast("Heads up!!","Sms provider added successfully","success")
-  //       fetchemailplatform(currentPage,pageLimit)
-  //     }else{
-  //       showToast("Heads up!!","Sms provider added successfully","info")
-  //     }
+  //   $(".loaderemails").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
+  //   $(".form-reset").val('');
+    $.post(`../admin/emailaddprovider/${emailprovider}/${sendename}`, function (response){
+      const results = JSON.parse(response)
+      //  console.log(results)
+      if(results == "success"){
+        $("#emailmodal").modal("hide"); 
+        showToast("Heads up!!","Email provider added successfully","success")
+        fetchemaildata(currentPage,pageLimit)
+      }else{
+        showToast("Heads up!!","Email provider added successfully","info")
+      }
   
-  //   })
+    })
 
   
-  // });
+  });
   
   //delete message
   $(document).on("click", ".deleteemail", function () {
@@ -288,7 +286,7 @@ $(function () {
       $.post(`../admin/deleteemail/${emailid}`, function (response) {
       if (response) {
           showToast("Success",JSON.parse(response), "success");
-          fetchPaymentPlatform(currentPage,pageLimit)
+          fetchemaildata(currentPage,pageLimit)
       } else {
           showToast("Heads up!!", "failed", "info");
       }
@@ -296,60 +294,61 @@ $(function () {
   });
 
     //edit message
-  $(document).on("click", ".editemail", function () {
-      $("#editemailplatform").modal("show");
-      const emailid = $(this).attr("datas");
-      $.post(`../admin/editemail/${emailid}`, function (response) {
-          const data = JSON.parse(response)[0];
-          $("#maxiamounts").val(data.max_withdrawal);
-          $("#minamount").val(data.max_deposit);
-          $("#emailids").val(data.bankid);
-          const currencys = data.currency_type;
-          if ($(`.typecurrency option[value="${currencys}"]`).length === 0) {
-              $(".typecurrency").append(new Option(currencys, currencys));
-          }
-          $(".typecurrency").val(currencys); 
+  // $(document).on("click", ".editemail", function () {
+  //     $("#editemailplatform").modal("show");
+  //     const emailid = $(this).attr("datas");
+  //     $.post(`../admin/editemail/${emailid}`, function (response) {
+  //         const data = JSON.parse(response)[0];
+  //         $("#maxiamounts").val(data.max_withdrawal);
+  //         $("#minamount").val(data.max_deposit);
+  //         $("#emailids").val(data.bankid);
+  //         const currencys = data.currency_type;
+  //         if ($(`.typecurrency option[value="${currencys}"]`).length === 0) {
+  //             $(".typecurrency").append(new Option(currencys, currencys));
+  //         }
+  //         $(".typecurrency").val(currencys); 
 
-          const status = data.bank_status;
-          if ($(`.statecurrent option[value="${status}"]`).length === 0) {
-              $(".statecurrent").append(new Option(status, status));
-          }
-          $(".statecurrent").val(status); 
-      });
-  });
+  //         const status = data.bank_status;
+  //         if ($(`.statecurrent option[value="${status}"]`).length === 0) {
+  //             $(".statecurrent").append(new Option(status, status));
+  //         }
+  //         $(".statecurrent").val(status); 
+  //     });
+  // });
 
-  $(document).on("click", ".updateemailbtn", function () {
-      const typecurrency = $(".typecurrency").val();
-      const maxiamounts  = $("#maxiamounts").val();
-      const minamount    = $("#minamount").val();
-      const statecurrent = $(".statecurrent").val();
-      const  emailids  = $("#emailids").val();
-      $(".loaderemailanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
-      $.post(`../admin/updateplatform/${typecurrency}/${maxiamounts}/${minamount}/${statecurrent}/${emailids}`, 
-      function (response) {
-      $(".loaderemailanup").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
-      if (response) {
-          showToast("Success", JSON.parse(response), "success");
-          $("#editemailplatform").modal("hide");
-          fetchPaymentPlatform(currentPage,pageLimit)
-      } else {
-          showToast("Heads up!!", JSON.parse(response), "info");
-      }
-      });
-  });
+  // $(document).on("click", ".updateemailbtn", function () {
+  //     const typecurrency = $(".typecurrency").val();
+  //     const maxiamounts  = $("#maxiamounts").val();
+  //     const minamount    = $("#minamount").val();
+  //     const statecurrent = $(".statecurrent").val();
+  //     const  emailids  = $("#emailids").val();
+  //     $(".loaderemailanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
+  //     $.post(`../admin/updateplatform/${typecurrency}/${maxiamounts}/${minamount}/${statecurrent}/${emailids}`, 
+  //     function (response) {
+  //     $(".loaderemailanup").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+  //     if (response) {
+  //         showToast("Success", JSON.parse(response), "success");
+  //         $("#editemailplatform").modal("hide");
+  //         fetchPaymentPlatform(currentPage,pageLimit)
+  //     } else {
+  //         showToast("Heads up!!", JSON.parse(response), "info");
+  //     }
+  //     });
+  // });
 
-  $(document).on("click", "#sendSMSBtn", function () {
+  $(document).on("click", "#sendSMSBtns", function () {
     const emailload = {
-            provider: $("#provider").val(),
+            provider: $("#providers").val(),
             deposit: $(".depositSwitch").is(":checked"),
-            withdraw: $("#withdrawSwitch").is(":checked"),
+            withdraw: $("#withdrawSwitchs").is(":checked"),
             // security: $("#securitySwitch").is(":checked"),
             // promo: $("#promoSwitch").is(":checked"),
-              gamewon: $("#gameSwitch").is(":checked"),
+              gamewon: $("#gameSwitchs").is(":checked"),
             // vip: $("#vipSwitch").is(":checked")
         };
       //  localStorage.setItem("emailPreferences", JSON.stringify(emailload));
     // $(".loaderemailanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
+    // console.log(provider)
 
       $.ajax({
             url: `../admin/emailpreferences`,
@@ -357,11 +356,11 @@ $(function () {
             contentType: "application/json",
             data: JSON.stringify(emailload),
               success: function (response) {
+                console.log(response)
               let res = typeof response === "string" ? JSON.parse(response) : response;
                 if(res === "success"){
-                  showToast("Heads up!!","Sms settings saved","success")
+                  showToast("Heads up!!","Email settings saved","success")
                   $("#emailModalsettings").modal("hide");
-           
                 }else{
                 showToast("Heads up!!","Sms settings not saved","info")
                 }
@@ -380,10 +379,10 @@ $(function () {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const data = await response.json(); // Parse JSON response
-           // console.log(data)
-          // return
+            console.log(data)
+          //  return
            
-            let html = `<option value="">Sms Provider</option>`;
+            let html = `<option value="">Email Provider</option>`;
             data.forEach((emailprovider) => {
                 html += `<option value="${emailprovider.email_provider}">${emailprovider.email_provider}</option>`;
             });

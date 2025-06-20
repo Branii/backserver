@@ -304,10 +304,15 @@ $(function () {
       pageLimit = 20;
       fetchLotteryBet(currentPagebet, pageLimit);
   });
+  const headsUpText = document.getElementById("trans-heads-up").textContent;
+const selectFieldsText = document.getElementById("trans-select-fields").textContent;
+
+
 
   $(".executebet").click(function () {
       if ($("#myInput").val() == "" && $(".typelottery").val() == "" && $(".startdates").val() == "" && $(".betsate").val() == "" && $(".betstatus").val() == "" && $("#lot-betID").val() == "") {
-          showToast("Heads up!!", "Select one or more data fields to filter", "info");
+        //   showToast("Heads up!!", "Select one or more data fields to filter", "info");
+          showToast(headsUpText, selectFieldsText, "info");
           return;
       }
       const uidd = $("#myInput").val();

@@ -217,6 +217,23 @@
 
 </style>
 
+<!-- toast messages -->
+
+<span id="trans-failed-inactive" data-translation="<?= $translator['FailedToSetInactive']; ?>" style="display:none;"></span>
+<span id="trans-inactive-success" data-translation="<?= $translator['SetInactiveSuccess']; ?>" style="display:none;"></span>
+<span id="trans-select-fields" data-translation="<?= $translator['SelectFilterFields']; ?>" style="display:none;"></span>
+<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display:none;"></span>
+<span id="trans-alert" data-translation="<?= $translator['Alert']; ?>" style="display:none;"></span>
+<span id="trans-user-does-not-exist" data-translation="<?= $translator['UserDoesNotExist']; ?>" style="display:none;"></span>
+
+<span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
+<span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
+
+
+
+
+<!-- toast messages ends here -->
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Deposit Record']; ?></h4>

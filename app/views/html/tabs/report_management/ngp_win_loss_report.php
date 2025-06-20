@@ -329,6 +329,29 @@
     }
 </style>
 
+<span id="trans-no-user-selected-title" style="display: none;"><?php echo $translator['NO_USER_SELECTED_TITLE']; ?></span>
+<span id="trans-no-user-selected-msg" style="display: none;"><?php echo $translator['NO_USER_SELECTED_MSG']; ?></span>
+
+<!-- For Error -->
+<span id="trans-error-title" style="display:none;"><?php echo $translator['ERROR_TITLE']; ?></span>
+<span id="trans-error-msg" style="display:none;"><?php echo $translator['ERROR_MSG']; ?></span>
+
+<!-- For No User Selected -->
+<span id="trans-no-user-2-title" style="display:none;"><?php echo $translator['NO_USER_SELECTED_2_TITLE']; ?></span>
+<span id="trans-no-user-2-msg" style="display:none;"><?php echo $translator['NO_USER_SELECTED_2_MSG']; ?></span>
+
+<!-- For Too Many Users -->
+<span id="trans-too-many-title" style="display:none;"><?php echo $translator['TOO_MANY_USERS_TITLE']; ?></span>
+<span id="trans-too-many-msg" style="display:none;"><?php echo $translator['TOO_MANY_USERS_MSG']; ?></span>
+
+
+<span id="trans-no-data-title" style="display:none;"><?php echo $translator['NO_DATA_TITLE']; ?></span>
+<span id="trans-no-data-msg" style="display:none;"><?php echo $translator['NO_DATA_MSG']; ?></span>
+
+<span id="trans-no-data-title" style="display:none;"><?php echo $translator['NO_DATA_TITLE']; ?></span>
+<span id="trans-no-data-msg" style="display:none;"><?php echo $translator['NO_DATA_MSG']; ?></span>
+
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['NGP Win/Loss Report']; ?></h4>

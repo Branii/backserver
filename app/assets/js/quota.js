@@ -10,6 +10,12 @@ $(function () {
           duration: 3000, // auto-dismiss after 3s
       });
   }
+
+  const ALL_FIELDS_REQUIRED = document.getElementById("allfields_text").innerText;
+const ENTER_QUOTA_VALUE = document.getElementById("quota_text").innerText;
+const SUCCESS_TEXT = document.getElementById("success_text").innerText;
+const QUOTA_UPDATED = document.getElementById("quota_success").innerText;
+
   const QuotaData = (data) => {
       let html = "";
 
@@ -90,7 +96,9 @@ $(function () {
       try {
           const response = await fetch(`../admin/updatequota/${rebatid}/${quota}`);
           if (response) {
-              showToast("Success", "quota updated successfully", "success");
+            //   showToast("Success", "quota updated successfully", "success");
+              showToast(SUCCESS_TEXT, QUOTA_UPDATED, "success");
+              
           }
       } catch (error) {
           console.error("Error fetching data:", error);
@@ -101,20 +109,50 @@ $(function () {
       $("#addContactModal").modal("show");
   });
 
-  $(document).on("click", "#btn-setallquota", function () {
-      const quotaval = $("#c-quota").val();
-      try {
-          $.post(`../admin/UpdateAllquota/${quotaval}`, function (response) {
-              if (response) {
-                  showToast("Success", "quota updated successfully", "success");
-                  fetchquota(currentPagequota, pageLimit);
-              }
-          });
-          // const data = await response.json();
-      } catch (error) {
-          console.error("Error fetching data:", error);
-      }
-  });
+//   $(document).on("click", "#btn-setallquota", function () {
+//       const quotaval = $("#c-quota").val();
+//       try {
+//           $.post(`../admin/UpdateAllquota/${quotaval}`, function (response) {
+//               if (response) {
+//                   showToast("Success", "quota updated successfully", "success");
+//                   fetchquota(currentPagequota, pageLimit);
+//               }
+//           });
+//           // const data = await response.json();
+//       } catch (error) {
+//           console.error("Error fetching data:", error);
+//       }
+//   });
+
+
+
+
+// showToast(ALL_FIELDS_REQUIRED, ENTER_QUOTA_VALUE, "error");
+// showToast(SUCCESS_TEXT, QUOTA_UPDATED, "success");
+$(document).on("click", "#btn-setallquota", function () {
+    const quotaval = $("#c-quota").val().trim();
+
+    // ✅ Check if the field is empty
+    if (quotaval === "") {
+        // showToast("All Fields Required", "Please enter a quota value before saving.", "error");
+        showToast(ALL_FIELDS_REQUIRED, ENTER_QUOTA_VALUE, "error");
+        return;
+    }
+
+    // Proceed to send the POST request
+    try {
+        $.post(`../admin/UpdateAllquota/${quotaval}`, function (response) {
+            if (response) {
+                // showToast("Success", "Quota updated successfully", "success");
+                showToast(SUCCESS_TEXT, QUOTA_UPDATED, "success");
+                fetchquota(currentPagequota, pageLimit);
+            }
+        });
+    } catch (error) {
+        console.error("Error updating quota:", error);
+    }
+});
+
 
   $(document).on("keyup", ".userrebatess", function () {
       const inputValue = $(this).val().trim(); 

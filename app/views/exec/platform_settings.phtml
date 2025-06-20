@@ -46,7 +46,7 @@ if($flag == "savepreferences"){
     echo json_encode($result);
 }
 
-if($flag == "savessmsstaes"){
+if($flag == "savesmspreferencestate"){
      $result  = PLatFormSettingModel::SaveStateSmsSettings();
      echo json_encode($result); 
 }
@@ -71,15 +71,19 @@ if($flag == "filtersms"){
     ]);
 }
 
-
+if($flag == "deletesms"){
+     $smsid = isset($this->viewData['sms']) ? $this->viewData['sms'] : "";
+     $result  = PLatFormSettingModel::DeleteSms($smsid);
+     echo json_encode($result);
+}
 
 if($flag == "fetchemaildata"){
 
     $page  = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
     $smsResult = PLatFormSettingModel::fetchEmailData($page, $limit);
-    $smsRecords = $smsResult['data'] ?? [];
-    // $totalCount = $smsResult['total'] ?? 0;
+    $emailRecords = $smsResult['data'] ?? [];
+     $totalCount = $smsResult['total'] ?? 0;
     // $sms_id = $smsRecords[0]['sms_id'];
     // foreach ($smsRecords as &$record) {
     // $provider = $record['sms_provider'] ?? '';
@@ -88,58 +92,57 @@ if($flag == "fetchemaildata"){
     //     }
     // }
     echo json_encode([
-            'email' => $smsRecords,
+            'email' => $emailRecords,
             'totalPages' => ceil($totalCount / $limit)
         ]);           
 }
-// if($flag == "twofaenables"){
-//      $email = isset($this->viewData['email']) ?  $this->viewData['email'] : "";
-//      $result = GoogleAuthenticateModel::UpdatemobileAuth($email) ?? [];
-//      echo json_encode($result);
-// }
 
-// if($flag == "getcodeverify"){
-//      $adminEmail = (new Controller)->getSeesion("userauthmethosid");
-//      $phone = GoogleAuthenticateModel::GetOtpCode($adminEmail);
-//      $code = rand(100000, 999999);
+if($flag == "emailaddprovider"){
+     $emailprovider = isset($this->viewData['emailprovider']) ? $this->viewData['emailprovider'] : "";
+     $sendename = isset($this->viewData['sendename']) ?($this->viewData['sendename']) : "";
+     $sendename =  urldecode($sendename);
+   //  strtoupper(urldecode($sendename))
+     $result  = PLatFormSettingModel::InserIntoEmail($emailprovider,$sendename);
+     echo json_encode($result);
+}
 
-    
-//     try {
-//         $request = new SMSRequest();
-//         $request->setHost("api.smsonlinegh.com");
-//         $request->setAuthModel(AuthModel::API_KEY);
-//         $request->setAuthApiKey("a49c61c65a8166d35b55fbcdcef25771399768bab912caf0cc987c33216d3b9c"); // Replace with your actual API key
+if($flag == "savepreferencesemail"){
+    $data = json_decode(file_get_contents("php://input"), true);
+    $result  = PLatFormSettingModel::InserEmailSavePreferences($data);
+    echo json_encode($result);
+}
 
-//         $request->setSender("LIMVO APP"); // Replace with your approved sender ID
-//         $request->setMessage( "Verfication Code"."  ".$code);
-//         $request->addDestination($phone);
+if($flag == "savedemailpreferencestate"){
+     $result  = PLatFormSettingModel::SaveStateEmailSettings();
+     echo json_encode($result); 
+}
 
-//         $response = $request->submit();
+if($flag =="fetchemailprovider"){
+    $results = PLatFormSettingModel::FetchEmailProviders();
+    echo json_encode($results);
+}
 
-//         if ($response instanceof MessageResponse) {
-//             echo "SMS sent successfully to $phone!";
-//             $adminEmail = (new Controller)->getSeesion("userauthmethosid");
-//             $result = GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
-//         } else {
-//             echo "Failed to send SMS. Reason: " . $response->getResponseMessage();
-//         }
-//         } catch (Exception $ex) {
-//             echo "Error: " . $ex->getMessage();
-//         }
-   
-// }
+if($flag == "filteremail"){
+    $emailprovider = isset($this->viewData['emailprovider']) ?  $this->viewData['emailprovider'] : "";
+    $emailstatus = isset($this->viewData['emailstatus']) ?  $this->viewData['emailstatus'] : "";
+    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
+    $enddate = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+      $subquery = PLatFormSettingModel::Emailsubquery($emailprovider,$emailstatus,$startdate,$enddate) ?? [];
+      $result   = PLatFormSettingModel::FilterEmailData($subquery,$page,$limit) ?? [];
+    echo json_encode([
+        'email' => $result['data'],
+         'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
 
-// if($flag == "checkotpstatus"){
-//      $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
-//      $result = GoogleAuthenticateModel::CheckotpStatus($adminEmail);
-//      echo json_encode($adminEmail);
-// }
 
-// if($flag == "resetauth"){
-//      $adminEmail = (new Controller)->getSeesion("isUserLoggedIn");
-//      $result = GoogleAuthenticateModel::ResetAuthentication($adminEmail);
-//      echo json_encode($result);
-// }
+if($flag == "deleteemail"){
+     $emailid = isset($this->viewData['email']) ? $this->viewData['email'] : "";
+     $result  = PLatFormSettingModel::DeleteEmail($emailid);
+     echo json_encode($result);
+}
 
 
 

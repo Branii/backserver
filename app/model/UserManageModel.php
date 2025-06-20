@@ -216,13 +216,15 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function fetchAgentSubs($agent_id, $page = 1, $limit = 20): array
+    public static function fetchAgentSubs($partner,$agent_id, $page = 1, $limit = 20): array
     {
         try {
-            $all_subs = DataReportModel::allSubs($agent_id, $page, $limit);
+        $all_subs = DataReportModel::allSubs($partner,$agent_id, $page, $limit);
+  
             if (empty($all_subs["data"])) {
                 return ["status" => "success", "data" => []];
             }
+
             $all_subs = $all_subs["data"];
 
             $uids = array_column($all_subs, 'uid');
@@ -354,7 +356,7 @@ class UserManageModel extends MEDOOHelper
     public static function fetchTopAgents(array $filters, $page = 1, $limit = 20): array
     {
         try {
-            $top_agents = self::filter_top_agents($filters, $page, $limit);
+           $top_agents = self::filter_top_agents($filters, $page, $limit);
             if (empty($top_agents["data"])) {
                 return ["status" => "success", "data" => [], "login_counts" => [], "direct_subs_count" => []];
             }
@@ -411,7 +413,6 @@ class UserManageModel extends MEDOOHelper
                 $params[':end_date'] = $end;
             }
 
-            
             $whereClause = empty($whereClause) ? " " : " WHERE  {$whereClause} ";
 
             $sql = "SELECT *,(SELECT COUNT(*) FROM users_test {$whereClause}) AS total_records FROM users_test {$whereClause}  ORDER BY uid DESC LIMIT :offset, :limit";
@@ -433,7 +434,7 @@ class UserManageModel extends MEDOOHelper
 
     public static function blockUserData(int $userId)
     {
-        $db = parent::getLink();
+        $db = parent::openLink();
         $params = [":userid" => intval($userId)];
         try {
             $sql = "UPDATE users_test SET user_state = 4 WHERE uid = :userid";
@@ -447,7 +448,7 @@ class UserManageModel extends MEDOOHelper
         } catch (PDOException $pDOException) {
             return ['status' => 'error', 'message' => $pDOException];
         }
-        }
+    }
     // public static function FilterUserlistDataSubQuery($username = '', $states = '', $from = '', $to = '')
     // {
     //     $conditions = [];
@@ -628,6 +629,104 @@ class UserManageModel extends MEDOOHelper
 
         return $nickname;
     }
+    public static function fetchUserLotteries($user_id)
+    {
+        try {
+            $db = parent::openLink();
+            $sql = "SELECT lt_id,name,(SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id ) as blockedLotteries FROM `lottery_type`";
+            $stmt = $db->query($sql, [":user_id" => $user_id]);
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+            if (empty($data)) {
+                return ["status" => "error", "data", "No Lotteries registered"];
+            }
+            $blocked_lotteries = $data[0]->blockedLotteries;
+            if ($blocked_lotteries != null && $blocked_lotteries != "*****") {
+                $data[0]->blockedLotteries = unserialize($blocked_lotteries);
+            }
+
+            return ["status" => "success", "data" => $data];
+        } catch (Exception $e) {
+            return ["status" => "error", "data" => "Internal Server Error." . $e->getMessage()];
+        }
+        // return ['lotteries' => $lotteries, 'blockedLotteries' => empty($data->blocked_lotteries) ? [] : unserialize($data->blocked_lotteries)];
+    }
+    public static function update_lottery_stat_for_user($user_id, $lottery_id)
+    {
+        try {
+            $db = parent::openLink();
+            $sql = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
+            $stmt = $db->query($sql, [":user_id" => $user_id]);
+            $data = $stmt->fetch(PDO::FETCH_OBJ);
+            $state = false;
+
+            $unserialized_lotteries = empty($data->blocked_lotteries) || $data->blocked_lotteries == "*****" ? [] : unserialize($data->blocked_lotteries);
+
+            if (empty($unserialized_lotteries)) {
+                $state = true;
+                $sql = "UPDATE `users_test` SET blocked_lotteries='" . serialize([$lottery_id]) . "' WHERE uid=:user_id";
+            } else {
+                if (in_array($lottery_id, $unserialized_lotteries)) {
+                    $unserialized_lotteries = array_diff($unserialized_lotteries, [$lottery_id]);
+                } else {
+                    $state = true;
+                    array_push($unserialized_lotteries, $lottery_id);
+                }
+
+                $sql = "UPDATE `users_test` SET blocked_lotteries='".serialize($unserialized_lotteries)."' WHERE uid=:user_id";
+            }
+            $stmt = $db->query($sql, [":user_id" => $user_id]);
+            if ($stmt->rowCount()) {
+                return ['status' => 'success', 'data' => $stmt->rowCount()];
+            }
+
+            // print_r($unserialized_lotteries);
+            return ['status' => 'success', 'data' => 0];
+        } catch (Exception $e) {
+            return ['status' => 'error', 'msg' => 'Error Blocking Lottery for User.' . $e->getMessage()];
+        }
+    }
+    public static function fetchUserLogs($user_id, $page = 1, $limit = 100): array
+    {
+        try {
+            $db = parent::openLink();
+            $offset = ($page - 1) * $limit;
+            $sql =
+                "SELECT ulog_id,uid,ip,login_date,login_time,(SELECT COUNT(ulog_id) FROM user_logs WHERE uid=:user_id) as totalPages, CASE ip_state WHEN 1 THEN 'allowed' ELSE 'unknown' END AS ip_state FROM user_logs WHERE uid=:user_id LIMIT :offset, :limit";
+            $stmt = $db->query($sql, [":user_id" => $user_id, ":offset" => $offset, ":limit" => $limit]);
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return ['status' => 'success', "data" => $data];
+        } catch (Exception $e) {
+            return ["status" => "error", "data" => "Internal Server Error."];
+        }
+    }
+    public static function FetchUserData(int $user_id)
+    {
+        try {
+            $db = parent::openLink();
+            $sql = "SELECT * FROM users_test WHERE uid = :user_id";
+            $stmt = $db->query($sql, [":user_id" => $user_id]);
+            $data = $stmt->fetch(PDO::FETCH_OBJ);
+            return ["status" => "success", "data" => $data];
+        } catch (Exception $e) {
+            return ["status" => "error", "data" => $e->getMessage()];
+        }
+    }
+    public static function deleteUserData(int $userId)
+    {
+        try {
+            $db = parent::openLink();
+            $sql = "DELETE FROM users_test WHERE uid = :userid";
+            $stmt = $db->query($sql, [":userid" => intval($userId)]);
+            if ($stmt->rowCount() > 0) {
+                return ['status' => 'success', 'data' => $stmt->rowCount()];
+            } else {
+                return ['status' => 'success', 'data' => 0];
+            }
+        } catch (Exception $e) {
+            return ["status" => "error", "data" => "Internal Server Error."];
+        }
+    }
+
 
     ////////////// USERLIST LIST END -//////////
     //NOTE -
@@ -635,25 +734,25 @@ class UserManageModel extends MEDOOHelper
     ////////////// USERLIST LOGS -//////////
     public static function FetchUserlogsData($page, $limit): array
     {
-        $startpoint = ($page * $limit) - $limit;
-        $sql = "
-        SELECT 
-            user_logs.*, 
-            users_test.email, users_test.contact, users_test.reg_type ,
-            COALESCE(users_test.username, 'N/A') AS username 
-        FROM user_logs   
-        JOIN users_test ON users_test.uid = user_logs.uid  
-        ORDER BY user_logs.ulog_id DESC 
-        LIMIT :startpoint, :limit
-     ";
+            $startpoint = ($page * $limit) - $limit;
+            $sql = "
+            SELECT 
+                user_logs.*, 
+                users_test.email, users_test.contact, users_test.reg_type ,
+                COALESCE(users_test.username, 'N/A') AS username 
+            FROM user_logs   
+            JOIN users_test ON users_test.uid = user_logs.uid  
+            ORDER BY user_logs.ulog_id DESC 
+            LIMIT :startpoint, :limit
+        ";
 
+            // Execute the query with pagination parameters
+            $data = parent::openLink()->query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+            $totalRecords = parent::count('user_logs');
         // Execute the query with pagination parameters
-        $data = parent::openLink()->query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
-        $totalRecords = parent::count('user_logs');
-    // Execute the query with pagination parameters
-      $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
-        $totalRecords  = parent::count('user_logs');
-        return ['data' => $data, 'total' => $totalRecords];
+        $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+            $totalRecords  = parent::count('user_logs');
+            return ['data' => $data, 'total' => $totalRecords];
     }
 
     public static function Filteruserlogs($subQuery, $page, $limit)

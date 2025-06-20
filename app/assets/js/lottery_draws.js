@@ -11,33 +11,42 @@ $(function(){
       });
     }
 
+const SETTLED_TEXT = document.getElementById("settled_text").innerText;
+const UNSETTLED_TEXT = document.getElementById("unsettled_text").innerText;
+const PENDING_TEXT = document.getElementById("pending_text").innerText;
 
+const drawTables = (data) => {
+    let html = "";
 
-  const drawTables = (data) => {
-      let html = "";
+    const statusMap = {
+        'done': SETTLED_TEXT,
+        'waiting': UNSETTLED_TEXT,
+        'pending': PENDING_TEXT
+    };
 
-      const status = {'done' : 'Settled', 'waiting' : 'Settling'};
-      data.forEach((item) => {
+    data.forEach((item) => {
         let timezone = item.timezone.split(" ");
         timezone = timezone[0] + `<span style="margin-left: 1rem;">${timezone[1]}</span>`;
+
         html += `<tr class="trow">
-                      <td>${item.lottery_type}</td>
-                      <td>${transformInputLd(item.lottery_code)}</td>
-                      <td>${item.issue_number}</td>
-                      <td>${item.winning_numbers}</td>
-                      <td>${item.total_bet_amount}</td>
-                      <td>${item.total_win_amount}</td>
-                      <td>${item.draw_time}</td>
-                      <td>${item.sales_deadline}</td>
-                      <td>${item.actual_draw_time}</td>
-                      <td>${timezone}</td>
-                      <td>${item.settlement_completion_time}</td>
-                      <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${status[item.status]}</span></td>
-                  </tr>
-              `;
-      });
-      return html;
-  };
+                  <td>${item.lottery_type}</td>
+                  <td>${transformInputLd(item.lottery_code)}</td>
+                  <td>${item.issue_number}</td>
+                  <td>${item.winning_numbers}</td>
+                  <td>${item.total_bet_amount}</td>
+                  <td>${item.total_win_amount}</td>
+                  <td>${item.draw_time}</td>
+                  <td>${item.sales_deadline}</td>
+                  <td>${item.actual_draw_time}</td>
+                  <td>${timezone}</td>
+                  <td>${item.settlement_completion_time}</td>
+                  <td><span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${statusMap[item.status] || item.status}</span></td>
+              </tr>`;
+    });
+
+    return html;
+};
+
 
   const renderDrawTable = (data) => {
 

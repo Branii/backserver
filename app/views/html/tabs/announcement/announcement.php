@@ -247,6 +247,27 @@
     }
 </style>
 
+<span id="Editt-text" data-translation="<?= $translator['Edit'] ?? 'Edit'; ?>" style="display:none;"></span>
+<span id="Deletee-text" data-translation="<?= $translator['Delete'] ?? 'Delete'; ?>" style="display:none;"></span>
+  
+<!-- Hidden translation spans -->
+<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp'] ?? 'Heads up!!'; ?>" style="display:none;"></span>
+<span id="trans-select-fields" data-translation="<?= $translator['Select one or more data fields to filter'] ?? 'Select one or more data fields to filter'; ?>" style="display:none;"></span>
+<span id="trans-all-fields" data-translation="<?= $translator['AllFieldsRequired'] ?? 'All fields are required'; ?>" style="display:none;"></span>
+<span id="trans-failed" data-translation="<?= $translator['Failed'] ?? 'Failed'; ?>" style="display:none;"></span>
+
+
+<span id="trans-no-user-selected-title" style="display: none;"><?php echo $translator['NO_USER_SELECTED_TITLE']; ?></span>
+<span id="trans-no-user-selected-msg" style="display: none;"><?php echo $translator['NO_USER_SELECTED_MSG']; ?></span>
+
+<span id="all_fields_required_text" style="display:none;"><?php echo $translator['ALL_FIELDS_REQUIRED']; ?></span>
+<span id="cannot_update_if_empty_text" style="display:none;"><?php echo $translator['CANNOT_UPDATE_IF_EMPTY']; ?></span>
+
+
+
+
+
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Announcement List']; ?></h4>
@@ -328,7 +349,7 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Message Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Timezone/Hrs']; ?></h6>
                         </th>
 
                         <th>
@@ -424,9 +445,9 @@
                     <div class="form-floating mb-3">
                         <select name="deposit" class="form-select form-control borders border-infos messagetype">
                         <option value="general"><?= $translator['General Announcement (All Users)']; ?></option>
-                        <option value="new_users">Newly Registered Users Only</option>
+                        <option value="new_users"><?= $translator['Newly Registered Users Only']; ?></option>
                         <option value="personal"><?= $translator['User-Specific Announcement']; ?></option>
-                        <option value="vipusers">VIP Users Only</option>
+                        <option value="vipusers"><?= $translator['VIP Users Only']; ?></option>
                         </select>
                         <label>
                             <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
@@ -450,8 +471,8 @@
 
                     <div class="input-group mb-3">
                     <span class="input-group-text" id="" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bxs-calendar' style="font-size:18px;"></i></span>
-                    <input type="date" class="form-control notistartdate" placeholder="Search ..." id="combinedatess" aria-describedby="basic-addon1" />
-                    <input type="date" class="form-control notienddates" placeholder="Search ..." id="combinedates" aria-describedby="basic-addon1" />
+                    <input type="date" class="form-control notistartdate" placeholder=" <?=$translator['Search']; ?>..." id="combinedatess" aria-describedby="basic-addon1" />
+                    <input type="date" class="form-control notienddates" placeholder="<?=$translator['Search']; ?>..." id="combinedates" aria-describedby="basic-addon1" />
                     </div>
 
                     <div class="form-floating mb-3">
@@ -462,7 +483,7 @@
                         </select>
                         <label>
                             <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
-                            <span class="border-start ps-3">Audience</span>
+                            <span class="border-start ps-3"><?=$translator['Audience']; ?></span>
                         </label>
                       </div>
 

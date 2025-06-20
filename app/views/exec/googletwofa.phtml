@@ -35,16 +35,16 @@ if($flag == "verifycodebyemail"){
     $email = isset($this->viewData['email']) ? $this->viewData['email'] : "";
     $code = rand(100000, 999999);
      if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      (new EmailProviderModel)-> sendEmailDefault($email,$code);
-     $adminEmail = (new Controller)->getSeesion("userauthmethosid");
-     $result = GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
+      $adminEmail = (new Controller)->getSeesion("userauthmethosid");
+      $result = GoogleAuthenticateModel::SignOptionUpdates($adminEmail,$code);
+      (new EmailProviderModel)->sendEmailDefault($email,$code);
       }else{
            echo "Invalid email address.";
       } 
 }
 
 if($flag =="verifycodebycontact"){
-     $phone = isset($this->viewData['contact']) ? $this->viewData['contact'] : "";
+     $contact = isset($this->viewData['contact']) ? $this->viewData['contact'] : "";
      $code = rand(100000, 999999); 
      $message = 'Verification Code: ' . $code;
     // $provider ="smsonlinegh";
@@ -72,7 +72,7 @@ if($flag == "twofaenables"){
 
 if($flag == "getcodeverify"){
      $adminEmail = (new Controller)->getSeesion("userauthmethosid");
-     $phone = GoogleAuthenticateModel::GetOtpCode($adminEmail);
+     $contact = GoogleAuthenticateModel::GetOtpCode($adminEmail);
      $code = rand(100000, 999999); 
      $message = 'Verification Code: ' . $code;
      $provider = PLatFormSettingModel::getActiveProvider('otp');
