@@ -72,13 +72,20 @@ const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
                 <input type="range" class="rangeSlideroness" min="0" step ="0.1" max="100" value="${item.totalbetpercentage}"  ${disableslider}/>
                 <span class="rangeValues" style="margin-left:10px">${item.totalbetpercentage}%</span>
                 </td>
-
                 <td>
                     <label class="switch">
                     <input type="checkbox"  class="form-check-input gamestatus" value ='${item.gn_id}'  datas= '${item.model}' role="switch" ${isChecked}>
                     <span class="slider"></span>
                     </label>
                 </td>
+
+                  <td>
+                   <label class="switch">
+                    <input type="checkbox"  class="form-check-input gamestatus" value ='${item.gn_id}'  datas= '${item.model}' role="switch" ${isChecked}>
+                    <span class="slider"></span>
+                    </label>
+                 </td>
+
          
                 <td> <button type="button" class="btn btn-light updatethis saveBtn" value ='${item.gn_id}' datas= '${item.model}' >${SaveText}</button></td>
              </tr>
@@ -334,17 +341,14 @@ showToast(SUCCESS_TEXT, NO_CHANGES_MADE, "info");
 
   async function updateGameStatus(gametypeId, gamemodel, isChecked) {
     try {
-      const response = await fetch(
-        `../admin/updategamestatus/${gametypeId}/${gamemodel}/${isChecked}`
-      );
+      const response = await fetch(`../admin/updategamestatus/${gametypeId}/${gamemodel}/${isChecked}`);
       const data = await response.json();
       // console.log(data);
       if (data.success) {
         // Ensure the backend sends { success: true } when the update is successful
         // showToast("Success", "Game state updated", "info");
      
-showToast(SUCCESS_TEXT, GAME_STATE_UPDATED, "info");
-
+    showToast(SUCCESS_TEXT, GAME_STATE_UPDATED, "info");
 
       } else {
         return false;
