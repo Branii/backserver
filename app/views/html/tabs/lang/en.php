@@ -51,6 +51,7 @@ return [
     'Referral Time' => 'Referral Time',
     'Message Time' => 'Message Time',
     'Notification Time' => 'Notification Time',
+    'Profit Limit'=>'Profit Limit',
 
     //'Withdrawal Review' => 'Withdrawal Review',
     'Withdrawal Review' => 'Withdrawal Review',
