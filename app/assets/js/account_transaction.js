@@ -53,31 +53,32 @@ $(function () {
             // 12: { title: translator["Bet Lost"], color: "#FFC107" } // Amber
         };
 
+        
         let completes = translator["Completed"];
         const formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
 
-        data.forEach((item) => {
-            let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-            if (item.order_type === 12) return;
-            let timezone = item.timezone.split(" ");
-            timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
-            html += `
-                      <tr class="trow">
-                        <td>${"TR" + item.order_id.substring(0, 7)}</td>
-                        <td>${username}</td>
-                        <td>${item.name}</td>
-                        <td><i class='bx bxs-circle' style='color:${statusColor[item.order_type].color};font-size:8px;margin-right:5px;'></i>${statusColor[item.order_type].title}</td>
-                        <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
-                        <td>${formatMoney(item.balance)}</td>
-                        <td>${formatTimestamp(item.date_created)}</td>
-                        <td>${timezone}</td>
-                        <td>${item.order_id}</td>
-                        <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${completes}</span></td>
-                        <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
-                      </tr>
-                  `;
-        });
+       data.forEach((item) => {
+        if (item.order_type === 12) return;
 
+        let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+        let timezone = item.timezone ? item.timezone.split(" ") : ["UTC", "+0"];
+        timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
+
+        html += `
+            <tr class="trow">
+                <td>${"TR" + item.order_id.substring(0, 7)}</td>
+                <td>${username}</td>
+                <td>${item.name}</td>
+                <td><i class='bx bxs-circle' style='color:${statusColor[item.order_type]?.color || "#000"};font-size:8px;margin-right:5px;'></i>${statusColor[item.order_type]?.title || "Unknown"}</td>
+                <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
+                <td>${formatMoney(item.balance)}</td>
+                <td>${formatTimestamp(item.date_created)}</td>
+                <td>${timezone}</td>
+                <td>${item.order_id}</td>
+                <td><span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${completes}</span></td>
+                <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
+            </tr>`;
+    });
         return html;
     };
 
@@ -140,8 +141,10 @@ $(function () {
     };
 
     const render = (data) => {
-        var html = AccountTransactions(data);
-        $("#dataContainer").html(html);
+    //   console.log("Rendering to Table Body:", data);
+    var html = AccountTransactions(data);
+    // console.log("Generated HTML:", html);
+    $("#dataContainer").html(html);
     };
 
     let currentPage = 1;
@@ -151,6 +154,8 @@ $(function () {
         try {
             const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
             const data = await response.json();
+            // Logs the entire response
+        // console.log("Transaction Data Array:", data.transaction); // Logs just the transaction list
             $("#mask").LoadingOverlay("hide");
             render(data.transaction);
             renderPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchTrasaction(newPage, pageLimit));
@@ -159,6 +164,8 @@ $(function () {
             console.error("Error fetching data:", error);
         }
     }
+
+    
     fetchTrasaction(currentPage, pageLimit);
 
     function renderPagination(totalPages, currentPage, pageLimit, callback) {

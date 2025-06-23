@@ -361,8 +361,12 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
                         </th>
                         <th>
+                       
                             <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
+
                         </th>
+
+                        
                     </tr>
                 </thead>
 
