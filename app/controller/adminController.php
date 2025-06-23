@@ -1201,5 +1201,17 @@ class adminController extends Controller
     }
 
 
+    // reset user login attempt
+
+     public function resetUser($uid) {
+
+
+    $this->view('exec/account_manage', [
+        'uid' => $uid,
+        'flag' => 'resetloginattempt'
+    ]);
+    $this->view->render();
+}
+
     //filteradmindata
 }

@@ -2,13 +2,11 @@
 
 class UserManageModel extends MEDOOHelper
 {
-
     //NOTE -
     ////////////// USERLIST LIST -//////////
 
     public static function FetchUserlistData($page, $limit): array
     {
-
         $startpoint = ($page - 1) * $limit;
         $data = parent::query(
             "SELECT uid, username,email,contact,nickname, agent_name, balance, recharge_level, user_state,reg_type,
@@ -17,8 +15,8 @@ class UserManageModel extends MEDOOHelper
              ORDER BY uid DESC
              LIMIT :startpoint, :limit",
             [
-                'startpoint' => (int)$startpoint,
-                'limit' => (int)$limit
+                'startpoint' => (int) $startpoint,
+                'limit' => (int) $limit,
             ]
         );
 
@@ -26,19 +24,19 @@ class UserManageModel extends MEDOOHelper
 
         return ['data' => $data, 'total' => $totalRecords];
     }
-    public static function countUserLogs($partnerID,$uid)
-    {   
+    public static function countUserLogs($partnerID, $uid)
+    {
         $logCount = parent::openLink($partnerID)->count("user_logs", '*', ["uid" => $uid]);
         // $logCount = parent::count("user_logs", '*', ["uid" => $uid]);
         return $logCount ?: null;
     }
 
-    public static function getDirectReferrals($partnerID,$agent_id)
+    public static function getDirectReferrals($partnerID, $agent_id)
     {
         $total = parent::getLink($partnerID)->count("users_test", "*", ["agent_id" => $agent_id]);
         return $total > 2 ? '...' : '->';
     }
-    public static function getSubordinate($partnerID,$agent_id)
+    public static function getSubordinate($partnerID, $agent_id)
     {
         return $data = parent::openLink($partnerID)->query("SELECT nickname FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
     }
@@ -65,24 +63,23 @@ class UserManageModel extends MEDOOHelper
             return [];
         }
 
-        return  $data = parent::query("SELECT nickname FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
+        return $data = parent::query("SELECT nickname FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
     }
 
-    public static function Fetchsubordinates($partnerID,$uid)
+    public static function Fetchsubordinates($partnerID, $uid)
     {
         $totalCount = parent::openLink($partnerID)->count("users_test", "*", ["AND" => ["agent_id" => $uid, "account_type" => 3, "uid[!]" => $uid]]);
         $totalCount = parent::count("users_test", "*", ["AND" => ["agent_id" => $uid, "account_type" => 3, "uid[!]" => $uid]]);
         return $totalCount;
     }
 
- 
     public static function Filteruserlist($page, $limit, $username, $states, $startdate, $enddate)
     {
         $whereConditions = self::FilterUserlistDataSubQuery($username, $states, $startdate, $enddate);
-        $startpoint = ($page * $limit) - $limit;
+        $startpoint = $page * $limit - $limit;
         $data = parent::selectAll("users", '*', ["AND" => $whereConditions, "ORDER" => ["users.uid" => "DESC"], "LIMIT" => [$startpoint, $limit]]);
         $lastQuery = MedooOrm::openLink()->log();
-        $totalRecords = parent::count("users","*",["AND" => $whereConditions]);
+        $totalRecords = parent::count("users", "*", ["AND" => $whereConditions]);
         return ['data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery[0]];
     }
 
@@ -194,7 +191,6 @@ class UserManageModel extends MEDOOHelper
 
         // $totalRecords  = parent::selectAll('users', '*', ['AND' => $whereConditions]);
         // return ['data' => $data, 'total' => count($totalRecords), 'sql' => $lastQuery[0]];
-
     }
 
     public static function fetch_agent_nickname(array $agent_ids): array
@@ -216,11 +212,11 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function fetchAgentSubs($partner,$agent_id, $page = 1, $limit = 20): array
+    public static function fetchAgentSubs($partner, $agent_id, $page = 1, $limit = 20): array
     {
         try {
-        $all_subs = DataReportModel::allSubs($partner,$agent_id, $page, $limit);
-  
+            $all_subs = DataReportModel::allSubs($partner, $agent_id, $page, $limit);
+
             if (empty($all_subs["data"])) {
                 return ["status" => "success", "data" => []];
             }
@@ -240,7 +236,7 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function filter_user($partnerID,array $filters = []): array
+    public static function filter_user($partnerID, array $filters = []): array
     {
         try {
             $database = parent::openLink($partnerID);
@@ -335,17 +331,17 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function searchUserData($partnerID,$filters): array
+    public static function searchUserData($partnerID, $filters): array
     {
         try {
-            $top_agents = self::filter_user($partnerID,$filters);
+            $top_agents = self::filter_user($partnerID, $filters);
             if (empty($top_agents["data"])) {
                 return ["status" => "success", "data" => []];
             }
             $top_agents = $top_agents["data"];
             $uids = array_column($top_agents, 'uid');
-            $login_counts = self::fetch_users_login_count($partnerID,$uids);
-            $subs_count = self::count_subs($partnerID,$uids);
+            $login_counts = self::fetch_users_login_count($partnerID, $uids);
+            $subs_count = self::count_subs($partnerID, $uids);
 
             return ["status" => "success", "data" => $top_agents, "login_counts" => $login_counts, "direct_subs_count" => $subs_count];
         } catch (Exception $e) {
@@ -356,7 +352,7 @@ class UserManageModel extends MEDOOHelper
     public static function fetchTopAgents(array $filters, $page = 1, $limit = 20): array
     {
         try {
-           $top_agents = self::filter_top_agents($filters, $page, $limit);
+            $top_agents = self::filter_top_agents($filters, $page, $limit);
             if (empty($top_agents["data"])) {
                 return ["status" => "success", "data" => [], "login_counts" => [], "direct_subs_count" => []];
             }
@@ -372,7 +368,7 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-    public static function fetchUsersData($partnerID,array $filters = [], $page = 1, $limit): array
+    public static function fetchUsersData($partnerID, array $filters = [], $page = 1, $limit): array
     {
         try {
             $db = parent::openLink();
@@ -419,7 +415,6 @@ class UserManageModel extends MEDOOHelper
             $stmt = $db->query($sql, $params);
             $data = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-            
             $uids = array_column($data, 'uid');
             $agent_ids = array_column($data, 'agent_id');
             $login_counts = self::fetch_users_login_count($uids);
@@ -472,10 +467,8 @@ class UserManageModel extends MEDOOHelper
     //     return $conditions;
     // }
 
-
     public static function AddAgentData($datas)
     {
-
         try {
             $inserAgentdata = parent::insert("users_test", $datas);
 
@@ -494,7 +487,7 @@ class UserManageModel extends MEDOOHelper
     public static function FetchTopAgentData($page, $limit): array
     {
         // Calculate the starting point for pagination
-        $startpoint = ($page * $limit) - $limit;
+        $startpoint = $page * $limit - $limit;
         $sql = "
         SELECT 
             uid, username,email,contact, agent_name, balance, recharge_level, user_state, 
@@ -506,7 +499,7 @@ class UserManageModel extends MEDOOHelper
       ";
 
         // $data = parent:: query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
-      $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+        $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
         // Count the total records with the same filter (for pagination)
         $totalRecords = parent::count("users_test");
 
@@ -516,31 +509,29 @@ class UserManageModel extends MEDOOHelper
 
     public static function checkEmailExist($datas)
     {
-        return  $agentemail = parent::selectAll("users_test", ["email", "uid"], ["email" => $datas]);
+        return $agentemail = parent::selectAll("users_test", ["email", "uid"], ["email" => $datas]);
     }
 
     public static function UpdateAgentTable($userData)
     {
-
-        $dates  = new DateTime();
-        $date   = $dates->format('Y-m-d');
-        $time   = $dates->format("H:i:s");
-        $agent  =  self::checkEmailExist($userData['email'])[0];
+        $dates = new DateTime();
+        $date = $dates->format('Y-m-d');
+        $time = $dates->format("H:i:s");
+        $agent = self::checkEmailExist($userData['email'])[0];
         $agentid = $agent['uid'];
         $data = [
             "agent_id" => $agentid,
             "agent_name" => $userData["username"],
             "agent_email" => $userData["email"],
-            "agent_rebate" =>  $userData["rebate"],
-            "date_created" =>  $date,
+            "agent_rebate" => $userData["rebate"],
+            "date_created" => $date,
             "time_created" => $time,
         ];
         return $Agentdata = parent::insert("agents", $data);
     }
 
-    public static function validateRegister($partnerID,$datas)
+    public static function validateRegister($partnerID, $datas)
     {
-
         $errors = [];
         // $emailexist = self::checkEmailExist($datas['agentemail']);
         $password = trim($datas['agentpassword'] ?? '');
@@ -548,8 +539,7 @@ class UserManageModel extends MEDOOHelper
         // $email = trim($datas['agentemail'] ?? '');
         $username = trim($datas['agentname'] ?? '');
 
-
-        //email exit    
+        //email exit
         // if ($emailexist) {
         //     $errors['emailexist'] = "Email already exists";
         // }
@@ -604,10 +594,10 @@ class UserManageModel extends MEDOOHelper
     public static function FetchRebateData($partnerID)
     {
         // return $res = parent::selectAll($partnerID,"rebate", ["rebate"], ["ORDER" => ["rebate_id" => "ASC"]]);
-        return  $res = parent::selectAll("rebate", ["rebate"], ["ORDER" => ["rebate_id" => "ASC"]]);
+        return $res = parent::selectAll("rebate", ["rebate"], ["ORDER" => ["rebate_id" => "ASC"]]);
     }
 
-    public static function fetchquotaData($partnerID,$userrebate)
+    public static function fetchquotaData($partnerID, $userrebate)
     {
         $data = parent::openLink($partnerID)->query("SELECT odds_group, rebate, quota, counts FROM rebate WHERE rebate <= :rebate", ['rebate' => $userrebate]);
 
@@ -615,7 +605,7 @@ class UserManageModel extends MEDOOHelper
         return $serializedData = json_encode($data);
     }
 
-    public static   function generateRandomNickname()
+    public static function generateRandomNickname()
     {
         // List of random words to pick from
         $adjectives = ['Swift', 'Bold', 'Clever', 'Brave', 'Mighty', 'Fierce', 'Silent', 'Electric', 'Lucky', 'Shiny'];
@@ -629,6 +619,7 @@ class UserManageModel extends MEDOOHelper
 
         return $nickname;
     }
+
     public static function fetchUserLotteries($user_id)
     {
         try {
@@ -672,7 +663,7 @@ class UserManageModel extends MEDOOHelper
                     array_push($unserialized_lotteries, $lottery_id);
                 }
 
-                $sql = "UPDATE `users_test` SET blocked_lotteries='".serialize($unserialized_lotteries)."' WHERE uid=:user_id";
+                $sql = "UPDATE `users_test` SET blocked_lotteries='" . serialize($unserialized_lotteries) . "' WHERE uid=:user_id";
             }
             $stmt = $db->query($sql, [":user_id" => $user_id]);
             if ($stmt->rowCount()) {
@@ -727,15 +718,14 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-
     ////////////// USERLIST LIST END -//////////
     //NOTE -
 
     ////////////// USERLIST LOGS -//////////
     public static function FetchUserlogsData($page, $limit): array
     {
-            $startpoint = ($page * $limit) - $limit;
-            $sql = "
+        $startpoint = $page * $limit - $limit;
+        $sql = "
             SELECT 
                 user_logs.*, 
                 users_test.email, users_test.contact, users_test.reg_type ,
@@ -746,13 +736,13 @@ class UserManageModel extends MEDOOHelper
             LIMIT :startpoint, :limit
         ";
 
-            // Execute the query with pagination parameters
-            $data = parent::openLink()->query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
-            $totalRecords = parent::count('user_logs');
+        // Execute the query with pagination parameters
+        $data = parent::openLink()->query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+        $totalRecords = parent::count('user_logs');
         // Execute the query with pagination parameters
         $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
-            $totalRecords  = parent::count('user_logs');
-            return ['data' => $data, 'total' => $totalRecords];
+        $totalRecords = parent::count('user_logs');
+        return ['data' => $data, 'total' => $totalRecords];
     }
 
     public static function Filteruserlogs($subQuery, $page, $limit)
@@ -915,5 +905,87 @@ class UserManageModel extends MEDOOHelper
         //  $subQuery .= " ORDER BY dateTime DESC";
 
         return $subQuery;
+    }
+
+    // reset login attempt
+    public static function ResetloginAttempt($uid)
+    {
+        try {
+            $pdo = (new Database())->openLink();
+
+            // Step 1: Check if login_attempt is already 0
+            $checkSql = "SELECT login_attempt FROM users_test WHERE uid = :uid";
+            $checkStmt = $pdo->prepare($checkSql);
+            $checkStmt->bindParam(':uid', $uid, PDO::PARAM_INT);
+            $checkStmt->execute();
+            $current = $checkStmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$current) {
+                return [
+                    'status' => 'error',
+                    'message' => 'User not found',
+                ];
+            }
+
+            if ((int) $current['login_attempt'] === 0) {
+                return [
+                    'status' => 'info',
+                    'message' => 'Login attempt already reset',
+                ];
+            }
+
+            // Step 2: Reset the login attempt
+            $sql = "UPDATE users_test SET login_attempt = 0 WHERE uid = :uid";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':uid', $uid, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return [
+                'status' => 'success',
+                'message' => 'Login attempt reset successfully',
+            ];
+        } catch (PDOException $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Reset failed: ' . $e->getMessage(),
+            ];
+        }
+    }
+
+    //updateUserInfo
+    public static function updateUserInfo($user_id, $depositLimit, $withdrawalLimit, $rebate, $state, $dailyBettingTotalLimit)
+    {
+        try {
+            $pdo = (new Database())->openLink();
+
+            $sql = "UPDATE users_test 
+                SET 
+                    recharge_level = :depositLimit,
+                    withdrawal_level = :withdrawalLimit,
+                    rebate = :rebate,
+                   user_state = :user_state,
+                    daily_bet_limit = :dailyBettingTotalLimit
+                WHERE uid = :uid";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':depositLimit', $depositLimit);
+            $stmt->bindParam(':withdrawalLimit', $withdrawalLimit);
+            $stmt->bindParam(':rebate', $rebate);
+            $stmt->bindParam(':user_state', $state);
+            $stmt->bindParam(':dailyBettingTotalLimit', $dailyBettingTotalLimit);
+            $stmt->bindParam(':uid', $user_id, PDO::PARAM_INT);
+
+            $stmt->execute();
+
+            return [
+                'status' => 'success',
+                'data' => $stmt->rowCount(), // You can return row count to JS
+            ];
+        } catch (PDOException $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Update failed: ' . $e->getMessage(),
+            ];
+        }
     }
 }

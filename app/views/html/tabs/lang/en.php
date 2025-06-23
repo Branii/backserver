@@ -1474,5 +1474,12 @@ return [
     'Page' => 'Page',
     'of' => 'of',
     'pages' => 'pages',
+    'Reset Login Attempt' => 'Reset Login Attempt',
+    'Are you sure you want to Reset Login Attempt' => 'Are you sure you want to Reset Login Attempt',
+    "Error" => "Error",
+    "UnexpectedError" => "An unexpected error occurred.",
+    'unexpected_error' => 'An unexpected error occurred.',
+    'operation_successful' => 'Operation completed successfully.',
+    
 
 ];
