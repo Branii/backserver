@@ -68,6 +68,22 @@ if ($flag == "updategamestatus") {
     echo json_encode($result);
 }
 
+if ($flag == "updategamegroup") {
+    $gamegroupid = isset($this->viewData['gamegroupid']) ? $this->viewData['gamegroupid'] : '';
+    $gametate =isset($this->viewData['gametate']) ? $this->viewData['gametate'] : ''; 
+    $result = GameManageModel::UpdateGameGroup($gamegroupid,$gametate);
+    echo json_encode($result);
+}
+
+if ($flag == "updategamelottery") {
+    $lotteryid = isset($this->viewData['lotteryid']) ? $this->viewData['lotteryid'] : '';
+    $gametate =isset($this->viewData['gametate']) ? $this->viewData['gametate'] : ''; 
+    $result = GameManageModel::UpdateGameLotteryType($lotteryid,$gametate);
+    echo json_encode($result);
+}
+
+
+
 
 if($flag == "getSpecificDraws") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;

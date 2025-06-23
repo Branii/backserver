@@ -826,6 +826,20 @@ class adminController extends Controller
         $this->view->render();
     }
 
+     function updategamegroup($gamegroupid, $gametate)
+    {
+        $this->view('exec/game_management', [ 'flag' => 'updategamegroup','gamegroupid' => $gamegroupid,'gametate' => $gametate]);
+        $this->view->render();
+    }
+
+     function updategamelottery($lotteryid, $gametate)
+    {
+        $this->view('exec/game_management', [ 'flag' => 'updategamelottery','lotteryid' => $lotteryid,'gametate' => $gametate]);
+        $this->view->render();
+    }
+
+    
+
     //annoucement
     function createannoucement($messagetype, $messagetitle, $usernames, $description, $startdate, $enddate, $sendby)
     {
