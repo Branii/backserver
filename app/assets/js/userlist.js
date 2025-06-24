@@ -963,14 +963,13 @@ $(function () {
         //     6: "Forbbiden to Withdraw", // Red
         // };
         const status = {
-    1: document.getElementById('status_enable').innerText,
-    2: document.getElementById('status_suspend').innerText,
-    3: document.getElementById('status_forbid_login').innerText,
-    4: document.getElementById('status_blocked').innerText,
-    5: document.getElementById('status_forbid_deposit').innerText,
-    6: document.getElementById('status_forbid_withdraw').innerText
-};
-
+            1: document.getElementById("status_enable").innerText,
+            2: document.getElementById("status_suspend").innerText,
+            3: document.getElementById("status_forbid_login").innerText,
+            4: document.getElementById("status_blocked").innerText,
+            5: document.getElementById("status_forbid_deposit").innerText,
+            6: document.getElementById("status_forbid_withdraw").innerText,
+        };
 
         //   const account_type = {
         //     1 :"customer",

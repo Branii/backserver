@@ -305,6 +305,15 @@
 
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
+<span id="gamemodel_1" style="display:none;"><?= $translator['gamemodel_standard'] ?></span>
+<span id="gamemodel_2" style="display:none;"><?= $translator['gamemodel_two_sides'] ?></span>
+<span id="gamemodel_3" style="display:none;"><?= $translator['gamemodel_road_bets'] ?></span>
+<span id="gamemodel_4" style="display:none;"><?= $translator['gamemodel_long_dragon'] ?></span>
+<span id="gamemodel_5" style="display:none;"><?= $translator['gamemodel_many_tables'] ?></span>
+<span id="gamemodel_6" style="display:none;"><?= $translator['gamemodel_board_games'] ?></span>
+<span id="gamemodel_7" style="display:none;"><?= $translator['gamemodel_fantan'] ?></span>
+<span id="gamemodel_8" style="display:none;"><?= $translator['gamemodel_trend'] ?></span>
+
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">

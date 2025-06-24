@@ -525,14 +525,10 @@
 <span id="trans-ip-updated" data-translation="<?= $translator['IPUpdated']; ?>" style="display: none;"></span>
 <span id="trans-no-agent" data-translation="<?= $translator['NoAgent']; ?>" style="display: none;"></span>
 <span id="trans-no-agent-message" data-translation="<?= $translator['NoAgentMessage']; ?>" style="display: none;"></span>
-
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
-
 <!-- toast messages ends here -->
-
 <!-- //userlist info -->
-
 <span id="trans-heads-up" data-translation="<?= $translator['HeadsUp']; ?>" style="display: none;"></span>
 <span id="trans-email-exists" data-translation="<?= $translator['EmailExists']; ?>" style="display: none;"></span>
 <span id="trans-username-pattern" data-translation="<?= $translator['UsernamePattern']; ?>" style="display: none;"></span>
@@ -543,10 +539,8 @@
 <span id="trans-confirm-password" data-translation="<?= $translator['ConfirmPassword']; ?>" style="display: none;"></span>
 <span id="trans-password-length" data-translation="<?= $translator['PasswordLength']; ?>" style="display: none;"></span>
 <span id="trans-password-required" data-translation="<?= $translator['PasswordRequired']; ?>" style="display: none;"></span>
-
 <!-- //userlist info ends here -->
 <!-- button icons -->
-
 <span id="view-text" data-translation="<?= $translator['View'] ?? 'View'; ?>" style="display: none;"></span>
 <span id="quota-text" data-translation="<?= $translator['Quota'] ?? 'Quota'; ?>" style="display: none;"></span>
 <span id="subs-text" data-translation="<?= $translator['Subs'] ?? 'Subs'; ?>" style="display: none;"></span>
@@ -556,19 +550,16 @@
 <span id="delete-user-text" data-translation="<?= $translator['Delete User'] ?? 'Delete User'; ?>" style="display: none;"></span>
 <span id="deactivate-user-text" data-translation="<?= $translator['Deactivate User'] ?? 'Deactivate User'; ?>" style="display: none;"></span>
 <span id="reset-user-text" data-translation="<?= $translator['Reset Login Attempt'] ?? 'Reset Login Attempt'; ?>" style="display: none;"></span>
-
 <!-- User Status Translations for JS -->
-<span id="status_enable" style="display:none;"><?= $translator['status_enable'] ?></span>
-<span id="status_suspend" style="display:none;"><?= $translator['status_suspend'] ?></span>
-<span id="status_forbid_login" style="display:none;"><?= $translator['status_forbid_login'] ?></span>
-<span id="status_blocked" style="display:none;"><?= $translator['status_blocked'] ?></span>
-<span id="status_forbid_deposit" style="display:none;"><?= $translator['status_forbid_deposit'] ?></span>
-<span id="status_forbid_withdraw" style="display:none;"><?= $translator['status_forbid_withdraw'] ?></span>
-
+<span id="status_enable" style="display: none;"><?= $translator['status_enable'] ?></span>
+<span id="status_suspend" style="display: none;"><?= $translator['status_suspend'] ?></span>
+<span id="status_forbid_login" style="display: none;"><?= $translator['status_forbid_login'] ?></span>
+<span id="status_blocked" style="display: none;"><?= $translator['status_blocked'] ?></span>
+<span id="status_forbid_deposit" style="display: none;"><?= $translator['status_forbid_deposit'] ?></span>
+<span id="status_forbid_withdraw" style="display: none;"><?= $translator['status_forbid_withdraw'] ?></span>
 <!-- Hidden spans to hold translated text -->
 <span id="toast-title-error" class="d-none"><?= $translator['Error']; ?></span>
 <span id="toast-msg-unexpected" class="d-none"><?= $translator['UnexpectedError']; ?></span>
-
 <!-- button icons -->
 
 <div class="card w-100 position-relative overflow-hidden">

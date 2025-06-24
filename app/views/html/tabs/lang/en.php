@@ -1505,5 +1505,15 @@ return [
     'status_blocked'        => 'Blocked',
     'status_forbid_deposit' => 'Forbbiden to Log Deposit',
     'status_forbid_withdraw' => 'Forbbiden to Withdraw',
+  'state_on'  => 'Turned On',
+    'state_off' => 'Turned Off',
+    'gamemodel_standard'     => 'Standard',
+    'gamemodel_two_sides'    => 'Two Sides',
+    'gamemodel_road_bets'    => 'Road Bets',
+    'gamemodel_long_dragon'  => 'Long Dragon',
+    'gamemodel_many_tables'  => 'Many Tables',
+    'gamemodel_board_games'  => 'Board Games',
+    'gamemodel_fantan'       => 'Fantan',
+    'gamemodel_trend'        => 'Trend',
 
 ];

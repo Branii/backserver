@@ -1604,5 +1604,15 @@ return [
     'status_blocked'        => '封禁',
     'status_forbid_deposit' => '禁止充值',
     'status_forbid_withdraw'=> '禁止提现',
+   'state_on'  => '已开启',
+    'state_off' => '已关闭',
+   'gamemodel_standard'     => '标准',
+    'gamemodel_two_sides'    => '两面',
+    'gamemodel_road_bets'    => '路单',
+    'gamemodel_long_dragon'  => '长龙',
+    'gamemodel_many_tables'  => '多桌',
+    'gamemodel_board_games'  => '棋牌',
+    'gamemodel_fantan'       => '番摊',
+    'gamemodel_trend'        => '走势',
 
 ];
