@@ -238,7 +238,6 @@
 <span id="trans-inactive-success" data-translation="<?= htmlspecialchars($translator['SetInactiveSuccess'] ?? 'Set to inactive successfully') ?>" style="display:none;"></span>
 <span id="trans-select-data-fields" data-translation="<?= htmlspecialchars($translator['SelectFilterFields'] ?? 'Select one or more data fields to filter') ?>" style="display:none;"></span>
 <span id="trans-success" data-translation="<?= htmlspecialchars($translator['Success'] ?? 'Success') ?>" style="display:none;"></span>
-
 <!-- Field Label Translations (Hidden Elements) -->
 <span id="trans-partner-name" data-translation="<?= htmlspecialchars($translator['Partner Name'] ?? 'Partner Name') ?>" style="display:none;"></span>
 
@@ -337,7 +336,7 @@
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Partner Name</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Partner Name']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Type']; ?></h6>

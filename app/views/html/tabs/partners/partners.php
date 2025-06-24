@@ -275,9 +275,10 @@
 <span id="lang-product-settings" style="display: none;"><?php echo $translator['product_settings']; ?></span>
 <span id="lang-currency-settings" style="display: none;"><?php echo $translator['currency_settings']; ?></span>
 <span id="lang-language-settings" style="display: none;"><?php echo $translator['language_settings']; ?></span>
-
 <span id="lang-partners-label" style="display: none;"><?php echo $translator['partners_label']; ?></span>
-
+<span id="status_active" style="display:none;"><?= $translator['status_active'] ?></span>
+<span id="status_inactive" style="display:none;"><?= $translator['status_inactive'] ?></span>
+<span id="status_hidden" style="display:none;"><?= $translator['status_hidden'] ?></span>
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Partners']; ?></h4>

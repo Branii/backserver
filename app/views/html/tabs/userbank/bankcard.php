@@ -273,6 +273,10 @@
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
 
 
+<span id="bank_state_1" style="display:none;"><?= $translator['bank_state_in_force'] ?></span>
+<span id="bank_state_2" style="display:none;"><?= $translator['bank_state_not_active'] ?></span>
+<span id="bank_state_3" style="display:none;"><?= $translator['bank_state_terminated'] ?></span>
+<span id="bank_state_4" style="display:none;"><?= $translator['bank_state_deleted'] ?></span>
 
 
 

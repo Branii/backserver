@@ -393,7 +393,6 @@ $(() => {
         searchPaymentPlatforms();
     });
 
-
     const searchPaymentPlatforms = (page = 1, limit = 20) => {
         const partnerName = $("#ptns-partners").val();
         const state = $("#ptns-partnerState").val();

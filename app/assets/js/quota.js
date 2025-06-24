@@ -58,6 +58,7 @@ const QUOTA_UPDATED = document.getElementById("quota_success").innerText;
   fetchquota(currentPagequota, pageLimit);
 
   $(".refreshquota").click(function () {
+     $(".userrebatess").val("");
       $(".queryholderlogs").val("");
       $("#maskquota").LoadingOverlay("show", {
           background: "rgb(90,106,133,0.1)",

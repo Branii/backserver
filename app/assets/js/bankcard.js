@@ -17,12 +17,19 @@ $(function () {
 
   // showToast(headsUpText, selectFieldsText, "info");
   const bankcarddata = (data) => {
-    const states = {
-      1: "In Force",
-      2: "Not Active",
-      3: "Terminated",
-      4: "Deleted"
-    };
+    // const states = {
+    //   1: "In Force",
+    //   2: "Not Active",
+    //   3: "Terminated",
+    //   4: "Deleted"
+    // };
+
+    const bankStates = {
+  1: document.getElementById('bank_state_1').innerText,
+  2: document.getElementById('bank_state_2').innerText,
+  3: document.getElementById('bank_state_3').innerText,
+  4: document.getElementById('bank_state_4').innerText
+};
     let html = "";
 
     data.forEach((item) => {
@@ -39,7 +46,8 @@ $(function () {
                       <td>${item.withdrawal_count}</td>
                       <td>${item.bind_time}</td>
                       <td>${timezone}</td>
-                      <td>${states[item.status]}</td> 
+                 
+                       <td>${bankStates[item.status] ?? item.status}</td>
                     </tr>
                   `;
     });
