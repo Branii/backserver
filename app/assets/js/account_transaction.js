@@ -513,12 +513,7 @@ $(function () {
             }
         });
 
-        // Hide the dropdown when an option is selected
-        //  $dropdown.on("click", ".optionlist", function () {
-        //     const selectedValue = $(this).text();
-        //     $input.val(selectedValue); // Optionally set the input value to the selected option
-        //     $dropdown.hide();
-        // });
+        
     });
     // Function to fetch and display users
     function fetchbetUser(query) {

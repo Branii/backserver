@@ -1579,5 +1579,30 @@ return [
     "UnexpectedError" => "发生了意外错误。",
     'unexpected_error' => '发生了意外错误。',
     'operation_successful' => '操作成功完成。',
+    'status_pending' => '待处理',
+    'status_success' => '成功',
+    'status_failed' => '失败',
+
+    'channel_momo' => '手机钱包',
+    'channel_crypto' => '加密货币',
+    'channel_bank' => '银行',
+    'channel_manual' => '人工',
+    'status_pending' => '待处理',
+    'status_success' => '成功',
+    'status_failed' => '失败',
+
+    // Channels
+    'channel_manual_deposit' => '手动充值',
+    'channel_bank_transfer'  => '银行转账',
+    'channel_momo'           => '手机钱包',
+    'channel_crypto'         => '加密货币',
+     'finance_deposit'        => '充值',
+    'finance_withdrawal'     => '提现',
+     'status_enable'         => '启用',
+    'status_suspend'        => '暂停',
+    'status_forbid_login'   => '禁止登录',
+    'status_blocked'        => '封禁',
+    'status_forbid_deposit' => '禁止充值',
+    'status_forbid_withdraw'=> '禁止提现',
 
 ];

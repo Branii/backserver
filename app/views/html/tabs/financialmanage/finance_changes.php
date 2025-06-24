@@ -254,6 +254,9 @@
 <span id="tr_of" style="display: none;"><?= $translator['of'] ?></span>
 <span id="tr_pages" style="display: none;"><?= $translator['pages'] ?></span>
 
+<span id="finance_deposit" style="display:none;"><?= $translator['finance_deposit'] ?></span>
+<span id="finance_withdrawal" style="display:none;"><?= $translator['finance_withdrawal'] ?></span>
+
 
 
 <!-- toast messages ends here -->

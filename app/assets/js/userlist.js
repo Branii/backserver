@@ -954,14 +954,23 @@ $(function () {
     const UserlistDataV2 = (response) => {
         //  console.log(response);
         let html = "";
+        // const status = {
+        //     1: "Enable", // Green
+        //     2: "Suspend", // Orange
+        //     3: "Forbbiden to Log In", // Light Blue
+        //     4: "Blocked", // Red
+        //     5: "Forbbiden to Log Deposit", // Light Blue
+        //     6: "Forbbiden to Withdraw", // Red
+        // };
         const status = {
-            1: "Enable", // Green
-            2: "Suspend", // Orange
-            3: "Forbbiden to Log In", // Light Blue
-            4: "Blocked", // Red
-            5: "Forbbiden to Log Deposit", // Light Blue
-            6: "Forbbiden to Withdraw", // Red
-        };
+    1: document.getElementById('status_enable').innerText,
+    2: document.getElementById('status_suspend').innerText,
+    3: document.getElementById('status_forbid_login').innerText,
+    4: document.getElementById('status_blocked').innerText,
+    5: document.getElementById('status_forbid_deposit').innerText,
+    6: document.getElementById('status_forbid_withdraw').innerText
+};
+
 
         //   const account_type = {
         //     1 :"customer",
@@ -1045,7 +1054,9 @@ $(function () {
                   <td>${timezone}</td>
                   <td>${dates + " / " + times}</td>
                   <td>${logsLookup[item.uid] ?? 0}</td>
+                
                   <td id="usrl-state-${item.uid}">${status[item.user_state]}</td>
+
              
                     <td>
                       

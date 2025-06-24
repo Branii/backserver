@@ -235,6 +235,15 @@
 <span id="tr_of" style="display: none;"><?= $translator['of'] ?></span>
 <span id="tr_pages" style="display: none;"><?= $translator['pages'] ?></span>
 
+<span id="channel_manual_deposit" style="display:none;"><?= $translator['channel_manual_deposit'] ?></span>
+<span id="channel_bank_transfer" style="display:none;"><?= $translator['channel_bank_transfer'] ?></span>
+<span id="channel_momo" style="display:none;"><?= $translator['channel_momo'] ?></span>
+<span id="channel_crypto" style="display:none;"><?= $translator['channel_crypto'] ?></span>
+
+<span id="status_pending" style="display:none;"><?= $translator['status_pending'] ?></span>
+<span id="status_success" style="display:none;"><?= $translator['status_success'] ?></span>
+<span id="status_failed" style="display:none;"><?= $translator['status_failed'] ?></span>
+
 
 <!-- toast messages ends here -->
 

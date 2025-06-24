@@ -1480,6 +1480,30 @@ return [
     "UnexpectedError" => "An unexpected error occurred.",
     'unexpected_error' => 'An unexpected error occurred.',
     'operation_successful' => 'Operation completed successfully.',
-    
+    'status_pending' => 'Pending',
+    'status_success' => 'Success',
+    'status_failed' => 'Failed',
+
+    'channel_momo' => 'Momo',
+    'channel_crypto' => 'Crypto',
+    'channel_bank' => 'Bank',
+    'channel_manual' => 'Manual',
+    'status_pending' => 'Pending',
+    'status_success' => 'Success',
+    'status_failed' => 'Failed',
+
+    // Channels
+    'channel_manual_deposit' => 'Manual Deposit',
+    'channel_bank_transfer'  => 'Bank Transfer',
+    'channel_momo'           => 'Momo',
+    'channel_crypto'         => 'Crypto',
+    'finance_deposit'        => 'Deposit',
+    'finance_withdrawal'     => 'Withdrawal',
+    'status_enable'         => 'Enable',
+    'status_suspend'        => 'Suspend',
+    'status_forbid_login'   => 'Forbbiden to Log In',
+    'status_blocked'        => 'Blocked',
+    'status_forbid_deposit' => 'Forbbiden to Log Deposit',
+    'status_forbid_withdraw' => 'Forbbiden to Withdraw',
 
 ];

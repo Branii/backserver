@@ -29,37 +29,82 @@ $(function () {
   of: document.getElementById("tr_of").textContent,
   pages: document.getElementById("tr_pages").textContent
 };
-  const withdrawdata = (data) => {
-      let html = "";
-      const status = { 1: "Pending", 2: "Success", 3: "Failed" };
-      const withdrawal_channel = { 3: "Momo", 5: "Crypto", 2: "Bank", 4: "Manual" }; // 3:momo 5:crypto 2:bank 4:manual
+
+
+const status = {
+  1: document.getElementById('status_pending').innerText,
+  2: document.getElementById('status_success').innerText,
+  3: document.getElementById('status_failed').innerText
+};
+
+const withdrawal_channel = {
+  3: document.getElementById('channel_momo').innerText,
+  5: document.getElementById('channel_crypto').innerText,
+  2: document.getElementById('channel_bank').innerText,
+  4: document.getElementById('channel_manual').innerText
+};
+
+//   const withdrawdata = (data) => {
+//       let html = "";
+//       const status = { 1: "Pending", 2: "Success", 3: "Failed" };
+//       const withdrawal_channel = { 3: "Momo", 5: "Crypto", 2: "Bank", 4: "Manual" }; // 3:momo 5:crypto 2:bank 4:manual
       
 
 
-      data.forEach((item) => {
-        let timezone = item.withdrawal_timezone.split(" ");
-        timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
-          html += `
-        <tr>
-            <td>${item.withdrawal_id}</td>
-            <td>${item.username}</td>
-            <td>VIP</td>
-            <td>${item.bank_type}</td>
-            <td>${withdrawal_channel[item.withdrawal_channel]}</td>
-            <td>${item.card_holder}</td>
-            <td>${item.bank_card_number}</td>
-            <td>${formatNumber(item.withdrawal_amount)}</td>
-            <td>${formatNumber(item.fee)}</td>
-            <td>${formatNumber(item.actual_withdrawal_amount)}</td>
-            <td>${item.withdrawal_application_time.replace(" ", "/")}</td>
-            <td>${timezone}</td>
-            <td>${status[item.withdrawal_state]}</td>
-            <td>${item.approved_by}</td>
-        </tr>
-          `;
-      });
-      return html;
-  };
+//       data.forEach((item) => {
+//         let timezone = item.withdrawal_timezone.split(" ");
+//         timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
+//           html += `
+//         <tr>
+//             <td>${item.withdrawal_id}</td>
+//             <td>${item.username}</td>
+//             <td>VIP</td>
+//             <td>${item.bank_type}</td>
+//             <td>${withdrawal_channel[item.withdrawal_channel]}</td>
+//             <td>${item.card_holder}</td>
+//             <td>${item.bank_card_number}</td>
+//             <td>${formatNumber(item.withdrawal_amount)}</td>
+//             <td>${formatNumber(item.fee)}</td>
+//             <td>${formatNumber(item.actual_withdrawal_amount)}</td>
+//             <td>${item.withdrawal_application_time.replace(" ", "/")}</td>
+//             <td>${timezone}</td>
+//             <td>${status[item.withdrawal_state]}</td>
+//             <td>${item.approved_by}</td>
+//         </tr>
+//           `;
+//       });
+//       return html;
+//   };
+
+  const withdrawdata = (data) => {
+  let html = "";
+
+  data.forEach((item) => {
+    let timezone = item.withdrawal_timezone.split(" ");
+    timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
+
+    html += `
+      <tr>
+        <td>${item.withdrawal_id}</td>
+        <td>${item.username}</td>
+        <td>VIP</td>
+        <td>${item.bank_type}</td>
+        <td>${withdrawal_channel[item.withdrawal_channel]}</td>
+        <td>${item.card_holder}</td>
+        <td>${item.bank_card_number}</td>
+        <td>${formatNumber(item.withdrawal_amount)}</td>
+        <td>${formatNumber(item.fee)}</td>
+        <td>${formatNumber(item.actual_withdrawal_amount)}</td>
+        <td>${item.withdrawal_application_time.replace(" ", "/")}</td>
+        <td>${timezone}</td>
+        <td>${status[item.withdrawal_state]}</td>
+        <td>${item.approved_by}</td>
+      </tr>
+    `;
+  });
+
+  return html;
+};
 
   const renderwithdraw = (data) => {
       var html = withdrawdata(data);

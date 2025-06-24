@@ -61,32 +61,75 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
       } 
       return moneyStr; 
   }
-    const FinanceData = (data) => {
-      let html = "";
+    // const FinanceData = (data) => {
+    //   let html = "";
 
-      data.forEach((item) => {
-        let total_income = item.deposit_withdrawal_type == 1 ? `+${item.deposit_and_withdrawal_amount}` :
-        item.deposit_withdrawal_type == 4 ? `-${item.deposit_and_withdrawal_amount}` : 0;
+    //   data.forEach((item) => {
+    //     let total_income = item.deposit_withdrawal_type == 1 ? `+${item.deposit_and_withdrawal_amount}` :
+    //     item.deposit_withdrawal_type == 4 ? `-${item.deposit_and_withdrawal_amount}` : 0;
 
-          let types = item.deposit_withdrawal_type == 1 ? 'Deposit':item.deposit_withdrawal_type == 4 ? 'Withdrawal' : '';
-          let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
-          let timezone = item.timezone.split(" ");
-            timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>` 
-         html += `
-              <tr>
-              <td>${username}</td>
-              <td>VIP</td>
-              <td>${types}</td>
-              <td>${formatMoney(total_income)}</td>
-              <td>${formatMoney(item.recharge_balance_in_advance)}</td>
-              <td>${item.date_created +' / '+item.deposit_and_withdrawal_time}</td>
-              <td>${timezone}</td>
-              <td>${item.remark.charAt(0).toUpperCase() + item.remark.slice(1)}</td>             
-              </tr>
-                  `;
-         });
-      return html;
-    };
+    //       let types = item.deposit_withdrawal_type == 1 ? 'Deposit':item.deposit_withdrawal_type == 4 ? 'Withdrawal' : '';
+    //       let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
+    //       let timezone = item.timezone.split(" ");
+    //         timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>` 
+    //      html += `
+    //           <tr>
+    //           <td>${username}</td>
+    //           <td>VIP</td>
+    //           <td>${types}</td>
+    //           <td>${formatMoney(total_income)}</td>
+    //           <td>${formatMoney(item.recharge_balance_in_advance)}</td>
+    //           <td>${item.date_created +' / '+item.deposit_and_withdrawal_time}</td>
+    //           <td>${timezone}</td>
+    //           <td>${item.remark.charAt(0).toUpperCase() + item.remark.slice(1)}</td>             
+    //           </tr>
+    //               `;
+    //      });
+    //   return html;
+    // };
+    const financeTypes = {
+  1: document.getElementById('finance_deposit').innerText,
+  4: document.getElementById('finance_withdrawal').innerText
+};
+
+const FinanceData = (data) => {
+  let html = "";
+
+  data.forEach((item) => {
+    let total_income = item.deposit_withdrawal_type == 1
+      ? `+${item.deposit_and_withdrawal_amount}`
+      : item.deposit_withdrawal_type == 4
+      ? `-${item.deposit_and_withdrawal_amount}`
+      : 0;
+
+    let types = financeTypes[item.deposit_withdrawal_type] ?? '';
+
+    let username = item.reg_type === "email"
+      ? item.email
+      : item.reg_type === "username"
+      ? item.username
+      : item.contact;
+
+    let timezone = item.timezone.split(" ");
+    timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
+
+    html += `
+      <tr>
+        <td>${username}</td>
+        <td>VIP</td>
+        <td>${types}</td>
+        <td>${formatMoney(total_income)}</td>
+        <td>${formatMoney(item.recharge_balance_in_advance)}</td>
+        <td>${item.date_created} / ${item.deposit_and_withdrawal_time}</td>
+        <td>${timezone}</td>
+        <td>${item.remark.charAt(0).toUpperCase() + item.remark.slice(1)}</td>             
+      </tr>
+    `;
+  });
+
+  return html;
+};
+
   
     const renderfinace = (data) => {
       var html = FinanceData(data);

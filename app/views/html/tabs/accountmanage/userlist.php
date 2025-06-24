@@ -557,6 +557,14 @@
 <span id="deactivate-user-text" data-translation="<?= $translator['Deactivate User'] ?? 'Deactivate User'; ?>" style="display: none;"></span>
 <span id="reset-user-text" data-translation="<?= $translator['Reset Login Attempt'] ?? 'Reset Login Attempt'; ?>" style="display: none;"></span>
 
+<!-- User Status Translations for JS -->
+<span id="status_enable" style="display:none;"><?= $translator['status_enable'] ?></span>
+<span id="status_suspend" style="display:none;"><?= $translator['status_suspend'] ?></span>
+<span id="status_forbid_login" style="display:none;"><?= $translator['status_forbid_login'] ?></span>
+<span id="status_blocked" style="display:none;"><?= $translator['status_blocked'] ?></span>
+<span id="status_forbid_deposit" style="display:none;"><?= $translator['status_forbid_deposit'] ?></span>
+<span id="status_forbid_withdraw" style="display:none;"><?= $translator['status_forbid_withdraw'] ?></span>
+
 <!-- Hidden spans to hold translated text -->
 <span id="toast-title-error" class="d-none"><?= $translator['Error']; ?></span>
 <span id="toast-msg-unexpected" class="d-none"><?= $translator['UnexpectedError']; ?></span>
