@@ -371,10 +371,18 @@
         <!-- <option value="5" class="fromnumrows">5</option>
             <option value="10">10</option>
             <option value="20">20</option> -->
-        <option value="50">50</option>
+        <!-- <option value="50">50</option>
         <option value="100">100</option>
         <option value="200">200</option>
-        <option value="500">500</option>
+        <option value="500">500</option> -->
+
+   
+      <option value="10"><?= $translator['10'] ?? '10' ?></option>
+            <option value="20"><?= $translator['20'] ?? '20' ?></option>
+                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+    <option value="100"><?= $translator['100'] ?? '100' ?></option>
+    <option value="200"><?= $translator['200'] ?? '200' ?></option>
+    <option value="500"><?= $translator['500'] ?? '500' ?></option>
       </select>
       <span id="paginationBackup" class="right-element"> </span>
     </span>

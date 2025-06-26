@@ -29,6 +29,9 @@ $(function () {
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
             .join(" "); // Join the parts back with spaces
     };
+    const txtNoRule = document.getElementById("trans-norule").innerText;
+    const txtStopIfNotWin = document.getElementById("trans-stopifnotwin").innerText;
+    const txtStopIfWin = document.getElementById("trans-stopifwin").innerText;
 
     const translatorScript = document.querySelector(".translations"); // Get the script tag
     const translator = JSON.parse(translatorScript.textContent);
@@ -55,7 +58,9 @@ $(function () {
 
         data.forEach((item) => {
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-            let trackrule = item.track_rule == "no_rule" ? "No Rule" : item.track_rule == "stop_if_not_win" ? "Stop If Not Win" : item.track_rule == "stop_if_win" ? "Stop If Win" : "";
+            // let trackrule = item.track_rule == "no_rule" ? "No Rule" : item.track_rule == "stop_if_not_win" ? "Stop If Not Win" : item.track_rule == "stop_if_win" ? "Stop If Win" : "";
+            let trackrule = item.track_rule === "no_rule" ? txtNoRule : item.track_rule === "stop_if_not_win" ? txtStopIfNotWin : item.track_rule === "stop_if_win" ? txtStopIfWin : "";
+
             let timezone = item.timezone.split(" ");
             timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
             htmls += `

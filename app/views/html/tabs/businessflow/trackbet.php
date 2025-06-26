@@ -417,6 +417,12 @@
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
 
+<span id="trans-norule" style="display:none;"><?= $translator['No Rule'] ?? 'No Rule' ?></span>
+<span id="trans-stopifnotwin" style="display:none;"><?= $translator['Stop If Not Win'] ?? 'Stop If Not Win' ?></span>
+<span id="trans-stopifwin" style="display:none;"><?= $translator['Stop If Win'] ?? 'Stop If Win' ?></span>
+
+
+
 
 <div class="card w-100 position-relative overflow-hidden">
 
@@ -573,10 +579,15 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowstrack" style="font-size: 12px;">
-                <option value="50">50</option>
+                <!-- <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
-                <option value="500">500</option>
+                <option value="500">500</option> -->
+               <option value="20"><?= $translator['20'] ?? '20' ?></option>
+                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+    <option value="100"><?= $translator['100'] ?? '100' ?></option>
+    <option value="200"><?= $translator['200'] ?? '200' ?></option>
+    <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
             <span class="toplist-right" id="paginationtrack" aria-label="Page navigation example">
             <!--Dynamic pagination-->

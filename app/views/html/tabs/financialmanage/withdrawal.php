@@ -312,7 +312,7 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Withdrawal Application Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Timezone/hrs</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Timezone/hrs']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
@@ -355,10 +355,15 @@
         </span>
         <span class="top-right-btn"  aria-label="Page navigation example">
            <select class="left-element form-control numrowstrans" id="widrl-numrowstans" style="font-size: 12px;">
-                <option value="10">10</option>
+                <!-- <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
-                <option value="50">50</option>
+                <option value="50">50</option> -->
+                          <option value="20"><?= $translator['20'] ?? '20' ?></option>
+                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+    <option value="100"><?= $translator['100'] ?? '100' ?></option>
+    <option value="200"><?= $translator['200'] ?? '200' ?></option>
+    <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
             <span class="right-element" id="paginationwithdraw">
                 <!--Dynamic pagination-->

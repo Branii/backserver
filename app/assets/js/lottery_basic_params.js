@@ -566,7 +566,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
           // showToast("Error", "Lottery Data Successfully Updated.","error");
 
 
-showToast(ERROR_TEXT, LOTTERY_UPDATED, "error");
+        showToast(ERROR_TEXT, LOTTERY_UPDATED, "error");
 
 
           return;
@@ -604,21 +604,7 @@ showToast(ERROR_TEXT, LOTTERY_UPDATED, "error");
     
   });
 
-  // $(document).on('click','.gameon,.gameoff',function(){
 
-  //   $("#lb-toggle-lottery").addClass("show");
-  //   $("#lb-toggle-lottery").css("display", "block");
-
-  //  const lotteryName =  $($($(this).parents("tr")[0]).find("td:eq(3)")[0]).text();
-
-  //   $("#lb-id-holder").val($(this).attr("data-target"));
-  //   let status = $(this).attr("class").split(" ")[1];
-  //   $("#toggle-lottery-msg").html(`Are you sure you want to  ${status === "gameon" ? " <span style='color:#2aa96b;'> Turn On </span> " : " <span style='color:#e60e38;'> Turn Off </span> " }  <span style="font-weight: 900;">${lotteryName}</span> ? `);
-  //   $("#lb-toggle-lottery").attr({"data-status": status});
-
-
-
-  // });
 $(document).on('click', '.gameon, .gameoff', function () {
     $("#lb-toggle-lottery").addClass("show").css("display", "block");
 
@@ -661,53 +647,6 @@ $(document).on('click', '.gameon, .gameoff', function () {
 
 
 
-  // $(document).on("click", ".fetch-lotter-basic-records", function () {
-  //   // const lottery_id = $("#lottery").val();
-
-  //   // $.ajax({
-  //   //   url: `../admin/fetch_lottery_basic_params/${lottery_id}/${page}`,
-  //   //   type: "POST",
-  //   //   beforeSend: function () {
-  //   //     $("#lottery-draw-loader").css({ display: "flex" });
-  //   //   },
-  //   //   success: function (response) {
-  //   //     response = JSON.parse(response);
-  //   //   //  console.log(response);
-  //   //     const data = response.data;
-  //   //     const totalCount = response.totalCount;
-  //   //   //  console.log(data);
-
-  //   //     if (response.length === 0) {
-  //   //       $("#lot-basic-dtholder").html(
-  //   //         `<tr class="no-results"> <td colspan="9"><img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`
-  //   //       );
-  //   //       $("#lottery-draws-pages-wrapper").html("");
-  //   //       return;
-  //   //     }
-  //   //     let rowsMarkup = "";
-  //   //     //console.log(data);
-  //   //     data.forEach((row) => {
-  //   //       rowsMarkup += lotteryBasicParametersMarkup(row);
-  //   //     });
-  //   //   //  console.log(rowsMarkup);
-  //   //     $("#lot-basic-dtholder").html(rowsMarkup);
-  //   //     const totalPages = Math.ceil(totalCount / 20);
-  //   //     renderPaginationlist(totalPages,1,() => );
-  //   //   },
-  //   //   error: function (res, status, error) {
-  //   //     $(".dataholder").html(
-  //   //       "<tr><td colspan='12' style='text-align:center;'>An error occured, please try again later.</td></tr>"
-  //   //     );
-  //   //     console.log("An error occured: " + status + " - " + error);
-  //   //   },
-  //   //   complete: function () {
-  //   //     $("#lottery-draw-loader").css({ display: "none" });
-  //   //   },
-  //   // });
-  //   fetchLotteryBasicParams(1,this);
-
-  // });
-
  
 
 
@@ -740,6 +679,9 @@ $(document).on('click', '.gameon, .gameoff', function () {
         }
     }
   });
+
+  const turnedOnText = document.getElementById("turnedon-text")?.dataset.translation || "Turned On";
+const turnedOffText = document.getElementById("turnedoff-text")?.dataset.translation || "Turned Off";
 
   function lotteryDrawMarkup(data) {
     return `<tr>
