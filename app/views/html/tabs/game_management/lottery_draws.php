@@ -199,6 +199,11 @@
 <span id="unsettled_text" style="display:none;"><?= $translator['UNSETTLED']; ?></span>
 <span id="pending_text" style="display:none;"><?= $translator['PENDING']; ?></span>
 
+<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+
+
 
 <div class="card w-100 position-relative overflow-hidden">
 

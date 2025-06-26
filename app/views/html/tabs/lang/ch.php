@@ -1621,5 +1621,9 @@ return [
     'status_active'   => '启用',
     'status_inactive' => '未启用',
     'status_hidden'   => '隐藏',
+    "Unknown" => "未知",
+     "Page" => "页",
+    "of" => "共",
+    "pages" => "页",
 
 ];

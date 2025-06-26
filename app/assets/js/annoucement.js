@@ -14,6 +14,11 @@ $(function () {
     return document.getElementById(id)?.dataset.translation || fallback;
   }
 
+  const txtPage = document.getElementById("trans-page").innerText;
+const txtOf = document.getElementById("trans-of").innerText;
+const txtPages = document.getElementById("trans-pages").innerText;
+
+
   const EdittText =
     document.getElementById("Editt-text")?.dataset.translation || "Edit";
   const DeleteeText = getTranslation("Deletee-text", "Delete");
@@ -147,8 +152,11 @@ $(function () {
         pageLimit,
         (newPage, pageLimit) => fetchmessage(newPage, pageLimit)
       );
-      document.getElementById("paging_infofmessage").innerHTML =
-        "Page " + page + " of " + data.totalPages + " pages";
+      // document.getElementById("paging_infofmessage").innerHTML =
+      //   "Page " + page + " of " + data.totalPages + " pages";
+        document.getElementById("paging_infofmessage").innerHTML =
+    `${txtPage} ${page} ${txtOf} ${data.totalPages} ${txtPages}`;
+
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -267,8 +275,12 @@ $(function () {
                 pageLimit
               )
           );
-          document.getElementById("paging_infofmessage").innerHTML =
-            "Page " + currentPage + " of " + data.totalPages + " pages";
+          // document.getElementById("paging_infofmessage").innerHTML =
+          //   "Page " + currentPage + " of " + data.totalPages + " pages";
+
+            document.getElementById("paging_infofmessage").innerHTML =
+    `${txtPage} ${page} ${txtOf} ${data.totalPages} ${txtPages}`;
+
         } catch (error) {
           console.error("Error parsing JSON response:", error);
         } finally {

@@ -562,6 +562,10 @@
 <span id="toast-msg-unexpected" class="d-none"><?= $translator['UnexpectedError']; ?></span>
 <!-- button icons -->
 
+<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['User List']; ?></h4>

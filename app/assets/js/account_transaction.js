@@ -32,7 +32,7 @@ $(function () {
         }
         return moneyStr;
     }
-
+    const unknownText = document.getElementById("trans-unknown").innerText;
     const translatorScript = document.querySelector(".translations");
     const translator = JSON.parse(translatorScript.textContent);
     const AccountTransactions = (data) => {
@@ -68,7 +68,7 @@ $(function () {
                 <td>${"TR" + item.order_id.substring(0, 7)}</td>
                 <td>${username}</td>
                 <td>${item.name}</td>
-                <td><i class='bx bxs-circle' style='color:${statusColor[item.order_type]?.color || "#000"};font-size:8px;margin-right:5px;'></i>${statusColor[item.order_type]?.title || "Unknown"}</td>
+                <td> <i class='bx bxs-circle' style='color:${statusColor[item.order_type]?.color || "#000"};font-size:8px;margin-right:5px;'></i>${statusColor[item.order_type]?.title || unknownText}</td>
                 <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
                 <td>${formatMoney(item.balance)}</td>
                 <td>${formatTimestamp(item.date_created)}</td>
@@ -512,8 +512,6 @@ $(function () {
                 $(".userIdtrans").val(""); // Reset user ID if input is cleared
             }
         });
-
-        
     });
     // Function to fetch and display users
     function fetchbetUser(query) {

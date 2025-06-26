@@ -240,6 +240,7 @@
 <span id="trans-success" data-translation="<?= htmlspecialchars($translator['Success'] ?? 'Success') ?>" style="display:none;"></span>
 <!-- Field Label Translations (Hidden Elements) -->
 <span id="trans-partner-name" data-translation="<?= htmlspecialchars($translator['Partner Name'] ?? 'Partner Name') ?>" style="display:none;"></span>
+<span id="trans-unknown" class="hidden"><?= $translator['Unknown'] ?? 'Unknown' ?></span>
 
 
 <!-- toast messages ends here -->

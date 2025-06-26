@@ -12,6 +12,11 @@ $(function () {
     function getTranslation(id, fallback) {
         return document.getElementById(id)?.dataset.translation || fallback;
     }
+const txtPage = document.getElementById("trans-page").innerText;
+const txtOf = document.getElementById("trans-of").innerText;
+const txtPages = document.getElementById("trans-pages").innerText;
+
+
 
     const viewprofile_text = document.getElementById("viewprofile-text")?.dataset.translation || "View Profile";
 
@@ -164,7 +169,10 @@ $(function () {
             renderAdmin(data.admins);
             // Render pagination
             renderPaginationForAdmin(data.totalPages, currentPage);
-            document.getElementById("paging_info_admin").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            // document.getElementById("paging_info_admin").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+
+            document.getElementById("paging_info_admin").innerHTML =
+    `${txtPage} ${currentPage} ${txtOf} ${data.totalPages} ${txtPages}`;
         } catch (error) {
             console.error("Error fetching data:", error);
         }

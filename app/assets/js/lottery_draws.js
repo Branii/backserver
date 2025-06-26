@@ -15,6 +15,12 @@ const SETTLED_TEXT = document.getElementById("settled_text").innerText;
 const UNSETTLED_TEXT = document.getElementById("unsettled_text").innerText;
 const PENDING_TEXT = document.getElementById("pending_text").innerText;
 
+const txtPage = document.getElementById("trans-page").innerText;
+const txtOf = document.getElementById("trans-of").innerText;
+const txtPages = document.getElementById("trans-pages").innerText;
+
+
+
 const drawTables = (data) => {
     let html = "";
 
@@ -108,8 +114,11 @@ const drawTables = (data) => {
               $("#maskkk").LoadingOverlay("hide")
               const totalPages = Math.ceil(data[0].total_records / pageLimit);
               renderPaginationForDraws(totalPages, currentPage,(currentPage,pageLimit)=> getAllSpecificDraws(currentPage,pageLimit));
+              // document.getElementById("ltd_paging_info_draws").innerHTML =
+              // "Page " + currentPage + " of " + totalPages + " pages";
+
               document.getElementById("ltd_paging_info_draws").innerHTML =
-              "Page " + currentPage + " of " + totalPages + " pages";
+    `${txtPage} ${currentPage} ${txtOf} ${totalPages} ${txtPages}`;
           },
           error: function (xhr,status,error){
             showToast("Error", "Request Error, please contact admin",'error');

@@ -423,6 +423,12 @@ const TURN_ON_TEXT = document.getElementById("turn_on_text").innerText;
 const TURN_OFF_TEXT = document.getElementById("turn_off_text").innerText;
 
 
+const txtPage = document.getElementById("trans-page").innerText;
+const txtOf = document.getElementById("trans-of").innerText;
+const txtPages = document.getElementById("trans-pages").innerText;
+
+
+
   // filter user name
 
   $(document).on("keyup", "#ld-lottery", function () {
@@ -950,9 +956,11 @@ function renderPaginationlist(totalPages, currentPage, pageLimit, callback) {
   pagLink += createPageLink(currentPage + 1, `<i class='bx bx-chevron-right'></i>`, currentPage === totalPages);
   pagLink += "</ul>";
 
-  document.getElementById("lb-pagination").innerHTML = pagLink;
-  $("#paging_info_drawsw").html(`Page ${currentPage} of ${totalPages} Pages`);
+  // document.getElementById("lb-pagination").innerHTML = pagLink;
+  // $("#paging_info_drawsw").html(`Page ${currentPage} of ${totalPages} Pages`);
 
+  document.getElementById("lb-pagination").innerHTML = pagLink;
+$("#paging_info_drawsw").html(`${txtPage} ${currentPage} ${txtOf} ${totalPages} ${txtPages}`);
   // Add click event listeners
   document.querySelectorAll("#lb-pagination .page-link").forEach((link) => {
       link.addEventListener("click", function (e) {

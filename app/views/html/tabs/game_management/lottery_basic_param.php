@@ -197,6 +197,10 @@
 <span id="state_on" style="display: none;"><?= $translator['state_on'] ?></span>
 <span id="state_off" style="display: none;"><?= $translator['state_off'] ?></span>
 
+<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'Pages' ?></span>
+
 <div id="lb-edit" class="modal fade" tabindex="-1" style="display: none;" aria-modal="true" role="dialog">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">

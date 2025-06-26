@@ -1522,5 +1522,8 @@ return [
   'status_active'   => 'Active',
   'status_inactive' => 'Inactive',
   'status_hidden'   => 'Hidden',
-
+  "Unknown" => "Unknown",
+"Page" => "Page",
+    "of" => "of",
+    "pages" => "pages",
 ];

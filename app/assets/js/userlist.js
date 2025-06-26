@@ -58,6 +58,10 @@ $(function () {
     const headsUpText = document.getElementById("trans-heads-up").textContent;
     const selectFieldsText = document.getElementById("trans-select-fields").textContent;
 
+    const txtPage = document.getElementById("trans-page").innerText;
+const txtOf = document.getElementById("trans-of").innerText;
+const txtPages = document.getElementById("trans-pages").innerText;
+
     // editting the user from the userlist table
     $(document).on("click", ".manage-user-btn,.user-restrictions-btn", function () {
         let userID = $("#idHolder").val();
@@ -384,7 +388,10 @@ $(function () {
                     // renderuserlist(data.users);
                     const totalPages = Math.ceil(data.data[0].total_records / pageLimit);
                     renderPaginationlist(totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlist(newPage, pageLimit));
-                    document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + totalPages + " pages";
+                    // document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + totalPages + " pages";
+                    document.getElementById("paging_infolist").innerHTML = `${txtPage} ${page} ${txtOf} ${totalPages} ${txtPages}`;
+
+                   
                 },
                 error: function () {},
                 complete: function () {

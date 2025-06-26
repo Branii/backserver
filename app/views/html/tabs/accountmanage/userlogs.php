@@ -267,7 +267,9 @@
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
 
-
+<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
 <!-- toast messages ends here -->
 
 <div class="card w-100 position-relative overflow-hidden">

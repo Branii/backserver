@@ -10,6 +10,11 @@ $(function () {
             duration: 3000, // auto-dismiss after 3s
         });
     }
+const txtPage = document.getElementById("trans-page").innerText;
+const txtOf = document.getElementById("trans-of").innerText;
+const txtPages = document.getElementById("trans-pages").innerText;
+
+
 
     function getTranslation(id, fallback) {
         return document.getElementById(id)?.dataset.translation || fallback;
@@ -139,7 +144,9 @@ $(function () {
             $("#maskpayment").LoadingOverlay("hide");
             renderpayment(data.payment);
             renderpaymentPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchPaymentPlatform(newPage, pageLimit));
-            document.getElementById("paging_infopayment").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+            // document.getElementById("paging_infopayment").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+            document.getElementById("paging_infopayment").innerHTML =
+    `${txtPage} ${page} ${txtOf} ${data.totalPages} ${txtPages}`;
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -208,7 +215,9 @@ $(function () {
             $("#maskpayment").LoadingOverlay("hide");
             renderpayment(data.payments);
             renderpaymentPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterpayment(username, stautspayment, startdepay, enddepay, newPage, pageLimit));
-            document.getElementById("paging_infopayment").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            // document.getElementById("paging_infopayment").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            document.getElementById("paging_infopayment").innerHTML =
+    `${txtPage} ${page} ${txtOf} ${data.totalPages} ${txtPages}`;
         } catch (error) {
             console.error("Error fetching data:", error);
         }

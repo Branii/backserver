@@ -250,6 +250,11 @@
 <span id="trans-read" style="display: none;"><?php echo $translator['READ']; ?></span>
 <span id="trans-unread" style="display: none;"><?php echo $translator['UNREAD']; ?></span>
 
+<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+
+
 
 
 <div class="card w-100 position-relative overflow-hidden">

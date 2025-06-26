@@ -285,6 +285,11 @@
 <span id="trans-currencyselect" data-translation="<?= $translator['CurrencySelect'] ?? 'Currency Select'; ?>" style="display: none;"></span>
 <span id="trans-approvedby" data-translation="<?= $translator['ApprovedBy'] ?? 'Approved By'; ?>" style="display: none;"></span>
 
+<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Payment Platform']; ?></h4>

@@ -9,7 +9,9 @@ $(function () {
       duration: 3000 // auto-dismiss after 3s
     });
   }
-
+const txtPage = document.getElementById("trans-page").innerText;
+const txtOf = document.getElementById("trans-of").innerText;
+const txtPages = document.getElementById("trans-pages").innerText;
   const headsUpText = document.getElementById("trans-heads-up").textContent;
   const selectFieldsText = document.getElementById(
     "trans-select-fields"
@@ -97,8 +99,10 @@ $(function () {
       renderPaginationlist(totalPages, pagebankcard, pageLimit, (newpage) =>
         fetchbankcard(newpage)
       );
-      document.getElementById("paging_infobankcard").innerHTML =
-        "Page " + pagebankcard + " of " + totalPages + " pages";
+      // document.getElementById("paging_infobankcard").innerHTML =
+      //   "Page " + pagebankcard + " of " + totalPages + " pages";
+        document.getElementById("paging_infobankcard").innerHTML =
+    `${txtPage} ${pagebankcard} ${txtOf} ${totalPages} ${txtPages}`;
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -282,8 +286,10 @@ $(function () {
           renderPaginationlist(totalPages, currentPage, pageLimit, (newpage) =>
             searchBankList(newpage)
           );
-          document.getElementById("paging_infobankcard").innerHTML =
-            "Page " + currentPage + " of " + totalPages + " pages";
+          // document.getElementById("paging_infobankcard").innerHTML =
+          //   "Page " + currentPage + " of " + totalPages + " pages";
+            document.getElementById("paging_infobankcard").innerHTML =
+    `${txtPage} ${pagebankcard} ${txtOf} ${totalPages} ${txtPages}`;
         },
         error: function (xhr, status, error) {
           showToast(

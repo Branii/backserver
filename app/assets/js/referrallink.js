@@ -11,7 +11,9 @@ $(function () {
           duration: 3000, // auto-dismiss after 3s
       });
   };
-
+const txtPage = document.getElementById("trans-page").innerText;
+const txtOf = document.getElementById("trans-of").innerText;
+const txtPages = document.getElementById("trans-pages").innerText;
 
 const headsUpText = document.getElementById("trans-heads-up").textContent;
 const selectFieldsText = document.getElementById("trans-select-fields").textContent;
@@ -59,7 +61,8 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
           $("#maskreferal").LoadingOverlay("hide");
           renderuserlinks(data.userlinks);
           renderfinacesPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlinks(newPage, pageLimit));
-          document.getElementById("paging_inforeferal").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+        //   document.getElementById("paging_inforeferal").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+          document.getElementById("paging_inforeferal").innerHTML = `${txtPage} ${page} ${txtOf} ${data.totalPages} ${txtPages}`;
       } catch (error) {
           console.error("Error fetching data:", error);
       }
