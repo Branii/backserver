@@ -737,6 +737,7 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
+
     public static function UpdateGameNames($uid,$lotterymodel,$lottery_id)
     {
 

@@ -563,8 +563,6 @@ class adminController extends Controller
         ]);
         $this->view->render();
     }
-
-    
     //games for user
     public function updatesGames($userid,$data)
     {
@@ -580,6 +578,8 @@ class adminController extends Controller
 
     public function updatesGamegroup($userid,$lotterymodel,$data)
     {
+   
+   
         $this->view('exec/account_manage', ["uid"=>$userid, "lotterymodel"=>$lotterymodel, "data" => $data ,"flag" => 'updatesGamegroup']);
         $this->view->render();
     }

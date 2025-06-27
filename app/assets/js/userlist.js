@@ -1935,7 +1935,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
 
          html += ` 
          <tr>
-            <td>${gamegroup.name}</td>
+            <td class="tabname">${gamegroup.name}</td>
             <td>
                <input class="form-check-input gametoggle" type="checkbox" ${check ? 'checked' : ''} value="${gamegroup.gp_id}">
             </td>
@@ -1948,7 +1948,9 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
    
      let gameGr = []
      $(document).on("change", ".gametoggle", function () {
-        const val = parseInt($(this).val());
+      //   const val = parseInt($(this).val());
+        const val = $(this).closest("tr").find(".tabname").text()
+        console.log(val)
         if ($(this).is(":checked")) {
             if (!gameGr.includes(val)) gameGr.push(val);
             console.log(gameGr)
@@ -2027,6 +2029,8 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
      let gameName = []
     $(document).on("change", ".gamenametoggle", function () {
         const val = parseInt($(this).val());
+        
+        console.log(val)
         if ($(this).is(":checked")) {
             if (!gameName.includes(val)) gameName.push(val);
             console.log(gameName)
