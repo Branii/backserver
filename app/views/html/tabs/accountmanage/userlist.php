@@ -1479,7 +1479,7 @@
                                 <thead>
                                     <tr>
                                         <th class="font-weight-normal"><?= $translator['Lottery Name']; ?></th>
-                                        <th class="font-weight-normal"> <input type="checkbox" id="checkAllGames">  Select All</th>
+                                        <th class="font-weight-normal"><input type="checkbox" id="checkAllGames" style="width:20px;height:20px"/> </th>
                                     </tr>
                                 </thead>
                                 <tbody id="gamenametbl"></tbody>

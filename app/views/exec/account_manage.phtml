@@ -429,7 +429,7 @@ if($flag == "updatesGamegroup"){
         $uid = $this->viewData["uid"];
         $lotterymodel = $this->viewData["lotterymodel"];
         $res = UserManageModel::UpdateGameGroup($uid,$lotterymodel,$gameData);
-        echo json_encode($res);
+         echo json_encode($res['status']);
 }
 
 
@@ -448,7 +448,7 @@ if($flag == "updatesGameNamess"){
         $uid = $this->viewData["uid"];
         $lotterymodel = $this->viewData["lotterymodel"];
         $res = UserManageModel::UpdateGameNames($uid,$lotterymodel,$gameData);
-        echo json_encode($res);
+        echo json_encode($res['status']);
 }
 
 

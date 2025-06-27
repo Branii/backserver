@@ -340,23 +340,20 @@ $(function () {
       console.log(niiData)
       if(niiData != "*****"){
         parsedGameIds = JSON.parse(niiData).lti 
-         showDialog("usl-lottery-name-modal");
+          $("#usl-lottery-name-modal").modal("show")
          fetchLotteryTypes(parsedGameIds);
       }else{
-         showDialog("usl-lottery-name-modal");
+         $("#usl-lottery-name-modal").modal("show")
          fetchLotteryTypes([]);
       }
     
    });
 
    $(document).on("click", ".listclose", function () {
-      let modalElement = $("#usl-lottery-name-modal")
-         modalElement.hasClass("show") 
-        ? modalElement.css({ display: "none" }) 
-        : modalElement.css({ display: "block" });
+      $("#usl-lottery-name-modal").modal("hide")
+       
    });
     
-
    $(document).on("click", ".usr-delete-user,.usrl-delete-userbtn", function () {
       showDialog("usl-delete-user-dialog");
       if ($(this).hasClass("usr-delete-user")) {
@@ -1783,7 +1780,7 @@ $(function () {
 
   //game name
 
-  let allGamesData;
+   let allGamesData;
    let parsedGamenameIds
    let bigArr = [];
    $(document).on("click", ".usr-gamename", function () {
@@ -1811,7 +1808,7 @@ $(function () {
 
                html +=`
                <div class="accordion-item accord-item">  
-                  <div class="accordion-header">
+                  <div class="accordion-header togglethis">
                      <span style="margin-left: 15px; display: flex; justify-content: space-between;">
                      <span style="font-size: 16px;">${item}</span>
                      <input type="checkbox" class="checkall"  data-gametype ='${item}' style="width:20px;height:20px"/>
@@ -1845,7 +1842,6 @@ $(function () {
          $(".gamediv").html(html);
       });
    });
-
 
    $(document).on("change", ".chkgameids", function() {
    const gameid = $(this).data("gameid");
@@ -1881,7 +1877,7 @@ $(function () {
    });
 
 // Accordion toggle
-$(document).on("click", ".accordion-header", function () {
+$(document).on("click", ".togglethis", function () {
   toggleAccordion(this);
 });
 
@@ -1970,12 +1966,12 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
       //   return
       $.post(`../admin/updatesGamegroup/${userID}/${models}/${JSON.stringify(gameGr)}`,function(res){
          console.log(res)
-         //  if(res ="success"){
-         //    showToast("Heads Up", "User Games Updated sucessfully","success")
-         //    fetchUserlist(currentPage, pageLimit);
-         //   }else{
-         //      showToast("Heads Up", "User Games not  Updated","info")
-         //   }
+          if(res ="success"){
+            showToast("Heads Up", "User Games Updated sucessfully","success")
+            fetchUserlist(currentPage, pageLimit);
+           }else{
+              showToast("Heads Up", "User Games not  Updated","info")
+           }
          
       })
    });
@@ -2030,7 +2026,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
    })
    
      let gameName = []
-     $(document).on("change", ".gamenametoggle", function () {
+    $(document).on("change", ".gamenametoggle", function () {
         const val = parseInt($(this).val());
         if ($(this).is(":checked")) {
             if (!gameName.includes(val)) gameName.push(val);
@@ -2042,27 +2038,24 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
 
     });
 
-    $(document).on('change', '#checkAllGames', function () {
-  const isChecked = $(this).is(':checked');
-  $('.gamenametoggle').prop('checked', isChecked);
-  
-})
+   //  $(document).on('change', '#checkAllGames', function () {
+   //  const isChecked = $(this).is(':checked');
+   //  $('.gamenametoggle').prop('checked', isChecked);
+   //  })
 
    // updategamegroup
 
    $(document).on("click", ".updategamess", function () {
         let userID = $("#idHolder").val();
           let gn_id = $("#gameslottery").val();
-       //  console.log(userID,gn_id)
-        // return
       $.post(`../admin/updatesGameNamess/${userID}/${gn_id}/${JSON.stringify(gameName)}`,function(res){
          console.log(res)
-         //  if(res ="success"){
-         //    showToast("Heads Up", "User Games Updated sucessfully","success")
-         //    fetchUserlist(currentPage, pageLimit);
-         //   }else{
-         //      showToast("Heads Up", "User Games not  Updated","info")
-         //   }
+          if(res ="success"){
+            showToast("Heads Up", "User Games Updated sucessfully","success")
+            fetchUserlist(currentPage, pageLimit);
+           }else{
+              showToast("Heads Up", "User Games not  Updated","info")
+           }
          
       })
    });
