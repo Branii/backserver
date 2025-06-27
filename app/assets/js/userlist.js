@@ -179,6 +179,9 @@ $(function () {
    const whiteListText = getTranslation("whitelist-text", "White List");
    const deleteUserText = getTranslation("delete-user-text", "Delete User");
    const deactivateUserText = getTranslation("deactivate-user-text", "Deactivate User");
+   const gamenameTexts =  getTranslation("deactivate-use", "Game Type");
+   const gamegroupTexts =  getTranslation("deactivate-use", "Game Group");
+   const gamegroupTextss =  getTranslation("deactivate-use", "Game Name");
 
    function formatMoney(money) {
       let moneyStr = String(money);
@@ -272,9 +275,11 @@ $(function () {
                                    <i class='bx bx-dots-vertical-rounded'></i>
                                   </a>
                                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
-                                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${
-                                       item.uid
-                                    }">
+                                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${item.uid}">
+                                      <i class="bx bx-show fs-5"></i>${viewText}
+                                    </a>
+
+                                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${item.uid}">
                                       <i class="bx bx-show fs-5"></i>${viewText}
                                     </a>
                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
@@ -297,6 +302,9 @@ $(function () {
                                      <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                       <i class="bx bx-trash fs-5"></i>Delete User
                                     </a>
+                                     <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                      <i class="bx bx-trash fs-5"></i>Delete User
+                                    </a>
                                   </div>
                                 </div>
                       </td>
@@ -307,11 +315,7 @@ $(function () {
       return html;
    };
 
-   $(document).on("click", ".usrl-listclose", function () {
-      const parent = $(this).parents(".modal").first();
-      parent.removeClass("show");
-      parent.css({ display: "none" });
-   });
+ 
 
    $(document).on("click", ".usr-deactivate-user, .block-userbtn", function () {
       showDialog("usl-deactivate-user-dialog");
@@ -329,11 +333,29 @@ $(function () {
       fetchUserLogs();
    });
 
+   let parsedGameIds = []
    $(document).on("click", ".user-lottery-name", function () {
-      showDialog("usl-lottery-name-modal");
-      $("#idHolder").val($(this).attr("data-uid"));
-      fetchLotteryTypes();
+       $("#idHolder").val($(this).attr("data-uid")); 
+      let niiData = $(this).closest('tr').find(".nii").text()
+      console.log(niiData)
+      if(niiData != "*****"){
+        parsedGameIds = JSON.parse(niiData).lti 
+         showDialog("usl-lottery-name-modal");
+         fetchLotteryTypes(parsedGameIds);
+      }else{
+         showDialog("usl-lottery-name-modal");
+         fetchLotteryTypes([]);
+      }
+    
    });
+
+   $(document).on("click", ".listclose", function () {
+      let modalElement = $("#usl-lottery-name-modal")
+         modalElement.hasClass("show") 
+        ? modalElement.css({ display: "none" }) 
+        : modalElement.css({ display: "block" });
+   });
+    
 
    $(document).on("click", ".usr-delete-user,.usrl-delete-userbtn", function () {
       showDialog("usl-delete-user-dialog");
@@ -887,14 +909,14 @@ $(function () {
    });
 
    //fetch_sub
-   let navigationHistory = [];
+    let navigationHistory = [];
    $(document).on("click", ".viewsub", function () {
       const userID = $(this).attr("data-agent-id").trim();
       // // console.log("Navigation History:", navigationHistory);
       fetchsubagent(userID, currentPage, pageLimit, this);
    });
 
-   const fetchsubagent = (userID, currentPage, pageLimit, element) => {
+     const fetchsubagent = (userID, currentPage, pageLimit, element) => {
       $.ajax({
          url: `../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
          type: "POST",
@@ -1017,11 +1039,11 @@ $(function () {
          //     <span class="tooltipp-text">Surbodinate names</span>
          // </span>
 
-         html += `
+          html += `
               <tr id="usrl-tr-${item.uid}">
                  <td>${username}</td>
                   <td>${item.nickname}</td>
-                  <td>VIP</td>
+                  <td> <nii class="nii">${item.blocked_lotteries}</nii> VIP</td>
                  <td class="show-user-rel ${item.agent_level === "*****" ? "no-agent" : ""}" data-user-id="${item.uid}" style="cursor:pointer;">
                ${item.account_type == 1 ? "Customer" : item.account_type == 2 ? "Top Agent" : subsLookups[item.uid] < 2 ? agentNicknamesLookups[item.agent_id] + " > " + username : agentNicknamesLookups[item.agent_id] + " ... " + username}
               </td>
@@ -1060,19 +1082,31 @@ $(function () {
                                 </a> <a class="dropdown-item user-lottery-name cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                   <i class='bx bx-filter' ></i>${lotteryNameText}
                                 </a>
+                                 <a class="dropdown-item  usr-gamename  cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                  <i class='bx bx-user-minus' ></i>${gamenameTexts}
+                                </a>
+                                   <a class="dropdown-item  usergamegroup  cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                  <i class='bx bx-user-minus' ></i>${gamegroupTexts}
+                                </a>
+
+                                </a>
+                                   <a class="dropdown-item  usergamename cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                  <i class='bx bx-user-minus' ></i>${gamegroupTextss}
+                                </a>
                                  <a class="dropdown-item usr-white-list cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                   <i class="bx bx-trash fs-5"></i>${whiteListText}
                                 </a>
                                  <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                   <i class='bx bx-user-minus' ></i>${deleteUserText}
                                 </a>
+                                
                               </div>
                             </div>
                   </td>
                  
               </tr>
           `;
-      });
+           });
       return html;
    };
 
@@ -1182,46 +1216,56 @@ $(function () {
       });
    };
 
-   const fetchLotteryTypes = () => {
-      const userID = $("#idHolder").val();
-      const lotteryID = "all";
-      let flag = "fetchUserLotteries";
-      $.ajax({
-         url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
-         type: "POST",
-         beforeSend: function () {},
-         success: function (response) {
-            response = JSON.parse(response);
-            // console.log(response);
-            let responseMarkup = "";
-
-            if (response.status == "error") {
-               showToast("Error", response.data, "error");
-               return;
-            }
-            data = response.data;
-
-            let blockedLotteries = data[0].blockedLotteries == undefined ? [] : Object.values(data[0].blockedLotteries);
-
-            data.forEach((lottery) => {
-               responseMarkup += lotteriesMarkup(lottery, blockedLotteries);
-            });
-            // return;
-            $("#usrl-lot-dtholder").html(responseMarkup);
-         },
-         error: function (res, status, error) {},
-         complete: function () {
-            // console.log("Operation Completed Successfully.");
-         },
+     let GamesArr = [];
+   const fetchLotteryTypes = (datas) => {
+   $.post('../admin/fetchLoterytype', function (data) {
+      let maindata = JSON.parse(data);
+      let html = ""; 
+      maindata.data.map((lottery) => {
+         let check = datas.includes(lottery.lt_id);
+         // Avoid duplicate entries in GamesArr
+         if (check && !GamesArr.includes(lottery.lt_id)) {
+         GamesArr.push(lottery.lt_id);
+         }
+         html += `
+         <tr>
+            <td>${lottery.name}</td>
+            <td>
+               <input class="form-check-input toggle-lot" type="checkbox" ${check ? 'checked' : ''} value="${lottery.lt_id}">
+            </td>
+         </tr>
+         `;
       });
+
+      $('#usrl-lot-dtholder').html(html);
+    });
    };
 
    $(document).on("click", ".toggle-lot", function () {
+      let id = parseInt($(this).val());
+
       if ($(this).is(":checked")) {
-         toggleLottery(this, true);
+         if (!GamesArr.includes(id)) GamesArr.push(id);
+         // console.log(GamesArr);
       } else {
-         toggleLottery(this, false);
+         GamesArr = GamesArr.filter(item => item !== id);
+         console.log(GamesArr);
+         // toggleLottery(this, false);
       }
+   });
+
+   $(document).on("click", ".updategames", function () {
+       const userID = $("#idHolder").val();
+       $.post(`../admin/updatesGames/${userID}/${JSON.stringify(GamesArr)}`,function(res){
+          // let data = JSON.parse(res)
+         //  console.log(res)
+           if(res ="success"){
+            showToast("Heads Up", "User Games Updated sucessfully","success")
+            fetchUserlist(currentPage, pageLimit);
+           }else{
+              showToast("Heads Up", "User Games not  Updated","info")
+           }
+       })
    });
 
    $(document).on("click", ".toggle-ip-state", function () {
@@ -1272,7 +1316,7 @@ $(function () {
    };
 
    const updateUserData = () => {
-      const userID = $("#idHolder").val();
+      let userID = $("#idHolder").val();
       const flag = "updateUserInfo";
       const depositLimit = $("#usrl-deposit-limit").val();
       const withdrawalLimit = $("#usrl-withdrawal-limit").val();
@@ -1312,7 +1356,7 @@ $(function () {
    };
 
    const fetchUserInfo = () => {
-      const userID = $("#idHolder").val();
+      let userID = $("#idHolder").val();
       const flag = "fetchUserInfo";
       const lotteryID = "all";
 
@@ -1373,7 +1417,6 @@ $(function () {
                showToast("Error", response.data, "error");
                return;
             }
-
             if (response.data == 0) {
                // showToast("Not Done", "Already blocked", "info");
                showToast(translations.notDone, translations.alreadyBlocked, "info");
@@ -1393,7 +1436,7 @@ $(function () {
    };
 
    const fetchUserLogs = () => {
-      const userID = $("#idHolder").val();
+      let userID = $("#idHolder").val();
       const flag = "fetchUserLogs";
       const lotteryID = "all";
 
@@ -1737,16 +1780,303 @@ $(function () {
          toggleIcon.removeClass("bx-hide").addClass("bx-show"); // Change icon to "show"
       }
    });
+
+  //game name
+
+  let allGamesData;
+   let parsedGamenameIds
+   let bigArr = [];
+   $(document).on("click", ".usr-gamename", function () {
+      $("#usl-lottery-gamename-modal").modal("show");
+      $("#idHolder").val($(this).attr("data-uid"));  
+      let niiData = $(this).closest('tr').find(".nii").text()
+     // console.log(niiData)
+      if(niiData != "*****"){
+         parsedGamenameIds = JSON.parse(niiData).gti ?? []
+       // console.log(parsedGamenameIds) 
+      }else{
+       $("#usl-lottery-gamename-modal").modal("show"); 
+      }
+      $.post(`../admin/getallgametype`, function (response) {
+
+         const data = JSON.parse(response);
+         allGamesData = data
+        // console.log(data);
+         const keys = ["5d", "3d", "fast3", "pk10", "11x5", "mark6", "happy8", "pk6"];
+
+         let html = "";
+
+         keys.forEach((item) => {
+               if (!data[item]) return; // skip if key doesn't exist
+
+               html +=`
+               <div class="accordion-item accord-item">  
+                  <div class="accordion-header">
+                     <span style="margin-left: 15px; display: flex; justify-content: space-between;">
+                     <span style="font-size: 16px;">${item}</span>
+                     <input type="checkbox" class="checkall"  data-gametype ='${item}' style="width:20px;height:20px"/>
+                     </span>
+                  </div>
+                  <div class="accordion-content">
+                     <ul class="custom-list">
+             `;
+               data[item].forEach((key) => {
+                    let check = parsedGamenameIds.includes(key.id);
+                  // Avoid duplicate entries in bigArr
+                  if (check && !bigArr.includes(key.id)) {
+                  bigArr.push(key.id);
+                  }
+                  console.log(check)
+                  html += `
+               <li class="tab-buttonc item" style="height:45px; border-bottom:solid 1px #eee;display: flex; justify-content: space-between; align-items: center; padding: 5px 10px;">
+                  <span style="margin-left: 7px; font-size: 14px;"'>${key.name}</span>
+                  <input type="checkbox" ${check ? 'checked' : ''} id="${key.id}" class="chkgameids" data-gameid='${key.id}'style="width:20px;height:20px"/>
+               </li>
+         `;
+               });
+
+               html += `
+               </ul>
+            </div>
+         </div>
+         `;
+         });
+
+         $(".gamediv").html(html);
+      });
+   });
+
+
+   $(document).on("change", ".chkgameids", function() {
+   const gameid = $(this).data("gameid");
+   if ($(this).is(":checked")) {
+      if (!bigArr.includes(gameid)) bigArr.push(gameid);
+   } else {
+      bigArr = bigArr.filter(id => id !== gameid);
+      // Also uncheck the related "check all" if exists for this game type
+      const gametype = $(this).data("gametype");
+      if ($(".checkall[data-gametype='" + gametype + "']").length) {
+         $(".checkall[data-gametype='" + gametype + "']").prop("checked", false);
+      }
+   }
+ //  console.log(bigArr);
+   });
+
+   $(document).on("change", ".checkall", function() {
+   const gametype = $(this).data("gametype");
+   if ($(this).is(":checked")) {
+      // Add all game IDs from this gametype
+      allGamesData[gametype].forEach(item => {
+         if (!bigArr.includes(item.id)) bigArr.push(item.id);
+         $("#" + item.id).prop("checked", true);
+      });
+   } else {
+      // Remove all game IDs from this gametype
+      allGamesData[gametype].forEach(item => {
+         bigArr = bigArr.filter(id => id !== item.id);
+         $("#" + item.id).prop("checked", false);
+      });
+   }
+   console.log(bigArr);
+   });
+
+// Accordion toggle
+$(document).on("click", ".accordion-header", function () {
+  toggleAccordion(this);
+});
+
+// Prevent toggleAccordion when clicking .checkall
+$(document).on("click", ".checkall", e => e.stopPropagation());
+
+// Check/uncheck logic
+   $(document).on("click", ".updategamenames", function () {
+        let userID = $("#idHolder").val();
+      $.post(`../admin/updatesGamesnames/${userID}/${JSON.stringify(bigArr)}`,function(res){
+         console.log(res)
+          if(res ="success"){
+            showToast("Heads Up", "User Games Updated sucessfully","success")
+            fetchUserlist(currentPage, pageLimit);
+           }else{
+              showToast("Heads Up", "User Games not  Updated","info")
+           }
+      })
+   });
+
+      // gamegrup
+      let parsedGamegroupIds = []
+    $(document).on("click", ".usergamegroup", function () {
+      $("#usl-lottery-gamegroup-modal").modal("show");
+      $("#idHolder").val($(this).attr("data-uid"));  
+       parsedGamegroupIds = $(this).closest('tr').find(".nii").text()       
+    });
+
+     
+   $(document).on("click", ".executegames", function () {
+      let lotteryId = $("#lotterys").val();
+      let models = $("#allgroup").val();
+      let niiData;
+      if(parsedGamegroupIds != "*****"){
+        let getCurrentGame = JSON.parse(parsedGamegroupIds).tabs
+        niiData = getCurrentGame[lotteryId] ?? []
+        console.log(niiData)
+      }else{
+       $("#usl-lottery-gamename-modal").modal("show"); 
+      }
+      // return
+        $.post(`../admin/fetchgamesTab/${lotteryId}/${models}`,function(res){
+         console.log(res)
+           let maindata = JSON.parse(res);
+           let html = ""; 
+           gameGr = []
+          maindata.data.map((gamegroup) => {
+         let check = niiData.includes(gamegroup.gp_id);
+         // Avoid duplicate entries in GamesArr
+         if (check && !gameGr.includes(gamegroup.gp_id)) {
+         gameGr.push(gamegroup.gp_id);
+         }
+
+         html += ` 
+         <tr>
+            <td>${gamegroup.name}</td>
+            <td>
+               <input class="form-check-input gametoggle" type="checkbox" ${check ? 'checked' : ''} value="${gamegroup.gp_id}">
+            </td>
+         </tr>
+         `;
+      });
+          $('#gamegrouptype').html(html);
+      });
+   })
+   
+     let gameGr = []
+     $(document).on("change", ".gametoggle", function () {
+        const val = parseInt($(this).val());
+        if ($(this).is(":checked")) {
+            if (!gameGr.includes(val)) gameGr.push(val);
+            console.log(gameGr)
+        } else {
+            gameGr = gameGr.filter((item) => item !== val);
+            console.log(gameGr)
+        }
+
+    });
+
+   // updategamegroup
+
+   $(document).on("click", ".updategamegroup", function () {
+        let userID = $("#idHolder").val();
+          let models = $("#lotterys").val();
+         console.log(userID,models)
+      //   return
+      $.post(`../admin/updatesGamegroup/${userID}/${models}/${JSON.stringify(gameGr)}`,function(res){
+         console.log(res)
+         //  if(res ="success"){
+         //    showToast("Heads Up", "User Games Updated sucessfully","success")
+         //    fetchUserlist(currentPage, pageLimit);
+         //   }else{
+         //      showToast("Heads Up", "User Games not  Updated","info")
+         //   }
+         
+      })
+   });
+
+
+
+   //gamenames headerRowUserList
+      let parsedGamegroupIdss = []
+    $(document).on("click", ".usergamename", function () {
+      $("#usl-lottery-gamenems-modal").modal("show");
+     $("#idHolder").val($(this).attr("data-uid"));  
+       parsedGamegroupIdss = $(this).closest('tr').find(".nii").text()       
+    });
+
+     
+   $(document).on("click", ".executegnames", function () {
+      let lotteryId = $("#gameslottery").val();
+      let models = $("#allgames").val();
+      let niiData;
+      if(parsedGamegroupIdss != "*****"){
+        let getCurrentGames = JSON.parse(parsedGamegroupIdss).gpi
+        niiData = getCurrentGames[lotteryId] ?? []
+        console.log(niiData)
+      }else{
+       $("#usl-lottery-gamename-modal").modal("show"); 
+      }
+      //return
+        $.post(`../admin/fetchGameNames/${lotteryId}/${models}`,function(res){
+         console.log(res)
+         // return
+           let maindata = JSON.parse(res);
+           let html = ""; 
+           gameName = []
+          maindata.data.map((gamename) => {
+         let check = niiData.includes(gamename.gn_id);
+         // Avoid duplicate entries in GamesArr
+         if (check && !gameName.includes(gamename.gn_id)) {
+         gameName.push(gamename.gp_id);
+         }
+     
+         html += `
+         <tr>
+            <td>${gamename.name}</td>
+            <td>
+               <input class="form-check-input gamenametoggle" type="checkbox"${check ? 'checked' : ''}  value="${gamename.gn_id}">
+            </td>
+         </tr>
+         `;
+      });
+          $('#gamenametbl').html(html);
+      });
+   })
+   
+     let gameName = []
+     $(document).on("change", ".gamenametoggle", function () {
+        const val = parseInt($(this).val());
+        if ($(this).is(":checked")) {
+            if (!gameName.includes(val)) gameName.push(val);
+            console.log(gameName)
+        } else {
+            gameName = gameName.filter((item) => item !== val);
+            console.log(gameName)
+        }
+
+    });
+
+    $(document).on('change', '#checkAllGames', function () {
+  const isChecked = $(this).is(':checked');
+  $('.gamenametoggle').prop('checked', isChecked);
+  
+})
+
+   // updategamegroup
+
+   $(document).on("click", ".updategamess", function () {
+        let userID = $("#idHolder").val();
+          let gn_id = $("#gameslottery").val();
+       //  console.log(userID,gn_id)
+        // return
+      $.post(`../admin/updatesGameNamess/${userID}/${gn_id}/${JSON.stringify(gameName)}`,function(res){
+         console.log(res)
+         //  if(res ="success"){
+         //    showToast("Heads Up", "User Games Updated sucessfully","success")
+         //    fetchUserlist(currentPage, pageLimit);
+         //   }else{
+         //      showToast("Heads Up", "User Games not  Updated","info")
+         //   }
+         
+      })
+   });
+                   
+
 });
 
 const lotteriesMarkup = (lottery, blockedLotteries) => {
    const lotteryID = lottery.lt_id;
-   const status = blockedLotteries.includes(`${lotteryID}`) ? "Disabled" : "Active";
-   const checkedState = status == "Active" ? "checked" : "";
+    const status = blockedLotteries.includes(`${lotteryID}`) ? "Disabled" : "Active";
+   // const checkedState = status == "Active" ? "checked" : "";
    return `<tr>
             <td><span class="lottery-name"> ${lottery.name}</span></td>
-            <td><span class="lottery-status">${status}</span></td>
-            <td><input class="form-check-input toggle-lot" type="checkbox" value="${lotteryID}" ${checkedState}></td>
+            <td><input class="form-check-input toggle-lot" type="checkbox" value="${lotteryID}"></td>
             </tr>`;
 };
 const userIpsMarkup = (data) => {

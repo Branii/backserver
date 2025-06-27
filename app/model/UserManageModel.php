@@ -12,7 +12,7 @@ class UserManageModel extends MEDOOHelper
         $startpoint = ($page - 1) * $limit;
         $data = parent::query(
             "SELECT uid, username,email,contact,nickname, agent_name, balance, recharge_level, user_state,reg_type,
-                  rebate, created_at, agent_id, account_type,reg_type
+                  rebate, created_at, agent_id, account_type,reg_type,blocked_lotteries
              FROM users_test
              ORDER BY uid DESC
              LIMIT :startpoint, :limit",
@@ -75,7 +75,6 @@ class UserManageModel extends MEDOOHelper
         return $totalCount;
     }
 
- 
     public static function Filteruserlist($page, $limit, $username, $states, $startdate, $enddate)
     {
         $whereConditions = self::FilterUserlistDataSubQuery($username, $states, $startdate, $enddate);
@@ -449,30 +448,7 @@ class UserManageModel extends MEDOOHelper
             return ['status' => 'error', 'message' => $pDOException];
         }
     }
-    // public static function FilterUserlistDataSubQuery($username = '', $states = '', $from = '', $to = '')
-    // {
-    //     $conditions = [];
-
-    //     if (!empty($username) && $username != 'all') {
-    //         $conditions['users.uid'] = $username;
-    //     }
-
-    //     if (!empty($states) && $states != 'all') {
-    //         $conditions['users.state'] = $states;
-    //     }
-
-    //     if ($from != '' && $to != '') {
-    //         $conditions['users.date_created[<>]'] = [$from, $to];
-    //     } elseif ($from != '') {
-    //         $conditions['users.date_created[>=]'] = $from;
-    //     } elseif ($to != '') {
-    //         $conditions['users.date_created[<=]'] = $to;
-    //     }
-
-    //     return $conditions;
-    // }
-
-
+   
     public static function AddAgentData($datas)
     {
 
@@ -629,22 +605,14 @@ class UserManageModel extends MEDOOHelper
 
         return $nickname;
     }
-    public static function fetchUserLotteries($user_id)
+    public static function FetchLotteryTypes()
     {
         try {
             $db = parent::openLink();
-            $sql = "SELECT lt_id,name,(SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id ) as blockedLotteries FROM `lottery_type`";
-            $stmt = $db->query($sql, [":user_id" => $user_id]);
-            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
-            if (empty($data)) {
-                return ["status" => "error", "data", "No Lotteries registered"];
-            }
-            $blocked_lotteries = $data[0]->blockedLotteries;
-            if ($blocked_lotteries != null && $blocked_lotteries != "*****") {
-                $data[0]->blockedLotteries = unserialize($blocked_lotteries);
-            }
-
-            return ["status" => "success", "data" => $data];
+            $sql = "SELECT lt_id,name FROM `lottery_type`";
+             $stmt = $db->query($sql);
+             $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return ["data" => $data];
         } catch (Exception $e) {
             return ["status" => "error", "data" => "Internal Server Error." . $e->getMessage()];
         }
@@ -656,35 +624,215 @@ class UserManageModel extends MEDOOHelper
             $db = parent::openLink();
             $sql = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
             $stmt = $db->query($sql, [":user_id" => $user_id]);
-            $data = $stmt->fetch(PDO::FETCH_OBJ);
-            $state = false;
-
-            $unserialized_lotteries = empty($data->blocked_lotteries) || $data->blocked_lotteries == "*****" ? [] : unserialize($data->blocked_lotteries);
-
-            if (empty($unserialized_lotteries)) {
-                $state = true;
-                $sql = "UPDATE `users_test` SET blocked_lotteries='" . serialize([$lottery_id]) . "' WHERE uid=:user_id";
-            } else {
-                if (in_array($lottery_id, $unserialized_lotteries)) {
-                    $unserialized_lotteries = array_diff($unserialized_lotteries, [$lottery_id]);
-                } else {
-                    $state = true;
-                    array_push($unserialized_lotteries, $lottery_id);
-                }
-
-                $sql = "UPDATE `users_test` SET blocked_lotteries='".serialize($unserialized_lotteries)."' WHERE uid=:user_id";
-            }
+            $data = $stmt->fetch(PDO::FETCH_OBJ)->blocked_lotteries;
+            if($data == "*****"){
+             $obj = [
+                    "lti" => $lottery_id ,
+                    "gti" => [],
+                    "gpi" => [],
+                    "tabs" =>[]
+                ];
+            $sql = "UPDATE `users_test` SET blocked_lotteries='" . json_encode($obj) . "' WHERE uid=:user_id";
             $stmt = $db->query($sql, [":user_id" => $user_id]);
-            if ($stmt->rowCount()) {
-                return ['status' => 'success', 'data' => $stmt->rowCount()];
+            return ['status' => 'success', 'data' => $stmt->rowCount()];
             }
-
-            // print_r($unserialized_lotteries);
-            return ['status' => 'success', 'data' => 0];
+            $decoded = json_decode($data,true);
+            $obj = [
+                    "lti" => $lottery_id,
+                    "gti" => $decoded['gti']  ?? [],
+                    "gpi" => $decoded['gpi']  ?? [],
+                    "tabs" => $decoded['tabs'] ??[]
+                ];
+            $sql = "UPDATE `users_test` SET blocked_lotteries='" . json_encode($obj) . "' WHERE uid=:user_id";
+            $stmt = $db->query($sql, [":user_id" => $user_id]);
+            return ['status' => 'success', 'data' => $stmt->rowCount()];
         } catch (Exception $e) {
             return ['status' => 'error', 'msg' => 'Error Blocking Lottery for User.' . $e->getMessage()];
         }
     }
+
+    public static function UpdateGametypes($user_id, $lottery_id)
+    {
+        try {
+            $db = parent::openLink();
+            $sql = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
+            $stmt = $db->query($sql, [":user_id" => $user_id]);
+            $data = $stmt->fetch(PDO::FETCH_OBJ)->blocked_lotteries;
+            if($data == "*****"){
+               $obj = [
+                    "lti" => [] ,
+                    "gti" => $lottery_id,
+                    "gpi" => [],
+                    "tabs" => []
+                ];
+            $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($obj). "' WHERE uid=:user_id";
+            $stmt = $db->query($sql, [":user_id" => $user_id]);
+            return ['status' => 'success', 'data' => $stmt->rowCount()];
+            }
+            $decoded = json_decode($data,true);
+             $obj = [
+                    "lti" => $decoded['lti'],
+                    "gti" => $lottery_id ?? [],
+                    "gpi" => $decoded['gpi'] ?? [],
+                    "tabs" => $decoded['tabs'] ?? []
+                ];
+                $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($obj). "' WHERE uid=:user_id";
+                $stmt = $db->query($sql, [":user_id" => $user_id]);
+                return ['status' => 'success', 'data' => $stmt->rowCount()];
+        } catch (Exception $e) {
+            return ['status' => 'error', 'msg' => 'Error Blocking Lottery for User.' . $e->getMessage()];
+        }
+    }
+
+    public static function UpdateGameGroup($uid,$lotterymodel,$lottery_id)
+    {
+
+        try {
+            $db = parent::openLink();
+            $sql = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
+            $stmt = $db->query($sql, [":user_id" => $uid]);
+            $data = $stmt->fetch(PDO::FETCH_OBJ)->blocked_lotteries;
+            if($data == "*****"){
+                $minObj = [
+                    $lotterymodel => $lottery_id
+                ];
+               $obj = [
+                    "lti" => [] ,
+                    "gti" => [],
+                    "gpi" => [],
+                    "tabs" => $minObj
+                ];
+            $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($obj). "' WHERE uid=:user_id";
+            $stmt = $db->query($sql, [":user_id" => $uid]);
+            return ['status' => 'success', 'data' => $stmt->rowCount()];
+            }
+
+             $decoded = json_decode($data,true);
+            if (isset($decoded['tabs'][$lotterymodel])) { // game exist
+                $decoded['tabs'][$lotterymodel] = $lottery_id;
+                $objkeyExist = [
+                    "lti" => $decoded['lti'] ?? [],
+                    "gti" => $decoded['gti'] ?? [],
+                    "gpi" => $decoded['gpi'] ?? [],
+                    "tabs" => $decoded['tabs']
+                ];
+                $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($objkeyExist). "' WHERE uid=:user_id";
+                $stmt = $db->query($sql, [":user_id" => $uid]);
+                return ['status' => 'success', 'data' => $stmt->rowCount()];
+            } else { // game does not exist
+                $decoded['tabs'][$lotterymodel] = $lottery_id;
+                $objKeyNoExist = [
+                    "lti" => $decoded['lti'] ?? [],
+                    "gti" => $decoded['gti'] ?? [],
+                    "gpi" => $decoded['gpi'] ?? [],
+                    "tabs" => $decoded['tabs']
+                ];
+                $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($objKeyNoExist). "' WHERE uid=:user_id";
+                $stmt = $db->query($sql, [":user_id" => $uid]);
+                return ['status' => 'success', 'data' => $stmt->rowCount()];
+            }
+    
+        } catch (Exception $e) {
+            return ['status' => 'error', 'msg' => 'Error Blocking Lottery for User.' . $e->getMessage()];
+        }
+    }
+
+    public static function UpdateGameNames($uid,$lotterymodel,$lottery_id)
+    {
+
+        try {
+            $db = parent::openLink();
+            $sql = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
+            $stmt = $db->query($sql, [":user_id" => $uid]);
+            $data = $stmt->fetch(PDO::FETCH_OBJ)->blocked_lotteries;
+            if($data == "*****"){
+                $minObj = [
+                    $lotterymodel => $lottery_id
+                ];
+               $obj = [
+                    "lti" => [] ,
+                    "gti" => [],
+                    "gpi" =>$minObj,
+                    "tabs" =>[] 
+                ];
+            $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($obj). "' WHERE uid=:user_id";
+            $stmt = $db->query($sql, [":user_id" => $uid]);
+            return ['status' => 'success', 'data' => $stmt->rowCount()];
+            }
+
+             $decoded = json_decode($data,true);
+            if (isset($decoded['gpi'][$lotterymodel])) { // game exist
+                $decoded['gpi'][$lotterymodel] = $lottery_id;
+                $objkeyExist = [
+                    "lti" => $decoded['lti'] ?? [],
+                    "gti" => $decoded['gti'] ?? [],
+                    "gpi" => $decoded['gpi'] ,
+                    "tabs" => $decoded['tabs'] ??[]
+                ];
+                $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($objkeyExist). "' WHERE uid=:user_id";
+                $stmt = $db->query($sql, [":user_id" => $uid]);
+                return ['status' => 'success', 'data' => $stmt->rowCount()];
+            } else { // game does not exist
+                $decoded['gpi'][$lotterymodel] = $lottery_id;
+                $objKeyNoExist = [
+                    "lti" => $decoded['lti'] ?? [],
+                    "gti" => $decoded['gti'] ?? [],
+                    "gpi" => $decoded['gpi'] ,
+                    "tabs" => $decoded['tabs'] ??[]
+                ];
+                $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($objKeyNoExist). "' WHERE uid=:user_id";
+                $stmt = $db->query($sql, [":user_id" => $uid]);
+                return ['status' => 'success', 'data' => $stmt->rowCount()];
+            }
+    
+        } catch (Exception $e) {
+            return ['status' => 'error', 'msg' => 'Error Blocking Lottery for User.' . $e->getMessage()];
+        }
+    }
+
+    public static function GetGameTabs(string $lotteryId, $gamemodel)
+    {
+      // $bigData = [];
+
+      if (in_array($lotteryId, [1, 2, 3, 5, 6, 8, 10,11]) && in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
+         $tableMap = [
+            'standard' => 'game_group',
+            // 'twosides' => 'twosides',
+            // 'longdragon' => 'longdragon',
+            // 'boardgames' => 'boardgames',
+            // 'roadbet' => 'roadbet',
+            // 'fantan' => 'fantan',
+            // 'manytables' => 'manytables',
+         ];
+         $tableName = $tableMap[$gamemodel];
+         $sql = "SELECT gp_id, name FROM {$tableName}  WHERE lottery_type = :lottery_type";
+         $data = parent::query($sql, ['lottery_type' => $lotteryId]);
+         return ['data' => $data];
+      }
+    }
+
+
+    public static function GetGameNames(string $lotteryId, $gamemodel)
+    {
+        // $bigData = [];
+
+        if (in_array($lotteryId, [1, 2, 3, 5, 6, 8, 10,11]) && in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
+            $tableMap = [
+                'standard' => 'game_name',
+                // 'twosides' => 'twosides',
+                // 'longdragon' => 'longdragon',
+                // 'boardgames' => 'boardgames',
+                // 'roadbet' => 'roadbet',
+                // 'fantan' => 'fantan',
+                // 'manytables' => 'manytables',
+            ];
+            $tableName = $tableMap[$gamemodel];
+            $sql = "SELECT gn_id, name FROM {$tableName}  WHERE lottery_type = :lottery_type";
+            $data = parent::query($sql, ['lottery_type' => $lotteryId]);
+            return ['data' => $data];
+        }
+    }
+
     public static function fetchUserLogs($user_id, $page = 1, $limit = 100): array
     {
         try {
@@ -727,7 +875,6 @@ class UserManageModel extends MEDOOHelper
         }
     }
 
-
     ////////////// USERLIST LIST END -//////////
     //NOTE -
 
@@ -754,7 +901,6 @@ class UserManageModel extends MEDOOHelper
             $totalRecords  = parent::count('user_logs');
             return ['data' => $data, 'total' => $totalRecords];
     }
-
     public static function Filteruserlogs($subQuery, $page, $limit)
     {
         $startpoint = $page * $limit - $limit;

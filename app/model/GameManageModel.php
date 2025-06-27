@@ -186,6 +186,39 @@ class GameManageModel extends MEDOOHelper
             return ['success' => true];
           }
    }
+
+   public static function GetAllGameTypes()
+   {
+       $formattedGroup = [];
+       $gametypes = parent::query("SELECT gt_id,name,game_group FROM game_type  GROUP BY gt_id,name,game_group ORDER BY name ASC");
+       $keys = ['5d','3d','fast3','pk10','11x5','mark6','happy8','pk6'];
+       $arr = [];
+       foreach($gametypes as $types){
+         if(in_array($types['game_group'],$keys)){
+            $formattedGroup[$types['game_group']][] = ['name' =>$types['name'],'id'=>$types['gt_id']];
+         }
+       }
+       return $formattedGroup;
+   }
+
+
+   public static function GetAllGameTabs()
+   {
+       $formattedGroup = [];
+       $gametypes = parent::query("SELECT gp_id,name,game_group FROM game_group  GROUP BY gt_id,name,game_group ORDER BY name ASC");
+       $keys = ['5d','3d','fast3','pk10','11x5','mark6','happy8','pk6'];
+       $arr = [];
+       foreach($gametypes as $types){
+         if(in_array($types['game_group'],$keys)){
+            $formattedGroup[$types['game_group']][] = ['name' =>$types['name'],'id'=>$types['gt_id']];
+         }
+       }
+       return $formattedGroup;
+   }
+
+
+
+   
    public static function filterGameDraws($page, $limit, $gameId, $datefrom, $dateto)
    {
       try {

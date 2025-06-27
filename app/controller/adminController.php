@@ -549,8 +549,6 @@ class adminController extends Controller
         $this->view->render();
     }
 
-
-
     public function filterChangeAccount($uid, $ordertype, $startdate, $enddate, $pageNumber, $limit)
     {
         $this->view('exec/account_manage', [
@@ -566,7 +564,66 @@ class adminController extends Controller
         $this->view->render();
     }
 
+    
+    //games for user
+    public function updatesGames($userid,$data)
+    {
+        $this->view('exec/account_manage', ["uid"=>$userid, "data" => $data ,"flag" => 'updateLotteryState']);
+        $this->view->render();
+    }
 
+    public function updatesGamesnames($userid,$data)
+    {
+        $this->view('exec/account_manage', ["uid"=>$userid, "data" => $data ,"flag" => 'updategamenames']);
+        $this->view->render();
+    }
+
+    public function updatesGamegroup($userid,$lotterymodel,$data)
+    {
+        $this->view('exec/account_manage', ["uid"=>$userid, "lotterymodel"=>$lotterymodel, "data" => $data ,"flag" => 'updatesGamegroup']);
+        $this->view->render();
+    }
+
+      public function updatesGameNamess($userid,$lotterymodel,$data)
+    {
+        $this->view('exec/account_manage', ["uid"=>$userid, "lotterymodel"=>$lotterymodel, "data" => $data ,"flag" => 'updatesGameNamess']);
+        $this->view->render();
+    }
+
+   
+     public function getallgamegroup()
+    {
+        $this->view('exec/account_manage', ["flag" => 'getallgamegroup']);
+        $this->view->render();
+    }
+
+    function getallgametype()
+    {
+        $this->view('exec/game_management', ['flag'=>'getallgametype']);
+        $this->view->render();
+    }
+
+     function fetchgamesTab($lotteryid,$model)
+    {
+        $this->view('exec/account_manage', ['lotteryid'=>$lotteryid, 'model'=>$model,'flag'=>'fetchgamesTab']);
+        $this->view->render();
+    }
+
+     function fetchGameNames($lotteryid,$model)
+    {
+        $this->view('exec/account_manage', ['lotteryid'=>$lotteryid, 'model'=>$model,'flag'=>'fetchGameNames']);
+        $this->view->render();
+    }
+
+    
+    
+    public function fetchLoterytype()
+    {
+        $this->view('exec/account_manage', ["flag" => 'fetchLoterytype']);
+        $this->view->render();
+    }
+
+    
     //NOTE -
     ////////////// USERLIST LOGS -//////////
     public function userlogsdata($pageNumber, $limit)
@@ -597,6 +654,7 @@ class adminController extends Controller
         $this->view('exec/partners', ['partner_id' => $partnerID, "flag" => $flag]);
         $this->view->render();
     }
+
 
     public function agent_subordinate($user_id, $pageNumber, $limit)
     {
@@ -838,8 +896,7 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    
-
+  
     //annoucement
     function createannoucement($messagetype, $messagetitle, $usernames, $description, $startdate, $enddate, $sendby)
     {

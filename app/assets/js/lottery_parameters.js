@@ -267,7 +267,6 @@ const lotteryParamTable = (data) => {
     // console.log(lotteryId, models);
     if (models == "twosides" || models === "boardgames" || models === "fantan")
       return;
-
     getLotteryGames(lotteryId, models);
   });
 
@@ -517,8 +516,8 @@ const lotteryParamTable = (data) => {
       5: ["Standard", "Twosides", "Logdragon", "Roadbet"],
       6: ["Standard","Twosides","Logdragon","BoardGames","Manytables","Roadbet"],
       8: ["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"],
-      10: ["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"],
-      11: ["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"]
+      10:["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"],
+      11:["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"]
     };
     // Get matching games for selected value
     let options = optionsMap[selectedValue] || [];
