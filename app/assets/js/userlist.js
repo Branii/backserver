@@ -1256,7 +1256,8 @@ $(function () {
        $.post(`../admin/updatesGames/${userID}/${JSON.stringify(GamesArr)}`,function(res){
           // let data = JSON.parse(res)
          //  console.log(res)
-           if(res ="success"){
+           if(res = "success"){
+            $("#usl-lottery-name-modal").modal("hide")
             showToast("Heads Up", "User Games Updated sucessfully","success")
             fetchUserlist(currentPage, pageLimit);
            }else{
@@ -1890,6 +1891,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
       $.post(`../admin/updatesGamesnames/${userID}/${JSON.stringify(bigArr)}`,function(res){
          console.log(res)
           if(res ="success"){
+              $("#usl-lottery-gamename-modal").modal("hide"); 
             showToast("Heads Up", "User Games Updated sucessfully","success")
             fetchUserlist(currentPage, pageLimit);
            }else{
@@ -1958,7 +1960,6 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
     });
 
    // updategamegroup
-
    $(document).on("click", ".updategamegroup", function () {
         let userID = $("#idHolder").val();
           let models = $("#lotterys").val();
@@ -1967,6 +1968,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
       $.post(`../admin/updatesGamegroup/${userID}/${models}/${JSON.stringify(gameGr)}`,function(res){
          console.log(res)
           if(res ="success"){
+            $("#usl-lottery-gamename-modal").modal("hide"); 
             showToast("Heads Up", "User Games Updated sucessfully","success")
             fetchUserlist(currentPage, pageLimit);
            }else{
@@ -1976,17 +1978,14 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
       })
    });
 
-
-
    //gamenames headerRowUserList
-      let parsedGamegroupIdss = []
+    let parsedGamegroupIdss = []
     $(document).on("click", ".usergamename", function () {
       $("#usl-lottery-gamenems-modal").modal("show");
      $("#idHolder").val($(this).attr("data-uid"));  
        parsedGamegroupIdss = $(this).closest('tr').find(".nii").text()       
     });
-
-     
+  
    $(document).on("click", ".executegnames", function () {
       let lotteryId = $("#gameslottery").val();
       let models = $("#allgames").val();
