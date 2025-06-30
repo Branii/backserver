@@ -1795,6 +1795,312 @@ const txtPages = document.getElementById("trans-pages").innerText;
          toggleIcon.removeClass("bx-hide").addClass("bx-show"); // Change icon to "show"
       }
    });
+
+  //game type
+
+   let allGamesData;
+   let parsedGamenameIds
+   let bigArr = [];
+   $(document).on("click", ".usr-gametype", function () {
+      $("#usl-lottery-gamename-modal").modal("show");
+      $("#idHolder").val($(this).attr("data-uid"));  
+      let niiData = $(this).closest('tr').find(".nii").text()
+     // console.log(niiData)
+      if(niiData != "*****"){
+         parsedGamenameIds = JSON.parse(niiData).gti ?? []
+       // console.log(parsedGamenameIds) 
+      }else{
+       $("#usl-lottery-gamename-modal").modal("show"); 
+      }
+      $.post(`../admin/getallgametype`, function (response) {
+
+         const data = JSON.parse(response);
+         allGamesData = data
+        // console.log(data);
+         const keys = ["5d", "3d", "fast3", "pk10", "11x5", "mark6", "happy8", "pk6"];
+
+         let html = "";
+
+         keys.forEach((item) => {
+               if (!data[item]) return; // skip if key doesn't exist
+
+               html +=`
+               <div class="accordion-item accord-item">  
+                  <div class="accordion-header togglethis">
+                     <span style="margin-left: 15px; display: flex; justify-content: space-between;">
+                     <span style="font-size: 16px;">${item}</span>
+                     <input type="checkbox" class="checkall"  data-gametype ='${item}' style="width:20px;height:20px"/>
+                     </span>
+                  </div>
+                  <div class="accordion-content">
+                     <ul class="custom-list">
+             `;
+               data[item].forEach((key) => {
+                    let check = parsedGamenameIds.includes(key.id);
+                  // Avoid duplicate entries in bigArr
+                  if (check && !bigArr.includes(key.id)) {
+                  bigArr.push(key.id);
+                  }
+                  console.log(check)
+                  html += `
+               <li class="tab-buttonc item" style="height:45px; border-bottom:solid 1px #eee;display: flex; justify-content: space-between; align-items: center; padding: 5px 10px;">
+                  <span style="margin-left: 7px; font-size: 14px;"'>${key.name}</span>
+                  <input type="checkbox" ${check ? 'checked' : ''} id="${key.id}" class="chkgameids" data-gameid='${key.id}'style="width:20px;height:20px"/>
+               </li>
+         `;
+               });
+
+               html += `
+               </ul>
+            </div>
+         </div>
+         `;
+         });
+
+         $(".gamediv").html(html);
+      });
+   });
+
+   $(document).on("change", ".chkgameids", function() {
+   const gameid = $(this).data("gameid");
+   if ($(this).is(":checked")) {
+      if (!bigArr.includes(gameid)) bigArr.push(gameid);
+   } else {
+      bigArr = bigArr.filter(id => id !== gameid);
+      // Also uncheck the related "check all" if exists for this game type
+      const gametype = $(this).data("gametype");
+      if ($(".checkall[data-gametype='" + gametype + "']").length) {
+         $(".checkall[data-gametype='" + gametype + "']").prop("checked", false);
+      }
+   }
+ //  console.log(bigArr);
+   });
+
+   $(document).on("change", ".checkall", function() {
+   const gametype = $(this).data("gametype");
+   if ($(this).is(":checked")) {
+      // Add all game IDs from this gametype
+      allGamesData[gametype].forEach(item => {
+         if (!bigArr.includes(item.id)) bigArr.push(item.id);
+         $("#" + item.id).prop("checked", true);
+      });
+   } else {
+      // Remove all game IDs from this gametype
+      allGamesData[gametype].forEach(item => {
+         bigArr = bigArr.filter(id => id !== item.id);
+         $("#" + item.id).prop("checked", false);
+      });
+   }
+   console.log(bigArr);
+   });
+
+// Accordion toggle
+$(document).on("click", ".togglethis", function () {
+  toggleAccordion(this);
+});
+
+// Prevent toggleAccordion when clicking .checkall
+$(document).on("click", ".checkall", e => e.stopPropagation());
+
+// Check/uncheck logic
+   $(document).on("click", ".updategametype", function () {
+        let userID = $("#idHolder").val();
+      $.post(`../admin/updatesGamesnames/${userID}/${JSON.stringify(bigArr)}`,function(res){
+         console.log(res)
+          if(res ="success"){
+              $("#usl-lottery-gamename-modal").modal("hide"); 
+            showToast("Heads Up", "User Games Updated sucessfully","success")
+            fetchUserlist(currentPage, pageLimit);
+           }else{
+              showToast("Heads Up", "User Games not  Updated","info")
+           }
+      })
+   });
+
+      // gametabs
+      let parsedGamegroupIds = []
+    $(document).on("click", ".usergamegroup", function () {
+      $("#usl-lottery-gamegroup-modal").modal("show");
+      $("#idHolder").val($(this).attr("data-uid"));  
+       parsedGamegroupIds = $(this).closest('tr').find(".nii").text()       
+    });
+
+     
+   $(document).on("click", ".executegames", function () {
+      let lotteryId = $("#lotterys").val();
+      let models = $("#allgroup").val();
+      let niiData;
+      if(parsedGamegroupIds != "*****"){
+        let getCurrentGame = JSON.parse(parsedGamegroupIds).tabs
+        niiData = getCurrentGame[lotteryId] ?? []
+        console.log(niiData)
+      }else{
+       $("#usl-lottery-gamename-modal").modal("show"); 
+      }
+      // return
+        $.post(`../admin/fetchgamesTab/${lotteryId}/${models}`,function(res){
+         console.log(res)
+           let maindata = JSON.parse(res);
+           let html = ""; 
+           gameGr = []
+          maindata.data.map((gamegroup) => {
+         let check = niiData.includes(gamegroup.gp_id);
+         // Avoid duplicate entries in GamesArr
+         if (check && !gameGr.includes(gamegroup.gp_id)) {
+         gameGr.push(gamegroup.gp_id);
+         }
+
+         html += ` 
+         <tr>
+            <td class="tabname">${gamegroup.name}</td>
+            <td>
+               <input class="form-check-input gametoggle" type="checkbox" ${check ? 'checked' : ''} value="${gamegroup.gp_id}">
+            </td>
+         </tr>
+         `;
+      });
+          $('#gamegrouptype').html(html);
+      });
+   })
+   
+     let gameGr = []
+     $(document).on("change", ".gametoggle", function () {
+      //   const val = parseInt($(this).val());
+        const val = $(this).closest("tr").find(".tabname").text()
+        console.log(val)
+        if ($(this).is(":checked")) {
+            if (!gameGr.includes(val)) gameGr.push(val);
+            console.log(gameGr)
+        } else {
+            gameGr = gameGr.filter((item) => item !== val);
+            console.log(gameGr)
+        }
+
+    });
+
+   // updategamegroup
+   $(document).on("click", ".updategamegroup", function () {
+        let userID = $("#idHolder").val();
+          let models = $("#lotterys").val();
+         console.log(userID,models)
+      //   return
+      $.post(`../admin/updatesGamegroup/${userID}/${models}/${JSON.stringify(gameGr)}`,function(res){
+         console.log(res)
+          if(res ="success"){
+            $("#usl-lottery-gamename-modal").modal("hide"); 
+            showToast("Heads Up", "User Games Updated sucessfully","success")
+            fetchUserlist(currentPage, pageLimit);
+           }else{
+              showToast("Heads Up", "User Games not  Updated","info")
+           }
+         
+      })
+   });
+
+   //gamenames headerRowUserList
+    let parsedGamegroupIdss = []
+    $(document).on("click", ".usergamename", function () {
+      $("#usl-lottery-gamenems-modal").modal("show");
+     $("#idHolder").val($(this).attr("data-uid"));  
+       parsedGamegroupIdss = $(this).closest('tr').find(".nii").text()       
+    });
+  
+   $(document).on("click", ".executegnames", function () {
+      let lotteryId = $(".gamenametype").val().split("|")[1];
+      let models = $("#allgames").val();
+      let gamenametype = $(".gamenametype").val().split("|")[0];
+      console.log(lotteryId, models, gamenametype)
+      let niiData;
+      if(parsedGamegroupIdss != "*****"){
+        let getCurrentGames = JSON.parse(parsedGamegroupIdss).gpi
+        niiData = getCurrentGames[gamenametype] ?? []
+        console.log(niiData)
+      }else{
+       $("#usl-lottery-gamename-modal").modal("show"); 
+      }
+      //return
+        $.post(`../admin/fetchGameNames/${lotteryId}/${models}`,function(res){
+         console.log(res)
+         // return
+           let maindata = JSON.parse(res);
+           let html = ""; 
+           gameName = []
+          maindata.data.map((gamename) => {
+         let check = niiData.includes(gamename.gn_id);
+         // Avoid duplicate entries in GamesArr
+         if (check && !gameName.includes(gamename.gn_id)) {
+         gameName.push(gamename.gp_id);
+         }
+     
+         html += `
+         <tr>
+            <td>${gamename.name}</td>
+            <td>
+               <input class="form-check-input gamenametoggle" type="checkbox" ${check ? 'checked' : ''}  value="${gamename.gn_id}">
+            </td>
+         </tr>
+         `;
+      });
+          $('#gamenametbl').html(html);
+      });
+   })
+   
+     let gameName = []
+    $(document).on("change", ".gamenametoggle", function () {
+        const val = parseInt($(this).val()); 
+        console.log(val)
+        if ($(this).is(":checked")) {
+            if (!gameName.includes(val)) gameName.push(val);
+            console.log(gameName)
+        } else {
+            gameName = gameName.filter((item) => item !== val);
+            console.log(gameName)
+        }
+
+    });
+
+   //  $(document).on('change', '#checkAllGames', function () {
+   //  const isChecked = $(this).is(':checked');
+   //  $('.gamenametoggle').prop('checked', isChecked);
+   //  })
+
+   // updategamegrou
+
+   $(document).on("click", ".updategamenames", function () {
+       let userID = $("#idHolder").val();
+       let gamenametypes = $(".gamenametype").val().split("|")[0];
+      $.post(`../admin/updatesGameNamess/${userID}/${gamenametypes}/${JSON.stringify(gameName)}`,function(res){
+         console.log(res)
+          if(res ="success"){
+            showToast("Heads Up", "User Games Updated sucessfully","success")
+            fetchUserlist(currentPage, pageLimit);
+           }else{
+              showToast("Heads Up", "User Games not  Updated","info")
+           }
+         
+      })
+   });
+
+
+  async function fetchLotteryname() {
+      try {
+          const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json(); // Parse JSON response
+          let html = `<option value="">${translator['Lottery Type']}</option>`;
+          data.forEach((lottery) => {
+            html += `<option value="${lottery.gt_id}|${lottery.lottery_type}">${lottery.name}</option>`;
+          });
+          $(".gamenametype").html(html);
+      } catch (error) {
+          console.error("Error fetching data:", error);
+      }
+  }
+  fetchLotteryname();
+                   
+
 });
 
 const lotteriesMarkup = (lottery, blockedLotteries) => {

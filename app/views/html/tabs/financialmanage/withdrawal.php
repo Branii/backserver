@@ -355,10 +355,7 @@
         </span>
         <span class="top-right-btn"  aria-label="Page navigation example">
            <select class="left-element form-control numrowstrans" id="widrl-numrowstans" style="font-size: 12px;">
-                <!-- <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option value="50">50</option> -->
+      
                           <option value="20"><?= $translator['20'] ?? '20' ?></option>
                       <option value="50"><?= $translator['50'] ?? '50' ?></option>
     <option value="100"><?= $translator['100'] ?? '100' ?></option>

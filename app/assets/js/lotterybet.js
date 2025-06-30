@@ -360,18 +360,23 @@ $(function () {
         viewstakedBet(betcode);
     });
 
-    async function viewstakedBet(betcode) {
-        try {
-            const response = await fetch(`../admin/viewBetstake/${betcode}`);
-            const data = await response.json();
-            let htmlbet1 = Showbettable(firstRowbet, data);
-            let htmlbet2 = Showbettable(secondRowbet, data);
-            $("#rowbet").html(htmlbet1);
-            $("#rowbet1").html(htmlbet2);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    }
+  async function fetchLotteryname() {
+      try {
+          const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json(); // Parse JSON response
+          let html = `<option value="">${translator['Lottery Type']}</option>`;
+          data.forEach((lottery) => {
+            html += `<option value="${lottery.gt_id}|${lottery.lottery_type}" data-lottery="">${lottery.name}|${lottery.gt_id}|${lottery.lottery_type}</option>`;
+          });
+          $(".selectlottery").html(html);
+      } catch (error) {
+          console.error("Error fetching data:", error);
+      }
+  }
+  fetchLotteryname();
 
     let debounceTimeout = null;
     let isPastingss = false;

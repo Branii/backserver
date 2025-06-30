@@ -54,11 +54,17 @@ $(function () {
         };
 
         let completes = translator["Completed"];
-        const formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
+      const formatTimestamp = (timestamp) => {
+            if (typeof timestamp !== 'string' || timestamp.trim() === '') {
+                return 'N/A';
+            }
+
+            const parts = timestamp.trim().split(' ');
+            return parts.length === 2 ? `${parts[0]} / ${parts[1]}` : parts[0];
+        };
 
         data.forEach((item) => {
-            if (item.order_type === 12) return;
-
+            //  let formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
             let timezone = item.timezone ? item.timezone.split(" ") : ["UTC", "+0"];
             timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
@@ -151,7 +157,7 @@ $(function () {
 
     async function fetchTrasaction(page, pageLimit) {
         try {
-            const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
+            const response = await fetch(`../businessflow/transactiondata/${page}/${pageLimit}`);
             const data = await response.json();
             // Logs the entire response
             // console.log("Transaction Data Array:", data.transaction); // Logs just the transaction list
@@ -267,7 +273,7 @@ $(function () {
 
     async function filterTrasaction(transusername, transactionId, ordertypetrans, partneruid, startdatrans, enddatetrans, currentPage, pageLimit) {
         try {
-            const response = await fetch(`../admin/filtertransactions/${transusername}/${transactionId}/${ordertypetrans}/${partneruid}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
+            const response = await fetch(`../businessflow/filtertransactions/${transusername}/${transactionId}/${ordertypetrans}/${partneruid}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
 
             const data = await response.json();
             $(".loadertrans").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
@@ -416,7 +422,7 @@ $(function () {
 
     async function fetchTrasactionBet(transactionId) {
         try {
-            const response = await fetch(`../admin/getTransactionBet/${transactionId}`);
+            const response = await fetch(`../businessflow/getTransactionBet/${transactionId}`);
             const transactiondata = await response.json();
             if (transactiondata.deposit) {
                 populatedepositeTable(transactiondata);
@@ -439,8 +445,7 @@ $(function () {
     }
 
     $(document).on("click", ".tinfo", function () {
-        setTimeout(() => {
-            $("#loadingIndicator").hide();
+        setTimeout(() => { $("#loadingIndicator").hide();
         }, 100);
         $("#signup-modal").modal("show");
         const transactionId = $(this).attr("value");
@@ -459,8 +464,8 @@ $(function () {
             background: "rgb(90,106,133,0.1)",
             size: 3,
         });
-        const numrow = $(this).val();
-        fetchTrasaction(currentPage, numrow);
+        let numrowtrans = $(this).val();
+       fetchTrasaction(currentPage, numrowtrans);
     });
 
     //search the for username

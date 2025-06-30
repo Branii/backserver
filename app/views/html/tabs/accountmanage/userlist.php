@@ -1502,26 +1502,9 @@
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px;">
-                    <select name="betsate" class="form-control form-select queryholderlistt lotteryTypes" id="gameslottery" style="width: 50%;">
-                        <!-- <option value="">--<?= $translator['Select Lottery']; ?>--</option>
-                        <option value="1">5D</option>
-                        <option value="2">PK10</option>
-                        <option value="3">FAST3</option>
-                        <option value="5">3D</option>
-                        <option value="6">11x5</option>
-                        <option value="8">Mark6</option>
-                        <option value="10">Happy</option> -->
-                    </select>
-
-                     <select name="betsate" class="form-control form-select queryholderlistt selectlottery" id="gamenametype" style="width: 50%;">
-                        <!-- <option value="">--<?= $translator['Select Lottery']; ?>--</option>
-                        <option value="1">5D</option>
-                        <option value="2">PK10</option>
-                        <option value="3">FAST3</option>
-                        <option value="5">3D</option>
-                        <option value="6">11x5</option>
-                        <option value="8">Mark6</option>
-                        <option value="10">Happy</option> -->
+                   
+                     <select name="betsate" class="form-control form-select queryholderlistt  gamenametype" id="" style="width: 50%;">
+                       
                     </select>
 
                     <select id="allgames" class="form-control form-select" style="width: 50%;">
@@ -1547,7 +1530,7 @@
                 </div>
                 <br>
                      <div style="overflow: hidden;">
-                            <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
+                            <table class="table table-hover table-bordered text-nowrap mb-0 " id="">
                                 <thead>
                                     <tr>
                                         <th class="font-weight-normal"><?= $translator['Lottery Name']; ?></th>
