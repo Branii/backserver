@@ -275,6 +275,7 @@
                     <option value="9"><?= $translator['Sending Red Envelope']; ?></option>
                     <option value="10"><?= $translator['Red Envelope Receive']; ?></option>
                     <option value="11"><?= $translator['Bet Refund']; ?></option>
+                     <option value="13"><?= $translator['Profit Limit']; ?></option>
                 </select>
 
                 <select name="order_type" class="form-control form-select queryholdertransaction " id="ordertypetruans"

@@ -22,7 +22,7 @@ $(function () {
   }
 
 
-  const SUCCESS_TEXT = document.getElementById("success_text").innerText;
+const SUCCESS_TEXT = document.getElementById("success_text").innerText;
 const UPDATED_SUCCESSFULLY = document.getElementById("updated_successfully").innerText;
 const GAME_STATE_UPDATED = document.getElementById("game_state_updated").innerText;
 const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
@@ -38,54 +38,167 @@ const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
   const SaveText =
     document.getElementById("savee-text")?.dataset.translation || "Save";
 
-  const lotteryParamTable = (data) => {
-    let html = "";
-    data.forEach((item) => {
+  // const lotteryParamTable = (data) => {
+  //   let html = "";
+  //   data.forEach((item) => {
+  //     let isChecked = item.state === "active" ? "checked" : "";
+  //     let isCheck = item.totalbetpercentage === "100" ? "" : "checked";
+  //     let disableslider = item.totalbetpercentage === "100" ? "disabled" : "";
+
+  //     html += `
+  //           <tr class="trow">
+  //           <tr>
+  //               <td>${item.gameplay_name}</td>
+  //           <th rowspan="2"></th>
+        
+  //           </tr>
+  //              <td>${item.gameplay_name}</td>
+  //              <td>${item.group_type}</td>
+  //              <td>${item.name}</td>
+  //               <td>
+  //               <input type="text" class="form-control oddsone" value="${item.modified_odds}" data-original="${item.odds}" readonly>
+  //                <br>
+  //               <input type="range" class="rangeSliderone" min="0" max="100" value="${item.oddspercentage}">
+  //               <span class="rangeValue" style="margin-left:10px">${item.oddspercentage}%</span>
+  //               </td>
+  //               <td>
+  //               <label class="switches">
+  //               <input type="checkbox" class="resetCheckbox" value ='${item.gn_id}' datas= '${item.model}' ${isCheck}/>
+  //               <span class="slider1"></span>
+  //               </label>
+  //               </td>
+
+  //               <td>
+  //               <input type="text" class="form-control oddsoness" value="${item.modified_totalbet}" data-original="${item.total_bets}" readonly>
+  //               <br>
+  //               <input type="range" class="rangeSlideroness" min="0" step ="0.1" max="100" value="${item.totalbetpercentage}"  ${disableslider}/>
+  //               <span class="rangeValues" style="margin-left:10px">${item.totalbetpercentage}%</span>
+  //               </td>
+  //               <td>
+  //                   <label class="switch">
+  //                   <input type="checkbox"  class="form-check-input gamestatus" value ='${item.gn_id}'  datas= '${item.model}' role="switch" ${isChecked}>
+  //                   <span class="slider"></span>
+  //                   </label>
+  //               </td>
+
+  //               <td> <button type="button" class="btn btn-light updatethis saveBtn" value ='${item.gn_id}' datas= '${item.model}' >${SaveText}</button></td>
+  //            </tr>
+  //     `;
+  //   });
+  //   return html;
+  // };
+// const SaveText = "Save"; // example button text
+
+const lotteryParamTable = (data) => {
+  let html = "";
+  const grouped = {};
+  
+ 
+    data.forEach(item => {
+        const lotteryType = item.lottery_type === 1 ? "5D" :item.lottery_type === 2 ? "Pk10" :
+                      item.lottery_type === 3 ? "FAST3" :item.lottery_type === 5 ? "3D" :
+                      item.lottery_type === 6 ? "11x5" :item.lottery_type === 8 ? "Mark6" :
+                      item.lottery_type === 10 ? "Happy8" :item.lottery_type === 11 ? "PK6" :
+                     "Other Games"; 
+
+            if (!grouped[lotteryType]) {
+              grouped[lotteryType] = {}; // Initialize empty object for that lotteryType
+            }
+            // Initialize gameplay_name if not already in grouped[lotteryType]
+            if (!grouped[lotteryType][item.gameplay_name]) {
+              grouped[lotteryType][item.gameplay_name] = [];
+            }
+            // Push the item into the appropriate group
+            grouped[lotteryType][item.gameplay_name].push(item);
+  });
+
+ 
+  for (const lottery in grouped) {
+    const lotteryGroup = grouped[lottery];
+    const lotteryStateChecked = lotteryGroup[Object.keys(lotteryGroup)[0]][0]['lottery_state'] === "active" ? "checked" : "";
+     console.log(lotteryStateChecked)
+    // First row with Lottery Type
+    html += `
+      <tr style="background:#eef;">
+         <td colspan="8" style="">${lottery}</td>
+          <td colspan="5">
+             <label class="switch"  style="right:200%;">
+              <input type="checkbox" class="form-check-input gameslottery" value='' datas='${lotteryGroup[Object.keys(lotteryGroup)[0]][0]['lottery_type']}' role="switch" ${lotteryStateChecked}>
+              <span class="slider"></span>
+             </label>
+           </td>
+      
+      </tr>
+    `;
+  for (const gameplay in lotteryGroup) {
+    const groupItems = lotteryGroup[gameplay];
+    const groupStateChecked  = groupItems[0]['group_state'] === "active" ? "checked" : "";
+      //  console.log(groupStateChecked );
+          //  return
+    // First row with Game Type and button[0]['group_state']
+    html += `
+      <tr style="background:#eef;">
+         <td>${gameplay}</td>
+            <td colspan="6">
+             <label class="switch"  style="left:88%;">
+              <input type="checkbox" class="form-check-input gamestates" value='' datas='${groupItems[0]['game_group']}' role="switch" ${groupStateChecked }>
+              <span class="slider"></span>
+             </label>
+           </td>
+      </tr>
+    `;
+
+    // Rows for each item
+    groupItems.forEach(item => {
+      // Determine checkbox & slider states based on your logic
       let isChecked = item.state === "active" ? "checked" : "";
       let isCheck = item.totalbetpercentage === "100" ? "" : "checked";
       let disableslider = item.totalbetpercentage === "100" ? "disabled" : "";
 
       html += `
-            <tr class="trow">
-               <td>${item.gameplay_name}</td>
-               <td>${item.group_type}</td>
-               <td>${item.name}</td>
-                 data-updated-percentage-one
-                <td>
-              
-                <input type="text" class="form-control oddsone" value="${item.modified_odds}" data-original="${item.odds}" readonly>
-                 <br>
-                <input type="range" class="rangeSliderone" min="0" max="100" value="${item.oddspercentage}">
-                <span class="rangeValue" style="margin-left:10px">${item.oddspercentage}%</span>
-                </td>
-                <td>
-                <label class="switches">
-                <input type="checkbox" class="resetCheckbox" value ='${item.gn_id}' datas= '${item.model}' ${isCheck}/>
-                <span class="slider1"></span>
-                </label>
+        <tr>
+          <td></td> <!-- empty Game Type cell -->
+          <td>${item.group_type}</td>
+          <td>${item.name}</td>
+          <td>
+            <input type="text" class="form-control oddsone" value="${item.modified_odds}" data-original="${item.odds}" readonly>
+            <br>
+            <input type="range" class="rangeSliderone" min="0" max="100" value="${item.oddspercentage}">
+            <span class="rangeValue" style="margin-left:10px">${item.oddspercentage}%</span>
+          </td>
 
-                </td>
+          <td>
+            <label class="switches">
+              <input type="checkbox" class="resetCheckbox" value='${item.gn_id}' datas='${item.model}' ${isCheck}/>
+              <span class="slider1"></span>
+            </label>
+          </td>
 
-                <td>
-                <input type="text" class="form-control oddsoness" value="${item.modified_totalbet}" data-original="${item.total_bets}" readonly>
-                <br>
-                <input type="range" class="rangeSlideroness" min="0" step ="0.1" max="100" value="${item.totalbetpercentage}"  ${disableslider}/>
-                <span class="rangeValues" style="margin-left:10px">${item.totalbetpercentage}%</span>
-                </td>
+          <td>
+            <input type="text" class="form-control oddsoness" value="${item.modified_totalbet}" data-original="${item.total_bets}" readonly>
+            <br>
+            <input type="range" class="rangeSlideroness" min="0" step="0.1" max="100" value="${item.totalbetpercentage}" ${disableslider}/>
+            <span class="rangeValues" style="margin-left:10px">${item.totalbetpercentage}%</span>
+          </td>
 
-                <td>
-                    <label class="switch">
-                    <input type="checkbox"  class="form-check-input gamestatus" value ='${item.gn_id}'  datas= '${item.model}' role="switch" ${isChecked}>
-                    <span class="slider"></span>
-                    </label>
-                </td>
-         
-                <td> <button type="button" class="btn btn-light updatethis saveBtn" value ='${item.gn_id}' datas= '${item.model}' >${SaveText}</button></td>
-             </tr>
+          <td>
+            <label class="switch">
+              <input type="checkbox" class="form-check-input gamestatus" value='${item.gn_id}' datas='${item.model}' role="switch" ${isChecked}>
+              <span class="slider"></span>
+            </label>
+          </td>
+
+          <td>
+            <button type="button" class="btn btn-light updatethis saveBtn" value='${item.gn_id}' datas='${item.model}'>${SaveText}</button>
+          </td>
+        </tr>
       `;
     });
-    return html;
-  };
+  }
+  }
+ 
+  return html;
+};
 
   const renderLotteryParams = (data) => {
     var html = lotteryParamTable(data);
@@ -93,6 +206,7 @@ const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
   };
 
   function getTranslation(key) {
+
     const span = document.getElementById(`trans-${key.replace(/\s+/g, "")}`);
     return span?.dataset.translation || key;
   }
@@ -103,11 +217,9 @@ const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
     try {
       const response = await fetch(`../admin/getAllGamesLottery`);
       const data = await response.json();
-      //  console.log(data);
       let html = "";
       let translatedSelectGame = getTranslation("Select Game");
       html += `<option>${translatedSelectGame}</option>`;
-
       data.forEach((item) => {
         html += `<option value='${item.lt_id}'>${item.name}</option>`;
       });
@@ -123,8 +235,8 @@ const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
     TabMap.set(contentEl, elem);
   }
 
-  function addTabStyle(contentEl, elem) {
-    TabMap.set(contentEl, elem);
+  function addTabStyle(contentEl,elem) {
+    TabMap.set(contentEl,elem);
     $(".chrome-tab-drag-handle").removeClass("chromclass");
     $(elem).find(".chrome-tab-drag-handle").addClass("chromclass");
   }
@@ -140,11 +252,9 @@ const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
 
   async function getLotteryGames(lotterId, models) {
     try {
-      const response = await fetch(
-        `../admin/getLotteryGames/${lotterId}/${models}`
-      );
+      const response = await fetch(`../admin/getLotteryGames/${lotterId}/${models}`);
       const data = await response.json();
-      //  console.log(response);
+      //  console.log(data);
       renderLotteryParams(data.bonus);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -157,7 +267,6 @@ const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
     // console.log(lotteryId, models);
     if (models == "twosides" || models === "boardgames" || models === "fantan")
       return;
-
     getLotteryGames(lotteryId, models);
   });
 
@@ -269,44 +378,20 @@ const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
     let percentageOne = row.attr("data-updated-percentage-one");
     if (percentageOne == undefined) {
       // showToast("Success", "no changes made", "info");
-
-showToast(SUCCESS_TEXT, NO_CHANGES_MADE, "info");
-
-
-
+     showToast(SUCCESS_TEXT, NO_CHANGES_MADE, "info");
       return;
     }
     let percentageTwo = row.attr("data-updated-percentage-two");
-    let scaledValuesOne = JSON.parse(
-      row.attr("data-updated-values-one") ||
-        row.find(".oddsone").attr("data-original")
-    );
-    let scaledValueTwo =
-      row.attr("data-updated-value-two") ||
-      row.find(".oddsoness").attr("data-original");
+    let scaledValuesOne = JSON.parse(row.attr("data-updated-values-one") ||row.find(".oddsone").attr("data-original"));
+    let scaledValueTwo =row.attr("data-updated-value-two") ||row.find(".oddsoness").attr("data-original");
     let gametypeId = $(this).val();
     let gamemodel = $(this).attr("datas");
     // console.log("Saving:", { percentageOne,scaledValuesOne});
-    updateoddstotalbets(
-      gametypeId,
-      gamemodel,
-      percentageOne,
-      scaledValuesOne,
-      percentageTwo,
-      scaledValueTwo
-    );
-
+    updateoddstotalbets(gametypeId,gamemodel,percentageOne,scaledValuesOne,percentageTwo,scaledValueTwo);
     //getLotteryGames(gametypeId, gamemodel)
   });
 
-  async function updateoddstotalbets(
-    gametypeId,
-    gamemodel,
-    percentageOne,
-    scaledValuesOne,
-    percentageTwo,
-    scaledValueTwo
-  ) {
+  async function updateoddstotalbets(gametypeId,gamemodel,percentageOne,scaledValuesOne, percentageTwo, scaledValueTwo) {
     try {
       const response = await fetch(
         `../admin/updateoddstotalbets/${gametypeId}/${gamemodel}/${percentageOne}/${scaledValuesOne}/${percentageTwo}/${scaledValueTwo}`
@@ -330,21 +415,44 @@ showToast(SUCCESS_TEXT, NO_CHANGES_MADE, "info");
     let gamemodel = $(this).attr("datas");
     //console.log(gametypeId, gamemodel, isChecked);
     updateGameStatus(gametypeId, gamemodel, isChecked);
-  });
+  })
+
+  $(document).on("change", ".gamestates", function () {
+     let states = $(this).is(":checked") ? "active" : "inactive"; // Determine status
+    let gamegroupid = $(this).attr("datas");
+    $.post(`../admin/updategamegroup/${gamegroupid}/${states}`,function(response){
+         const data = JSON.parse(response);
+         if (data.success) {
+        showToast(SUCCESS_TEXT, GAME_STATE_UPDATED, "success"); 
+        }else {
+        return false;
+       }   
+     })
+  })
+
+   $(document).on("change", ".gameslottery", function () {
+     let lotterystate = $(this).is(":checked") ? "active" : "inactive"; // Determine status
+     let lotteryid = $(this).attr("datas");
+      $.post(`../admin/updategamelottery/${lotteryid}/${lotterystate}`,function(response){
+         const data = JSON.parse(response);
+         if (data.success) {
+        showToast(SUCCESS_TEXT, GAME_STATE_UPDATED, "success"); 
+        }else {
+        return false;
+       }   
+     })
+  })
+  
 
   async function updateGameStatus(gametypeId, gamemodel, isChecked) {
     try {
-      const response = await fetch(
-        `../admin/updategamestatus/${gametypeId}/${gamemodel}/${isChecked}`
-      );
+      const response = await fetch(`../admin/updategamestatus/${gametypeId}/${gamemodel}/${isChecked}`);
       const data = await response.json();
       // console.log(data);
       if (data.success) {
         // Ensure the backend sends { success: true } when the update is successful
         // showToast("Success", "Game state updated", "info");
-     
-showToast(SUCCESS_TEXT, GAME_STATE_UPDATED, "info");
-
+      showToast(SUCCESS_TEXT, GAME_STATE_UPDATED, "success");
 
       } else {
         return false;
@@ -400,64 +508,19 @@ showToast(SUCCESS_TEXT, GAME_STATE_UPDATED, "info");
       const span = document.getElementById(`trans-${key}`);
       return span?.dataset.translation || key;
     }
-
     // Original mapping
     const optionsMap = {
-      1: [
-        "Standard",
-        "Twosides",
-        "Logdragon",
-        "BoardGames",
-        "Manytables",
-        "Roadbet",
-        "Fantan"
-      ],
-      2: [
-        "Standard",
-        "Twosides",
-        "Logdragon",
-        "BoardGames",
-        "Roadbet",
-        "Fantan"
-      ],
-      3: [
-        "Standard",
-        "Twosides",
-        "Logdragon",
-        "BoardGames",
-        "Manytables",
-        "Fantan"
-      ],
+      1: [ "Standard","Twosides","Logdragon", "BoardGames","Manytables","Roadbet","Fantan"],
+      2: ["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"],
+      3: ["Standard","Twosides","Logdragon","BoardGames","Manytables","Fantan"],
       5: ["Standard", "Twosides", "Logdragon", "Roadbet"],
-      6: [
-        "Standard",
-        "Twosides",
-        "Logdragon",
-        "BoardGames",
-        "Manytables",
-        "Roadbet"
-      ],
-      8: [
-        "Standard",
-        "Twosides",
-        "Logdragon",
-        "BoardGames",
-        "Roadbet",
-        "Fantan"
-      ],
-      10: [
-        "Standard",
-        "Twosides",
-        "Logdragon",
-        "BoardGames",
-        "Roadbet",
-        "Fantan"
-      ]
+      6: ["Standard","Twosides","Logdragon","BoardGames","Manytables","Roadbet"],
+      8: ["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"],
+      10:["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"],
+      11:["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"]
     };
-
     // Get matching games for selected value
     let options = optionsMap[selectedValue] || [];
-
     // Populate second dropdown with translated labels
     let secondDropdown = $("#allmodels");
     secondDropdown.empty();

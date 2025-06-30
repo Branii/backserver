@@ -601,9 +601,11 @@ foreach ($gameOptions as $game) {
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">
+                       <tr>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?></h6>
                         </th>
+                        
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Play Group']; ?></h6>
                         </th>

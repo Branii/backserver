@@ -504,31 +504,33 @@
 <span id="trans-no-pages" data-translation="<?= $translator['NoPages']; ?>" style="display: none;"></span>
 <span id="trans-main-page-notice" data-translation="<?= $translator['MainPageNotice']; ?>" style="display: none;"></span>
 
-<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display: none;"></span>
-<span id="trans-agent-added" data-translation="<?= $translator['AgentAdded']; ?>" style="display: none;"></span>
-<span id="trans-quota-updated" data-translation="<?= $translator['QuotaUpdated']; ?>" style="display: none;"></span>
-<span id="trans-blocked" data-translation="<?= $translator['Blocked']; ?>" style="display: none;"></span>
-<span id="trans-already-blocked" data-translation="<?= $translator['AlreadyBlocked']; ?>" style="display: none;"></span>
-<span id="trans-delete" data-translation="<?= $translator['Delete']; ?>" style="display: none;"></span>
-<span id="trans-invalid-operation" data-translation="<?= $translator['InvalidOperation']; ?>" style="display: none;"></span>
-<span id="trans-error" data-translation="<?= $translator['Error']; ?>" style="display: none;"></span>
-<span id="trans-generic-error" data-translation="<?= $translator['GenericError']; ?>" style="display: none;"></span>
-<span id="trans-request-error" data-translation="<?= $translator['RequestError']; ?>" style="display: none;"></span>
-<span id="trans-enabled" data-translation="<?= $translator['Enabled']; ?>" style="display: none;"></span>
-<span id="trans-lottery-enabled" data-translation="<?= $translator['LotteryEnabled']; ?>" style="display: none;"></span>
-<span id="trans-disabled" data-translation="<?= $translator['Disabled']; ?>" style="display: none;"></span>
-<span id="trans-lottery-disabled" data-translation="<?= $translator['LotteryDisabled']; ?>" style="display: none;"></span>
-<span id="trans-error-processing" data-translation="<?= $translator['ErrorProcessing']; ?>" style="display: none;"></span>
-<span id="trans-successful" data-translation="<?= $translator['Successful']; ?>" style="display: none;"></span>
-<span id="trans-records-updated" data-translation="<?= $translator['RecordsUpdated']; ?>" style="display: none;"></span>
-<span id="trans-not-done" data-translation="<?= $translator['NotDone']; ?>" style="display: none;"></span>
-<span id="trans-ip-updated" data-translation="<?= $translator['IPUpdated']; ?>" style="display: none;"></span>
-<span id="trans-no-agent" data-translation="<?= $translator['NoAgent']; ?>" style="display: none;"></span>
-<span id="trans-no-agent-message" data-translation="<?= $translator['NoAgentMessage']; ?>" style="display: none;"></span>
+<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display:  none;"></span>
+<span id="trans-agent-added" data-translation="<?= $translator['AgentAdded']; ?>" style="display:  none;"></span>
+<span id="trans-quota-updated" data-translation="<?= $translator['QuotaUpdated']; ?>" style="display:  none;"></span>
+<span id="trans-blocked" data-translation="<?= $translator['Blocked']; ?>" style="display:  none;"></span>
+<span id="trans-already-blocked" data-translation="<?= $translator['AlreadyBlocked']; ?>" style="display:  none;"></span>
+<span id="trans-delete" data-translation="<?= $translator['Delete']; ?>" style="display:  none;"></span>
+<span id="trans-invalid-operation" data-translation="<?= $translator['InvalidOperation']; ?>" style="display:  none;"></span>
+<span id="trans-error" data-translation="<?= $translator['Error']; ?>" style="display:  none;"></span>
+<span id="trans-generic-error" data-translation="<?= $translator['GenericError']; ?>" style="display:  none;"></span>
+<span id="trans-request-error" data-translation="<?= $translator['RequestError']; ?>" style="display:  none;"></span>
+<span id="trans-enabled" data-translation="<?= $translator['Enabled']; ?>" style="display:  none;"></span>
+<span id="trans-lottery-enabled" data-translation="<?= $translator['LotteryEnabled']; ?>" style="display:  none;"></span>
+<span id="trans-disabled" data-translation="<?= $translator['Disabled']; ?>" style="display:  none;"></span>
+<span id="trans-lottery-disabled" data-translation="<?= $translator['LotteryDisabled']; ?>" style="display:  none;"></span>
+<span id="trans-error-processing" data-translation="<?= $translator['ErrorProcessing']; ?>" style="display:  none;"></span>
+<span id="trans-successful" data-translation="<?= $translator['Successful']; ?>" style="display:  none;"></span>
+<span id="trans-records-updated" data-translation="<?= $translator['RecordsUpdated']; ?>" style="display:  none;"></span>
+<span id="trans-not-done" data-translation="<?= $translator['NotDone']; ?>" style="display:  none;"></span>
+<span id="trans-ip-updated" data-translation="<?= $translator['IPUpdated']; ?>" style="display:  none;"></span>
+<span id="trans-no-agent" data-translation="<?= $translator['NoAgent']; ?>" style="display:  none;"></span>
+<span id="trans-no-agent-message" data-translation="<?= $translator['NoAgentMessage']; ?>" style="display:  none;"></span>
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
+
 <!-- toast messages ends here -->
 <!-- //userlist info -->
+
 <span id="trans-heads-up" data-translation="<?= $translator['HeadsUp']; ?>" style="display: none;"></span>
 <span id="trans-email-exists" data-translation="<?= $translator['EmailExists']; ?>" style="display: none;"></span>
 <span id="trans-username-pattern" data-translation="<?= $translator['UsernamePattern']; ?>" style="display: none;"></span>
@@ -539,6 +541,7 @@
 <span id="trans-confirm-password" data-translation="<?= $translator['ConfirmPassword']; ?>" style="display: none;"></span>
 <span id="trans-password-length" data-translation="<?= $translator['PasswordLength']; ?>" style="display: none;"></span>
 <span id="trans-password-required" data-translation="<?= $translator['PasswordRequired']; ?>" style="display: none;"></span>
+
 <!-- //userlist info ends here -->
 <!-- button icons -->
 <span id="view-text" data-translation="<?= $translator['View'] ?? 'View'; ?>" style="display: none;"></span>
@@ -1057,7 +1060,6 @@
                                 <thead>
                                     <tr>
                                         <th class="font-weight-normal"><?= $translator['Lottery Name']; ?></th>
-                                        <th class="font-weight-normal"><?= $translator['Status']; ?></th>
                                         <th class="font-weight-normal"><?= $translator['Action']; ?></th>
                                     </tr>
                                 </thead>
@@ -1067,9 +1069,8 @@
                     </div>
                     <div class="d-md-flex align-items-center">
                         <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 usrl-listclose" style="border: solid 1px #ccc;">
-                                <i class="bx bx-x-circle loaderquota"></i>
-                                <?= $translator['Close']; ?>
+                            <button type="button" class="btn hstack gap-6 updategames" style="border: solid 1px #ccc;">
+                                <i class="loaderquoota"></i>Update
                             </button>
                         </div>
                     </div>
@@ -1140,9 +1141,9 @@
                     </div>
                     <div class="d-md-flex align-items-center">
                         <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 usrl-reset-userbtn" style="border: solid 1px #ccc; color: #e60e38 !important;">
-                                <i class="bx bx-log-in loaderquota"></i>
-                                <?= $translator['Reset Login Attempt']; ?>
+                            <button type="button" class="btn hstack gap-6 usrl-delete-userbtn" style="border: solid 1px #ccc; color: #e60e38 !important;">
+                                <i class="bx bx-trash loaderquota"></i>
+                                <?= $translator['Delete User']; ?>
                             </button>
                         </div>
                     </div>
@@ -1388,3 +1389,184 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+<div id="usl-lottery-gamename-modal" class="modal fade" tabindex="-1" aria-modal="true" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- Modal Header -->
+                <div class="text-center mt-2 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="text-infos"><?= $translator['Lottery Name']; ?></h5>
+                        <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
+                    </div>
+                </div>
+
+                <div class="gamediv">
+                 
+                </div>
+               
+            </div>
+         <div class="d-md-flex align-items-center">
+                        <div class="mt-3 mt-md-0 ms-auto">
+                            <button type="button" class="btn hstack gap-6 updategametype" style="border: solid 1px #ccc;margin:10px">
+                                <i class="loaderquoota"></i>Update
+                            </button>
+                        </div>
+                    </div>
+        </div>
+    </div>
+   
+</div>
+
+<div id="usl-lottery-gamegroup-modal" class="modal fade" tabindex="-1" aria-modal="true" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- Modal Header -->
+                <div class="text-center mt-2 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="text-infos"><?= $translator['Lottery Name']; ?></h5>
+                        <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <select name="betsate" class="form-control form-select queryholderlistt lotteryTypes" id="lotterys" style="width: 50%;">
+                        <!-- <option value="">--<?= $translator['Select Lottery']; ?>--</option>
+                        <option value="1">5D</option>
+                        <option value="2">PK10</option>
+                        <option value="3">FAST3</option>
+                        <option value="5">3D</option>
+                        <option value="6">11x5</option>
+                        <option value="8">Mark6</option>
+                        <option value="10">Happy</option> -->
+                    </select>
+
+                    <select id="allgroup" class="form-control form-select" style="width: 50%;">
+                        <option value="">--Select Game Name--</option>
+                          <option value="standard">Standard</option>
+                        <!-- <option value="2">Twosides</option>
+                        <option value="3">Logdragon</option>
+                        <option value="5">BoardGames</option>
+                        <option value="6">Manytables</option>
+                        <option value="8">Roadbet</option>
+                        <option value="10">Fantan</option> -->
+                    </select>
+
+                    <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                        <button type="button" class="btn bg-white-subtle player refreshlogs" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                            <i class="bx bx-refresh" style="font-size: 20px;"></i>
+                        </button>
+                        <button type="button" class="btn bg-white-subtle executegames" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                            <i class="bx bx-check-double loaderlog" style="font-size: 20px;"></i>
+                        </button>
+                    </div>
+
+                </div>
+                <br>
+                     <div style="overflow: hidden;">
+                            <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
+                                <thead>
+                                    <tr>
+                                        <th class="font-weight-normal"><?= $translator['Lottery Name']; ?></th>
+                                        <th class="font-weight-normal">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="gamegrouptype"></tbody>
+                            </table>
+                             <div class="d-md-flex align-items-center">
+                            <div class="mt-3 mt-md-0 ms-auto">
+                                <button type="button" class="btn hstack gap-6 updategamegroup" style="border: solid 1px #ccc; margin: 10px;"><i class="loaderquoota"></i>Update</button>
+                            </div>
+                        </div>
+                        </div>
+                    
+             
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+
+
+<div id="usl-lottery-gamenems-modal" class="modal fade" tabindex="-1" aria-modal="true" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- Modal Header -->
+                <div class="text-center mt-2 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="text-infos"><?= $translator['Game Name']; ?></h5>
+                        <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <select name="betsate" class="form-control form-select queryholderlistt lotteryTypes" id="gameslottery" style="width: 50%;">
+                        <!-- <option value="">--<?= $translator['Select Lottery']; ?>--</option>
+                        <option value="1">5D</option>
+                        <option value="2">PK10</option>
+                        <option value="3">FAST3</option>
+                        <option value="5">3D</option>
+                        <option value="6">11x5</option>
+                        <option value="8">Mark6</option>
+                        <option value="10">Happy</option> -->
+                    </select>
+
+                     <select name="betsate" class="form-control form-select queryholderlistt selectlottery" id="gamenametype" style="width: 50%;">
+                        <!-- <option value="">--<?= $translator['Select Lottery']; ?>--</option>
+                        <option value="1">5D</option>
+                        <option value="2">PK10</option>
+                        <option value="3">FAST3</option>
+                        <option value="5">3D</option>
+                        <option value="6">11x5</option>
+                        <option value="8">Mark6</option>
+                        <option value="10">Happy</option> -->
+                    </select>
+
+                    <select id="allgames" class="form-control form-select" style="width: 50%;">
+                        <option value="">--Select Game Name--</option>
+                          <option value="standard">Standard</option>
+                        <!-- <option value="2">Twosides</option>
+                        <option value="3">Logdragon</option>
+                        <option value="5">BoardGames</option>
+                        <option value="6">Manytables</option>
+                        <option value="8">Roadbet</option>
+                        <option value="10">Fantan</option> -->
+                    </select>
+
+                    <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                        <button type="button" class="btn bg-white-subtle player refreshlogs" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                            <i class="bx bx-refresh" style="font-size: 20px;"></i>
+                        </button>
+                        <button type="button" class="btn bg-white-subtle executegnames" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                            <i class="bx bx-check-double loaderlog" style="font-size: 20px;"></i>
+                        </button>
+                    </div>
+
+                </div>
+                <br>
+                     <div style="overflow: hidden;">
+                            <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
+                                <thead>
+                                    <tr>
+                                        <th class="font-weight-normal"><?= $translator['Lottery Name']; ?></th>
+                                        <th class="font-weight-normal"><input type="checkbox" id="checkAllGames" style="width:20px;height:20px"/> </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="gamenametbl"></tbody>
+                            </table>
+                             <div class="d-md-flex align-items-center">
+                            <div class="mt-3 mt-md-0 ms-auto">
+                                <button type="button" class="btn hstack gap-6 updategamenames" style="border: solid 1px #ccc; margin: 10px;"><i class="loaderquoota"></i>Update</button>
+                            </div>
+                        </div>
+                        </div>
+                    
+             
+            </div>
+           
+        </div>
+    </div>
+</div>
+

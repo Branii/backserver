@@ -176,14 +176,13 @@ const txtPages = document.getElementById("trans-pages").innerText;
 
     const viewText = document.getElementById("view-text")?.dataset.translation || "View";
 
-    const quotaText = getTranslation("quota-text", "Quota");
-    const subsText = getTranslation("subs-text", "Subs");
-    const accountChangeText = getTranslation("account-change-text", "Account Change");
-    const lotteryNameText = getTranslation("lottery-name-text", "Lottery Name");
-    const whiteListText = getTranslation("whitelist-text", "White List");
-    const deleteUserText = getTranslation("delete-user-text", "Delete User");
-    const deactivateUserText = getTranslation("deactivate-user-text", "Deactivate User");
-    const resetUserText = getTranslation("reset-user-text", "Reset Login Attempt");
+   const quotaText = getTranslation("quota-text", "Quota");
+   const subsText = getTranslation("subs-text", "Subs");
+   const accountChangeText = getTranslation("account-change-text", "Account Change");
+   const lotteryNameText = getTranslation("lottery-name-text", "Lottery Name");
+   const whiteListText = getTranslation("whitelist-text", "White List");
+   const deleteUserText = getTranslation("delete-user-text", "Delete User");
+   const deactivateUserText = getTranslation("deactivate-user-text", "Deactivate User");
 
     function formatMoney(money) {
         let moneyStr = String(money);
@@ -197,62 +196,62 @@ const txtPages = document.getElementById("trans-pages").innerText;
         return moneyStr;
     }
 
-    const UserlistData = (data) => {
-        let html = "";
-        const status = {
-            1: "Enable", // Green
-            2: "Suspend", // Orange
-            3: "Forbbiden", // Light Blue
-            4: "Blocked", // Red
-        };
+   const UserlistData = (data) => {
+      let html = "";
+      const status = {
+         1: "Enable", // Green
+         2: "Suspend", // Orange
+         3: "Forbbiden", // Light Blue
+         4: "Blocked", // Red
+      };
 
-        //   const account_type = {
-        //     1 :"customer",
-        //     2 : "agent",
-        //     3 : "sub agent",        // Red
-        //   };
+      //   const account_type = {
+      //     1 :"customer",
+      //     2 : "agent",
+      //     3 : "sub agent",        // Red
+      //   };
 
-        const recharges = {
-            1: "momo",
-            2: "bank Transfer",
-            3: "bank card",
-            4: "crypto", // Red
-        };
+      const recharges = {
+         1: "momo",
+         2: "bank Transfer",
+         3: "bank card",
+         4: "crypto", // Red
+      };
 
-        data.forEach((item) => {
-            //  // console.log(item)
-            let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+      data.forEach((item) => {
+         //  // console.log(item)
+         let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
 
-            let subordinate;
-            if (item.account_type == 2) {
-                subordinate = "Top Agent";
-            } else if (item.account_type == 3 && item.sub_count == 0) {
-                subordinate = "Sub Agent";
-            } else if (item.account_type == 3 && item.sub_count == 1) {
-                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates;
-            } else if (item.account_type == 3 && item.sub_count == 2) {
-                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",")[0];
-            } else if (item.account_type == 3 && item.sub_count > 2) {
-                subordinate = username + " <i class='bx bx-dots-horizontal-rounded' ></i>" + item.subordinates.split(",")[0];
-            } else if (item.account_type == 1 && item.sub_count == 0) {
-                subordinate = "---";
-            }
+         let subordinate;
+         if (item.account_type == 2) {
+            subordinate = "Top Agent";
+         } else if (item.account_type == 3 && item.sub_count == 0) {
+            subordinate = "Sub Agent";
+         } else if (item.account_type == 3 && item.sub_count == 1) {
+            subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates;
+         } else if (item.account_type == 3 && item.sub_count == 2) {
+            subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",")[0];
+         } else if (item.account_type == 3 && item.sub_count > 2) {
+            subordinate = username + " <i class='bx bx-dots-horizontal-rounded' ></i>" + item.subordinates.split(",")[0];
+         } else if (item.account_type == 1 && item.sub_count == 0) {
+            subordinate = "---";
+         }
 
-            const formattedSubordinates = item.subordinates ? username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",").join(" <i class='bx bx-right-arrow-alt'></i> ") : "None";
-            //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-            let logincount = item.logincount == null ? "0" : item.logincount;
-            const [date, time] = item.created_at.split(" ");
-            let dates = "";
-            let times = "";
-            if (item.last_login && item.last_login !== "*****") {
-                [dates, times] = item.last_login.split(" ");
-            } else {
-                dates = item.last_login || ""; // Use empty string if null/undefined
-                times = item.last_login || "";
-            }
-            //  // console.log(item.subordinates)
+         const formattedSubordinates = item.subordinates ? username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",").join(" <i class='bx bx-right-arrow-alt'></i> ") : "None";
+         //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+         let logincount = item.logincount == null ? "0" : item.logincount;
+         const [date, time] = item.created_at.split(" ");
+         let dates = "";
+         let times = "";
+         if (item.last_login && item.last_login !== "*****") {
+            [dates, times] = item.last_login.split(" ");
+         } else {
+            dates = item.last_login || ""; // Use empty string if null/undefined
+            times = item.last_login || "";
+         }
+         //  // console.log(item.subordinates)
 
-            html += `
+         html += `
                   <tr id="usrl-tr-${item.uid}">
                      <td>${username}</td>
                       <td>${item.nickname}</td>
@@ -270,7 +269,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
                       <td>${logincount}</td>
                       <td id="usrl-state-${item.uid}">${status[item.user_state]}</td>
                  
-                        <td>
+   //                      <td>
                           
                            <div class="dropdown">
                                   <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -278,7 +277,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
                                   </a>
                                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${
-                                        item.uid
+                                       item.uid
                                     }">
                                       <i class="bx bx-show fs-5"></i>${viewText}
                                     </a>
@@ -301,21 +300,22 @@ const txtPages = document.getElementById("trans-pages").innerText;
                                     </a>
                                      <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                       <i class="bx bx-trash fs-5"></i>Delete User
+                                    </a>
                                   </div>
                                 </div>
                       </td>
                      
                   </tr>
               `;
-        });
-        return html;
-    };
+      });
+      return html;
+   };
 
-    $(document).on("click", ".usrl-listclose", function () {
-        const parent = $(this).parents(".modal").first();
-        parent.removeClass("show");
-        parent.css({ display: "none" });
-    });
+   $(document).on("click", ".usrl-listclose", function () {
+      const parent = $(this).parents(".modal").first();
+      parent.removeClass("show");
+      parent.css({ display: "none" });
+   });
 
     $(document).on("click", ".usr-deactivate-user, .block-userbtn", function () {
         showDialog("usl-deactivate-user-dialog");
@@ -333,21 +333,21 @@ const txtPages = document.getElementById("trans-pages").innerText;
         fetchUserLogs();
     });
 
-    $(document).on("click", ".user-lottery-name", function () {
-        showDialog("usl-lottery-name-modal");
-        $("#idHolder").val($(this).attr("data-uid"));
-        fetchLotteryTypes();
-    });
+   $(document).on("click", ".user-lottery-name", function () {
+      showDialog("usl-lottery-name-modal");
+      $("#idHolder").val($(this).attr("data-uid"));
+      fetchLotteryTypes();
+   });
 
-    $(document).on("click", ".usr-delete-user,.usrl-delete-userbtn", function () {
-        showDialog("usl-delete-user-dialog");
-        if ($(this).hasClass("usr-delete-user")) {
-            $("#idHolder").val($(this).attr("data-uid"));
-        }
-        if ($(this).hasClass("usrl-delete-userbtn")) {
-            manageUser("deleteUser");
-        }
-    });
+   $(document).on("click", ".usr-delete-user,.usrl-delete-userbtn", function () {
+      showDialog("usl-delete-user-dialog");
+      if ($(this).hasClass("usr-delete-user")) {
+         $("#idHolder").val($(this).attr("data-uid"));
+      }
+      if ($(this).hasClass("usrl-delete-userbtn")) {
+         manageUser("deleteUser");
+      }
+   });
 
     const renderuserlist = (data) => {
         if (data.length === 0) {
@@ -910,46 +910,46 @@ const txtPages = document.getElementById("trans-pages").innerText;
         );
     });
 
-    //fetch_sub
-    let navigationHistory = [];
-    $(document).on("click", ".viewsub", function () {
-        const userID = $(this).attr("data-agent-id").trim();
-        // // console.log("Navigation History:", navigationHistory);
-        fetchsubagent(userID, currentPage, pageLimit, this);
-    });
+   //fetch_sub
+   let navigationHistory = [];
+   $(document).on("click", ".viewsub", function () {
+      const userID = $(this).attr("data-agent-id").trim();
+      // // console.log("Navigation History:", navigationHistory);
+      fetchsubagent(userID, currentPage, pageLimit, this);
+   });
 
-    const fetchsubagent = (userID, currentPage, pageLimit, element) => {
-        $.ajax({
-            url: `../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
-            type: "POST",
-            beforeSend: function () {
-                //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
-                //  $("#ngp-wl-tbl-wrapper").LoadingOverlay("show");
-            },
-            success: function (response) {
-                response = JSON.parse(response);
-                const data = response.data;
-                // console.log(data);
-                if (response.status === "error") {
-                    showToast("Error", data, "error");
-                    // $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${data}</td></tr>`);
-                    return;
-                }
-                if (data.length === 0) {
-                    const content = $("#userlistContainer").html();
-                    const pagesInfo = $("#paging_infolist").html();
-                    const pagination = $("#paginationuserlist").html();
-                    navigationHistory.push({ content: content, pagination: pagination, pagesInfo: pagesInfo });
-                    $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
-                    return;
-                }
-                const content = $("#userlistContainer").html();
-                const pagesInfo = $("#paging_infolist").html();
-                const pagination = $("#paginationuserlist").html();
-                navigationHistory.push({ content: content, pagination: pagination, pagesInfo: pagesInfo });
-                $("#userlistContainer").html(UserlistDataV2(response));
-                renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray, newPage, pageLimit));
-                document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+   const fetchsubagent = (userID, currentPage, pageLimit, element) => {
+      $.ajax({
+         url: `../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
+         type: "POST",
+         beforeSend: function () {
+            //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+            //  $("#ngp-wl-tbl-wrapper").LoadingOverlay("show");
+         },
+         success: function (response) {
+            response = JSON.parse(response);
+            const data = response.data;
+            // console.log(data);
+            if (response.status === "error") {
+               showToast("Error", data, "error");
+               // $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${data}</td></tr>`);
+               return;
+            }
+            if (data.length === 0) {
+               const content = $("#userlistContainer").html();
+               const pagesInfo = $("#paging_infolist").html();
+               const pagination = $("#paginationuserlist").html();
+               navigationHistory.push({ content: content, pagination: pagination, pagesInfo: pagesInfo });
+               $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
+               return;
+            }
+            const content = $("#userlistContainer").html();
+            const pagesInfo = $("#paging_infolist").html();
+            const pagination = $("#paginationuserlist").html();
+            navigationHistory.push({ content: content, pagination: pagination, pagesInfo: pagesInfo });
+            $("#userlistContainer").html(UserlistDataV2(response));
+            renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray, newPage, pageLimit));
+            document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
 
                 return;
             },
@@ -1045,11 +1045,11 @@ const txtPages = document.getElementById("trans-pages").innerText;
                 times = item.last_login || "";
             }
 
-            html += `
+         html += `
               <tr id="usrl-tr-${item.uid}">
                  <td>${username}</td>
                   <td>${item.nickname}</td>
-                  <td>VIP</td>
+                  <td> <nii class="nii">${item.blocked_lotteries}</nii> VIP</td>
                  <td class="show-user-rel ${item.agent_level === "*****" ? "no-agent" : ""}" data-user-id="${item.uid}" style="cursor:pointer;">
                ${item.account_type == 1 ? "Customer" : item.account_type == 2 ? "Top Agent" : subsLookups[item.uid] < 2 ? agentNicknamesLookups[item.agent_id] + " > " + username : agentNicknamesLookups[item.agent_id] + " ... " + username}
               </td>
@@ -1090,28 +1090,32 @@ const txtPages = document.getElementById("trans-pages").innerText;
                                 </a> <a class="dropdown-item user-lottery-name cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                   <i class='bx bx-filter' ></i>${lotteryNameText}
                                 </a>
+                                 <a class="dropdown-item  usr-gametype  cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                  <i class='bx bx-user-minus' ></i>${gamenameTexts}
+                                </a>
+                                   <a class="dropdown-item  usergamegroup  cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                  <i class='bx bx-user-minus' ></i>${gamegroupTexts}
+                                </a>
+
+                                </a>
+                                   <a class="dropdown-item  usergamename cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                  <i class='bx bx-user-minus' ></i>${gamegroupTextss}
+                                </a>
                                  <a class="dropdown-item usr-white-list cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                   <i class="bx bx-trash fs-5"></i>${whiteListText}
                                 </a>
                                  <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                   <i class='bx bx-user-minus' ></i>${deleteUserText} 
                                 </a>
-                                 <a class="dropdown-item usr-reset-user cursor-pointer d-flex align-items-center gap-1"
-                                    href="javascript:void(0);" data-uid="${item.uid}">
-                                    <i class='bx bx-log-in'></i>${resetUserText}
-
-                                    
-                                    </a>
-
                               </div>
                             </div>
                   </td>
                  
               </tr>
           `;
-        });
-        return html;
-    };
+      });
+      return html;
+   };
 
     function toggleBackButton() {
         if (navigationHistory.length > 1) {
@@ -1219,47 +1223,47 @@ const txtPages = document.getElementById("trans-pages").innerText;
         });
     };
 
-    const fetchLotteryTypes = () => {
-        const userID = $("#idHolder").val();
-        const lotteryID = "all";
-        let flag = "fetchUserLotteries";
-        $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
-            type: "POST",
-            beforeSend: function () {},
-            success: function (response) {
-                response = JSON.parse(response);
-                // console.log(response);
-                let responseMarkup = "";
+   const fetchLotteryTypes = () => {
+      const userID = $("#idHolder").val();
+      const lotteryID = "all";
+      let flag = "fetchUserLotteries";
+      $.ajax({
+         url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+         type: "POST",
+         beforeSend: function () {},
+         success: function (response) {
+            response = JSON.parse(response);
+            // console.log(response);
+            let responseMarkup = "";
 
-                if (response.status == "error") {
-                    showToast("Error", response.data, "error");
-                    return;
-                }
-                data = response.data;
+            if (response.status == "error") {
+               showToast("Error", response.data, "error");
+               return;
+            }
+            data = response.data;
 
-                let blockedLotteries = data[0].blockedLotteries == undefined ? [] : Object.values(data[0].blockedLotteries);
+            let blockedLotteries = data[0].blockedLotteries == undefined ? [] : Object.values(data[0].blockedLotteries);
 
-                data.forEach((lottery) => {
-                    responseMarkup += lotteriesMarkup(lottery, blockedLotteries);
-                });
-                // return;
-                $("#usrl-lot-dtholder").html(responseMarkup);
-            },
-            error: function (res, status, error) {},
-            complete: function () {
-                // console.log("Operation Completed Successfully.");
-            },
-        });
-    };
+            data.forEach((lottery) => {
+               responseMarkup += lotteriesMarkup(lottery, blockedLotteries);
+            });
+            // return;
+            $("#usrl-lot-dtholder").html(responseMarkup);
+         },
+         error: function (res, status, error) {},
+         complete: function () {
+            // console.log("Operation Completed Successfully.");
+         },
+      });
+   };
 
-    $(document).on("click", ".toggle-lot", function () {
-        if ($(this).is(":checked")) {
-            toggleLottery(this, true);
-        } else {
-            toggleLottery(this, false);
-        }
-    });
+   $(document).on("click", ".toggle-lot", function () {
+      if ($(this).is(":checked")) {
+         toggleLottery(this, true);
+      } else {
+         toggleLottery(this, false);
+      }
+   });
 
     $(document).on("click", ".toggle-ip-state", function () {
         if ($(this).is(":checked")) {
@@ -1308,14 +1312,14 @@ const txtPages = document.getElementById("trans-pages").innerText;
         });
     };
 
-    const updateUserData = () => {
-        const userID = $("#idHolder").val();
-        const flag = "updateUserInfo";
-        const depositLimit = $("#usrl-deposit-limit").val();
-        const withdrawalLimit = $("#usrl-withdrawal-limit").val();
-        const rebate = $("#usrl-rebate").val();
-        const state = $("#usrl-state").val();
-        const dailyBettingLimit = $("#usrl-daily-betting-total-limit").val();
+   const updateUserData = () => {
+      const userID = $("#idHolder").val();
+      const flag = "updateUserInfo";
+      const depositLimit = $("#usrl-deposit-limit").val();
+      const withdrawalLimit = $("#usrl-withdrawal-limit").val();
+      const rebate = $("#usrl-rebate").val();
+      const state = $("#usrl-filter-state").val();
+      const dailyBettingLimit = $("#usrl-daily-betting-total-limit").val();
 
         $.ajax({
             url: `../admin/updateUserData/${userID}/${depositLimit}/${withdrawalLimit}/${rebate}/${state}/${dailyBettingLimit}/${flag}`,
@@ -1362,10 +1366,10 @@ const txtPages = document.getElementById("trans-pages").innerText;
         }
     };
 
-    const fetchUserInfo = () => {
-        const userID = $("#idHolder").val();
-        const flag = "fetchUserInfo";
-        const lotteryID = "all";
+   const fetchUserInfo = () => {
+      const userID = $("#idHolder").val();
+      const flag = "fetchUserInfo";
+      const lotteryID = "all";
 
         $.ajax({
             url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
@@ -1422,15 +1426,15 @@ const txtPages = document.getElementById("trans-pages").innerText;
                 // console.log(response);
                 response = JSON.parse(response);
 
-                if (response.state == 0) return;
-                if (response.status == "error") {
-                    showToast("Error", response.data, "error");
-                    return;
-                }
+            if (response.state == 0) return;
+            if (response.status == "error") {
+               showToast("Error", response.data, "error");
+               return;
+            }
 
-                if (response.data == 0) {
-                    // showToast("Not Done", "Already blocked", "info");
-                    showToast(translations.notDone, translations.alreadyBlocked, "info");
+            if (response.data == 0) {
+               // showToast("Not Done", "Already blocked", "info");
+               showToast(translations.notDone, translations.alreadyBlocked, "info");
 
                     return;
                 }
@@ -1446,10 +1450,10 @@ const txtPages = document.getElementById("trans-pages").innerText;
         });
     };
 
-    const fetchUserLogs = () => {
-        const userID = $("#idHolder").val();
-        const flag = "fetchUserLogs";
-        const lotteryID = "all";
+   const fetchUserLogs = () => {
+      const userID = $("#idHolder").val();
+      const flag = "fetchUserLogs";
+      const lotteryID = "all";
 
         $.ajax({
             url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
@@ -1782,67 +1786,24 @@ const txtPages = document.getElementById("trans-pages").innerText;
         var passwordField = $("#agentpassword");
         var toggleIcon = $(".showpass");
 
-        // Check if the type is password and toggle between text and password
-        if (passwordField.attr("type") === "password") {
-            passwordField.attr("type", "text"); // Change input to text (show password)
-            toggleIcon.removeClass("bx-show").addClass("bx-hide"); // Change icon to "hide"
-        } else {
-            passwordField.attr("type", "password"); // Change input to password (hide password)
-            toggleIcon.removeClass("bx-hide").addClass("bx-show"); // Change icon to "show"
-        }
-    });
-
-    //    reset login attempt
-
-    $(document).on("click", ".usr-reset-user", function () {
-        const uid = $(this).attr("data-uid");
-        $("#idHolder").val(uid);
-        $("#usl-reset-user-dialog").modal("show");
-    });
-
-    // Trigger login attempt reset when confirm button is clicked
-    $(document).on("click", ".usrl-reset-userbtn", function () {
-        const uid = $("#idHolder").val();
-
-        $.ajax({
-            url: `../admin/resetUser/${uid}`,
-            type: "POST",
-            success: function (response) {
-                try {
-                    if (typeof response === "string") {
-                        response = JSON.parse(response); // Parse JSON if needed
-                    }
-
-                    $("#usl-reset-user-dialog").modal("hide"); // Hide modal
-
-                    if (response.status === "success") {
-                        setTimeout(() => {
-                            showToast("Success", response.message, "success");
-                        }, 500);
-                    } else if (response.status === "info") {
-                        showToast("Notice", response.message, "info");
-                    } else {
-                        showToast("Error", response.message || "Reset failed", "error");
-                    }
-                } catch (e) {
-                    showToast("Error", "Invalid response from server", "error");
-                }
-            },
-            error: function () {
-                showToast("Error", "Something went wrong while resetting login attempts.", "error");
-            },
-        });
-    });
+      // Check if the type is password and toggle between text and password
+      if (passwordField.attr("type") === "password") {
+         passwordField.attr("type", "text"); // Change input to text (show password)
+         toggleIcon.removeClass("bx-show").addClass("bx-hide"); // Change icon to "hide"
+      } else {
+         passwordField.attr("type", "password"); // Change input to password (hide password)
+         toggleIcon.removeClass("bx-hide").addClass("bx-show"); // Change icon to "show"
+      }
+   });
 });
 
 const lotteriesMarkup = (lottery, blockedLotteries) => {
-    const lotteryID = lottery.lt_id;
-    const status = blockedLotteries.includes(`${lotteryID}`) ? "Disabled" : "Active";
-    const checkedState = status == "Active" ? "checked" : "";
-    return `<tr>
+   const lotteryID = lottery.lt_id;
+   const status = blockedLotteries.includes(`${lotteryID}`) ? "Disabled" : "Active";
+   const checkedState = status == "Active" ? "checked" : "";
+   return `<tr>
             <td><span class="lottery-name"> ${lottery.name}</span></td>
-            <td><span class="lottery-status">${status}</span></td>
-            <td><input class="form-check-input toggle-lot" type="checkbox" value="${lotteryID}" ${checkedState}></td>
+            <td><input class="form-check-input toggle-lot" type="checkbox" value="${lotteryID}"></td>
             </tr>`;
 };
 const userIpsMarkup = (data) => {

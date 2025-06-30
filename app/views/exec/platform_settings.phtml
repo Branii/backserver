@@ -46,7 +46,7 @@ if($flag == "savepreferences"){
     echo json_encode($result);
 }
 
-if($flag == "savessmsstaes"){
+if($flag == "savesmspreferencestate"){
      $result  = PLatFormSettingModel::SaveStateSmsSettings();
      echo json_encode($result); 
 }
@@ -70,13 +70,12 @@ if($flag == "filtersms"){
          'totalPages' => ceil($result['total'] / $limit),
     ]);
 }
+
 if($flag == "deletesms"){
      $smsid = isset($this->viewData['sms']) ? $this->viewData['sms'] : "";
      $result  = PLatFormSettingModel::DeleteSms($smsid);
      echo json_encode($result);
 }
-
-
 
 if($flag == "fetchemaildata"){
 
@@ -107,36 +106,44 @@ if($flag == "emailaddprovider"){
      echo json_encode($result);
 }
 
-// if($flag == "savepreferencesemail"){
-//     $data = json_decode(file_get_contents("php://input"), true);
-//     $result  = PLatFormSettingModel::InserIntoSavePreferences($data);
-//     echo json_encode($result);
-// }
+if($flag == "savepreferencesemail"){
+    $data = json_decode(file_get_contents("php://input"), true);
+    $result  = PLatFormSettingModel::InserEmailSavePreferences($data);
+    echo json_encode($result);
+}
 
-// if($flag == "savesemailstaes"){
-//      $result  = PLatFormSettingModel::SaveStateSmsSettings();
-//      echo json_encode($result); 
-// }
+if($flag == "savedemailpreferencestate"){
+     $result  = PLatFormSettingModel::SaveStateEmailSettings();
+     echo json_encode($result); 
+}
 
 if($flag =="fetchemailprovider"){
     $results = PLatFormSettingModel::FetchEmailProviders();
     echo json_encode($results);
 }
 
-// if($flag == "filteremail"){
-//     $smsprovider = isset($this->viewData['smsprovider']) ?  $this->viewData['smsprovider'] : "";
-//     $smsstatus = isset($this->viewData['smsstatus']) ?  $this->viewData['smsstatus'] : "";
-//     $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
-//     $enddate = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
-//     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
-//     $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
-//       $subquery = PLatFormSettingModel::Smssubquery($smsprovider,$smsstatus,$startdate,$enddate) ?? [];
-//       $result   = PLatFormSettingModel::FilterSmsData($subquery,$page,$limit) ?? [];
-//     echo json_encode([
-//         'sms' => $result['data'],
-//          'totalPages' => ceil($result['total'] / $limit),
-//     ]);
-// }
+if($flag == "filteremail"){
+    $emailprovider = isset($this->viewData['emailprovider']) ?  $this->viewData['emailprovider'] : "";
+    $emailstatus = isset($this->viewData['emailstatus']) ?  $this->viewData['emailstatus'] : "";
+    $startdate = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
+    $enddate = isset($this->viewData['enddate']) ?  $this->viewData['enddate'] : "";
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
+    $limit = isset($this->viewData['limit']) ? (int) $this->viewData['limit'] : 20;
+      $subquery = PLatFormSettingModel::Emailsubquery($emailprovider,$emailstatus,$startdate,$enddate) ?? [];
+      $result   = PLatFormSettingModel::FilterEmailData($subquery,$page,$limit) ?? [];
+    echo json_encode([
+        'email' => $result['data'],
+         'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
+
+
+if($flag == "deleteemail"){
+     $emailid = isset($this->viewData['email']) ? $this->viewData['email'] : "";
+     $result  = PLatFormSettingModel::DeleteEmail($emailid);
+     echo json_encode($result);
+}
+
 
 
 

@@ -306,47 +306,50 @@ if ($flag == "fetchsubagent") {
     echo json_encode($res);
     return;
 
-    // $result =  (new UserManageModel())->FetchSubAgents($nickname,$page,$limit);
-    // echo json_encode([
-    //     'subagent' => $result['data'],
-    //     'totalPages' => ceil($result['total'] / $limit)
-    // ]);
-} elseif ($flag == "blockUser") {
-    $user_id = $this->viewData["user_id"];
-    $res = UserManageModel::blockUserData($user_id);
-    echo json_encode($res);
-    return;
-} elseif ($flag == "deleteUser") {
-    $user_id = $this->viewData["user_id"];
-    $res = UserManageModel::deleteUserData($user_id);
-    echo json_encode($res);
-    return;
-} elseif ($flag == "fetchUserLotteries") {
-    $user_id = $this->viewData["user_id"];
-    $res = UserManageModel::fetchUserLotteries($user_id);
-    echo json_encode($res);
-} elseif ($flag == "updateLotteryState") {
-    $user_id = $this->viewData["user_id"];
-    $lottery_id = $this->viewData["lottery_id"];
+        // $result =  (new UserManageModel())->FetchSubAgents($nickname,$page,$limit);
+        // echo json_encode([
+        //     'subagent' => $result['data'],
+        //     'totalPages' => ceil($result['total'] / $limit)
+        // ]);
+    } elseif ($flag == "blockUser") {
+        $user_id = $this->viewData["user_id"];
+        $res = UserManageModel::blockUserData($user_id);
+        echo json_encode($res);
+        return;
+    } elseif ($flag == "deleteUser") {
+        $user_id = $this->viewData["user_id"];
+        $res = UserManageModel::deleteUserData($user_id);
+        echo json_encode($res);
+        return;
+    } elseif ($flag == "fetchUserLotteries") {
+        $user_id = $this->viewData["user_id"];
+        $res = UserManageModel::fetchUserLotteries($user_id);
+        echo json_encode($res);
+    } elseif ($flag == "updateLotteryState") {
 
-    $res = UserManageModel::update_lottery_stat_for_user($user_id, $lottery_id);
+        $arr = $this->viewData["data"];
+        $gameIds = urldecode($arr);
+        $gameData = json_decode($gameIds,true);
+        $uid = $this->viewData["uid"];
+        $res = UserManageModel::update_lottery_stat_for_user($uid,$gameData);
+        echo json_encode($res['status']);
 
-    echo json_encode($res);
-} elseif ($flag === "fetchUserLogs") {
-    $user_id = $this->viewData["user_id"];
-    $res = UserManageModel::fetchUserLogs($user_id);
-    echo json_encode($res);
-} elseif ($flag == "blockUserIp") {
-    $ip_id = $this->viewData['ulog_id'];
-    $uid = $this->viewData['user_id'];
-    $res = UserManageModel::block_user_ip($uid, $ip_id);
-    echo json_encode($res);
-} elseif ($flag === "fetchUserInfo") {
-    $user_id = $this->viewData['user_id'];
-    $user_id = intval($user_id);
-    $data = UserManageModel::FetchUserData($user_id);
-    // $userData        = UserManageModel::getBankAccounts($user_id );
-    // $withdrawalCount = UserManageModel::withdrawalCount($user_id);
+
+    } elseif ($flag === "fetchUserLogs") {
+        $user_id = $this->viewData["user_id"];
+        $res = UserManageModel::fetchUserLogs($user_id);
+        echo json_encode($res);
+    } elseif ($flag == "blockUserIp") {
+        $ip_id = $this->viewData['ulog_id'];
+        $uid = $this->viewData['user_id'];
+        $res = UserManageModel::block_user_ip($uid, $ip_id);
+        echo json_encode($res);
+    } elseif ($flag === "fetchUserInfo") {
+        $user_id = $this->viewData['user_id'];
+        $user_id = intval($user_id);
+        $data = UserManageModel::FetchUserData($user_id);
+        // $userData        = UserManageModel::getBankAccounts($user_id );
+        // $withdrawalCount = UserManageModel::withdrawalCount($user_id);
 
     echo json_encode($data);
 } elseif ($flag === "updateUserData") {
@@ -392,8 +395,58 @@ if ($flag == "filterchange") {
         'totalPages' => ceil($result['total'] / $limit),
     ]);
 }
-if ($flag == "resetloginattempt") {
-    $uid = $this->viewData['uid'] ?? '';
-    $result = (new UserManageModel())->ResetloginAttempt($uid);
-    echo json_encode($result);
+
+
+if($flag == "fetchLoterytype"){
+     $res = UserManageModel::FetchLotteryTypes();
+    echo json_encode($res);
 }
+
+if($flag == "updategamenames"){
+       $arr = $this->viewData["data"];
+        $gameIds = urldecode($arr);
+        $gameData = json_decode($gameIds,true);
+        $uid = $this->viewData["uid"];
+        $res = UserManageModel::UpdateGametypes($uid,$gameData);
+        echo json_encode($res['status']);
+}
+
+if($flag == "fetchgamesTab"){
+        $lotteryid = $this->viewData["lotteryid"];
+        $model = $this->viewData["model"];
+        $res = UserManageModel::GetGameTabs($lotteryid,$model);
+        echo json_encode($res);
+}
+
+if($flag == "updatesGamegroup"){
+       $arr = $this->viewData["data"];
+        $gameIds = urldecode($arr);
+        $gameData = json_decode($gameIds,true);
+        $uid = $this->viewData["uid"];
+        $lotterymodel = $this->viewData["lotterymodel"];
+        $res = UserManageModel::UpdateGameGroup($uid,$lotterymodel,$gameData);
+         echo json_encode($res['status']);
+}
+
+
+if($flag == "fetchGameNames"){
+        $lotteryid = $this->viewData["lotteryid"];
+        $model = $this->viewData["model"];
+        $res = UserManageModel::GetGameNames($lotteryid,$model);
+        echo json_encode($res);
+}
+
+
+if($flag == "updatesGameNamess"){
+       $arr = $this->viewData["data"];
+        $gameIds = urldecode($arr);
+        $gameData = json_decode($gameIds,true);
+        $uid = $this->viewData["uid"];
+        $lotterymodel = $this->viewData["lotterymodel"];
+        $res = UserManageModel::UpdateGameNames($uid,$lotterymodel,$gameData);
+        echo json_encode($res['status']);
+}
+
+
+
+

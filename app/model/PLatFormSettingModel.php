@@ -159,14 +159,98 @@ class PLatFormSettingModel extends MEDOOHelper
         $data = parent::query($sql);
         return $data;
     }
-    
-    public static function EditMessageData($mgid)
-    {
-        $sql = "SELECT msg_id,subject,message FROM notices WHERE msg_id = :mgid";
-        $data = parent::query($sql, ['mgid' => $mgid]);
+
+    public static function InserEmailSavePreferences($data)
+    {  
+
+     $sql = "REPLACE INTO email_preferences (id, deposit, withdraw,gamewon, email_provider) VALUES (:id,:deposit,:withdraw,:gamewon,:email_provider)";
+        $id = 1;
+        $params = [
+            ':id' => $id,
+            ':deposit'  => isset($data['deposit']) && $data['deposit'] ? 1 : 0,
+            ':withdraw' => isset($data['withdraw']) && $data['withdraw'] ? 1 : 0,
+            ':gamewon'  => isset($data['gamewon']) && $data['gamewon'] ? 1 : 0,
+            ':email_provider' => $data['provider'] ?? null
+        ];
+        $data = parent::query($sql, $params);
+        return $data ? "failed" : "success";
+    }
+
+    public static function SaveStateEmailSettings()
+    {  
+        $sql = "SELECT deposit, withdraw,gamewon,email_provider FROM email_preferences WHERE id = 1";  
+        $data = parent::query($sql);
         return $data;
     }
 
+    public static function DeleteEmail($emailid)
+    {
+        $params = ['email_id' => $emailid]; // Correct parameter key
+        $data = parent::query("DELETE FROM email_config WHERE email_id = :email_id", $params);
+        return $data ? "Data could not be deleted. Please try again." : "Data deleted successfully.";
+    }
+
+       public static function Emailsubquery($emailprovider,$emailstatus,$startdate,$enddate)
+    {
+        $filterConditions = [];
+
+        if (!empty($emailprovider)) {
+            $filterConditions[] = "email_provider= '$emailprovider'";
+        }
+
+        if (!empty($emailstatus)) {
+            $filterConditions[] = "status = '$emailstatus'";
+        }
+
+        if (!empty($startdate) && !empty($enddate)) {
+            $filterConditions[] = "DATE(created_at) BETWEEN '$startdate' AND '$enddate'";
+        } elseif (!empty($startdate)) {
+            $filterConditions[] = "DATE(created_at) = '$startdate'";
+        } elseif (!empty($enddate)) {
+            $filterConditions[] = "DATE(created_at) = '$enddate'";
+        }
+
+        if (!empty($filterConditions)) {
+            $subQuery = implode(' AND ', $filterConditions);
+        }
+        // Add ordering and limit to the query
+      //  $subQuery .= "ORDER BY created_at DESC";
+
+        return $subQuery;
+    }
+
+    public static function FilterEmailData($subquery, $page, $limit)
+    {
+        try {
+            $startpoint = ($page - 1) * $limit;
+            $sql = " SELECT *  FROM email_config WHERE $subquery LIMIT :offset, :limit";
+            $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
+
+            $countSql1 = "SELECT COUNT(*) AS total_results FROM email_config WHERE $subquery";
+            $totalRecords = parent::query($countSql1);
+
+            $totalRecords = $totalRecords[0]['total_results'];
+            return ['data' => $data, 'total' => $totalRecords];
+        } catch (Exception $e) {
+            // Log the error message for debugging purposes
+            error_log("Error executing query: " . $e->getMessage());
+        }
+    }
+    
+    public static function getEmailBalance($provider)
+    {
+        $sql = "SELECT current_emails,email_used FROM email_config WHERE email_provider = :email_provider";
+        $data = parent::query($sql, ['email_provider' => $provider])[0];
+        return $data;
+    }
+
+
+      public static function UpdateEmail($initialTotal,$used,$currentBalance,$sms_provider)
+    {
+        $sql = "UPDATE email_config SET total_emails =:total_emails, email_used=:email_used,current_emails=:current_emails  WHERE email_provider = :email_provider";
+        $data = parent::query($sql, ['total_emails' => $initialTotal, 'email_used' => $used,'current_emails'=>$currentBalance, 'email_provider' => $sms_provider]);
+        return $data ? "Message could not be updated. Please try again." : "Message updated successfully.";
+    }
     public static function UpdateSms($initialTotal,$used,$currentBalance,$sms_provider)
     {
         $sql = "UPDATE sms_config SET total_sms =:total_sms, sms_used=:sms_used,current_sms=:current_sms  WHERE sms_provider = :sms_provider";
@@ -175,82 +259,82 @@ class PLatFormSettingModel extends MEDOOHelper
     }
 
 
-    ///Notification data
-    public static function FetchNotification($page, $limit): array
-    {
-        $startpoint = $page * $limit - $limit;
+    // ///Notification data
+    // public static function FetchNotification($page, $limit): array
+    // {
+    //     $startpoint = $page * $limit - $limit;
     
-        $query =
-         "SELECT nu.msg_id, nu.username, nu.read_status, n.subject, n.message, n.created_at,n.timezone 
-            FROM notice_users AS nu
-            JOIN notices AS n ON nu.msg_id = n.msg_id
-            ORDER BY nu.msg_id DESC
-            LIMIT :offset, :limit ";
+    //     $query =
+    //      "SELECT nu.msg_id, nu.username, nu.read_status, n.subject, n.message, n.created_at,n.timezone 
+    //         FROM notice_users AS nu
+    //         JOIN notices AS n ON nu.msg_id = n.msg_id
+    //         ORDER BY nu.msg_id DESC
+    //         LIMIT :offset, :limit ";
     
-        $data = parent::query($query, ['offset' => $startpoint, 'limit' => $limit]);
-        $totalRecords = parent::count('notice_users');
+    //     $data = parent::query($query, ['offset' => $startpoint, 'limit' => $limit]);
+    //     $totalRecords = parent::count('notice_users');
     
-        return ['data' => $data, 'total' => $totalRecords];
-    }
+    //     return ['data' => $data, 'total' => $totalRecords];
+    // }
 
-    public static function Notifyssubquery($username, $messagetype, $startdate, $enddate)
-    {
-        $filterConditions = [];
-        $subQuery = "";
-        if (!empty($username)) {
-            $filterConditions[] = "notice_users.username = '$username'";
-        }
+    // public static function Notifyssubquery($username, $messagetype, $startdate, $enddate)
+    // {
+    //     $filterConditions = [];
+    //     $subQuery = "";
+    //     if (!empty($username)) {
+    //         $filterConditions[] = "notice_users.username = '$username'";
+    //     }
 
-        if (!empty($messagetype)) {
-            $filterConditions[] = "notice_users.read_status= '$messagetype'";
-        }
+    //     if (!empty($messagetype)) {
+    //         $filterConditions[] = "notice_users.read_status= '$messagetype'";
+    //     }
 
-        if (!empty($startdate) && !empty($enddate)) {
-            $filterConditions[] = "DATE(notice_users.created_at) BETWEEN '$startdate' AND '$enddate'";
-        } elseif (!empty($startdate)) {
-            $filterConditions[] = "DATE(notice_users.created_at) = '$startdate'";
-        } elseif (!empty($enddate)) {
-            $filterConditions[] = "DATE(notice_users.created_at) = '$enddate'";
-        }
+    //     if (!empty($startdate) && !empty($enddate)) {
+    //         $filterConditions[] = "DATE(notice_users.created_at) BETWEEN '$startdate' AND '$enddate'";
+    //     } elseif (!empty($startdate)) {
+    //         $filterConditions[] = "DATE(notice_users.created_at) = '$startdate'";
+    //     } elseif (!empty($enddate)) {
+    //         $filterConditions[] = "DATE(notice_users.created_at) = '$enddate'";
+    //     }
 
-        if (!empty($filterConditions)) {
-            $subQuery = implode(' AND ', $filterConditions);
-        }
-        // Add ordering and limit to the query
-       // $subQuery .= "ORDER BY notice_users.created_at DESC";
+    //     if (!empty($filterConditions)) {
+    //         $subQuery = implode(' AND ', $filterConditions);
+    //     }
+    //     // Add ordering and limit to the query
+    //    // $subQuery .= "ORDER BY notice_users.created_at DESC";
 
-        return $subQuery;
-    }
+    //     return $subQuery;
+    // }
 
-    public static function FilterNotifysData($subquery, $page, $limit)
-    {
-        try {
-             $startpoint = ($page - 1) * $limit;
-             $sql = "
-                SELECT 
-                notice_users.*, 
-                notices.message,
-                notices.subject
-            FROM notice_users
-            LEFT JOIN notices ON notices.msg_id = notice_users.msg_id
-            WHERE $subquery
-            LIMIT :offset, :limit
-            ";
+    // public static function FilterNotifysData($subquery, $page, $limit)
+    // {
+    //     try {
+    //          $startpoint = ($page - 1) * $limit;
+    //          $sql = "
+    //             SELECT 
+    //             notice_users.*, 
+    //             notices.message,
+    //             notices.subject
+    //         FROM notice_users
+    //         LEFT JOIN notices ON notices.msg_id = notice_users.msg_id
+    //         WHERE $subquery
+    //         LIMIT :offset, :limit
+    //         ";
         
-            $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
+    //         $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
  
-            $countSql1 = "SELECT COUNT(*) AS total_results FROM notice_users WHERE $subquery"; 
+    //         $countSql1 = "SELECT COUNT(*) AS total_results FROM notice_users WHERE $subquery"; 
 
-            // Execute the count query
-            $totalRecords = parent::query($countSql1);
-            $totalRecords = $totalRecords[0]['total_results'];
+    //         // Execute the count query
+    //         $totalRecords = parent::query($countSql1);
+    //         $totalRecords = $totalRecords[0]['total_results'];
 
-            return ['data' => $data , 'total' => $totalRecords];
-        } catch (Exception $e) {
-            // Log the error message for debugging purposes
-            error_log("Error executing query: " . $e->getMessage());
-        }
-    }
+    //         return ['data' => $data , 'total' => $totalRecords];
+    //     } catch (Exception $e) {
+    //         // Log the error message for debugging purposes
+    //         error_log("Error executing query: " . $e->getMessage());
+    //     }
+    // }
 
     
 }

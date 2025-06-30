@@ -517,13 +517,11 @@ class adminController extends Controller
     }
 
 
-
     public function  editPaymentPlaftorm($partnerID, $paymentType, $paymentTypeName, $currency, $status, $fee, $maxAmount, $minAmount, $siteUrl, $adminSiteUrl, $info, $priority, $countries)
     {
         $this->view('exec/payment_platform', ['partner_id' => $partnerID, "paymentType" => $paymentType, "paymentTypeName" => $paymentTypeName, "currency" => $currency, "status" => $status, "fee" => $fee, "maxAmount" => $maxAmount, "minAmount" => $minAmount, "siteUrl" => $siteUrl, "adminSiteUrl" => $adminSiteUrl, "info" => $info, "priority" => $priority, "countries" => $countries, 'flag' => 'editPaymentPlaftorm']);
         $this->view->render();
     }
-
 
 
     public function  fetchBonusTwoSides($lotteryID, $lotteryGameGroup)
@@ -542,7 +540,6 @@ class adminController extends Controller
     public function updateUsedquota($uid, $bonus_group, $rebate_group, $quata_group, $count_group)
     {
         $this->view('exec/account_manage', [
-
             'uid' => $uid,
             'bonus' => $bonus_group,
             'rebate' => $rebate_group,
@@ -552,8 +549,6 @@ class adminController extends Controller
         ]);
         $this->view->render();
     }
-
-
 
     public function filterChangeAccount($uid, $ordertype, $startdate, $enddate, $pageNumber, $limit)
     {
@@ -569,8 +564,67 @@ class adminController extends Controller
         ]);
         $this->view->render();
     }
+    //games for user
+    public function updatesGames($userid,$data)
+    {
+        $this->view('exec/account_manage', ["uid"=>$userid, "data" => $data ,"flag" => 'updateLotteryState']);
+        $this->view->render();
+    }
 
+    public function updatesGamesnames($userid,$data)
+    {
+        $this->view('exec/account_manage', ["uid"=>$userid, "data" => $data ,"flag" => 'updategamenames']);
+        $this->view->render();
+    }
 
+    public function updatesGamegroup($userid,$lotterymodel,$data)
+    {
+   
+   
+        $this->view('exec/account_manage', ["uid"=>$userid, "lotterymodel"=>$lotterymodel, "data" => $data ,"flag" => 'updatesGamegroup']);
+        $this->view->render();
+    }
+
+      public function updatesGameNamess($userid,$lotterymodel,$data)
+    {
+        $this->view('exec/account_manage', ["uid"=>$userid, "lotterymodel"=>$lotterymodel, "data" => $data ,"flag" => 'updatesGameNamess']);
+        $this->view->render();
+    }
+
+   
+     public function getallgamegroup()
+    {
+        $this->view('exec/account_manage', ["flag" => 'getallgamegroup']);
+        $this->view->render();
+    }
+
+    function getallgametype()
+    {
+        $this->view('exec/game_management', ['flag'=>'getallgametype']);
+        $this->view->render();
+    }
+
+     function fetchgamesTab($lotteryid,$model)
+    {
+        $this->view('exec/account_manage', ['lotteryid'=>$lotteryid, 'model'=>$model,'flag'=>'fetchgamesTab']);
+        $this->view->render();
+    }
+
+     function fetchGameNames($lotteryid,$model)
+    {
+        $this->view('exec/account_manage', ['lotteryid'=>$lotteryid, 'model'=>$model,'flag'=>'fetchGameNames']);
+        $this->view->render();
+    }
+
+    
+    
+    public function fetchLoterytype()
+    {
+        $this->view('exec/account_manage', ["flag" => 'fetchLoterytype']);
+        $this->view->render();
+    }
+
+    
     //NOTE -
     ////////////// USERLIST LOGS -//////////
     public function userlogsdata($pageNumber, $limit)
@@ -601,6 +655,7 @@ class adminController extends Controller
         $this->view('exec/partners', ['partner_id' => $partnerID, "flag" => $flag]);
         $this->view->render();
     }
+
 
     public function agent_subordinate($user_id, $pageNumber, $limit)
     {
@@ -830,6 +885,19 @@ class adminController extends Controller
         $this->view->render();
     }
 
+     function updategamegroup($gamegroupid, $gametate)
+    {
+        $this->view('exec/game_management', [ 'flag' => 'updategamegroup','gamegroupid' => $gamegroupid,'gametate' => $gametate]);
+        $this->view->render();
+    }
+
+     function updategamelottery($lotteryid, $gametate)
+    {
+        $this->view('exec/game_management', [ 'flag' => 'updategamelottery','lotteryid' => $lotteryid,'gametate' => $gametate]);
+        $this->view->render();
+    }
+
+  
     //annoucement
     function createannoucement($messagetype, $messagetitle, $usernames, $description, $startdate, $enddate, $sendby)
     {
@@ -1116,8 +1184,8 @@ class adminController extends Controller
       $this->view('exec/platform_settings', ['flag' => 'savepreferences']);
       $this->view->render();
     }
-    public function savessmsstaes(){
-      $this->view('exec/platform_settings', ['flag' => 'savessmsstaes']);
+    public function savesmspreferencestate(){
+      $this->view('exec/platform_settings', ['flag' => 'savesmspreferencestate']);
       $this->view->render();
     }
      public function fetchsmsprovider(){
@@ -1159,7 +1227,34 @@ class adminController extends Controller
       $this->view->render();
      }
 
+      public function emailpreferences(){
+      $this->view('exec/platform_settings', ['flag' => 'savepreferencesemail']);
+      $this->view->render();
+    }
+    public function savedemailpreferencestate(){
+      $this->view('exec/platform_settings', ['flag' => 'savedemailpreferencestate']);
+      $this->view->render();
+    }
 
+     public function deleteemail($emailid){
+      $this->view('exec/platform_settings', ['email'=>$emailid,'flag' => 'deleteemail']);
+      $this->view->render();
+     }
+     public function  filteremail($emailprovider,$emailstatus,$startdate,$enddate,$page,$limit){
+        $this->view('exec/platform_settings', [
+            'emailprovider'=>$emailprovider,
+            'emailstatus'=>$emailstatus,
+            'startdate'=>$startdate,
+            'enddate'=>$enddate,
+            'page'=>$page,
+            'limit'=>$limit,
+            'flag' => 'filteremail']);
+        $this->view->render();
+     }
+     
+     
+    
+   
     
 
     //searchadmin names

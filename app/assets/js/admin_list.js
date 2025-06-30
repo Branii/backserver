@@ -508,7 +508,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
         }
     }
 
-    let bigArr = [];
+    let bigArrs = [];
     let originalPermissions = []; //permission array
     let graph = {};
     let userId;
@@ -517,7 +517,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
     $(document).on("click", ".admin_per", function () {
         const userdata = JSON.parse($(this).attr("value"));
         let permissions = JSON.parse(userdata.permissions);
-        bigArr = [];
+        bigArrs = [];
         originalPermissions = [];
         graph = {};
         userId = userdata.admin_id;
@@ -560,6 +560,8 @@ const txtPages = document.getElementById("trans-pages").innerText;
             24: { title: "User Overview", content: "overview" },
             23: { title: "Partners", content: "Partners" },
             25: { title: "User Payment Method", content: "usernotsi" },
+            26: { title: "SMS Configuration", content: "smsconfig" },
+            27: { title: "Email Configuration", content: "emailconfigure" },
         };
         const sidebarMain = {
             1: { category: "Business flow", items: [1, 2, 3, 4] },
@@ -574,6 +576,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
             10: { category: "System Announcement", items: [20, 21] },
             11: { category: "Payment Platform", items: [22] },
             12: { category: "Partner Management", items: [23] },
+            13: { category: "Platform Setting", items: [26,27] },
         };
         let html = "";
         for (let key in sidebarMain) {
@@ -593,10 +596,9 @@ const txtPages = document.getElementById("trans-pages").innerText;
                     const checked = permissions?.[key]?.includes(item) ? "checked" : "";
 
                     if (checked) {
-                        bigArr.push(value);
+                        bigArrs.push(value);
                         originalPermissions.push(value);
                     }
-
                     html += `
                     <li id="tab1" class="item " value="" style="display: flex; justify-content: space-between;">
                       ${sidebarMenu[item].title}
@@ -622,9 +624,9 @@ const txtPages = document.getElementById("trans-pages").innerText;
     $(document).on("change", ".chk", function () {
         const val = $(this).val();
         if ($(this).is(":checked")) {
-            if (!bigArr.includes(val)) bigArr.push(val);
+            if (!bigArrs.includes(val)) bigArrs.push(val);
         } else {
-            bigArr = bigArr.filter((item) => item !== val);
+            bigArrs = bigArrs.filter((item) => item !== val);
         }
         updateSelectAllState();
     });
@@ -632,13 +634,13 @@ const txtPages = document.getElementById("trans-pages").innerText;
     // When clicking Select All Permissions checkbox
     $(document).on("change", "#selectAllPermissions", function () {
         const isChecked = $(this).is(":checked");
-        bigArr = [];
+        bigArrs = [];
 
         $(".chk").each(function () {
             $(this).prop("checked", isChecked);
             const val = $(this).val();
             if (isChecked && !bigArr.includes(val)) {
-                bigArr.push(val);
+                bigArrs.push(val);
             }
         });
 
@@ -648,12 +650,12 @@ const txtPages = document.getElementById("trans-pages").innerText;
     $(document).on("click", ".updateperm", function () {
         const graph = {};
 
-        if (bigArr.length === 0) {
+        if (bigArrs.length === 0) {
             updatePermissions(`../admin/permissions/${encodeURIComponent(JSON.stringify({}))}/${userId}`, {});
             return;
         }
 
-        bigArr.forEach((pair) => {
+        bigArrs.forEach((pair) => {
             const [node, connection] = pair.split(" ");
             const connNum = Number(connection);
             if (!graph[node]) graph[node] = [];

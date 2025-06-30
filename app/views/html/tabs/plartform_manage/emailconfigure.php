@@ -477,7 +477,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="mb-0" id="emailModalLabel">SMS Notification Preferences</h4>
+                    <h4 class="mb-0" id="emailModalLabel">Email Notification Preferences</h4>
                     <i class="bx bx-x" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
                 </div>
 
@@ -492,7 +492,7 @@
                                     <p class="mb-0 text-muted">Notifications confirming successful deposits.</p>
                                 </div>
                                 <div class="form-check form-switch m-0">
-                                    <input class="form-check-input depositSwitch" type="checkbox" id="depositSwitch" />
+                                    <input class="form-check-input depositSwitch" type="checkbox" id="depositSwitchs" />
                                     <label class="form-check-label" for="depositSwitch">Enable</label>
                                 </div>
                             </div>
@@ -506,7 +506,7 @@
                                     <p class="mb-0 text-muted">Alerts when a withdrawal is processed or completed.</p>
                                 </div>
                                 <div class="form-check form-switch m-0">
-                                    <input class="form-check-input" type="checkbox" id="withdrawSwitch" />
+                                    <input class="form-check-input" type="checkbox" id="withdrawSwitchs" />
                                     <label class="form-check-label" for="withdrawSwitch">Enable</label>
                                 </div>
                             </div>
@@ -520,7 +520,7 @@
                                     <p class="mb-0 text-muted">Alerts when a game won </p>
                                 </div>
                                 <div class="form-check form-switch m-0">
-                                    <input class="form-check-input" type="checkbox" id="gameSwitch" />
+                                    <input class="form-check-input" type="checkbox" id="gameSwitchs" />
                                     <label class="form-check-label" for="gameSwitch">Enable</label>
                                 </div>
                             </div>
@@ -576,11 +576,11 @@
                                     <p class="mb-0 text-muted">For sending messages to clients.</p>
                                 </div>
                                 <!-- <div class="ms-auto" style="min-width: 250px;"> -->
-                                    <select id="provider" class="form-select">
-                                        <option value="">Select...</option>
+                                    <select id="providers" class="form-select selectemailprovider">
+                                        <!-- <option value="">Select...</option>
                                         <option value="ntem">NTEM</option>
                                         <option value="emailonlinegh">SMSONLINEGH</option>
-                                        <option value="hubtel">Hubtel</option>
+                                        <option value="hubtel">Hubtel</option> -->
                                     </select>
                                 <!-- </div> -->
                             </div>
@@ -588,7 +588,7 @@
 
                         <!-- Submit Button -->
                         <div class="text-center mt-4">
-                            <button class="btn btn-primary" id="sendSMSBtn">Save Preferences</button>
+                            <button class="btn btn-primary" id="sendSMSBtns">Save Preferences</button>
                         </div>
 
                     </div>

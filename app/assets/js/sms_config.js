@@ -226,7 +226,7 @@ $(function () {
   })
 
   $(document).on('click', '#addsmssettings', function () {
-    $.post(`../admin/savessmsstaes`, function (response) {
+    $.post(`../admin/savesmspreferencestate`, function (response) {
       // console.log(response);
       //  return
         let data = typeof response === "string" ? JSON.parse(response)[0] : response;
