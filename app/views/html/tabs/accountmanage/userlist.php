@@ -1469,7 +1469,7 @@
                 </div>
                 <br>
                      <div style="overflow: hidden;">
-                            <table class="table table-hover table-bordered text-nowrap mb-0" id="quotatable">
+                            <table class="table table-hover table-bordered text-nowrap mb-0 " id="">
                                 <thead>
                                     <tr>
                                         <th class="font-weight-normal"><?= $translator['Lottery Name']; ?></th>

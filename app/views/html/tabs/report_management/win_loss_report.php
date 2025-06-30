@@ -463,7 +463,7 @@
             <span id="paging_infowl" style="color: #aaa;">---</span>
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
-            <select class="left-element form-control numrowstrans" id="wl-numrowstans" style="font-size: 12px;">
+            <select class="left-element form-control" id="wl-numrowstans" style="font-size: 12px;">
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>

@@ -138,11 +138,11 @@ class adminController extends Controller
 
     // side bar datas adminLogs
 
-    public function transactiondata($pageNumber, $limit)
-    {
-        $this->view('exec/businessflow', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'transactiondata']);
-        $this->view->render();
-    }
+    // public function transactiondata($pageNumber, $limit)
+    // {
+    //     $this->view('exec/businessflow', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'transactiondata']);
+    //     $this->view->render();
+    // }
 
     public function gamebetdata($pageNumber, $limit)
     {
@@ -150,34 +150,34 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function filterusername($username)
-    {
-        $this->view('exec/businessflow', ['username' => $username, 'flag' => 'filterusername']);
-        $this->view->render();
-    }
+    // public function filterusername($username)
+    // {
+    //     $this->view('exec/businessflow', ['username' => $username, 'flag' => 'filterusername']);
+    //     $this->view->render();
+    // }
 
-    public function filtertransactions($username, $orderid, $ordertype, $partneruid, $startdate, $enddate, $pageNumber, $limit)
-    {
-        $this->view('exec/businessflow', [
-            'username' => $username,
-            'orderid' => $orderid,
-            'ordertype' => $ordertype,
-            'partneruid' => $partneruid,
-            'startdate' => $startdate,
-            'enddate' => $enddate,
-            'flag' => 'filtertransactions',
-            'page' => $pageNumber,
-            'limit' => $limit,
+    // public function filtertransactions($username, $orderid, $ordertype, $partneruid, $startdate, $enddate, $pageNumber, $limit)
+    // {
+    //     $this->view('exec/businessflow', [
+    //         'username' => $username,
+    //         'orderid' => $orderid,
+    //         'ordertype' => $ordertype,
+    //         'partneruid' => $partneruid,
+    //         'startdate' => $startdate,
+    //         'enddate' => $enddate,
+    //         'flag' => 'filtertransactions',
+    //         'page' => $pageNumber,
+    //         'limit' => $limit,
 
-        ]);
-        $this->view->render();
-    }
+    //     ]);
+    //     $this->view->render();
+    // }
 
-    public function getTransactionBet($transactionId)
-    {
-        $this->view('exec/businessflow', ['transactionId' => $transactionId, 'flag' => 'getTransactionBet']);
-        $this->view->render();
-    }
+    // public function getTransactionBet($transactionId)
+    // {
+    //     $this->view('exec/businessflow', ['transactionId' => $transactionId, 'flag' => 'getTransactionBet']);
+    //     $this->view->render();
+    // }
 
     //NOTE -
     //////////////LOTTERY BETS -//////////
