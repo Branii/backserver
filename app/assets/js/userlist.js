@@ -195,125 +195,126 @@ $(function () {
       return moneyStr;
    }
 
-   const UserlistData = (data) => {
-      let html = "";
-      const status = {
-         1: "Enable", // Green
-         2: "Suspend", // Orange
-         3: "Forbbiden", // Light Blue
-         4: "Blocked", // Red
-      };
+   // const UserlistData = (data) => {
+   //    let html = "";
+   //    const status = {
+   //       1: "Enable", // Green
+   //       2: "Suspend", // Orange
+   //       3: "Forbbiden", // Light Blue
+   //       4: "Blocked", // Red
+   //    };
 
-      //   const account_type = {
-      //     1 :"customer",
-      //     2 : "agent",
-      //     3 : "sub agent",        // Red
-      //   };
+   //    //   const account_type = {
+   //    //     1 :"customer",
+   //    //     2 : "agent",
+   //    //     3 : "sub agent",        // Red
+   //    //   };
 
-      const recharges = {
-         1: "momo",
-         2: "bank Transfer",
-         3: "bank card",
-         4: "crypto", // Red
-      };
+   //    const recharges = {
+   //       1: "momo",
+   //       2: "bank Transfer",
+   //       3: "bank card",
+   //       4: "crypto", // Red
+   //    };
 
-      data.forEach((item) => {
-         //  // console.log(item)
-         let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+   //    data.forEach((item) => {
+   //       //  // console.log(item)
+   //       let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
 
-         let subordinate;
-         if (item.account_type == 2) {
-            subordinate = "Top Agent";
-         } else if (item.account_type == 3 && item.sub_count == 0) {
-            subordinate = "Sub Agent";
-         } else if (item.account_type == 3 && item.sub_count == 1) {
-            subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates;
-         } else if (item.account_type == 3 && item.sub_count == 2) {
-            subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",")[0];
-         } else if (item.account_type == 3 && item.sub_count > 2) {
-            subordinate = username + " <i class='bx bx-dots-horizontal-rounded' ></i>" + item.subordinates.split(",")[0];
-         } else if (item.account_type == 1 && item.sub_count == 0) {
-            subordinate = "---";
-         }
+   //       let subordinate;
+   //       if (item.account_type == 2) {
+   //          subordinate = "Top Agent";
+   //       } else if (item.account_type == 3 && item.sub_count == 0) {
+   //          subordinate = "Sub Agent";
+   //       } else if (item.account_type == 3 && item.sub_count == 1) {
+   //          subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates;
+   //       } else if (item.account_type == 3 && item.sub_count == 2) {
+   //          subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",")[0];
+   //       } else if (item.account_type == 3 && item.sub_count > 2) {
+   //          subordinate = username + " <i class='bx bx-dots-horizontal-rounded' ></i>" + item.subordinates.split(",")[0];
+   //       } else if (item.account_type == 1 && item.sub_count == 0) {
+   //          subordinate = "---";
+   //       }
 
-         const formattedSubordinates = item.subordinates ? username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",").join(" <i class='bx bx-right-arrow-alt'></i> ") : "None";
-         //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-         let logincount = item.logincount == null ? "0" : item.logincount;
-         const [date, time] = item.created_at.split(" ");
-         let dates = "";
-         let times = "";
-         if (item.last_login && item.last_login !== "*****") {
-            [dates, times] = item.last_login.split(" ");
-         } else {
-            dates = item.last_login || ""; // Use empty string if null/undefined
-            times = item.last_login || "";
-         }
-         //  // console.log(item.subordinates)
+   //       const formattedSubordinates = item.subordinates ? username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",").join(" <i class='bx bx-right-arrow-alt'></i> ") : "None";
+   //       //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+   //       let logincount = item.logincount == null ? "0" : item.logincount;
+   //       const [date, time] = item.created_at.split(" ");
+   //       let dates = "";
+   //       let times = "";
+   //       if (item.last_login && item.last_login !== "*****") {
+   //          [dates, times] = item.last_login.split(" ");
+   //       } else {
+   //          dates = item.last_login || ""; // Use empty string if null/undefined
+   //          times = item.last_login || "";
+   //       }
+   //       //  // console.log(item.subordinates)
 
-         html += `
-                  <tr id="usrl-tr-${item.uid}">
-                     <td>${username}</td>
-                      <td>${item.nickname}</td>
-                      <td>VIP</td>
-                     <td>
-                  <span class="tooltipp" style="">${subordinate}
-                  <span class="tooltipp-text">${formattedSubordinates}</span>
-                  </span>
-                  </td>
-                      <td>${item.sub_count} </td>
-                      <td>${formatMoney(item.balance)}</td> 
-                      <td>${item.rebate}</td>
-                      <td>${date + " / " + time}</td>
-                      <td>${dates + " / " + times}</td>
-                      <td>${logincount}</td>
-                      <td id="usrl-state-${item.uid}">${status[item.user_state]}</td>
+   //       html += `
+   //                <tr id="usrl-tr-${item.uid}">
+   //                   <td>${username}</td>
+   //                    <td>${item.nickname}</td>
+   //                    <td>VIP</td>
+   //                   <td>
+   //                <span class="tooltipp" style="">${subordinate}
+   //                <span class="tooltipp-text">${formattedSubordinates}</span>
+   //                </span>
+   //                </td>
+   //                    <td>${item.sub_count} </td>
+   //                    <td>${formatMoney(item.balance)}</td> 
+   //                    <td>${item.rebate}</td>
+   //                    <td>${date + " / " + time}</td>
+   //                    <td>${dates + " / " + times}</td>
+   //                    <td>${logincount}</td>
+   //                    <td id="usrl-state-${item.uid}">${status[item.user_state]}</td>
                  
-                        <td>
+   //                      <td>
                           
-                           <div class="dropdown">
-                                  <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                   <i class='bx bx-dots-vertical-rounded'></i>
-                                  </a>
-                                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
-                                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${item.uid}">
-                                      <i class="bx bx-show fs-5"></i>${viewText}
-                                    </a>
+   //                         <div class="dropdown">
+   //                                <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+   //                                 <i class='bx bx-dots-vertical-rounded'></i>
+   //                                </a>
+   //                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+   //                                  <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${item.uid}">
+   //                                    <i class="bx bx-show fs-5"></i>${viewText}
+   //                                  </a>
 
-                                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${item.uid}">
-                                      <i class="bx bx-show fs-5"></i>${viewText}
-                                    </a>
-                                    <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
-                                      <i class="bx bx-show fs-5" ></i>Quota
-                                    </a>
-                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewsub" data-agent-id="${item.uid}" href="javascript:void(0);"data-uid="${item.subordinates}"> 
-                                      <i class="bx bx-show fs-5" ></i>Subs
-                                    </a>
-                                    <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1 acountbtn" href="javascript:void(0);"data-uid="${item.uid}">
-                                      <i class="bx bx-money fs-5"></i>Account Change
-                                    </a>
-                                     <a class="dropdown-item usr-deactivate-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                      <i class="bx bx-trash fs-5"></i>${viewText}
-                                    </a> <a class="dropdown-item user-lottery-name cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                      <i class="bx bx-trash fs-5"></i>Lottery Name
-                                    </a>
-                                     <a class="dropdown-item usr-white-list cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                      <i class="bx bx-trash fs-5"></i>White List
-                                    </a>
-                                     <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                      <i class="bx bx-trash fs-5"></i>Delete User
-                                    </a>
-                                     <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                      <i class="bx bx-trash fs-5"></i>Delete User
-                                    </a>
-                                  </div>
-                                </div>
-                      </td>
+   //                                  <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${item.uid}">
+   //                                    <i class="bx bx-show fs-5"></i>${viewText}
+   //                                  </a>
+   //                                  <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
+   //                                    <i class="bx bx-show fs-5" ></i>Quota
+   //                                  </a>
+   //                                   <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewsub" data-agent-id="${item.uid}" href="javascript:void(0);"data-uid="${item.subordinates}"> 
+   //                                    <i class="bx bx-show fs-5" ></i>Subs
+   //                                  </a>
+   //                                  <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1 acountbtn" href="javascript:void(0);"data-uid="${item.uid}">
+   //                                    <i class="bx bx-money fs-5"></i>Account Change
+   //                                  </a>
+   //                                   <a class="dropdown-item usr-deactivate-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+   //                                    <i class="bx bx-trash fs-5"></i>${viewText}
+   //                                  </a> <a class="dropdown-item user-lottery-name cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+   //                                    <i class="bx bx-trash fs-5"></i>Lottery Name
+   //                                  </a>
+   //                                   <a class="dropdown-item usr-white-list cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+   //                                    <i class="bx bx-trash fs-5"></i>White List
+   //                                  </a>
+   //                                   <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+   //                                    <i class="bx bx-trash fs-5"></i>Delete User
+   //                                  </a>
+   //                                   <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+   //                                    <i class="bx bx-trash fs-5"></i>Delete User
+   //                                  </a>
+
+   //                                </div>
+   //                              </div>
+   //                    </td>
                      
-                  </tr>
-              `;
-      });
-      return html;
-   };
+   //                </tr>
+   //            `;
+   //    });
+   //    return html;
+   // };
 
  
 
@@ -1079,7 +1080,7 @@ $(function () {
                                 </a> <a class="dropdown-item user-lottery-name cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                   <i class='bx bx-filter' ></i>${lotteryNameText}
                                 </a>
-                                 <a class="dropdown-item  usr-gamename  cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
+                                 <a class="dropdown-item  usr-gametype  cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                   <i class='bx bx-user-minus' ></i>${gamenameTexts}
                                 </a>
                                    <a class="dropdown-item  usergamegroup  cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
@@ -1096,7 +1097,7 @@ $(function () {
                                  <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                   <i class='bx bx-user-minus' ></i>${deleteUserText}
                                 </a>
-                                
+
                               </div>
                             </div>
                   </td>
@@ -1779,12 +1780,12 @@ $(function () {
       }
    });
 
-  //game name
+  //game type
 
    let allGamesData;
    let parsedGamenameIds
    let bigArr = [];
-   $(document).on("click", ".usr-gamename", function () {
+   $(document).on("click", ".usr-gametype", function () {
       $("#usl-lottery-gamename-modal").modal("show");
       $("#idHolder").val($(this).attr("data-uid"));  
       let niiData = $(this).closest('tr').find(".nii").text()
@@ -1886,7 +1887,7 @@ $(document).on("click", ".togglethis", function () {
 $(document).on("click", ".checkall", e => e.stopPropagation());
 
 // Check/uncheck logic
-   $(document).on("click", ".updategamenames", function () {
+   $(document).on("click", ".updategametype", function () {
         let userID = $("#idHolder").val();
       $.post(`../admin/updatesGamesnames/${userID}/${JSON.stringify(bigArr)}`,function(res){
          console.log(res)
@@ -1900,7 +1901,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
       })
    });
 
-      // gamegrup
+      // gametabs
       let parsedGamegroupIds = []
     $(document).on("click", ".usergamegroup", function () {
       $("#usl-lottery-gamegroup-modal").modal("show");
@@ -1991,10 +1992,11 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
    $(document).on("click", ".executegnames", function () {
       let lotteryId = $("#gameslottery").val();
       let models = $("#allgames").val();
+      let gamenametype = $("#gamenametype").val();
       let niiData;
       if(parsedGamegroupIdss != "*****"){
         let getCurrentGames = JSON.parse(parsedGamegroupIdss).gpi
-        niiData = getCurrentGames[lotteryId] ?? []
+        niiData = getCurrentGames[gamenametype] ?? []
         console.log(niiData)
       }else{
        $("#usl-lottery-gamename-modal").modal("show"); 
@@ -2017,7 +2019,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
          <tr>
             <td>${gamename.name}</td>
             <td>
-               <input class="form-check-input gamenametoggle" type="checkbox"${check ? 'checked' : ''}  value="${gamename.gn_id}">
+               <input class="form-check-input gamenametoggle" type="checkbox" ${check ? 'checked' : ''}  value="${gamename.gn_id}">
             </td>
          </tr>
          `;
@@ -2028,8 +2030,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
    
      let gameName = []
     $(document).on("change", ".gamenametoggle", function () {
-        const val = parseInt($(this).val());
-        
+        const val = parseInt($(this).val()); 
         console.log(val)
         if ($(this).is(":checked")) {
             if (!gameName.includes(val)) gameName.push(val);
@@ -2048,10 +2049,12 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
 
    // updategamegroup
 
-   $(document).on("click", ".updategamess", function () {
+   $(document).on("click", ".updategamenames", function () {
         let userID = $("#idHolder").val();
-          let gn_id = $("#gameslottery").val();
-      $.post(`../admin/updatesGameNamess/${userID}/${gn_id}/${JSON.stringify(gameName)}`,function(res){
+          let gamenametype = $("#gamenametype").val();
+          console.log(userID,gamenametype)
+      //   return
+      $.post(`../admin/updatesGameNamess/${userID}/${gamenametype}/${JSON.stringify(gameName)}`,function(res){
          console.log(res)
           if(res ="success"){
             showToast("Heads Up", "User Games Updated sucessfully","success")

@@ -1348,7 +1348,7 @@
             </div>
          <div class="d-md-flex align-items-center">
                         <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 updategamenames" style="border: solid 1px #ccc;margin:10px">
+                            <button type="button" class="btn hstack gap-6 updategametype" style="border: solid 1px #ccc;margin:10px">
                                 <i class="loaderquoota"></i>Update
                             </button>
                         </div>
@@ -1370,15 +1370,15 @@
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px;">
-                    <select name="betsate" class="form-control form-select queryholderlistt" id="lotterys" style="width: 50%;">
-                        <option value="">--<?= $translator['Select Lottery']; ?>--</option>
+                    <select name="betsate" class="form-control form-select queryholderlistt lotteryTypes" id="lotterys" style="width: 50%;">
+                        <!-- <option value="">--<?= $translator['Select Lottery']; ?>--</option>
                         <option value="1">5D</option>
                         <option value="2">PK10</option>
                         <option value="3">FAST3</option>
                         <option value="5">3D</option>
                         <option value="6">11x5</option>
                         <option value="8">Mark6</option>
-                        <option value="10">Happy</option>
+                        <option value="10">Happy</option> -->
                     </select>
 
                     <select id="allgroup" class="form-control form-select" style="width: 50%;">
@@ -1441,15 +1441,26 @@
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px;">
-                    <select name="betsate" class="form-control form-select queryholderlistt" id="gameslottery" style="width: 50%;">
-                        <option value="">--<?= $translator['Select Lottery']; ?>--</option>
+                    <select name="betsate" class="form-control form-select queryholderlistt lotteryTypes" id="gameslottery" style="width: 50%;">
+                        <!-- <option value="">--<?= $translator['Select Lottery']; ?>--</option>
                         <option value="1">5D</option>
                         <option value="2">PK10</option>
                         <option value="3">FAST3</option>
                         <option value="5">3D</option>
                         <option value="6">11x5</option>
                         <option value="8">Mark6</option>
-                        <option value="10">Happy</option>
+                        <option value="10">Happy</option> -->
+                    </select>
+
+                     <select name="betsate" class="form-control form-select queryholderlistt selectlottery" id="gamenametype" style="width: 50%;">
+                        <!-- <option value="">--<?= $translator['Select Lottery']; ?>--</option>
+                        <option value="1">5D</option>
+                        <option value="2">PK10</option>
+                        <option value="3">FAST3</option>
+                        <option value="5">3D</option>
+                        <option value="6">11x5</option>
+                        <option value="8">Mark6</option>
+                        <option value="10">Happy</option> -->
                     </select>
 
                     <select id="allgames" class="form-control form-select" style="width: 50%;">
@@ -1486,7 +1497,7 @@
                             </table>
                              <div class="d-md-flex align-items-center">
                             <div class="mt-3 mt-md-0 ms-auto">
-                                <button type="button" class="btn hstack gap-6 updategamess" style="border: solid 1px #ccc; margin: 10px;"><i class="loaderquoota"></i>Update</button>
+                                <button type="button" class="btn hstack gap-6 updategamenames" style="border: solid 1px #ccc; margin: 10px;"><i class="loaderquoota"></i>Update</button>
                             </div>
                         </div>
                         </div>
