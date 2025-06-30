@@ -335,7 +335,7 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
           const data = await response.json(); // Parse JSON response
           let html = `<option value="">${translator['Lottery Type']}</option>`;
           data.forEach((lottery) => {
-              html += `<option value="${lottery.gt_id}">${lottery.name}</option>`;
+            html += `<option value="${lottery.gt_id}|${lottery.lottery_type}" data-lottery="">${lottery.name}|${lottery.gt_id}|${lottery.lottery_type}</option>`;
           });
           $(".selectlottery").html(html);
       } catch (error) {

@@ -267,7 +267,7 @@ class BusinessFlowModel extends MEDOOHelper
 
    public static function fetchLotteryname(): array
    {
-      return $res = parent::selectAll("game_type", ["gt_id", "name"], ["ORDER" => ["lottery_type" => "ASC"]]);
+      return $res = parent::selectAll("game_type", ["gt_id", "name","lottery_type"], ["ORDER" => ["lottery_type" => "ASC"]]);
    }
 
    public static function getLottery($gameId)

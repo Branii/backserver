@@ -1990,9 +1990,10 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
     });
   
    $(document).on("click", ".executegnames", function () {
-      let lotteryId = $("#gameslottery").val();
+      let lotteryId = $(".gamenametype").val().split("|")[1];
       let models = $("#allgames").val();
-      let gamenametype = $("#gamenametype").val();
+      let gamenametype = $(".gamenametype").val().split("|")[0];
+      console.log(lotteryId, models, gamenametype)
       let niiData;
       if(parsedGamegroupIdss != "*****"){
         let getCurrentGames = JSON.parse(parsedGamegroupIdss).gpi
@@ -2047,14 +2048,12 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
    //  $('.gamenametoggle').prop('checked', isChecked);
    //  })
 
-   // updategamegroup
+   // updategamegrou
 
    $(document).on("click", ".updategamenames", function () {
-        let userID = $("#idHolder").val();
-          let gamenametype = $("#gamenametype").val();
-          console.log(userID,gamenametype)
-      //   return
-      $.post(`../admin/updatesGameNamess/${userID}/${gamenametype}/${JSON.stringify(gameName)}`,function(res){
+       let userID = $("#idHolder").val();
+       let gamenametypes = $(".gamenametype").val().split("|")[0];
+      $.post(`../admin/updatesGameNamess/${userID}/${gamenametypes}/${JSON.stringify(gameName)}`,function(res){
          console.log(res)
           if(res ="success"){
             showToast("Heads Up", "User Games Updated sucessfully","success")
@@ -2065,6 +2064,25 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
          
       })
    });
+
+
+  async function fetchLotteryname() {
+      try {
+          const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json(); // Parse JSON response
+          let html = `<option value="">${translator['Lottery Type']}</option>`;
+          data.forEach((lottery) => {
+            html += `<option value="${lottery.gt_id}|${lottery.lottery_type}">${lottery.name}</option>`;
+          });
+          $(".gamenametype").html(html);
+      } catch (error) {
+          console.error("Error fetching data:", error);
+      }
+  }
+  fetchLotteryname();
                    
 
 });
