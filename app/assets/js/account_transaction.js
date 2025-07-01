@@ -54,14 +54,7 @@ $(function () {
         };
 
         let completes = translator["Completed"];
-      const formatTimestamp = (timestamp) => {
-            if (typeof timestamp !== 'string' || timestamp.trim() === '') {
-                return 'N/A';
-            }
-
-            const parts = timestamp.trim().split(' ');
-            return parts.length === 2 ? `${parts[0]} / ${parts[1]}` : parts[0];
-        };
+       const formatTimestamp = t => t && typeof t === 'string' && t.trim() ? t.trim().replace(' ', ' / ') : 'N/A';
 
         data.forEach((item) => {
             //  let formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
