@@ -183,6 +183,13 @@ const txtPages = document.getElementById("trans-pages").innerText;
    const whiteListText = getTranslation("whitelist-text", "White List");
    const deleteUserText = getTranslation("delete-user-text", "Delete User");
    const deactivateUserText = getTranslation("deactivate-user-text", "Deactivate User");
+   const gamegroupTextss = getTranslation("deactivate-game-text", "Game Name");
+   const gamenameTexts = getTranslation("deactivate-game-type", "Game Type");
+   const gamegroupTexts = getTranslation("deactivate-game-group", "Game Group");
+
+
+
+   
 
     function formatMoney(money) {
         let moneyStr = String(money);

@@ -1546,5 +1546,8 @@ return [
     "100" => "100",
     "200" => "200",
     "500" => "500",
+    'game_name' => 'Game Name',
+    'game_type' => 'Game Type',
+    'game_group' => 'Game Group',
 
 ];

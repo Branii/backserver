@@ -569,6 +569,11 @@
 <span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
 <span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
 
+<span id="deactivate-game-text" class="hidden"><?= $translator['game_name'] ?? 'Game Name' ?></span>
+<span id="deactivate-game-type" class="hidden"><?= $translator['game_type'] ?? 'Game Type' ?></span>
+<span id="deactivate-game-group" class="hidden"><?= $translator['game_group'] ?? 'Game Group' ?></span>
+
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['User List']; ?></h4>

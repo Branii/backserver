@@ -1652,4 +1652,10 @@ return [
     "200" => "两百",
     "500" => "五百",
 
+    'game_name' => '游戏名称',   // Game Name
+    'game_type' => '游戏类型',   // Game Type
+    'game_group' => '游戏分组', // Game Group
+
+
+
 ];
