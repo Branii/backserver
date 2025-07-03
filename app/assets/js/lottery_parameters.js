@@ -116,13 +116,13 @@ const lotteryParamTable = (data) => {
   for (const lottery in grouped) {
     const lotteryGroup = grouped[lottery];
     const lotteryStateChecked = lotteryGroup[Object.keys(lotteryGroup)[0]][0]['lottery_state'] === "active" ? "checked" : "";
-     console.log(lotteryStateChecked)
+    //  console.log(lotteryStateChecked)
     // First row with Lottery Type
     html += `
       <tr style="background:#eef;">
-         <td colspan="8" style="">${lottery}</td>
-          <td colspan="5">
-             <label class="switch"  style="right:200%;">
+         <td colspan="6" style="backgrounds:#eee;">${lottery}</td>
+          <td colspan="10"style="backgrounds:#eee;">
+             <label class="switch" ">
               <input type="checkbox" class="form-check-input gameslottery" value='' datas='${lotteryGroup[Object.keys(lotteryGroup)[0]][0]['lottery_type']}' role="switch" ${lotteryStateChecked}>
               <span class="slider"></span>
              </label>
@@ -138,8 +138,8 @@ const lotteryParamTable = (data) => {
     // First row with Game Type and button[0]['group_state']
     html += `
       <tr style="background:#eef;">
-         <td>${gameplay}</td>
-            <td colspan="6">
+         <td style="background:#eee;">${gameplay}</td>
+            <td colspan="6" style="background:#eee;">
              <label class="switch"  style="left:88%;">
               <input type="checkbox" class="form-check-input gamestates" value='' datas='${groupItems[0]['game_group']}' role="switch" ${groupStateChecked }>
               <span class="slider"></span>
@@ -161,7 +161,7 @@ const lotteryParamTable = (data) => {
           <td>${item.group_type}</td>
           <td>${item.name}</td>
           <td>
-            <input type="text" class="form-control oddsone" value="${item.modified_odds}" data-original="${item.odds}" readonly>
+            <input type="text" class="form-control oddsone" value="${item.standardodds}" data-original="${item.odds}" readonly>
             <br>
             <input type="range" class="rangeSliderone" min="0" max="100" value="${item.oddspercentage}">
             <span class="rangeValue" style="margin-left:10px">${item.oddspercentage}%</span>
@@ -175,7 +175,7 @@ const lotteryParamTable = (data) => {
           </td>
 
           <td>
-            <input type="text" class="form-control oddsoness" value="${item.modified_totalbet}" data-original="${item.total_bets}" readonly>
+            <input type="text" class="form-control oddsoness" value="${item.standardtotalbets}" data-original="${item.total_bets}" readonly>
             <br>
             <input type="range" class="rangeSlideroness" min="0" step="0.1" max="100" value="${item.totalbetpercentage}" ${disableslider}/>
             <span class="rangeValues" style="margin-left:10px">${item.totalbetpercentage}%</span>
@@ -206,7 +206,6 @@ const lotteryParamTable = (data) => {
   };
 
   function getTranslation(key) {
-
     const span = document.getElementById(`trans-${key.replace(/\s+/g, "")}`);
     return span?.dataset.translation || key;
   }
@@ -250,24 +249,32 @@ const lotteryParamTable = (data) => {
     applyCustomScrollbarsToTabs();
   }
 
-  async function getLotteryGames(lotterId, models) {
+  async function getLotteryGames(lotterId, models,gametypes) {
     try {
-      const response = await fetch(`../admin/getLotteryGames/${lotterId}/${models}`);
+      const response = await fetch(`../admin/getLotteryGames/${lotterId}/${models}/${gametypes}`);
       const data = await response.json();
-      //  console.log(data);
+        console.log(data);
+       // return
       renderLotteryParams(data.bonus);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   }
 
+  let gametypes
   $(document).on("click", ".executegetparams", function () {
     let lotteryId = $("#allGameNamesLottery").val();
     let models = $("#allmodels").val();
+     gametypes= $(".gamebonus").val().split("|")[0];
+    // console.log(lotteryId, models, gametypes);
+     //return
     // console.log(lotteryId, models);
-    if (models == "twosides" || models === "boardgames" || models === "fantan")
-      return;
-    getLotteryGames(lotteryId, models);
+    if (models == "twosides" || models === "boardgames" || models === "fantan"){
+  
+          return;
+    }
+  
+    getLotteryGames(lotteryId, models,gametypes);
   });
 
   //max slide
@@ -345,26 +352,17 @@ const lotteryParamTable = (data) => {
       // let rangeTextValue = row.find(".rangeValues").text();
       let toatalbetValue = row.find(".oddsoness").val();
 
-      resettotalbet(gametypeId, gamemodel, rangeSliderValue, toatalbetValue);
+      resettotalbet(gametypeId, gamemodel, rangeSliderValue, toatalbetValue,gametypes);
     }
   });
 
-  async function resettotalbet(
-    gametypeId,
-    gamemodel,
-    toatalbetValue,
-    rangeSliderValue
-  ) {
+  async function resettotalbet( gametypeId, gamemodel,toatalbetValue,rangeSliderValue,gametypes) {
     try {
-      const response = await fetch(
-        `../admin/resettotalbet/${gametypeId}/${gamemodel}/${toatalbetValue}/${rangeSliderValue}`
-      );
+      const response = await fetch(`../admin/resettotalbet/${gametypeId}/${gamemodel}/${toatalbetValue}/${rangeSliderValue}/${gametypes}`);
       const data = await response.json();
       if (data) {
         // showToast("Success", "updated succesfully", "success");
         showToast(SUCCESS_TEXT, UPDATED_SUCCESSFULLY, "success");
-
-
         // getLotteryGames(gametypeId, gamemodel)
       }
     } catch (error) {
@@ -386,16 +384,15 @@ const lotteryParamTable = (data) => {
     let scaledValueTwo =row.attr("data-updated-value-two") ||row.find(".oddsoness").attr("data-original");
     let gametypeId = $(this).val();
     let gamemodel = $(this).attr("datas");
-    // console.log("Saving:", { percentageOne,scaledValuesOne});
-    updateoddstotalbets(gametypeId,gamemodel,percentageOne,scaledValuesOne,percentageTwo,scaledValueTwo);
+   //  console.log("Saving:", { percentageOne,scaledValuesOne,gametypes});
+ //    return
+    updateoddstotalbets(gametypeId,gamemodel,percentageOne,scaledValuesOne,percentageTwo,scaledValueTwo,gametypes);
     //getLotteryGames(gametypeId, gamemodel)
   });
 
-  async function updateoddstotalbets(gametypeId,gamemodel,percentageOne,scaledValuesOne, percentageTwo, scaledValueTwo) {
+  async function updateoddstotalbets(gametypeId,gamemodel,percentageOne,scaledValuesOne, percentageTwo, scaledValueTwo,gametypes) {
     try {
-      const response = await fetch(
-        `../admin/updateoddstotalbets/${gametypeId}/${gamemodel}/${percentageOne}/${scaledValuesOne}/${percentageTwo}/${scaledValueTwo}`
-      );
+      const response = await fetch( `../admin/updateoddstotalbets/${gametypeId}/${gamemodel}/${percentageOne}/${scaledValuesOne}/${percentageTwo}/${scaledValueTwo}/${gametypes}`);
       const data = await response.json();
       if (data) {
         // showToast("Success", "updated succesfully", "success");
@@ -463,6 +460,7 @@ const lotteryParamTable = (data) => {
   }
 
   // $(document).on("change", "#allGameNamesLottery", function () {
+
   //     let selectedValue = $(this).val(); // Get selected value
 
   //     let optionsMap = {
@@ -485,6 +483,9 @@ const lotteryParamTable = (data) => {
   //     });
   // });
 
+
+
+
   // function tableScrollBonus() {
   //     const tableContainerBonus = document.querySelector(".table-wrapperbonus");
   //     const headerRowBonus = document.querySelector(".headrowbonus");
@@ -500,35 +501,91 @@ const lotteryParamTable = (data) => {
 
   // tableScrollBonus();
 
-  $(document).on("change", "#allGameNamesLottery", function () {
-    let selectedValue = $(this).val();
+  // $(document).on("change", "#allGameNamesLottery", function () {
+  //   let selectedValue = $(this).val();
+  //   let  game = $(".gamebonus").val().split("|")[1];
+  //    console.log(selectedValue);
+  //   // Helper to get translated value
+  //   function getGameTranslation(key) {
+  //     const span = document.getElementById(`trans-${key}`);
+  //     return span?.dataset.translation || key;
+  //   }
+  //   // Original mapping
+  //   const optionsMap = {
+  //     1: [ "Standard","Twosides","Logdragon", "BoardGames","Manytables","Roadbet","Fantan"],
+  //     2: ["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"],
+  //     3: ["Standard","Twosides","Logdragon","BoardGames","Manytables","Fantan"],
+  //     5: ["Standard", "Twosides", "Logdragon", "Roadbet"],
+  //     6: ["Standard","Twosides","Logdragon","BoardGames","Manytables","Roadbet"],
+  //     8: ["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"],
+  //     10:["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"],
+  //     11:["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"]
+  //   };
+  //   // Get matching games for selected value
+  //   let options = optionsMap[selectedValue] || [];
+  //   // Populate second dropdown with translated labels
+  //   let secondDropdown = $("#allmodels");
 
-    // Helper to get translated value
-    function getGameTranslation(key) {
-      const span = document.getElementById(`trans-${key}`);
-      return span?.dataset.translation || key;
-    }
-    // Original mapping
+  //   secondDropdown.empty();
+  //   $.each(options, function (index, gameKey) {
+  //     let translatedLabel = getGameTranslation(gameKey);
+  //     secondDropdown.append(new Option(translatedLabel, gameKey.toLowerCase()));
+  //   });
+  // });
+
+$(document).on("change", "#allGameNamesLottery", function () {
+    let selectedValue = $(this).val();
+    console.log("Selected Lottery Type:", selectedValue);
+
+     const selectedType = Number(selectedValue); // convert to number
+
+    // 1. Filter lottery names based on selectedType
+    fetch(`../admin/fetchLotteryname/${partnerID}`)
+        .then((res) => res.json())
+        .then((data) => {
+            let html = "";
+            data.forEach((lottery) => {
+                if (Number(lottery.lottery_type) === selectedType) {
+                    html += `<option value="${lottery.gt_id}|${lottery.lottery_type}">${lottery.name}</option>`;
+                }
+            });
+
+            if (html === "") {
+                html = `<option value="">No lotteries available</option>`;
+            }
+
+            $(".gamebonus").html(html);
+        })
+        .catch((err) => {
+            console.error("Error filtering lotteries:", err);
+        });
+    // 2. Populate the model types dropdown as usual
     const optionsMap = {
-      1: [ "Standard","Twosides","Logdragon", "BoardGames","Manytables","Roadbet","Fantan"],
-      2: ["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"],
-      3: ["Standard","Twosides","Logdragon","BoardGames","Manytables","Fantan"],
-      5: ["Standard", "Twosides", "Logdragon", "Roadbet"],
-      6: ["Standard","Twosides","Logdragon","BoardGames","Manytables","Roadbet"],
-      8: ["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"],
-      10:["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"],
-      11:["Standard","Twosides","Logdragon","BoardGames","Roadbet","Fantan"]
+        1: ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Roadbet", "Fantan"],
+        2: ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
+        3: ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Fantan"],
+        5: ["Standard", "Twosides", "Logdragon", "Roadbet"],
+        6: ["Standard", "Twosides", "Logdragon", "BoardGames", "Manytables", "Roadbet"],
+        8: ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
+        10: ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"],
+        11: ["Standard", "Twosides", "Logdragon", "BoardGames", "Roadbet", "Fantan"]
     };
-    // Get matching games for selected value
-    let options = optionsMap[selectedValue] || [];
-    // Populate second dropdown with translated labels
-    let secondDropdown = $("#allmodels");
+
+    const getGameTranslation = (key) => {
+        const span = document.getElementById(`trans-${key}`);
+        return span?.dataset.translation || key;
+    };
+
+    const secondDropdown = $("#allmodels");
     secondDropdown.empty();
-    $.each(options, function (index, gameKey) {
-      let translatedLabel = getGameTranslation(gameKey);
-      secondDropdown.append(new Option(translatedLabel, gameKey.toLowerCase()));
+
+    const options = optionsMap[selectedValue] || [];
+    options.forEach((gameKey) => {
+        const translatedLabel = getGameTranslation(gameKey);
+        secondDropdown.append(new Option(translatedLabel, gameKey.toLowerCase()));
     });
-  });
+});
+
 
   // Sticky header for bonus table
   function tableScrollBonus() {
@@ -545,7 +602,8 @@ const lotteryParamTable = (data) => {
       });
     }
   }
-
   // Initialize sticky scroll
   tableScrollBonus();
+
+  //
 });

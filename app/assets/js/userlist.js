@@ -385,12 +385,14 @@ $(function () {
       const startdate = $("#usrl-start-date").val();
       const enddate = $("#usrl-end-date").val();
 
-      try {
+       try {
          $.ajax({
             url: `../admin/userlistdata/${partnerID}/${uid}/${rechargeLevel}/${state}/${startdate}/${enddate}/${page}/${pageLimit}/1`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
+               // console.log(response);
+               // return;
                const data = JSON.parse(response);
                  $(".loaderlist").removeClass("bx-loader bx-spin").addClass("bx-check-double");
                if (data.data.length === 0) {
@@ -697,33 +699,37 @@ $(function () {
    });
 
    async function fetchRebatedata() {
-      try {
-         const response = await fetch(`../admin/fetchRebatedata/${partnerID}`); // Await the fetch call
+   try {
+     
+      const response = await fetch(`../admin/fetchRebatedata`);
 
-         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-         }
-
-         const data = await response.json(); // Parse JSON response
-         // // console.log(data);
-         let html = "";
-
-         // Check if data is not empty and iterate over it to generate options
-         if (Array.isArray(data) && data.length > 0) {
-            data.forEach((rebate) => {
-               html += `<option value="${rebate.rebate}" class="">${rebate.rebate}</option>`;
-            });
-         } else {
-            html += `<option value="" disabled>No rebates found</option>`; // If no data, show a message
-         }
-
-         // Inject the options into the #rebatedata select element
-         $("#usererebate").html(html);
-      } catch (error) {
-         console.error("Error fetching data:", error);
+      if (!response.ok) {
+         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
+      const data = await response.json();
+      // console.log(data);
+      // return
+
+      let html = `<option value="">Select a rebate</option>`;
+
+      if (Array.isArray(data) && data.length > 0) {
+         data.forEach((rebate) => {
+            html += `<option value="${rebate.rebate}">${rebate.rebate}</option>`;
+         });
+      } else {
+         html += `<option value="">No rebates found</option>`;
+      }
+
+      $("#usererebate").html(html);
+   } catch (error) {
+      console.error("Error fetching data:", error);
+      $("#usererebate").html(`<option value="">Error loading rebates</option>`);
    }
+}
+
    fetchRebatedata();
+
 
    $(document).on("click", ".btnaddagent", function () {
       const datas = $("#agentform").serialize();
@@ -907,7 +913,7 @@ $(function () {
    });
 
    //fetch_sub
-    let navigationHistory = [];
+   let navigationHistory = [];
    $(document).on("click", ".viewsub", function () {
       const userID = $(this).attr("data-agent-id").trim();
       // // console.log("Navigation History:", navigationHistory);
@@ -946,7 +952,6 @@ $(function () {
             $("#userlistContainer").html(UserlistDataV2(response));
             renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray, newPage, pageLimit));
             document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
-
             return;
          },
          error: function (xhr, status, err) {},
@@ -1037,11 +1042,11 @@ $(function () {
          //     <span class="tooltipp-text">Surbodinate names</span>
          // </span>
 
-          html += `
+           html += `
               <tr id="usrl-tr-${item.uid}">
                  <td>${username}</td>
                   <td>${item.nickname}</td>
-                  <td> <nii class="nii">${item.blocked_lotteries}</nii> VIP</td>
+                  <td> <nii class="nii"hidden>${item.blocked_lotteries}</nii> VIP</td>
                  <td class="show-user-rel ${item.agent_level === "*****" ? "no-agent" : ""}" data-user-id="${item.uid}" style="cursor:pointer;">
                ${item.account_type == 1 ? "Customer" : item.account_type == 2 ? "Top Agent" : subsLookups[item.uid] < 2 ? agentNicknamesLookups[item.agent_id] + " > " + username : agentNicknamesLookups[item.agent_id] + " ... " + username}
               </td>
@@ -1878,10 +1883,10 @@ $(function () {
    console.log(bigArr);
    });
 
-// Accordion toggle
-$(document).on("click", ".togglethis", function () {
-  toggleAccordion(this);
-});
+   // Accordion toggle
+   $(document).on("click", ".togglethis", function () {
+   toggleAccordion(this);
+   });
 
 // Prevent toggleAccordion when clicking .checkall
 $(document).on("click", ".checkall", e => e.stopPropagation());
@@ -1902,17 +1907,18 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
    });
 
       // gametabs
-      let parsedGamegroupIds = []
-    $(document).on("click", ".usergamegroup", function () {
-      $("#usl-lottery-gamegroup-modal").modal("show");
-      $("#idHolder").val($(this).attr("data-uid"));  
-       parsedGamegroupIds = $(this).closest('tr').find(".nii").text()       
-    });
+   let parsedGamegroupIds = []
+   $(document).on("click", ".usergamegroup", function () {
+   $("#usl-lottery-gamegroup-modal").modal("show");
+   $("#idHolder").val($(this).attr("data-uid"));  
+      parsedGamegroupIds = $(this).closest('tr').find(".nii").text()       
+   });
 
-     
+ 
    $(document).on("click", ".executegames", function () {
       let lotteryId = $("#lotterys").val();
       let models = $("#allgroup").val();
+   
       let niiData;
       if(parsedGamegroupIds != "*****"){
         let getCurrentGame = JSON.parse(parsedGamegroupIds).tabs
@@ -1928,12 +1934,12 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
            let html = ""; 
            gameGr = []
           maindata.data.map((gamegroup) => {
-         let check = niiData.includes(gamegroup.gp_id);
+         let check = niiData.includes(gamegroup.name);
          // Avoid duplicate entries in GamesArr
-         if (check && !gameGr.includes(gamegroup.gp_id)) {
-         gameGr.push(gamegroup.gp_id);
+         if (check && !gameGr.includes(gamegroup.name)) {
+         gameGr.push(gamegroup.name);
          }
-
+     
          html += ` 
          <tr>
             <td class="tabname">${gamegroup.name}</td>
@@ -1945,10 +1951,10 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
       });
           $('#gamegrouptype').html(html);
       });
-   })
-   
-     let gameGr = []
-     $(document).on("change", ".gametoggle", function () {
+   });
+
+   let gameGr = []
+   $(document).on("change", ".gametoggle", function () {
       //   const val = parseInt($(this).val());
         const val = $(this).closest("tr").find(".tabname").text()
         console.log(val)
@@ -1960,13 +1966,13 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
             console.log(gameGr)
         }
 
-    });
+   });
 
    // updategamegroup
    $(document).on("click", ".updategamegroup", function () {
         let userID = $("#idHolder").val();
           let models = $("#lotterys").val();
-         console.log(userID,models)
+       //  console.log(userID,models)
       //   return
       $.post(`../admin/updatesGamegroup/${userID}/${models}/${JSON.stringify(gameGr)}`,function(res){
          console.log(res)
@@ -1993,18 +1999,18 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
       let lotteryId = $(".gamenametype").val().split("|")[1];
       let models = $("#allgames").val();
       let gamenametype = $(".gamenametype").val().split("|")[0];
-      console.log(lotteryId, models, gamenametype)
+      console.log(lotteryId,gamenametype)
       let niiData;
       if(parsedGamegroupIdss != "*****"){
         let getCurrentGames = JSON.parse(parsedGamegroupIdss).gpi
         niiData = getCurrentGames[gamenametype] ?? []
-        console.log(niiData)
+       // console.log(niiData)
       }else{
        $("#usl-lottery-gamename-modal").modal("show"); 
       }
       //return
         $.post(`../admin/fetchGameNames/${lotteryId}/${models}`,function(res){
-         console.log(res)
+       //  console.log(res)
          // return
            let maindata = JSON.parse(res);
            let html = ""; 
@@ -2032,7 +2038,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
      let gameName = []
     $(document).on("change", ".gamenametoggle", function () {
         const val = parseInt($(this).val()); 
-        console.log(val)
+       // console.log(val)
         if ($(this).is(":checked")) {
             if (!gameName.includes(val)) gameName.push(val);
             console.log(gameName)
@@ -2053,9 +2059,11 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
    $(document).on("click", ".updategamenames", function () {
        let userID = $("#idHolder").val();
        let gamenametypes = $(".gamenametype").val().split("|")[0];
+       console.log(userID, gamenametypes)
       $.post(`../admin/updatesGameNamess/${userID}/${gamenametypes}/${JSON.stringify(gameName)}`,function(res){
-         console.log(res)
+         // console.log(res)
           if(res ="success"){
+             $("#usl-lottery-gamename-modal").modal("hide"); 
             showToast("Heads Up", "User Games Updated sucessfully","success")
             fetchUserlist(currentPage, pageLimit);
            }else{

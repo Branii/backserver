@@ -534,7 +534,7 @@ foreach ($gameOptions as $game) {
 
   <div class="px-4 py-3 border-bottom pager1">
     <span class="top-left-btn">
-      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:173%">
+      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:140%">
 
         <select name="order_type" id="allGameNamesLottery" class="form-control form-select  lotteryTypes " style ="width:90%;">
 
@@ -551,10 +551,13 @@ foreach ($gameOptions as $game) {
         <option value="manytables"><?= $translator['Many Tables']; ?></option> -->
           </select>
 
-
           <select name="order_type" class="form-control form-select" style= "margin-left:15px; display: none;" id="game_groups">
        
           </select>
+          <select name="gamebonus" class="form-control form-select gamebonus" style= "margin-left:15px"> 
+
+         </select>
+
           <select name="lotteryname" class="form-control form-select  selectpartner" style= "margin-left:15px"> 
 
          </select>

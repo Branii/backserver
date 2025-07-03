@@ -412,9 +412,9 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function fetchRebatedata($partnerID)
+    public function fetchRebatedata()
     {
-        $this->view('exec/account_manage', ['partner_id' => $partnerID, 'flag' => 'fetchRebatedata']);
+        $this->view('exec/account_manage', ['flag' => 'fetchRebatedata']);
         $this->view->render();
     }
 
@@ -833,17 +833,18 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function getLotteryGames(string $lotterId, string $tables)
+    public function getLotteryGames(string $lotterId, string $tables, string $gametypes)
     {
         $this->view('exec/game_management', [
             'flag' => 'getLotteryGames',
             'gameId' => $lotterId,
-            'tables' => $tables
+            'tables' => $tables,
+            'gametypes' => $gametypes
         ]);
         $this->view->render();
     }
 
-    function updateoddstotalbets($lotterId, $gamemodel, $oddpercent, $newodds, $totalbetpercent, $newtotalbet)
+    function updateoddstotalbets($lotterId, $gamemodel, $oddpercent, $newodds, $totalbetpercent, $newtotalbet,$gametype)
     {
         $this->view('exec/game_management', [
             'flag' => 'updateoddstotalbets',
@@ -853,13 +854,14 @@ class adminController extends Controller
             'newodds' => $newodds,
             'totalbetpercent' => $totalbetpercent,
             'newtotalbet' => $newtotalbet,
+            'gametype' => $gametype,
 
 
         ]);
         $this->view->render();
     }
 
-    function resettotalbet($lotterId, $gamemodel, $totalbetpercent, $newtotalbet)
+    function resettotalbet($lotterId, $gamemodel, $totalbetpercent, $newtotalbet,$gametype)
     {
         $this->view('exec/game_management', [
 
@@ -867,7 +869,8 @@ class adminController extends Controller
             'gameId' => $lotterId,
             'models' => $gamemodel,
             'totalbetpercent' => $totalbetpercent,
-            'newtotalbet' => $newtotalbet
+            'newtotalbet' => $newtotalbet,
+            'gametype' => $gametype
         ]);
         $this->view->render();
     }

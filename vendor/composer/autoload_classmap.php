@@ -16,6 +16,7 @@ return array(
     'Controller' => $baseDir . '/app/core/Controller.php',
     'DataReportModel' => $baseDir . '/app/model/DataReportModel.php',
     'Database' => $baseDir . '/app/database/Database.php',
+    'EmailProviderModel' => $baseDir . '/app/model/EmailProviderModel.php',
     'FinancialManageModel' => $baseDir . '/app/model/FinancialManageModel.php',
     'GameManageModel' => $baseDir . '/app/model/GameManageModel.php',
     'GearmanWorker' => $baseDir . '/app/services/GearmanWorker.php',
@@ -30,6 +31,7 @@ return array(
     'PaymentPlatformModel' => $baseDir . '/app/model/PaymentPlatformModel.php',
     'PhpToken' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
     'PromotionManageModel' => $baseDir . '/app/model/PromotionManageModel.php',
+    'Publisher' => $baseDir . '/app/model/Publisher.php',
     'SmsPreferenceScheduler' => $baseDir . '/app/model/SmsPreferenceScheduler.php',
     'SmsPromotionWorker' => $baseDir . '/app/model/SmsPromotionWorker.php',
     'SmsProvider' => $baseDir . '/app/model/SmsProvider.php',
@@ -110,4 +112,5 @@ return array(
     'Zenoph\\Notify\\Utils\\PhoneUtil' => $baseDir . '/app/assets/Zenoph/Notify/Utils/PhoneUtil.php',
     'Zenoph\\Notify\\Utils\\RequestUtil' => $baseDir . '/app/assets/Zenoph/Notify/Utils/RequestUtil.php',
     'adminController' => $baseDir . '/app/controller/adminController.php',
+    'businessflowController' => $baseDir . '/app/controller/businessflowController.php',
 );
