@@ -1046,7 +1046,7 @@ $(function () {
               <tr id="usrl-tr-${item.uid}">
                  <td>${username}</td>
                   <td>${item.nickname}</td>
-                  <td> <nii class="nii"hidden>${item.blocked_lotteries}</nii> VIP</td>
+                  <td> <nii class="nii">${item.blocked_lotteries}</nii> VIP</td>
                  <td class="show-user-rel ${item.agent_level === "*****" ? "no-agent" : ""}" data-user-id="${item.uid}" style="cursor:pointer;">
                ${item.account_type == 1 ? "Customer" : item.account_type == 2 ? "Top Agent" : subsLookups[item.uid] < 2 ? agentNicknamesLookups[item.agent_id] + " > " + username : agentNicknamesLookups[item.agent_id] + " ... " + username}
               </td>
@@ -1788,20 +1788,21 @@ $(function () {
   //game type
 
    let allGamesData;
-   let parsedGamenameIds
+   let parsedGamenameIds = []
    let bigArr = [];
    $(document).on("click", ".usr-gametype", function () {
-      $("#usl-lottery-gamename-modal").modal("show");
+      $("#usl-lottery-gameType-modal").modal("show");
       $("#idHolder").val($(this).attr("data-uid"));  
       let niiData = $(this).closest('tr').find(".nii").text()
-     // console.log(niiData)
       if(niiData != "*****"){
-         parsedGamenameIds = JSON.parse(niiData).gti ?? []
-       // console.log(parsedGamenameIds) 
+         let parsed = JSON.parse(niiData);
+           parsedGamenameIds = Array.isArray(parsed.gti) ? parsed.gti : [];
+        // parsedGamenameIds ??[];
+        console.log(parsedGamenameIds) 
       }else{
-       $("#usl-lottery-gamename-modal").modal("show"); 
-      }
-      $.post(`../admin/getallgametype`, function (response) {
+        //   console.log("ME") 
+     ///  $("#usl-lottery-gameType-modal").modal("show"); 
+       $.post(`../admin/getallgametype`, function (response) {
 
          const data = JSON.parse(response);
          allGamesData = data
@@ -1825,14 +1826,15 @@ $(function () {
                      <ul class="custom-list">
              `;
                data[item].forEach((key) => {
+                  console.log(key)
                     let check = parsedGamenameIds.includes(key.id);
-                  // Avoid duplicate entries in bigArr
+              //    Avoid duplicate entries in bigArr
                   if (check && !bigArr.includes(key.id)) {
-                  bigArr.push(key.id);
+                  bigArr.push(key.id); 
                   }
-                  console.log(check)
+                 // console.log(check)
                   html += `
-               <li class="tab-buttonc item" style="height:45px; border-bottom:solid 1px;display: flex; justify-content: space-between; align-items: center; padding: 5px 10px;">
+               <li class="tab-buttonc item" style="height:45px;display: flex; justify-content: space-between; align-items: center; padding: 5px 10px;">
                   <span style="margin-left: 7px; font-size: 14px;"'>${key.name}</span>
                   <input type="checkbox" ${check ? 'checked' : ''} id="${key.id}" class="chkgameids" data-gameid='${key.id}'style="width:20px;height:20px"/>
                </li>
@@ -1848,6 +1850,9 @@ $(function () {
 
          $(".gamediv").html(html);
       });
+      }
+      // return;
+      
    });
 
    $(document).on("change", ".chkgameids", function() {
@@ -1883,13 +1888,15 @@ $(function () {
    console.log(bigArr);
    });
 
+
+
    // Accordion toggle
    $(document).on("click", ".togglethis", function () {
    toggleAccordion(this);
    });
 
 // Prevent toggleAccordion when clicking .checkall
-$(document).on("click", ".checkall", e => e.stopPropagation());
+   $(document).on("click", ".checkall", e => e.stopPropagation());
 
 // Check/uncheck logic
    $(document).on("click", ".updategametype", function () {
@@ -1897,7 +1904,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
       $.post(`../admin/updatesGamesnames/${userID}/${JSON.stringify(bigArr)}`,function(res){
          console.log(res)
           if(res ="success"){
-              $("#usl-lottery-gamename-modal").modal("hide"); 
+              $("#usl-lottery-gameType-modal").modal("hide"); 
             showToast("Heads Up", "User Games Updated sucessfully","success")
             fetchUserlist(currentPage, pageLimit);
            }else{
@@ -1908,33 +1915,29 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
 
       // gametabs
    let parsedGamegroupIds = []
+   let niiData;
    $(document).on("click", ".usergamegroup", function () {
-   $("#usl-lottery-gamegroup-modal").modal("show");
-   $("#idHolder").val($(this).attr("data-uid"));  
-      parsedGamegroupIds = $(this).closest('tr').find(".nii").text()       
+      $("#usl-lottery-gamegroup-modal").modal("show");
+      $("#idHolder").val($(this).attr("data-uid"));  
+         niiData = $(this).closest('tr').find(".nii").text()      
    });
 
- 
    $(document).on("click", ".executegames", function () {
       let lotteryId = $("#lotterys").val();
       let models = $("#allgroup").val();
-   
-      let niiData;
-      if(parsedGamegroupIds != "*****"){
-        let getCurrentGame = JSON.parse(parsedGamegroupIds).tabs
-        niiData = getCurrentGame[lotteryId] ?? []
-        console.log(niiData)
+      if(niiData != "*****"){
+        let getCurrentGame = JSON.parse(niiData).tabs
+        parsedGamegroupIds = getCurrentGame[lotteryId] ?? []
+       
       }else{
-       $("#usl-lottery-gamename-modal").modal("show"); 
-      }
-      // return
-        $.post(`../admin/fetchgamesTab/${lotteryId}/${models}`,function(res){
+       $("usl-lottery-gamegroup-modal").modal("show");
+         $.post(`../admin/fetchgamesTab/${lotteryId}/${models}`,function(res){
          console.log(res)
            let maindata = JSON.parse(res);
            let html = ""; 
            gameGr = []
           maindata.data.map((gamegroup) => {
-         let check = niiData.includes(gamegroup.name);
+         let check = parsedGamegroupIds.includes(gamegroup.name);
          // Avoid duplicate entries in GamesArr
          if (check && !gameGr.includes(gamegroup.name)) {
          gameGr.push(gamegroup.name);
@@ -1950,7 +1953,10 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
          `;
       });
           $('#gamegrouptype').html(html);
-      });
+      }); 
+      }
+      // return
+      
    });
 
    let gameGr = []
@@ -1989,10 +1995,11 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
 
    //gamenames headerRowUserList
     let parsedGamegroupIdss = []
+    let niiDatas
    $(document).on("click", ".usergamename", function () {
       $("#usl-lottery-gamenems-modal").modal("show");
      $("#idHolder").val($(this).attr("data-uid"));  
-       parsedGamegroupIdss = $(this).closest('tr').find(".nii").text()       
+      niiDatas = $(this).closest('tr').find(".nii").text()       
    });
   
    $(document).on("click", ".executegnames", function () {
@@ -2000,23 +2007,23 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
       let models = $("#allgames").val();
       let gamenametype = $(".gamenametype").val().split("|")[0];
       console.log(lotteryId,gamenametype)
-      let niiData;
-      if(parsedGamegroupIdss != "*****"){
-        let getCurrentGames = JSON.parse(parsedGamegroupIdss).gpi
-        niiData = getCurrentGames[gamenametype] ?? []
+
+      if(niiDatas != "*****"){
+        let getCurrentGames = JSON.parse(niiDatas).gpi
+        parsedGamegroupIdss = getCurrentGames[gamenametype] ?? []
        // console.log(niiData)
       }else{
-       $("#usl-lottery-gamename-modal").modal("show"); 
+       $("#usl-lottery-gamenems-modal").modal("show"); 
       }
       //return
-        $.post(`../admin/fetchGameNames/${lotteryId}/${models}`,function(res){
+      $.post(`../admin/fetchGameNames/${lotteryId}/${models}`,function(res){
        //  console.log(res)
          // return
            let maindata = JSON.parse(res);
            let html = ""; 
            gameName = []
           maindata.data.map((gamename) => {
-         let check = niiData.includes(gamename.gn_id);
+         let check = parsedGamegroupIdss.includes(gamename.gn_id) ??[];
          // Avoid duplicate entries in GamesArr
          if (check && !gameName.includes(gamename.gn_id)) {
          gameName.push(gamename.gp_id);

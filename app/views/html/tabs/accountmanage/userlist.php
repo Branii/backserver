@@ -1329,14 +1329,14 @@
     <!-- /.modal-dialog -->
 </div>
 
-<div id="usl-lottery-gamename-modal" class="modal fade" tabindex="-1" aria-modal="true" role="dialog" style="display: none;">
+<div id="usl-lottery-gameType-modal" class="modal fade" tabindex="-1" aria-modal="true" role="dialog" style="display: none;">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-body">
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="text-infos"><?= $translator['Lottery Name']; ?></h5>
+                        <h5 class="text-infos"><?= $translator['Game Type']; ?></h5>
                         <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
                 </div>
@@ -1427,8 +1427,6 @@
     </div>
 </div>
 
-
-
 <div id="usl-lottery-gamenems-modal" class="modal fade" tabindex="-1" aria-modal="true" role="dialog" style="display: none;">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
@@ -1472,7 +1470,7 @@
                             <table class="table table-hover table-bordered text-nowrap mb-0 " id="">
                                 <thead>
                                     <tr>
-                                        <th class="font-weight-normal"><?= $translator['Lottery Name']; ?></th>
+                                        <th class="font-weight-normal"><?= $translator['Game Name']; ?></th>
                                         <th class="font-weight-normal"><input type="checkbox" id="checkAllGames" style="width:20px;height:20px"/> </th>
                                     </tr>
                                 </thead>
