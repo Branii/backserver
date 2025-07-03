@@ -1832,7 +1832,7 @@ $(function () {
                   }
                   console.log(check)
                   html += `
-               <li class="tab-buttonc item" style="height:45px; border-bottom:solid 1px #eee;display: flex; justify-content: space-between; align-items: center; padding: 5px 10px;">
+               <li class="tab-buttonc item" style="height:45px; border-bottom:solid 1px;display: flex; justify-content: space-between; align-items: center; padding: 5px 10px;">
                   <span style="margin-left: 7px; font-size: 14px;"'>${key.name}</span>
                   <input type="checkbox" ${check ? 'checked' : ''} id="${key.id}" class="chkgameids" data-gameid='${key.id}'style="width:20px;height:20px"/>
                </li>
@@ -1989,11 +1989,11 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
 
    //gamenames headerRowUserList
     let parsedGamegroupIdss = []
-    $(document).on("click", ".usergamename", function () {
+   $(document).on("click", ".usergamename", function () {
       $("#usl-lottery-gamenems-modal").modal("show");
      $("#idHolder").val($(this).attr("data-uid"));  
        parsedGamegroupIdss = $(this).closest('tr').find(".nii").text()       
-    });
+   });
   
    $(document).on("click", ".executegnames", function () {
       let lotteryId = $(".gamenametype").val().split("|")[1];
@@ -2036,7 +2036,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
    })
    
      let gameName = []
-    $(document).on("change", ".gamenametoggle", function () {
+   $(document).on("change", ".gamenametoggle", function () {
         const val = parseInt($(this).val()); 
        // console.log(val)
         if ($(this).is(":checked")) {
@@ -2047,7 +2047,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
             console.log(gameName)
         }
 
-    });
+   });
 
    //  $(document).on('change', '#checkAllGames', function () {
    //  const isChecked = $(this).is(':checked');
