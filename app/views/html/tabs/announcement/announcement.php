@@ -263,6 +263,11 @@
 <span id="all_fields_required_text" style="display:none;"><?php echo $translator['ALL_FIELDS_REQUIRED']; ?></span>
 <span id="cannot_update_if_empty_text" style="display:none;"><?php echo $translator['CANNOT_UPDATE_IF_EMPTY']; ?></span>
 
+<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+
+
 
 
 
@@ -410,10 +415,16 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowsnotfy" style="font-size: 12px;">
-                <option value="50">50</option>
+                <!-- <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
-                <option value="500">500</option>
+                <option value="500">500</option> -->
+            <option value="20"><?= $translator['20'] ?? '20' ?></option>
+                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+    <option value="100"><?= $translator['100'] ?? '100' ?></option>
+    <option value="200"><?= $translator['200'] ?? '200' ?></option>
+    <option value="500"><?= $translator['500'] ?? '500' ?></option>
+  
             </select>
             <span class="toplist-right" id="paginationmessage" aria-label="Page navigation example">
                 <!--Dynamic pagination-->

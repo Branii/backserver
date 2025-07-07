@@ -6,17 +6,16 @@ class UserManageModel extends MEDOOHelper{
 
     public static function FetchUserlistData($page, $limit): array
     {
-
         $startpoint = ($page - 1) * $limit;
-        $data = parent::query(
+        $data       = parent::query(
             "SELECT uid, username,email,contact,nickname, agent_name, balance, recharge_level, user_state,reg_type,
                   rebate, created_at, agent_id, account_type,reg_type,blocked_lotteries
              FROM users_test
              ORDER BY uid DESC
              LIMIT :startpoint, :limit",
             [
-                'startpoint' => (int)$startpoint,
-                'limit' => (int)$limit
+                'startpoint' => (int) $startpoint,
+                'limit'      => (int) $limit,
             ]
         );
 
@@ -24,19 +23,19 @@ class UserManageModel extends MEDOOHelper{
 
         return ['data' => $data, 'total' => $totalRecords];
     }
-    public static function countUserLogs($partnerID,$uid)
-    {   
+    public static function countUserLogs($partnerID, $uid)
+    {
         $logCount = parent::openLink($partnerID)->count("user_logs", '*', ["uid" => $uid]);
         // $logCount = parent::count("user_logs", '*', ["uid" => $uid]);
         return $logCount ?: null;
     }
 
-    public static function getDirectReferrals($partnerID,$agent_id)
+    public static function getDirectReferrals($partnerID, $agent_id)
     {
         $total = parent::getLink($partnerID)->count("users_test", "*", ["agent_id" => $agent_id]);
         return $total > 2 ? '...' : '->';
     }
-    public static function getSubordinate($partnerID,$agent_id)
+    public static function getSubordinate($partnerID, $agent_id)
     {
         return $data = parent::openLink($partnerID)->query("SELECT nickname FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
     }
@@ -49,7 +48,7 @@ class UserManageModel extends MEDOOHelper{
 
         try {
             $placeholders = implode(',', array_fill(0, count($mixedValue), '?'));
-            $pdo = (new Database())->openLink();
+            $pdo          = (new Database())->openLink();
 
             $stmt = $pdo->prepare("SELECT nickname FROM users_test WHERE uid IN ($placeholders)");
             $stmt->execute($mixedValue);
@@ -63,10 +62,10 @@ class UserManageModel extends MEDOOHelper{
             return [];
         }
 
-        return  $data = parent::query("SELECT nickname FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
+        return $data = parent::query("SELECT nickname FROM users_test WHERE agent_id = :agent_id", ['agent_id' => $agent_id]);
     }
 
-    public static function Fetchsubordinates($partnerID,$uid)
+    public static function Fetchsubordinates($partnerID, $uid)
     {
         $totalCount = parent::openLink($partnerID)->count("users_test", "*", ["AND" => ["agent_id" => $uid, "account_type" => 3, "uid[!]" => $uid]]);
         $totalCount = parent::count("users_test", "*", ["AND" => ["agent_id" => $uid, "account_type" => 3, "uid[!]" => $uid]]);
@@ -76,10 +75,10 @@ class UserManageModel extends MEDOOHelper{
     public static function Filteruserlist($page, $limit, $username, $states, $startdate, $enddate)
     {
         $whereConditions = self::FilterUserlistDataSubQuery($username, $states, $startdate, $enddate);
-        $startpoint = ($page * $limit) - $limit;
-        $data = parent::selectAll("users", '*', ["AND" => $whereConditions, "ORDER" => ["users.uid" => "DESC"], "LIMIT" => [$startpoint, $limit]]);
-        $lastQuery = MedooOrm::openLink()->log();
-        $totalRecords = parent::count("users","*",["AND" => $whereConditions]);
+        $startpoint      = $page * $limit - $limit;
+        $data            = parent::selectAll("users", '*', ["AND" => $whereConditions, "ORDER" => ["users.uid" => "DESC"], "LIMIT" => [$startpoint, $limit]]);
+        $lastQuery       = MedooOrm::openLink()->log();
+        $totalRecords    = parent::count("users", "*", ["AND" => $whereConditions]);
         return ['data' => $data, 'total' => $totalRecords, 'sql' => $lastQuery[0]];
     }
 
@@ -88,24 +87,24 @@ class UserManageModel extends MEDOOHelper{
         $filterConditions = [];
 
         // Build filter conditions
-        if (!empty($username)) {
+        if (! empty($username)) {
             $filterConditions[] = "uid = '$username'";
         }
 
-        if (!empty($states)) {
+        if (! empty($states)) {
             $filterConditions[] = "user_state = '$states'";
         }
 
-        if (!empty($startdate) && !empty($enddate)) {
+        if (! empty($startdate) && ! empty($enddate)) {
             $filterConditions[] = "created_at BETWEEN '$startdate' AND '$enddate'";
-        } elseif (!empty($startdate)) {
+        } elseif (! empty($startdate)) {
             $filterConditions[] = "created_at = '$startdate'";
-        } elseif (!empty($enddate)) {
+        } elseif (! empty($enddate)) {
             $filterConditions[] = " created_at = '$enddate'";
         }
 
         // Combine conditions into the final query
-        if (!empty($filterConditions)) {
+        if (! empty($filterConditions)) {
             $subQuery = implode(' AND ', $filterConditions);
         }
 
@@ -115,8 +114,8 @@ class UserManageModel extends MEDOOHelper{
 
     public static function fetch_user_hierarchy($user_id)
     {
-        $db = parent::openLink();
-        $sql = "SELECT uid,username,agent_level,account_type FROM users_test  WHERE uid=:user_id";
+        $db   = parent::openLink();
+        $sql  = "SELECT uid,username,agent_level,account_type FROM users_test  WHERE uid=:user_id";
         $stmt = $db->query($sql, [":user_id" => intval($user_id)]);
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
@@ -131,11 +130,11 @@ class UserManageModel extends MEDOOHelper{
                 return ["status" => "success", "data" => []];
             }
             $unserialized_hierarchy = unserialize($agent_level_res->agent_level);
-            $params = [];
-            $placeholders = [];
+            $params                 = [];
+            $placeholders           = [];
             foreach ($unserialized_hierarchy as $agent_id => $agent_rebate) {
-                $place_holder = ":uid{$agent_id}";
-                $placeholders[] = $place_holder;
+                $place_holder          = ":uid{$agent_id}";
+                $placeholders[]        = $place_holder;
                 $params[$place_holder] = $agent_id;
             }
             $sql =
@@ -155,14 +154,14 @@ class UserManageModel extends MEDOOHelper{
     public static function fetch_users_login_count(array $user_ids): array
     {
         try {
-            $db = parent::openLink();
+            $db           = parent::openLink();
             $placeholders = [];
-            $params = [];
+            $params       = [];
             foreach ($user_ids as $user_id) {
-                $placeholders[] = ":uid$user_id";
+                $placeholders[]         = ":uid$user_id";
                 $params[":uid$user_id"] = $user_id;
             }
-            $sql = "SELECT uid,COUNT(*) as logs_count FROM `user_logs` WHERE uid IN (" . implode(',', $placeholders) . ") GROUP BY uid";
+            $sql  = "SELECT uid,COUNT(*) as logs_count FROM `user_logs` WHERE uid IN (" . implode(',', $placeholders) . ") GROUP BY uid";
             $stmt = $db->query($sql, $params);
             $data = $stmt->fetchAll(PDO::FETCH_OBJ);
             return ["status" => "success", "data" => $data];
@@ -174,14 +173,14 @@ class UserManageModel extends MEDOOHelper{
     public static function count_subs(array $agent_ids): array
     {
         try {
-            $db = parent::openLink();
+            $db           = parent::openLink();
             $placeholders = [];
-            $params = [];
+            $params       = [];
             foreach ($agent_ids as $agent_id) {
-                $placeholders[] = ":uid$agent_id";
+                $placeholders[]          = ":uid$agent_id";
                 $params[":uid$agent_id"] = $agent_id;
             }
-            $sql = "SELECT agent_id,COUNT(*) as subs_count FROM `users_test` WHERE agent_id IN (" . implode(',', $placeholders) . ") GROUP BY agent_id";
+            $sql  = "SELECT agent_id,COUNT(*) as subs_count FROM `users_test` WHERE agent_id IN (" . implode(',', $placeholders) . ") GROUP BY agent_id";
             $stmt = $db->query($sql, $params);
             $data = $stmt->fetchAll(PDO::FETCH_OBJ);
             return ["status" => "success", "data" => $data];
@@ -191,20 +190,19 @@ class UserManageModel extends MEDOOHelper{
 
         // $totalRecords  = parent::selectAll('users', '*', ['AND' => $whereConditions]);
         // return ['data' => $data, 'total' => count($totalRecords), 'sql' => $lastQuery[0]];
-
     }
 
     public static function fetch_agent_nickname(array $agent_ids): array
     {
         try {
-            $db = parent::openLink();
+            $db           = parent::openLink();
             $placeholders = [];
-            $params = [];
+            $params       = [];
             foreach ($agent_ids as $key => $agent_id) {
-                $placeholders[] = ":uid$key";
+                $placeholders[]     = ":uid$key";
                 $params[":uid$key"] = $agent_id;
             }
-            $sql = "SELECT uid,nickname FROM `users_test` WHERE uid IN (" . implode(',', $placeholders) . ") GROUP BY uid";
+            $sql  = "SELECT uid,nickname FROM `users_test` WHERE uid IN (" . implode(',', $placeholders) . ") GROUP BY uid";
             $stmt = $db->query($sql, $params);
             $data = $stmt->fetchAll(PDO::FETCH_OBJ);
             return ["status" => "success", "data" => $data];
@@ -213,21 +211,21 @@ class UserManageModel extends MEDOOHelper{
         }
     }
 
-    public static function fetchAgentSubs($partner,$agent_id, $page = 1, $limit = 20): array
+    public static function fetchAgentSubs($partner, $agent_id, $page = 1, $limit = 20): array
     {
         try {
-        $all_subs = DataReportModel::allSubs($partner,$agent_id, $page, $limit);
-  
+            $all_subs = DataReportModel::allSubs($partner, $agent_id, $page, $limit);
+
             if (empty($all_subs["data"])) {
                 return ["status" => "success", "data" => []];
             }
 
             $all_subs = $all_subs["data"];
 
-            $uids = array_column($all_subs, 'uid');
-            $agent_ids = array_column($all_subs, 'agent_id');
-            $login_counts = self::fetch_users_login_count($uids);
-            $subs_count = self::count_subs($uids);
+            $uids            = array_column($all_subs, 'uid');
+            $agent_ids       = array_column($all_subs, 'agent_id');
+            $login_counts    = self::fetch_users_login_count($uids);
+            $subs_count      = self::count_subs($uids);
             $agent_nicknames = self::fetch_agent_nickname($agent_ids);
 
             return ["status" => "success", "data" => $all_subs, "login_counts" => $login_counts, "direct_subs_count" => $subs_count, "agent_nicknames" => $agent_nicknames];
@@ -237,40 +235,40 @@ class UserManageModel extends MEDOOHelper{
         }
     }
 
-    public static function filter_user($partnerID,array $filters = []): array
+    public static function filter_user($partnerID, array $filters = []): array
     {
         try {
             $database = parent::openLink($partnerID);
 
             // Add binding parameters
-            $params = [":uid" => $filters["uid"]];
-            $table_name = "users_test";
+            $params      = [":uid" => $filters["uid"]];
+            $table_name  = "users_test";
             $whereClause = "";
 
             $startDate = $filters["start_date"];
-            $endDate = $filters["end_date"];
+            $endDate   = $filters["end_date"];
 
-            if (!empty($filters["recharge_level"])) {
+            if (! empty($filters["recharge_level"])) {
                 $params[":recharge_level"] = $filters["recharge_level"];
-                $whereClause = " AND recharge_level=:recharge_level ";
+                $whereClause               = " AND recharge_level=:recharge_level ";
             }
-            if (!empty($filters["state"])) {
+            if (! empty($filters["state"])) {
                 $params[":user_state"] = $filters["state"];
                 $whereClause .= " AND user_state=:user_state";
             }
 
-            if (!empty($startDate) && empty($endDate)) {
+            if (! empty($startDate) && empty($endDate)) {
                 $whereClause .= "AND created_at = :start_date";
                 $params[':start_date'] = $startDate;
-            } elseif (empty($startDate) && !empty($endDate)) {
+            } elseif (empty($startDate) && ! empty($endDate)) {
                 $whereClause .= "AND created_at = :end_date";
                 $params[':end_date'] = $endDate;
-            } elseif (!empty($startDate) && !empty($endDate)) {
+            } elseif (! empty($startDate) && ! empty($endDate)) {
                 $start = min($startDate, $endDate);
-                $end = max($startDate, $endDate);
+                $end   = max($startDate, $endDate);
                 $whereClause .= " AND created_at BETWEEN :start_date AND :end_date ";
                 $params[':start_date'] = $start;
-                $params[':end_date'] = $end;
+                $params[':end_date']   = $end;
             }
 
             // Build the query
@@ -292,33 +290,33 @@ class UserManageModel extends MEDOOHelper{
             // Pagination setup
             $offset = ($page - 1) * $limit;
             // Add binding parameters
-            $params = [':offset' => intval($offset), ':limit' => intval($limit)];
-            $table_name = "users_test";
+            $params      = [':offset' => intval($offset), ':limit' => intval($limit)];
+            $table_name  = "users_test";
             $whereClause = "";
-            $startDate = $filters["start_date"];
-            $endDate = $filters["end_date"];
+            $startDate   = $filters["start_date"];
+            $endDate     = $filters["end_date"];
 
-            if (!empty($filters["recharge_level"])) {
+            if (! empty($filters["recharge_level"])) {
                 $params[":recharge_level"] = $filters["recharge_level"];
-                $whereClause = " AND recharge_level=:recharge_level ";
+                $whereClause               = " AND recharge_level=:recharge_level ";
             }
-            if (!empty($filters["state"])) {
+            if (! empty($filters["state"])) {
                 $params[":user_state"] = $filters["state"];
                 $whereClause .= " AND user_state=:user_state";
             }
 
-            if (!empty($startDate) && empty($endDate)) {
+            if (! empty($startDate) && empty($endDate)) {
                 $whereClause .= "AND created_at = :start_date";
                 $params[':start_date'] = $startDate;
-            } elseif (empty($startDate) && !empty($endDate)) {
+            } elseif (empty($startDate) && ! empty($endDate)) {
                 $whereClause .= "AND created_at = :end_date";
                 $params[':end_date'] = $endDate;
-            } elseif (!empty($startDate) && !empty($endDate)) {
+            } elseif (! empty($startDate) && ! empty($endDate)) {
                 $start = min($startDate, $endDate);
-                $end = max($startDate, $endDate);
+                $end   = max($startDate, $endDate);
                 $whereClause .= " AND created_at BETWEEN :start_date AND :end_date ";
                 $params[':start_date'] = $start;
-                $params[':end_date'] = $end;
+                $params[':end_date']   = $end;
             }
 
             // Build the query
@@ -332,17 +330,17 @@ class UserManageModel extends MEDOOHelper{
         }
     }
 
-    public static function searchUserData($partnerID,$filters): array
+    public static function searchUserData($partnerID, $filters): array
     {
         try {
-            $top_agents = self::filter_user($partnerID,$filters);
+            $top_agents = self::filter_user($partnerID, $filters);
             if (empty($top_agents["data"])) {
                 return ["status" => "success", "data" => []];
             }
-            $top_agents = $top_agents["data"];
-            $uids = array_column($top_agents, 'uid');
-            $login_counts = self::fetch_users_login_count($partnerID,$uids);
-            $subs_count = self::count_subs($partnerID,$uids);
+            $top_agents   = $top_agents["data"];
+            $uids         = array_column($top_agents, 'uid');
+            $login_counts = self::fetch_users_login_count($partnerID, $uids);
+            $subs_count   = self::count_subs($partnerID, $uids);
 
             return ["status" => "success", "data" => $top_agents, "login_counts" => $login_counts, "direct_subs_count" => $subs_count];
         } catch (Exception $e) {
@@ -353,14 +351,14 @@ class UserManageModel extends MEDOOHelper{
     public static function fetchTopAgents(array $filters, $page = 1, $limit = 20): array
     {
         try {
-           $top_agents = self::filter_top_agents($filters, $page, $limit);
+            $top_agents = self::filter_top_agents($filters, $page, $limit);
             if (empty($top_agents["data"])) {
                 return ["status" => "success", "data" => [], "login_counts" => [], "direct_subs_count" => []];
             }
-            $top_agents = $top_agents["data"];
-            $uids = array_column($top_agents, 'uid');
+            $top_agents   = $top_agents["data"];
+            $uids         = array_column($top_agents, 'uid');
             $login_counts = self::fetch_users_login_count($uids);
-            $subs_count = self::count_subs($uids);
+            $subs_count   = self::count_subs($uids);
 
             return ["status" => "success", "data" => $top_agents, "login_counts" => $login_counts, "direct_subs_count" => $subs_count, "agent_nicknames" => ["status" => "success", "data" => []]];
         } catch (Exception $e) {
@@ -369,7 +367,7 @@ class UserManageModel extends MEDOOHelper{
         }
     }
 
-    public static function fetchUsersData($partnerID,array $filters = [], $page = 1, $limit): array
+    public static function fetchUsersData($partnerID, array $filters = [], $page = 1, $limit): array
     {
         try {
             $db = parent::openLink();
@@ -377,50 +375,49 @@ class UserManageModel extends MEDOOHelper{
             // Pagination setup
             $offset = ($page - 1) * $limit;
             // Add binding parameters
-            $params = [':offset' => intval($offset), ':limit' => intval($limit)];
-            $table_name = "users_test";
+            $params      = [':offset' => intval($offset), ':limit' => intval($limit)];
+            $table_name  = "users_test";
             $whereClause = "";
-            $startDate = $filters["start_date"];
-            $endDate = $filters["end_date"];
+            $startDate   = $filters["start_date"];
+            $endDate     = $filters["end_date"];
 
-            if (!empty($filters["recharge_level"])) {
+            if (! empty($filters["recharge_level"])) {
                 $params[":recharge_level"] = $filters["recharge_level"];
-                $whereClause = empty($whereClause) ? " recharge_level=:recharge_level " : " AND recharge_level=:recharge_level ";
+                $whereClause               = empty($whereClause) ? " recharge_level=:recharge_level " : " AND recharge_level=:recharge_level ";
             }
-            if (!empty($filters["state"])) {
+            if (! empty($filters["state"])) {
                 $params[":user_state"] = $filters["state"];
                 $whereClause .= empty($whereClause) ? " user_state=:user_state " : " AND user_state=:user_state ";
             }
-            if (!empty($filters["uid"])) {
+            if (! empty($filters["uid"])) {
                 $params[":uid"] = $filters["uid"];
                 $whereClause .= empty($whereClause) ? " uid=:uid " : " AND uid=:uid ";
             }
 
-            if (!empty($startDate) && empty($endDate)) {
+            if (! empty($startDate) && empty($endDate)) {
                 $whereClause .= empty($whereClause) ? " created_at = :start_date " : "AND created_at = :start_date ";
                 $params[':start_date'] = $startDate;
-            } elseif (empty($startDate) && !empty($endDate)) {
+            } elseif (empty($startDate) && ! empty($endDate)) {
                 $whereClause .= empty($whereClause) ? " created_at = :end_date " : "AND created_at = :end_date ";
                 $params[':end_date'] = $endDate;
-            } elseif (!empty($startDate) && !empty($endDate)) {
+            } elseif (! empty($startDate) && ! empty($endDate)) {
                 $start = min($startDate, $endDate);
-                $end = max($startDate, $endDate);
+                $end   = max($startDate, $endDate);
                 $whereClause .= empty($whereClause) ? " created_at BETWEEN :start_date AND :end_date  " : " AND created_at BETWEEN :start_date AND :end_date ";
                 $params[':start_date'] = $start;
-                $params[':end_date'] = $end;
+                $params[':end_date']   = $end;
             }
 
             $whereClause = empty($whereClause) ? " " : " WHERE  {$whereClause} ";
 
-            $sql = "SELECT *,(SELECT COUNT(*) FROM users_test {$whereClause}) AS total_records FROM users_test {$whereClause}  ORDER BY uid DESC LIMIT :offset, :limit";
+            $sql  = "SELECT *,(SELECT COUNT(*) FROM users_test {$whereClause}) AS total_records FROM users_test {$whereClause}  ORDER BY uid DESC LIMIT :offset, :limit";
             $stmt = $db->query($sql, $params);
             $data = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-            
-            $uids = array_column($data, 'uid');
-            $agent_ids = array_column($data, 'agent_id');
-            $login_counts = self::fetch_users_login_count($uids);
-            $subs_count = self::count_subs($uids);
+            $uids            = array_column($data, 'uid');
+            $agent_ids       = array_column($data, 'agent_id');
+            $login_counts    = self::fetch_users_login_count($uids);
+            $subs_count      = self::count_subs($uids);
             $agent_nicknames = self::fetch_agent_nickname($agent_ids);
 
             return ["status" => "success", "data" => $data, "login_counts" => $login_counts, "direct_subs_count" => $subs_count, "agent_nicknames" => $agent_nicknames];
@@ -431,11 +428,11 @@ class UserManageModel extends MEDOOHelper{
 
     public static function blockUserData(int $userId)
     {
-        $db = parent::openLink();
+        $db     = parent::openLink();
         $params = [":userid" => intval($userId)];
         try {
-            $sql = "UPDATE users_test SET user_state = 4 WHERE uid = :userid";
-            $stmt = $db->query($sql, $params);
+            $sql       = "UPDATE users_test SET user_state = 4 WHERE uid = :userid";
+            $stmt      = $db->query($sql, $params);
             $row_count = $stmt->rowCount();
             if ($row_count > 0) {
                 return ['status' => 'success', 'data' => $row_count];
@@ -446,10 +443,31 @@ class UserManageModel extends MEDOOHelper{
             return ['status' => 'error', 'message' => $pDOException];
         }
     }
-   
+    // public static function FilterUserlistDataSubQuery($username = '', $states = '', $from = '', $to = '')
+    // {
+    //     $conditions = [];
+
+    //     if (!empty($username) && $username != 'all') {
+    //         $conditions['users.uid'] = $username;
+    //     }
+
+    //     if (!empty($states) && $states != 'all') {
+    //         $conditions['users.state'] = $states;
+    //     }
+
+    //     if ($from != '' && $to != '') {
+    //         $conditions['users.date_created[<>]'] = [$from, $to];
+    //     } elseif ($from != '') {
+    //         $conditions['users.date_created[>=]'] = $from;
+    //     } elseif ($to != '') {
+    //         $conditions['users.date_created[<=]'] = $to;
+    //     }
+
+    //     return $conditions;
+    // }
+
     public static function AddAgentData($datas)
     {
-
         try {
             $inserAgentdata = parent::insert("users_test", $datas);
 
@@ -468,11 +486,11 @@ class UserManageModel extends MEDOOHelper{
     public static function FetchTopAgentData($page, $limit): array
     {
         // Calculate the starting point for pagination
-        $startpoint = ($page * $limit) - $limit;
-        $sql = "
-        SELECT 
-            uid, username,email,contact, agent_name, balance, recharge_level, user_state, 
-            last_login, rebate, created_at, agent_id,account_type,reg_type,nickname  
+        $startpoint = $page * $limit - $limit;
+        $sql        = "
+        SELECT
+            uid, username,email,contact, agent_name, balance, recharge_level, user_state,
+            last_login, rebate, created_at, agent_id,account_type,reg_type,nickname
         FROM users_test
         WHERE account_type = 2
         ORDER BY uid DESC
@@ -480,7 +498,7 @@ class UserManageModel extends MEDOOHelper{
       ";
 
         // $data = parent:: query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
-      $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+        $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
         // Count the total records with the same filter (for pagination)
         $totalRecords = parent::count("users_test");
 
@@ -490,31 +508,29 @@ class UserManageModel extends MEDOOHelper{
 
     public static function checkEmailExist($datas)
     {
-        return  $agentemail = parent::selectAll("users_test", ["email", "uid"], ["email" => $datas]);
+        return $agentemail = parent::selectAll("users_test", ["email", "uid"], ["email" => $datas]);
     }
 
     public static function UpdateAgentTable($userData)
     {
-
-        $dates  = new DateTime();
-        $date   = $dates->format('Y-m-d');
-        $time   = $dates->format("H:i:s");
-        $agent  =  self::checkEmailExist($userData['email'])[0];
+        $dates   = new DateTime();
+        $date    = $dates->format('Y-m-d');
+        $time    = $dates->format("H:i:s");
+        $agent   = self::checkEmailExist($userData['email'])[0];
         $agentid = $agent['uid'];
-        $data = [
-            "agent_id" => $agentid,
-            "agent_name" => $userData["username"],
-            "agent_email" => $userData["email"],
-            "agent_rebate" =>  $userData["rebate"],
-            "date_created" =>  $date,
+        $data    = [
+            "agent_id"     => $agentid,
+            "agent_name"   => $userData["username"],
+            "agent_email"  => $userData["email"],
+            "agent_rebate" => $userData["rebate"],
+            "date_created" => $date,
             "time_created" => $time,
         ];
         return $Agentdata = parent::insert("agents", $data);
     }
 
-    public static function validateRegister($partnerID,$datas)
+    public static function validateRegister($partnerID, $datas)
     {
-
         $errors = [];
         // $emailexist = self::checkEmailExist($datas['agentemail']);
         $password = trim($datas['agentpassword'] ?? '');
@@ -522,8 +538,7 @@ class UserManageModel extends MEDOOHelper{
         // $email = trim($datas['agentemail'] ?? '');
         $username = trim($datas['agentname'] ?? '');
 
-
-        //email exit    
+        //email exit
         // if ($emailexist) {
         //     $errors['emailexist'] = "Email already exists";
         // }
@@ -539,17 +554,17 @@ class UserManageModel extends MEDOOHelper{
         //     $errors['confirmPassword'] = "Password doesn't match";
         // }
 
-        if (!preg_match('/^(?=.*[~`!@#$%^&*()\-+={}[\]|\\:;"\'<>,.?\/₹]).*$/', $password)) {
+        if (! preg_match('/^(?=.*[~`!@#$%^&*()\-+={}[\]|\\:;"\'<>,.?\/₹]).*$/', $password)) {
             $errors['passwordSpecialChar'] = "Password must contain at least one special symbol";
         }
 
         // Case sensitivity validation (uppercase and lowercase)
-        if (!preg_match('/^(?=.*[A-Z])(?=.*[a-z]).*$/', $password)) {
+        if (! preg_match('/^(?=.*[A-Z])(?=.*[a-z]).*$/', $password)) {
             $errors['passwordCaseSensitive'] = "Password must contain at least one uppercase and lowercase letter";
         }
 
         // Must contain at least one number
-        if (!preg_match('/^(?=.*[0-9]).*$/', $password)) {
+        if (! preg_match('/^(?=.*[0-9]).*$/', $password)) {
             $errors['passwordNumber'] = "Password must contain at least one number";
         }
 
@@ -568,7 +583,7 @@ class UserManageModel extends MEDOOHelper{
         }
 
         // Username pattern validation (corrected pattern)
-        if (!preg_match('/^[A-Za-z][A-Za-z0-9_]*$/', $username)) {
+        if (! preg_match('/^[A-Za-z][A-Za-z0-9_]*$/', $username)) {
             $errors['usernamePattern'] = "Username must contain only letters, numbers, and underscores, and must start with a letter";
         }
 
@@ -578,26 +593,26 @@ class UserManageModel extends MEDOOHelper{
     public static function FetchRebateData($partnerID)
     {
         // return $res = parent::selectAll($partnerID,"rebate", ["rebate"], ["ORDER" => ["rebate_id" => "ASC"]]);
-        return  $res = parent::selectAll("rebate", ["rebate"], ["ORDER" => ["rebate_id" => "ASC"]]);
+        return $res = parent::selectAll("rebate", ["rebate"], ["ORDER" => ["rebate_id" => "ASC"]]);
     }
 
-    public static function fetchquotaData($partnerID,$userrebate)
+    public static function fetchquotaData($partnerID, $userrebate)
     {
         $data = parent::openLink($partnerID)->query("SELECT odds_group, rebate, quota, counts FROM rebate WHERE rebate <= :rebate", ['rebate' => $userrebate]);
 
-        $data = parent::query("SELECT odds_group, rebate, quota, counts FROM rebate WHERE rebate <= :rebate", ['rebate' => $userrebate]);
+        $data                  = parent::query("SELECT odds_group, rebate, quota, counts FROM rebate WHERE rebate <= :rebate", ['rebate' => $userrebate]);
         return $serializedData = json_encode($data);
     }
 
-    public static   function generateRandomNickname()
+    public static function generateRandomNickname()
     {
         // List of random words to pick from
         $adjectives = ['Swift', 'Bold', 'Clever', 'Brave', 'Mighty', 'Fierce', 'Silent', 'Electric', 'Lucky', 'Shiny'];
-        $animals = ['Tiger', 'Eagle', 'Wolf', 'Dragon', 'Panther', 'Fox', 'Bear', 'Shark', 'Lion', 'Falcon'];
+        $animals    = ['Tiger', 'Eagle', 'Wolf', 'Dragon', 'Panther', 'Fox', 'Bear', 'Shark', 'Lion', 'Falcon'];
 
         $randomAdjective = $adjectives[array_rand($adjectives)];
-        $randomAnimal = $animals[array_rand($animals)];
-        $randomNumber = rand(100, 999); // Generates a random number between 100 and 999
+        $randomAnimal    = $animals[array_rand($animals)];
+        $randomNumber    = rand(100, 999); // Generates a random number between 100 and 999
 
         $nickname = $randomAdjective . $randomAnimal . $randomNumber;
 
@@ -606,10 +621,10 @@ class UserManageModel extends MEDOOHelper{
     public static function FetchLotteryTypes()
     {
         try {
-            $db = parent::openLink();
-            $sql = "SELECT lt_id,name FROM `lottery_type`";
-             $stmt = $db->query($sql);
-             $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $db   = parent::openLink();
+            $sql  = "SELECT lt_id,name FROM `lottery_type`";
+            $stmt = $db->query($sql);
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
             return ["data" => $data];
         } catch (Exception $e) {
             return ["status" => "error", "data" => "Internal Server Error." . $e->getMessage()];
@@ -619,29 +634,29 @@ class UserManageModel extends MEDOOHelper{
     public static function update_lottery_stat_for_user($user_id, $lottery_id)
     {
         try {
-            $db = parent::openLink();
-            $sql = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
+            $db   = parent::openLink();
+            $sql  = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
             $stmt = $db->query($sql, [":user_id" => $user_id]);
             $data = $stmt->fetch(PDO::FETCH_OBJ)->blocked_lotteries;
-            if($data == "*****"){
-             $obj = [
-                    "lti" => $lottery_id ,
-                    "gti" => [],
-                    "gpi" => [],
-                    "tabs" =>[]
+            if ($data == "*****") {
+                $obj = [
+                    "lti"  => $lottery_id,
+                    "gti"  => [],
+                    "gpi"  => [],
+                    "tabs" => [],
                 ];
-            $sql = "UPDATE `users_test` SET blocked_lotteries='" . json_encode($obj) . "' WHERE uid=:user_id";
-            $stmt = $db->query($sql, [":user_id" => $user_id]);
-            return ['status' => 'success', 'data' => $stmt->rowCount()];
+                $sql  = "UPDATE `users_test` SET blocked_lotteries='" . json_encode($obj) . "' WHERE uid=:user_id";
+                $stmt = $db->query($sql, [":user_id" => $user_id]);
+                return ['status' => 'success', 'data' => $stmt->rowCount()];
             }
-            $decoded = json_decode($data,true);
-            $obj = [
-                    "lti" => $lottery_id,
-                    "gti" => $decoded['gti']  ?? [],
-                    "gpi" => $decoded['gpi']  ?? [],
-                    "tabs" => $decoded['tabs'] ??[]
-                ];
-            $sql = "UPDATE `users_test` SET blocked_lotteries='" . json_encode($obj) . "' WHERE uid=:user_id";
+            $decoded = json_decode($data, true);
+            $obj     = [
+                "lti"  => $lottery_id,
+                "gti"  => $decoded['gti'] ?? [],
+                "gpi"  => $decoded['gpi'] ?? [],
+                "tabs" => $decoded['tabs'] ?? [],
+            ];
+            $sql  = "UPDATE `users_test` SET blocked_lotteries='" . json_encode($obj) . "' WHERE uid=:user_id";
             $stmt = $db->query($sql, [":user_id" => $user_id]);
             return ['status' => 'success', 'data' => $stmt->rowCount()];
         } catch (Exception $e) {
@@ -652,138 +667,135 @@ class UserManageModel extends MEDOOHelper{
     public static function UpdateGametypes($user_id, $lottery_id)
     {
         try {
-            $db = parent::openLink();
-            $sql = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
+            $db   = parent::openLink();
+            $sql  = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
             $stmt = $db->query($sql, [":user_id" => $user_id]);
             $data = $stmt->fetch(PDO::FETCH_OBJ)->blocked_lotteries;
-            if($data == "*****"){
-               $obj = [
-                    "lti" => [] ,
-                    "gti" => $lottery_id,
-                    "gpi" => [],
-                    "tabs" => []
+            if ($data == "*****") {
+                $obj = [
+                    "lti"  => [],
+                    "gti"  => $lottery_id,
+                    "gpi"  => [],
+                    "tabs" => [],
                 ];
-            $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($obj). "' WHERE uid=:user_id";
-            $stmt = $db->query($sql, [":user_id" => $user_id]);
-            return ['status' => 'success', 'data' => $stmt->rowCount()];
-            }
-            $decoded = json_decode($data,true);
-             $obj = [
-                    "lti" => $decoded['lti'],
-                    "gti" => $lottery_id ?? [],
-                    "gpi" => $decoded['gpi'] ?? [],
-                    "tabs" => $decoded['tabs'] ?? []
-                ];
-                $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($obj). "' WHERE uid=:user_id";
+                $sql  = "UPDATE `users_test` SET blocked_lotteries='" . json_encode($obj) . "' WHERE uid=:user_id";
                 $stmt = $db->query($sql, [":user_id" => $user_id]);
                 return ['status' => 'success', 'data' => $stmt->rowCount()];
+            }
+            $decoded = json_decode($data, true);
+            $obj     = [
+                "lti"  => $decoded['lti'],
+                "gti"  => $lottery_id ?? [],
+                "gpi"  => $decoded['gpi'] ?? [],
+                "tabs" => $decoded['tabs'] ?? [],
+            ];
+            $sql  = "UPDATE `users_test` SET blocked_lotteries='" . json_encode($obj) . "' WHERE uid=:user_id";
+            $stmt = $db->query($sql, [":user_id" => $user_id]);
+            return ['status' => 'success', 'data' => $stmt->rowCount()];
         } catch (Exception $e) {
             return ['status' => 'error', 'msg' => 'Error Blocking Lottery for User.' . $e->getMessage()];
         }
     }
 
-    public static function UpdateGameGroup($uid,$lotterymodel,$lottery_id)
+    public static function UpdateGameGroup($uid, $lotterymodel, $lottery_id)
     {
 
         try {
-            $db = parent::openLink();
-            $sql = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
+            $db   = parent::openLink();
+            $sql  = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
             $stmt = $db->query($sql, [":user_id" => $uid]);
             $data = $stmt->fetch(PDO::FETCH_OBJ)->blocked_lotteries;
-            if($data == "*****"){
+            if ($data == "*****") {
                 $minObj = [
-                    $lotterymodel => $lottery_id
+                    $lotterymodel => $lottery_id,
                 ];
-               $obj = [
-                    "lti" => [] ,
-                    "gti" => [],
-                    "gpi" => [],
-                    "tabs" => $minObj
+                $obj = [
+                    "lti"  => [],
+                    "gti"  => [],
+                    "gpi"  => [],
+                    "tabs" => $minObj,
                 ];
-            $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($obj). "' WHERE uid=:user_id";
-            $stmt = $db->query($sql, [":user_id" => $uid]);
-            return ['status' => 'success', 'data' => $stmt->rowCount()];
+                $sql  = "UPDATE `users_test` SET blocked_lotteries='" . json_encode($obj) . "' WHERE uid=:user_id";
+                $stmt = $db->query($sql, [":user_id" => $uid]);
+                return ['status' => 'success', 'data' => $stmt->rowCount()];
             }
 
-             $decoded = json_decode($data,true);
+            $decoded = json_decode($data, true);
             if (isset($decoded['tabs'][$lotterymodel])) { // game exist
                 $decoded['tabs'][$lotterymodel] = $lottery_id;
-                $objkeyExist = [
-                    "lti" => $decoded['lti'] ?? [],
-                    "gti" => $decoded['gti'] ?? [],
-                    "gpi" => $decoded['gpi'] ?? [],
-                    "tabs" => $decoded['tabs']
+                $objkeyExist                    = [
+                    "lti"  => $decoded['lti'] ?? [],
+                    "gti"  => $decoded['gti'] ?? [],
+                    "gpi"  => $decoded['gpi'] ?? [],
+                    "tabs" => $decoded['tabs'],
                 ];
-                $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($objkeyExist). "' WHERE uid=:user_id";
+                $sql  = "UPDATE `users_test` SET blocked_lotteries='" . json_encode($objkeyExist) . "' WHERE uid=:user_id";
                 $stmt = $db->query($sql, [":user_id" => $uid]);
                 return ['status' => 'success', 'data' => $stmt->rowCount()];
             } else { // game does not exist
                 $decoded['tabs'][$lotterymodel] = $lottery_id;
-                $objKeyNoExist = [
-                    "lti" => $decoded['lti'] ?? [],
-                    "gti" => $decoded['gti'] ?? [],
-                    "gpi" => $decoded['gpi'] ?? [],
-                    "tabs" => $decoded['tabs']
+                $objKeyNoExist                  = [
+                    "lti"  => $decoded['lti'] ?? [],
+                    "gti"  => $decoded['gti'] ?? [],
+                    "gpi"  => $decoded['gpi'] ?? [],
+                    "tabs" => $decoded['tabs'],
                 ];
-                $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($objKeyNoExist). "' WHERE uid=:user_id";
+                $sql  = "UPDATE `users_test` SET blocked_lotteries='" . json_encode($objKeyNoExist) . "' WHERE uid=:user_id";
                 $stmt = $db->query($sql, [":user_id" => $uid]);
                 return ['status' => 'success', 'data' => $stmt->rowCount()];
             }
-    
         } catch (Exception $e) {
             return ['status' => 'error', 'msg' => 'Error Blocking Lottery for User.' . $e->getMessage()];
         }
     }
 
-
-    public static function UpdateGameNames($uid,$lotterymodel,$lottery_id)
+    public static function UpdateGameNames($uid, $lotterymodel, $lottery_id)
     {
 
         try {
-            $db = parent::openLink();
-            $sql = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
+            $db   = parent::openLink();
+            $sql  = "SELECT blocked_lotteries FROM `users_test` WHERE uid=:user_id";
             $stmt = $db->query($sql, [":user_id" => $uid]);
             $data = $stmt->fetch(PDO::FETCH_OBJ)->blocked_lotteries;
-            if($data == "*****"){
+            if ($data == "*****") {
                 $minObj = [
-                    $lotterymodel => $lottery_id
+                    $lotterymodel => $lottery_id,
                 ];
-               $obj = [
-                    "lti" => [] ,
-                    "gti" => [],
-                    "gpi" =>$minObj,
-                    "tabs" =>[] 
+                $obj = [
+                    "lti"  => [],
+                    "gti"  => [],
+                    "gpi"  => $minObj,
+                    "tabs" => [],
                 ];
-            $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($obj). "' WHERE uid=:user_id";
-            $stmt = $db->query($sql, [":user_id" => $uid]);
-            return ['status' => 'success', 'data' => $stmt->rowCount()];
+                $sql  = "UPDATE `users_test` SET blocked_lotteries='" . json_encode($obj) . "' WHERE uid=:user_id";
+                $stmt = $db->query($sql, [":user_id" => $uid]);
+                return ['status' => 'success', 'data' => $stmt->rowCount()];
             }
 
-             $decoded = json_decode($data,true);
+            $decoded = json_decode($data, true);
             if (isset($decoded['gpi'][$lotterymodel])) { // game exist
                 $decoded['gpi'][$lotterymodel] = $lottery_id;
-                $objkeyExist = [
-                    "lti" => $decoded['lti'] ?? [],
-                    "gti" => $decoded['gti'] ?? [],
-                    "gpi" => $decoded['gpi'] ,
-                    "tabs" => $decoded['tabs'] ??[]
+                $objkeyExist                   = [
+                    "lti"  => $decoded['lti'] ?? [],
+                    "gti"  => $decoded['gti'] ?? [],
+                    "gpi"  => $decoded['gpi'],
+                    "tabs" => $decoded['tabs'] ?? [],
                 ];
-                $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($objkeyExist). "' WHERE uid=:user_id";
+                $sql  = "UPDATE `users_test` SET blocked_lotteries='" . json_encode($objkeyExist) . "' WHERE uid=:user_id";
                 $stmt = $db->query($sql, [":user_id" => $uid]);
                 return ['status' => 'success', 'data' => $stmt->rowCount()];
             } else { // game does not exist
                 $decoded['gpi'][$lotterymodel] = $lottery_id;
-                $objKeyNoExist = [
-                    "lti" => $decoded['lti'] ?? [],
-                    "gti" => $decoded['gti'] ?? [],
-                    "gpi" => $decoded['gpi'] ,
-                    "tabs" => $decoded['tabs'] ??[]
+                $objKeyNoExist                 = [
+                    "lti"  => $decoded['lti'] ?? [],
+                    "gti"  => $decoded['gti'] ?? [],
+                    "gpi"  => $decoded['gpi'],
+                    "tabs" => $decoded['tabs'] ?? [],
                 ];
-                $sql = "UPDATE `users_test` SET blocked_lotteries='" .json_encode($objKeyNoExist). "' WHERE uid=:user_id";
+                $sql  = "UPDATE `users_test` SET blocked_lotteries='" . json_encode($objKeyNoExist) . "' WHERE uid=:user_id";
                 $stmt = $db->query($sql, [":user_id" => $uid]);
                 return ['status' => 'success', 'data' => $stmt->rowCount()];
             }
-    
         } catch (Exception $e) {
             return ['status' => 'error', 'msg' => 'Error Blocking Lottery for User.' . $e->getMessage()];
         }
@@ -791,31 +803,30 @@ class UserManageModel extends MEDOOHelper{
 
     public static function GetGameTabs(string $lotteryId, $gamemodel)
     {
-      // $bigData = [];
+        // $bigData = [];
 
-      if (in_array($lotteryId, [1, 2, 3, 5, 6, 8, 10,11]) && in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
-         $tableMap = [
-            'standard' => 'game_group',
-            // 'twosides' => 'twosides',
-            // 'longdragon' => 'longdragon',
-            // 'boardgames' => 'boardgames',
-            // 'roadbet' => 'roadbet',
-            // 'fantan' => 'fantan',
-            // 'manytables' => 'manytables',
-         ];
-         $tableName = $tableMap[$gamemodel];
-         $sql = "SELECT gp_id, name FROM {$tableName}  WHERE lottery_type = :lottery_type";
-         $data = parent::query($sql, ['lottery_type' => $lotteryId]);
-         return ['data' => $data];
-      }
+        if (in_array($lotteryId, [1, 2, 3, 5, 6, 8, 10, 11]) && in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
+            $tableMap = [
+                'standard' => 'game_group',
+                // 'twosides' => 'twosides',
+                // 'longdragon' => 'longdragon',
+                // 'boardgames' => 'boardgames',
+                // 'roadbet' => 'roadbet',
+                // 'fantan' => 'fantan',
+                // 'manytables' => 'manytables',
+            ];
+            $tableName = $tableMap[$gamemodel];
+            $sql       = "SELECT gp_id, name FROM {$tableName}  WHERE lottery_type = :lottery_type";
+            $data      = parent::query($sql, ['lottery_type' => $lotteryId]);
+            return ['data' => $data];
+        }
     }
-
 
     public static function GetGameNames(string $lotteryId, $gamemodel)
     {
         // $bigData = [];
 
-        if (in_array($lotteryId, [1, 2, 3, 5, 6, 8, 10,11]) && in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
+        if (in_array($lotteryId, [1, 2, 3, 5, 6, 8, 10, 11]) && in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
             $tableMap = [
                 'standard' => 'game_name',
                 // 'twosides' => 'twosides',
@@ -826,8 +837,8 @@ class UserManageModel extends MEDOOHelper{
                 // 'manytables' => 'manytables',
             ];
             $tableName = $tableMap[$gamemodel];
-            $sql = "SELECT gn_id, name FROM {$tableName}  WHERE lottery_type = :lottery_type";
-            $data = parent::query($sql, ['lottery_type' => $lotteryId]);
+            $sql       = "SELECT gn_id, name FROM {$tableName}  WHERE lottery_type = :lottery_type";
+            $data      = parent::query($sql, ['lottery_type' => $lotteryId]);
             return ['data' => $data];
         }
     }
@@ -835,9 +846,9 @@ class UserManageModel extends MEDOOHelper{
     public static function fetchUserLogs($user_id, $page = 1, $limit = 100): array
     {
         try {
-            $db = parent::openLink();
+            $db     = parent::openLink();
             $offset = ($page - 1) * $limit;
-            $sql =
+            $sql    =
                 "SELECT ulog_id,uid,ip,login_date,login_time,(SELECT COUNT(ulog_id) FROM user_logs WHERE uid=:user_id) as totalPages, CASE ip_state WHEN 1 THEN 'allowed' ELSE 'unknown' END AS ip_state FROM user_logs WHERE uid=:user_id LIMIT :offset, :limit";
             $stmt = $db->query($sql, [":user_id" => $user_id, ":offset" => $offset, ":limit" => $limit]);
             $data = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -849,8 +860,8 @@ class UserManageModel extends MEDOOHelper{
     public static function FetchUserData(int $user_id)
     {
         try {
-            $db = parent::openLink();
-            $sql = "SELECT * FROM users_test WHERE uid = :user_id";
+            $db   = parent::openLink();
+            $sql  = "SELECT * FROM users_test WHERE uid = :user_id";
             $stmt = $db->query($sql, [":user_id" => $user_id]);
             $data = $stmt->fetch(PDO::FETCH_OBJ);
             return ["status" => "success", "data" => $data];
@@ -861,8 +872,8 @@ class UserManageModel extends MEDOOHelper{
     public static function deleteUserData(int $userId)
     {
         try {
-            $db = parent::openLink();
-            $sql = "DELETE FROM users_test WHERE uid = :userid";
+            $db   = parent::openLink();
+            $sql  = "DELETE FROM users_test WHERE uid = :userid";
             $stmt = $db->query($sql, [":userid" => intval($userId)]);
             if ($stmt->rowCount() > 0) {
                 return ['status' => 'success', 'data' => $stmt->rowCount()];
@@ -880,32 +891,32 @@ class UserManageModel extends MEDOOHelper{
     ////////////// USERLIST LOGS -//////////
     public static function FetchUserlogsData($page, $limit): array
     {
-            $startpoint = ($page * $limit) - $limit;
-            $sql = "
-            SELECT 
-                user_logs.*, 
+        $startpoint = $page * $limit - $limit;
+        $sql        = "
+            SELECT
+                user_logs.*,
                 users_test.email, users_test.contact, users_test.reg_type ,
-                COALESCE(users_test.username, 'N/A') AS username 
-            FROM user_logs   
-            JOIN users_test ON users_test.uid = user_logs.uid  
-            ORDER BY user_logs.ulog_id DESC 
+                COALESCE(users_test.username, 'N/A') AS username
+            FROM user_logs
+            JOIN users_test ON users_test.uid = user_logs.uid
+            ORDER BY user_logs.ulog_id DESC
             LIMIT :startpoint, :limit
         ";
 
-            // Execute the query with pagination parameters
-            $data = parent::openLink()->query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
-            $totalRecords = parent::count('user_logs');
         // Execute the query with pagination parameters
-        $data = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
-            $totalRecords  = parent::count('user_logs');
-            return ['data' => $data, 'total' => $totalRecords];
+        $data         = parent::openLink()->query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+        $totalRecords = parent::count('user_logs');
+        // Execute the query with pagination parameters
+        $data         = parent::query($sql, ['startpoint' => $startpoint, 'limit' => $limit]);
+        $totalRecords = parent::count('user_logs');
+        return ['data' => $data, 'total' => $totalRecords];
     }
     public static function Filteruserlogs($subQuery, $page, $limit)
     {
         $startpoint = $page * $limit - $limit;
-        $sql = "
-        SELECT 
-            user_logs.*, 
+        $sql        = "
+        SELECT
+            user_logs.*,
             users_test.email,
             users_test.username,
             users_test.contact,
@@ -916,8 +927,8 @@ class UserManageModel extends MEDOOHelper{
         LIMIT :offset, :limit
         ";
 
-        $countSql = " SELECT COUNT(*) AS total_count FROM user_logs WHERE $subQuery";
-        $data = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
+        $countSql     = " SELECT COUNT(*) AS total_count FROM user_logs WHERE $subQuery";
+        $data         = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
         $totalRecords = parent::query($countSql);
         $totalRecords = $totalRecords[0]['total_count'];
         //$lastQuery = MedooOrm::openLink()->log();
@@ -929,19 +940,19 @@ class UserManageModel extends MEDOOHelper{
         $filterConditions = [];
 
         // Build filter conditions
-        if (!empty($username)) {
+        if (! empty($username)) {
             $filterConditions[] = "user_logs.uid = '$username'";
         }
 
-        if (!empty($startdate) && !empty($enddate)) {
+        if (! empty($startdate) && ! empty($enddate)) {
             $filterConditions[] = "user_logs.login_date BETWEEN '$startdate' AND '$enddate'";
-        } elseif (!empty($startdate)) {
+        } elseif (! empty($startdate)) {
             $filterConditions[] = "user_logs.login_date = '$startdate'";
-        } elseif (!empty($enddate)) {
+        } elseif (! empty($enddate)) {
             $filterConditions[] = "user_logs.login_date = '$enddate'";
         }
         // Combine conditions into the final query
-        if (!empty($filterConditions)) {
+        if (! empty($filterConditions)) {
             $subQuery = implode(' AND ', $filterConditions);
         }
         // $subQuery .= " ORDER BY login_date DESC";
@@ -957,28 +968,28 @@ class UserManageModel extends MEDOOHelper{
     public function FetchUserAccountChange($userid, $page, $limit)
     {
         $startpoint = ($page - 1) * $limit;
-        $sql = "SELECT 
-                    transaction.*, 
-                    users_test.email, 
-                    users_test.contact, 
-                    users_test.reg_type, 
-                    COALESCE(users_test.username, 'N/A') AS username 
-                FROM 
-                    transaction   
-                LEFT JOIN 
-                    users_test ON users_test.uid = transaction.uid  
-                WHERE 
-                    transaction.uid = :uid  
-                ORDER BY 
-                    transaction.trans_id DESC 
+        $sql        = "SELECT
+                    transaction.*,
+                    users_test.email,
+                    users_test.contact,
+                    users_test.reg_type,
+                    COALESCE(users_test.username, 'N/A') AS username
+                FROM
+                    transaction
+                LEFT JOIN
+                    users_test ON users_test.uid = transaction.uid
+                WHERE
+                    transaction.uid = :uid
+                ORDER BY
+                    transaction.trans_id DESC
                 LIMIT :offset, :limit";
 
-        $countSql = "SELECT COUNT(*) AS total_count 
-        FROM transaction 
-        LEFT JOIN users_test ON users_test.uid = transaction.uid  
+        $countSql = "SELECT COUNT(*) AS total_count
+        FROM transaction
+        LEFT JOIN users_test ON users_test.uid = transaction.uid
         WHERE transaction.uid = :uid";
 
-        $pdo = (new Database())->openLink();
+        $pdo  = (new Database())->openLink();
         $stmt = $pdo->prepare($sql);
 
         // Bind parameters correctly
@@ -1001,23 +1012,23 @@ class UserManageModel extends MEDOOHelper{
     {
         $startpoint = ($page - 1) * $limit;
 
-        $sql = "SELECT 
-                    transaction.*, 
-                    users_test.email, 
-                    users_test.contact, 
-                    users_test.reg_type, 
-                    COALESCE(users_test.username, 'N/A') AS username 
-                FROM 
-                    transaction   
-                LEFT JOIN 
-                    users_test ON users_test.uid = transaction.uid  
+        $sql = "SELECT
+                    transaction.*,
+                    users_test.email,
+                    users_test.contact,
+                    users_test.reg_type,
+                    COALESCE(users_test.username, 'N/A') AS username
+                FROM
+                    transaction
+                LEFT JOIN
+                    users_test ON users_test.uid = transaction.uid
                  WHERE   $subquery AND transaction.uid = :uid
-                  ORDER BY  transaction.trans_id DESC 
+                  ORDER BY  transaction.trans_id DESC
                 LIMIT :offset, :limit";
 
-        $countSql = "SELECT COUNT(*) AS total_count 
-                     FROM transaction 
-                     LEFT JOIN users_test ON users_test.uid = transaction.uid  
+        $countSql = "SELECT COUNT(*) AS total_count
+                     FROM transaction
+                     LEFT JOIN users_test ON users_test.uid = transaction.uid
                     WHERE $subquery AND transaction.uid = :uid";
 
         // Database connection
@@ -1042,23 +1053,105 @@ class UserManageModel extends MEDOOHelper{
     {
         $filterConditions = [];
 
-        if (!empty($states)) {
+        if (! empty($states)) {
             $filterConditions[] = "transaction.order_type = '$states'";
         }
 
-        if (!empty($startdate) && !empty($enddate)) {
+        if (! empty($startdate) && ! empty($enddate)) {
             $filterConditions[] = "DATE(transaction.dateTime) BETWEEN '$startdate' AND '$enddate'";
-        } elseif (!empty($startdate)) {
+        } elseif (! empty($startdate)) {
             $filterConditions[] = "DATE(transaction.dateTime) = '$startdate'";
-        } elseif (!empty($enddate)) {
+        } elseif (! empty($enddate)) {
             $filterConditions[] = "DATE(transaction.dateTime) = '$enddate'";
         }
 
-        if (!empty($filterConditions)) {
+        if (! empty($filterConditions)) {
             $subQuery = implode(' AND ', $filterConditions);
         }
         //  $subQuery .= " ORDER BY dateTime DESC";
 
         return $subQuery;
+    }
+
+    // reset login attempt
+    public static function ResetloginAttempt($uid)
+    {
+        try {
+            $pdo = (new Database())->openLink();
+
+            // Step 1: Check current login_attempt
+            $checkSql  = "SELECT login_attempt FROM users_test WHERE uid = :uid";
+            $checkStmt = $pdo->prepare($checkSql);
+            $checkStmt->bindParam(':uid', $uid, PDO::PARAM_INT);
+            $checkStmt->execute();
+            $current = $checkStmt->fetch(PDO::FETCH_ASSOC);
+
+            if (! $current) {
+                return [
+                    'status'  => 'error',
+                    'message' => 'User not found.',
+                ];
+            }
+
+            if ((int) $current['login_attempt'] === 0) {
+                return [
+                    'status'  => 'info',
+                    'message' => 'Login attempt already reset.',
+                ];
+            }
+
+            // Step 2: Reset login attempt
+            $sql  = "UPDATE users_test SET login_attempt = 0 WHERE uid = :uid";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':uid', $uid, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return [
+                'status'  => 'success',
+                'message' => 'Login attempt reset successfully.',
+            ];
+        } catch (PDOException $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Reset failed: ' . $e->getMessage(),
+            ];
+        }
+    }
+
+    //updateUserInfo
+    public static function updateUserInfo($user_id, $depositLimit, $withdrawalLimit, $rebate, $state, $dailyBettingTotalLimit)
+    {
+        try {
+            $pdo = (new Database())->openLink();
+
+            $sql = "UPDATE users_test
+                SET
+                    recharge_level = :depositLimit,
+                    withdrawal_level = :withdrawalLimit,
+                    rebate = :rebate,
+                   user_state = :user_state,
+                    daily_bet_limit = :dailyBettingTotalLimit
+                WHERE uid = :uid";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':depositLimit', $depositLimit);
+            $stmt->bindParam(':withdrawalLimit', $withdrawalLimit);
+            $stmt->bindParam(':rebate', $rebate);
+            $stmt->bindParam(':user_state', $state);
+            $stmt->bindParam(':dailyBettingTotalLimit', $dailyBettingTotalLimit);
+            $stmt->bindParam(':uid', $user_id, PDO::PARAM_INT);
+
+            $stmt->execute();
+
+            return [
+                'status' => 'success',
+                'data'   => $stmt->rowCount(), // You can return row count to JS
+            ];
+        } catch (PDOException $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Update failed: ' . $e->getMessage(),
+            ];
+        }
     }
 }

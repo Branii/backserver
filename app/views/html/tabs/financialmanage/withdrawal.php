@@ -201,6 +201,22 @@
     }
 </style>
 
+
+
+<span id="tr_page" style="display:none"><?= $translator['Page'] ?></span>
+<span id="tr_of" style="display:none"><?= $translator['of'] ?></span>
+<span id="tr_pages" style="display:none"><?= $translator['pages'] ?></span>
+
+<span id="status_pending" style="display:none;"><?= $translator['status_pending'] ?></span>
+<span id="status_success" style="display:none;"><?= $translator['status_success'] ?></span>
+<span id="status_failed" style="display:none;"><?= $translator['status_failed'] ?></span>
+
+<span id="channel_momo" style="display:none;"><?= $translator['channel_momo'] ?></span>
+<span id="channel_crypto" style="display:none;"><?= $translator['channel_crypto'] ?></span>
+<span id="channel_bank" style="display:none;"><?= $translator['channel_bank'] ?></span>
+<span id="channel_manual" style="display:none;"><?= $translator['channel_manual'] ?></span>
+
+
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
@@ -296,7 +312,7 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Withdrawal Application Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Timezone/hrs</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Timezone/hrs']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
@@ -338,11 +354,13 @@
 
         </span>
         <span class="top-right-btn"  aria-label="Page navigation example">
-           <select class="left-element form-control" id="widrl-numrowstans" style="font-size: 12px;">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option value="50">50</option>
+           <select class="left-element form-control numrowstrans" id="widrl-numrowstans" style="font-size: 12px;">
+      
+                          <option value="20"><?= $translator['20'] ?? '20' ?></option>
+                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+    <option value="100"><?= $translator['100'] ?? '100' ?></option>
+    <option value="200"><?= $translator['200'] ?? '200' ?></option>
+    <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
             <span class="right-element" id="paginationwithdraw">
                 <!--Dynamic pagination-->

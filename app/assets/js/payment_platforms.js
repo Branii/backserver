@@ -10,6 +10,11 @@ $(function () {
             duration: 3000, // auto-dismiss after 3s
         });
     }
+const txtPage = document.getElementById("trans-page").innerText;
+const txtOf = document.getElementById("trans-of").innerText;
+const txtPages = document.getElementById("trans-pages").innerText;
+
+
 
     function getTranslation(id, fallback) {
         return document.getElementById(id)?.dataset.translation || fallback;
@@ -134,12 +139,14 @@ $(function () {
 
     async function fetchPaymentPlatform(page, pageLimit) {
         try {
-            const response = await fetch(`../admin/fetchPaymentPlatform/${page}/${pageLimit}`);
+            const response = await fetch(`../payment/fetchPaymentPlatform/${page}/${pageLimit}`);
             const data = await response.json();
             $("#maskpayment").LoadingOverlay("hide");
             renderpayment(data.payment);
             renderpaymentPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchPaymentPlatform(newPage, pageLimit));
-            document.getElementById("paging_infopayment").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+            // document.getElementById("paging_infopayment").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+            document.getElementById("paging_infopayment").innerHTML =
+    `${txtPage} ${page} ${txtOf} ${data.totalPages} ${txtPages}`;
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -190,7 +197,7 @@ $(function () {
 
     async function filterpayment(curencytypes, stautspayment, startdepay, enddepay, currentPage, pageLimit) {
         try {
-            let response = await fetch(`../admin/filterpayments/${partnerID}/${curencytypes}/${stautspayment}/${startdepay}/${enddepay}/${currentPage}/${pageLimit}`);
+            let response = await fetch(`../payment/filterpayments/${partnerID}/${curencytypes}/${stautspayment}/${startdepay}/${enddepay}/${currentPage}/${pageLimit}`);
             const data = await response.json();
 
             $(".loaderpay").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
@@ -208,7 +215,9 @@ $(function () {
             $("#maskpayment").LoadingOverlay("hide");
             renderpayment(data.payments);
             renderpaymentPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterpayment(username, stautspayment, startdepay, enddepay, newPage, pageLimit));
-            document.getElementById("paging_infopayment").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            // document.getElementById("paging_infopayment").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            document.getElementById("paging_infopayment").innerHTML =
+    `${txtPage} ${page} ${txtOf} ${data.totalPages} ${txtPages}`;
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -494,7 +503,7 @@ $(function () {
         $(".loaderpays").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
         $(".form-reset").val("");
         $.ajax({
-            url: "../admin/addnewpayment", // Clean URL!
+            url: "../payment/addnewpayment", // Clean URL!
             method: "POST",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -515,7 +524,7 @@ $(function () {
     //delete message
     $(document).on("click", ".deletepayment", function () {
         const payid = $(this).attr("datas");
-        $.post(`../admin/deletepayment/${payid}`, function (response) {
+        $.post(`../payment/deletepayment/${payid}`, function (response) {
             if (response) {
                 showToast("Success", JSON.parse(response), "success");
                 fetchPaymentPlatform(currentPage, pageLimit);
@@ -530,7 +539,7 @@ $(function () {
     $(document).on("click", ".editpayment", function () {
         $("#editpayplatform").modal("show");
         const payid = $(this).attr("datas");
-        $.post(`../admin/editpayment/${payid}`, function (response) {
+        $.post(`../payment/editpayment/${payid}`, function (response) {
             const data = JSON.parse(response)[0];
             $("#maxiamounts").val(data.max_withdrawal);
             $("#minamount").val(data.max_deposit);
@@ -556,7 +565,7 @@ $(function () {
         const statecurrent = $(".statecurrent").val();
         const paymentids = $("#paymentids").val();
         $(".loaderpayanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
-        $.post(`../admin/updateplatform/${typecurrency}/${maxiamounts}/${minamount}/${statecurrent}/${paymentids}`, function (response) {
+        $.post(`../payment/updateplatform/${typecurrency}/${maxiamounts}/${minamount}/${statecurrent}/${paymentids}`, function (response) {
             $(".loaderpayanup").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
             if (response) {
                 showToast("Success", JSON.parse(response), "success");

@@ -10,7 +10,11 @@ $(function () {
       duration: 3000 // auto-dismiss after 3s
     });
   }
-
+const langStrings = {
+  Page: document.getElementById("tr_page").textContent,
+  of: document.getElementById("tr_of").textContent,
+  pages: document.getElementById("tr_pages").textContent
+};
   const translations = {
     failedInactive: document.getElementById("trans-failed-inactive").dataset
       .translation,
@@ -49,56 +53,107 @@ $(function () {
     }
     return moneyStr;
   }
-  const states = {
-    1: "Manual Deposit",
-    2: "Bank Transfer",
-    3: "Momo",
-    5: "Crypto"
-  };
-  const Depositdata = (data) => {
-    let html = "";
+  // const states = {
+  //   1: "Manual Deposit",
+  //   2: "Bank Transfer",
+  //   3: "Momo",
+  //   5: "Crypto"
+  // };
+  // const Depositdata = (data) => {
+  //   let html = "";
 
-    data.forEach((item) => {
-      let username =
-        item.reg_type === "email"
-          ? item.email
-          : item.reg_type === "username"
-          ? item.username
-          : item.contact;
-      let timezone = item.timezone.split(" ");
-      timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
-      html += `
-                      <tr>
-                          <td>${item.payment_reference}</td>
-                          <td>${username}</td>
-                          <td>VIP</td>
-                          <td>${
-                            states[item.desposit_channel]
-                              ? states[item.desposit_channel]
-                              : "N/A"
-                          }</td>
-                          <td>${formatMoney(item.amount_paid)}</td>
-                          <td>${formatMoney(item.charges)}</td>
-                          <td>${formatMoney(item.amount_recieved)}</td>
-                          <td>${
-                            item.date_created == undefined
-                              ? ""
-                              : item.date_created.replace(" ", " / ")
-                          }</td>
-                          <td>${timezone}</td>
-                          <td>${item.provider ? item.provider : "N/A"}</td>
-                          <td>${item.user_mobile}</td>
-                          <td>${
-                            item.status.charAt(0).toUpperCase() +
-                            item.status.slice(1)
-                          }</td>
-                          <td>${item.approved_by}</td>
+  //   data.forEach((item) => {
+  //     let username =
+  //       item.reg_type === "email"
+  //         ? item.email
+  //         : item.reg_type === "username"
+  //         ? item.username
+  //         : item.contact;
+  //     let timezone = item.timezone.split(" ");
+  //     timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
+  //     html += `
+  //                     <tr>
+  //                         <td>${item.payment_reference}</td>
+  //                         <td>${username}</td>
+  //                         <td>VIP</td>
+  //                         <td>${
+  //                           states[item.desposit_channel]
+  //                             ? states[item.desposit_channel]
+  //                             : "N/A"
+  //                         }</td>
+  //                         <td>${formatMoney(item.amount_paid)}</td>
+  //                         <td>${formatMoney(item.charges)}</td>
+  //                         <td>${formatMoney(item.amount_recieved)}</td>
+  //                         <td>${
+  //                           item.date_created == undefined
+  //                             ? ""
+  //                             : item.date_created.replace(" ", " / ")
+  //                         }</td>
+  //                         <td>${timezone}</td>
+  //                         <td>${item.provider ? item.provider : "N/A"}</td>
+  //                         <td>${item.user_mobile}</td>
+  //                         <td>${
+  //                           item.status.charAt(0).toUpperCase() +
+  //                           item.status.slice(1)
+  //                         }</td>
+  //                         <td>${item.approved_by}</td>
                           
-                      </tr>
-                  `;
-    });
-    return html;
-  };
+  //                     </tr>
+  //                 `;
+  //   });
+  //   return html;
+  // };
+
+
+  const states = {
+  1: document.getElementById('channel_manual_deposit').innerText,
+  2: document.getElementById('channel_bank_transfer').innerText,
+  3: document.getElementById('channel_momo').innerText,
+  5: document.getElementById('channel_crypto').innerText
+};
+
+const statusMap = {
+  pending: document.getElementById('status_pending').innerText,
+  success: document.getElementById('status_success').innerText,
+  failed: document.getElementById('status_failed').innerText
+};
+
+const Depositdata = (data) => {
+  let html = "";
+
+  data.forEach((item) => {
+    let username = item.reg_type === "email"
+      ? item.email
+      : item.reg_type === "username"
+      ? item.username
+      : item.contact;
+
+    let timezone = item.timezone.split(" ");
+    timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
+
+    let statusText = statusMap[item.status.toLowerCase()] ?? item.status;
+
+    html += `
+      <tr>
+        <td>${item.payment_reference}</td>
+        <td>${username}</td>
+        <td>VIP</td>
+        <td>${states[item.desposit_channel] ?? "N/A"}</td>
+        <td>${formatMoney(item.amount_paid)}</td>
+        <td>${formatMoney(item.charges)}</td>
+        <td>${formatMoney(item.amount_recieved)}</td>
+        <td>${item.date_created ? item.date_created.replace(" ", " / ") : ""}</td>
+        <td>${timezone}</td>
+        <td>${item.provider ?? "N/A"}</td>
+        <td>${item.user_mobile}</td>
+        <td>${statusText}</td>
+        <td>${item.approved_by}</td>
+      </tr>
+    `;
+  });
+
+  return html;
+};
   const renderdeposit = (data) => {
     var html = Depositdata(data);
     $("#DepositContainer").html(html);
@@ -110,7 +165,7 @@ $(function () {
   async function fetchDeposit(page, pageLimit) {
     try {
       const response = await fetch(
-        `../admin/fetchDeposit/${page}/${pageLimit}`
+        `../financial/fetchDeposit/${page}/${pageLimit}`
       );
       const data = await response.json();
 
@@ -122,8 +177,10 @@ $(function () {
         pageLimit,
         (newPage, pageLimit) => fetchDeposit(newPage, pageLimit)
       );
-      document.getElementById("paging_infodeposit").innerHTML =
-        "Page " + page + " of " + data.totalPages + " pages";
+      // document.getElementById("paging_infodeposit").innerHTML =
+      //   "Page " + page + " of " + data.totalPages + " pages";
+        document.getElementById("paging_infodeposit").innerHTML =
+  `${langStrings.Page} ${page} ${langStrings.of} ${data.totalPages} ${langStrings.pages}`;
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -200,7 +257,7 @@ $(function () {
   ) {
     try {
       const response = await fetch(
-        `../admin/filterdeposits/${username}/${depositchanel}/${depositid}/${stautsdeposit}/${startdepo}/${enddepo}/${currentPage}/${pageLimit}`
+        `../financial/filterdeposits/${username}/${depositchanel}/${depositid}/${stautsdeposit}/${startdepo}/${enddepo}/${currentPage}/${pageLimit}`
       );
 
       const data = await response.json();

@@ -262,6 +262,12 @@
     .dark-red {
         color: #af0404;
     }
+
+    #ptns-maskfinances {
+        position: relative;
+        height: 530px;
+        overflow-y: auto;
+    }
 </style>
 
 <span id="lang-main-info" style="display: none;"><?php echo $translator['main_info']; ?></span>
@@ -269,9 +275,10 @@
 <span id="lang-product-settings" style="display: none;"><?php echo $translator['product_settings']; ?></span>
 <span id="lang-currency-settings" style="display: none;"><?php echo $translator['currency_settings']; ?></span>
 <span id="lang-language-settings" style="display: none;"><?php echo $translator['language_settings']; ?></span>
-
 <span id="lang-partners-label" style="display: none;"><?php echo $translator['partners_label']; ?></span>
-
+<span id="status_active" style="display:none;"><?= $translator['status_active'] ?></span>
+<span id="status_inactive" style="display:none;"><?= $translator['status_inactive'] ?></span>
+<span id="status_hidden" style="display:none;"><?= $translator['status_hidden'] ?></span>
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Partners']; ?></h4>
@@ -307,9 +314,14 @@
                 <button type="button" id="ptns-refresh" class="btn bg-white-subtle player" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" id="ptns-search" class="btn bg-white-subtle" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                <!-- <button type="button" id="ptns-search" class="btn bg-white-subtle" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                     <i class="bx bx-check-double" style="font-size: 20px;"></i>
+                </button> -->
+
+                <button type="button" id="ptns-search" class="btn bg-white-subtle" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                    <i class="bx bx-check-double ptns-loader-icon" style="font-size: 20px;"></i>
                 </button>
+
                 <!-- <button type="button" class="btn bg-white-subtle executedeposit" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                     <i class="bx bx-check-double loaderdeposit" style="font-size: 20px;"></i>
                 </button> -->
@@ -393,10 +405,14 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowsnotfy" style="font-size: 12px;">
-                <option value="50">50</option>
+                <!-- <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
-                <option value="500">500</option>
+                <option value="500">500</option> -->
+                 <option value="50"><?= $translator['Fifty'] ?? '50' ?></option>
+    <option value="100"><?= $translator['One Hundred'] ?? '100' ?></option>
+    <option value="200"><?= $translator['Two Hundred'] ?? '200' ?></option>
+    <option value="500"><?= $translator['Five Hundred'] ?? '500' ?></option>
             </select>
             <span class="toplist-right" id="ptns-paginationmessage" aria-label="Page navigation example">
                 <!--Dynamic pagination-->
@@ -409,40 +425,40 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Partners</h5>
+                <h5 class="modal-title"><?= $translator['Partners']; ?></h5>
                 <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
             </div>
             <div class="scrollable-container">
                 <div class="card border mb-4">
                     <div class="card-body">
-                        <h4 class="card-title">Add Partner</h4>
+                        <h4 class="card-title"><?= $translator['Add Partner']; ?></h4>
                         <form id="ptns-pp-personalDetailsForm">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label for="partner-name" class="form-label">Partner Name (<span style="color: #a01616;">*</span>)</label>
+                                        <label for="partner-name" class="form-label"> <?= $translator['Partner Name']; ?>(<span style="color: #a01616;">*</span>)</label>
                                         <input type="text" class="form-control" id="ptns-partner-name" placeholder="e.g Enzerhub" />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="ptns-site-url" class="form-label">Site Url (<span style="color: #a01616;">*</span>)</label>
+                                        <label for="ptns-site-url" class="form-label"><?= $translator['Site Url']; ?>(<span style="color: #a01616;">*</span>)</label>
                                         <input type="text" class="form-control" id="ptns-site-url" placeholder="e.g www.enzerhub.com" />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="ptns-admin-site-rul" class="form-label">Admin Site Url (<span style="color: #a01616;">*</span>)</label>
+                                        <label for="ptns-admin-site-rul" class="form-label"> <?= $translator['Admin Site Url']; ?>(<span style="color: #a01616;">*</span>)</label>
                                         <input type="text" class="form-control" id="ptns-admin-site-url" placeholder="e.g www.enzerhub.com" />
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="pp-countries-edit" class="form-label">Currency </label>
+                                        <label for="pp-countries-edit" class="form-label"><?= $translator['Currency']; ?> </label>
 
                                         <select id="ptns-currency" class="form-select currency-list"></select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="ptns-status" class="form-label">Select State (<span style="color: #a01616;">*</span>)</label>
+                                        <label for="ptns-status" class="form-label"> <?= $translator['Select State']; ?>(<span style="color: #a01616;">*</span>)</label>
 
                                         <select id="ptns-status" class="form-select" disabled="">
-                                            <option value="inactive">Inactive</option>
+                                            <option value="inactive"><?= $translator['Inactive']; ?></option>
                                         </select>
                                     </div>
                                 </div>
@@ -1947,10 +1963,17 @@
                         </span>
                         <span class="top-right-btn" aria-label="Page navigation example">
                             <select class="left-element form-control numrowsnotfy" style="font-size: 12px;">
-                                <option value="50">50</option>
+                                <!-- <option value="50">50</option>
                                 <option value="100">100</option>
                                 <option value="200">200</option>
-                                <option value="500">500</option>
+                                <option value="500">500</option> -->
+
+  
+
+                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+    <option value="100"><?= $translator['100'] ?? '100' ?></option>
+    <option value="200"><?= $translator['200'] ?? '200' ?></option>
+    <option value="500"><?= $translator['500'] ?? '500' ?></option>
                             </select>
                             <span class="toplist-right" id="ptns-pagination" aria-label="Page navigation example">
                                 <!--Dynamic pagination-->

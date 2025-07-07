@@ -18,6 +18,15 @@ const BackupText = document.getElementById("restbackup-text")?.dataset.translati
 const EmailbackupText = getTranslation("emailbackup-text", "Email Backup");
 const DeletebackupText = getTranslation("deletebackup-text", "Delete Backup");
 
+const txtPage = document.getElementById("trans-page").innerText;
+const txtOf = document.getElementById("trans-of").innerText;
+const txtPages = document.getElementById("trans-pages").innerText;
+
+// document.getElementById("paging_info_backup").innerHTML =
+//     `${txtPage} ${currentPage} ${txtOf} ${data.totalPages} ${txtPages}`;
+
+
+
 
 const backupTable = (data) => {
   let html = "";
@@ -122,8 +131,11 @@ const backupTable = (data) => {
           $("#maskk").LoadingOverlay("hide")
           //Render pagination
           renderPaginationForBackups(data.totalPages, currentPage);
-          document.getElementById("paging_info_backup").innerHTML =
-          "Page " + currentPage + " of " + data.totalPages + " pages";
+          // document.getElementById("paging_info_backup").innerHTML =
+          // "Page " + currentPage + " of " + data.totalPages + " pages";
+  document.getElementById("paging_info_backup").innerHTML =
+    `${txtPage} ${currentPage} ${txtOf} ${data.totalPages} ${txtPages}`;
+
         } catch (error) {
           console.error("Error fetching data:", error);
         }

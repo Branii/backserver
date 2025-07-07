@@ -32,7 +32,7 @@ $(function () {
         }
         return moneyStr;
     }
-
+    const unknownText = document.getElementById("trans-unknown").innerText;
     const translatorScript = document.querySelector(".translations");
     const translator = JSON.parse(translatorScript.textContent);
     const AccountTransactions = (data) => {
@@ -59,26 +59,24 @@ $(function () {
         data.forEach((item) => {
             //  let formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-            if (item.order_type === 12) return;
-            let timezone = item.timezone.split(" ");
+            let timezone = item.timezone ? item.timezone.split(" ") : ["UTC", "+0"];
             timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
-            html += `
-                      <tr class="trow">
-                        <td>${"TR" + item.order_id.substring(0, 7)}</td>
-                        <td>${username}</td>
-                        <td>${item.name}</td>
-                        <td><i class='bx bxs-circle' style='color:${statusColor[item.order_type].color};font-size:8px;margin-right:5px;'></i>${statusColor[item.order_type].title}</td>
-                        <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
-                        <td>${formatMoney(item.balance)}</td>
-                        <td>${formatTimestamp(item.date_created)}</td>
-                        <td>${timezone}</td>
-                        <td>${item.order_id}</td>
-                        <td> <span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${completes}</span></td>
-                        <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
-                      </tr>
-                  `;
-        });
 
+            html += `
+            <tr class="trow">
+                <td>${"TR" + item.order_id.substring(0, 7)}</td>
+                <td>${username}</td>
+                <td>${item.name}</td>
+                <td> <i class='bx bxs-circle' style='color:${statusColor[item.order_type]?.color || "#000"};font-size:8px;margin-right:5px;'></i>${statusColor[item.order_type]?.title || unknownText}</td>
+                <td>${formatMoney(item.account_change) < 0 ? formatMoney(item.account_change) : `+ ${formatMoney(item.account_change)}`}</td>
+                <td>${formatMoney(item.balance)}</td>
+                <td>${formatTimestamp(item.date_created)}</td>
+                <td>${timezone}</td>
+                <td>${item.order_id}</td>
+                <td><span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${completes}</span></td>
+                <td><i value='${item.order_id}_${item.game_type}_${item.order_type}' class='bx bx-info-circle tinfo' style='color:#868c87;font-size:18px;cursor:pointer;'></i></td>
+            </tr>`;
+        });
         return html;
     };
 
@@ -141,7 +139,9 @@ $(function () {
     };
 
     const render = (data) => {
+        //   console.log("Rendering to Table Body:", data);
         var html = AccountTransactions(data);
+        // console.log("Generated HTML:", html);
         $("#dataContainer").html(html);
     };
 
@@ -152,7 +152,8 @@ $(function () {
         try {
             const response = await fetch(`../businessflow/transactiondata/${page}/${pageLimit}`);
             const data = await response.json();
-            console.lo
+            // Logs the entire response
+            // console.log("Transaction Data Array:", data.transaction); // Logs just the transaction list
             $("#mask").LoadingOverlay("hide");
             render(data.transaction);
             renderPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchTrasaction(newPage, pageLimit));
@@ -161,6 +162,7 @@ $(function () {
             console.error("Error fetching data:", error);
         }
     }
+
     fetchTrasaction(currentPage, pageLimit);
 
     function renderPagination(totalPages, currentPage, pageLimit, callback) {
@@ -245,7 +247,7 @@ $(function () {
     });
 
     $(document).on("click", ".executetrans", function () {
-        if ($("#transuser").val() == "" && $("#transactionId").val() == "" && $("#ordertypetrans").val() == "" && $("#startdatrans").val() == "" && $(".selectpartner").val() == "") { 
+        if ($("#transuser").val() == "" && $("#transactionId").val() == "" && $("#ordertypetrans").val() == "" && $("#startdatrans").val() == "" && $(".selectpartner").val() == "") {
             showToast(translations.headsUp, translations.selectDataFields, "info");
             return;
         }
@@ -508,13 +510,6 @@ $(function () {
                 $(".userIdtrans").val(""); // Reset user ID if input is cleared
             }
         });
-
-        // Hide the dropdown when an option is selected
-        //  $dropdown.on("click", ".optionlist", function () {
-        //     const selectedValue = $(this).text();
-        //     $input.val(selectedValue); // Optionally set the input value to the selected option
-        //     $dropdown.hide();
-        // });
     });
     // Function to fetch and display users
     function fetchbetUser(query) {

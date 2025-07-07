@@ -1,6 +1,5 @@
 <?php
 
-
 class businessflowController extends Controller
 {
 
@@ -10,7 +9,6 @@ class businessflowController extends Controller
         $this->view->render();
     }
 
-    
     //NOTE -
     //////////////TRANSACTION FUNCTIONS -//////////
     public function transactiondata($pageNumber, $limit)
@@ -21,15 +19,15 @@ class businessflowController extends Controller
     public function filtertransactions($username, $orderid, $ordertype, $partneruid, $startdate, $enddate, $pageNumber, $limit)
     {
         $this->view('exec/businessflow', [
-            'username' => $username,
-            'orderid' => $orderid,
-            'ordertype' => $ordertype,
+            'username'   => $username,
+            'orderid'    => $orderid,
+            'ordertype'  => $ordertype,
             'partneruid' => $partneruid,
-            'startdate' => $startdate,
-            'enddate' => $enddate,
-            'flag' => 'filtertransactions',
-            'page' => $pageNumber,
-            'limit' => $limit,
+            'startdate'  => $startdate,
+            'enddate'    => $enddate,
+            'flag'       => 'filtertransactions',
+            'page'       => $pageNumber,
+            'limit'      => $limit,
 
         ]);
         $this->view->render();
@@ -41,8 +39,8 @@ class businessflowController extends Controller
         $this->view->render();
     }
 
-     //NOTE -
-    //////////////LOTTERY BETS -//////////
+    //NOTE -
+    //////////////LOTTERY BETS FUNCTIONS -//////////
 
     public function lotterydata($pageNumber, $limit)
     {
@@ -66,19 +64,55 @@ class businessflowController extends Controller
     {
         $this->view('exec/businessflow', [
             // 'partner_id' => $partnerID,
-            'uid' => $uid,
+            'uid'        => $uid,
             'betOrderID' => $betOrderID,
-            'gametype' => $gametype,
-            'betstate' => $betstate,
-            'betstatus' => $betstatus,
-            'startdate' => $startdate,
-            'enddate' => $enddate,
-            'page' => $page,
-            'limit' => $limit,
-            'flag' => 'filterbetdata'
+            'gametype'   => $gametype,
+            'betstate'   => $betstate,
+            'betstatus'  => $betstatus,
+            'startdate'  => $startdate,
+            'enddate'    => $enddate,
+            'page'       => $page,
+            'limit'      => $limit,
+            'flag'       => 'filterbetdata',
         ]);
         $this->view->render();
     }
- 
+
+    //NOTE -
+    //////////////TRACK BETS FUNCTIONS -//////////
+    public function trackdata($pageNumber, $limit)
+    {
+        $this->view('exec/businessflow', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'trackdatas']);
+        $this->view->render();
+    }
+
+    public function filterTrackdata($username, $trackstatus, $trackcode, $tracklotery, $startdate, $enddate, $page, $limit)
+    {
+        $this->view('exec/businessflow', [
+
+            'username'    => $username,
+            'trackstatus' => $trackstatus,
+            'trackcode'   => $trackcode,
+            'tracklotery' => $tracklotery,
+            'startdate'   => $startdate,
+            'enddate'     => $enddate,
+            'page'        => $page,
+            'limit'       => $limit,
+            'flag'        => 'filterTrack',
+        ]);
+        $this->view->render();
+    }
+
+    public function getAllTokenbet($tracktoken)
+    {
+        $this->view('exec/businessflow', ['token' => $tracktoken, 'flag' => 'getTracktokenbet']);
+        $this->view->render();
+    }
+
+    public function getTrackbet($tracktoken)
+    {
+        $this->view('exec/businessflow', ['token' => $tracktoken, 'flag' => 'getTrackbet']);
+        $this->view->render();
+    }
 
 }

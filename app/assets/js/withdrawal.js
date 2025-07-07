@@ -23,37 +23,88 @@ $(function () {
           duration: 3000, // auto-dismiss after 3s
       });
   }
-  const withdrawdata = (data) => {
-      let html = "";
-      const status = { 1: "Pending", 2: "Success", 3: "Failed" };
-      const withdrawal_channel = { 3: "Momo", 5: "Crypto", 2: "Bank", 4: "Manual" }; // 3:momo 5:crypto 2:bank 4:manual
+
+  const langStrings = {
+  Page: document.getElementById("tr_page").textContent,
+  of: document.getElementById("tr_of").textContent,
+  pages: document.getElementById("tr_pages").textContent
+};
+
+
+const status = {
+  1: document.getElementById('status_pending').innerText,
+  2: document.getElementById('status_success').innerText,
+  3: document.getElementById('status_failed').innerText
+};
+
+const withdrawal_channel = {
+  3: document.getElementById('channel_momo').innerText,
+  5: document.getElementById('channel_crypto').innerText,
+  2: document.getElementById('channel_bank').innerText,
+  4: document.getElementById('channel_manual').innerText
+};
+
+//   const withdrawdata = (data) => {
+//       let html = "";
+//       const status = { 1: "Pending", 2: "Success", 3: "Failed" };
+//       const withdrawal_channel = { 3: "Momo", 5: "Crypto", 2: "Bank", 4: "Manual" }; // 3:momo 5:crypto 2:bank 4:manual
       
 
 
-      data.forEach((item) => {
-        let timezone = item.withdrawal_timezone.split(" ");
-        timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
-          html += `
-        <tr>
-            <td>${item.withdrawal_id}</td>
-            <td>${item.username}</td>
-            <td>VIP</td>
-            <td>${item.bank_type}</td>
-            <td>${withdrawal_channel[item.withdrawal_channel]}</td>
-            <td>${item.card_holder}</td>
-            <td>${item.bank_card_number}</td>
-            <td>${formatNumber(item.withdrawal_amount)}</td>
-            <td>${formatNumber(item.fee)}</td>
-            <td>${formatNumber(item.actual_withdrawal_amount)}</td>
-            <td>${item.withdrawal_application_time.replace(" ", "/")}</td>
-            <td>${timezone}</td>
-            <td>${status[item.withdrawal_state]}</td>
-            <td>${item.approved_by}</td>
-        </tr>
-          `;
-      });
-      return html;
-  };
+//       data.forEach((item) => {
+//         let timezone = item.withdrawal_timezone.split(" ");
+//         timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
+//           html += `
+//         <tr>
+//             <td>${item.withdrawal_id}</td>
+//             <td>${item.username}</td>
+//             <td>VIP</td>
+//             <td>${item.bank_type}</td>
+//             <td>${withdrawal_channel[item.withdrawal_channel]}</td>
+//             <td>${item.card_holder}</td>
+//             <td>${item.bank_card_number}</td>
+//             <td>${formatNumber(item.withdrawal_amount)}</td>
+//             <td>${formatNumber(item.fee)}</td>
+//             <td>${formatNumber(item.actual_withdrawal_amount)}</td>
+//             <td>${item.withdrawal_application_time.replace(" ", "/")}</td>
+//             <td>${timezone}</td>
+//             <td>${status[item.withdrawal_state]}</td>
+//             <td>${item.approved_by}</td>
+//         </tr>
+//           `;
+//       });
+//       return html;
+//   };
+
+  const withdrawdata = (data) => {
+  let html = "";
+
+  data.forEach((item) => {
+    let timezone = item.withdrawal_timezone.split(" ");
+    timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
+
+    html += `
+      <tr>
+        <td>${item.withdrawal_id}</td>
+        <td>${item.username}</td>
+        <td>VIP</td>
+        <td>${item.bank_type}</td>
+        <td>${withdrawal_channel[item.withdrawal_channel]}</td>
+        <td>${item.card_holder}</td>
+        <td>${item.bank_card_number}</td>
+        <td>${formatNumber(item.withdrawal_amount)}</td>
+        <td>${formatNumber(item.fee)}</td>
+        <td>${formatNumber(item.actual_withdrawal_amount)}</td>
+        <td>${item.withdrawal_application_time.replace(" ", "/")}</td>
+        <td>${timezone}</td>
+        <td>${status[item.withdrawal_state]}</td>
+        <td>${item.approved_by}</td>
+      </tr>
+    `;
+  });
+
+  return html;
+};
 
   const renderwithdraw = (data) => {
       var html = withdrawdata(data);
@@ -66,7 +117,7 @@ $(function () {
   async function fetchwithdraw(pagewithdraw) {
       try {
          
-          let response = await fetch(`../admin/fetchwithdraw/${partnerID}/${pagewithdraw}/${pageLimit}`);
+          let response = await fetch(`../financial/fetchwithdraw/${partnerID}/${pagewithdraw}/${pageLimit}`);
           response = await response.json();
           if (response.status === "error") {
               $("#withdrawContainer").html(`<tr class="no-resultslist"><td colspan="15">Error: ${response.data}</td></tr>`);
@@ -121,7 +172,11 @@ $(function () {
 
       pagLink += "</ul>";
       document.getElementById("paginationwithdraw").innerHTML = pagLink;
-      $("#paging_infowithdraw").text(`Page ${currentPagewithdraw} of ${totalPages} ${totalPages === 1 ? " Page " : " Pages "} `);
+    //   $("#paging_infowithdraw").text(`Page ${currentPagewithdraw} of ${totalPages} ${totalPages === 1 ? " Page " : " Pages "} `);
+      $("#paging_infowithdraw").text(`${langStrings.Page} ${currentPagewithdraw} ${langStrings.of} ${totalPages} ${langStrings.pages}`);
+
+//       document.getElementById("paginationwithdraw").innerHTML = pagLink;
+// $("#paging_infowithdraw").text(`Page ${currentPagewithdraw} of ${totalPages} ${totalPages === 1 ? " Page " : " Pages "} `);
       // Add click event listeners to pagination links
       // document.querySelectorAll("#paginationwithdraw .page-link").forEach((link) => {
       //   link.addEventListener("click", function (e) {
@@ -269,7 +324,7 @@ $(function () {
       widrlStatus = widrlStatus == 0 ? "all" : widrlStatus;
 
       $.ajax({
-          url: `../admin/searchWidrlRecords/${partnerID}/${userID}/${widrlID}/${widrlChannels}/${widrlStatus}/${widrlStartDate}/${widrlEndDate}/${currentPage}/${limit}`,
+          url: `../financial/searchWidrlRecords/${partnerID}/${userID}/${widrlID}/${widrlChannels}/${widrlStatus}/${widrlStartDate}/${widrlEndDate}/${currentPage}/${limit}`,
           type: "POST",
           beforeSend: function () {
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

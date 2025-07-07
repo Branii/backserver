@@ -238,9 +238,9 @@
 <span id="trans-inactive-success" data-translation="<?= htmlspecialchars($translator['SetInactiveSuccess'] ?? 'Set to inactive successfully') ?>" style="display:none;"></span>
 <span id="trans-select-data-fields" data-translation="<?= htmlspecialchars($translator['SelectFilterFields'] ?? 'Select one or more data fields to filter') ?>" style="display:none;"></span>
 <span id="trans-success" data-translation="<?= htmlspecialchars($translator['Success'] ?? 'Success') ?>" style="display:none;"></span>
-
 <!-- Field Label Translations (Hidden Elements) -->
 <span id="trans-partner-name" data-translation="<?= htmlspecialchars($translator['Partner Name'] ?? 'Partner Name') ?>" style="display:none;"></span>
+<span id="trans-unknown" class="hidden"><?= $translator['Unknown'] ?? 'Unknown' ?></span>
 
 
 <!-- toast messages ends here -->
@@ -338,7 +338,7 @@
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Partner Name</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Partner Name']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Transaction Type']; ?></h6>
@@ -362,8 +362,12 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
                         </th>
                         <th>
+                       
                             <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
+
                         </th>
+
+                        
                     </tr>
                 </thead>
 
@@ -407,10 +411,16 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowstrans" style="font-size: 12px;">
-                <option value="50">50</option>
+
+                <!-- <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
-                <option value="500">500</option>
+                <option value="500">500</option> --> 
+                 <option value="20"><?= $translator['20'] ?? '20' ?></option>
+                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+    <option value="100"><?= $translator['100'] ?? '100' ?></option>
+    <option value="200"><?= $translator['200'] ?? '200' ?></option>
+    <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
             <span id="pagination" class="right-element">--pagination--- </span>
         </span>

@@ -9,7 +9,9 @@ $(function () {
       duration: 3000 // auto-dismiss after 3s
     });
   }
-
+const txtPage = document.getElementById("trans-page").innerText;
+const txtOf = document.getElementById("trans-of").innerText;
+const txtPages = document.getElementById("trans-pages").innerText;
   const headsUpText = document.getElementById("trans-heads-up").textContent;
   const selectFieldsText = document.getElementById(
     "trans-select-fields"
@@ -17,12 +19,19 @@ $(function () {
 
   // showToast(headsUpText, selectFieldsText, "info");
   const bankcarddata = (data) => {
-    const states = {
-      1: "In Force",
-      2: "Not Active",
-      3: "Terminated",
-      4: "Deleted"
-    };
+    // const states = {
+    //   1: "In Force",
+    //   2: "Not Active",
+    //   3: "Terminated",
+    //   4: "Deleted"
+    // };
+
+    const bankStates = {
+  1: document.getElementById('bank_state_1').innerText,
+  2: document.getElementById('bank_state_2').innerText,
+  3: document.getElementById('bank_state_3').innerText,
+  4: document.getElementById('bank_state_4').innerText
+};
     let html = "";
 
     data.forEach((item) => {
@@ -39,7 +48,8 @@ $(function () {
                       <td>${item.withdrawal_count}</td>
                       <td>${item.bind_time}</td>
                       <td>${timezone}</td>
-                      <td>${states[item.status]}</td> 
+                 
+                       <td>${bankStates[item.status] ?? item.status}</td>
                     </tr>
                   `;
     });
@@ -72,7 +82,7 @@ $(function () {
       const card_number = $("#bl-card-number").val();
       const status = $("#bl-status").val();
       const response = await fetch(
-        `../admin/fetchbankcard/${partnerID}/${uid}/${bank_type}/${card_number}/${status}/${pagebankcard}/${pageLimit}/1`
+        `../userbank/fetchbankcard/${partnerID}/${uid}/${bank_type}/${card_number}/${status}/${pagebankcard}/${pageLimit}/1`
       );
       const data = await response.json();
       // console.log(response);
@@ -89,8 +99,10 @@ $(function () {
       renderPaginationlist(totalPages, pagebankcard, pageLimit, (newpage) =>
         fetchbankcard(newpage)
       );
-      document.getElementById("paging_infobankcard").innerHTML =
-        "Page " + pagebankcard + " of " + totalPages + " pages";
+      // document.getElementById("paging_infobankcard").innerHTML =
+      //   "Page " + pagebankcard + " of " + totalPages + " pages";
+        document.getElementById("paging_infobankcard").innerHTML =
+    `${txtPage} ${pagebankcard} ${txtOf} ${totalPages} ${txtPages}`;
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -240,7 +252,7 @@ $(function () {
         return;
       }
       $.ajax({
-        url: `../admin/fetchbankcard/${partnerID}/${userID}/${bankType}/${cardNumber}/${state}/${currentPage}/${pageLimit}/1`,
+        url: `../uerbank/fetchbankcard/${partnerID}/${userID}/${bankType}/${cardNumber}/${state}/${currentPage}/${pageLimit}/1`,
         type: "POST",
         beforeSend: function () {
           $($(element).find("i")[0])
@@ -274,8 +286,10 @@ $(function () {
           renderPaginationlist(totalPages, currentPage, pageLimit, (newpage) =>
             searchBankList(newpage)
           );
-          document.getElementById("paging_infobankcard").innerHTML =
-            "Page " + currentPage + " of " + totalPages + " pages";
+          // document.getElementById("paging_infobankcard").innerHTML =
+          //   "Page " + currentPage + " of " + totalPages + " pages";
+            document.getElementById("paging_infobankcard").innerHTML =
+    `${txtPage} ${pagebankcard} ${txtOf} ${totalPages} ${txtPages}`;
         },
         error: function (xhr, status, error) {
           showToast(
@@ -305,7 +319,7 @@ $(function () {
     let optionsHtml = "";
 
     $.post(
-      `../admin/Searchusername/${encodeURIComponent(query)}`,
+      `../admin/searchusername/${encodeURIComponent(query)}`,
       function (response) {
         try {
           const getDisplayName = (user) => {
@@ -362,7 +376,7 @@ $(function () {
     try {
       const elemennt = this;
       $.ajax({
-        url: `../admin/searchBankTypes/${query}`,
+        url: `../userbank/searchBankTypes/${query}`,
         type: "POST",
         beforeSend: function () {
           //  $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

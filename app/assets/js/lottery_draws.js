@@ -15,8 +15,14 @@ $(function () {
   const UNSETTLED_TEXT = document.getElementById('unsettled_text').innerText;
   const PENDING_TEXT = document.getElementById('pending_text').innerText;
 
-  const drawTables = (data) => {
-    let html = '';
+  const txtPage = document.getElementById("trans-page").innerText;
+  const txtOf = document.getElementById("trans-of").innerText;
+  const txtPages = document.getElementById("trans-pages").innerText;
+
+
+
+const drawTables = (data) => {
+    let html = "";
 
     const statusMap = {
       done: SETTLED_TEXT,
@@ -72,6 +78,72 @@ $(function () {
       $('#allGameNames').html(html);
     } catch (error) {
       console.error('Error fetching data:', error);
+      try {
+        const response = await fetch(`../game/getAllgames/${partnerID}`);
+
+        const data = await response.json();
+        let html = ""
+        html += ``
+        data.forEach((item) => {
+           html += `<option value='${item.gt_id}'>${item.name}</option>`
+        })
+        $("#allGameNames").html(html)
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+  }
+  getAllGames() 
+
+
+    const  getAllSpecificDraws = (currentPage, pageLimit,element) => {
+      const gameID       =  $("#allGameNames").val() ;
+      const issueNumber  = $("#ltd-issuenumber").val();
+      const status       = $("#ltd-status").val();
+      const startDate    = $("#ltd-start-date").val();
+      const endDate      = $("#ltd-end-date").val();
+
+
+      try {
+        $.ajax({
+          url:`../game/getSpecificDraws/${partnerID}/${gameID}/${issueNumber}/${status}/${startDate}/${endDate}/${currentPage}/${pageLimit}`,
+          type: "POST",
+          beforeSend: function(){
+              $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+
+          },
+          success: function(response){
+              response  = JSON.parse(response);
+              if(response.status === 'error'){
+                showToast("Error", response.data, "error");
+                return;
+              }
+
+              if(response.data.length === 0){
+                $("#dataContainerDrawsss").html(`<tr class="no-results"><td colspan="12"><img src="/admin/app/assets/images/notfound.png" class="dark-logo" alt="Logo-Dark"></td></tr>`)
+                return;
+              }
+              const data = response.data;
+              renderDrawTable(data);
+              $("#maskkk").LoadingOverlay("hide")
+              const totalPages = Math.ceil(data[0].total_records / pageLimit);
+              renderPaginationForDraws(totalPages, currentPage,(currentPage,pageLimit)=> getAllSpecificDraws(currentPage,pageLimit));
+              // document.getElementById("ltd_paging_info_draws").innerHTML =
+              // "Page " + currentPage + " of " + totalPages + " pages";
+
+              document.getElementById("ltd_paging_info_draws").innerHTML =
+           `${txtPage} ${currentPage} ${txtOf} ${totalPages} ${txtPages}`;
+          },
+          error: function (xhr,status,error){
+            showToast("Error", "Request Error, please contact admin",'error');
+          },
+          complete: function (){
+            $($(element).find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx-check-double");
+          },
+       
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
   }
   getAllGames();

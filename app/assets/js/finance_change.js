@@ -1,112 +1,142 @@
 $(function () {
-  
-  const partnerID  = $('#partner-holder').attr("data-partner-id");
+    const partnerID = $("#partner-holder").attr("data-partner-id");
     function showToast(title, message, type) {
-      $.toast({
-        position: "bottom-right",
-        title: title,
-        message: message,
-        type: type,
-        duration: 3000, // auto-dismiss after 3s
-      });
+        $.toast({
+            position: "bottom-right",
+            title: title,
+            message: message,
+            type: type,
+            duration: 3000, // auto-dismiss after 3s
+        });
     }
 
+    const langStrings = {
+        Page: document.getElementById("tr_page").textContent,
+        of: document.getElementById("tr_of").textContent,
+        pages: document.getElementById("tr_pages").textContent,
+    };
 
-       
-const translations = {
-  headsUp: document.getElementById("trans-heads-up").dataset.translation,
-  failedInactive: document.getElementById("trans-failed-inactive").dataset.translation,
-  inactiveSuccess: document.getElementById("trans-inactive-success").dataset.translation,
-  selectFields: document.getElementById("trans-select-fields").dataset.translation,
-  success: document.getElementById("trans-success").dataset.translation,
-};
+    const translations = {
+        headsUp: document.getElementById("trans-heads-up").dataset.translation,
+        failedInactive: document.getElementById("trans-failed-inactive").dataset.translation,
+        inactiveSuccess: document.getElementById("trans-inactive-success").dataset.translation,
+        selectFields: document.getElementById("trans-select-fields").dataset.translation,
+        success: document.getElementById("trans-success").dataset.translation,
+    };
 
-// showToast(translations.headsUp, translations.failedInactive, "danger");
+    // showToast(translations.headsUp, translations.failedInactive, "danger");
 
-// showToast(translations.headsUp, translations.inactiveSuccess, "success");
+    // showToast(translations.headsUp, translations.inactiveSuccess, "success");
 
-// showToast(translations.headsUp, translations.selectFields, "info");
+    // showToast(translations.headsUp, translations.selectFields, "info");
 
+    const alertTitle = document.getElementById("trans-alert").dataset.translation;
+    const userDoesNotExist = document.getElementById("trans-user-does-not-exist").dataset.translation;
 
+    // showToast(alertTitle, userDoesNotExist, "info");
+    const headsUp = document.getElementById("trans-heads-up").dataset.translation;
+    const allFieldsRequired = document.getElementById("trans-all-fields-required").dataset.translation;
 
-const alertTitle = document.getElementById("trans-alert").dataset.translation;
-const userDoesNotExist = document.getElementById("trans-user-does-not-exist").dataset.translation;
+    const headsUpText = document.getElementById("trans-heads-up").textContent;
+    const selectFieldsText = document.getElementById("trans-select-fields").textContent;
 
-// showToast(alertTitle, userDoesNotExist, "info");
-const headsUp = document.getElementById("trans-heads-up").dataset.translation;
-const allFieldsRequired = document.getElementById("trans-all-fields-required").dataset.translation;
+    // showToast(headsUp, allFieldsRequired, "info");
 
-const headsUpText = document.getElementById("trans-heads-up").textContent;
-const selectFieldsText = document.getElementById("trans-select-fields").textContent;
+    function formatMoney(money) {
+        let moneyStr = String(money);
+        if (moneyStr.includes(".")) {
+            let parts = moneyStr.split(".");
+            if (parts[1].length > 2) {
+                parts[1] = parts[1].substring(0, 4);
+            }
+            moneyStr = parts.join(".").replace(/\.?0+$/, "");
+        }
+        return moneyStr;
+    }
+    // const FinanceData = (data) => {
+    //   let html = "";
 
+    //   data.forEach((item) => {
+    //     let total_income = item.deposit_withdrawal_type == 1 ? `+${item.deposit_and_withdrawal_amount}` :
+    //     item.deposit_withdrawal_type == 4 ? `-${item.deposit_and_withdrawal_amount}` : 0;
 
+    //       let types = item.deposit_withdrawal_type == 1 ? 'Deposit':item.deposit_withdrawal_type == 4 ? 'Withdrawal' : '';
+    //       let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
+    //       let timezone = item.timezone.split(" ");
+    //         timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
+    //      html += `
+    //           <tr>
+    //           <td>${username}</td>
+    //           <td>VIP</td>
+    //           <td>${types}</td>
+    //           <td>${formatMoney(total_income)}</td>
+    //           <td>${formatMoney(item.recharge_balance_in_advance)}</td>
+    //           <td>${item.date_created +' / '+item.deposit_and_withdrawal_time}</td>
+    //           <td>${timezone}</td>
+    //           <td>${item.remark.charAt(0).toUpperCase() + item.remark.slice(1)}</td>
+    //           </tr>
+    //               `;
+    //      });
+    //   return html;
+    // };
+    const financeTypes = {
+        1: document.getElementById("finance_deposit").innerText,
+        4: document.getElementById("finance_withdrawal").innerText,
+    };
 
-// showToast(headsUp, allFieldsRequired, "info");
-
-
-
-    function formatMoney(money) { 
-      let moneyStr = String(money); 
-      if (moneyStr.includes(".")) { 
-          let parts = moneyStr.split("."); 
-          if (parts[1].length > 2) { 
-              parts[1] = parts[1].substring(0, 4); 
-          } 
-          moneyStr = parts.join(".").replace(/\.?0+$/, ""); 
-      } 
-      return moneyStr; 
-  }
     const FinanceData = (data) => {
-      let html = "";
+        let html = "";
 
-      data.forEach((item) => {
-        let total_income = item.deposit_withdrawal_type == 1 ? `+${item.deposit_and_withdrawal_amount}` :
-        item.deposit_withdrawal_type == 4 ? `-${item.deposit_and_withdrawal_amount}` : 0;
+        data.forEach((item) => {
+            let total_income = item.deposit_withdrawal_type == 1 ? `+${item.deposit_and_withdrawal_amount}` : item.deposit_withdrawal_type == 4 ? `-${item.deposit_and_withdrawal_amount}` : 0;
 
-          let types = item.deposit_withdrawal_type == 1 ? 'Deposit':item.deposit_withdrawal_type == 4 ? 'Withdrawal' : '';
-          let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
-          let timezone = item.timezone.split(" ");
-            timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>` 
-         html += `
-              <tr>
-              <td>${username}</td>
-              <td>VIP</td>
-              <td>${types}</td>
-              <td>${formatMoney(total_income)}</td>
-              <td>${formatMoney(item.recharge_balance_in_advance)}</td>
-              <td>${item.date_created +' / '+item.deposit_and_withdrawal_time}</td>
-              <td>${timezone}</td>
-              <td>${item.remark.charAt(0).toUpperCase() + item.remark.slice(1)}</td>             
-              </tr>
-                  `;
-         });
-      return html;
+            let types = financeTypes[item.deposit_withdrawal_type] ?? "";
+
+            let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+
+            let timezone = item.timezone.split(" ");
+            timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
+
+            html += `
+      <tr>
+        <td>${username}</td>
+        <td>VIP</td>
+        <td>${types}</td>
+        <td>${formatMoney(total_income)}</td>
+        <td>${formatMoney(item.recharge_balance_in_advance)}</td>
+        <td>${item.date_created} / ${item.deposit_and_withdrawal_time}</td>
+        <td>${timezone}</td>
+        <td>${item.remark.charAt(0).toUpperCase() + item.remark.slice(1)}</td>             
+      </tr>
+    `;
+        });
+
+        return html;
     };
-  
+
     const renderfinace = (data) => {
-      var html = FinanceData(data);
-      $("#financeContainer").html(html);
+        var html = FinanceData(data);
+        $("#financeContainer").html(html);
     };
-  
+
     let currentPage = 1;
     let pageLimit = 20;
-  
-    async function fetchfinance(page,pageLimit) {
-      try {
-        const response = await fetch(
-          `../admin/fetchfinance/${page}/${pageLimit}`
-        );
-        const data = await response.json();
-        $("#maskfinance").LoadingOverlay("hide");
-        renderfinace(data.finance);
-        renderfinacePagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchfinance(newPage, pageLimit));
-        document.getElementById("paging_infofinance").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+
+    async function fetchfinance(page, pageLimit) {
+        try {
+            const response = await fetch(`../financial/fetchfinance/${page}/${pageLimit}`);
+            const data = await response.json();
+            $("#maskfinance").LoadingOverlay("hide");
+            renderfinace(data.finance);
+            renderfinacePagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchfinance(newPage, pageLimit));
+            // document.getElementById("paging_infofinance").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+            document.getElementById("paging_infofinance").innerHTML = `${langStrings.Page} ${page} ${langStrings.of} ${data.totalPages} ${langStrings.pages}`;
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     }
-  
-    fetchfinance(currentPage,pageLimit);
+
+    fetchfinance(currentPage, pageLimit);
     function renderfinacePagination(totalPages, currentPage, pageLimit, callback) {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
             `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
@@ -147,299 +177,245 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
             });
         });
     }
-    
+
     $(".refreshfiance").click(function () {
-      $(".queryholderlistt").val("");
-      $("#maskfinance").LoadingOverlay("show", {
-        background: "rgb(90,106,133,0.1)",
-        size: 3,
-      });
-      fetchfinance(currentPage,pageLimit)
+        $(".queryholderlistt").val("");
+        $("#maskfinance").LoadingOverlay("show", {
+            background: "rgb(90,106,133,0.1)",
+            size: 3,
+        });
+        fetchfinance(currentPage, pageLimit);
     });
-  
+
     //search function
     async function filterfinance(username, financetype, startfinance, endfinance, currentPage, pageLimit) {
-      $.post(
-        `../admin/filterfinance/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`,
-        function (response) {
-          try {
-            const data = JSON.parse(response);
-              // console.log(data)
-            //  return
-            $(".loaderfinance").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-            if (data.finances.length < 1) {
-              $("#financeContainer").html(`
+        $.post(`../financial/filterfinance/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`, function (response) {
+            try {
+                const data = JSON.parse(response);
+                // console.log(data)
+                //  return
+                $(".loaderfinance").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+                if (data.finances.length < 1) {
+                    $("#financeContainer").html(`
                 <tr class="no-results">
                   <td colspan="9">
                     <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
                   </td>
                 </tr>
               `);
-              return;
+                    return;
+                }
+                $("#maskfinance").LoadingOverlay("hide");
+                renderfinace(data.finances);
+                // Render pagination
+                renderfinacePagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterfinance(username, financetype, startfinance, endfinance, newPage, pageLimit));
+                // document.getElementById("paging_infofinance").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+                document.getElementById("paging_infofinance").innerHTML = `${langStrings.Page} ${page} ${langStrings.of} ${data.totalPages} ${langStrings.pages}`;
+            } catch (error) {
+                console.error("Error parsing JSON response:", error);
+            } finally {
+                $(".loaderfinance").removeClass("bx-loader bx-spin").addClass("bx-check-double");
             }
-            $("#maskfinance").LoadingOverlay("hide");
-             renderfinace(data.finances);
-          // Render pagination
-          renderfinacePagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterfinance(username, financetype, startfinance, endfinance, newPage, pageLimit));
-          document.getElementById("paging_infofinance").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
-    
-          } catch (error) {
-            console.error("Error parsing JSON response:", error);
-          } finally {
+        }).fail(function (error) {
+            console.error("Error fetching data:", error);
             $(".loaderfinance").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-          }
+        });
+    }
+
+    $(document).on("click", ".executefinance", function () {
+        if ($("#financefunds").val() == "" && $(".financetype").val() == "" && $(".startfinances").val() == "") {
+            // $("#danger-finance").modal("show");
+            // showToast("Heads up!!","Select one or more data fields to filter","info")
+
+            showToast(headsUpText, selectFieldsText, "info");
+            return;
         }
-      ).fail(function (error) {
-        console.error("Error fetching data:", error);
-        $(".loaderfinance").removeClass("bx-loader bx-spin").addClass("bx-check-double");
-      });
-    }
-
-    $(document).on('click', '.executefinance', function () {
-    
-      if ($("#financefunds").val() == "" && $(".financetype").val() == "" && $(".startfinances").val() == "" ) {
-        // $("#danger-finance").modal("show");
-        // showToast("Heads up!!","Select one or more data fields to filter","info")
-
-     
-        showToast(headsUpText, selectFieldsText, "info");
-        return;
-    }
-      const financetype = $(".financetype").val();
-      const username = $("#financefunds").val();
-      const startfinance = $(".startfinances").val();
-      const endfinance = $(".endfinances").val(); 
-     filterfinance(username,financetype,startfinance,endfinance,currentPage,pageLimit)
-      $(".loaderfinance").removeClass('bx-check-double').addClass('bx-loader bx-spin');
+        const financetype = $(".financetype").val();
+        const username = $("#financefunds").val();
+        const startfinance = $(".startfinances").val();
+        const endfinance = $(".endfinances").val();
+        filterfinance(username, financetype, startfinance, endfinance, currentPage, pageLimit);
+        $(".loaderfinance").removeClass("bx-check-double").addClass("bx-loader bx-spin");
     });
-  
 
-      
     let debounceTimeout = null;
     $(document).ready(function () {
         // Event listener for keyup on #myInput
-        $(document).on('keyup', '#financeinput', function () {
+        $(document).on("keyup", "#financeinput", function () {
             const query = $(this).val().trim();
-    
+
             // Only trigger if input is more than 2 characters
             if (query.length > 1) {
                 clearTimeout(debounceTimeout); // Clear any existing timeout
                 debounceTimeout = setTimeout(fetchUserss, 500, query); // Call fetchUsers with the query after 500ms delay
             } else {
-                $('.financeDropdowns').hide(); // Hide dropdown if input is less than 3 characters
+                $(".financeDropdowns").hide(); // Hide dropdown if input is less than 3 characters
             }
         });
-    
+
         // Handle dropdown item selection
-        $(document).on('change', '.financeDropdowns', function () {
-            const selectedOption = $(this).find('option:selected');
+        $(document).on("change", ".financeDropdowns", function () {
+            const selectedOption = $(this).find("option:selected");
             const selectedUserId = selectedOption.val();
-            const selectedUsername = selectedOption.data('usernames');
-    
+            const selectedUsername = selectedOption.data("usernames");
+
             if (selectedUserId) {
-                $('#financeinput').val(selectedUsername);
-                $('.userIdFields').val(selectedUserId);
-                $('.financeDropdowns').hide();
+                $("#financeinput").val(selectedUsername);
+                $(".userIdFields").val(selectedUserId);
+                $(".financeDropdowns").hide();
             }
         });
-    
+
         $(document).on("click", function (e) {
-          const $dropdownbet = $("#userfinaceDropdown");
-          if (!$(e.target).closest("#financeinput, #userfinaceDropdown").length) {
-              $dropdownbet.hide();
-          }
-      });
+            const $dropdownbet = $("#userfinaceDropdown");
+            if (!$(e.target).closest("#financeinput, #userfinaceDropdown").length) {
+                $dropdownbet.hide();
+            }
+        });
         // Handle manual input clearing
-        $(document).on('input', '#financeDropdowns', function () {
+        $(document).on("input", "#financeDropdowns", function () {
             if (!$(this).val()) {
-                $('.userIdFields').val(''); // Reset user ID if input is cleared
+                $(".userIdFields").val(""); // Reset user ID if input is cleared
             }
         });
     });
-    
-    // Function to fetch and display users
-    function fetchUserss(query) {
-        let optionsHtml = '';
-    
-        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
-            try {
-                response = typeof response === 'string' ? JSON.parse(response) : response;
 
-           //     console.log(response);
-              
-          response.forEach(user => {
-           let   displayValue;
-           let regname;
-            // Display based on regtype
-            if (user.regtype === "email") {
-               displayValue = user.email;
-               regname = user.email;  // Show email
-            } else if (user.regtype === "username") {
-              displayValue = user.username;
-              regname = user.username;  // Show username
-            } else if (user.regtype === "contact") {
-              displayValue = user.contact;
-              regname  = user.contact;  // Show contact
-            }else{
-              displayValue = 'no data found ...';
-              regname = 'no data found ...';  // Show contact
-             }
-          
-              // Append the option to the optionsHtml string
-              optionsHtml += `<option class="optionlist" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
-          });
-                $('.financeDropdowns').html(optionsHtml).show();
-            } catch (error) {
-                console.error("Error parsing response: ", error);
-                $('.financeDropdowns').hide();
-            }
-        }).fail(function () {
-            console.error("Error fetching users.");
-            $('.financeDropdowns').hide();
-        });
-    }
-    
+
     //add money
     $(document).on("click", ".addmoneybtn", function () {
-      // const deposity = $("#financeinput").val()
-      const depositype = $(".depositt").val()
-      const usernames = $(".userIdFields").val();
-      const amount = $(".amount").val();
-      const review = $(".review").val();
-      const approvedby = $(".approved").val()
-      if (amount === "" || review === "" || usernames === "" || approvedby === "") {
-        // showToast("Heads up!!", "All field are required", "info");
-        
-showToast(headsUp, allFieldsRequired, "info");
+        // const deposity = $("#financeinput").val()
+        const depositype = $(".depositt").val();
+        const usernames = $(".userIdFields").val();
+        const amount = $(".amount").val();
+        const review = $(".review").val();
+        const approvedby = $(".approved").val();
+        if (amount === "" || review === "" || usernames === "" || approvedby === "") {
+             showToast("Heads up!!", "All field are required", "info");
 
-        return false;
-      }
-      $("#addfinancemodal").modal("hide");  
-      $(".userIdFields, .amount,.review,#financeinput").val(''); 
-      $(".loaderfinanc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
-      $.post(`../admin/addmoney/${depositype}/${usernames}/${amount}/${approvedby}/${review}`,
-        function (response) {
-             const result = JSON.parse(response)
-          if (result === 'success') {
-            $(".loaderfinanc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send")
-            showToast("Success", "transaction success", "success");
-            fetchfinance(currentPage,pageLimit);
-          } else {
-            showToast("Heads up!!",'transaction failed', "info");
-          }
+            // showToast(headsUp, allFieldsRequired, "info");
+
+            return false;
         }
-      );
+        $("#addfinancemodal").modal("hide");
+        $(".userIdFields, .amount,.review,#financeinput").val("");
+        $(".loaderfinanc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
+        $.post(`../financial/addmoney/${depositype}/${usernames}/${amount}/${approvedby}/${review}`, function (response) {
+            const result = JSON.parse(response);
+            if (result === "success") {
+                $(".loaderfinanc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+                showToast("Success", "transaction success", "success");
+                fetchfinance(currentPage, pageLimit);
+            } else {
+                showToast("Heads up!!", "transaction failed", "info");
+            }
+        });
     });
-  
 
-    //modal 
-    $(document).on('click','.showmodal',function(){
-      $("#addfinancemodal").modal("show");   
-    })
+    //modal
+    $(document).on("click", ".showmodal", function () {
+        $("#addfinancemodal").modal("show");
+    });
 
     let debounceTimeouts = null;
     $(document).ready(function () {
         // Event listener for keyup on #myInput
-        $(document).on('keyup', '#financefunds', function () {
+        $(document).on("keyup", "#financefunds", function () {
             const query = $(this).val().trim();
-    
+
             // Only trigger if input is more than 2 characters
             if (query.length > 1) {
                 clearTimeout(debounceTimeouts); // Clear any existing timeout
                 debounceTimeout = setTimeout(fetchUsers, 500, query); // Call fetchUsers with the query after 500ms delay
             } else {
-                $('.financefunds').hide(); // Hide dropdown if input is less than 3 characters
-            }
-        });
-    
-        // Handle dropdown item selection
-        $(document).on('change', '.financefunds', function () {
-            const selectedOption = $(this).find('option:selected');
-            const selectedUserId = selectedOption.val();
-            const selectedUsername = selectedOption.data('username');
-    
-            if (selectedUserId) {
-                $('#financefunds').val(selectedUsername);
-                $('.userIdfinance').val(selectedUserId);
-                $('.financefunds').hide();
+                $(".financefunds").hide(); // Hide dropdown if input is less than 3 characters
             }
         });
 
-       $(document).on("click", function (e) {
-          const $dropdownbet = $("#userfinaceDropdowns");
-          if (!$(e.target).closest("#financefunds, #userfinaceDropdowns").length) {
-              $dropdownbet.hide();
-          }
-      });
+        // Handle dropdown item selection
+        $(document).on("change", ".financefunds", function () {
+            const selectedOption = $(this).find("option:selected");
+            const selectedUserId = selectedOption.val();
+            const selectedUsername = selectedOption.data("username");
+
+            if (selectedUserId) {
+                $("#financefunds").val(selectedUsername);
+                $(".userIdfinance").val(selectedUserId);
+                $(".financefunds").hide();
+            }
+        });
+
+        $(document).on("click", function (e) {
+            const $dropdownbet = $("#userfinaceDropdowns");
+            if (!$(e.target).closest("#financefunds, #userfinaceDropdowns").length) {
+                $dropdownbet.hide();
+            }
+        });
         // Handle manual input clearing
-        $(document).on('input', '#financefunds', function () {
+        $(document).on("input", "#financefunds", function () {
             if (!$(this).val()) {
-                $('.userIdfinance').val(''); // Reset user ID if input is cleared
+                $(".userIdfinance").val(""); // Reset user ID if input is cleared
             }
         });
     });
-    
+
     // Function to fetch and display users
     function fetchUsers(query) {
-        let optionsHtml = '';
-    
-        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+        let optionsHtml = "";
+
+        $.post(`../admin/searchusername/${encodeURIComponent(query)}`, function (response) {
             try {
-                response = typeof response === 'string' ? JSON.parse(response) : response;
-                response.forEach(user => {
-                  let   displayValues;
-                  let regnames;
-                   // Display based on regtype
-                   if (user.regtype === "email") {
-                      displayValues = user.email;
-                      regnames = user.email;  // Show email
-                   } else if (user.regtype === "username") {
-                     displayValues = user.username;
-                     regnames = user.username;  // Show username
-                   } else if (user.regtype === "contact") {
-                     displayValues = user.contact;
-                     regnames  = user.contact;  // Show contact
-                   }else{
-                    displayValues = 'no data found ...';
-                    regnames  = 'no data found ...';  // Show contact
-                   }
+                response = typeof response === "string" ? JSON.parse(response) : response;
+                response.forEach((user) => {
+                    let displayValues;
+                    let regnames;
+                    // Display based on regtype
+                    if (user.regtype === "email") {
+                        displayValues = user.email;
+                        regnames = user.email; // Show email
+                    } else if (user.regtype === "username") {
+                        displayValues = user.username;
+                        regnames = user.username; // Show username
+                    } else if (user.regtype === "contact") {
+                        displayValues = user.contact;
+                        regnames = user.contact; // Show contact
+                    } else {
+                        displayValues = "no data found ...";
+                        regnames = "no data found ..."; // Show contact
+                    }
                     optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regnames}">${displayValues}</option>`;
                 });
-    
-                $('.financefunds').html(optionsHtml).show();
+
+                $(".financefunds").html(optionsHtml).show();
             } catch (error) {
                 console.error("Error parsing response: ", error);
-                $('.financefunds').hide();
+                $(".financefunds").hide();
             }
         }).fail(function () {
             console.error("Error fetching users.");
-            $('.financefunds').hide();
+            $(".financefunds").hide();
         });
     }
 
     $(".numrowsfinance").change(function () {
-      $("#maskfinance").LoadingOverlay("show", {
-          background: "rgb(90,106,133,0.1)",
-          size: 3,
+        $("#maskfinance").LoadingOverlay("show", {
+            background: "rgb(90,106,133,0.1)",
+            size: 3,
         });
-      const numrows = $(this).val();
-      fetchfinance(currentPage,numrows)
-     });
+        const numrows = $(this).val();
+        fetchfinance(currentPage, numrows);
+    });
 
     function tableScrollFinance() {
-      const tableContainerFinance= document.querySelector(".table-wrapperfinance");
-      const headerRowFinance= document.querySelector(".financeheadrow");
+        const tableContainerFinance = document.querySelector(".table-wrapperfinance");
+        const headerRowFinance = document.querySelector(".financeheadrow");
 
-      tableContainerFinance.addEventListener("scroll", function () {
-          if (tableContainerFinance.scrollTop > 0) {
-              headerRowFinance.classList.add("sticky-financehead");
-          } else {
-              headerRowFinance.classList.remove("sticky-financehead");
-          }
-      });
+        tableContainerFinance.addEventListener("scroll", function () {
+            if (tableContainerFinance.scrollTop > 0) {
+                headerRowFinance.classList.add("sticky-financehead");
+            } else {
+                headerRowFinance.classList.remove("sticky-financehead");
+            }
+        });
     }
     tableScrollFinance();
-
-   
-  });
-  
+});

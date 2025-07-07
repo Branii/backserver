@@ -250,6 +250,11 @@
 <span id="trans-read" style="display: none;"><?php echo $translator['READ']; ?></span>
 <span id="trans-unread" style="display: none;"><?php echo $translator['UNREAD']; ?></span>
 
+<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+
+
 
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -360,10 +365,17 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowsnotfys" style="font-size: 12px;">
-                <option value="50">50</option>
+                <!-- <option value="50">50</option>
                 <option value="100">100</option>
-                <option value="200">200</option>
+                <option value="200">200</option> -->
                 <option value="500">500</option>
+
+
+               <option value="20"><?= $translator['20'] ?? '20' ?></option>
+                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+    <option value="100"><?= $translator['100'] ?? '100' ?></option>
+    <option value="200"><?= $translator['200'] ?? '200' ?></option>
+    <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
             <span class="toplist-right" id="paginationnoti" aria-label="Page navigation example">
                 <!--Dynamic pagination-->

@@ -1,4 +1,3 @@
-
 $(function () {
     const partnerID = $("#partner-holder").attr("data-partner-id");
     //NOTE -
@@ -30,6 +29,9 @@ $(function () {
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
             .join(" "); // Join the parts back with spaces
     };
+    const txtNoRule = document.getElementById("trans-norule").innerText;
+    const txtStopIfNotWin = document.getElementById("trans-stopifnotwin").innerText;
+    const txtStopIfWin = document.getElementById("trans-stopifwin").innerText;
 
     const translatorScript = document.querySelector(".translations"); // Get the script tag
     const translator = JSON.parse(translatorScript.textContent);
@@ -56,9 +58,11 @@ $(function () {
 
         data.forEach((item) => {
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-            let trackrule = item.track_rule == "no_rule" ? "No Rule" : item.track_rule == "stop_if_not_win" ? "Stop If Not Win" : item.track_rule == "stop_if_win" ? "Stop If Win" : "";
+            // let trackrule = item.track_rule == "no_rule" ? "No Rule" : item.track_rule == "stop_if_not_win" ? "Stop If Not Win" : item.track_rule == "stop_if_win" ? "Stop If Win" : "";
+            let trackrule = item.track_rule === "no_rule" ? txtNoRule : item.track_rule === "stop_if_not_win" ? txtStopIfNotWin : item.track_rule === "stop_if_win" ? txtStopIfWin : "";
+
             let timezone = item.timezone.split(" ");
-            timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
+            timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
             htmls += `
                     <tr>
                         <td>${item.track_token}</td>
@@ -85,11 +89,11 @@ $(function () {
             let test = value !== translator["Bet Selection"] && langMap[value] ? langMap[value] : translator["Bet Selection"];
 
             if (value == test) {
-                 htmlbet += `
+                htmlbet += `
                   <td>${value}</td>
                    <td class="${key === "user_selection" ? "bet_userSelection" : ""}">
                     <textarea class="form-control"   readonly style="height: 75px;">${obj[key]}</textarea>
-                    </td>`
+                    </td>`;
             } else {
                 htmlbet += `
            <tr>
@@ -106,36 +110,35 @@ $(function () {
     };
 
     const langMap = {
-        '投注选择:' :'Bet Selection',
-    }
-    
-    const firstRowtrack = {
-        bet_code:    `${translator["Bet Order ID"]}`,
-        draw_period: `${translator["Issue Number"]}`,
-        bet_time:    `${translator["Bet Time"]}`,
-        bet_number:  `${translator["Total Bets"]}`,
-        unit_stake:  `${translator["Unit Stake"]}`,
-        multiplier:  `${translator["Multiplier"]}`,
-        bet_amount:  `${translator["Total Bet Amount"]}`,
-        win_bonus:   `${translator["Win Amount"]}`,
-        rebate_amount:`${translator["Rebate Amount"]}`,
-        num_wins:     `${translator["Number of Wins"]}`,
-        draw_number:  `${translator["Draw Results"]}`,
+        "投注选择:": "Bet Selection",
     };
-    
+
+    const firstRowtrack = {
+        bet_code: `${translator["Bet Order ID"]}`,
+        draw_period: `${translator["Issue Number"]}`,
+        bet_time: `${translator["Bet Time"]}`,
+        bet_number: `${translator["Total Bets"]}`,
+        unit_stake: `${translator["Unit Stake"]}`,
+        multiplier: `${translator["Multiplier"]}`,
+        bet_amount: `${translator["Total Bet Amount"]}`,
+        win_bonus: `${translator["Win Amount"]}`,
+        rebate_amount: `${translator["Rebate Amount"]}`,
+        num_wins: `${translator["Number of Wins"]}`,
+        draw_number: `${translator["Draw Results"]}`,
+    };
+
     const secondRowtrack = {
-        reg_type:   `${translator["Username"]}`,
+        reg_type: `${translator["Username"]}`,
         ip_address: `${translator["IP"]}`,
-        game_type:  `${translator["Lottery Type"]}`,
+        game_type: `${translator["Lottery Type"]}`,
         game_label: `${translator["Game Label"]}`,
-        bettype:    `${translator["Bet Type"]}`,
+        bettype: `${translator["Bet Type"]}`,
         game_model: `${translator["Game Model"]}`,
-        closing_time:`${translator["Closing Time"]}`,
-        opening_time:`${translator["Draw Time"]}`,
-        bet_status:  `${translator["Bet Status"]}`,
+        closing_time: `${translator["Closing Time"]}`,
+        opening_time: `${translator["Draw Time"]}`,
+        bet_status: `${translator["Bet Status"]}`,
         user_selection: `${translator["Bet Selection"]}`,
     };
-     
 
     const rendertrack = (data) => {
         var htmls = Trackbetdata(data);
@@ -147,9 +150,9 @@ $(function () {
 
     async function fetchtrackdata(page, pageLimit) {
         try {
-            const response = await fetch(`../admin/trackdata/${page}/${pageLimit}`);
+            const response = await fetch(`../businessflow/trackdata/${page}/${pageLimit}`);
             const data = await response.json();
-    
+
             $("#masktrack").LoadingOverlay("hide");
             rendertrack(data.trackbet);
             // Render pagination
@@ -162,7 +165,7 @@ $(function () {
 
     async function filterTrack(usernames, trackstatus, trackcode, tracklotery, startdatetrack, enddatetrack, currentPagetrack, pageLimit) {
         try {
-            const response = await fetch(`../admin/filterTrackdata/${usernames}/${trackstatus}/${trackcode}/${tracklotery}/${startdatetrack}/${enddatetrack}/${currentPagetrack}/${pageLimit}`);
+            const response = await fetch(`../businessflow/filterTrackdata/${usernames}/${trackstatus}/${trackcode}/${tracklotery}/${startdatetrack}/${enddatetrack}/${currentPagetrack}/${pageLimit}`);
 
             const data = await response.json();
             if (data.response == "error") {
@@ -236,7 +239,7 @@ $(function () {
         });
     }
 
-     fetchtrackdata(currentPagetrack, pageLimit);
+    fetchtrackdata(currentPagetrack, pageLimit);
 
     $(".playertrack").click(function () {
         let direction = $(this).val();
@@ -265,7 +268,6 @@ $(function () {
             }
         }
     });
-    
 
     $(".refreshtrack").click(function () {
         $(".queryholderlist").val("");
@@ -303,14 +305,14 @@ $(function () {
 
     async function fetchLotteryname() {
         try {
-            const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
+            const response = await fetch(`../businessflow/fetchLotteryname/${partnerID}`); // Await the fetch call
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
             const data = await response.json(); // Parse JSON response
             // console.log(data);
-            let html = `<option value="">${translator['Lottery Type']}</option>`;
+            let html = `<option value="">${translator["Lottery Type"]}</option>`;
             data.forEach((lottery) => {
                 html += `<option value="${lottery.gt_id}" class="">${lottery.name}</option>`;
             });
@@ -322,10 +324,10 @@ $(function () {
     }
     fetchLotteryname();
 
-    $(document).on("click", ".trackinfo", function () {       
+    $(document).on("click", ".trackinfo", function () {
         $("#viewtrackmodal").modal("show");
         const tracktoken = $(this).attr("value");
-       // console.log(tracktoken);
+        // console.log(tracktoken);
 
         $("#row1").empty();
         $("#row2").empty();
@@ -336,7 +338,7 @@ $(function () {
 
     async function fetchAllToken(tracktoken) {
         try {
-            const response = await fetch(`../admin/getAllTokenbet/${tracktoken}`);
+            const response = await fetch(`../businessflow/getAllTokenbet/${tracktoken}`);
             const data = await response.json();
             const tableBody = document.getElementById("trackbetTableBody");
             tableBody.innerHTML = "";
@@ -355,14 +357,14 @@ $(function () {
                     1: "Settled",
                     2: "Unsettled",
                     4: "Cancelled",
-                    7: translator["Refund"]
+                    7: translator["Refund"],
                 };
                 row.innerHTML = `
                 <td>${item.draw_number || "N/A"}</td>     
                 <td>${item.draw_period || "N/A"}</td> 
                 <td>${item.multiplier || "N/A"}</td>       
                 <td>${item.bet_amount || "N/A"}</td> 
-                <td>${states[item.state]|| "N/A"}</td>
+                <td>${states[item.state] || "N/A"}</td>
                 <td>${betstatus[item.bet_status] || "N/A"}</td>    
             `;
                 // Append the row to the table body
@@ -375,7 +377,7 @@ $(function () {
 
     async function fetchTrackDeatails(tracktoken) {
         try {
-            const response = await fetch(`../admin/getTrackbet/${tracktoken}`);
+            const response = await fetch(`../businessflow/getTrackbet/${tracktoken}`);
             const data = await response.json();
             $("#row1").empty();
             $("#row2").empty();
@@ -383,7 +385,7 @@ $(function () {
             let html2 = Showtrackbet(secondRowtrack, data);
             $("#rowtrack").html(html1);
             $("#rowtrack1").html(html2);
-         
+
             // }
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -498,7 +500,6 @@ $(function () {
             }
         });
     }
-
 
     $(".clearitem").on("dblclick", function () {
         $(this).val(""); // Clears the input field

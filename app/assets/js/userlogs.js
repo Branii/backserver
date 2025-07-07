@@ -10,7 +10,9 @@ $(function () {
           duration: 3000, // auto-dismiss after 3s
       });
   }
-
+const txtPage = document.getElementById("trans-page").innerText;
+const txtOf = document.getElementById("trans-of").innerText;
+const txtPages = document.getElementById("trans-pages").innerText;
   
       const translations = {
   headsUp: document.getElementById("trans-heads-up").dataset.translation,
@@ -61,6 +63,8 @@ $(function () {
 
 const headsUpText = document.getElementById("trans-heads-up").textContent;
 const selectFieldsText = document.getElementById("trans-select-fields").textContent;
+
+
 
 // showToast(headsUpText, selectFieldsText, "info");
 // Use the correct object properties:
@@ -147,14 +151,17 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
 
   async function fetchUserlogs(page, pageLimit) {
       try {
-          const response = await fetch(`../admin/userlogsdata/${page}/${pageLimit}`);
+          const response = await fetch(`../user/userlogsdata/${page}/${pageLimit}`);
           const data = await response.json();
           //  console.log(response);
 
           $("#masklogs").LoadingOverlay("hide");
           renderuserlogs(data.userlogs);
           renderuserlogPagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlogs(newPage, pageLimit));
-          document.getElementById("paging_infologs").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+        //    document.getElementById("paging_infologs").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+
+           document.getElementById("paging_infologs").innerHTML = `${txtPage} ${page} ${txtOf} ${data.totalPages} ${txtPages}`;
+
       } catch (error) {
           console.error("Error fetching data:", error);
       }
@@ -164,7 +171,7 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
 
   async function filterUserlogs(usernamelog, startdatelog, enddatelog, currentPage, pageLimit) {
       try {
-          const response = await fetch(`../admin/filterUserlogs/${usernamelog}/${startdatelog}/${enddatelog}/${currentPage}/${pageLimit}`);
+          const response = await fetch(`../user/filterUserlogs/${usernamelog}/${startdatelog}/${enddatelog}/${currentPage}/${pageLimit}`);
           const data = await response.json();
           console.log(response);
           //  return

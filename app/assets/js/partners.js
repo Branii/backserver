@@ -65,7 +65,7 @@ $(() => {
         const state = $("#ptns-state-edit").val();
         const currency = $("#ptns-currency-edit").val();
 
-        $.post(`../admin/editPartnerMainInfo/${partnerID}/${partnerName}/${siteUrl}/${adminSiteUrl}/${clientMinAge}/${verificationType}/${unusedWithdrawalAmount}/${priority}/${state}/${currency}`, function (response) {
+        $.post(`../partner/editPartnerMainInfo/${partnerID}/${partnerName}/${siteUrl}/${adminSiteUrl}/${clientMinAge}/${verificationType}/${unusedWithdrawalAmount}/${priority}/${state}/${currency}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
 
@@ -99,7 +99,7 @@ $(() => {
             .join(",");
         const partnerID = $("#data-holder").attr("data-row-id");
 
-        $.post(`../admin/editPartnerCurrencySettings/${partnerID}/${lotteries}`, function (response) {
+        $.post(`../partner/editPartnerCurrencySettings/${partnerID}/${lotteries}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
                 if (response.status === "error") {
@@ -132,7 +132,7 @@ $(() => {
             .join(",");
         const partnerID = $("#data-holder").attr("data-row-id");
 
-        $.post(`../admin/editPartnerlanguagesSettings/${partnerID}/${languages}`, function (response) {
+        $.post(`../partner/editPartnerlanguagesSettings/${partnerID}/${languages}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
                 if (response.status === "error") {
@@ -164,7 +164,7 @@ $(() => {
             .get()
             .join(",");
         const partnerID = $("#data-holder").attr("data-row-id");
-        $.post(`../admin/editPartnerLotteries/${partnerID}/${lotteries}`, function (response) {
+        $.post(`../partner/editPartnerLotteries/${partnerID}/${lotteries}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
                 if (response.status === "error") {
@@ -202,7 +202,7 @@ $(() => {
         const state = $("#ptns-state-edit").val();
         const currency = $("#ptns-currency-edit").val();
 
-        $.post(`../admin/editPartnerMainInfo/${partnerID}/${partnerName}/${siteUrl}/${adminSiteUrl}/${clientMinAge}/${verificationType}/${unusedWithdrawalAmount}/${priority}/${state}/${currency}`, function (response) {
+        $.post(`../partner/editPartnerMainInfo/${partnerID}/${partnerName}/${siteUrl}/${adminSiteUrl}/${clientMinAge}/${verificationType}/${unusedWithdrawalAmount}/${priority}/${state}/${currency}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
 
@@ -238,7 +238,7 @@ $(() => {
             return;
         }
 
-        $.post(`../admin/searchPartnersNames/${encodeURIComponent(query)}`, function (response) {
+        $.post(`../partner/searchPartnersNames/${encodeURIComponent(query)}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
                 // console.log(response);
@@ -335,7 +335,7 @@ $(() => {
         const encodedAdminSiteUrl = encodeURIComponent(adminSiteUrl).replace(/%2F/g, "%252F");
         const encodedCountries = encodeURIComponent(countries);
 
-        $.post(`../admin/editPaymentPlaftorm/${paymentType}/${paymentTypeName}/${currency}/${status}/${fee}/${maxAmount}/${minAmount}/${siteUrl}/${adminSiteUrl}/${info}/${priority}/${encodedCountries}`, function (response) {
+        $.post(`../partner/editPaymentPlaftorm/${paymentType}/${paymentTypeName}/${currency}/${status}/${fee}/${maxAmount}/${minAmount}/${siteUrl}/${adminSiteUrl}/${info}/${priority}/${encodedCountries}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
 
@@ -383,9 +383,6 @@ $(() => {
         $("#ptns-currency").val("");
     });
 
-    // $(document).on("click", "#ptns-search", function () {
-    //     searchPaymentPlatforms();
-    // });
     $(document).on("click", "#ptns-search", function () {
         console.log("ptns-search button clicked");
         searchPaymentPlatforms();
@@ -401,6 +398,7 @@ $(() => {
         const state = $("#ptns-partnerState").val();
         const startDate = $("#ptns-partnerStartDate").val();
         const endDate = $("#ptns-partnerEndDate").val();
+
         console.log("Search Filters =>", {
             "Partner Name": partnerName,
             Status: state,
@@ -413,7 +411,12 @@ $(() => {
             return;
         }
 
-        $.post(`../admin/searchPartners/${partnerName}/${state}/${startDate}/${endDate}/${page}/${limit}`, function (response) {
+        // Start icon spinner
+        $(".ptns-loader-icon").removeClass("bx-check-double").addClass("bx-loader bx-spin");
+
+        $.post(`../partner/searchPartners/${partnerName}/${state}/${startDate}/${endDate}/${page}/${limit}`, function (response) {
+            $(".ptns-loader-icon").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+
             response = typeof response === "string" ? JSON.parse(response) : response;
 
             if (response.status === "error") {
@@ -443,7 +446,7 @@ $(() => {
     const fetchAllPartners = () => {
         try {
             $.ajax({
-                url: `../admin/fetchPartners/${partnerID}/${page}/${limit}/`,
+                url: `../partner/fetchPartners/${partnerID}/${page}/${limit}/`,
                 type: "POST",
 
                 success: function (response) {
@@ -479,18 +482,27 @@ $(() => {
     };
     fetchAllPartners();
 
-    $(document).on("click", "#ptns-refresh", function () {
+    $("#ptns-refresh").click(function () {
+        $("#ptns-maskfinances").LoadingOverlay("show", {
+            background: "rgba(90, 106, 133, 0.1)",
+            size: 3,
+        });
+
         $("#ptns-partners").val("");
         $("#ptns-partnerState").val("");
         $("#ptns-partnerStartDate").val("");
         $("#ptns-partnerEndDate").val("");
+        // Call fetch function
         fetchAllPartners();
+        setTimeout(function () {
+            $("#ptns-maskfinances").LoadingOverlay("hide");
+        }, 3000); // 3000ms = 3 seconds
     });
 
     const fetchPartnersNames = () => {
         try {
             $.ajax({
-                url: `../admin/fetchPartnersNames/${partnerID}/${page}/${limit}/`,
+                url: `../partner/fetchPartnersNames/${partnerID}/${page}/${limit}/`,
                 type: "POST",
                 success: function (response) {
                     response = JSON.parse(response);
@@ -601,7 +613,7 @@ $(() => {
         const endDate = $("#platformEndDates").val();
         let blocked_payment_platforms = partner.blocked_payment_platforms.split(",");
         try {
-            const response = await fetch(`../admin/filterPartnerPaymentPlatforms/${partnerID}/${blocked_payment_platforms}/${paymentPlatformID}/${curency_types}/${status}/${startDate}/${endDate}/${page}/${limit}`);
+            const response = await fetch(`../partner/filterPartnerPaymentPlatforms/${partnerID}/${blocked_payment_platforms}/${paymentPlatformID}/${curency_types}/${status}/${startDate}/${endDate}/${page}/${limit}`);
 
             const data = await response.json();
             // console.log(data);
@@ -644,7 +656,7 @@ $(() => {
         const encodedSiteUrl = encodeURIComponent(siteUrl).replace(/%2F/g, "%252F");
         const encodedAdminSiteUrl = encodeURIComponent(adminSiteUrl).replace(/%2F/g, "%252F");
 
-        $.post(`../admin/addNewPartner/${partnerName}/${currency}/${encodedSiteUrl}/${encodedAdminSiteUrl}`, function (response) {
+        $.post(`../partner/addNewPartner/${partnerName}/${currency}/${encodedSiteUrl}/${encodedAdminSiteUrl}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
                 // console.log(response);
@@ -820,7 +832,7 @@ $(() => {
     const fetchPaymentPlatform = (paymentPlatform) => {
         let optionsHtml = "";
 
-        $.post(`../admin/fetchPaymentPlatform/${encodeURIComponent(paymentPlatform)}`, function (response) {
+        $.post(`../partner/fetchPaymentPlatform/${encodeURIComponent(paymentPlatform)}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
 
@@ -878,7 +890,7 @@ $(() => {
         flag = "get-active-subs";
         // console.log(agentID);
         $.ajax({
-            url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
+            url: `../partner/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
             type: "POST",
             beforeSend: function () {
                 $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

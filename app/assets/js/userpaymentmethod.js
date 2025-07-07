@@ -64,7 +64,7 @@ $(function () {
   async function fetchuserpayment(page, pageLimit) {
     try {
       const response = await fetch(
-        `../admin/fetchuserpaymentmethod/${page}/${pageLimit}`
+        `../userbank/fetchuserpaymentmethod/${page}/${pageLimit}`
       );
       const jsonData = await response.json();
 
@@ -91,7 +91,7 @@ $(function () {
     const tableBody = $("#uerpaymenttbl tbody");
     tableBody.html("");
     $.ajax({
-      url: `../admin/fetchuserpaymentbyuid/${uid}`,
+      url: `../userbank/fetchuserpaymentbyuid/${uid}`,
       method: "POST",
       dataType: "json",
       success: function (response) {
@@ -129,7 +129,7 @@ $(function () {
     const uid = $(this).data("uid");
     const bankid = $(this).data("bankid");
     $.ajax({
-      url: `../admin/Inactiveuserpaymentmethod/${uid}/${bankid}`,
+      url: `../userbank/Inactiveuserpaymentmethod/${uid}/${bankid}`,
       method: "POST",
       success: function (response) {
         $("#Userpaymentmodal").modal("hide");
@@ -186,7 +186,7 @@ $(function () {
       .removeClass("bx-check-double")
       .addClass("bx-loader bx-spin");
     $.ajax({
-      url: `../admin/filterpaymentdata/${username}/${uid}/${pageNumber}/${limit}`,
+      url: `../userbank/filterpaymentdata/${username}/${uid}/${pageNumber}/${limit}`,
       method: "POST",
       success: function (response) {
         $(".loaderlist")

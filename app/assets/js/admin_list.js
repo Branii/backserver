@@ -12,6 +12,11 @@ $(function () {
     function getTranslation(id, fallback) {
         return document.getElementById(id)?.dataset.translation || fallback;
     }
+const txtPage = document.getElementById("trans-page").innerText;
+const txtOf = document.getElementById("trans-of").innerText;
+const txtPages = document.getElementById("trans-pages").innerText;
+
+
 
     const viewprofile_text = document.getElementById("viewprofile-text")?.dataset.translation || "View Profile";
 
@@ -164,7 +169,10 @@ $(function () {
             renderAdmin(data.admins);
             // Render pagination
             renderPaginationForAdmin(data.totalPages, currentPage);
-            document.getElementById("paging_info_admin").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            // document.getElementById("paging_info_admin").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+
+            document.getElementById("paging_info_admin").innerHTML =
+    `${txtPage} ${currentPage} ${txtOf} ${data.totalPages} ${txtPages}`;
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -659,7 +667,6 @@ $(function () {
         updatePermissions(`../admin/permissions/${encodeURIComponent(JSON.stringify(graph))}/${userId}`, graph);
     });
 
-
     const viewPermissionsModal = document.getElementById("view-permissions");
 
     // Add zoom when the modal is shown
@@ -721,70 +728,60 @@ $(function () {
         clearTimeout(timeout);
         timeout = setTimeout(searchlogs(currentPage, pageLimit, adminId, query), 300);
     });
+
     $(document).on("click", ".search-icon-wrapper", function () {
         const username = $("#transuseradmin").val().trim();
         const uid = $(".adminuserIdtrans").val();
         const pageNumber = 1;
         const limit = 20;
 
-        // Get translations from hidden spans
-
         const headsUpTitle = document.getElementById("trans-heads-up-title").textContent;
         const selectAdminMsg = document.getElementById("trans-select-admin-msg").textContent;
-        // showToast(headsUpTitle, selectAdminMsg, "info");
 
         if (!username) {
-            // showToast("Heads up!", "Please select or type an admin to search.", "info");
             showToast(headsUpTitle, selectAdminMsg, "info");
             return;
         }
 
-        // Hide search icon and show spinner overlay
-        $(".search-icon").hide();
-        $(".search-icon-overlay").show();
+        // Start loading spinner (change icon class)
+        $(".loaderlist").removeClass("bx-check-double").addClass("bx-loader bx-spin");
 
-        // Simulate 2-second loading spinner before sending request
-        setTimeout(() => {
-            $.ajax({
-                url: `../admin/filteradmindata/${username}/${uid}/${pageNumber}/${limit}`,
-                method: "POST",
-                success: function (response) {
-                    try {
-                        if (typeof response === "string") {
-                            response = JSON.parse(response);
-                        }
+        $.ajax({
+            url: `../admin/filteradmindata/${username}/${uid}/${pageNumber}/${limit}`,
+            method: "POST",
+            success: function (response) {
+                $(".loaderlist").removeClass("bx-loader bx-spin").addClass("bx-check-double");
 
-                        if (response.status && Array.isArray(response.data) && response.data.length > 0) {
-                            $("#dataContainerAdmin").empty();
-                            renderAdmin(response.data);
-                        } else {
-                            $("#dataContainerAdmin").html(`
-              <tr class="no-resultslist">
-                <td colspan="10" class="text-center">
-                  <img src="/../admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-                  <p class="mt-2 mb-0 fw-semibold">No matching admin found.</p>
-                </td>
-              </tr>
-            `);
-                        }
-                    } catch (e) {
-                        console.error("Response parsing error:", e);
+                try {
+                    if (typeof response === "string") {
+                        response = JSON.parse(response);
                     }
 
-                    $(".search-icon-overlay").hide();
-                    setTimeout(() => {
-                        $(".search-icon").show();
-                    }, 1000);
-                },
-                error: function (xhr, status, error) {
-                    console.error("AJAX Error:", status, error);
-                    $(".search-icon-overlay").hide();
-                    setTimeout(() => {
-                        $(".search-icon").show();
-                    }, 1000);
-                },
-            });
-        }, 2000); // simulate 2s loading
+                    if (response.status && Array.isArray(response.data) && response.data.length > 0) {
+                        $("#dataContainerAdmin").empty();
+                        renderAdmin(response.data);
+                    } else {
+                        $("#dataContainerAdmin").html(`
+                        <tr class="no-resultslist">
+                            <td colspan="10" class="text-center">
+                                <img src="/../admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                                <p class="mt-2 mb-0 fw-semibold">No matching admin found.</p>
+                            </td>
+                        </tr>
+                    `);
+                    }
+                } catch (e) {
+                    console.error("Response parsing error:", e);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error:", status, error);
+            },
+            complete: function () {
+                // Always reset icon after request
+                $(".loaderlist").removeClass("bx-loader bx-spin").addClass("bx-check-double");
+            },
+        });
     });
 
     //refresh page
