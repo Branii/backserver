@@ -726,10 +726,9 @@ $(function () {
       console.error("Error fetching data:", error);
       $("#usererebate").html(`<option value="">Error loading rebates</option>`);
    }
-}
+  }
 
    fetchRebatedata();
-
 
    $(document).on("click", ".btnaddagent", function () {
       const datas = $("#agentform").serialize();
@@ -921,42 +920,42 @@ $(function () {
    });
 
      const fetchsubagent = (userID, currentPage, pageLimit, element) => {
-      $.ajax({
-         url: `../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
-         type: "POST",
-         beforeSend: function () {
-            //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
-            //  $("#ngp-wl-tbl-wrapper").LoadingOverlay("show");
-         },
-         success: function (response) {
-            response = JSON.parse(response);
-            const data = response.data;
-            // console.log(data);
-            if (response.status === "error") {
-               showToast("Error", data, "error");
-               // $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${data}</td></tr>`);
-               return;
-            }
-            if (data.length === 0) {
+         $.ajax({
+            url: `../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
+            type: "POST",
+            beforeSend: function () {
+               //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+               //  $("#ngp-wl-tbl-wrapper").LoadingOverlay("show");
+            },
+            success: function (response) {
+               response = JSON.parse(response);
+               const data = response.data;
+               // console.log(data);
+               if (response.status === "error") {
+                  showToast("Error", data, "error");
+                  // $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${data}</td></tr>`);
+                  return;
+               }
+               if (data.length === 0) {
+                  const content = $("#userlistContainer").html();
+                  const pagesInfo = $("#paging_infolist").html();
+                  const pagination = $("#paginationuserlist").html();
+                  navigationHistory.push({ content: content, pagination: pagination, pagesInfo: pagesInfo });
+                  $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
+                  return;
+               }
                const content = $("#userlistContainer").html();
                const pagesInfo = $("#paging_infolist").html();
                const pagination = $("#paginationuserlist").html();
                navigationHistory.push({ content: content, pagination: pagination, pagesInfo: pagesInfo });
-               $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
+               $("#userlistContainer").html(UserlistDataV2(response));
+               renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray, newPage, pageLimit));
+               document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
                return;
-            }
-            const content = $("#userlistContainer").html();
-            const pagesInfo = $("#paging_infolist").html();
-            const pagination = $("#paginationuserlist").html();
-            navigationHistory.push({ content: content, pagination: pagination, pagesInfo: pagesInfo });
-            $("#userlistContainer").html(UserlistDataV2(response));
-            renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray, newPage, pageLimit));
-            document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
-            return;
-         },
-         error: function (xhr, status, err) {},
-         complete: function () {},
-      });
+            },
+            error: function (xhr, status, err) {},
+            complete: function () {},
+         });
    };
 
    const UserlistDataV2 = (response) => {
@@ -1046,7 +1045,7 @@ $(function () {
               <tr id="usrl-tr-${item.uid}">
                  <td>${username}</td>
                   <td>${item.nickname}</td>
-                  <td> <nii class="nii">${item.blocked_lotteries}</nii> VIP</td>
+                  <td> <nii class="nii"hidden>${item.blocked_lotteries}</nii> VIP</td>
                  <td class="show-user-rel ${item.agent_level === "*****" ? "no-agent" : ""}" data-user-id="${item.uid}" style="cursor:pointer;">
                ${item.account_type == 1 ? "Customer" : item.account_type == 2 ? "Top Agent" : subsLookups[item.uid] < 2 ? agentNicknamesLookups[item.agent_id] + " > " + username : agentNicknamesLookups[item.agent_id] + " ... " + username}
               </td>
@@ -1110,7 +1109,7 @@ $(function () {
               </tr>
           `;
            });
-      return html;
+       return html;
    };
 
    function toggleBackButton() {
@@ -1246,26 +1245,20 @@ $(function () {
 
    $(document).on("click", ".toggle-lot", function () {
       let id = parseInt($(this).val());
-
       if ($(this).is(":checked")) {
          if (!GamesArr.includes(id)) GamesArr.push(id);
-         // console.log(GamesArr);
       } else {
          GamesArr = GamesArr.filter(item => item !== id);
-         console.log(GamesArr);
-         // toggleLottery(this, false);
       }
    });
 
    $(document).on("click", ".updategames", function () {
        const userID = $("#idHolder").val();
        $.post(`../admin/updatesGames/${userID}/${JSON.stringify(GamesArr)}`,function(res){
-          // let data = JSON.parse(res)
-         //  console.log(res)
            if(res = "success"){
             $("#usl-lottery-name-modal").modal("hide")
             showToast("Heads Up", "User Games Updated sucessfully","success")
-            fetchUserlist(currentPage, pageLimit);
+            fetchUserlist(page = 1, pageLimit = 20);
            }else{
               showToast("Heads Up", "User Games not  Updated","info")
            }
@@ -1785,6 +1778,12 @@ $(function () {
       }
    });
 
+   // // close modal
+   // $(document).on("click", ".usrl-listclose", function () {
+   //    $("#usl-lottery-gamegroup-modal").modal("hide");
+     
+   // });
+
   //game type
 
    let allGamesData;
@@ -1797,13 +1796,14 @@ $(function () {
       if(niiData != "*****"){
          let parsed = JSON.parse(niiData);
            parsedGamenameIds = Array.isArray(parsed.gti) ? parsed.gti : [];
-        // parsedGamenameIds ??[];
-        console.log(parsedGamenameIds) 
+        //  console.log(parsedGamenameIds) 
       }else{
-        //   console.log("ME") 
-     ///  $("#usl-lottery-gameType-modal").modal("show"); 
+         parsedGamenameIds = [];
+         bigArr = [];
+      }
+      
        $.post(`../admin/getallgametype`, function (response) {
-
+         
          const data = JSON.parse(response);
          allGamesData = data
         // console.log(data);
@@ -1832,7 +1832,7 @@ $(function () {
                   if (check && !bigArr.includes(key.id)) {
                   bigArr.push(key.id); 
                   }
-                 // console.log(check)
+                  console.log(check)
                   html += `
                <li class="tab-buttonc item" style="height:45px;display: flex; justify-content: space-between; align-items: center; padding: 5px 10px;">
                   <span style="margin-left: 7px; font-size: 14px;"'>${key.name}</span>
@@ -1850,13 +1850,13 @@ $(function () {
 
          $(".gamediv").html(html);
       });
-      }
+    
       // return;
       
    });
 
    $(document).on("change", ".chkgameids", function() {
-   const gameid = $(this).data("gameid");
+   const gameid = parseInt($(this).data("gameid"));
    if ($(this).is(":checked")) {
       if (!bigArr.includes(gameid)) bigArr.push(gameid);
    } else {
@@ -1867,7 +1867,7 @@ $(function () {
          $(".checkall[data-gametype='" + gametype + "']").prop("checked", false);
       }
    }
- //  console.log(bigArr);
+   console.log(bigArr);
    });
 
    $(document).on("change", ".checkall", function() {
@@ -1887,8 +1887,6 @@ $(function () {
    }
    console.log(bigArr);
    });
-
-
 
    // Accordion toggle
    $(document).on("click", ".togglethis", function () {
@@ -1913,77 +1911,89 @@ $(function () {
       })
    });
 
-      // gametabs
+    // gametabs
    let parsedGamegroupIds = []
-   let niiData;
+   let steveData;
+   let gameGr = []
    $(document).on("click", ".usergamegroup", function () {
+      $("#gamegrouptype").html("");
       $("#usl-lottery-gamegroup-modal").modal("show");
       $("#idHolder").val($(this).attr("data-uid"));  
-         niiData = $(this).closest('tr').find(".nii").text()      
+      steveData = $(this).closest('tr').find(".nii").text()   
+    
    });
 
-   $(document).on("click", ".executegames", function () {
+   $(document).on("click", ".executegroups", function () {
       let lotteryId = $("#lotterys").val();
       let models = $("#allgroup").val();
-      if(niiData != "*****"){
-        let getCurrentGame = JSON.parse(niiData).tabs
+      console.log(lotteryId, models)
+      // console.log(steveData)
+      if(steveData != "*****"){
+        let getCurrentGame = JSON.parse(steveData).tabs
         parsedGamegroupIds = getCurrentGame[lotteryId] ?? []
-       
-      }else{
-       $("usl-lottery-gamegroup-modal").modal("show");
-         $.post(`../admin/fetchgamesTab/${lotteryId}/${models}`,function(res){
-         console.log(res)
-           let maindata = JSON.parse(res);
-           let html = ""; 
-           gameGr = []
-          maindata.data.map((gamegroup) => {
-         let check = parsedGamegroupIds.includes(gamegroup.name);
-         // Avoid duplicate entries in GamesArr
-         if (check && !gameGr.includes(gamegroup.name)) {
-         gameGr.push(gamegroup.name);
-         }
-     
-         html += ` 
-         <tr>
-            <td class="tabname">${gamegroup.name}</td>
-            <td>
-               <input class="form-check-input gametoggle" type="checkbox" ${check ? 'checked' : ''} value="${gamegroup.gp_id}">
-            </td>
-         </tr>
-         `;
-      });
-          $('#gamegrouptype').html(html);
-      }); 
       }
-      // return
+     else{
+       parsedGamegroupIds = []
+       gameGr = [];
+     }
+   //      // Fetch game group data from server
+        $.post(`../admin/fetchgamesTab/${lotteryId}/${models}`, function (res) {
+         // console.log(res);
+             try {
+                 let maindata = JSON.parse(res);
+                 let html = "";
+                // let gameGr = [];
+
+                 maindata.data.forEach((gamegroup) => {
+                     let check = parsedGamegroupIds.includes(gamegroup.name);
+            //         // Avoid duplicate entries
+                     if (check && !gameGr.includes(gamegroup.name)) {
+                         gameGr.push(gamegroup.name);
+                     }
+
+                    html += `
+                        <tr>
+                            <td class="tabname">${gamegroup.name}</td>
+                            <td>
+                                <input class="form-check-input gametoggle" type="checkbox" ${check ? 'checked' : ''} value="${gamegroup.gp_id}">
+                            </td>
+                        </tr>
+                    `;
+                });
+
+              $("#gamegrouptype").html(html);
+          } catch (err) {
+                console.error("Error parsing game group data:", err);
+             }
+        });
+   //}
       
    });
 
-   let gameGr = []
+
    $(document).on("change", ".gametoggle", function () {
       //   const val = parseInt($(this).val());
         const val = $(this).closest("tr").find(".tabname").text()
         console.log(val)
         if ($(this).is(":checked")) {
             if (!gameGr.includes(val)) gameGr.push(val);
-            console.log(gameGr)
+           console.log(gameGr)
         } else {
             gameGr = gameGr.filter((item) => item !== val);
             console.log(gameGr)
         }
-
    });
 
    // updategamegroup
    $(document).on("click", ".updategamegroup", function () {
         let userID = $("#idHolder").val();
-          let models = $("#lotterys").val();
+        let models = $("#lotterys").val();
        //  console.log(userID,models)
       //   return
       $.post(`../admin/updatesGamegroup/${userID}/${models}/${JSON.stringify(gameGr)}`,function(res){
-         console.log(res)
+         // console.log(res)
           if(res ="success"){
-            $("#usl-lottery-gamename-modal").modal("hide"); 
+            $("#usl-lottery-gamegroup-modal").modal("hide"); 
             showToast("Heads Up", "User Games Updated sucessfully","success")
             fetchUserlist(currentPage, pageLimit);
            }else{
@@ -1996,9 +2006,11 @@ $(function () {
    //gamenames headerRowUserList
     let parsedGamegroupIdss = []
     let niiDatas
+   let gameName = []
    $(document).on("click", ".usergamename", function () {
+      $('#gamenametbl').html("");
       $("#usl-lottery-gamenems-modal").modal("show");
-     $("#idHolder").val($(this).attr("data-uid"));  
+      $("#idHolder").val($(this).attr("data-uid"));  
       niiDatas = $(this).closest('tr').find(".nii").text()       
    });
   
@@ -2007,16 +2019,12 @@ $(function () {
       let models = $("#allgames").val();
       let gamenametype = $(".gamenametype").val().split("|")[0];
       console.log(lotteryId,gamenametype)
-
       if(niiDatas != "*****"){
         let getCurrentGames = JSON.parse(niiDatas).gpi
         parsedGamegroupIdss = getCurrentGames[gamenametype] ?? []
        // console.log(niiData)
       }else{
-       $("#usl-lottery-gamenems-modal").modal("show"); 
-      }
-      //return
-      $.post(`../admin/fetchGameNames/${lotteryId}/${models}`,function(res){
+       $.post(`../admin/fetchGameNames/${lotteryId}/${models}`,function(res){
        //  console.log(res)
          // return
            let maindata = JSON.parse(res);
@@ -2040,9 +2048,11 @@ $(function () {
       });
           $('#gamenametbl').html(html);
       });
+      }
+      //return
+    
    })
    
-     let gameName = []
    $(document).on("change", ".gamenametoggle", function () {
         const val = parseInt($(this).val()); 
        // console.log(val)
