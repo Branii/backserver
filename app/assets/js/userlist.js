@@ -1778,12 +1778,6 @@ $(function () {
       }
    });
 
-   // // close modal
-   // $(document).on("click", ".usrl-listclose", function () {
-   //    $("#usl-lottery-gamegroup-modal").modal("hide");
-     
-   // });
-
   //game type
 
    let allGamesData;
@@ -1926,8 +1920,6 @@ $(function () {
    $(document).on("click", ".executegroups", function () {
       let lotteryId = $("#lotterys").val();
       let models = $("#allgroup").val();
-      console.log(lotteryId, models)
-      // console.log(steveData)
       if(steveData != "*****"){
         let getCurrentGame = JSON.parse(steveData).tabs
         parsedGamegroupIds = getCurrentGame[lotteryId] ?? []
@@ -1972,15 +1964,11 @@ $(function () {
 
 
    $(document).on("change", ".gametoggle", function () {
-      //   const val = parseInt($(this).val());
-        const val = $(this).closest("tr").find(".tabname").text()
-        console.log(val)
+       const val = $(this).closest("tr").find(".tabname").text()
         if ($(this).is(":checked")) {
-            if (!gameGr.includes(val)) gameGr.push(val);
-           console.log(gameGr)
+            if (!gameGr.includes(val)) gameGr.push(val);        
         } else {
             gameGr = gameGr.filter((item) => item !== val);
-            console.log(gameGr)
         }
    });
 
@@ -1988,10 +1976,8 @@ $(function () {
    $(document).on("click", ".updategamegroup", function () {
         let userID = $("#idHolder").val();
         let models = $("#lotterys").val();
-       //  console.log(userID,models)
-      //   return
       $.post(`../admin/updatesGamegroup/${userID}/${models}/${JSON.stringify(gameGr)}`,function(res){
-         // console.log(res)
+      
           if(res ="success"){
             $("#usl-lottery-gamegroup-modal").modal("hide"); 
             showToast("Heads Up", "User Games Updated sucessfully","success")
@@ -2006,7 +1992,7 @@ $(function () {
    //gamenames headerRowUserList
     let parsedGamegroupIdss = []
     let niiDatas
-   let gameName = []
+    let gameName = []
    $(document).on("click", ".usergamename", function () {
       $('#gamenametbl').html("");
       $("#usl-lottery-gamenems-modal").modal("show");
@@ -2090,7 +2076,6 @@ $(function () {
       })
    });
 
-
   async function fetchLotteryname() {
       try {
           const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
@@ -2109,7 +2094,6 @@ $(function () {
   }
   fetchLotteryname();
                    
-
 });
 
 const lotteriesMarkup = (lottery, blockedLotteries) => {
