@@ -215,7 +215,7 @@ const lotteryParamTable = (data) => {
 
   async function getAllGamesLottery() {
     try {
-      const response = await fetch(`../admin/getAllGamesLottery`);
+      const response = await fetch(`../game/getAllGamesLottery`);
       const data = await response.json();
       let html = "";
       let translatedSelectGame = getTranslation("Select Game");
@@ -252,7 +252,7 @@ const lotteryParamTable = (data) => {
 
   async function getLotteryGames(lotterId, models) {
     try {
-      const response = await fetch(`../admin/getLotteryGames/${lotterId}/${models}`);
+      const response = await fetch(`../game/getLotteryGames/${lotterId}/${models}`);
       const data = await response.json();
       //  console.log(data);
       renderLotteryParams(data.bonus);
@@ -357,7 +357,7 @@ const lotteryParamTable = (data) => {
   ) {
     try {
       const response = await fetch(
-        `../admin/resettotalbet/${gametypeId}/${gamemodel}/${toatalbetValue}/${rangeSliderValue}`
+        `../game/resettotalbet/${gametypeId}/${gamemodel}/${toatalbetValue}/${rangeSliderValue}`
       );
       const data = await response.json();
       if (data) {
@@ -394,7 +394,7 @@ const lotteryParamTable = (data) => {
   async function updateoddstotalbets(gametypeId,gamemodel,percentageOne,scaledValuesOne, percentageTwo, scaledValueTwo) {
     try {
       const response = await fetch(
-        `../admin/updateoddstotalbets/${gametypeId}/${gamemodel}/${percentageOne}/${scaledValuesOne}/${percentageTwo}/${scaledValueTwo}`
+        `../game/updateoddstotalbets/${gametypeId}/${gamemodel}/${percentageOne}/${scaledValuesOne}/${percentageTwo}/${scaledValueTwo}`
       );
       const data = await response.json();
       if (data) {
@@ -420,7 +420,7 @@ const lotteryParamTable = (data) => {
   $(document).on("change", ".gamestates", function () {
      let states = $(this).is(":checked") ? "active" : "inactive"; // Determine status
     let gamegroupid = $(this).attr("datas");
-    $.post(`../admin/updategamegroup/${gamegroupid}/${states}`,function(response){
+    $.post(`../game/updategamegroup/${gamegroupid}/${states}`,function(response){
          const data = JSON.parse(response);
          if (data.success) {
         showToast(SUCCESS_TEXT, GAME_STATE_UPDATED, "success"); 
@@ -433,7 +433,7 @@ const lotteryParamTable = (data) => {
    $(document).on("change", ".gameslottery", function () {
      let lotterystate = $(this).is(":checked") ? "active" : "inactive"; // Determine status
      let lotteryid = $(this).attr("datas");
-      $.post(`../admin/updategamelottery/${lotteryid}/${lotterystate}`,function(response){
+      $.post(`../game/updategamelottery/${lotteryid}/${lotterystate}`,function(response){
          const data = JSON.parse(response);
          if (data.success) {
         showToast(SUCCESS_TEXT, GAME_STATE_UPDATED, "success"); 
@@ -446,7 +446,7 @@ const lotteryParamTable = (data) => {
 
   async function updateGameStatus(gametypeId, gamemodel, isChecked) {
     try {
-      const response = await fetch(`../admin/updategamestatus/${gametypeId}/${gamemodel}/${isChecked}`);
+      const response = await fetch(`../game/updategamestatus/${gametypeId}/${gamemodel}/${isChecked}`);
       const data = await response.json();
       // console.log(data);
       if (data.success) {

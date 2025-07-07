@@ -85,7 +85,7 @@ $(() => {
       const lotteryType = $(`#lb-lottery-type`).val();
 
       $.ajax({
-         url: `../admin/updateLottery/${maxPrizeAmount}/${maxBetAmountPerIssue}/${maxWinPerPersonPerIssue}/${minBetAmountPerIssue}/${lockTimeForClosingBet}/${sortingWeight}/${lotteryType}/${lotteryID}`,
+         url: `../game/updateLottery/${maxPrizeAmount}/${maxBetAmountPerIssue}/${maxWinPerPersonPerIssue}/${minBetAmountPerIssue}/${lockTimeForClosingBet}/${sortingWeight}/${lotteryType}/${lotteryID}`,
          type: "POST",
          beforeSend: function () {
             $("#lottery-draw-loader").css({ display: "flex" });
@@ -139,7 +139,7 @@ $(() => {
       const lotteryID = $("#lb-id-holder").val();
       const status = $("#lb-toggle-lottery").attr("data-status");
       $.ajax({
-         url: `../admin/updateLotteryStatus/${partnerID}/${lotteryID}/${status}`,
+         url: `../game/updateLotteryStatus/${partnerID}/${lotteryID}/${status}`,
          type: "POST",
          beforeSend: function () {
             $("#lottery-draw-loader").css({ display: "flex" });
@@ -346,7 +346,7 @@ $(() => {
    const fetchLotteryBasicParams = (page, element) => {
       const lottery_id = $("#lottery").val();
       $.ajax({
-         url: `../admin/fetch_lottery_basic_params/${partnerID}/${lottery_id}/${page}`,
+         url: `../game/fetch_lottery_basic_params/${partnerID}/${lottery_id}/${page}`,
          type: "POST",
          beforeSend: function () {
             $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

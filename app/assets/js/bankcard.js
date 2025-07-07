@@ -82,7 +82,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
       const card_number = $("#bl-card-number").val();
       const status = $("#bl-status").val();
       const response = await fetch(
-        `../admin/fetchbankcard/${partnerID}/${uid}/${bank_type}/${card_number}/${status}/${pagebankcard}/${pageLimit}/1`
+        `../userbank/fetchbankcard/${partnerID}/${uid}/${bank_type}/${card_number}/${status}/${pagebankcard}/${pageLimit}/1`
       );
       const data = await response.json();
       // console.log(response);
@@ -252,7 +252,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
         return;
       }
       $.ajax({
-        url: `../admin/fetchbankcard/${partnerID}/${userID}/${bankType}/${cardNumber}/${state}/${currentPage}/${pageLimit}/1`,
+        url: `../uerbank/fetchbankcard/${partnerID}/${userID}/${bankType}/${cardNumber}/${state}/${currentPage}/${pageLimit}/1`,
         type: "POST",
         beforeSend: function () {
           $($(element).find("i")[0])
@@ -319,7 +319,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
     let optionsHtml = "";
 
     $.post(
-      `../admin/Searchusername/${encodeURIComponent(query)}`,
+      `../admin/searchusername/${encodeURIComponent(query)}`,
       function (response) {
         try {
           const getDisplayName = (user) => {
@@ -376,7 +376,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
     try {
       const elemennt = this;
       $.ajax({
-        url: `../admin/searchBankTypes/${query}`,
+        url: `../userbank/searchBankTypes/${query}`,
         type: "POST",
         beforeSend: function () {
           //  $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

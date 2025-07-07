@@ -151,7 +151,7 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
 
   async function fetchUserlogs(page, pageLimit) {
       try {
-          const response = await fetch(`../admin/userlogsdata/${page}/${pageLimit}`);
+          const response = await fetch(`../user/userlogsdata/${page}/${pageLimit}`);
           const data = await response.json();
           //  console.log(response);
 
@@ -171,7 +171,7 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
 
   async function filterUserlogs(usernamelog, startdatelog, enddatelog, currentPage, pageLimit) {
       try {
-          const response = await fetch(`../admin/filterUserlogs/${usernamelog}/${startdatelog}/${enddatelog}/${currentPage}/${pageLimit}`);
+          const response = await fetch(`../user/filterUserlogs/${usernamelog}/${startdatelog}/${enddatelog}/${currentPage}/${pageLimit}`);
           const data = await response.json();
           console.log(response);
           //  return

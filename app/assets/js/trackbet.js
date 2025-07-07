@@ -150,7 +150,7 @@ $(function () {
 
     async function fetchtrackdata(page, pageLimit) {
         try {
-            const response = await fetch(`../admin/trackdata/${page}/${pageLimit}`);
+            const response = await fetch(`../businessflow/trackdata/${page}/${pageLimit}`);
             const data = await response.json();
 
             $("#masktrack").LoadingOverlay("hide");
@@ -165,7 +165,7 @@ $(function () {
 
     async function filterTrack(usernames, trackstatus, trackcode, tracklotery, startdatetrack, enddatetrack, currentPagetrack, pageLimit) {
         try {
-            const response = await fetch(`../admin/filterTrackdata/${usernames}/${trackstatus}/${trackcode}/${tracklotery}/${startdatetrack}/${enddatetrack}/${currentPagetrack}/${pageLimit}`);
+            const response = await fetch(`../businessflow/filterTrackdata/${usernames}/${trackstatus}/${trackcode}/${tracklotery}/${startdatetrack}/${enddatetrack}/${currentPagetrack}/${pageLimit}`);
 
             const data = await response.json();
             if (data.response == "error") {
@@ -305,7 +305,7 @@ $(function () {
 
     async function fetchLotteryname() {
         try {
-            const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
+            const response = await fetch(`../businessflow/fetchLotteryname/${partnerID}`); // Await the fetch call
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -338,7 +338,7 @@ $(function () {
 
     async function fetchAllToken(tracktoken) {
         try {
-            const response = await fetch(`../admin/getAllTokenbet/${tracktoken}`);
+            const response = await fetch(`../businessflow/getAllTokenbet/${tracktoken}`);
             const data = await response.json();
             const tableBody = document.getElementById("trackbetTableBody");
             tableBody.innerHTML = "";
@@ -377,7 +377,7 @@ $(function () {
 
     async function fetchTrackDeatails(tracktoken) {
         try {
-            const response = await fetch(`../admin/getTrackbet/${tracktoken}`);
+            const response = await fetch(`../businessflow/getTrackbet/${tracktoken}`);
             const data = await response.json();
             $("#row1").empty();
             $("#row2").empty();

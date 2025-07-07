@@ -117,7 +117,7 @@ const withdrawal_channel = {
   async function fetchwithdraw(pagewithdraw) {
       try {
          
-          let response = await fetch(`../admin/fetchwithdraw/${partnerID}/${pagewithdraw}/${pageLimit}`);
+          let response = await fetch(`../financial/fetchwithdraw/${partnerID}/${pagewithdraw}/${pageLimit}`);
           response = await response.json();
           if (response.status === "error") {
               $("#withdrawContainer").html(`<tr class="no-resultslist"><td colspan="15">Error: ${response.data}</td></tr>`);
@@ -324,7 +324,7 @@ const withdrawal_channel = {
       widrlStatus = widrlStatus == 0 ? "all" : widrlStatus;
 
       $.ajax({
-          url: `../admin/searchWidrlRecords/${partnerID}/${userID}/${widrlID}/${widrlChannels}/${widrlStatus}/${widrlStartDate}/${widrlEndDate}/${currentPage}/${limit}`,
+          url: `../financial/searchWidrlRecords/${partnerID}/${userID}/${widrlID}/${widrlChannels}/${widrlStatus}/${widrlStartDate}/${widrlEndDate}/${currentPage}/${limit}`,
           type: "POST",
           beforeSend: function () {
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

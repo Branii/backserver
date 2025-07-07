@@ -56,7 +56,7 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
 
   async function fetchUserlinks(page, pageLimit) {
       try {
-          const response = await fetch(`../admin/userlinkdata/${page}/${pageLimit}`);
+          const response = await fetch(`../promotion/userlinkdata/${page}/${pageLimit}`);
           const data = await response.json();
           $("#maskreferal").LoadingOverlay("hide");
           renderuserlinks(data.userlinks);
@@ -70,7 +70,7 @@ const selectFieldsText = document.getElementById("trans-select-fields").textCont
 
   async function filterUserlinks(username, linkstart, linkenddate, currentPage, pageLimit) {
       try {
-          const response = await fetch(`../admin/filterUserlinks/${username}/${linkstart}/${linkenddate}/${currentPage}/${pageLimit}`);
+          const response = await fetch(`../promotion/filterUserlinks/${username}/${linkstart}/${linkenddate}/${currentPage}/${pageLimit}`);
           const data = await response.json();
           // console.log(response)
           //  return

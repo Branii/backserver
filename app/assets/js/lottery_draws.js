@@ -66,7 +66,7 @@ const drawTables = (data) => {
 
   async function getAllGames() {
       try {
-        const response = await fetch(`../admin/getAllgames/${partnerID}`);
+        const response = await fetch(`../game/getAllgames/${partnerID}`);
 
         const data = await response.json();
         let html = ""
@@ -92,7 +92,7 @@ const drawTables = (data) => {
 
       try {
         $.ajax({
-          url:`../admin/getSpecificDraws/${partnerID}/${gameID}/${issueNumber}/${status}/${startDate}/${endDate}/${currentPage}/${pageLimit}`,
+          url:`../game/getSpecificDraws/${partnerID}/${gameID}/${issueNumber}/${status}/${startDate}/${endDate}/${currentPage}/${pageLimit}`,
           type: "POST",
           beforeSend: function(){
               $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");

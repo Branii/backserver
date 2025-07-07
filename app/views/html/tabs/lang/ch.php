@@ -1655,6 +1655,8 @@ return [
     'game_name' => '游戏名称',   // Game Name
     'game_type' => '游戏类型',   // Game Type
     'game_group' => '游戏分组', // Game Group
+    'Reset user Account'=> '重置用户帐户',
+    'Profit Limit'=> '利润限制',
 
 
 

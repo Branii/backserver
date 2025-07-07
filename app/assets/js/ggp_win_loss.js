@@ -44,61 +44,7 @@ $(() => {
     "trans-no-data-title"
   ).textContent;
   const noDataMsg = document.getElementById("trans-no-data-msg").textContent;
-  // showToast(noDataTitle, noDataMsg, "info");
-  // showToast(tooManyTitle, tooManyMsg, "info");
-  // showToast(noUser2Title, noUser2Msg, "info");
-  // showToast(errorTitle, errorMsg, "info");
-  // showToast(noUserTitle, noUserMessage, "info");
-
-  //     const fetchUsersWinLoss = (lottery_id = "all",startDate = "all", endDate ="all",page = 1, limit = 10, generatePages = true) => {
-
-  //         lottery_id = lottery_id ?? "all";
-  //         startDate  = startDate.length === 0  ? "all" : startDate;
-  //         endDate    = endDate.length   === 0  ? "all" : endDate;
-  //         page       = parseInt(page)
-  //         $.ajax({
-  //             url: BASE_URL + `/users_win_loss/${lottery_id}/${startDate}/${endDate}/${page}/${limit}`, // full url with page number ,limit and flag
-  //             type: "POST",
-  //             beforeSend: function(){
-  //                 $("#wl-tbl").LoadingOverlay("show", {
-  //                     background: "rgb(90,106,133,0.1)",
-  //                     size: 3,
-  //                   });
-  // //    $($(".wl-refreshlist").find("i")[0]).removeClass("bx bx-refresh").addClass("bx-loader bx-spin");
-  //             },
-  //             success: function(response){
-  //                 console.log(response);
-  //                 response  = JSON.parse(response);
-  //                 data      = response.data;
-  //                 console.log(response);
-  //                 if(data.status === "error") {
-  //                     // $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">${data.data}</td></tr>`);
-  //                 }
-  //                 if(data.length == 0){
-  //                     $("#winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
-  //                     return;
-  //                 }
-  //                 let htmlMarkup = "";
-  //                 const num_users = Math.ceil(data[0].num_users / 10);
-  //                if(generatePages) renderPaginationGGP("wl-pagination",num_users, page);
-  //                 data.forEach(data => {
-  //                     htmlMarkup += getUserRowMarkup(data);
-  //                 });
-
-  //                 $("#winLossDtholder").html(htmlMarkup);
-  //             },
-  //             error: function(xhr,status,err){
-  //                   console.error("response from server, received" + err);
-  //             },
-  //             complete: function(){
-  //                 $("#wl-tbl").LoadingOverlay("hide", {
-  //                     background: "rgb(90,106,133,0.1)",
-  //                     size: 3,
-  //                   });
-  // // $($(".wl-refreshlist").find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx bx-refresh");
-  //             },
-  //         });
-  //     };
+ 
 
   const fetchLotteryNames = () => {
     try {
@@ -192,7 +138,7 @@ $(() => {
     endDate = endDate.length != 0 ? endDate : "all";
 
     $.ajax({
-      url: `../admin/searchWinLossUser/${partnerID}/${userID}/${lotteryID}/${startDate}/${endDate}/`,
+      url: `../report/searchWinLossUser/${partnerID}/${userID}/${lotteryID}/${startDate}/${endDate}/`,
       type: "POST",
       beforeSend: function () {
         $($(element).find("i")[0])
@@ -282,7 +228,7 @@ $(() => {
     endDate = endDate.length != 0 ? endDate : "all";
 
     $.ajax({
-      url: `../admin/getUserDetails/${userID}/${lotteryID}/${startDate}/${endDate}/`,
+      url: `../report/getUserDetails/${userID}/${lotteryID}/${startDate}/${endDate}/`,
       type: "POST",
       beforeSend: function () {
         $($(element).find("i")[0])
@@ -548,7 +494,7 @@ $(() => {
     endDate = endDate.length != 0 ? endDate : "all";
 
     $.ajax({
-      url: `../admin/fetchTopAgents/${lotteryID}/${startDate}/${endDate}/${currentPage}/${limit}`,
+      url: `../report/fetchTopAgents/${lotteryID}/${startDate}/${endDate}/${currentPage}/${limit}`,
       type: "POST",
       beforeSend: function () {
         $($(element).find("i")[0])
@@ -625,7 +571,7 @@ $(() => {
     flag = "get-active-subs";
     // console.log(agentID);
     $.ajax({
-      url: `../admin/fetchAgentSubs/${partnerID}/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
+      url: `../report/fetchAgentSubs/${partnerID}/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
       type: "POST",
       beforeSend: function () {
         $($(element).find("i")[0])

@@ -171,7 +171,7 @@ $(function () {
     // Fetch lottery bet data
     async function fetchLotteryBet(currentPagebet, pageLimit) {
         try {
-            const response = await fetch(`../admin/lotterydata/${currentPagebet}/${pageLimit}`);
+            const response = await fetch(`../businessflow/lotterydata/${currentPagebet}/${pageLimit}`);
             const data = await response.json();
             $("#maskbet").LoadingOverlay("hide");
             renderlottery(data.lotterybet);
@@ -235,7 +235,7 @@ $(function () {
     }
     // Filter and fetch lottery bet data
     async function filterbetdata(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, currentPagebet, pageLimit) {
-        $.post(`../admin/filterbetdata/${uidd}/${betOrderID}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`).done(function (response) {
+        $.post(`../businessflow/filterbetdata/${uidd}/${betOrderID}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`).done(function (response) {
             try {
                 const data = JSON.parse(response);
                 if (data.response == "error") {
@@ -316,7 +316,7 @@ $(function () {
     const headsUpText = document.getElementById("trans-heads-up").textContent;
     const selectFieldsText = document.getElementById("trans-select-fields").textContent;
 
-    $(".executebet").click(function () {
+      $(".executebet").click(function () {
         if ($("#myInput").val() == "" && $(".typelottery").val() == "" && $(".startdates").val() == "" && $(".betsate").val() == "" && $(".betstatus").val() == "" && $("#lot-betID").val() == "") {
             //   showToast("Heads up!!", "Select one or more data fields to filter", "info");
             showToast(headsUpText, selectFieldsText, "info");
@@ -335,7 +335,7 @@ $(function () {
 
     async function fetchLotteryname() {
         try {
-            const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
+            const response = await fetch(`../businessflow/fetchLotteryname/${partnerID}`); // Await the fetch call
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -358,25 +358,24 @@ $(function () {
         $("#rowbet").empty();
         $("#rowbe1").empty();
         viewstakedBet(betcode);
+        
     });
 
-  async function fetchLotteryname() {
+    async function viewstakedBet(betcode) {
       try {
-          const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
-          if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          const data = await response.json(); // Parse JSON response
-          let html = `<option value="">${translator['Lottery Type']}</option>`;
-          data.forEach((lottery) => {
-            html += `<option value="${lottery.gt_id}|${lottery.lottery_type}" data-lottery="">${lottery.name}|${lottery.gt_id}|${lottery.lottery_type}</option>`;
-          });
-          $(".selectlottery").html(html);
+          const response = await fetch(`../businessflow/viewBetstake/${betcode}`);
+          const data = await response.json();
+          let htmlbet1 = Showbettable(firstRowbet, data);
+          let htmlbet2 = Showbettable(secondRowbet, data);
+          $("#rowbet").html(htmlbet1);
+          $("#rowbet1").html(htmlbet2);
       } catch (error) {
           console.error("Error fetching data:", error);
       }
   }
-  fetchLotteryname();
+    
+
+
 
     let debounceTimeout = null;
     let isPastingss = false;

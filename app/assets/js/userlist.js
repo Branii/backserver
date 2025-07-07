@@ -115,7 +115,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
         flag = "all-subs";
         // console.log(agentID);
         $.ajax({
-            url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
+            url: `../user/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
             type: "POST",
             beforeSend: function () {
                 $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -356,6 +356,61 @@ const txtPages = document.getElementById("trans-pages").innerText;
       }
    });
 
+
+// block user account
+// Open modal when "block user" clicked in dropdown
+$(document).on("click", ".usr-block-user", function () {
+    const userID = $(this).attr("data-uid");
+    // console.log("Dropdown Clicked UID:", userID);
+    $("#idHolder").val(userID);
+    $("#usl-reset-user-dialog").modal("show");
+});
+
+// Confirm block user button inside modal
+$(document).on("click", ".usrl-block-userbtn", function () {
+    const userID = $("#idHolder").val();
+    // console.log("Block Confirmed for UID:", userID);
+
+    $.ajax({
+        url: `../user/resetUser/${userID}`,
+        type: "POST",
+        beforeSend: function () {
+            // console.log("Sending block request for UID:", userID);
+        },
+        success: function (response) {
+            // console.log("Server Response:", response);
+
+            let res;
+            try {
+                res = JSON.parse(response);
+            } catch (e) {
+                // console.error("Invalid JSON from server.");
+                showToast("Error", "Unexpected server response.", "error");
+                return;
+            }
+
+            if (res.status === "success") {
+                $("#usl-reset-user-dialog").modal("hide");
+                showToast("Completed", res.message, "success");
+
+                $(`#usrl-state-${userID}`).text("Blocked");
+            } else {
+                $("#usl-reset-user-dialog").modal("hide");
+                showToast("Heads Up", res.message, "info");
+            }
+        },
+        error: function (xhr, status, error) {
+            // console.error("Block Error:", error);
+            showToast("Error", "An error occurred, please try again.", "error");
+        },
+    });
+});
+
+
+
+
+
+
     const renderuserlist = (data) => {
         if (data.length === 0) {
             $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
@@ -378,7 +433,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
 
         try {
             $.ajax({
-                url: `../admin/userlistdata/${partnerID}/${uid}/${rechargeLevel}/${state}/${startdate}/${enddate}/${page}/${pageLimit}/1`,
+                url: `../user/userlistdata/${partnerID}/${uid}/${rechargeLevel}/${state}/${startdate}/${enddate}/${page}/${pageLimit}/1`,
                 type: "POST",
                 beforeSend: function () {},
                 success: function (response) {
@@ -414,7 +469,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
     fetchUserlist(currentPage, pageLimit);
 
     function filterUserlist(currentPage, pageLimit) {
-        $.post(`../admin/filteruserlist/${currentPage}/${pageLimit}`, function (response) {
+        $.post(`../user/filteruserlist/${currentPage}/${pageLimit}`, function (response) {
             try {
                 // console.log(response);
                 const data = JSON.parse(response);
@@ -448,7 +503,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
     }
 
     const searchUserListData = (uid, rechargeLevel, state, startDate, endDate) => {
-        $.post(`../admin/searchUserListData/${uid}/${rechargeLevel}/${state}/${startDate}/${endDate}/1`, function (response) {
+        $.post(`../user/searchUserListData/${uid}/${rechargeLevel}/${state}/${startDate}/${endDate}/1`, function (response) {
             // $.post(`../admin/searchUserListData/uid/rechargeLevel/state/startDate/endDate`, function (response) {
 
             try {
@@ -709,7 +764,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
 
     async function fetchRebatedata() {
         try {
-            const response = await fetch(`../admin/fetchRebatedata/${partnerID}`); // Await the fetch call
+            const response = await fetch(`../user/fetchRebatedata/${partnerID}`); // Await the fetch call
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -744,7 +799,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
     async function addAgent(datas) {
         try {
             ///api/v1/limvo/selfregister
-            const response = await fetch(`../admin/addAgent/${datas}`, {
+            const response = await fetch(`../user/addAgent/${datas}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -807,7 +862,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
         // console.log(pageLimit);
         try {
             $.ajax({
-                url: `../admin/fetchTopAgent/${rechargeLevel}/${state}/${startDate}/${endDate}/${page}/${pageLimit}`,
+                url: `../user/fetchTopAgent/${rechargeLevel}/${state}/${startDate}/${endDate}/${page}/${pageLimit}`,
                 type: "POST",
                 beforeSend: function () {},
                 success: function (response) {
@@ -843,7 +898,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
         $("#viewquota").modal("show");
         const uid = $(this).attr("data-uid").trim();
         $(".userquotaid").val(uid);
-        $.post(`../admin/getuserrebate/${uid}`, function (data) {
+        $.post(`../user/getuserrebate/${uid}`, function (data) {
             const rebatelist = JSON.parse(data);
             let tableBody = document.getElementById("quotatable").getElementsByTagName("tbody")[0];
             while (tableBody.firstChild) {
@@ -899,7 +954,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
         $(".loaderquota").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
         //
         $.post(
-            `../admin/updateUsedquota/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
+            `../user/updateUsedquota/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
 
             function (result) {
                 setTimeout(function () {
@@ -927,7 +982,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
 
    const fetchsubagent = (userID, currentPage, pageLimit, element) => {
       $.ajax({
-         url: `../admin/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
+         url: `../user/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
          type: "POST",
          beforeSend: function () {
             //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -1114,6 +1169,11 @@ const txtPages = document.getElementById("trans-pages").innerText;
                                  <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
                                   <i class='bx bx-user-minus' ></i>${deleteUserText} 
                                 </a>
+                             
+                                <a class="dropdown-item usr-block-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" data-uid="${item.uid}">
+                                    <i class='bx bx-log-in-circle'></i> block user
+                                </a>
+
                               </div>
                             </div>
                   </td>
@@ -1166,7 +1226,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
         const userID = $("#idHolder").val();
         const lotteryID = "all";
         $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            url: `../user/manageUser/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {
                 //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -1235,7 +1295,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
       const lotteryID = "all";
       let flag = "fetchUserLotteries";
       $.ajax({
-         url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+         url: `../user/manageUser/${userID}/${lotteryID}/${flag}`,
          type: "POST",
          beforeSend: function () {},
          success: function (response) {
@@ -1290,7 +1350,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
         let flag = "updateLotteryState";
 
         $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            url: `../user/manageUser/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1329,7 +1389,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
       const dailyBettingLimit = $("#usrl-daily-betting-total-limit").val();
 
         $.ajax({
-            url: `../admin/updateUserData/${userID}/${depositLimit}/${withdrawalLimit}/${rebate}/${state}/${dailyBettingLimit}/${flag}`,
+            url: `../user/updateUserData/${userID}/${depositLimit}/${withdrawalLimit}/${rebate}/${state}/${dailyBettingLimit}/${flag}`,
             type: "POST",
             beforeSend: function () {
                 $("#overlay-loader").show();
@@ -1379,7 +1439,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
       const lotteryID = "all";
 
         $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            url: `../user/manageUser/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1426,7 +1486,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
         let flag = "blockUserIp";
 
         $.ajax({
-            url: `../admin/manageUser/${userID}/${ulogID}/${flag}`,
+            url: `../user/manageUser/${userID}/${ulogID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1463,7 +1523,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
       const lotteryID = "all";
 
         $.ajax({
-            url: `../admin/manageUser/${userID}/${lotteryID}/${flag}`,
+            url: `../user/manageUser/${userID}/${lotteryID}/${flag}`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1508,7 +1568,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
 
     const fetchUserRel = (userID) => {
         $.ajax({
-            url: `../admin/manageUser/${userID}/all/fetchUserRel`,
+            url: `../user/manageUser/${userID}/all/fetchUserRel`,
             type: "POST",
             beforeSend: function () {},
             success: function (response) {
@@ -1592,7 +1652,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
 
     async function fetchaccount(userid, currentPage, pageLimit) {
         try {
-            const response = await fetch(`../admin/useraccountchange/${userid}/${currentPage}/${pageLimit}`);
+            const response = await fetch(`../user/useraccountchange/${userid}/${currentPage}/${pageLimit}`);
             const data = await response.json();
 
             $("#maskaccount").LoadingOverlay("hide");
@@ -1715,7 +1775,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
 
     async function filterAccountChange(userIdacc, ordertype, startdateusers, enddateusers, currentPage, pageLimit) {
         try {
-            const response = await fetch(`../admin/filterChangeAccount/${userIdacc}/${ordertype}/${startdateusers}/${enddateusers}/${currentPage}/${pageLimit}`);
+            const response = await fetch(`../user/filterChangeAccount/${userIdacc}/${ordertype}/${startdateusers}/${enddateusers}/${currentPage}/${pageLimit}`);
             const data = await response.json();
 
             ///// console.log(response);
@@ -1819,7 +1879,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
       }else{
        $("#usl-lottery-gamename-modal").modal("show"); 
       }
-      $.post(`../admin/getallgametype`, function (response) {
+      $.post(`../user/getallgametype`, function (response) {
 
          const data = JSON.parse(response);
          allGamesData = data
@@ -1912,7 +1972,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
 // Check/uncheck logic
    $(document).on("click", ".updategametype", function () {
         let userID = $("#idHolder").val();
-      $.post(`../admin/updatesGamesnames/${userID}/${JSON.stringify(bigArr)}`,function(res){
+      $.post(`../user/updatesGamesnames/${userID}/${JSON.stringify(bigArr)}`,function(res){
          console.log(res)
           if(res ="success"){
               $("#usl-lottery-gamename-modal").modal("hide"); 
@@ -1945,7 +2005,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
        $("#usl-lottery-gamename-modal").modal("show"); 
       }
       // return
-        $.post(`../admin/fetchgamesTab/${lotteryId}/${models}`,function(res){
+        $.post(`../user/fetchgamesTab/${lotteryId}/${models}`,function(res){
          console.log(res)
            let maindata = JSON.parse(res);
            let html = ""; 
@@ -1991,7 +2051,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
           let models = $("#lotterys").val();
          console.log(userID,models)
       //   return
-      $.post(`../admin/updatesGamegroup/${userID}/${models}/${JSON.stringify(gameGr)}`,function(res){
+      $.post(`../user/updatesGamegroup/${userID}/${models}/${JSON.stringify(gameGr)}`,function(res){
          console.log(res)
           if(res ="success"){
             $("#usl-lottery-gamename-modal").modal("hide"); 
@@ -2026,7 +2086,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
        $("#usl-lottery-gamename-modal").modal("show"); 
       }
       //return
-        $.post(`../admin/fetchGameNames/${lotteryId}/${models}`,function(res){
+        $.post(`../user/fetchGameNames/${lotteryId}/${models}`,function(res){
          console.log(res)
          // return
            let maindata = JSON.parse(res);
@@ -2076,7 +2136,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
    $(document).on("click", ".updategamenames", function () {
        let userID = $("#idHolder").val();
        let gamenametypes = $(".gamenametype").val().split("|")[0];
-      $.post(`../admin/updatesGameNamess/${userID}/${gamenametypes}/${JSON.stringify(gameName)}`,function(res){
+      $.post(`../user/updatesGameNamess/${userID}/${gamenametypes}/${JSON.stringify(gameName)}`,function(res){
          console.log(res)
           if(res ="success"){
             showToast("Heads Up", "User Games Updated sucessfully","success")
@@ -2091,7 +2151,7 @@ $(document).on("click", ".checkall", e => e.stopPropagation());
 
   async function fetchLotteryname() {
       try {
-          const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
+          const response = await fetch(`../user/fetchLotteryname/${partnerID}`); // Await the fetch call
           if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
           }

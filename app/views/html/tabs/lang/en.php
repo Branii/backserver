@@ -1549,5 +1549,6 @@ return [
     'game_name' => 'Game Name',
     'game_type' => 'Game Type',
     'game_group' => 'Game Group',
-
+    'Reset user Account'=> 'Reset user Account',
+   'Profit Limit'=> 'Profit Limit',
 ];

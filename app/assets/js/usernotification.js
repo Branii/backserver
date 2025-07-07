@@ -78,7 +78,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
   async function fetchusernotification(page, pageLimit) {
     try {
       const response = await fetch(
-        `../admin/fetchusernotification/${page}/${pageLimit}`
+        `../announce/fetchusernotification/${page}/${pageLimit}`
       );
       const data = await response.json();
       //console.log(response);
@@ -201,7 +201,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
     pageLimit
   ) {
     $.post(
-      `../admin/filteruserNotifys/${username}/${messagestype}/${startnotfys}/${endnotfys}/${currentPage}/${pageLimit}`,
+      `../announce/filteruserNotifys/${username}/${messagestype}/${startnotfys}/${endnotfys}/${currentPage}/${pageLimit}`,
       function (response) {
         try {
           const data = JSON.parse(response);

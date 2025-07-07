@@ -140,7 +140,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
   async function fetchmessage(page, pageLimit) {
     try {
       const response = await fetch(
-        `../admin/fetchmessage/${page}/${pageLimit}`
+        `../announce/fetchmessage/${page}/${pageLimit}`
       );
       const data = await response.json();
       // console.log(data);
@@ -239,7 +239,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
     pageLimit
   ) {
     $.post(
-      `../admin/filtermessage/${username}/${messagestype}/${startfmessage}/${endmessage}/${currentPage}/${pageLimit}`,
+      `../announce/filtermessage/${username}/${messagestype}/${startfmessage}/${endmessage}/${currentPage}/${pageLimit}`,
       function (response) {
         try {
           const data = JSON.parse(response);
@@ -378,7 +378,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
       .removeClass("bx-send")
       .addClass("bx-loader-circle bx-spin loader");
     $.post(
-      `../admin/createannoucement/${messagetype}/${messagetitle}/${usernames}/${description}/${notistartdate}/${notienddates}/${sendby}`,
+      `../announce/createannoucement/${messagetype}/${messagetitle}/${usernames}/${description}/${notistartdate}/${notienddates}/${sendby}`,
       function (response) {
         if (response) {
           $(".loaderfinancc")
@@ -397,7 +397,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
   //delete message
   $(document).on("click", ".deletemessage", function () {
     const messageid = $(this).attr("datas");
-    $.post(`../admin/deleteannoucement/${messageid}`, function (response) {
+    $.post(`../announce/deleteannoucement/${messageid}`, function (response) {
       if (response) {
         showToast("Success", response, "success");
         fetchmessage(currentPage, pageLimit);
@@ -411,7 +411,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
   $(document).on("click", ".editmsg", function () {
     $("#editmessage").modal("show");
     let msgid = $(this).attr("datas");
-    $.post(`../admin/editannoucement/${msgid}`, function (response) {
+    $.post(`../announce/editannoucement/${msgid}`, function (response) {
       let data = JSON.parse(response)[0];
       $("#note-has-titles").val(data.subject);
       $("#descriptions").val(data.message);
@@ -440,7 +440,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
 
     // Send data
     $.post(
-      `../admin/updateannoucement/${encodeURIComponent(
+      `../announce/updateannoucement/${encodeURIComponent(
         msgtitle
       )}/${encodeURIComponent(msgcontent)}/${updatemsgid}`,
       function (response) {

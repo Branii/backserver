@@ -124,7 +124,7 @@ $(function () {
 
     async function fetchfinance(page, pageLimit) {
         try {
-            const response = await fetch(`../admin/fetchfinance/${page}/${pageLimit}`);
+            const response = await fetch(`../financial/fetchfinance/${page}/${pageLimit}`);
             const data = await response.json();
             $("#maskfinance").LoadingOverlay("hide");
             renderfinace(data.finance);
@@ -189,7 +189,7 @@ $(function () {
 
     //search function
     async function filterfinance(username, financetype, startfinance, endfinance, currentPage, pageLimit) {
-        $.post(`../admin/filterfinance/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`, function (response) {
+        $.post(`../financial/filterfinance/${username}/${financetype}/${startfinance}/${endfinance}/${currentPage}/${pageLimit}`, function (response) {
             try {
                 const data = JSON.parse(response);
                 // console.log(data)
@@ -280,47 +280,6 @@ $(function () {
         });
     });
 
-    // Function to fetch and display users
-    function fetchUserss(query) {
-        let optionsHtml = "";
-
-        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
-            try {
-                response = typeof response === "string" ? JSON.parse(response) : response;
-
-                //     console.log(response);
-
-                response.forEach((user) => {
-                    let displayValue;
-                    let regname;
-                    // Display based on regtype
-                    if (user.regtype === "email") {
-                        displayValue = user.email;
-                        regname = user.email; // Show email
-                    } else if (user.regtype === "username") {
-                        displayValue = user.username;
-                        regname = user.username; // Show username
-                    } else if (user.regtype === "contact") {
-                        displayValue = user.contact;
-                        regname = user.contact; // Show contact
-                    } else {
-                        displayValue = "no data found ...";
-                        regname = "no data found ..."; // Show contact
-                    }
-
-                    // Append the option to the optionsHtml string
-                    optionsHtml += `<option class="optionlist" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
-                });
-                $(".financeDropdowns").html(optionsHtml).show();
-            } catch (error) {
-                console.error("Error parsing response: ", error);
-                $(".financeDropdowns").hide();
-            }
-        }).fail(function () {
-            console.error("Error fetching users.");
-            $(".financeDropdowns").hide();
-        });
-    }
 
     //add money
     $(document).on("click", ".addmoneybtn", function () {
@@ -331,16 +290,16 @@ $(function () {
         const review = $(".review").val();
         const approvedby = $(".approved").val();
         if (amount === "" || review === "" || usernames === "" || approvedby === "") {
-            // showToast("Heads up!!", "All field are required", "info");
+             showToast("Heads up!!", "All field are required", "info");
 
-            showToast(headsUp, allFieldsRequired, "info");
+            // showToast(headsUp, allFieldsRequired, "info");
 
             return false;
         }
         $("#addfinancemodal").modal("hide");
         $(".userIdFields, .amount,.review,#financeinput").val("");
         $(".loaderfinanc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
-        $.post(`../admin/addmoney/${depositype}/${usernames}/${amount}/${approvedby}/${review}`, function (response) {
+        $.post(`../financial/addmoney/${depositype}/${usernames}/${amount}/${approvedby}/${review}`, function (response) {
             const result = JSON.parse(response);
             if (result === "success") {
                 $(".loaderfinanc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
@@ -403,7 +362,7 @@ $(function () {
     function fetchUsers(query) {
         let optionsHtml = "";
 
-        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+        $.post(`../admin/searchusername/${encodeURIComponent(query)}`, function (response) {
             try {
                 response = typeof response === "string" ? JSON.parse(response) : response;
                 response.forEach((user) => {

@@ -165,7 +165,7 @@ const Depositdata = (data) => {
   async function fetchDeposit(page, pageLimit) {
     try {
       const response = await fetch(
-        `../admin/fetchDeposit/${page}/${pageLimit}`
+        `../financial/fetchDeposit/${page}/${pageLimit}`
       );
       const data = await response.json();
 
@@ -257,7 +257,7 @@ const Depositdata = (data) => {
   ) {
     try {
       const response = await fetch(
-        `../admin/filterdeposits/${username}/${depositchanel}/${depositid}/${stautsdeposit}/${startdepo}/${enddepo}/${currentPage}/${pageLimit}`
+        `../financial/filterdeposits/${username}/${depositchanel}/${depositid}/${stautsdeposit}/${startdepo}/${enddepo}/${currentPage}/${pageLimit}`
       );
 
       const data = await response.json();

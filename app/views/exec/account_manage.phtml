@@ -447,6 +447,13 @@ if($flag == "updatesGameNamess"){
         echo json_encode($res['status']);
 }
 
+if ($flag == "resetloginattempt") {
+    $uid = $this->viewData["uid"];
+    $res = UserManageModel::ResetLoginattempt($uid);
+    echo json_encode($res); // Return full status and message
+}
+
+
 
 
 

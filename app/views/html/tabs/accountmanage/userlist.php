@@ -1121,6 +1121,7 @@
     </div>
 </div>
 
+
 <div id="usl-reset-user-dialog" class="modal fade" tabindex="-1" aria-modal="true" role="dialog" style="display: none; top: 363px; left: 191px;">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content" style="width: 75%;">
@@ -1146,9 +1147,11 @@
                     </div>
                     <div class="d-md-flex align-items-center">
                         <div class="mt-3 mt-md-0 ms-auto">
-                            <button type="button" class="btn hstack gap-6 usrl-delete-userbtn" style="border: solid 1px #ccc; color: #e60e38 !important;">
-                                <i class="bx bx-trash loaderquota"></i>
-                                <?= $translator['Delete User']; ?>
+                           <button type="button" class="btn hstack gap-6 usrl-block-userbtn" style="border: solid 1px #ccc; color: #e60e38 !important;">
+                                <i class="bx bx-log-in loaderquota"></i>
+                  
+                         <?= $translator['Reset user Account']; ?>
+                          
                             </button>
                         </div>
                     </div>
