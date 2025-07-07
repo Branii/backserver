@@ -138,11 +138,11 @@ class adminController extends Controller
 
     // side bar datas adminLogs
 
-    public function transactiondata($pageNumber, $limit)
-    {
-        $this->view('exec/businessflow', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'transactiondata']);
-        $this->view->render();
-    }
+    // public function transactiondata($pageNumber, $limit)
+    // {
+    //     $this->view('exec/businessflow', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'transactiondata']);
+    //     $this->view->render();
+    // }
 
     public function gamebetdata($pageNumber, $limit)
     {
@@ -150,34 +150,34 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function filterusername($username)
-    {
-        $this->view('exec/businessflow', ['username' => $username, 'flag' => 'filterusername']);
-        $this->view->render();
-    }
+    // public function filterusername($username)
+    // {
+    //     $this->view('exec/businessflow', ['username' => $username, 'flag' => 'filterusername']);
+    //     $this->view->render();
+    // }
 
-    public function filtertransactions($username, $orderid, $ordertype, $partneruid, $startdate, $enddate, $pageNumber, $limit)
-    {
-        $this->view('exec/businessflow', [
-            'username' => $username,
-            'orderid' => $orderid,
-            'ordertype' => $ordertype,
-            'partneruid' => $partneruid,
-            'startdate' => $startdate,
-            'enddate' => $enddate,
-            'flag' => 'filtertransactions',
-            'page' => $pageNumber,
-            'limit' => $limit,
+    // public function filtertransactions($username, $orderid, $ordertype, $partneruid, $startdate, $enddate, $pageNumber, $limit)
+    // {
+    //     $this->view('exec/businessflow', [
+    //         'username' => $username,
+    //         'orderid' => $orderid,
+    //         'ordertype' => $ordertype,
+    //         'partneruid' => $partneruid,
+    //         'startdate' => $startdate,
+    //         'enddate' => $enddate,
+    //         'flag' => 'filtertransactions',
+    //         'page' => $pageNumber,
+    //         'limit' => $limit,
 
-        ]);
-        $this->view->render();
-    }
+    //     ]);
+    //     $this->view->render();
+    // }
 
-    public function getTransactionBet($transactionId)
-    {
-        $this->view('exec/businessflow', ['transactionId' => $transactionId, 'flag' => 'getTransactionBet']);
-        $this->view->render();
-    }
+    // public function getTransactionBet($transactionId)
+    // {
+    //     $this->view('exec/businessflow', ['transactionId' => $transactionId, 'flag' => 'getTransactionBet']);
+    //     $this->view->render();
+    // }
 
     //NOTE -
     //////////////LOTTERY BETS -//////////
@@ -412,9 +412,9 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function fetchRebatedata($partnerID)
+    public function fetchRebatedata()
     {
-        $this->view('exec/account_manage', ['partner_id' => $partnerID, 'flag' => 'fetchRebatedata']);
+        $this->view('exec/account_manage', ['flag' => 'fetchRebatedata']);
         $this->view->render();
     }
 
@@ -549,8 +549,6 @@ class adminController extends Controller
         $this->view->render();
     }
 
-
-
     public function filterChangeAccount($uid, $ordertype, $startdate, $enddate, $pageNumber, $limit)
     {
         $this->view('exec/account_manage', [
@@ -565,8 +563,67 @@ class adminController extends Controller
         ]);
         $this->view->render();
     }
+    //games for user
+    public function updatesGames($userid,$data)
+    {
+        $this->view('exec/account_manage', ["uid"=>$userid, "data" => $data ,"flag" => 'updateLotteryState']);
+        $this->view->render();
+    }
 
+    public function updatesGamesnames($userid,$data)
+    {
+        $this->view('exec/account_manage', ["uid"=>$userid, "data" => $data ,"flag" => 'updategamenames']);
+        $this->view->render();
+    }
 
+    public function updatesGamegroup($userid,$lotterymodel,$data)
+    {
+   
+   
+        $this->view('exec/account_manage', ["uid"=>$userid, "lotterymodel"=>$lotterymodel, "data" => $data ,"flag" => 'updatesGamegroup']);
+        $this->view->render();
+    }
+
+      public function updatesGameNamess($userid,$lotterymodel,$data)
+    {
+        $this->view('exec/account_manage', ["uid"=>$userid, "lotterymodel"=>$lotterymodel, "data" => $data ,"flag" => 'updatesGameNamess']);
+        $this->view->render();
+    }
+
+   
+     public function getallgamegroup()
+    {
+        $this->view('exec/account_manage', ["flag" => 'getallgamegroup']);
+        $this->view->render();
+    }
+
+    function getallgametype()
+    {
+        $this->view('exec/game_management', ['flag'=>'getallgametype']);
+        $this->view->render();
+    }
+
+     function fetchgamesTab($lotteryid,$model)
+    {
+        $this->view('exec/account_manage', ['lotteryid'=>$lotteryid, 'model'=>$model,'flag'=>'fetchgamesTab']);
+        $this->view->render();
+    }
+
+     function fetchGameNames($lotteryid,$model)
+    {
+        $this->view('exec/account_manage', ['lotteryid'=>$lotteryid, 'model'=>$model,'flag'=>'fetchGameNames']);
+        $this->view->render();
+    }
+
+    
+    
+    public function fetchLoterytype()
+    {
+        $this->view('exec/account_manage', ["flag" => 'fetchLoterytype']);
+        $this->view->render();
+    }
+
+    
     //NOTE -
     ////////////// USERLIST LOGS -//////////
     public function userlogsdata($pageNumber, $limit)
@@ -597,6 +654,7 @@ class adminController extends Controller
         $this->view('exec/partners', ['partner_id' => $partnerID, "flag" => $flag]);
         $this->view->render();
     }
+
 
     public function agent_subordinate($user_id, $pageNumber, $limit)
     {
@@ -775,17 +833,18 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function getLotteryGames(string $lotterId, string $tables)
+    public function getLotteryGames(string $lotterId, string $tables, string $gametypes)
     {
         $this->view('exec/game_management', [
             'flag' => 'getLotteryGames',
             'gameId' => $lotterId,
-            'tables' => $tables
+            'tables' => $tables,
+            'gametypes' => $gametypes
         ]);
         $this->view->render();
     }
 
-    function updateoddstotalbets($lotterId, $gamemodel, $oddpercent, $newodds, $totalbetpercent, $newtotalbet)
+    function updateoddstotalbets($lotterId, $gamemodel, $oddpercent, $newodds, $totalbetpercent, $newtotalbet,$gametype)
     {
         $this->view('exec/game_management', [
             'flag' => 'updateoddstotalbets',
@@ -795,13 +854,14 @@ class adminController extends Controller
             'newodds' => $newodds,
             'totalbetpercent' => $totalbetpercent,
             'newtotalbet' => $newtotalbet,
+            'gametype' => $gametype,
 
 
         ]);
         $this->view->render();
     }
 
-    function resettotalbet($lotterId, $gamemodel, $totalbetpercent, $newtotalbet)
+    function resettotalbet($lotterId, $gamemodel, $totalbetpercent, $newtotalbet,$gametype)
     {
         $this->view('exec/game_management', [
 
@@ -809,7 +869,8 @@ class adminController extends Controller
             'gameId' => $lotterId,
             'models' => $gamemodel,
             'totalbetpercent' => $totalbetpercent,
-            'newtotalbet' => $newtotalbet
+            'newtotalbet' => $newtotalbet,
+            'gametype' => $gametype
         ]);
         $this->view->render();
     }
@@ -826,6 +887,19 @@ class adminController extends Controller
         $this->view->render();
     }
 
+     function updategamegroup($gamegroupid, $gametate)
+    {
+        $this->view('exec/game_management', [ 'flag' => 'updategamegroup','gamegroupid' => $gamegroupid,'gametate' => $gametate]);
+        $this->view->render();
+    }
+
+     function updategamelottery($lotteryid, $gametate)
+    {
+        $this->view('exec/game_management', [ 'flag' => 'updategamelottery','lotteryid' => $lotteryid,'gametate' => $gametate]);
+        $this->view->render();
+    }
+
+  
     //annoucement
     function createannoucement($messagetype, $messagetitle, $usernames, $description, $startdate, $enddate, $sendby)
     {

@@ -54,9 +54,10 @@ $(function () {
         };
 
         let completes = translator["Completed"];
-        const formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
+       const formatTimestamp = t => t && typeof t === 'string' && t.trim() ? t.trim().replace(' ', ' / ') : 'N/A';
 
         data.forEach((item) => {
+            //  let formatTimestamp = (timestamp) => `${timestamp.slice(0, 10)} / ${timestamp.slice(10)}`;
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
             if (item.order_type === 12) return;
             let timezone = item.timezone.split(" ");
@@ -149,7 +150,7 @@ $(function () {
 
     async function fetchTrasaction(page, pageLimit) {
         try {
-            const response = await fetch(`../admin/transactiondata/${page}/${pageLimit}`);
+            const response = await fetch(`../businessflow/transactiondata/${page}/${pageLimit}`);
             const data = await response.json();
             console.lo
             $("#mask").LoadingOverlay("hide");
@@ -244,15 +245,8 @@ $(function () {
     });
 
     $(document).on("click", ".executetrans", function () {
-        if ($("#transuser").val() == "" && $("#transactionId").val() == "" && $("#ordertypetrans").val() == "" && $("#startdatrans").val() == "" && $(".selectpartner").val() == "") {
-            //   showToast(
-            //     "Heads up!!",
-            //     "Select one or more data fields to filter",
-            //     "info"
-            //   );
-
+        if ($("#transuser").val() == "" && $("#transactionId").val() == "" && $("#ordertypetrans").val() == "" && $("#startdatrans").val() == "" && $(".selectpartner").val() == "") { 
             showToast(translations.headsUp, translations.selectDataFields, "info");
-
             return;
         }
         const transusername = $("#transuser").val();
@@ -270,7 +264,7 @@ $(function () {
 
     async function filterTrasaction(transusername, transactionId, ordertypetrans, partneruid, startdatrans, enddatetrans, currentPage, pageLimit) {
         try {
-            const response = await fetch(`../admin/filtertransactions/${transusername}/${transactionId}/${ordertypetrans}/${partneruid}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
+            const response = await fetch(`../businessflow/filtertransactions/${transusername}/${transactionId}/${ordertypetrans}/${partneruid}/${startdatrans}/${enddatetrans}/${currentPage}/${pageLimit}`);
 
             const data = await response.json();
             $(".loadertrans").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
@@ -419,7 +413,7 @@ $(function () {
 
     async function fetchTrasactionBet(transactionId) {
         try {
-            const response = await fetch(`../admin/getTransactionBet/${transactionId}`);
+            const response = await fetch(`../businessflow/getTransactionBet/${transactionId}`);
             const transactiondata = await response.json();
             if (transactiondata.deposit) {
                 populatedepositeTable(transactiondata);
@@ -442,8 +436,7 @@ $(function () {
     }
 
     $(document).on("click", ".tinfo", function () {
-        setTimeout(() => {
-            $("#loadingIndicator").hide();
+        setTimeout(() => { $("#loadingIndicator").hide();
         }, 100);
         $("#signup-modal").modal("show");
         const transactionId = $(this).attr("value");
@@ -462,8 +455,8 @@ $(function () {
             background: "rgb(90,106,133,0.1)",
             size: 3,
         });
-        const numrow = $(this).val();
-        fetchTrasaction(currentPage, numrow);
+        let numrowtrans = $(this).val();
+       fetchTrasaction(currentPage, numrowtrans);
     });
 
     //search the for username

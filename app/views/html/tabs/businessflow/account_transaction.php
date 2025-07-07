@@ -407,7 +407,6 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowstrans" style="font-size: 12px;">
-
                 <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
@@ -489,7 +488,7 @@
                                 <th class="font-weight-normal"><?= $translator['Amount']; ?></th>
                                 <!-- <th class="font-weight-normal"><?= $translator['Credit Amount']; ?></th> -->
                                 <th class="font-weight-normal"><?= $translator['Balance']; ?></th>
-                                <th class="font-weight-normal"><?= $translator['Date/Time']; ?></th>
+                                <th class="font-weight-normal"><?= $translator['Transaction Time']; ?></th>
                                 <!-- <th class="font-weight-normal"><?= $translator['Game']; ?></th> -->
                                 <th class="font-weight-normal"><?= $translator['Transaction ID']; ?></th>
                                 <th class="font-weight-normal"><?= $translator['Status']; ?></th>

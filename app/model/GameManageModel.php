@@ -31,11 +31,11 @@ class GameManageModel extends MEDOOHelper
       // return parent::selectAll('lottery_type', ['lt_id', 'name'], "lt_id != 9");
    }
 
-   public static function getLotteryGamesById(string $lotteryId, $gamemodel)
+   public static function getLotteryGamesById($lotteryId, $gamemodel,$gametype)
    {
-      // $bigData = [];
+      // $bigData = [];JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_odds, CONCAT('$.', :game_types))) AS standardodds
 
-      if (in_array($lotteryId, [1, 2, 3, 5, 6, 8, 10]) && in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
+      if (in_array($lotteryId, [1, 2, 3, 5, 6, 8, 10,11]) && in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
          $tableMap = [
             'standard' => 'game_name',
             'twosides' => 'twosides',
@@ -46,17 +46,43 @@ class GameManageModel extends MEDOOHelper
             'manytables' => 'manytables',
          ];
          $tableName = $tableMap[$gamemodel];
-         $sql = "SELECT gn_id, name, state,modified_odds, group_type, modified_totalbet,
-                           gameplay_name, total_bets,model,
-                          oddspercentage,totalbetpercentage,odds,total_bets
-                    FROM {$tableName} WHERE lottery_type = :lotteryId";
+         $jsonKey = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
+         $jsonPath = "$." . $jsonKey;
+        $sql = "
+            SELECT 
+               {$tableName}.gn_id, 
+               {$tableName}.name, 
+               {$tableName}.state,
+               {$tableName}.modified_odds, 
+               {$tableName}.group_type, 
+               {$tableName}.modified_totalbet,
+               {$tableName}.gameplay_name,
+               {$tableName}.total_bets, 
+               {$tableName}.model,
+               {$tableName}.oddspercentage,
+               {$tableName}.totalbetpercentage,
+               {$tableName}.odds,{$tableName}.game_group,
+               {$tableName}.lottery_type, JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_odds, '$jsonPath')) AS standardodds,
+               JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_total_bets, '$jsonPath')) AS standardtotalbets,
+               game_group.state AS group_state,lottery_type.state AS lottery_state
+            FROM 
+               {$tableName}
+             JOIN 
+               game_group 
+               ON game_group.gp_id = {$tableName}.game_group
+               JOIN lottery_type ON lottery_type.lt_id={$tableName}.lottery_type
+            WHERE 
+               {$tableName}.lottery_type = :lotteryId 
+            ";
 
          $data = parent::query($sql, ['lotteryId' => $lotteryId]);
-         return ['data' => $data];
+        
+        return ['data' => $data];
+
       }
    }
 
-   public static function UpdateOddsTotalbets($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent)
+   public static function UpdateOddsTotalbets($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent,$gametype)
    {
       if (in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
          $tableMap = [
@@ -69,26 +95,36 @@ class GameManageModel extends MEDOOHelper
             'manytables' => 'manytables',
          ];
          $tableName = $tableMap[$gamemodel];
-         $sql = "UPDATE {$tableName} 
-            SET modified_odds = :modified_odds,
+        // Sanitize 
+        $jsonKey = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
+        $jsonPath = "$.\"$jsonKey\"";  // correct MySQL JSON path syntax with quoted key
+
+         $sql = "
+            UPDATE {$tableName}
+            SET 
+                modified_odds = :modified_odds,
                 oddspercentage = :oddspercentage,
                 modified_totalbet = :modified_totalbet,
-                totalbetpercentage = :totalbetpercentage
-              WHERE gn_id = :gn_id";
+                totalbetpercentage = :totalbetpercentage, standard_odds = JSON_SET(standard_odds, '{$jsonPath}', :new_standard_odds),
+                standard_total_bets = JSON_SET(standard_total_bets, '{$jsonPath}', :new_standard_totalbet)
+               WHERE 
+                gn_id = :gn_id
+        ";
 
          try {
             $data = parent::query($sql, [
-               'modified_odds' => $newodds,
-               'oddspercentage' => $oddpercent,
-               'modified_totalbet' => $newtotalbet,
-               'totalbetpercentage' => $totalbetpercent,
-               'gn_id' => $gameId,
+                'modified_odds'        => $newodds,
+                'oddspercentage'       => $oddpercent,
+                'modified_totalbet'    => $newtotalbet,
+                'totalbetpercentage'   => $totalbetpercent,
+                 'new_standard_odds'    => $newodds,      // same value as modified_odds
+                 'new_standard_totalbet'=> $newtotalbet,  // same value as modified_totalbet
+                'gn_id'                => $gameId
             ]);
 
             if ($data > 1) {
-               $data = self::getLotteryGamesById($gameId, $gamemodel);
+               $data = self::getLotteryGamesById($gameId, $gamemodel, $gametype);
             }
-
             return ['success' => true, 'message' => 'Update successful'];
          } catch (Exception $e) {
             return ['success' => false, 'message' => 'Database update failed', 'error' => $e->getMessage()];
@@ -96,7 +132,7 @@ class GameManageModel extends MEDOOHelper
       }
    }
 
-   public static function ResetTotalbets($gameId, $gamemodel, $newtotalbet, $totalbetpercent)
+   public static function ResetTotalbets($gameId, $gamemodel, $newtotalbet, $totalbetpercent,$gametype)
    {
       if (in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
          $tableMap = [
@@ -109,17 +145,24 @@ class GameManageModel extends MEDOOHelper
             'manytables' => 'manytables',
          ];
          $tableName = $tableMap[$gamemodel];
-         $sql = "UPDATE {$tableName} SET  modified_totalbet = :modified_totalbet,totalbetpercentage = :totalbetpercentage WHERE gn_id = :gn_id";
+           // Sanitize 
+        $jsonKey = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
+        $jsonPath = "$.\"$jsonKey\"";  // correct MySQL JSON path syntax with quoted key
+
+         $sql = "UPDATE {$tableName} SET  modified_totalbet = :modified_totalbet,totalbetpercentage = :totalbetpercentage,
+             standard_total_bets = JSON_SET(standard_total_bets, '{$jsonPath}', :new_standard_totalbet)
+          WHERE gn_id = :gn_id";
 
          try {
             $data = parent::query($sql, [
                'modified_totalbet' => $newtotalbet,
                'totalbetpercentage' => $totalbetpercent,
+               'new_standard_totalbet' =>$newtotalbet,
                'gn_id' => $gameId,
             ]);
 
             if ($data > 1) {
-               $data = self::getLotteryGamesById($gameId, $gamemodel);
+               $data = self::getLotteryGamesById($gameId, $gamemodel,$gametype);
             }
 
             return ['success' => true, 'message' => 'Update successful'];
@@ -142,17 +185,61 @@ class GameManageModel extends MEDOOHelper
             'manytables' => 'manytables',
          ];
          $tableName = $tableMap[$gamemodel];
-         // $sql = "UPDATE {$tableName}  SET  state = :state WHERE gn_id = :gn_id";
          $updated = parent::query("UPDATE {$tableName} SET  state = :state WHERE gn_id = :gn_id", ["state" => $gametate, "gn_id" => $gameId]);
          if ($updated > 1) {
-            //     $sql = "SELECT state FROM {$tableName} WHERE gn_id = :gn_id";
             return ['success' => true, 'state' => $gametate];
-            //    $data = parent::query($sql, ['gn_id' => $gameId]);
-            //    return $data;
          }
       }
    }
 
+   public static function UpdateGameGroup($gamegroupid,$gametate)
+   {
+         $update = parent::query("UPDATE game_group SET state = :state WHERE gp_id = :gp_id", ["state" => $gametate, "gp_id" => $gamegroupid]);
+         if ($update > 1) {
+            return ['success' => true];
+          }
+   }
+
+   public static function UpdateGameLotteryType($lotteryid,$gametate)
+   {
+         $update = parent::query("UPDATE lottery_type SET state = :state WHERE lt_id = :lt_id", ["state" => $gametate, "lt_id" => $lotteryid]);
+         if ($update > 1) {
+            return ['success' => true];
+          }
+   }
+
+   public static function GetAllGameTypes()
+   {
+       $formattedGroup = [];
+       $gametypes = parent::query("SELECT gt_id,name,game_group FROM game_type  GROUP BY gt_id,name,game_group ORDER BY name ASC");
+       $keys = ['5d','3d','fast3','pk10','11x5','mark6','happy8','pk6'];
+       $arr = [];
+       foreach($gametypes as $types){
+         if(in_array($types['game_group'],$keys)){
+            $formattedGroup[$types['game_group']][] = ['name' =>$types['name'],'id'=>$types['gt_id']];
+         }
+       }
+       return $formattedGroup;
+   }
+
+
+   public static function GetAllGameTabs()
+   {
+       $formattedGroup = [];
+       $gametypes = parent::query("SELECT gp_id,name,game_group FROM game_group  GROUP BY gt_id,name,game_group ORDER BY name ASC");
+       $keys = ['5d','3d','fast3','pk10','11x5','mark6','happy8','pk6'];
+       $arr = [];
+       foreach($gametypes as $types){
+         if(in_array($types['game_group'],$keys)){
+            $formattedGroup[$types['game_group']][] = ['name' =>$types['name'],'id'=>$types['gt_id']];
+         }
+       }
+       return $formattedGroup;
+   }
+
+
+
+   
    public static function filterGameDraws($page, $limit, $gameId, $datefrom, $dateto)
    {
       try {

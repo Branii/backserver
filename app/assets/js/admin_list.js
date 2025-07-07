@@ -500,7 +500,7 @@ $(function () {
         }
     }
 
-    let bigArr = [];
+    let bigArrs = [];
     let originalPermissions = []; //permission array
     let graph = {};
     let userId;
@@ -509,7 +509,7 @@ $(function () {
     $(document).on("click", ".admin_per", function () {
         const userdata = JSON.parse($(this).attr("value"));
         let permissions = JSON.parse(userdata.permissions);
-        bigArr = [];
+        bigArrs = [];
         originalPermissions = [];
         graph = {};
         userId = userdata.admin_id;
@@ -588,10 +588,9 @@ $(function () {
                     const checked = permissions?.[key]?.includes(item) ? "checked" : "";
 
                     if (checked) {
-                        bigArr.push(value);
+                        bigArrs.push(value);
                         originalPermissions.push(value);
                     }
-
                     html += `
                     <li id="tab1" class="item " value="" style="display: flex; justify-content: space-between;">
                       ${sidebarMenu[item].title}
@@ -617,9 +616,9 @@ $(function () {
     $(document).on("change", ".chk", function () {
         const val = $(this).val();
         if ($(this).is(":checked")) {
-            if (!bigArr.includes(val)) bigArr.push(val);
+            if (!bigArrs.includes(val)) bigArrs.push(val);
         } else {
-            bigArr = bigArr.filter((item) => item !== val);
+            bigArrs = bigArrs.filter((item) => item !== val);
         }
         updateSelectAllState();
     });
@@ -627,13 +626,13 @@ $(function () {
     // When clicking Select All Permissions checkbox
     $(document).on("change", "#selectAllPermissions", function () {
         const isChecked = $(this).is(":checked");
-        bigArr = [];
+        bigArrs = [];
 
         $(".chk").each(function () {
             $(this).prop("checked", isChecked);
             const val = $(this).val();
             if (isChecked && !bigArr.includes(val)) {
-                bigArr.push(val);
+                bigArrs.push(val);
             }
         });
 
@@ -643,12 +642,12 @@ $(function () {
     $(document).on("click", ".updateperm", function () {
         const graph = {};
 
-        if (bigArr.length === 0) {
+        if (bigArrs.length === 0) {
             updatePermissions(`../admin/permissions/${encodeURIComponent(JSON.stringify({}))}/${userId}`, {});
             return;
         }
 
-        bigArr.forEach((pair) => {
+        bigArrs.forEach((pair) => {
             const [node, connection] = pair.split(" ");
             const connNum = Number(connection);
             if (!graph[node]) graph[node] = [];

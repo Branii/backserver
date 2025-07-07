@@ -284,8 +284,8 @@
 
                 <select name="betsate" id="ptns-partnerState" class="form-control form-select queryholderlistt messagestype" data-bs-placeholder="Select Type">
                     <option value="">-<?= $translator['State']; ?>-</option>
-                    <option value="active"><?= $translator['Block']; ?></option>
-                    <option value="blocked"><?= $translator['Active']; ?></option>
+                    <option value="active"><?= $translator['Active']; ?></option>
+                    <option value="blocked"><?= $translator['Blocked']; ?></option>
                     <option value="inactive"><?= $translator['Inactive']; ?></option>
                 </select>
 
@@ -1813,7 +1813,7 @@
                                 </div>
 
                                 <select name="betsate" id="platformCurrency" class="form-control form-select queryholderlistt messagestype currency-list" data-bs-placeholder="Select Type">
-                                    <option value="">-<?= $translator['PaymentSettings']; ?>-</option>
+                                    <option value="">-<?= $translator['Payment Settings']; ?>-</option>
                                 </select>
 
                                 <select name="betsate" id="platformStatus" class="form-control form-select queryholderlistt messagestype" data-bs-placeholder="Select Type">

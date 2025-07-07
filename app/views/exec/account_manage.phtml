@@ -18,10 +18,6 @@ if ($flag == "userlistdata") {
     $end_date = isset($this->viewData['end_date']) ? max((int) $this->viewData['end_date'], 0) : ""; // Ensure valid limit
     $res = UserManageModel::fetchUsersData($partnerID,["uid" => $uid, "state" => $state, "recharge_level" => $recharge_level, "start_date" => $start_date, "end_date" => $end_date], $page, $limit);
     echo json_encode($res);
-    return;
-    // $page = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
-    // $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit
-    // $result = (new UserManageModel())->FetchUserlistData($page, $limit);
 }
 
 if ($flag === "searchUserlistData") {
@@ -329,12 +325,15 @@ if ($flag == "fetchsubagent") {
         $res = UserManageModel::fetchUserLotteries($user_id);
         echo json_encode($res);
     } elseif ($flag == "updateLotteryState") {
-        $user_id = $this->viewData["user_id"];
-        $lottery_id = $this->viewData["lottery_id"];
 
-        $res = UserManageModel::update_lottery_stat_for_user($user_id, $lottery_id);
+        $arr = $this->viewData["data"];
+        $gameIds = urldecode($arr);
+        $gameData = json_decode($gameIds,true);
+        $uid = $this->viewData["uid"];
+        $res = UserManageModel::update_lottery_stat_for_user($uid,$gameData);
+        echo json_encode($res['status']);
 
-        echo json_encode($res);
+
     } elseif ($flag === "fetchUserLogs") {
         $user_id = $this->viewData["user_id"];
         $res = UserManageModel::fetchUserLogs($user_id);
@@ -396,4 +395,58 @@ if ($flag == "filterchange") {
         'totalPages' => ceil($result['total'] / $limit),
     ]);
 }
+
+
+if($flag == "fetchLoterytype"){
+     $res = UserManageModel::FetchLotteryTypes();
+    echo json_encode($res);
+}
+
+if($flag == "updategamenames"){
+       $arr = $this->viewData["data"];
+        $gameIds = urldecode($arr);
+        $gameData = json_decode($gameIds,true);
+        $uid = $this->viewData["uid"];
+        $res = UserManageModel::UpdateGametypes($uid,$gameData);
+        echo json_encode($res['status']);
+}
+
+if($flag == "fetchgamesTab"){
+        $lotteryid = $this->viewData["lotteryid"];
+        $model = $this->viewData["model"];
+        $res = UserManageModel::GetGameTabs($lotteryid,$model);
+        echo json_encode($res);
+}
+
+if($flag == "updatesGamegroup"){
+       $arr = $this->viewData["data"];
+        $gameIds = urldecode($arr);
+        $gameData = json_decode($gameIds,true);
+        $uid = $this->viewData["uid"];
+        $lotterymodel = $this->viewData["lotterymodel"];
+        $res = UserManageModel::UpdateGameGroup($uid,$lotterymodel,$gameData);
+         echo json_encode($res['status']);
+}
+
+
+if($flag == "fetchGameNames"){
+        $lotteryid = $this->viewData["lotteryid"];
+        $model = $this->viewData["model"];
+        $res = UserManageModel::GetGameNames($lotteryid,$model);
+        echo json_encode($res);
+}
+
+
+if($flag == "updatesGameNamess"){
+       $arr = $this->viewData["data"];
+        $gameIds = urldecode($arr);
+        $gameData = json_decode($gameIds,true);
+        $uid = $this->viewData["uid"];
+        $lotterymodel = $this->viewData["lotterymodel"];
+        $res = UserManageModel::UpdateGameNames($uid,$lotterymodel,$gameData);
+        echo json_encode($res['status']);
+}
+
+
+
 

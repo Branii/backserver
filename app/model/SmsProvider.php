@@ -93,81 +93,79 @@ class SmsProvider  extends GearmanWorker{
 
     //arkesel
 
-public  function sendArkeselSMS($message, $contact) {
-  
-    $contact = preg_replace('/\D/', '', $contact); // Keep only digits
-
-    // Encode the message for the URL
-    $encodedMessage = urlencode($message);
-
-    $apiKey = 'dldsQ2NaT1N0aGlpVXZUZE1WQnY';
-    $from = 'ENZERHUB';
-    // Base URL
-    $url = "https://sms.arkesel.com/sms/api?action=send-sms"
-         . "&api_key=$apiKey"
-         . "&to=$contact"
-         . "&from=$from"
-         . "&sms=$encodedMessage";
-
-    // Initialize cURL
-    $curl = curl_init();
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 10,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-    ));
-
-    // Execute and handle response
-    $response = curl_exec($curl);
-    curl_close($curl);
-    // Output or return response
-   // echo $response;
-}
-
-public static function getArkeselSMSBalance($provider)
-{
-    $apiKey = 'dldsQ2NaT1N0aGlpVXZUZE1WQnY';
-
-    $url = "https://sms.arkesel.com/sms/api?action=check-balance&api_key={$apiKey}&response=json";
-
-    // Initialize cURL
-    $curl = curl_init();
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 10,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-    ));
-
-    // Execute request and close
-    $response = curl_exec($curl);
-     curl_close($curl);
-
-      $data = json_decode($response, true);
-
-        if (!isset($data['balance'])) {
-            echo json_encode(['error' => 'No balance data in response']);
-            exit();
-        }
-        $currentBalance = (int) $data['balance'];
-        $file = 'sms_totals.txt';
-        if (!file_exists($file)) {
-            file_put_contents($file, $currentBalance);
-        }
-        // // Read the original total
-        $initialTotal = (int) file_get_contents($file);
-        $used = $initialTotal - $currentBalance;
-        PLatFormSettingModel::UpdateSms($initialTotal, $used, $currentBalance, $provider);
-}
-
+    public  function sendArkeselSMS($message, $contact) {
     
+        $contact = preg_replace('/\D/', '', $contact); // Keep only digits
+
+        // Encode the message for the URL
+        $encodedMessage = urlencode($message);
+
+        $apiKey = 'dldsQ2NaT1N0aGlpVXZUZE1WQnY';
+        $from = 'ENZERHUB';
+        // Base URL
+        $url = "https://sms.arkesel.com/sms/api?action=send-sms"
+            . "&api_key=$apiKey"
+            . "&to=$contact"
+            . "&from=$from"
+            . "&sms=$encodedMessage";
+
+        // Initialize cURL
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 10,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        // Execute and handle response
+        $response = curl_exec($curl);
+        curl_close($curl);
+        // Output or return response
+    // echo $response;
+    }
+    public static function getArkeselSMSBalance($provider)
+    {
+        $apiKey = 'dldsQ2NaT1N0aGlpVXZUZE1WQnY';
+
+        $url = "https://sms.arkesel.com/sms/api?action=check-balance&api_key={$apiKey}&response=json";
+
+        // Initialize cURL
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 10,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        // Execute request and close
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        $data = json_decode($response, true);
+
+            if (!isset($data['balance'])) {
+                echo json_encode(['error' => 'No balance data in response']);
+                exit();
+            }
+            $currentBalance = (int) $data['balance'];
+            $file = 'sms_totals.txt';
+            if (!file_exists($file)) {
+                file_put_contents($file, $currentBalance);
+            }
+            // // Read the original total
+            $initialTotal = (int) file_get_contents($file);
+            $used = $initialTotal - $currentBalance;
+            PLatFormSettingModel::UpdateSms($initialTotal, $used, $currentBalance, $provider);
+    }
+  
 }
