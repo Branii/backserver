@@ -45,6 +45,7 @@ $(() => {
             duration: 3000, // auto-dismiss after 3s
         });
     }
+    
     const lang = {
         partnersLabel: document.getElementById("lang-partners-label").textContent.trim(),
     };
@@ -743,30 +744,30 @@ $(() => {
         $(".pp-names-wrapper").hide();
     });
 
-    const fetchLotteryTypes = () => {
-        $.ajax({
-            url: `../admin/fetchLotteries/${partnerID}/fetchLotteries`,
-            type: "POST",
-            beforeSend: function () {},
-            success: function (response) {
-                response = JSON.parse(response);
-                //  console.log(response);
-                let responseMarkup = "";
-                if (response.status == "error") {
-                    showToast("Error", response.data, "error");
-                    return;
-                }
-                data = response.data;
-                validLotteries = data;
-            },
-            error: function (res, status, error) {},
-            complete: function () {
-                // console.log("Operation Completed Successfully.");
-            },
-        });
-    };
+    // const fetchLotteryTypes = () => {
+    //     $.ajax({
+    //         url: `../admin/fetchLotteries/${partnerID}/fetchLotteries`,
+    //         type: "POST",
+    //         beforeSend: function () {},
+    //         success: function (response) {
+    //             response = JSON.parse(response);
+    //             //  console.log(response);
+    //             let responseMarkup = "";
+    //             if (response.status == "error") {
+    //                 showToast("Error", response.data, "error");
+    //                 return;
+    //             }
+    //             data = response.data;
+    //             validLotteries = data;
+    //         },
+    //         error: function (res, status, error) {},
+    //         complete: function () {
+    //             // console.log("Operation Completed Successfully.");
+    //         },
+    //     });
+    // };
 
-    fetchLotteryTypes();
+    // fetchLotteryTypes();
 
     const populateCurrencySettings = () => {
         let markup = "";
@@ -1098,10 +1099,7 @@ const partnersMarkup = (data) => {
                     </a> 
                         <a class="dropdown-item ptns-language-settings cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="" data-bs-toggle="modal" data-bs-target="#ptns-languages-settings-modal" data-uid="">
                         <i class='bx bx-blanket' ></i>${lang.languageSettings}
-                    </a> 
-                   
-
-                       
+                    </a>        
                     </div>
                    </div>
                 </td>

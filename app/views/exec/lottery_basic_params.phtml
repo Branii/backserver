@@ -22,10 +22,9 @@ if ($flag == "update-params") {
     try{
 
    
-    $path =  'http://localhost/task/admin/assets/lottery';
+    $path =  'https://winsstarts.com/chairman_test/app/lottery_images/';//'http://localhost/task/admin/assets/lottery';
     $lottery_id = isset($this->viewData['lottery_id']) ? $this->viewData['lottery_id']: ""; 
         
-
     $model = GameManageModel::fetchGameTypesForLottery($lottery_id,$page);
 
 

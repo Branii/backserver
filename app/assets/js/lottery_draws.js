@@ -1,5 +1,6 @@
 $(function () {
-  const partnerID = $('#partner-holder').attr('data-partner-id');
+
+const partnerID = $('#partner-holder').attr('data-partner-id');
 
   function showToast(title, message, type) {
     $.toast({
@@ -21,7 +22,7 @@ $(function () {
 
 
 
-const drawTables = (data) => {
+  const drawTables = (data) => {
     let html = "";
 
     const statusMap = {
@@ -66,31 +67,17 @@ const drawTables = (data) => {
   let sibling = '';
 
   async function getAllGames() {
-    try {
-      const response = await fetch(`../admin/getAllgames/${partnerID}`);
-
-      const data = await response.json();
-      let html = '';
-      html += ``;
-      data.forEach((item) => {
-        html += `<option value='${item.gt_id}'>${item.name}</option>`;
-      });
-      $('#allGameNames').html(html);
-    } catch (error) {
-      console.error('Error fetching data:', error);
       try {
-        const response = await fetch(`../game/getAllgames/${partnerID}`);
-
+        const response = await fetch(`../game/getAllgames`);
         const data = await response.json();
-        let html = ""
-        html += ``
+        let html = '';
         data.forEach((item) => {
-           html += `<option value='${item.gt_id}'>${item.name}</option>`
-        })
-        $("#allGameNames").html(html)
+          html += `<option value='${item.gt_id}'>${item.name}</option>`;
+        });
+        $('#allGameNames').html(html);
       } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+        console.error('Error fetching data:', error);  
+    }
   }
   getAllGames() 
 
@@ -145,84 +132,75 @@ const drawTables = (data) => {
         console.error("Error fetching data:", error);
       }
     }
-  }
-  getAllGames();
+  
 
-  const getAllSpecificDraws = (currentPage, pageLimit, element) => {
-    const gameID = $('#allGameNames').val();
-    const issueNumber = $('#ltd-issuenumber').val();
-    const status = $('#ltd-status').val();
-    const startDate = $('#ltd-start-date').val();
-    const endDate = $('#ltd-end-date').val();
+ 
+  // const getAllSpecificDraws = (currentPage, pageLimit, element) => {
+  //   const gameID = $('#allGameNames').val();
+  //   const issueNumber = $('#ltd-issuenumber').val();
+  //   const status = $('#ltd-status').val();
+  //   const startDate = $('#ltd-start-date').val();
+  //   const endDate = $('#ltd-end-date').val();
 
-    try {
-      $.ajax({
-        url: `../admin/getSpecificDraws/${partnerID}/${gameID}/${issueNumber}/${status}/${startDate}/${endDate}/${currentPage}/${pageLimit}`,
-        type: 'POST',
-        beforeSend: function () {
-          $($(element).find('i')[0])
-            .removeClass('bx-check-double')
-            .addClass('bx-loader bx-spin');
-        },
-        success: function (response) {
-          response = JSON.parse(response);
-          if (response.status === 'error') {
-            showToast('Error', response.data, 'error');
-            return;
-          }
+  //   try {
+  //     $.ajax({
+  //       url: `../admin/getSpecificDraws/${partnerID}/${gameID}/${issueNumber}/${status}/${startDate}/${endDate}/${currentPage}/${pageLimit}`,
+  //       type: 'POST',
+  //       beforeSend: function () {
+  //         $($(element).find('i')[0])
+  //           .removeClass('bx-check-double')
+  //           .addClass('bx-loader bx-spin');
+  //       },
+  //       success: function (response) {
+  //         response = JSON.parse(response);
+  //         if (response.status === 'error') {
+  //           showToast('Error', response.data, 'error');
+  //           return;
+  //         }
 
-          if (response.data.length === 0) {
-            $('#dataContainerDrawsss').html(
-              `<tr class="no-results"><td colspan="12"><img src="/admin/app/assets/images/notfound.png" class="dark-logo" alt="Logo-Dark"></td></tr>`
-            );
-            return;
-          }
-          const data = response.data;
-          renderDrawTable(data);
-          $('#maskkk').LoadingOverlay('hide');
-          const totalPages = Math.ceil(data[0].total_records / pageLimit);
-          renderPaginationForDraws(
-            totalPages,
-            currentPage,
-            (currentPage, pageLimit) =>
-              getAllSpecificDraws(currentPage, pageLimit)
-          );
-          document.getElementById('ltd_paging_info_draws').innerHTML =
-            'Page ' + currentPage + ' of ' + totalPages + ' pages';
-        },
-        error: function (xhr, status, error) {
-          showToast('Error', 'Request Error, please contact admin', 'error');
-        },
-        complete: function () {
-          $($(element).find('i')[0])
-            .removeClass('bx-loader bx-spin')
-            .addClass('bx-check-double');
-        },
-      });
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+  //         if (response.data.length === 0) {
+  //           $('#dataContainerDrawsss').html(
+  //             `<tr class="no-results"><td colspan="12"><img src="/admin/app/assets/images/notfound.png" class="dark-logo" alt="Logo-Dark"></td></tr>`
+  //           );
+  //           return;
+  //         }
+  //         const data = response.data;
+  //         renderDrawTable(data);
+  //         $('#maskkk').LoadingOverlay('hide');
+  //         const totalPages = Math.ceil(data[0].total_records / pageLimit);
+  //         renderPaginationForDraws( totalPages,currentPage,
+  //           (currentPage, pageLimit) =>
+  //             getAllSpecificDraws(currentPage, pageLimit)
+  //         );
+  //         document.getElementById('ltd_paging_info_draws').innerHTML =
+  //           'Page ' + currentPage + ' of ' + totalPages + ' pages';
+  //       },
+  //       error: function (xhr, status, error) {
+  //         showToast('Error', 'Request Error, please contact admin', 'error');
+  //       },
+  //       complete: function () {
+  //         $($(element).find('i')[0])
+  //           .removeClass('bx-loader bx-spin')
+  //           .addClass('bx-check-double');
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //   }
+  // };
 
   getAllSpecificDraws(currentPage, pageLimit);
   //getAllBackups(currentPage, pageLimit);
 
   function renderPaginationForDraws(totalPages, currentPage, callback) {
     const createPageLink = (i, label = i, disabled = false, active = false) =>
-      `<li class='page-item ${disabled ? 'disabled' : ''} ${
-        active ? 'active' : ''
-      }'>
+      `<li class='page-item ${disabled ? 'disabled' : ''} ${active ? 'active' : ''}'>
               <a class='page-link' href='#' data-page='${i}'>${label}</a>
-            </li>`;
+      </li>`;
     let pagLink = `<ul class='pagination justify-content-end'>`;
 
     // Previous Button
-    pagLink += createPageLink(
-      currentPage - 1,
-      `<i class='bx bx-chevron-left'></i>`,
-      currentPage === 1
-    );
-
+    pagLink += createPageLink(currentPage - 1,`<i class='bx bx-chevron-left'></i>`, currentPage === 1);
     // Page numbers with ellipsis
     for (let i = 1; i <= totalPages; i++) {
       if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
@@ -233,18 +211,14 @@ const drawTables = (data) => {
     }
 
     // Next Button
-    pagLink += createPageLink(
-      currentPage + 1,
-      `<i class='bx bx-chevron-right'></i>`,
-      currentPage === totalPages
+    pagLink += createPageLink( currentPage + 1,`<i class='bx bx-chevron-right'></i>`, currentPage === totalPages
     );
     pagLink += '</ul>';
 
     document.getElementById('ltd_paginationDraws').innerHTML = pagLink;
 
     // Add click event listeners
-    document
-      .querySelectorAll('#ltd_paginationDraws .page-link')
+    document.querySelectorAll('#ltd_paginationDraws .page-link')
       .forEach((link) => {
         link.addEventListener('click', function (e) {
           e.preventDefault();
@@ -379,4 +353,6 @@ const drawTables = (data) => {
   }
 
   tableScrollDraws();
-});
+
+
+})

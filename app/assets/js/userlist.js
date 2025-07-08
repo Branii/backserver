@@ -777,17 +777,15 @@ $(document).on("click", ".usrl-block-userbtn", function () {
         $("#addagentmodal").modal("hide");
     });
 
-    async function fetchRebatedata() {
+   async function fetchRebatedata() {
      try {
         
       const response = await fetch(`../user/fetchRebatedata`);
-
          if (!response.ok) {
              throw new Error(`HTTP error! Status: ${response.status}`);
          }
-
             const data = await response.json(); // Parse JSON response
-            // // console.log(data);
+           //  console.log(data);
             let html = "";
 
             // Check if data is not empty and iterate over it to generate options
@@ -970,9 +968,7 @@ $(document).on("click", ".usrl-block-userbtn", function () {
 
         $(".loaderquota").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
         //
-        $.post(
-            `../user/updateUsedquota/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
-
+        $.post(`../user/updateUsedquota/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
             function (result) {
                 setTimeout(function () {
                     $(".loaderquota").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
