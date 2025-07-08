@@ -285,9 +285,9 @@ $(() => {
 
    function lotteryBasicParametersMarkup(data) {
       return `
-  <tr>
+    <tr>
       <td>${data.id}</td>
-      <td><img src="${sanitizeHTML(data.lottery_image)}" alt="lottery icon" width="40"></td>
+      <td><img src="${sanitizeHTML(data.lottery_image)}" alt="lottery icon" width="100"></td>
       <td id="td-sorting-weight-${data.id}">${data.sort_weight[data.id] ?? 0}</td>
       <td>${data.lottery_type}</td>
       <td>System</td>
@@ -339,7 +339,7 @@ $(() => {
               </ul>
           </div>
       </td>
-  </tr>`;
+     </tr>`;
    }
 
    const pageLimit = 20;
@@ -535,6 +535,14 @@ $(() => {
          return abbreviation.charAt(0).toUpperCase() + abbreviation.slice(1) + "500";
       }
    };
+
+
+   //add new game to the other games
+   //addnewgames
+   $(document).on("click", ".addnewlottery", function () {
+     $("#signup-modals").modal("show");
+      
+   })  
 
    fetchLotteryBasicParams(1);
    function tableScrollbasic() {

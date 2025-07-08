@@ -32,9 +32,9 @@ class userController extends Controller
         $this->view->render();
     }
 
-        public function fetchRebatedata($partnerID)
+        public function fetchRebatedata()
     {
-        $this->view('exec/account_manage', ['partner_id' => $partnerID, 'flag' => 'fetchRebatedata']);
+        $this->view('exec/account_manage', ['flag' => 'fetchRebatedata']);
         $this->view->render();
     }
 

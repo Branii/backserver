@@ -9,35 +9,33 @@ class gameController extends Controller
         $this->view->render();
     }
 
+    ////////////// LOTTERY DRAW GAMES FUNCTIONS  - //////////
 
-   ////////////// LOTTERY DRAW GAMES FUNCTIONS  - //////////
-    
     public function getAllgames()
     {
         $this->view('exec/game_management', ['flag' => 'getAllgames']);
         $this->view->render();
     }
 
- public function getSpecificDraws($partnerID, $gameId, $issue_number, $status, $start_date, $end_date, $pageNumber, $limit)
+    public function getSpecificDraws($partnerID, $gameId, $issue_number, $status, $start_date, $end_date, $pageNumber, $limit)
     {
 
         $this->view('exec/game_management', [
-            'partner_id' => $partnerID,
-            'page' => $pageNumber,
-            'limit' => $limit,
-            'flag' => 'getDraws',
-            'status' => $status,
-            'gameId' => $gameId,
-            'start_date' => $start_date,
-            'end_date' => $end_date,
-            'issue_number' => $issue_number
+            'partner_id'   => $partnerID,
+            'page'         => $pageNumber,
+            'limit'        => $limit,
+            'flag'         => 'getDraws',
+            'status'       => $status,
+            'gameId'       => $gameId,
+            'start_date'   => $start_date,
+            'end_date'     => $end_date,
+            'issue_number' => $issue_number,
         ]);
         $this->view->render();
     }
 
-
-       ////////////// LOTTERY BASIC PARAM FUNCTIONS  - //////////
-        public function fetch_lottery_basic_params($partnerID, $lottery_id, $page)
+    ////////////// LOTTERY BASIC PARAM FUNCTIONS  - //////////
+    public function fetch_lottery_basic_params($partnerID, $lottery_id, $page)
     {
 
         $this->view('exec/lottery_basic_params', ['partner_id' => $partnerID, 'lottery_id' => $lottery_id, 'page' => $page, 'flag' => 'fetch-lottery-basic-params']);
@@ -50,7 +48,7 @@ class gameController extends Controller
         $this->view->render();
     }
 
-       public function updateLotteryStatus($partnerID, $game_type_id, $status)
+    public function updateLotteryStatus($partnerID, $game_type_id, $status)
     {
         $this->view('exec/lottery_basic_params', ['partner_id' => $partnerID, 'status' => $status, 'game_type_id' => $game_type_id, 'flag' => 'updateLotteryStatus']);
         $this->view->render();
@@ -61,89 +59,86 @@ class gameController extends Controller
         $this->view('exec/win_loss', ['partner_id' => $partnerID, 'lottery_name' => $lottery_name, 'flag' => 'filter-lotteries']);
         $this->view->render();
     }
-  
 
- ////////////// LOTTERY  PARAM FUNCTIONS  - //////////
- public function getAllGamesLottery()
+    ////////////// LOTTERY  PARAM FUNCTIONS  - //////////
+    public function getAllGamesLottery()
     {
         $this->view('exec/game_management', ['flag' => 'getAllGamesLottery']);
         $this->view->render();
     }
 
-        public function getLotteryGames(string $lotterId, string $tables)
+    public function getLotteryGames(string $lotterId, string $tables)
     {
         $this->view('exec/game_management', [
-            'flag' => 'getLotteryGames',
+            'flag'   => 'getLotteryGames',
             'gameId' => $lotterId,
-            'tables' => $tables
+            'tables' => $tables,
         ]);
         $this->view->render();
     }
 
-      function resettotalbet($lotterId, $gamemodel, $totalbetpercent, $newtotalbet)
+    public function resettotalbet($lotterId, $gamemodel, $totalbetpercent, $newtotalbet)
     {
         $this->view('exec/game_management', [
 
-            'flag' => 'resettotalbet',
-            'gameId' => $lotterId,
-            'models' => $gamemodel,
+            'flag'            => 'resettotalbet',
+            'gameId'          => $lotterId,
+            'models'          => $gamemodel,
             'totalbetpercent' => $totalbetpercent,
-            'newtotalbet' => $newtotalbet
+            'newtotalbet'     => $newtotalbet,
         ]);
         $this->view->render();
     }
 
-     function updateoddstotalbets($lotterId, $gamemodel, $oddpercent, $newodds, $totalbetpercent, $newtotalbet)
+    public function updateoddstotalbets($lotterId, $gamemodel, $oddpercent, $newodds, $totalbetpercent, $newtotalbet)
     {
         $this->view('exec/game_management', [
-            'flag' => 'updateoddstotalbets',
-            'gameId' => $lotterId,
-            'models' => $gamemodel,
-            'oddpercent' => $oddpercent,
-            'newodds' => $newodds,
+            'flag'            => 'updateoddstotalbets',
+            'gameId'          => $lotterId,
+            'models'          => $gamemodel,
+            'oddpercent'      => $oddpercent,
+            'newodds'         => $newodds,
             'totalbetpercent' => $totalbetpercent,
-            'newtotalbet' => $newtotalbet,
-
+            'newtotalbet'     => $newtotalbet,
 
         ]);
         $this->view->render();
     }
 
-     function updategamelottery($lotteryid, $gametate)
+    public function updategamelottery($lotteryid, $gametate)
     {
-        $this->view('exec/game_management', [ 'flag' => 'updategamelottery','lotteryid' => $lotteryid,'gametate' => $gametate]);
+        $this->view('exec/game_management', ['flag' => 'updategamelottery', 'lotteryid' => $lotteryid, 'gametate' => $gametate]);
         $this->view->render();
     }
 
-      function updategamestatus($lotterId, $gamemodel, $gametate)
+    public function updategamestatus($lotterId, $gamemodel, $gametate)
     {
         $this->view('exec/game_management', [
-            'flag' => 'updategamestatus',
-            'gameId' => $lotterId,
-            'models' => $gamemodel,
+            'flag'     => 'updategamestatus',
+            'gameId'   => $lotterId,
+            'models'   => $gamemodel,
             'gametate' => $gametate,
 
         ]);
         $this->view->render();
     }
 
-       function updategamegroup($gamegroupid, $gametate)
+    public function updategamegroup($gamegroupid, $gametate)
     {
-        $this->view('exec/game_management', [ 'flag' => 'updategamegroup','gamegroupid' => $gamegroupid,'gametate' => $gametate]);
+        $this->view('exec/game_management', ['flag' => 'updategamegroup', 'gamegroupid' => $gamegroupid, 'gametate' => $gametate]);
         $this->view->render();
     }
 
-
-     public function  updateGameGroupData($data)
+    public function updateGameGroupData($data)
     {
         $this->view('exec/lottery_bonus_parameters', ["data" => $data, 'flag' => 'updateGameGroupData']);
         $this->view->render();
     }
-   
-      public function  toggleTwosidesLotteryState($gameID)
+
+    public function toggleTwosidesLotteryState($gameID)
     {
         $this->view('exec/lottery_bonus_parameters', ["gameID" => $gameID, 'flag' => 'toggleTwosidesLotteryState']);
         $this->view->render();
     }
-   
+
 }

@@ -1398,14 +1398,14 @@
     <!-- /.modal-dialog -->
 </div>
 
-<div id="usl-lottery-gamename-modal" class="modal fade" tabindex="-1" aria-modal="true" role="dialog" style="display: none;">
+<div id="usl-lottery-gameType-modal" class="modal fade" tabindex="-1" aria-modal="true" role="dialog" style="display: none;">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-body">
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="text-infos"><?= $translator['Lottery Name']; ?></h5>
+                        <h5 class="text-infos"><?= $translator['Game Type']; ?></h5>
                         <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
                 </div>
@@ -1434,7 +1434,7 @@
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="text-infos"><?= $translator['Lottery Name']; ?></h5>
+                        <h5 class="text-infos"><?= $translator['Game']; ?></h5>
                         <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
                 </div>
@@ -1462,10 +1462,10 @@
                     </select>
 
                     <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-                        <button type="button" class="btn bg-white-subtle player refreshlogs" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                        <!-- <button type="button" class="btn bg-white-subtle player refreshlogs" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                             <i class="bx bx-refresh" style="font-size: 20px;"></i>
-                        </button>
-                        <button type="button" class="btn bg-white-subtle executegames" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                        </button> -->
+                        <button type="button" class="btn bg-white-subtle executegroups" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
                             <i class="bx bx-check-double loaderlog" style="font-size: 20px;"></i>
                         </button>
                     </div>
@@ -1487,16 +1487,13 @@
                                 <button type="button" class="btn hstack gap-6 updategamegroup" style="border: solid 1px #ccc; margin: 10px;"><i class="loaderquoota"></i>Update</button>
                             </div>
                         </div>
-                        </div>
-                    
+                    </div>  
              
             </div>
            
         </div>
     </div>
 </div>
-
-
 
 <div id="usl-lottery-gamenems-modal" class="modal fade" tabindex="-1" aria-modal="true" role="dialog" style="display: none;">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -1509,39 +1506,39 @@
                         <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
                 </div>
-                <div style="display: flex; gap: 10px;">
-                   
-                     <select name="betsate" class="form-control form-select queryholderlistt  gamenametype" id="" style="width: 50%;">
-                       
-                    </select>
+                    <div style="display: flex; gap: 10px;">
+                    
+                        <select name="betsate" class="form-control form-select queryholderlistt  gamenametype" id="" style="width: 50%;">
+                        
+                        </select>
 
-                    <select id="allgames" class="form-control form-select" style="width: 50%;">
-                        <option value="">--Select Game Name--</option>
-                          <option value="standard">Standard</option>
-                        <!-- <option value="2">Twosides</option>
-                        <option value="3">Logdragon</option>
-                        <option value="5">BoardGames</option>
-                        <option value="6">Manytables</option>
-                        <option value="8">Roadbet</option>
-                        <option value="10">Fantan</option> -->
-                    </select>
+                        <select id="allgames" class="form-control form-select" style="width: 50%;">
+                            <option value="">--Select Game Name--</option>
+                            <option value="standard">Standard</option>
+                            <!-- <option value="2">Twosides</option>
+                            <option value="3">Logdragon</option>
+                            <option value="5">BoardGames</option>
+                            <option value="6">Manytables</option>
+                            <option value="8">Roadbet</option>
+                            <option value="10">Fantan</option> -->
+                        </select>
 
-                    <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-                        <button type="button" class="btn bg-white-subtle player refreshlogs" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
-                            <i class="bx bx-refresh" style="font-size: 20px;"></i>
-                        </button>
-                        <button type="button" class="btn bg-white-subtle executegnames" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                            <i class="bx bx-check-double loaderlog" style="font-size: 20px;"></i>
-                        </button>
+                        <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                            <button type="button" class="btn bg-white-subtle player refreshlogs" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                                <i class="bx bx-refresh" style="font-size: 20px;"></i>
+                            </button>
+                            <button type="button" class="btn bg-white-subtle executegnames" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                                <i class="bx bx-check-double loaderlog" style="font-size: 20px;"></i>
+                            </button>
+                        </div>
+
                     </div>
-
-                </div>
-                <br>
+                 <br>
                      <div style="overflow: hidden;">
                             <table class="table table-hover table-bordered text-nowrap mb-0 " id="">
                                 <thead>
                                     <tr>
-                                        <th class="font-weight-normal"><?= $translator['Lottery Name']; ?></th>
+                                        <th class="font-weight-normal"><?= $translator['Game Name']; ?></th>
                                         <th class="font-weight-normal"><input type="checkbox" id="checkAllGames" style="width:20px;height:20px"/> </th>
                                     </tr>
                                 </thead>
@@ -1552,7 +1549,7 @@
                                 <button type="button" class="btn hstack gap-6 updategamenames" style="border: solid 1px #ccc; margin: 10px;"><i class="loaderquoota"></i>Update</button>
                             </div>
                         </div>
-                        </div>
+                     </div>
                     
              
             </div>

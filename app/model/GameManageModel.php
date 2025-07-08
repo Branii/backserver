@@ -31,9 +31,9 @@ class GameManageModel extends MEDOOHelper
       // return parent::selectAll('lottery_type', ['lt_id', 'name'], "lt_id != 9");
    }
 
-   public static function getLotteryGamesById(string $lotteryId, $gamemodel)
+   public static function getLotteryGamesById($lotteryId, $gamemodel,$gametype)
    {
-      // $bigData = [];
+      // $bigData = [];JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_odds, CONCAT('$.', :game_types))) AS standardodds
 
       if (in_array($lotteryId, [1, 2, 3, 5, 6, 8, 10,11]) && in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
          $tableMap = [
@@ -46,6 +46,8 @@ class GameManageModel extends MEDOOHelper
             'manytables' => 'manytables',
          ];
          $tableName = $tableMap[$gamemodel];
+         $jsonKey = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
+         $jsonPath = "$." . $jsonKey;
         $sql = "
             SELECT 
                {$tableName}.gn_id, 
@@ -60,7 +62,8 @@ class GameManageModel extends MEDOOHelper
                {$tableName}.oddspercentage,
                {$tableName}.totalbetpercentage,
                {$tableName}.odds,{$tableName}.game_group,
-               {$tableName}.total_bets,{$tableName}.lottery_type,
+               {$tableName}.lottery_type, JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_odds, '$jsonPath')) AS standardodds,
+               JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_total_bets, '$jsonPath')) AS standardtotalbets,
                game_group.state AS group_state,lottery_type.state AS lottery_state
             FROM 
                {$tableName}
@@ -69,16 +72,17 @@ class GameManageModel extends MEDOOHelper
                ON game_group.gp_id = {$tableName}.game_group
                JOIN lottery_type ON lottery_type.lt_id={$tableName}.lottery_type
             WHERE 
-               {$tableName}.lottery_type = :lotteryId
+               {$tableName}.lottery_type = :lotteryId 
             ";
 
-
          $data = parent::query($sql, ['lotteryId' => $lotteryId]);
-         return ['data' => $data];
+        
+        return ['data' => $data];
+
       }
    }
 
-   public static function UpdateOddsTotalbets($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent)
+   public static function UpdateOddsTotalbets($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent,$gametype)
    {
       if (in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
          $tableMap = [
@@ -91,26 +95,36 @@ class GameManageModel extends MEDOOHelper
             'manytables' => 'manytables',
          ];
          $tableName = $tableMap[$gamemodel];
-         $sql = "UPDATE {$tableName} 
-            SET modified_odds = :modified_odds,
+        // Sanitize 
+        $jsonKey = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
+        $jsonPath = "$.\"$jsonKey\"";  // correct MySQL JSON path syntax with quoted key
+
+         $sql = "
+            UPDATE {$tableName}
+            SET 
+                modified_odds = :modified_odds,
                 oddspercentage = :oddspercentage,
                 modified_totalbet = :modified_totalbet,
-                totalbetpercentage = :totalbetpercentage
-              WHERE gn_id = :gn_id";
+                totalbetpercentage = :totalbetpercentage, standard_odds = JSON_SET(standard_odds, '{$jsonPath}', :new_standard_odds),
+                standard_total_bets = JSON_SET(standard_total_bets, '{$jsonPath}', :new_standard_totalbet)
+               WHERE 
+                gn_id = :gn_id
+        ";
 
          try {
             $data = parent::query($sql, [
-               'modified_odds' => $newodds,
-               'oddspercentage' => $oddpercent,
-               'modified_totalbet' => $newtotalbet,
-               'totalbetpercentage' => $totalbetpercent,
-               'gn_id' => $gameId,
+                'modified_odds'        => $newodds,
+                'oddspercentage'       => $oddpercent,
+                'modified_totalbet'    => $newtotalbet,
+                'totalbetpercentage'   => $totalbetpercent,
+                 'new_standard_odds'    => $newodds,      // same value as modified_odds
+                 'new_standard_totalbet'=> $newtotalbet,  // same value as modified_totalbet
+                'gn_id'                => $gameId
             ]);
 
             if ($data > 1) {
-               $data = self::getLotteryGamesById($gameId, $gamemodel);
+               $data = self::getLotteryGamesById($gameId, $gamemodel, $gametype);
             }
-
             return ['success' => true, 'message' => 'Update successful'];
          } catch (Exception $e) {
             return ['success' => false, 'message' => 'Database update failed', 'error' => $e->getMessage()];
@@ -118,7 +132,7 @@ class GameManageModel extends MEDOOHelper
       }
    }
 
-   public static function ResetTotalbets($gameId, $gamemodel, $newtotalbet, $totalbetpercent)
+   public static function ResetTotalbets($gameId, $gamemodel, $newtotalbet, $totalbetpercent,$gametype)
    {
       if (in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
          $tableMap = [
@@ -131,17 +145,24 @@ class GameManageModel extends MEDOOHelper
             'manytables' => 'manytables',
          ];
          $tableName = $tableMap[$gamemodel];
-         $sql = "UPDATE {$tableName} SET  modified_totalbet = :modified_totalbet,totalbetpercentage = :totalbetpercentage WHERE gn_id = :gn_id";
+           // Sanitize 
+        $jsonKey = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
+        $jsonPath = "$.\"$jsonKey\"";  // correct MySQL JSON path syntax with quoted key
+
+         $sql = "UPDATE {$tableName} SET  modified_totalbet = :modified_totalbet,totalbetpercentage = :totalbetpercentage,
+             standard_total_bets = JSON_SET(standard_total_bets, '{$jsonPath}', :new_standard_totalbet)
+          WHERE gn_id = :gn_id";
 
          try {
             $data = parent::query($sql, [
                'modified_totalbet' => $newtotalbet,
                'totalbetpercentage' => $totalbetpercent,
+               'new_standard_totalbet' =>$newtotalbet,
                'gn_id' => $gameId,
             ]);
 
             if ($data > 1) {
-               $data = self::getLotteryGamesById($gameId, $gamemodel);
+               $data = self::getLotteryGamesById($gameId, $gamemodel,$gametype);
             }
 
             return ['success' => true, 'message' => 'Update successful'];

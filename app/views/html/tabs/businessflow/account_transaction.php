@@ -498,7 +498,7 @@
                                 <th class="font-weight-normal"><?= $translator['Amount']; ?></th>
                                 <!-- <th class="font-weight-normal"><?= $translator['Credit Amount']; ?></th> -->
                                 <th class="font-weight-normal"><?= $translator['Balance']; ?></th>
-                                <th class="font-weight-normal"><?= $translator['Date/Time']; ?></th>
+                                <th class="font-weight-normal"><?= $translator['Transaction Time']; ?></th>
                                 <!-- <th class="font-weight-normal"><?= $translator['Game']; ?></th> -->
                                 <th class="font-weight-normal"><?= $translator['Transaction ID']; ?></th>
                                 <th class="font-weight-normal"><?= $translator['Status']; ?></th>

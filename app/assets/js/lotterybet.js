@@ -351,17 +351,17 @@ $(function () {
     }
     fetchLotteryname();
 
-    // viewbets
-    $(document).on("click", ".viewbets", function () {
-        $("#viewbetsmodal").modal("show");
-        const betcode = $(this).attr("value");
-        $("#rowbet").empty();
-        $("#rowbe1").empty();
-        viewstakedBet(betcode);
-        
-    });
 
-    async function viewstakedBet(betcode) {
+  // viewbets
+  $(document).on("click", ".viewbets", function () {
+      $("#viewbetsmodal").modal("show");
+      const betcode = $(this).attr("value");
+      $("#rowbet").empty();
+      $("#rowbe1").empty();
+      viewstakedBet(betcode);
+  });
+
+  async function viewstakedBet(betcode) {
       try {
           const response = await fetch(`../businessflow/viewBetstake/${betcode}`);
           const data = await response.json();

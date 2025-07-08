@@ -278,12 +278,14 @@ $(() =>{
         $("#game_groups").html(html);
         $("#game_groups").show();
         $("#lbp_twosides").show();
+         $(".gamebonus").hide();
 
       }else if(lotteryModel === "boardgames"){
         $("#lbp_boardgames").show();
       }else if(lotteryModel === "standard"){
          $("#game_groups").hide();
          $("#maskrfeferal").show();
+          $(".gamebonus").show();
       }else if(lotteryModel === "fantan"){
         const lotteryType = $("#allGameNamesLottery").val();
         let html = "";

@@ -1,7 +1,6 @@
 <?php
+class UserManageModel extends MEDOOHelper{
 
-class UserManageModel extends MEDOOHelper
-{
     //NOTE -
     ////////////// USERLIST LIST -//////////
 
