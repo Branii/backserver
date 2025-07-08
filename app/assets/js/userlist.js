@@ -1171,7 +1171,7 @@ $(document).on("click", ".usrl-block-userbtn", function () {
                                 </a>
                              
                                 <a class="dropdown-item usr-block-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" data-uid="${item.uid}">
-                                    <i class='bx bx-log-in-circle'></i> block user
+                                    <i class='bx bx-log-in-circle'></i> Reset Login Attempt
                                 </a>
 
                               </div>
