@@ -343,43 +343,100 @@ $(() => {
    }
 
    const pageLimit = 20;
+   // const fetchLotteryBasicParams = (page, element) => {
+   //    const lottery_id = $("#lottery").val();
+   //    console.log(lottery_id)
+   //    $.ajax({
+   //       url: `../game/fetch_lottery_basic_params/${partnerID}/${lottery_id}/${page}`,
+   //       type: "POST",
+   //       beforeSend: function () {
+   //          $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+   //       },
+   //       success: function (response) {
+   //            console.log("LOTTERY DRAW RECORDS: ", response);
+   //          response = JSON.parse(response);
+   //          const data = response.data;
+
+   //          if (data.length === 0) {
+   //             $("#lot-basic-dtholder").html(`<tr class="no-results"> <td colspan="9"><img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
+   //             $("#lb-pagination").html("");
+   //             return;
+   //          }
+
+   //          let rowsMarkup = "";
+   //          // console.log(data);
+   //          data.forEach((row) => {
+   //             rowsMarkup += lotteryBasicParametersMarkup(row);
+   //          });
+   //          // console.log(rowsMarkup);
+   //          $("#lot-basic-dtholder").html(rowsMarkup);
+   //          const totalPages = Math.ceil(response.totalCount / 20);
+   //          renderPaginationlist(totalPages, page, pageLimit, (newpage, element) => fetchLotteryBasicParams(newpage, element));
+   //       },
+   //       error: function (res, status, error) {
+   //          $(".dataholder").html("<tr><td colspan='12' style='text-align:center;'>An error occured, please try again later.</td></tr>");
+   //       },
+   //       complete: function () {
+   //          $($(element).find("i")[0]).addClass("bx-check-double").removeClass("bx-loader bx-spin");
+   //       },
+   //    });
+   // };
+
+
    const fetchLotteryBasicParams = (page, element) => {
-      const lottery_id = $("#lottery").val();
-      $.ajax({
-         url: `../game/fetch_lottery_basic_params/${partnerID}/${lottery_id}/${page}`,
-         type: "POST",
-         beforeSend: function () {
-            $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
-         },
-         success: function (response) {
-            //  console.log("LOTTERY DRAW RECORDS: ", response);
-            response = JSON.parse(response);
-            const data = response.data;
+  const lottery_id = $("#lottery").val();
+  console.log("Lottery ID:", lottery_id);
 
-            if (data.length === 0) {
-               $("#lot-basic-dtholder").html(`<tr class="no-results"> <td colspan="9"><img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
-               $("#lb-pagination").html("");
-               return;
-            }
+  $.ajax({
+    url: `../game/fetch_lottery_basic_params/${partnerID}/${lottery_id}/${page}`,
+    type: "POST",
+    beforeSend: function () {
+      $(element).find("i").first().removeClass("bx-check-double").addClass("bx-loader bx-spin");
+    },
+    success: function (response) {
+      console.log("Raw response:", response);
+      let parsedResponse;
 
-            let rowsMarkup = "";
-            // console.log(data);
-            data.forEach((row) => {
-               rowsMarkup += lotteryBasicParametersMarkup(row);
-            });
-            // console.log(rowsMarkup);
-            $("#lot-basic-dtholder").html(rowsMarkup);
-            const totalPages = Math.ceil(response.totalCount / 20);
-            renderPaginationlist(totalPages, page, pageLimit, (newpage, element) => fetchLotteryBasicParams(newpage, element));
-         },
-         error: function (res, status, error) {
-            $(".dataholder").html("<tr><td colspan='12' style='text-align:center;'>An error occured, please try again later.</td></tr>");
-         },
-         complete: function () {
-            $($(element).find("i")[0]).addClass("bx-check-double").removeClass("bx-loader bx-spin");
-         },
-      });
-   };
+      try {
+        parsedResponse = JSON.parse(response);
+        console.log(parsedResponse)
+      } catch (e) {
+        console.error("Failed to parse JSON:", e);
+        $("#lot-basic-dtholder").html(`<tr><td colspan="9">Invalid response format.</td></tr>`);
+        return;
+      }
+
+      const data = parsedResponse.data || [];
+      
+
+      if (data.length === 0) {
+        $("#lot-basic-dtholder").html(
+          `<tr class="no-results">
+            <td colspan="9">
+              <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Not Found">
+            </td>
+          </tr>`
+        );
+        $("#lb-pagination").empty();
+        return;
+      }
+
+      const rowsMarkup = data.map(row => lotteryBasicParametersMarkup(row)).join("");
+      $("#lot-basic-dtholder").html(rowsMarkup);
+
+      const totalPages = Math.ceil(parsedResponse.totalCount / pageLimit); // Ensure `pageLimit` is defined globally or passed as a parameter
+      renderPaginationlist(totalPages, page, pageLimit, (newPage, el) => fetchLotteryBasicParams(newPage, el));
+    },
+    error: function () {
+      $("#lot-basic-dtholder").html(
+        "<tr><td colspan='12' style='text-align:center;'>An error occurred, please try again later.</td></tr>"
+      );
+    },
+    complete: function () {
+      $(element).find("i").first().addClass("bx-check-double").removeClass("bx-loader bx-spin");
+    }
+  });
+};
 
    function sanitizeHTML(str) {
       if (typeof str !== "string") {
@@ -537,12 +594,10 @@ $(() => {
    };
 
 
-   //add new game to the other games
-   //addnewgames
-   $(document).on("click", ".addnewlottery", function () {
-     $("#signup-modals").modal("show");
-      
-   })  
+  
+
+
+
 
    fetchLotteryBasicParams(1);
    function tableScrollbasic() {
@@ -559,4 +614,182 @@ $(() => {
    }
 
    tableScrollbasic();
+
+//   const lotterySettings = {
+//   "1": { num_of_balls: 5, min_ball: 0, max_ball: 9 },
+//   "2": { num_of_balls: 10, min_ball: 1, max_ball: 10 },
+//   "3": { num_of_balls: 3, min_ball: 1, max_ball: 6 },
+//   "5": { num_of_balls: 3, min_ball: 0, max_ball: 9 },
+//   "6": { num_of_balls: 5, min_ball: 1, max_ball: 11 },
+//   "8": { num_of_balls: 7, min_ball: 1, max_ball: 49 },
+//   "10": { num_of_balls: 8, min_ball: 1, max_ball: 80 },
+//   "11": { num_of_balls: 6, min_ball: 1, max_ball: 6 }
+//   };
+
+// $(document).on("change", "#game_groups", function () {
+
+//   const settings = lotterySettings[selectedID];
+//   if (settings) {
+//     $("#numm_of_balls").val(settings.num_of_balls);
+//     $("#minn_ball").val(settings.min_ball);
+//     $("#maxx_ball").val(settings.max_ball);
+//   } else {
+//     console.warn(" No settings found for this lottery ID.");
+//   }
+// });
+
+const lotterySettings = {
+  "1":  { name: "5D",     num_of_balls: 5, min_ball: 0, max_ball: 9 },
+  "2":  { name: "PK10",   num_of_balls: 10, min_ball: 1, max_ball: 10 },
+  "3":  { name: "FAST3",  num_of_balls: 3, min_ball: 1, max_ball: 6 },
+  "5":  { name: "3D",     num_of_balls: 3, min_ball: 0, max_ball: 9 },
+  "6":  { name: "11x5",   num_of_balls: 5, min_ball: 1, max_ball: 11 },
+  "8":  { name: "Mark6",  num_of_balls: 7, min_ball: 1, max_ball: 49 },
+  "10": { name: "Happy8", num_of_balls: 8, min_ball: 1, max_ball: 80 },
+  "11": { name: "PK6",    num_of_balls: 6, min_ball: 1, max_ball: 6 }
+};
+
+$(document).on("change", "#game_groups", function () {
+  const selectedID = $(this).val().split("|")[1]; // e.g., "2"
+console.log(selectedID)
+  const settings = lotterySettings[selectedID];
+
+  if (settings) {
+    $("#numm_of_balls").val(settings.num_of_balls);
+    $("#minn_ball").val(settings.min_ball);
+    $("#maxx_ball").val(settings.max_ball);
+  } else {
+    console.warn(" No settings found for this lottery ID.");
+  }
+});
+
+// Show the modal when 'Add New Lottery' is clicked
+    
+$(document).on("click", ".addLottery", function (evt) {
+  evt.preventDefault();
+  const name = $("#namee").val();
+  const gamegroups = $("#lottery_types").val().split("|")[1]; // ID like "2"
+  const numberOfBalls = $("#numm_of_balls").val();
+  const minball = $("#minn_ball").val();
+  const maxball = $("#maxx_ball").val();
+  const secondsperissue = $("#secondss_per_issue").val();
+  const starttime = $("#starttimee").val();
+  const stoptime = $("#stoptimee").val();
+  const lotterymodel = $("#lottery_model").val();
+  const lotteryType = $("#lottery_types").val().split("|")[0];
+  const logoFileName = $("#lottery_logo_name").val();
+  console.log(" Submitting Lottery Game:");
+  console.log("Lottery Name:", name);
+  console.log("Game name :", gamegroups);
+  console.log("Number of Balls:", numberOfBalls);
+  console.log("Min Ball:", minball);
+  console.log("Max Ball:", maxball);
+  console.log("Seconds Per Issue:", secondsperissue);
+  console.log("Start Time:", starttime);
+  console.log("Stop Time:", stoptime);
+  console.log("Lottery Model:", lotterymodel);
+  console.log("Lottery Type:", lotteryType);
+  console.log("Logo File Name:", logoFileName);
+
+  // Validation
+  if (name === "" || gamegroups === "" || numberOfBalls === "" || minball === "" || maxball === "" || secondsperissue === "" || starttime === "" || stoptime === "" || lotterymodel === "" || lotteryType === "" || logoFileName === "") {
+    showToast("Heads up!!", "All fields are required", "info");
+    return false;
+  }
+  $("#addlottery-modals").modal("hide");
+  $.post(`../game/addlottery/${encodeURIComponent(name)}/${encodeURIComponent(gamegroups)}/${numberOfBalls}/${minball}/${maxball}/${secondsperissue}/${starttime}/${stoptime}/${lotterymodel}/${encodeURIComponent(lotteryType)}/${encodeURIComponent(logoFileName)}`, function (response) {
+    let result;
+    try {
+      result = JSON.parse(response);
+    } catch (e) {
+      showToast("Error", "Server response error", "error");
+      return;
+    }
+
+    if (result === "success") {
+      showToast("Success", "Lottery Game Added", "success");
+    } else {
+      showToast("Heads up!!", "Lottery Game failed", "info");
+    }
+  });
+});
+
+
+$("#lottery_logo_file").on("change", function () {
+    const file = this.files[0];
+    if (file) {
+        console.log("🖼️ Selected Logo File:", file.name);
+        $("#logoPreview").attr("src", URL.createObjectURL(file)).show();
+        $("#lottery_logo_name").val(file.name);
+    }
+});
+
+async function getAllGamesLottery() {
+  try {
+    const response = await fetch(`../game/getAllGamesLottery`);
+    const data = await response.json();
+    console.log(data); // You will see the array of game groups
+
+
+    let lotteryTypeOptions = "<option value='' disabled selected>Select Lottery Type</option>";
+
+    data.forEach((item) => {
+      lotteryTypeOptions += `<option value='${item.name}|${item.lt_id}'>${item.name}</option>`;
+    });
+
+    $(".lotteryTypeSelect").html(lotteryTypeOptions);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+getAllGamesLottery();
+
+
+//   async function getAllGamesLottery() {
+//     try {
+//       const response = await fetch(`../game/getAllGamesLottery`);
+//       const data = await response.json();
+//       console.log(data);
+      
+//       let html = "";
+
+//       html += `<option>select game</option>`;
+//       data.forEach((item) => {
+//         html += `<option value='${item.lt_id}'>${item.name}</option>`;
+//       });
+//       $(".lotteryTypess").html(html);
+//     } catch (error) {
+//       console.error("Error fetching data:", error);
+//     }
+//   }
+//   getAllGamesLottery();
+
+
+
+  
+  async function getTimegames() {
+    try {
+      const response = await fetch(`../game/getTimegames`);
+      const data = await response.json();
+      console.log(data);
+      
+      let html = "";
+
+      html += `<option>select Time</option>`;
+      data.forEach((item) => {
+        html += `<option value='${item.seconds}'>${item.seconds}</option>`;
+      });
+      $(".secondsselect").html(html);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+  getTimegames();
+
+  
+  $(document).on("click", ".addnewlottery", function () {
+      $("#addlottery-modals").modal("show");
+      });
+
 });

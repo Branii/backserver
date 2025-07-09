@@ -119,3 +119,14 @@ if ($flag == "getDraws") {
     echo json_encode($result );
     
 }
+
+
+
+if ($flag == "getTimegames") {
+    $result = (new GameManageModel())->getTimegames();
+    if($result){
+        echo json_encode($result);
+    } else {
+        echo json_encode(['type'=>'error','message'=>'Some error occured']);
+    }
+} 

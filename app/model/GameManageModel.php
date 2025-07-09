@@ -551,4 +551,18 @@ class GameManageModel extends MEDOOHelper
          return ["status" => "error", "data" => $e->getMessage()];
       }
    }
+
+
+   public static function addLotterygames($name, $gamegroups, $numberofballs, $minball, $maxball, $secondsperissue, $starttime, $stoptime,$lotterymodel, $lotteryType, $logoFileName)
+{
+ $pdo = (new Database())->openLink();
+}
+
+
+public static function getTimegames()
+{
+    return $data = parent::query("SELECT tid,seconds FROM game_time_set ");
+}
+
+
 }

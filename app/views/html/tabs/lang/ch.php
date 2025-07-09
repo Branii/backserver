@@ -1657,7 +1657,8 @@ return [
     'game_group' => '游戏分组', // Game Group
     'Reset user Account'=> '重置用户帐户',
     'Profit Limit'=> '利润限制',
-
+ 'Select Lottery Type'=>'选择彩票类型',
+ 'Select Seconds'=>'选择秒',
 
 
 ];

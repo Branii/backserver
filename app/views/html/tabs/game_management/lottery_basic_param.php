@@ -197,13 +197,12 @@
 <span id="state_on" style="display: none;"><?= $translator['state_on'] ?></span>
 <span id="state_off" style="display: none;"><?= $translator['state_off'] ?></span>
 
-<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'Pages' ?></span>
+<span id="trans-page" style="display: none;" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" style="display: none;" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" style="display: none;" class="hidden"><?= $translator['pages'] ?? 'Pages' ?></span>
 
-<span id="trans-turnedon" class="hidden"><?= $translator['Turned On'] ?? 'Turned On' ?></span>
-<span id="trans-turnedoff" class="hidden"><?= $translator['Turned Off'] ?? 'Turned Off' ?></span>
-
+<span id="trans-turnedon" style="display: none;" class="hidden"><?= $translator['Turned On'] ?? 'Turned On' ?></span>
+<span id="trans-turnedoff" style="display: none;" class="hidden"><?= $translator['Turned Off'] ?? 'Turned Off' ?></span>
 
 <div id="lb-edit" class="modal fade" tabindex="-1" style="display: none;" aria-modal="true" role="dialog">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -323,17 +322,15 @@
         </span>
         <span class="topplist-right" id="paginations" aria-label="Page navigation example">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-               
                 <button type="button" class="btn bg-white-subtle addnewlottery" value="" aria-label="Search" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="add new lottery">
                     <i class="bx bx-plus loaderlist" style="font-size: 20px;"></i>
                 </button>
-              <button type="button" class="btn bg-white-subtle player lb-refreshlist" value="" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                <button type="button" class="btn bg-white-subtle player lb-refreshlist" value="" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
-             </button>              
+                </button>
                 <button type="button" class="btn bg-white-subtle fetch-lotter-basic-records" value="" aria-label="Search" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Search">
                     <i class="bx bx-check-double loaderlist" style="font-size: 20px;"></i>
                 </button>
-
             </div>
         </span>
     </div>
@@ -424,161 +421,246 @@
                 <option value="200">200</option>
                 <option value="500">500</option> -->
 
-                 <option value="5" class="fromnumrows"><?= $translator['5'] ?></option>
-                     <option value="10"><?= $translator['10'] ?? '10' ?></option>
-            <option value="20"><?= $translator['20'] ?? '20' ?></option>
-                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
-    <option value="100"><?= $translator['100'] ?? '100' ?></option>
-    <option value="200"><?= $translator['200'] ?? '200' ?></option>
-    <option value="500"><?= $translator['500'] ?? '500' ?></option>
-                
+                <option value="5" class="fromnumrows"><?= $translator['5'] ?></option>
+                <option value="10"><?= $translator['10'] ?? '10' ?></option>
+                <option value="20"><?= $translator['20'] ?? '20' ?></option>
+                <option value="50"><?= $translator['50'] ?? '50' ?></option>
+                <option value="100"><?= $translator['100'] ?? '100' ?></option>
+                <option value="200"><?= $translator['200'] ?? '200' ?></option>
+                <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
             <span id="lb-pagination" class="right-element"> </span>
         </span>
     </div>
 </div>
- <div id="addnewgames" class="modal fade" tabindex="-1" aria-modal="true" role="dialog">
+
+
+<div id="addnewgames" class="modal fade" tabindex="-1" aria-modal="true" role="dialog">
     <div class="modal-dialog-scrollable modal-lg">
         <div class="modal-content modal-filled" style="background-color: #f9f9f9;">
-            
-   <div class="modal-body p-4">
-                  <div class="container">
-    <form enctype="multipart/form-data">
-      <div class="form-group">
-        <label for="upload_logo">Upload Logo (Preview Below)</label>
-        <input type="file" id="upload_logo" name="upload_logo" accept="image/*" onchange="previewLogo(event)" />
-      </div>
-     
-      <h2>Add New Lottery</h2>
+            <div class="modal-body p-4">
+                <div class="container">
+                    <form enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="upload_logo">Upload Logo (Preview Below)</label>
+                            <input type="file" id="upload_logo" name="upload_logo" accept="image/*" onchange="previewLogo(event)" />
+                        </div>
 
-      <div class="input-flex">
-        <div class="form-group">
-          <label for="name">Lottery Name*</label>
-          <input type="text" id="name" name="name" />
-        </div>
-        <div class="form-group">
-          <label for="logo">Logo*</label>
-          <input type="text" id="logo" name="logo" disabled />
-        </div>
-      </div>
+                        <h2>Add New Lottery</h2>
 
-      <div class="input-flex">
-        <div class="form-group">
-          <label for="num_of_balls">Number of Balls*</label>
-          <input type="number" id="num_of_balls" name="num_of_balls" />
-        </div>
-        <div class="form-group">
-          <label for="seconds_per_issue">Seconds Issue</label>
-          <select id="seconds_per_issue" name="seconds_per_issue">
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-            <option value="40">40</option>
-            <option value="50">50</option>
-            <option value="60">60</option>
-            <option value="120">120</option>
-            <option value="160">160</option>
-            <option value="200">200</option>
-            <option value="260">260</option>
-            <option value="300">300</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="game_group">Game Group*</label>
-          <select id="game_group" name="game_group">
-            <option value="5d">5D</option>
-            <option value="pk10">PK10</option>
-            <option value="3d">3D</option>
-            <option value="fast3">FAST 3</option>
-            <option value="11x5">11x5</option>
-            <option value="mark6">Mark 6</option>
-            <option value="happy8">Happy 8</option>
-          </select>
-        </div>
-      </div>
+                        <div class="input-flex">
+                            <div class="form-group">
+                                <label for="name">Lottery Name*</label>
+                                <input type="text" id="name" name="name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="logo">Logo*</label>
+                                <input type="text" id="logo" name="logo" disabled />
+                            </div>
+                        </div>
 
-      <div class="input-flex">
-        <div class="form-group">
-          <label for="max_ball">Max Ball*</label>
-          <input type="number" id="max_ball" name="max_ball" />
-        </div>
-        <div class="form-group">
-          <label for="min_ball">Min Ball*</label>
-          <input type="number" id="min_ball" name="min_ball" />
-        </div>
-      </div>
+                        <div class="input-flex">
+                            <div class="form-group">
+                                <label for="num_of_balls">Number of Balls*</label>
+                                <input type="number" id="num_of_balls" name="num_of_balls" />
+                            </div>
+                            <div class="form-group">
+                                <label for="seconds_per_issue">Seconds Issue</label>
+                                <select id="seconds_per_issue" name="seconds_per_issue">
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
+                                    <option value="50">50</option>
+                                    <option value="60">60</option>
+                                    <option value="120">120</option>
+                                    <option value="160">160</option>
+                                    <option value="200">200</option>
+                                    <option value="260">260</option>
+                                    <option value="300">300</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="game_group">Game Group*</label>
+                                <select id="game_group" name="game_group">
+                                    <option value="5d">5D</option>
+                                    <option value="pk10">PK10</option>
+                                    <option value="3d">3D</option>
+                                    <option value="fast3">FAST 3</option>
+                                    <option value="11x5">11x5</option>
+                                    <option value="mark6">Mark 6</option>
+                                    <option value="happy8">Happy 8</option>
+                                </select>
+                            </div>
+                        </div>
 
-      <div class="input-flex">
-        <div class="form-group">
-          <label for="starttime">Start Time*</label>
-          <input type="time" id="starttime" name="starttime" />
-        </div>
-        <div class="form-group">
-          <label for="stoptime">Stop Time*</label>
-          <input type="time" id="stoptime" name="stoptime" />
-        </div>
-        <div class="form-group">
-          <label for="lottery_model">Lottery Model*</label>
-          <select id="lottery_model" name="lottery_model">
-            <option value="3">Boardgame</option>
-            <option value="2">Fantan</option>
-            <option value="1">Standard</option>
-          </select>
-        </div>
-      </div>
+                        <div class="input-flex">
+                            <div class="form-group">
+                                <label for="max_ball">Max Ball*</label>
+                                <input type="number" id="max_ball" name="max_ball" />
+                            </div>
+                            <div class="form-group">
+                                <label for="min_ball">Min Ball*</label>
+                                <input type="number" id="min_ball" name="min_ball" />
+                            </div>
+                        </div>
 
-      <div class="form-group">
-        <label for="lottery_type">Lottery Type*</label>
-        <select id="lottery_type" name="lottery_type">
-          <option value="10">Happy 8</option>
-          <option value="8">Mark 6</option>
-          <option value="6">11x5</option>
-          <option value="5">3D</option>
-          <option value="3">Fast 3</option>
-          <option value="2">PK 10</option>
-          <option value="1">5D</option>
-        </select>
-      </div>
+                        <div class="input-flex">
+                            <div class="form-group">
+                                <label for="starttime">Start Time*</label>
+                                <input type="time" id="starttime" name="starttime" />
+                            </div>
+                            <div class="form-group">
+                                <label for="stoptime">Stop Time*</label>
+                                <input type="time" id="stoptime" name="stoptime" />
+                            </div>
+                            <div class="form-group">
+                                <label for="lottery_model">Lottery Model*</label>
+                                <select id="lottery_models" name="lottery_models">
+                                    <option value="3">Boardgame</option>
+                                    <option value="2">Fantan</option>
+                                    <option value="1">Standard</option>
+                                </select>
+                            </div>
+                        </div>
 
-      <button type="submit" class="submit-btn">Submit Lottery</button>
-    </form>
-  </div>
-                
+                        <div class="form-group">
+                            <label for="lottery_type">Lottery Type*</label>
+                            <select id="lottery_type" name="lottery_type">
+                                <option value="10">Happy 8</option>
+                                <option value="8">Mark 6</option>
+                                <option value="6">11x5</option>
+                                <option value="5">3D</option>
+                                <option value="3">Fast 3</option>
+                                <option value="2">PK 10</option>
+                                <option value="1">5D</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Submit Lottery</button>
+                    </form>
+                </div>
             </div>
         </div>
         <!-- /.modal-content -->
     </div>
 </div>
 
-<div id="signup-modals" class="modal fade" tabindex="-1" aria-hidden="true">
+
+
+
+<!-- add lottery modal start -->
+<div id="addlottery-modals" class="modal fade" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <!-- <div class="modal-body">
-                <div class="text-center mt-2 mb-4">
-                    <div class="d-flex justify-content-between">
-                        <div><?= $translator['Transaction Info']; ?></div>
-                        <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
+        <div class="modal-content rounded-4 p-4" style="background-image: url('your-background-image.jpg'); background-size: cover; background-position: center; backdrop-filter: blur(3px);">
+            <div class="modal-header border-0">
+                <h5 class="modal-title w-100 text-center fw-bold text-dark">Add New Lottery</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+        
+                    <form id="lotteryForm" name="lotteryForm" autocomplete="off" enctype="multipart/form-data">
+    
+                     
+  
+                                            <div class="col-md-12">
+                        <label class="form-label">Upload Lottery Logo (Image)*</label>
+                        <input type="file" class="form-control" name="lottery_logo_file" id="lottery_logo_file" accept="image/*" required />
+                        <input type="hidden" name="lottery_logo_name" id="lottery_logo_name" />
+                    </div><P><P>
+                        <hr>
+                    <div class="col-md-12">
+                        <center>
+                        <img id="logoPreview" src="#" alt="Logo Preview" style="max-width: 200px; display: none; max-height:150px;" />
+                        </center>
                     </div>
-                </div>
+                        <hr>
+                    <div class="row g-3">
+                        <!-- Row 1 -->
+                        <div class="col-md-12">
+                            <label class="form-label">Lottery name*</label>
+                            <input type="text" class="form-control" name="name" id="namee"  />
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <label class="form-label">Logo*</label>
+                            <input type="text" class="form-control" name="logo"  />
+                        </div> -->
+                        <div class="col-md-4">
+                            <label class="form-label">Lottery Type*</label>
+                            <!-- <select class="form-select" name="game_group  queryholderlistt  lotteryTypes"  id="lotterys">
+                            <?= $translator['Select Lottery']; ?>
+              </select> -->
+                        <!-- Game Group -->
+                       <select  class="form-select lotteryTypeSelect"  name="game_groups" id="game_groups"style="width: 100%;">
+                            <option value="" disabled selected>Select Game Group</option>
+                        </select>
 
-                <form>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <table class="table table-bordered table-striped">
-                                <tbody id="row1"></tbody>
-                            </table>
+
                         </div>
 
-                        <div class="col-md-6">
-                            <table class="table table-bordered table-striped">
-                                <tbody id="row2"></tbody>
-                            </table>
+                        <!-- Row 2 -->
+                        <div class="col-md-4">
+                            <label class="form-label">Number of Balls*</label>
+                            <input type="number" class="form-control" name="number_of_balls" id="numm_of_balls" readonly />
                         </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Seconds Issue</label>
+                            <!-- <select class="form-select" name="seconds_issue">
+                <option value="20" selected>20</option>
+              </select> -->
+                            <select class="form-select secondsselect" name="seconds_per_issue" id="secondss_per_issue" >
+                                 <option value="" disabled selected><?= $translator['Select Seconds']; ?></option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Min Ball*</label>
+                            <input type="number" class="form-control" name="minn_ball" id="minn_ball" readonly />
+                        </div>
+                        <!-- Row 3 -->
+                        <div class="col-md-6">
+                            <label class="form-label">Max Ball*</label>
+                            <input type="number" class="form-control" name="maxx_ball" id="maxx_ball" readonly />
+                        </div>
+
+                        <!-- Row 4 -->
+                        <div class="col-md-4">
+                            <label class="form-label">Start time*</label>
+                            <input type="time" class="form-control" name="starttime" id="starttimee" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Stop time*</label>
+                            <input type="time" class="form-control" name="stoptime" id="stoptimee" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Lottery model*</label>
+                            <select class="form-select" name="lottery_model" id="lottery_model">
+                                <option value="3" selected>Boardgame</option>
+                                <option value="2" selected>Fantan</option>
+                                <option value="1" selected>Standard</option>
+                            </select>
+                        </div>
+
+                        <!-- Row 5 -->
+                        <div class="col-md-12">
+                            <label class="form-label">Lottery type*</label>
+                            <!-- <select class="form-select" name="lottery_type">
+                <option value="PK 10" selected>PK 10</option>
+              </select> -->
+
+<!-- Lottery Type -->
+                        <select id="lottery_types" class="form-select lotteryTypeSelect" style="width: 100%;">
+                        <option value="" disabled selected><?= $translator['Select Lottery Type']; ?></option>
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary px-4 addLottery">Submit Lottery</button>
                     </div>
                 </form>
-            </div> -->
+            </div>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>

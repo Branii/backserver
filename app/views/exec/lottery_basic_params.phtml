@@ -95,8 +95,114 @@ if ($flag == "update-params") {
        $results = ["status" => "error", "data" => "Request Failed."];
     }
 
+echo json_encode($results);
 
+}if ($flag == "addlottery") {
+    // Step 1: Handle file upload
+    $logoFileName = '';
 
+    if (isset($_FILES['lottery_logo_file']) && $_FILES['lottery_logo_file']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = '../app/assets/images/';
+        $originalName = basename($_FILES['lottery_logo_file']['name']);
+
+        // Sanitize and make name unique
+        $safeName = preg_replace('/[^A-Za-z0-9.\-_]/', '', $originalName);
+        $uniqueName = time() . "_" . $safeName;
+        $targetPath = $uploadDir . $uniqueName;
+
+        if (move_uploaded_file($_FILES['lottery_logo_file']['tmp_name'], $targetPath)) {
+            $logoFileName = $uniqueName;
+        } else {
+            echo json_encode("Failed to upload image");
+            exit;
+        }
+    } else {
+        echo json_encode("No file uploaded or file error");
+        exit;
+    }
+
+    // Step 2: Retrieve values from viewData
+    $name            = $this->viewData['name'] ?? "";
+    $gamegroups      = $this->viewData['gamegroups'] ?? "";
+    $numberofballs   = $this->viewData['numberofballs'] ?? "";
+    $minball         = $this->viewData['minball'] ?? "";
+    $maxball         = $this->viewData['maxball'] ?? "";
+    $secondsperissue = $this->viewData['secondsperissue'] ?? "";
+    $starttime       = $this->viewData['starttime'] ?? "";
+    $stoptime        = $this->viewData['stoptime'] ?? "";
+    $lotterymodel    = $this->viewData['lotterymodel'] ?? "";
+    $lotteryType     = $this->viewData['lotteryType'] ?? "";
+
+    // 🔍 Debug output
+    var_dump([
+        'name'            => $name,
+        'gamegroups'      => $gamegroups,
+        'numberofballs'   => $numberofballs,
+        'minball'         => $minball,
+        'maxball'         => $maxball,
+        'secondsperissue' => $secondsperissue,
+        'starttime'       => $starttime,
+        'stoptime'        => $stoptime,
+        'lotterymodel'    => $lotterymodel,
+        'lotteryType'     => $lotteryType,
+        'logoFileName'    => $logoFileName
+    ]);
+    exit; // 👈 Remove this line when done debugging
+
+    // Step 3: Insert into DB
+    $result = GameManageModel::addLotterygames(
+        $name,
+        $gamegroups,
+        $numberofballs,
+        $minball,
+        $maxball,
+        $secondsperissue,
+        $starttime,
+        $stoptime,
+        $lotterymodel,
+        $lotteryType,
+        $logoFileName
+    );
+
+    // Step 4: Respond
+    echo json_encode($result ? "success" : "failed");
 }
 
-echo json_encode($results);
+
+
+// else if ($flag == "addlottery") {
+//     $name = $this->viewData['name'] ?? "";
+//     $gamegroups = $this->viewData['gamegroups'] ?? "";
+//     $numberofballs = $this->viewData['numberofballs'] ?? "";
+//     $minball = $this->viewData['minball'] ?? "";
+//     $maxball = $this->viewData['maxball'] ?? "";
+//     $secondsperissue = $this->viewData['secondsperissue'] ?? "";
+//     $starttime = $this->viewData['starttime'] ?? "";
+//     $stoptime = $this->viewData['stoptime'] ?? "";
+//     $lotterymodel = $this->viewData['lotterymodel'] ?? "";
+//     $lotteryType = $this->viewData['lotteryType'] ?? "";
+//     $logoFileName = $this->viewData['logoFileName'] ?? "";
+
+//     // // Dump all variables for inspection
+//     var_dump([
+//         'name' => $name,
+//         'gamegroups' => $gamegroups,
+//         'numberofballs' => $numberofballs,
+//         'minball' => $minball,
+//         'maxball' => $maxball,
+//         'secondsperissue' => $secondsperissue,
+//         'starttime' => $starttime,
+//         'stoptime' => $stoptime,
+//         'lotterymodel' => $lotterymodel,
+//         'lotteryType' => $lotteryType,
+//         'logoFileName' => $logoFileName
+//     ]);
+
+//     // Stop execution here to only debug
+//     exit;
+
+//     // If not debugging, uncomment this line to proceed
+//      $result = GameManageModel::addLotterygames($name, $gamegroups, $numberofballs, $minball, $maxball, $secondsperissue, $starttime, $stoptime,$lotterymodel, $lotteryType, $logoFileName) ?? [];
+//     echo json_encode($result);
+// }
+

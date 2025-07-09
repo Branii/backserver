@@ -1551,4 +1551,8 @@ return [
     'game_group' => 'Game Group',
     'Reset user Account'=> 'Reset user Account',
    'Profit Limit'=> 'Profit Limit',
+   'Select Lottery Type'=>'Select Lottery Type',
+   'Select Seconds'=>'Select Seconds',
+
+   
 ];

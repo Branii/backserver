@@ -141,4 +141,53 @@ class gameController extends Controller
         $this->view->render();
     }
 
+    public function getTimegames()
+    {
+        $this->view('exec/game_management', ['flag' => 'getTimegames']);
+        $this->view->render();
+    }
+
+    public function addlottery(
+        $name, $gamegroups, $numberofballs, $minball,
+        $maxball, $secondsperissue, $starttime, $stoptime, $lotterymodel,
+        $lotteryType, $logoFileName
+    ) {
+        // Decode all parameters
+        $name            = urldecode($name);
+        $gamegroups       = urldecode($gamegroups);
+        $logoFileName    = urldecode($logoFileName);
+        // var_dump([
+        //     'name'            => $name,
+        //     'gamegroup'       => $gamegroups,
+        //     'numberofballs'   => $numberofballs,
+        //     'minball'         => $minball,
+        //     'maxball'         => $maxball,
+        //     'secondsperissue' => $secondsperissue,
+        //     'starttime'       => $starttime,
+        //     'stoptime'        => $stoptime,
+        //     'lotterymodel'    => $lotterymodel,
+        //     'lotteryType'     => $lotteryType,
+        //     'logoFileName'    => $logoFileName,
+        // ]);
+        // exit;
+
+        // 🧭 Load the view with decoded data
+        $this->view('exec/lottery_basic_params', [
+            'name'            => $name,
+            'gamegroup'       => $gamegroups,
+            'numberofballs'   => $numberofballs,
+            'minball'         => $minball,
+            'maxball'         => $maxball,
+            'secondsperissue' => $secondsperissue,
+            'starttime'       => $starttime,
+            'stoptime'        => $stoptime,
+            'lotterymodel'    => $lotterymodel,
+            'lotteryType'     => $lotteryType,
+            'logoFileName'    => $logoFileName,
+            'flag'            => 'addlottery',
+        ]);
+
+        $this->view->render();
+    }
+
 }
