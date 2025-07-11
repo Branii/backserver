@@ -67,12 +67,13 @@ class gameController extends Controller
         $this->view->render();
     }
 
-    public function getLotteryGames(string $lotterId, string $tables)
+    public function getLotteryGames(string $lotterId, string $tables, string $gametypes)
     {
         $this->view('exec/game_management', [
             'flag'   => 'getLotteryGames',
             'gameId' => $lotterId,
             'tables' => $tables,
+            'gametypes'   => $gametypes
         ]);
         $this->view->render();
     }
@@ -90,7 +91,7 @@ class gameController extends Controller
         $this->view->render();
     }
 
-    public function updateoddstotalbets($lotterId, $gamemodel, $oddpercent, $newodds, $totalbetpercent, $newtotalbet)
+    public function updateoddstotalbets($lotterId, $gamemodel, $oddpercent, $newodds, $totalbetpercent, $newtotalbet,$gametype, $isSpecial)
     {
         $this->view('exec/game_management', [
             'flag'            => 'updateoddstotalbets',
@@ -100,6 +101,8 @@ class gameController extends Controller
             'newodds'         => $newodds,
             'totalbetpercent' => $totalbetpercent,
             'newtotalbet'     => $newtotalbet,
+            'gametype'        => $gametype,
+            'isSpecial'       => $isSpecial
 
         ]);
         $this->view->render();

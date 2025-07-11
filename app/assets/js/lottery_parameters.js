@@ -39,116 +39,117 @@ const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
     document.getElementById("savee-text")?.dataset.translation || "Save";
 
 
-const lotteryParamTable = (data) => {
-  let html = "";
-  const grouped = {};
+  const lotteryParamTable = (data) => {
+
+    let html = "";
+    const grouped = {};
+    
   
- 
-    data.forEach(item => {
-        const lotteryType = item.lottery_type === 1 ? "5D" :item.lottery_type === 2 ? "Pk10" :
-                      item.lottery_type === 3 ? "FAST3" :item.lottery_type === 5 ? "3D" :
-                      item.lottery_type === 6 ? "11x5" :item.lottery_type === 8 ? "Mark6" :
-                      item.lottery_type === 10 ? "Happy8" :item.lottery_type === 11 ? "PK6" :
-                     "Other Games"; 
+      data.forEach(item => {
+          const lotteryType = item.lottery_type === 1 ? "5D" :item.lottery_type === 2 ? "Pk10" :
+                        item.lottery_type === 3 ? "FAST3" :item.lottery_type === 5 ? "3D" :
+                        item.lottery_type === 6 ? "11x5" :item.lottery_type === 8 ? "Mark6" :
+                        item.lottery_type === 10 ? "Happy8" :item.lottery_type === 11 ? "PK6" :
+                      "Other Games"; 
 
-            if (!grouped[lotteryType]) {
-              grouped[lotteryType] = {}; // Initialize empty object for that lotteryType
-            }
-            // Initialize gameplay_name if not already in grouped[lotteryType]
-            if (!grouped[lotteryType][item.gameplay_name]) {
-              grouped[lotteryType][item.gameplay_name] = [];
-            }
-            // Push the item into the appropriate group
-            grouped[lotteryType][item.gameplay_name].push(item);
-  });
+              if (!grouped[lotteryType]) {
+                grouped[lotteryType] = {}; // Initialize empty object for that lotteryType
+              }
+              // Initialize gameplay_name if not already in grouped[lotteryType]
+              if (!grouped[lotteryType][item.gameplay_name]) {
+                grouped[lotteryType][item.gameplay_name] = [];
+              }
+              // Push the item into the appropriate group
+              grouped[lotteryType][item.gameplay_name].push(item);
+    });
 
- 
-  for (const lottery in grouped) {
-    const lotteryGroup = grouped[lottery];
-    const lotteryStateChecked = lotteryGroup[Object.keys(lotteryGroup)[0]][0]['lottery_state'] === "active" ? "checked" : "";
-    //  console.log(lotteryStateChecked)
-    // First row with Lottery Type
-    html += `
-      <tr style="background:#eef;">
-         <td colspan="6" style="backgrounds:#eee;">${lottery}</td>
-          <td colspan="10"style="backgrounds:#eee;">
-             <label class="switch" ">
-              <input type="checkbox" class="form-check-input gameslottery" value='' datas='${lotteryGroup[Object.keys(lotteryGroup)[0]][0]['lottery_type']}' role="switch" ${lotteryStateChecked}>
-              <span class="slider"></span>
-             </label>
-           </td>
-      
-      </tr>
-    `;
-  for (const gameplay in lotteryGroup) {
-    const groupItems = lotteryGroup[gameplay];
-    const groupStateChecked  = groupItems[0]['group_state'] === "active" ? "checked" : "";
-      //  console.log(groupStateChecked );
-          //  return
-    // First row with Game Type and button[0]['group_state']
-    html += `
-      <tr style="background:#eef;">
-         <td style="background:#eee;">${gameplay}</td>
-            <td colspan="6" style="background:#eee;">
-             <label class="switch"  style="left:88%;">
-              <input type="checkbox" class="form-check-input gamestates" value='' datas='${groupItems[0]['game_group']}' role="switch" ${groupStateChecked }>
-              <span class="slider"></span>
-             </label>
-           </td>
-      </tr>
-    `;
-
-    // Rows for each item
-    groupItems.forEach(item => {
-      // Determine checkbox & slider states based on your logic
-      let isChecked = item.state === "active" ? "checked" : "";
-      let isCheck = item.totalbetpercentage === "100" ? "" : "checked";
-      let disableslider = item.totalbetpercentage === "100" ? "disabled" : "";
-
+  
+    for (const lottery in grouped) {
+      const lotteryGroup = grouped[lottery];
+      const lotteryStateChecked = lotteryGroup[Object.keys(lotteryGroup)[0]][0]['lottery_state'] === "active" ? "checked" : "";
+      //  console.log(lotteryStateChecked)
+      // First row with Lottery Type
       html += `
-        <tr>
-          <td></td> <!-- empty Game Type cell -->
-          <td>${item.group_type}</td>
-          <td>${item.name}</td>
-          <td>
-            <input type="text" class="form-control oddsone" value="${item.standardodds}" data-original="${item.odds}" readonly>
-            <br>
-            <input type="range" class="rangeSliderone" min="0" max="100" value="${item.oddspercentage}">
-            <span class="rangeValue" style="margin-left:10px">${item.oddspercentage}%</span>
-          </td>
-
-          <td>
-            <label class="switches">
-              <input type="checkbox" class="resetCheckbox" value='${item.gn_id}' datas='${item.model}' ${isCheck}/>
-              <span class="slider1"></span>
-            </label>
-          </td>
-
-          <td>
-            <input type="text" class="form-control oddsoness" value="${item.standardtotalbets}" data-original="${item.total_bets}" readonly>
-            <br>
-            <input type="range" class="rangeSlideroness" min="0" step="0.1" max="100" value="${item.totalbetpercentage}" ${disableslider}/>
-            <span class="rangeValues" style="margin-left:10px">${item.totalbetpercentage}%</span>
-          </td>
-
-          <td>
-            <label class="switch">
-              <input type="checkbox" class="form-check-input gamestatus" value='${item.gn_id}' datas='${item.model}' role="switch" ${isChecked}>
-              <span class="slider"></span>
-            </label>
-          </td>
-
-          <td>
-            <button type="button" class="btn btn-light updatethis saveBtn" value='${item.gn_id}' datas='${item.model}'>${SaveText}</button>
-          </td>
+        <tr style="background:#eef;">
+          <td colspan="6" style="backgrounds:#eee;">${lottery}</td>
+            <td colspan="10"style="backgrounds:#eee;">
+              <label class="switch" ">
+                <input type="checkbox" class="form-check-input gameslottery" value='' datas='${lotteryGroup[Object.keys(lotteryGroup)[0]][0]['lottery_type']}' role="switch" ${lotteryStateChecked}>
+                <span class="slider"></span>
+              </label>
+            </td>
+        
         </tr>
       `;
-    });
-  }
-  }
- 
-  return html;
-};
+    for (const gameplay in lotteryGroup) {
+      const groupItems = lotteryGroup[gameplay];
+      const groupStateChecked  = groupItems[0]['group_state'] === "active" ? "checked" : "";
+        //  console.log(groupStateChecked );
+            //  return
+      // First row with Game Type and button[0]['group_state']
+      html += `
+        <tr style="background:#eef;">
+          <td style="background:#eee;">${gameplay}</td>
+              <td colspan="6" style="background:#eee;">
+              <label class="switch"  style="left:88%;">
+                <input type="checkbox" class="form-check-input gamestates" value='' datas='${groupItems[0]['game_group']}' role="switch" ${groupStateChecked }>
+                <span class="slider"></span>
+              </label>
+            </td>
+        </tr>
+      `;
+
+      // Rows for each item
+      groupItems.forEach(item => {
+        // Determine checkbox & slider states based on your logic
+        let isChecked = item.state === "active" ? "checked" : "";
+        let isCheck = item.totalbetpercentage === "100" ? "" : "checked";
+        let disableslider = item.totalbetpercentage === "100" ? "disabled" : "";
+
+        html += `
+          <tr>
+            <td></td> <!-- empty Game Type cell -->
+            <td>${item.group_type}</td>
+            <td>${item.label ?? item.name}</td>
+            <td>
+              <input type="text" class="form-control oddsone" value="${item.currentodds}" data-original="${item.mainSubOdds ?? item.mainOdds}" readonly>
+              <br>
+              <input type="range" class="rangeSliderone" min="0" max="100" value="${item.subOddsPercentage ?? item.oddspercentage}">
+              <span class="rangeValue" style="margin-left:10px">${item.subOddsPercentage ?? item.oddspercentage}%</span>
+            </td>
+
+            <td>
+              <label class="switches">
+                <input type="checkbox" class="resetCheckbox" value='${item.gn_id}' datas='${item.model}' ${isCheck}/>
+                <span class="slider1"></span>
+              </label>
+            </td>
+
+            <td>
+              <input type="text" class="form-control oddsoness" value="${item.standardtotalbets}" data-original="${item.total_bets}" readonly>
+              <br>
+              <input type="range" class="rangeSlideroness" min="0" step="0.1" max="100" value="${item.totalbetpercentage}" ${disableslider}/>
+              <span class="rangeValues" style="margin-left:10px">${item.totalbetpercentage}%</span>
+            </td>
+
+            <td>
+              <label class="switch">
+                <input type="checkbox" class="form-check-input gamestatus" value='${item.gn_id}' datas='${item.model}' role="switch" ${isChecked}>
+                <span class="slider"></span>
+              </label>
+            </td>
+
+            <td>
+              <button type="button" class="btn btn-light updatethis saveBtn" value='${item.subgame_id ??item.gn_id}|${item.isSpecial}' datas='${item.model}'>${SaveText}</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+    }
+  
+    return html;
+  };
 
   const renderLotteryParams = (data) => {
     var html = lotteryParamTable(data);
@@ -201,11 +202,11 @@ const lotteryParamTable = (data) => {
 
   async function getLotteryGames(lotterId, models,gametypes) {
     try {
-      const response = await fetch(`../admin/getLotteryGames/${lotterId}/${models}/${gametypes}`);
+      const response = await fetch(`../game/getLotteryGames/${lotterId}/${models}/${gametypes}`);
       const data = await response.json();
-        console.log(data);
+       console.log(data);
        // return
-      renderLotteryParams(data.bonus);
+         renderLotteryParams(data.bonus);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -216,8 +217,8 @@ const lotteryParamTable = (data) => {
     let lotteryId = $("#allGameNamesLottery").val();
     let models = $("#allmodels").val();
      gametypes= $(".gamebonus").val().split("|")[0];
-    // console.log(lotteryId, models, gametypes);
-     //return
+     console.log(lotteryId, models, gametypes);
+    // return
     // console.log(lotteryId, models);
     if (models == "twosides" || models === "boardgames" || models === "fantan"){
   
@@ -227,26 +228,38 @@ const lotteryParamTable = (data) => {
     getLotteryGames(lotteryId, models,gametypes);
   });
 
+    const toArray = (val) => {
+      if (Array.isArray(val)) return val;
+
+      try {
+        const parsed = JSON.parse(val);
+        if (Array.isArray(parsed)) return parsed;
+        if (typeof parsed === 'number') return [parsed];
+      } catch (e) {
+        // Fallback if not valid JSON
+      }
+      const num = parseFloat(val);
+      return isNaN(num) ? [] : [num];
+    };
+
   //max slide
 
   $(document).on("input", ".rangeSliderone, .rangeSlideroness", function () {
     let row = $(this).closest("tr"); // Get the closest table row
     let percentageOne = row.find(".rangeSliderone").val(); // First slider value
     let percentageTwo = row.find(".rangeSlideroness").val(); // Second slider value
+    let rawValue = row.find(".oddsone").attr("data-original");
+     let originalValuesOne = toArray(rawValue);
+    //let originalValuesOne = JSON.parse(row.find(".oddsone").attr("data-original")); // Get original array values
+    let originalValueTwo = parseFloat( row.find(".oddsoness").attr("data-original")); // Get original value
+    let lastModifiedValuesOne = JSON.parse(row.attr("data-last-modified-values-one") || JSON.stringify(originalValuesOne));
+    let lastModifiedValueTwo = parseFloat(row.attr("data-last-modified-value-two") || originalValueTwo );
 
-    let originalValuesOne = JSON.parse(
-      row.find(".oddsone").attr("data-original")
-    ); // Get original array values
-    let originalValueTwo = parseFloat(
-      row.find(".oddsoness").attr("data-original")
-    ); // Get original value
-    let lastModifiedValuesOne = JSON.parse(
-      row.attr("data-last-modified-values-one") ||
-        JSON.stringify(originalValuesOne)
-    );
-    let lastModifiedValueTwo = parseFloat(
-      row.attr("data-last-modified-value-two") || originalValueTwo
-    );
+   //  console.log(originalValuesOne);
+    // // console.log(originalValueTwo);
+    // // console.log(lastModifiedValuesOne);
+    // // console.log(lastModifiedValueTwo);
+    // return
 
     let scaledValuesOne, scaledValueTwo;
 
@@ -259,6 +272,7 @@ const lotteryParamTable = (data) => {
         Math.round((value * percentageOne) / 100)
       );
     }
+   // return
 
     row.find(".oddsone").val(JSON.stringify(scaledValuesOne)); // Update input field
     row.find(".rangeValue").text(percentageOne + "%");
@@ -278,15 +292,15 @@ const lotteryParamTable = (data) => {
     row.attr("data-updated-percentage-two", percentageTwo);
     row.attr("data-updated-values-one", JSON.stringify(scaledValuesOne));
     row.attr("data-updated-value-two", scaledValueTwo);
-    // console.log(row.attr("ata-updated-values-one"))
-    console.log(row.attr("data-updated-value-two"));
+ //    console.log(row.attr("data-updated-values-one"))
+    //console.log(row.attr("data-updated-value-two"));
   });
 
   // Reset checkbox functionality
   $(document).on("change", ".resetCheckbox", function () {
     let row = $(this).closest("tr");
     let isChecked = $(this).is(":checked");
-    let gametypeId = $(this).val();
+    let gametypeId = $(this).val().split("|")[0]
     let gamemodel = $(this).attr("datas");
     row.find(".rangeSlideroness").prop("disabled", !isChecked);
 
@@ -332,18 +346,21 @@ const lotteryParamTable = (data) => {
     let percentageTwo = row.attr("data-updated-percentage-two");
     let scaledValuesOne = JSON.parse(row.attr("data-updated-values-one") ||row.find(".oddsone").attr("data-original"));
     let scaledValueTwo =row.attr("data-updated-value-two") ||row.find(".oddsoness").attr("data-original");
-    let gametypeId = $(this).val();
+    let gametypeId = $(this).val().split("|")[0]; // Extract gametypeId from button value
+    let isSpecial = $(this).val().split("|")[1]; // Extract isSpecial from button value
     let gamemodel = $(this).attr("datas");
-   //  console.log("Saving:", { percentageOne,scaledValuesOne,gametypes});
- //    return
-    updateoddstotalbets(gametypeId,gamemodel,percentageOne,scaledValuesOne,percentageTwo,scaledValueTwo,gametypes);
+    console.log("Saving:", {percentageOne,scaledValuesOne,gametypeId,isSpecial,gametypes});
+    //return
+    updateoddstotalbets(gametypeId,gamemodel,percentageOne,scaledValuesOne,percentageTwo,scaledValueTwo,gametypes,isSpecial);
     //getLotteryGames(gametypeId, gamemodel)
   });
 
-  async function updateoddstotalbets(gametypeId,gamemodel,percentageOne,scaledValuesOne, percentageTwo, scaledValueTwo,gametypes) {
+  async function updateoddstotalbets(gametypeId,gamemodel,percentageOne,scaledValuesOne, percentageTwo, scaledValueTwo,gametypes,isSpecial) {
     try {
-      const response = await fetch( `../admin/updateoddstotalbets/${gametypeId}/${gamemodel}/${percentageOne}/${scaledValuesOne}/${percentageTwo}/${scaledValueTwo}/${gametypes}`);
+      const response = await fetch( `../game/updateoddstotalbets/${gametypeId}/${gamemodel}/${percentageOne}/${scaledValuesOne}/${percentageTwo}/${scaledValueTwo}/${gametypes}/${isSpecial}`);
       const data = await response.json();
+      // console.log(data);
+      // return
       if (data) {
         // showToast("Success", "updated succesfully", "success");
         showToast(SUCCESS_TEXT, UPDATED_SUCCESSFULLY, "success");
@@ -412,7 +429,7 @@ const lotteryParamTable = (data) => {
 
 $(document).on("change", "#allGameNamesLottery", function () {
     let selectedValue = $(this).val();
-    console.log("Selected Lottery Type:", selectedValue);
+   // console.log("Selected Lottery Type:", selectedValue);
 
      const selectedType = Number(selectedValue); // convert to number
 

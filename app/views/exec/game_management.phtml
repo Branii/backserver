@@ -30,13 +30,10 @@ if ($flag == "getLotteryGames") {
     $gameId = isset($this->viewData['gameId']) ? $this->viewData['gameId'] : '';
     $tableData = isset($this->viewData['tables']) ? $this->viewData['tables'] : '';
     $gametypes = isset($this->viewData['gametypes']) ? $this->viewData['gametypes'] : '';
-
     // $decodedUrl = urldecode($tableData);
     // $tables = json_decode($decodedUrl);
     $result = (new GameManageModel())->getLotteryGamesById($gameId,$tableData,$gametypes);
-    echo json_encode([
-        'bonus' => $result['data'],
-    ]);
+    echo json_encode(['bonus' => $result['data'] ]);
 }
 
 
@@ -48,9 +45,10 @@ if ($flag == "updateoddstotalbets") {
     $newtotalbet =isset($this->viewData['newtotalbet']) ? $this->viewData['newtotalbet'] : '';
     $totalbetpercent =isset($this->viewData['totalbetpercent']) ? $this->viewData['totalbetpercent'] : '';
     $gametype = isset($this->viewData['gametype']) ? $this->viewData['gametype'] : '';
+    $isSpecial = isset($this->viewData['isSpecial']) ? $this->viewData['isSpecial'] : '';
     $newodds = array_map('floatval', explode(',', $newodds));
     $newodds =   json_encode($newodds);
-    $result = (new GameManageModel())->UpdateOddsTotalbets($gameId,$gamemodel,$newodds,$oddpercent,$newtotalbet,$totalbetpercent,$gametype);
+    $result =  GameManageModel::UpdateOddsTotalbets($gameId,$gamemodel,$newodds,$oddpercent,$newtotalbet,$totalbetpercent,$gametype,$isSpecial);
     echo json_encode($result);
 }
 

@@ -247,7 +247,19 @@ try {
 // ]);
 
 // Set the timezone for the server (Berlin time)
+$arr = [2.2222];
 
+// Extract the first value
+$value = $arr[0];
+
+// Round to 5 decimal places as float
+$formatted = round((float)$value, 5);
+
+// Display it
+echo $value; // Will output: 2.2222
+
+// OR display with trailing zeros (as string)
+// echo number_format($formatted, 5, '.', ''); // Output: 2.22220
 ?>
 <!DOCTYPE html>
 <html lang="en">

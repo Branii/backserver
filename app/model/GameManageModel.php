@@ -1,554 +1,627 @@
 <?php
 
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-   // Throw an Exception with the error message and details
-   throw new \Exception("$errstr in $errfile on line $errline", $errno);
+    // Throw an Exception with the error message and details
+    throw new \Exception("$errstr in $errfile on line $errline", $errno);
 });
 
 class GameManageModel extends MEDOOHelper
 {
-   public static function getTables()
-   {
-      $result = parent::selectAll('gamestable_map', '*');
-      $gameTable = [];
-      foreach ($result as $value) {
-         $gameTable[$value['game_type']] = [
-            'draw_table' => $value['draw_table'],
-            'bet_table' => $value['bet_table'],
-            'draw_storage' => $value['draw_storage'],
-         ];
-      }
-      return $gameTable;
-   }
-   public static function getAllGames()
-   {
-      return parent::selectAll('game_type', ['gt_id', 'name']);
-   }
+    public static function getTables()
+    {
+        $result    = parent::selectAll('gamestable_map', '*');
+        $gameTable = [];
+        foreach ($result as $value) {
+            $gameTable[$value['game_type']] = [
+                'draw_table'   => $value['draw_table'],
+                'bet_table'    => $value['bet_table'],
+                'draw_storage' => $value['draw_storage'],
+            ];
+        }
+        return $gameTable;
+    }
+    public static function getAllGames()
+    {
+        return parent::selectAll('game_type', ['gt_id', 'name']);
+    }
 
-   public static function getAllGamesLottery()
-   {
-      return $data = parent::query("SELECT lt_id,name FROM lottery_type WHERE  lt_id != 9 ");
-      // return parent::selectAll('lottery_type', ['lt_id', 'name'], "lt_id != 9");
-   }
+    public static function getAllGamesLottery()
+    {
+        return $data = parent::query("SELECT lt_id,name FROM lottery_type WHERE  lt_id != 9 ");
+        // return parent::selectAll('lottery_type', ['lt_id', 'name'], "lt_id != 9");
+    }
 
-   public static function getLotteryGamesById($lotteryId, $gamemodel,$gametype)
-   {
-      // $bigData = [];JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_odds, CONCAT('$.', :game_types))) AS standardodds
+    public static function getLotteryGamesById($lotteryId, $gamemodel, $gametype)
+    {
+        // $bigData = [];JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_odds, CONCAT('$.', :game_types))) AS standardodds
 
-      if (in_array($lotteryId, [1, 2, 3, 5, 6, 8, 10,11]) && in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
-         $tableMap = [
-            'standard' => 'game_name',
-            'twosides' => 'twosides',
-            'longdragon' => 'longdragon',
-            'boardgames' => 'boardgames',
-            'roadbet' => 'roadbet',
-            'fantan' => 'fantan',
-            'manytables' => 'manytables',
-         ];
-         $tableName = $tableMap[$gamemodel];
-         $jsonKey = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
-         $jsonPath = "$." . $jsonKey;
-        $sql = "
-            SELECT 
-               {$tableName}.gn_id, 
-               {$tableName}.name, 
-               {$tableName}.state,
-               {$tableName}.modified_odds, 
-               {$tableName}.group_type, 
-               {$tableName}.modified_totalbet,
-               {$tableName}.gameplay_name,
-               {$tableName}.total_bets, 
-               {$tableName}.model,
-               {$tableName}.oddspercentage,
-               {$tableName}.totalbetpercentage,
-               {$tableName}.odds,{$tableName}.game_group,
-               {$tableName}.lottery_type, JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_odds, '$jsonPath')) AS standardodds,
-               JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_total_bets, '$jsonPath')) AS standardtotalbets,
-               game_group.state AS group_state,lottery_type.state AS lottery_state
-            FROM 
-               {$tableName}
-             JOIN 
-               game_group 
-               ON game_group.gp_id = {$tableName}.game_group
-               JOIN lottery_type ON lottery_type.lt_id={$tableName}.lottery_type
-            WHERE 
-               {$tableName}.lottery_type = :lotteryId 
+        if (in_array($lotteryId, [1, 2, 3, 5, 6, 8, 10, 11]) && in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
+            $tableMap = [
+                'standard'   => 'game_name',
+                'twosides'   => 'twosides',
+                'longdragon' => 'longdragon',
+                'boardgames' => 'boardgames',
+                'roadbet'    => 'roadbet',
+                'fantan'     => 'fantan',
+                'manytables' => 'manytables',
+            ];
+            $tableName = $tableMap[$gamemodel];
+            $jsonKey   = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
+            $jsonPath  = "$." . $jsonKey;
+
+            //   $sql = "
+            //       SELECT
+            //          {$tableName}.gn_id,
+            //          {$tableName}.name,
+            //           {$tableName}.isSpecial,
+            //          {$tableName}.state,
+            //          {$tableName}.modified_odds,
+            //          {$tableName}.group_type,
+            //          {$tableName}.modified_totalbet,
+            //          {$tableName}.gameplay_name,
+            //          {$tableName}.total_bets,
+            //          {$tableName}.model,
+            //          {$tableName}.oddspercentage,
+            //          {$tableName}.totalbetpercentage,
+            //          {$tableName}.odds,{$tableName}.game_group,
+            //          {$tableName}.lottery_type, JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_odds, '$jsonPath')) AS standardodds,
+            //          JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_total_bets, '$jsonPath')) AS standardtotalbets,
+            //          game_group.state AS group_state,lottery_type.state AS lottery_state
+            //       FROM
+            //          {$tableName}
+            //        JOIN
+            //          game_group
+            //          ON game_group.gp_id = {$tableName}.game_group
+            //          JOIN lottery_type ON lottery_type.lt_id={$tableName}.lottery_type
+            //       WHERE
+            //          {$tableName}.lottery_type = :lotteryId
+            //       ";
+
+            $sql = "SELECT
+                  gn.gn_id AS gn_id,
+                  gn.name AS name,
+                  gn.modified_odds,
+                  gn.isSpecial As isSpecial,
+                  gn.oddspercentage AS oddspercentage,
+                  gn.totalbetpercentage AS totalbetpercentage,
+                  gn.gameplay_name AS gameplay_name,gn.model AS model,
+                  gn.game_group AS game_group,gn.lottery_type AS lottery_type,
+                  gn.total_bets AS total_bets,
+                  JSON_UNQUOTE(JSON_EXTRACT(gn.standard_total_bets, CONCAT('$.\"',$jsonKey, '\"'))) AS standardtotalbets,
+                  gn.state AS state,
+                  gn.group_type AS group_type,
+                  gg.state AS group_state,
+                  og.odds_group_id AS subgame_id,
+                  og.label AS label,
+                  gn.odds AS mainOdds,
+                  og.odds AS mainSubOdds, og.oddspercentage AS subOddsPercentage,
+                  JSON_UNQUOTE(JSON_EXTRACT(gn.standard_odds, CONCAT('$.\"',$jsonKey, '\"'))) AS standardodds,
+                  IF(
+                     og.odds IS NOT NULL,
+                     JSON_UNQUOTE(JSON_EXTRACT(og.std_odds, CONCAT('$.\"',$jsonKey, '\"'))),
+                  JSON_UNQUOTE(JSON_EXTRACT(gn.standard_odds, CONCAT('$.\"',$jsonKey, '\"')))
+                  ) AS currentodds,
+                  IF(og.odds IS NOT NULL, true,false) AS isSubOdds,
+                  lottery_type.state AS lottery_state
+
+            FROM
+                  $tableName gn
+            JOIN
+                  game_group gg ON gn.game_group = gg.gp_id
+
+            LEFT JOIN
+                  odds_group og ON gn.gn_id = og.game_play_id
+            JOIN lottery_type ON lottery_type.lt_id= gn.lottery_type
+            WHERE
+                  gn.lottery_type = :lotteryId
             ";
 
-         $data = parent::query($sql, ['lotteryId' => $lotteryId]);
-        
-        return ['data' => $data];
+            $data = parent::query($sql, ['lotteryId' => $lotteryId]);
 
-      }
-   }
+            return ['data' => $data];
 
-   public static function UpdateOddsTotalbets($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent,$gametype)
-   {
-      if (in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
-         $tableMap = [
-            'standard' => 'game_name',
-            'twosides' => 'twosides',
-            'longdragon' => 'longdragon',
-            'boardgames' => 'boardgames',
-            'roadbet' => 'roadbet',
-            'fantan' => 'fantan',
-            'manytables' => 'manytables',
-         ];
-         $tableName = $tableMap[$gamemodel];
-        // Sanitize 
-        $jsonKey = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
-        $jsonPath = "$.\"$jsonKey\"";  // correct MySQL JSON path syntax with quoted key
+        }
+    }
 
-         $sql = "
+    public static function UpdateOddsTotalbets($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent, $gametype, $isSpecial)
+    {
+        $jsonKey  = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
+        $jsonPath = "$.\"$jsonKey\""; // correct MySQL JSON path syntax with quoted key
+      //   return $isSpecial;
+        if ($isSpecial === "true") {
+           $data =  self::UpdateOddsGroupTable($gameId,$newodds,$oddpercent,$jsonPath);
+            if ($data > 1) {
+               self::getLotteryGamesById($gameId, $gamemodel, $gametype);
+            }
+           return ['success' => true, 'message' => 'Update successful'];
+        }else{
+          self::UpdateGameNameTable($gameId,$gamemodel,$newodds, $oddpercent, $newtotalbet, $totalbetpercent, $jsonPath);
+        }
+  
+    }
+
+    public static function UpdateGameNameTable($gameId,$gamemodel,$newodds, $oddpercent, $newtotalbet, $totalbetpercent, $jsonPath)
+    {
+        if (in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
+            // Sanitize
+            $tableMap = [
+                'standard'   => 'game_name',
+                'twosides'   => 'twosides',
+                'longdragon' => 'longdragon',
+                'boardgames' => 'boardgames',
+                'roadbet'    => 'roadbet',
+                'fantan'     => 'fantan',
+                'manytables' => 'manytables',
+            ];
+        }
+
+        // Check if model exists in map
+        if (! isset($tableMap[$gamemodel])) {
+            return "Invalid game model";
+        }
+
+        $tableName = $tableMap[$gamemodel];
+
+        $sql = "
             UPDATE {$tableName}
-            SET 
+            SET
                 modified_odds = :modified_odds,
                 oddspercentage = :oddspercentage,
                 modified_totalbet = :modified_totalbet,
                 totalbetpercentage = :totalbetpercentage, standard_odds = JSON_SET(standard_odds, '{$jsonPath}', :new_standard_odds),
                 standard_total_bets = JSON_SET(standard_total_bets, '{$jsonPath}', :new_standard_totalbet)
-               WHERE 
+               WHERE
                 gn_id = :gn_id
         ";
 
-         try {
+        try {
             $data = parent::query($sql, [
-                'modified_odds'        => $newodds,
-                'oddspercentage'       => $oddpercent,
-                'modified_totalbet'    => $newtotalbet,
-                'totalbetpercentage'   => $totalbetpercent,
-                 'new_standard_odds'    => $newodds,      // same value as modified_odds
-                 'new_standard_totalbet'=> $newtotalbet,  // same value as modified_totalbet
-                'gn_id'                => $gameId
+                'modified_odds'         => $newodds,
+                'oddspercentage'        => $oddpercent,
+                'modified_totalbet'     => $newtotalbet,
+                'totalbetpercentage'    => $totalbetpercent,
+                'new_standard_odds'     => $newodds,     // same value as modified_odds
+                'new_standard_totalbet' => $newtotalbet, // same value as modified_totalbet
+                'gn_id'                 => $gameId,
             ]);
 
             if ($data > 1) {
-               $data = self::getLotteryGamesById($gameId, $gamemodel, $gametype);
+               self::getLotteryGamesById($gameId, $gamemodel, $gametype);
             }
             return ['success' => true, 'message' => 'Update successful'];
-         } catch (Exception $e) {
+        } catch (Exception $e) {
             return ['success' => false, 'message' => 'Database update failed', 'error' => $e->getMessage()];
-         }
-      }
-   }
+        }
+    }
+    
+    public static function UpdateOddsGroupTable($gameId,$newodds,$oddpercent,$jsonPath)
+    {
 
-   public static function ResetTotalbets($gameId, $gamemodel, $newtotalbet, $totalbetpercent,$gametype)
-   {
-      if (in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
-         $tableMap = [
-            'standard' => 'game_name',
-            'twosides' => 'twosides',
-            'longdragon' => 'longdragon',
-            'boardgames' => 'boardgames',
-            'roadbet' => 'roadbet',
-            'fantan' => 'fantan',
-            'manytables' => 'manytables',
-         ];
-         $tableName = $tableMap[$gamemodel];
-           // Sanitize 
-        $jsonKey = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
-        $jsonPath = "$.\"$jsonKey\"";  // correct MySQL JSON path syntax with quoted key
+       $formate = number_format(round((float)json_decode($newodds)[0], 5), 5, '.', ''); // Output: 1.00000
+        $sql    = "
+                UPDATE odds_group
+                SET std_odds = JSON_SET(std_odds, '{$jsonPath}',:subodds), oddspercentage = :oddspercentage
+                WHERE odds_group_id = :odds_group_id
+            ";
 
-         $sql = "UPDATE {$tableName} SET  modified_totalbet = :modified_totalbet,totalbetpercentage = :totalbetpercentage,
+          $data = parent::query($sql, ['subodds'=> $formate, 'oddspercentage' => $oddpercent,
+           'odds_group_id' => $gameId]);
+
+    }
+
+    public static function ResetTotalbets($gameId, $gamemodel, $newtotalbet, $totalbetpercent, $gametype)
+    {
+        if (in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
+            $tableMap = [
+                'standard'   => 'game_name',
+                'twosides'   => 'twosides',
+                'longdragon' => 'longdragon',
+                'boardgames' => 'boardgames',
+                'roadbet'    => 'roadbet',
+                'fantan'     => 'fantan',
+                'manytables' => 'manytables',
+            ];
+            $tableName = $tableMap[$gamemodel];
+            // Sanitize
+            $jsonKey  = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
+            $jsonPath = "$.\"$jsonKey\""; // correct MySQL JSON path syntax with quoted key
+
+            $sql = "UPDATE {$tableName} SET  modified_totalbet = :modified_totalbet,totalbetpercentage = :totalbetpercentage,
              standard_total_bets = JSON_SET(standard_total_bets, '{$jsonPath}', :new_standard_totalbet)
           WHERE gn_id = :gn_id";
 
-         try {
-            $data = parent::query($sql, [
-               'modified_totalbet' => $newtotalbet,
-               'totalbetpercentage' => $totalbetpercent,
-               'new_standard_totalbet' =>$newtotalbet,
-               'gn_id' => $gameId,
-            ]);
+            try {
+                $data = parent::query($sql, [
+                    'modified_totalbet'     => $newtotalbet,
+                    'totalbetpercentage'    => $totalbetpercent,
+                    'new_standard_totalbet' => $newtotalbet,
+                    'gn_id'                 => $gameId,
+                ]);
 
-            if ($data > 1) {
-               $data = self::getLotteryGamesById($gameId, $gamemodel,$gametype);
+                if ($data > 1) {
+                    $data = self::getLotteryGamesById($gameId, $gamemodel, $gametype);
+                }
+
+                return ['success' => true, 'message' => 'Update successful'];
+            } catch (Exception $e) {
+                return ['success' => false, 'message' => 'Database update failed', 'error' => $e->getMessage()];
             }
+        }
+    }
 
-            return ['success' => true, 'message' => 'Update successful'];
-         } catch (Exception $e) {
-            return ['success' => false, 'message' => 'Database update failed', 'error' => $e->getMessage()];
-         }
-      }
-   }
+    public static function UpdateGameStatus($gameId, $gamemodel, $gametate)
+    {
+        if (in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
+            $tableMap = [
+                'standard'   => 'game_name',
+                'twosides'   => 'twosides',
+                'longdragon' => 'longdragon',
+                'boardgames' => 'boardgames',
+                'roadbet'    => 'roadbet',
+                'fantan'     => 'fantan',
+                'manytables' => 'manytables',
+            ];
+            $tableName = $tableMap[$gamemodel];
+            $updated   = parent::query("UPDATE {$tableName} SET  state = :state WHERE gn_id = :gn_id", ["state" => $gametate, "gn_id" => $gameId]);
+            if ($updated > 1) {
+                return ['success' => true, 'state' => $gametate];
+            }
+        }
+    }
 
-   public static function UpdateGameStatus($gameId, $gamemodel, $gametate)
-   {
-      if (in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
-         $tableMap = [
-            'standard' => 'game_name',
-            'twosides' => 'twosides',
-            'longdragon' => 'longdragon',
-            'boardgames' => 'boardgames',
-            'roadbet' => 'roadbet',
-            'fantan' => 'fantan',
-            'manytables' => 'manytables',
-         ];
-         $tableName = $tableMap[$gamemodel];
-         $updated = parent::query("UPDATE {$tableName} SET  state = :state WHERE gn_id = :gn_id", ["state" => $gametate, "gn_id" => $gameId]);
-         if ($updated > 1) {
-            return ['success' => true, 'state' => $gametate];
-         }
-      }
-   }
-
-   public static function UpdateGameGroup($gamegroupid,$gametate)
-   {
-         $update = parent::query("UPDATE game_group SET state = :state WHERE gp_id = :gp_id", ["state" => $gametate, "gp_id" => $gamegroupid]);
-         if ($update > 1) {
+    public static function UpdateGameGroup($gamegroupid, $gametate)
+    {
+        $update = parent::query("UPDATE game_group SET state = :state WHERE gp_id = :gp_id", ["state" => $gametate, "gp_id" => $gamegroupid]);
+        if ($update > 1) {
             return ['success' => true];
-          }
-   }
+        }
+    }
 
-   public static function UpdateGameLotteryType($lotteryid,$gametate)
-   {
-         $update = parent::query("UPDATE lottery_type SET state = :state WHERE lt_id = :lt_id", ["state" => $gametate, "lt_id" => $lotteryid]);
-         if ($update > 1) {
+    public static function UpdateGameLotteryType($lotteryid, $gametate)
+    {
+        $update = parent::query("UPDATE lottery_type SET state = :state WHERE lt_id = :lt_id", ["state" => $gametate, "lt_id" => $lotteryid]);
+        if ($update > 1) {
             return ['success' => true];
-          }
-   }
+        }
+    }
 
-   public static function GetAllGameTypes()
-   {
-       $formattedGroup = [];
-       $gametypes = parent::query("SELECT gt_id,name,game_group FROM game_type  GROUP BY gt_id,name,game_group ORDER BY name ASC");
-       $keys = ['5d','3d','fast3','pk10','11x5','mark6','happy8','pk6'];
-       $arr = [];
-       foreach($gametypes as $types){
-         if(in_array($types['game_group'],$keys)){
-            $formattedGroup[$types['game_group']][] = ['name' =>$types['name'],'id'=>$types['gt_id']];
-         }
-       }
-       return $formattedGroup;
-   }
+    public static function GetAllGameTypes()
+    {
+        $formattedGroup = [];
+        $gametypes      = parent::query("SELECT gt_id,name,game_group FROM game_type  GROUP BY gt_id,name,game_group ORDER BY name ASC");
+        $keys           = ['5d', '3d', 'fast3', 'pk10', '11x5', 'mark6', 'happy8', 'pk6'];
+        $arr            = [];
+        foreach ($gametypes as $types) {
+            if (in_array($types['game_group'], $keys)) {
+                $formattedGroup[$types['game_group']][] = ['name' => $types['name'], 'id' => $types['gt_id']];
+            }
+        }
+        return $formattedGroup;
+    }
 
+    public static function GetAllGameTabs()
+    {
+        $formattedGroup = [];
+        $gametypes      = parent::query("SELECT gp_id,name,game_group FROM game_group  GROUP BY gt_id,name,game_group ORDER BY name ASC");
+        $keys           = ['5d', '3d', 'fast3', 'pk10', '11x5', 'mark6', 'happy8', 'pk6'];
+        $arr            = [];
+        foreach ($gametypes as $types) {
+            if (in_array($types['game_group'], $keys)) {
+                $formattedGroup[$types['game_group']][] = ['name' => $types['name'], 'id' => $types['gt_id']];
+            }
+        }
+        return $formattedGroup;
+    }
 
-   public static function GetAllGameTabs()
-   {
-       $formattedGroup = [];
-       $gametypes = parent::query("SELECT gp_id,name,game_group FROM game_group  GROUP BY gt_id,name,game_group ORDER BY name ASC");
-       $keys = ['5d','3d','fast3','pk10','11x5','mark6','happy8','pk6'];
-       $arr = [];
-       foreach($gametypes as $types){
-         if(in_array($types['game_group'],$keys)){
-            $formattedGroup[$types['game_group']][] = ['name' =>$types['name'],'id'=>$types['gt_id']];
-         }
-       }
-       return $formattedGroup;
-   }
-
-
-
-   
-   public static function filterGameDraws($page, $limit, $gameId, $datefrom, $dateto)
-   {
-      try {
-         $startpoint = $page * $limit - $limit;
-         $conditions = self::filterConditions($datefrom, $dateto);
-         $where = $conditions['where'];
-         $params = $conditions['params'];
-         $drawTable = self::getTables()[$gameId]['draw_table'];
-         $data = parent::query(
-            "SELECT * FROM " .
-               $drawTable .
-               " " .
-               $where .
-               "
+    public static function filterGameDraws($page, $limit, $gameId, $datefrom, $dateto)
+    {
+        try {
+            $startpoint = $page * $limit - $limit;
+            $conditions = self::filterConditions($datefrom, $dateto);
+            $where      = $conditions['where'];
+            $params     = $conditions['params'];
+            $drawTable  = self::getTables()[$gameId]['draw_table'];
+            $data       = parent::query(
+                "SELECT * FROM " .
+                $drawTable .
+                " " .
+                $where .
+                "
             ORDER BY draw_id DESC LIMIT :offset, :limit",
-            array_merge($params, ['offset' => $startpoint, 'limit' => $limit])
-         );
+                array_merge($params, ['offset' => $startpoint, 'limit' => $limit])
+            );
 
-         $totalRecords = parent::query("SELECT * FROM " . $drawTable . " " . $where . "ORDER BY draw_id DESC", array_merge($params));
+            $totalRecords = parent::query("SELECT * FROM " . $drawTable . " " . $where . "ORDER BY draw_id DESC", array_merge($params));
 
-         return ['data' => $data, 'total' => count($totalRecords)];
-      } catch (PDOException $e) {
-         return ['error' => $e->getMessage()];
-      }
-   }
+            return ['data' => $data, 'total' => count($totalRecords)];
+        } catch (PDOException $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
 
-   public static function filterConditions($datefrom = '', $dateto = '')
-   {
-      $where = '';
-      $params = [];
-      if ($datefrom && $dateto) {
-         $where .= "WHERE date_created >= :datefrom AND date_created <= :dateto";
-         $params['datefrom'] = $datefrom; // Set datefrom parameter
-         $params['dateto'] = $dateto; // Set dateto parameter
-      } elseif ($datefrom) {
-         $where .= "WHERE date_created = :datefrom";
-         $params['datefrom'] = $datefrom;
-      } elseif ($dateto) {
-         $where .= "WHERE date_created = :dateto";
-         $params['dateto'] = $dateto;
-      }
-      return ['where' => $where, 'params' => $params];
-   }
+    public static function filterConditions($datefrom = '', $dateto = '')
+    {
+        $where  = '';
+        $params = [];
+        if ($datefrom && $dateto) {
+            $where .= "WHERE date_created >= :datefrom AND date_created <= :dateto";
+            $params['datefrom'] = $datefrom; // Set datefrom parameter
+            $params['dateto']   = $dateto;   // Set dateto parameter
+        } elseif ($datefrom) {
+            $where .= "WHERE date_created = :datefrom";
+            $params['datefrom'] = $datefrom;
+        } elseif ($dateto) {
+            $where .= "WHERE date_created = :dateto";
+            $params['dateto'] = $dateto;
+        }
+        return ['where' => $where, 'params' => $params];
+    }
 
-   public static function fetchGameTypesForLottery($lottery_id, $current_page = 1, $recordsPerPage = 20)
-   {
-      try {
-         $offset = ($current_page - 1) * $recordsPerPage;
-         $database = parent::openLink();
-         $whereClause = empty($lottery_id) ? "" : " WHERE game_type.lottery_type = :lottery_id ";
+    public static function fetchGameTypesForLottery($lottery_id, $current_page = 1, $recordsPerPage = 20)
+    {
+        try {
+            $offset      = ($current_page - 1) * $recordsPerPage;
+            $database    = parent::openLink();
+            $whereClause = empty($lottery_id) ? "" : " WHERE game_type.lottery_type = :lottery_id ";
 
-         $sql = "SELECT lottery_type.*, game_type.*, 
-            (SELECT COUNT(*) FROM game_type 
-             JOIN lottery_type ON game_type.lottery_type = lottery_type.lt_id $whereClause ) AS total_count 
-            FROM game_type 
-            JOIN lottery_type ON game_type.lottery_type = lottery_type.lt_id 
-            $whereClause 
+            $sql = "SELECT lottery_type.*, game_type.*,
+            (SELECT COUNT(*) FROM game_type
+             JOIN lottery_type ON game_type.lottery_type = lottery_type.lt_id $whereClause ) AS total_count
+            FROM game_type
+            JOIN lottery_type ON game_type.lottery_type = lottery_type.lt_id
+            $whereClause
             ORDER BY game_type.gt_id  DESC
             LIMIT :offset, :recordsPerPage";
 
-         $params = [":offset" => $offset, ":recordsPerPage" => $recordsPerPage];
-         if ($whereClause) {
-            $params[":lottery_id"] = $lottery_id;
-         }
-
-         $data = $database->query($sql, $params)->fetchAll(PDO::FETCH_OBJ);
-
-         return ['status' => "success", 'data' => $data];
-      } catch (Exception $e) {
-         return ['status' => "success", 'data' => "Internal Server Error." . $e->getMessage()];
-      }
-   }
-
-   public static function fetchBonusTwoSides($lottery_id, $game_group_name)
-   {
-      try {
-         $database = parent::openLink();
-         $table_name = "twosides_group";
-         $sql = "SELECT {$table_name}.odds_group_id AS odds_group_id, {$table_name}.game_play_id, {$table_name}.label AS label, {$table_name}.odds AS odds, {$table_name}.rebate AS rebate, {$table_name}.profit AS profit , twosides.gn_id AS twosides_gn_id, twosides.name AS twosides_name FROM {$table_name} JOIN twosides ON {$table_name}.game_play_id = twosides.gn_id JOIN game_group ON game_group.gp_id = twosides.game_group WHERE game_group.name = :game_group_name AND game_group.lottery_type =:lottery_type";
-         $params = [":lottery_type" => $lottery_id, ":game_group_name" => $game_group_name];
-         $data = $database->query($sql, $params)->fetchAll(PDO::FETCH_OBJ);
-         return ['status' => "success", 'data' => $data];
-      } catch (Exception $e) {
-         return ['status' => "success", 'data' => "Internal Server Error." . $e->getMessage()];
-      }
-   }
-   public static function updateGameGroupData($data)
-   {
-      try {
-         $sql = "";
-         $database = parent::openLink();
-         $table_name = "twosides_group";
-         foreach ($data as $odds_group_id => $info) {
-            $odds_group_id = $info["labelid"];
-            if (empty($odds_group_id)) {
-               continue;
-            }
-            $params[":odds_{$odds_group_id}"] = empty($info["odds"]) ? 0 : $info["odds"];
-            $params[":max_bet_amt_{$odds_group_id}"] = empty($info["max_amt"]) ? 0 : (int) $info["max_amt"];
-            $params[":max_total_bet_amt_{$odds_group_id}"] = empty($info["max_tot_amt"]) ? 0 : (int) $info["max_tot_amt"];
-            $params[":odds_group_id_{$odds_group_id}"] = (int) $odds_group_id;
-            $sql .= "UPDATE {$table_name} SET modified_odds=:odds_{$odds_group_id} , max_bet_amount=:max_bet_amt_{$odds_group_id}, total_max_bet_amount=:max_total_bet_amt_{$odds_group_id} WHERE odds_group_id=:odds_group_id_{$odds_group_id};";
-         }
-         $data = $database->query($sql, $params);
-         return ['status' => "success", 'data' => $data->rowCount()];
-      } catch (Exception $e) {
-         return ['status' => "success", 'data' => "Internal Server Error." . $e->getMessage()];
-      }
-   }
-
-   public static function toggleTwosidesLotteryState($gameID)
-   {
-      try {
-         $sql = "";
-         $database = parent::openLink();
-         $table_name = "twosides";
-         $sql .= "UPDATE {$table_name} SET state = CASE WHEN state = 'active' THEN 'inactive' WHEN state = 'inactive' THEN 'active' ELSE state END WHERE gn_id=:gn_id;";
-
-         $data = $database->query($sql, [":gn_id" => $gameID]);
-         return ['status' => "success", 'data' => $data->rowCount()];
-      } catch (Exception $e) {
-         return ['status' => "success", 'data' => "Internal Server Error." . $e->getMessage()];
-      }
-   }
-
-   public static function updateLotteryData($maxPrizeAmountPerBet, $maxAmtPerIssue, $maxWinPerPersonPerIssue, $minBetAmtPerIssue, $lockTimeForClsing, $sortingWeight, $lottery_type, $game_type_id): array
-   {
-      try {
-         if ($sortingWeight < 1) {
-            return ["status" => "error", "data" => "Sorting Weight must be greater than zero."];
-         }
-
-         // return [":maximum_prize_per_bet" => $maxPrizeAmountPerBet, ':maximum_amount_per_issue' => $maxAmtPerIssue,':maximum_win_per_issue' => $maxWinPerPersonPerIssue, ':minimum_amount_per_issue' => $minBetAmtPerIssue, ':closing_time' => $lockTimeForClsing, ':game_type_id' => $game_type_id ];
-         $database = parent::openLink();
-         $swaped_game_ids = [];
-         $stmt = $database->query("SELECT sort_weight FROM lottery_type WHERE lt_id=:lt_id", [':lt_id' => $lottery_type]);
-         $data = $stmt->fetch(PDO::FETCH_OBJ);
-         $lottery_type_sort_weight = $data->sort_weight;
-         $lottery_type_sort_weight = json_decode($lottery_type_sort_weight, true);
-         $sorting_weight_flipped = array_flip($lottery_type_sort_weight);
-
-         if (empty($sorting_weight_flipped) || !in_array((int) $sortingWeight, $lottery_type_sort_weight)) {
-            $lottery_type_sort_weight[$game_type_id] = $sortingWeight;
-         } else {
-            $res = self::swapElements($lottery_type_sort_weight, $game_type_id, $sortingWeight, $sorting_weight_flipped[$sortingWeight]);
-            if (!$res) {
-               $stmt = self::updateLotteryBasicEdit($maxPrizeAmountPerBet, $maxAmtPerIssue, $maxWinPerPersonPerIssue, $minBetAmtPerIssue, $lockTimeForClsing, $game_type_id);
-               return ['status' => "error", 'data' => "Duplicated Sorting Weight"];
+            $params = [":offset" => $offset, ":recordsPerPage" => $recordsPerPage];
+            if ($whereClause) {
+                $params[":lottery_id"] = $lottery_id;
             }
 
-            $swaped_game_ids = $res;
-         }
+            $data = $database->query($sql, $params)->fetchAll(PDO::FETCH_OBJ);
 
-          $sorting_weight = $database->query("UPDATE lottery_type SET sort_weight = :sorting_weight  WHERE lottery_type.lt_id = :lottery_id", [":sorting_weight" => json_encode($lottery_type_sort_weight),':lottery_id' => (int) $lottery_type]);
-            
-         $stmt = self::updateLotteryBasicEdit($maxPrizeAmountPerBet, $maxAmtPerIssue, $maxWinPerPersonPerIssue, $minBetAmtPerIssue, $lockTimeForClsing, $game_type_id);
-         return ['status' => "success", 'data' => $stmt->rowCount(), "swapped" => $swaped_game_ids, "sorting_weight" => $sorting_weight->rowCount()];
-      } catch (Exception $e) {
-         return ['status' => "success", 'data' => "Internal Server Error."];
-      }
-   }
+            return ['status' => "success", 'data' => $data];
+        } catch (Exception $e) {
+            return ['status' => "success", 'data' => "Internal Server Error." . $e->getMessage()];
+        }
+    }
 
-   public static function updateLotteryBasicEdit($maxPrizeAmountPerBet, $maxAmtPerIssue, $maxWinPerPersonPerIssue, $minBetAmtPerIssue, $lockTimeForClsing, $game_type_id)
-   {
-      $database = parent::openLink();
-      $stmt = $database->query(
-         "UPDATE game_type SET maximum_prize_per_bet = :maximum_prize_per_bet,maximum_win_per_issue = :maximum_win_per_issue,maximum_amount_per_issue = :maximum_amount_per_issue, minimum_amount_per_issue = :minimum_amount_per_issue , closing_time =:closing_time  WHERE game_type.gt_id = :game_type_id
+    public static function fetchBonusTwoSides($lottery_id, $game_group_name)
+    {
+        try {
+            $database   = parent::openLink();
+            $table_name = "twosides_group";
+            $sql        = "SELECT {$table_name}.odds_group_id AS odds_group_id, {$table_name}.game_play_id, {$table_name}.label AS label, {$table_name}.odds AS odds, {$table_name}.rebate AS rebate, {$table_name}.profit AS profit , twosides.gn_id AS twosides_gn_id, twosides.name AS twosides_name FROM {$table_name} JOIN twosides ON {$table_name}.game_play_id = twosides.gn_id JOIN game_group ON game_group.gp_id = twosides.game_group WHERE game_group.name = :game_group_name AND game_group.lottery_type =:lottery_type";
+            $params     = [":lottery_type" => $lottery_id, ":game_group_name" => $game_group_name];
+            $data       = $database->query($sql, $params)->fetchAll(PDO::FETCH_OBJ);
+            return ['status' => "success", 'data' => $data];
+        } catch (Exception $e) {
+            return ['status' => "success", 'data' => "Internal Server Error." . $e->getMessage()];
+        }
+    }
+    public static function updateGameGroupData($data)
+    {
+        try {
+            $sql        = "";
+            $database   = parent::openLink();
+            $table_name = "twosides_group";
+            foreach ($data as $odds_group_id => $info) {
+                $odds_group_id = $info["labelid"];
+                if (empty($odds_group_id)) {
+                    continue;
+                }
+                $params[":odds_{$odds_group_id}"]              = empty($info["odds"]) ? 0 : $info["odds"];
+                $params[":max_bet_amt_{$odds_group_id}"]       = empty($info["max_amt"]) ? 0 : (int) $info["max_amt"];
+                $params[":max_total_bet_amt_{$odds_group_id}"] = empty($info["max_tot_amt"]) ? 0 : (int) $info["max_tot_amt"];
+                $params[":odds_group_id_{$odds_group_id}"]     = (int) $odds_group_id;
+                $sql .= "UPDATE {$table_name} SET modified_odds=:odds_{$odds_group_id} , max_bet_amount=:max_bet_amt_{$odds_group_id}, total_max_bet_amount=:max_total_bet_amt_{$odds_group_id} WHERE odds_group_id=:odds_group_id_{$odds_group_id};";
+            }
+            $data = $database->query($sql, $params);
+            return ['status' => "success", 'data' => $data->rowCount()];
+        } catch (Exception $e) {
+            return ['status' => "success", 'data' => "Internal Server Error." . $e->getMessage()];
+        }
+    }
+
+    public static function toggleTwosidesLotteryState($gameID)
+    {
+        try {
+            $sql        = "";
+            $database   = parent::openLink();
+            $table_name = "twosides";
+            $sql .= "UPDATE {$table_name} SET state = CASE WHEN state = 'active' THEN 'inactive' WHEN state = 'inactive' THEN 'active' ELSE state END WHERE gn_id=:gn_id;";
+
+            $data = $database->query($sql, [":gn_id" => $gameID]);
+            return ['status' => "success", 'data' => $data->rowCount()];
+        } catch (Exception $e) {
+            return ['status' => "success", 'data' => "Internal Server Error." . $e->getMessage()];
+        }
+    }
+
+    public static function updateLotteryData($maxPrizeAmountPerBet, $maxAmtPerIssue, $maxWinPerPersonPerIssue, $minBetAmtPerIssue, $lockTimeForClsing, $sortingWeight, $lottery_type, $game_type_id): array
+    {
+        try {
+            if ($sortingWeight < 1) {
+                return ["status" => "error", "data" => "Sorting Weight must be greater than zero."];
+            }
+
+            // return [":maximum_prize_per_bet" => $maxPrizeAmountPerBet, ':maximum_amount_per_issue' => $maxAmtPerIssue,':maximum_win_per_issue' => $maxWinPerPersonPerIssue, ':minimum_amount_per_issue' => $minBetAmtPerIssue, ':closing_time' => $lockTimeForClsing, ':game_type_id' => $game_type_id ];
+            $database                 = parent::openLink();
+            $swaped_game_ids          = [];
+            $stmt                     = $database->query("SELECT sort_weight FROM lottery_type WHERE lt_id=:lt_id", [':lt_id' => $lottery_type]);
+            $data                     = $stmt->fetch(PDO::FETCH_OBJ);
+            $lottery_type_sort_weight = $data->sort_weight;
+            $lottery_type_sort_weight = json_decode($lottery_type_sort_weight, true);
+            $sorting_weight_flipped   = array_flip($lottery_type_sort_weight);
+
+            if (empty($sorting_weight_flipped) || ! in_array((int) $sortingWeight, $lottery_type_sort_weight)) {
+                $lottery_type_sort_weight[$game_type_id] = $sortingWeight;
+            } else {
+                $res = self::swapElements($lottery_type_sort_weight, $game_type_id, $sortingWeight, $sorting_weight_flipped[$sortingWeight]);
+                if (! $res) {
+                    $stmt = self::updateLotteryBasicEdit($maxPrizeAmountPerBet, $maxAmtPerIssue, $maxWinPerPersonPerIssue, $minBetAmtPerIssue, $lockTimeForClsing, $game_type_id);
+                    return ['status' => "error", 'data' => "Duplicated Sorting Weight"];
+                }
+
+                $swaped_game_ids = $res;
+            }
+
+            $sorting_weight = $database->query("UPDATE lottery_type SET sort_weight = :sorting_weight  WHERE lottery_type.lt_id = :lottery_id", [":sorting_weight" => json_encode($lottery_type_sort_weight), ':lottery_id' => (int) $lottery_type]);
+
+            $stmt = self::updateLotteryBasicEdit($maxPrizeAmountPerBet, $maxAmtPerIssue, $maxWinPerPersonPerIssue, $minBetAmtPerIssue, $lockTimeForClsing, $game_type_id);
+            return ['status' => "success", 'data' => $stmt->rowCount(), "swapped" => $swaped_game_ids, "sorting_weight" => $sorting_weight->rowCount()];
+        } catch (Exception $e) {
+            return ['status' => "success", 'data' => "Internal Server Error."];
+        }
+    }
+
+    public static function updateLotteryBasicEdit($maxPrizeAmountPerBet, $maxAmtPerIssue, $maxWinPerPersonPerIssue, $minBetAmtPerIssue, $lockTimeForClsing, $game_type_id)
+    {
+        $database = parent::openLink();
+        $stmt     = $database->query(
+            "UPDATE game_type SET maximum_prize_per_bet = :maximum_prize_per_bet,maximum_win_per_issue = :maximum_win_per_issue,maximum_amount_per_issue = :maximum_amount_per_issue, minimum_amount_per_issue = :minimum_amount_per_issue , closing_time =:closing_time  WHERE game_type.gt_id = :game_type_id
             ",
-         [
-            ":maximum_prize_per_bet" => (int) $maxPrizeAmountPerBet,
-            ':maximum_amount_per_issue' => (int) $maxAmtPerIssue,
-            ':maximum_win_per_issue' => (int) $maxWinPerPersonPerIssue,
-            ':minimum_amount_per_issue' => (int) $minBetAmtPerIssue,
-            ':closing_time' => (int) $lockTimeForClsing,
-            ':game_type_id' => (int) $game_type_id,
-         ]
-      );
+            [
+                ":maximum_prize_per_bet"    => (int) $maxPrizeAmountPerBet,
+                ':maximum_amount_per_issue' => (int) $maxAmtPerIssue,
+                ':maximum_win_per_issue'    => (int) $maxWinPerPersonPerIssue,
+                ':minimum_amount_per_issue' => (int) $minBetAmtPerIssue,
+                ':closing_time'             => (int) $lockTimeForClsing,
+                ':game_type_id'             => (int) $game_type_id,
+            ]
+        );
 
-      return $stmt;
-   }
+        return $stmt;
+    }
 
-   public static function updateLotteryStatus($game_type_id, $status): array
-   {
-      try {
-         $status = ["gameon" => 1, "gameoff" => -1][$status];
-         $database = parent::openLink();
-         $stmt = $database->query(
-            "UPDATE game_type SET state = :state  WHERE game_type.gt_id = :game_type_id
+    public static function updateLotteryStatus($game_type_id, $status): array
+    {
+        try {
+            $status   = ["gameon" => 1, "gameoff" => -1][$status];
+            $database = parent::openLink();
+            $stmt     = $database->query(
+                "UPDATE game_type SET state = :state  WHERE game_type.gt_id = :game_type_id
             ",
-            [":state" => $status, ':game_type_id' => (int) $game_type_id]
-         );
-         return ['status' => "success", 'data' => $stmt->rowCount()];
-      } catch (Exception $e) {
-         return ['status' => "success", 'data' => "Internal Server Error." . $e->getMessage()];
-      }
-   }
+                [":state" => $status, ':game_type_id' => (int) $game_type_id]
+            );
+            return ['status' => "success", 'data' => $stmt->rowCount()];
+        } catch (Exception $e) {
+            return ['status' => "success", 'data' => "Internal Server Error." . $e->getMessage()];
+        }
+    }
 
-   public static function fetch_draw_info_game_type($game_type = 1)
-   {
-      try {
-         $db = parent::openLink();
-         $sql = "SELECT draw_table,bet_table FROM gamestable_map WHERE game_type = :game_type";
-         $stmt = $db->query($sql, [':game_type' => (int) $game_type]);
-         $data = $stmt->fetch(PDO::FETCH_OBJ);
-         return ['status' => 'success', 'data' => $data];
-      } catch (Exception $e) {
-         return [
-            'status' => "error",
-            'data' => "Internal Server 
+    public static function fetch_draw_info_game_type($game_type = 1)
+    {
+        try {
+            $db   = parent::openLink();
+            $sql  = "SELECT draw_table,bet_table FROM gamestable_map WHERE game_type = :game_type";
+            $stmt = $db->query($sql, [':game_type' => (int) $game_type]);
+            $data = $stmt->fetch(PDO::FETCH_OBJ);
+            return ['status' => 'success', 'data' => $data];
+        } catch (Exception $e) {
+            return [
+                'status' => "error",
+                'data'   => "Internal Server
             Erro",
-         ];
-      }
-   }
+            ];
+        }
+    }
 
-   public static function getDrawTableInfo($game_type, $issue_number = 0, $status = "", $startDate = "", $endDate = "", int $currentPage = 1, int $limit = 20)
-   {
-      $res = self::fetch_draw_info_game_type($game_type);
-      if ($res['status'] === "error") {
-         return ["status" => 'error', 'data' => "Internal Server error."];
-      }
-      $db = parent::openLink();
-      $offset = ($currentPage - 1) * $limit;
-      $res = $res['data'];
-      $drawtable = $res->draw_table;
-      $bet_table = $res->bet_table;
-      $params = [':offset' => (int) $offset, ':limit' => $limit];
+    public static function getDrawTableInfo($game_type, $issue_number = 0, $status = "", $startDate = "", $endDate = "", int $currentPage = 1, int $limit = 20)
+    {
+        $res = self::fetch_draw_info_game_type($game_type);
+        if ($res['status'] === "error") {
+            return ["status" => 'error', 'data' => "Internal Server error."];
+        }
+        $db        = parent::openLink();
+        $offset    = ($currentPage - 1) * $limit;
+        $res       = $res['data'];
+        $drawtable = $res->draw_table;
+        $bet_table = $res->bet_table;
+        $params    = [':offset' => (int) $offset, ':limit' => $limit];
 
-      $whereClause = "";
-      if (!empty($game_type)) {
-         $params[":game_type"] = $game_type;
-         $whereClause = empty($whereClause) ? " {$drawtable}.lottery_type=:game_type " : " AND {$drawtable}.lottery_type=:game_type ";
-      }
-      if (!empty($issue_number)) {
-         $params[":issue_number"] = $issue_number;
-         $whereClause .= empty($whereClause) ? " period=:issue_number " : " AND period=:issue_number ";
-      }
-      if (!empty($status)) {
-         $params[":draw_status"] = $status;
-         $whereClause .= empty($whereClause) ? " draw_status=:draw_status " : " AND draw_status=:draw_status ";
-      }
+        $whereClause = "";
+        if (! empty($game_type)) {
+            $params[":game_type"] = $game_type;
+            $whereClause          = empty($whereClause) ? " {$drawtable}.lottery_type=:game_type " : " AND {$drawtable}.lottery_type=:game_type ";
+        }
+        if (! empty($issue_number)) {
+            $params[":issue_number"] = $issue_number;
+            $whereClause .= empty($whereClause) ? " period=:issue_number " : " AND period=:issue_number ";
+        }
+        if (! empty($status)) {
+            $params[":draw_status"] = $status;
+            $whereClause .= empty($whereClause) ? " draw_status=:draw_status " : " AND draw_status=:draw_status ";
+        }
 
-      if (!empty($startDate) && empty($endDate)) {
-         $whereClause .= empty($whereClause) ? " time_added = :start_date " : " AND time_added = :start_date ";
-         $params[':start_date'] = $startDate;
-      } elseif (empty($startDate) && !empty($endDate)) {
-         $whereClause .= empty($whereClause) ? " time_added = :end_date " : " AND time_added = :end_date ";
-         $params[':end_date'] = $endDate;
-      } elseif (!empty($startDate) && !empty($endDate)) {
-         $start = min($startDate, $endDate);
-         $end = max($startDate, $endDate);
-         $whereClause .= empty($whereClause) ? " time_added BETWEEN :start_date AND :end_date  " : " AND time_added BETWEEN :start_date AND :end_date ";
-         $params[':start_date'] = $start;
-         $params[':end_date'] = $end;
-      }
+        if (! empty($startDate) && empty($endDate)) {
+            $whereClause .= empty($whereClause) ? " time_added = :start_date " : " AND time_added = :start_date ";
+            $params[':start_date'] = $startDate;
+        } elseif (empty($startDate) && ! empty($endDate)) {
+            $whereClause .= empty($whereClause) ? " time_added = :end_date " : " AND time_added = :end_date ";
+            $params[':end_date'] = $endDate;
+        } elseif (! empty($startDate) && ! empty($endDate)) {
+            $start = min($startDate, $endDate);
+            $end   = max($startDate, $endDate);
+            $whereClause .= empty($whereClause) ? " time_added BETWEEN :start_date AND :end_date  " : " AND time_added BETWEEN :start_date AND :end_date ";
+            $params[':start_date'] = $start;
+            $params[':end_date']   = $end;
+        }
 
-      $whereClause = empty($whereClause) ? "" : " WHERE {$whereClause} ";
+        $whereClause = empty($whereClause) ? "" : " WHERE {$whereClause} ";
 
-      $sql = "SELECT *,{$drawtable}.closing_time as my_closing,(SELECT COUNT(*) FROM  {$drawtable}) as total_records, (SELECT COUNT(*) FROM {$bet_table} WHERE draw_period = {$drawtable}.period) as totalIssueBet, (SELECT SUM(bet_amount) FROM {$bet_table}  WHERE draw_period = {$drawtable}.period) as sumTotalAmount,(SELECT SUM(win_bonus) FROM {$bet_table}  WHERE draw_period = {$drawtable}.period AND bet_status = 2) as total_won_amount,(SELECT SUM(win_bonus) FROM {$bet_table}  WHERE draw_period = {$drawtable}.period AND bet_status = 3) as total_lose_amount FROM {$drawtable} JOIN game_type ON {$drawtable}.lottery_type = game_type.gt_id {$whereClause}  ORDER BY draw_id DESC LIMIT :offset, :limit";
-      $stmt = $db->query($sql, $params);
-      $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $sql    = "SELECT *,{$drawtable}.closing_time as my_closing,(SELECT COUNT(*) FROM  {$drawtable}) as total_records, (SELECT COUNT(*) FROM {$bet_table} WHERE draw_period = {$drawtable}.period) as totalIssueBet, (SELECT SUM(bet_amount) FROM {$bet_table}  WHERE draw_period = {$drawtable}.period) as sumTotalAmount,(SELECT SUM(win_bonus) FROM {$bet_table}  WHERE draw_period = {$drawtable}.period AND bet_status = 2) as total_won_amount,(SELECT SUM(win_bonus) FROM {$bet_table}  WHERE draw_period = {$drawtable}.period AND bet_status = 3) as total_lose_amount FROM {$drawtable} JOIN game_type ON {$drawtable}.lottery_type = game_type.gt_id {$whereClause}  ORDER BY draw_id DESC LIMIT :offset, :limit";
+        $stmt   = $db->query($sql, $params);
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-      $data = [];
+        $data = [];
 
-      foreach ($result as $key => $value) {
-         $data[] = [
-            'lottery_type' => $value->name,
-            'lottery_code' => $value->game_group,
-            'issue_number' => $value->period,
-            'winning_numbers' => implode(',', json_decode($value->draw_number)),
-            'total_bet_amount' => $value->sumTotalAmount ?? 0,
-            'total_win_amount' => $value->total_won_amount ?? 0,
-            'draw_time' => str_replace(' ', '/', $value->time_added),
-            'sales_deadline' => str_replace(' ', '/', $value->my_closing),
-            'actual_draw_time' => str_replace(' ', '/', $value->time_added),
-            'settlement_completion_time' => str_replace(' ', '/', $value->settlement_completion_time ?? 0),
-            'status' => $value->draw_status,
-            'total_records' => $value->total_records,
-            "timezone" => $value->timezone,
-         ];
-      }
-      return ['status' => 'success', 'data' => $data];
-   }
+        foreach ($result as $key => $value) {
+            $data[] = [
+                'lottery_type'               => $value->name,
+                'lottery_code'               => $value->game_group,
+                'issue_number'               => $value->period,
+                'winning_numbers'            => implode(',', json_decode($value->draw_number)),
+                'total_bet_amount'           => $value->sumTotalAmount ?? 0,
+                'total_win_amount'           => $value->total_won_amount ?? 0,
+                'draw_time'                  => str_replace(' ', '/', $value->time_added),
+                'sales_deadline'             => str_replace(' ', '/', $value->my_closing),
+                'actual_draw_time'           => str_replace(' ', '/', $value->time_added),
+                'settlement_completion_time' => str_replace(' ', '/', $value->settlement_completion_time ?? 0),
+                'status'                     => $value->draw_status,
+                'total_records'              => $value->total_records,
+                "timezone"                   => $value->timezone,
+            ];
+        }
+        return ['status' => 'success', 'data' => $data];
+    }
 
-   public static function swapElements(&$array, $element1 = 0, $element1NewWeight = 0, $element2 = 0)
-   {
-      try {
-         $element1 = (int) $element1;
-         $element2 = (int) $element2;
+    public static function swapElements(&$array, $element1 = 0, $element1NewWeight = 0, $element2 = 0)
+    {
+        try {
+            $element1 = (int) $element1;
+            $element2 = (int) $element2;
 
-         if (!array_key_exists($element2, $array)) {
+            if (! array_key_exists($element2, $array)) {
+                $array[$element1] = $element1NewWeight;
+                return true;
+            }
+            if (! array_key_exists($element1, $array) || ! array_key_exists($element2, $array)) {
+                return false; // Ensure elements exist
+            }
+
+            $element1OldWeight = $array[$element1];
+
+            if ((int) $element1OldWeight == $element1NewWeight) {
+                return false;
+            }
+
             $array[$element1] = $element1NewWeight;
-            return true;
-         }
-         if (!array_key_exists($element1, $array) || !array_key_exists($element2, $array)) {
-            return false; // Ensure elements exist
-         }
-
-         $element1OldWeight = $array[$element1];
-
-         if ((int) $element1OldWeight == $element1NewWeight) {
-            return false;
-         }
-
-         $array[$element1] = $element1NewWeight;
-         $array[$element2] = $element1OldWeight;
-         return [$element1, $element2]; // Successful swap
-      } catch (Exception $e) {
-         echo $e->getMessage();
-         return ["status" => "error", "data" => $e->getMessage()];
-      }
-   }
+            $array[$element2] = $element1OldWeight;
+            return [$element1, $element2]; // Successful swap
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return ["status" => "error", "data" => $e->getMessage()];
+        }
+    }
 }

@@ -345,6 +345,7 @@ $(() => {
    const pageLimit = 20;
    const fetchLotteryBasicParams = (page, element) => {
       const lottery_id = $("#lottery").val();
+      console.log(lottery_id)
       $.ajax({
          url: `../game/fetch_lottery_basic_params/${partnerID}/${lottery_id}/${page}`,
          type: "POST",
