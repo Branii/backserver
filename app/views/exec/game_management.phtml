@@ -36,7 +36,6 @@ if ($flag == "getLotteryGames") {
     echo json_encode(['bonus' => $result['data'] ]);
 }
 
-
 if ($flag == "updateoddstotalbets") {
     $gameId = isset($this->viewData['gameId']) ? $this->viewData['gameId'] : '';
     $gamemodel = isset($this->viewData['models']) ? $this->viewData['models'] : '';
@@ -115,5 +114,11 @@ if ($flag == "getDraws") {
      if(empty($game_id))return ["status" => 'error', "data" => "Internal Server Error"];
     $result = GameManageModel::getDrawTableInfo($game_id,$issue_number,$draw_status,$start_date,$end_date,$page,$limit);
     echo json_encode($result );
+    
+}
+
+if ($flag == "resetAllOdds") {
+ $result = GameManageModel::resetAllOdds();
+ echo json_encode($result); 
     
 }

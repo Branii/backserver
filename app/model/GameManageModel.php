@@ -33,7 +33,6 @@ class GameManageModel extends MEDOOHelper
 
     public static function getLotteryGamesById($lotteryId, $gamemodel, $gametype)
     {
-        // $bigData = [];JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_odds, CONCAT('$.', :game_types))) AS standardodds
 
         if (in_array($lotteryId, [1, 2, 3, 5, 6, 8, 10, 11]) && in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
             $tableMap = [
@@ -48,34 +47,6 @@ class GameManageModel extends MEDOOHelper
             $tableName = $tableMap[$gamemodel];
             $jsonKey   = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
             $jsonPath  = "$." . $jsonKey;
-
-            //   $sql = "
-            //       SELECT
-            //          {$tableName}.gn_id,
-            //          {$tableName}.name,
-            //           {$tableName}.isSpecial,
-            //          {$tableName}.state,
-            //          {$tableName}.modified_odds,
-            //          {$tableName}.group_type,
-            //          {$tableName}.modified_totalbet,
-            //          {$tableName}.gameplay_name,
-            //          {$tableName}.total_bets,
-            //          {$tableName}.model,
-            //          {$tableName}.oddspercentage,
-            //          {$tableName}.totalbetpercentage,
-            //          {$tableName}.odds,{$tableName}.game_group,
-            //          {$tableName}.lottery_type, JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_odds, '$jsonPath')) AS standardodds,
-            //          JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_total_bets, '$jsonPath')) AS standardtotalbets,
-            //          game_group.state AS group_state,lottery_type.state AS lottery_state
-            //       FROM
-            //          {$tableName}
-            //        JOIN
-            //          game_group
-            //          ON game_group.gp_id = {$tableName}.game_group
-            //          JOIN lottery_type ON lottery_type.lt_id={$tableName}.lottery_type
-            //       WHERE
-            //          {$tableName}.lottery_type = :lotteryId
-            //       ";
 
             $sql = "SELECT
                   gn.gn_id AS gn_id,
@@ -126,21 +97,20 @@ class GameManageModel extends MEDOOHelper
     public static function UpdateOddsTotalbets($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent, $gametype, $isSpecial)
     {
         $jsonKey  = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
-        $jsonPath = "$.\"$jsonKey\""; // correct MySQL JSON path syntax with quoted key
-      //   return $isSpecial;
+        $jsonPath = "$.\"$jsonKey\""; 
         if ($isSpecial === "true") {
-           $data =  self::UpdateOddsGroupTable($gameId,$newodds,$oddpercent,$jsonPath);
+            $data = self::UpdateOddsGroupTable($gameId, $newodds, $oddpercent, $jsonPath);
             if ($data > 1) {
-               self::getLotteryGamesById($gameId, $gamemodel, $gametype);
+                self::getLotteryGamesById($gameId, $gamemodel, $gametype);
             }
-           return ['success' => true, 'message' => 'Update successful'];
-        }else{
-          self::UpdateGameNameTable($gameId,$gamemodel,$newodds, $oddpercent, $newtotalbet, $totalbetpercent, $jsonPath);
+            return ['success' => true, 'message' => 'Update successful'];
+        } else {
+            self::UpdateGameNameTable($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent, $jsonPath);
         }
-  
+
     }
 
-    public static function UpdateGameNameTable($gameId,$gamemodel,$newodds, $oddpercent, $newtotalbet, $totalbetpercent, $jsonPath)
+    public static function UpdateGameNameTable($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent, $jsonPath)
     {
         if (in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
             // Sanitize
@@ -186,26 +156,26 @@ class GameManageModel extends MEDOOHelper
             ]);
 
             if ($data > 1) {
-               self::getLotteryGamesById($gameId, $gamemodel, $gametype);
+                self::getLotteryGamesById($gameId, $gamemodel, $gametype);
             }
             return ['success' => true, 'message' => 'Update successful'];
         } catch (Exception $e) {
             return ['success' => false, 'message' => 'Database update failed', 'error' => $e->getMessage()];
         }
     }
-    
-    public static function UpdateOddsGroupTable($gameId,$newodds,$oddpercent,$jsonPath)
+
+    public static function UpdateOddsGroupTable($gameId, $newodds, $oddpercent, $jsonPath)
     {
 
-       $formate = number_format(round((float)json_decode($newodds)[0], 5), 5, '.', ''); // Output: 1.00000
-        $sql    = "
+        $formate = number_format(round((float) json_decode($newodds)[0], 5), 5, '.', ''); // Output: 1.00000
+        $sql     = "
                 UPDATE odds_group
                 SET std_odds = JSON_SET(std_odds, '{$jsonPath}',:subodds), oddspercentage = :oddspercentage
                 WHERE odds_group_id = :odds_group_id
             ";
 
-          $data = parent::query($sql, ['subodds'=> $formate, 'oddspercentage' => $oddpercent,
-           'odds_group_id' => $gameId]);
+        $data = parent::query($sql, ['subodds' => $formate, 'oddspercentage' => $oddpercent,
+            'odds_group_id'                        => $gameId]);
 
     }
 
@@ -438,6 +408,18 @@ class GameManageModel extends MEDOOHelper
         }
     }
 
+    //reset all odds
+   public static function resetAllOdds()
+   {
+   $gameNameReset  = Utils::getAllGamesPlay();
+    //  $oddGroupReset  = Utils::updateAllOddGroup();
+      if ($gameNameReset) {
+         return ['success' => true];
+      } else {
+         return ['success' => false];
+      }
+   }
+
     public static function updateLotteryData($maxPrizeAmountPerBet, $maxAmtPerIssue, $maxWinPerPersonPerIssue, $minBetAmtPerIssue, $lockTimeForClsing, $sortingWeight, $lottery_type, $game_type_id): array
     {
         try {
@@ -624,4 +606,19 @@ class GameManageModel extends MEDOOHelper
             return ["status" => "error", "data" => $e->getMessage()];
         }
     }
+
+
+    //test
+
+        public static function getAllGamesPlay()
+        {
+            try {
+                $sql  = "SELECT gn_id, name, odds, total_bets, lottery_type FROM game_name";
+                $data = parent::query($sql);
+                return $data;
+            } catch (Throwable $e) {
+                return [];
+            }
+        }
+
 }

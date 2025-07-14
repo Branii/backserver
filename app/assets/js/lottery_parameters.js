@@ -153,7 +153,9 @@ const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
 
   const renderLotteryParams = (data) => {
     var html = lotteryParamTable(data);
+      tableScrollBonus();
     $("#game_name_container").html(html);
+
   };
 
   function getTranslation(key) {
@@ -204,7 +206,7 @@ const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
     try {
       const response = await fetch(`../game/getLotteryGames/${lotterId}/${models}/${gametypes}`);
       const data = await response.json();
-       console.log(data);
+      // console.log(data);
        // return
          renderLotteryParams(data.bonus);
     } catch (error) {
@@ -255,16 +257,9 @@ const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
     let lastModifiedValuesOne = JSON.parse(row.attr("data-last-modified-values-one") || JSON.stringify(originalValuesOne));
     let lastModifiedValueTwo = parseFloat(row.attr("data-last-modified-value-two") || originalValueTwo );
 
-   //  console.log(originalValuesOne);
-    // // console.log(originalValueTwo);
-    // // console.log(lastModifiedValuesOne);
-    // // console.log(lastModifiedValueTwo);
-    // return
-
     let scaledValuesOne, scaledValueTwo;
 
     // Check if first slider is at 100%, reset to original values
-
     if (percentageOne === "100") {
       scaledValuesOne = [...originalValuesOne];
     } else {
@@ -480,6 +475,32 @@ $(document).on("change", "#allGameNamesLottery", function () {
     });
 });
 
+
+
+  // reset all odds
+  $(document).on("click", ".resetodds", function () {
+    $.post(`../game/resetallodds`, function (response) {
+   //   const data = JSON.parse(response);
+      console.log(response);
+    //   if (data.success) {
+    //     showToast(SUCCESS_TEXT, UPDATED_SUCCESSFULLY, "success");
+    //     // Optionally, you can refresh the lottery games after resetting odds
+    //     // let lotteryId = $("#allGameNamesLottery").val();
+    //     // let models = $("#allmodels").val();
+    //     // gametypes= $(".gamebonus").val().split("|")[0];
+    //     // getLotteryGames(lotteryId, models,gametypes);
+    //   } else {
+    //     showToast("Error", "Failed to reset odds", "error");
+    //   }
+    // } ).fail(function (xhr, status, error) {
+    //   console.error("Error resetting odds:", error);
+    //   showToast("Error", "Failed to reset odds", "error");
+     });
+  });
+
+
+ 
+    // Get all rows in the table
 
   // Sticky header for bonus table
   function tableScrollBonus() {

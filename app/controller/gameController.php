@@ -60,7 +60,7 @@ class gameController extends Controller
         $this->view->render();
     }
 
-    ////////////// LOTTERY  PARAM FUNCTIONS  - //////////
+    ////////////// LOTTERY BONUS  PARAMETERS FUNCTIONS  - //////////
     public function getAllGamesLottery()
     {
         $this->view('exec/game_management', ['flag' => 'getAllGamesLottery']);
@@ -141,6 +141,13 @@ class gameController extends Controller
     public function toggleTwosidesLotteryState($gameID)
     {
         $this->view('exec/lottery_bonus_parameters', ["gameID" => $gameID, 'flag' => 'toggleTwosidesLotteryState']);
+        $this->view->render();
+    }
+
+    //reset all odds
+    public function resetAllOdds()
+    {
+        $this->view('exec/game_management', ['flag' => 'resetAllOdds']);
         $this->view->render();
     }
 
