@@ -5,11 +5,6 @@
 class Utils extends MEDOOHelper
 {
 
-    public static function getGameIdsByGameType(): array
-    {
-        return parent::getTables();
-    }
-
     public static function getAllGamesPlay()
     {
         try {
@@ -92,4 +87,5 @@ class Utils extends MEDOOHelper
 
         }
     }
+    
 }

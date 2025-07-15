@@ -411,12 +411,12 @@ class GameManageModel extends MEDOOHelper
     //reset all odds
    public static function resetAllOdds()
    {
-   $gameNameReset  = Utils::getAllGamesPlay();
-    //  $oddGroupReset  = Utils::updateAllOddGroup();
+      $gameNameReset  = Utils::updateAllGamePlays();
+      //$oddGroupReset  = Utils::updateAllOddGroup();
       if ($gameNameReset) {
-         return ['success' => true];
+         return ['status' => "success"];
       } else {
-         return ['success' => false];
+         return ['status' => "faliled"];
       }
    }
 
