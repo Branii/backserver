@@ -243,7 +243,6 @@ $(function () {
         // Event listener for keyup on #myInput
         $(document).on("keyup", "#financeinput", function () {
             const query = $(this).val().trim();
-
             // Only trigger if input is more than 2 characters
             if (query.length > 1) {
                 clearTimeout(debounceTimeout); // Clear any existing timeout
@@ -279,6 +278,92 @@ $(function () {
             }
         });
     });
+
+
+    //   let debounceTimeout = null;
+    // $(document).ready(function () {
+    //     // Event listener for keyup on #myInput
+    //     $(document).on('keyup', '#financeinput', function () {
+    //         const query = $(this).val().trim();
+    
+    //         // Only trigger if input is more than 2 characters
+    //         if (query.length > 1) {
+    //             clearTimeout(debounceTimeout); // Clear any existing timeout
+    //             debounceTimeout = setTimeout(fetchUserss, 500, query); // Call fetchUsers with the query after 500ms delay
+    //         } else {
+    //             $('.financeDropdowns').hide(); // Hide dropdown if input is less than 3 characters
+    //         }
+    //     });
+    
+    //     // Handle dropdown item selection
+    //     $(document).on('change', '.financeDropdowns', function () {
+    //         const selectedOption = $(this).find('option:selected');
+    //         const selectedUserId = selectedOption.val();
+    //         const selectedUsername = selectedOption.data('usernames');
+    
+    //         if (selectedUserId) {
+    //             $('#financeinput').val(selectedUsername);
+    //             $('.userIdFields').val(selectedUserId);
+    //             $('.financeDropdowns').hide();
+    //         }
+    //     });
+    
+    //     $(document).on("click", function (e) {
+    //       const $dropdownbet = $("#userfinaceDropdown");
+    //       if (!$(e.target).closest("#financeinput, #userfinaceDropdown").length) {
+    //           $dropdownbet.hide();
+    //       }
+    //   });
+    //     // Handle manual input clearing
+    //     $(document).on('input', '#financeDropdowns', function () {
+    //         if (!$(this).val()) {
+    //             $('.userIdFields').val(''); // Reset user ID if input is cleared
+    //         }
+    //     });
+    // });
+    
+    // Function to fetch and display users
+    function fetchUserss(query) {
+        let optionsHtml = '';
+    
+        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
+            try {
+                response = typeof response === 'string' ? JSON.parse(response) : response;
+
+           //     console.log(response);
+              
+          response.forEach(user => {
+           let   displayValue;
+           let regname;
+            // Display based on regtype
+            if (user.regtype === "email") {
+               displayValue = user.email;
+               regname = user.email;  // Show email
+            } else if (user.regtype === "username") {
+              displayValue = user.username;
+              regname = user.username;  // Show username
+            } else if (user.regtype === "contact") {
+              displayValue = user.contact;
+              regname  = user.contact;  // Show contact
+            }else{
+              displayValue = 'no data found ...';
+              regname = 'no data found ...';  // Show contact
+             }
+          
+              // Append the option to the optionsHtml string
+              optionsHtml += `<option class="optionlist" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
+          });
+                $('.financeDropdowns').html(optionsHtml).show();
+            } catch (error) {
+                console.error("Error parsing response: ", error);
+                $('.financeDropdowns').hide();
+            }
+        }).fail(function () {
+            console.error("Error fetching users.");
+            $('.financeDropdowns').hide();
+        });
+    }
+    
 
 
     //add money

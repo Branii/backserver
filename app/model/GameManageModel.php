@@ -412,8 +412,8 @@ class GameManageModel extends MEDOOHelper
    public static function resetAllOdds()
    {
       $gameNameReset  = Utils::updateAllGamePlays();
-      //$oddGroupReset  = Utils::updateAllOddGroup();
-      if ($gameNameReset) {
+      $oddGroupReset  = Utils::updateAllOddGroup();
+      if ($gameNameReset && $oddGroupReset) {
          return ['status' => "success"];
       } else {
          return ['status' => "faliled"];

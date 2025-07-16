@@ -562,6 +562,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
             25: { title: "User Payment Method", content: "usernotsi" },
             26: { title: "SMS Configuration", content: "smsconfig" },
             27: { title: "Email Configuration", content: "emailconfigure" },
+            28: { title: "Email Configuration", content: "emailconfigure" },
         };
         const sidebarMain = {
             1: { category: "Business flow", items: [1, 2, 3, 4] },
@@ -577,6 +578,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
             11: { category: "Payment Platform", items: [22] },
             12: { category: "Partner Management", items: [23] },
             13: { category: "Platform Setting", items: [26,27] },
+            14: { category: "Period Management", items: [28] },
         };
         let html = "";
         for (let key in sidebarMain) {
@@ -589,7 +591,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
               <ul class="custom-list">`;
             // Check if the permissions object has the key
             if (sidebarMain.hasOwnProperty(key)) {
-                //console.log(`Value: ${sidebarMain[key].items}`);
+                console.log(`Value: ${sidebarMain[key].items}`);
 
                 sidebarMain[key].items.forEach((item) => {
                     const value = `${key} ${item}`;
@@ -639,7 +641,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
         $(".chk").each(function () {
             $(this).prop("checked", isChecked);
             const val = $(this).val();
-            if (isChecked && !bigArr.includes(val)) {
+            if (isChecked && !bigArrs.includes(val)) {
                 bigArrs.push(val);
             }
         });
@@ -701,7 +703,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
     $(document).on("click", ".admin_logs", function () {
         const userdata = JSON.parse($(this).attr("value"));
         adminId = JSON.parse(userdata.admin_id);
-        console.log(adminId);
+      // console.log(adminId);
         $(".logname").text(userdata.full_name);
         getAdminLogs(currentPage, pageLimit, adminId);
     });

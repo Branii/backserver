@@ -41,12 +41,13 @@ class Utils extends MEDOOHelper
 
     public static function updateAllGamePlays()
     {
-
+         $oddpercentage = 100;
         $gamePlay = self::getAllGamesPlay();
 
-        $sql = "UPDATE game_name SET standard_odds = ?, standard_total_bets = ? WHERE gn_id = ?";
+        $sql = "UPDATE game_name SET standard_odds = :standard_odds, standard_total_bets = :standard_total_bets,
+         oddspercentage = :oddspercentage,totalbetpercentage = :totalbetpercentage WHERE gn_id = :gn_id";
         foreach ($gamePlay as $play) {
-            $actualGameIds   = getGamesByLotteryType($play['lottery_type']);
+            $actualGameIds   = self::getGamesByLotteryType($play['lottery_type']);
             $filteredGameIds = array_column($actualGameIds, 'gt_id');
 
             $singleOdds = [];
@@ -61,7 +62,13 @@ class Utils extends MEDOOHelper
             $jsonOdds = json_encode($singleOdds);
             $jsonBets = json_encode($singleBets);
             //  $data     = parent::query($sql, [$jsonOdds, $jsonBets, $play['gn_id']]);
-            parent::query($sql, [$jsonOdds, $jsonBets, $play['gn_id']]);
+            parent::query($sql, [
+                "standard_odds" => $jsonOdds,
+                "standard_total_bets" => $jsonBets,
+                "oddspercentage" => $oddpercentage,
+                "totalbetpercentage" => $oddpercentage,
+                "gn_id" => $play['gn_id']
+            ]);
             //  $stmt->execute([$jsonOdds, $jsonBets, $play['gn_id']]);
         }
     }
@@ -69,12 +76,13 @@ class Utils extends MEDOOHelper
     public static function updateAllOddGroup()
     {
 
-        $oddsGroup = getAllOddsGroup();
+         $oddpercentage = 100;
+        $oddsGroup = self::getAllOddsGroup();
 
-        $sql = "UPDATE odds_group SET std_odds = ? WHERE odds_group_id = ?";
+        $sql = "UPDATE odds_group SET std_odds =:std_odds, oddspercentage = :oddspercentage WHERE odds_group_id = :odds_group_id";
 
         foreach ($oddsGroup as $group) {
-            $actualGameIds   = getGamesByLotteryType($group['lottery_type']);
+            $actualGameIds   = self::getGamesByLotteryType($group['lottery_type']);
             $filteredGameIds = array_column($actualGameIds, 'gt_id');
 
             $singleOdds = [];
@@ -83,7 +91,11 @@ class Utils extends MEDOOHelper
             }
 
             $jsonOdds = json_encode($singleOdds);
-            $data     = parent::query($sql, [$jsonOdds, $group['odds_group_id']]);
+            parent::query($sql, [
+                "std_odds" => $jsonOdds,
+                "oddspercentage" => $oddpercentage,
+                "odds_group_id" => $group['odds_group_id']
+            ]);
 
         }
     }

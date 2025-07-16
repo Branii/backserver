@@ -687,6 +687,7 @@ return [
     'Action' => 'Action',
     //（Platform Settings）平台设置
     'Platform Settings' => 'Platform Settings',
+    'Period Management' => 'Period Management',
 
   //(Basic Platform Configuration)
   'SMS Configuration' => 'SMS Configuration',
