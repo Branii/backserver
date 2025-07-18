@@ -27,7 +27,7 @@ $(function () {
     const translator = JSON.parse(translatorScript.textContent);
     const Lottery = (data) => {
         let htmls = "";
-        //translator["Deposit"]
+        // translator["Deposit"]
         //   const gamemodel = {
         //       1: translator["Standard"],
         //       2: translator["Two Sides"],
@@ -257,8 +257,8 @@ $(function () {
                     return;
                 }
                 $("#maskbet").LoadingOverlay("hide");
-                renderlottery(data.filterbet);
-                renderbetPagination(data.totalPages, currentPagebet, (page) => {
+                 renderlottery(data.filterbet);
+                 renderbetPagination(data.totalPages, currentPagebet, (page) => {
                     filterbetdata(uidd, betOrderID, gametype, betsate, betstatus, startdates, enddates, page, pageLimit);
                 }); // Pass callback
 
@@ -316,7 +316,7 @@ $(function () {
     const headsUpText = document.getElementById("trans-heads-up").textContent;
     const selectFieldsText = document.getElementById("trans-select-fields").textContent;
 
-      $(".executebet").click(function () {
+    $(".executebet").click(function () {
         if ($("#myInput").val() == "" && $(".typelottery").val() == "" && $(".startdates").val() == "" && $(".betsate").val() == "" && $(".betstatus").val() == "" && $("#lot-betID").val() == "") {
             //   showToast("Heads up!!", "Select one or more data fields to filter", "info");
             showToast(headsUpText, selectFieldsText, "info");

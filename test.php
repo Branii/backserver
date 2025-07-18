@@ -271,3 +271,21 @@ echo "hekko";
 //     print_r($standardOdds);
 
 // }
+
+
+// post: /api/v1/limvo/processBetSlipIfSkipped
+// {
+//     "gameIds": array
+//     period: string
+// }
+
+// ALTER TABLE `ds_royal5draw` 
+//   CHANGE `draw_count` `total_count` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+//   CHANGE `draw_date` `draw_period` VARCHAR(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+//   CHANGE `draw_number` `standard` VARCHAR(70) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+//   CHANGE `draw_time` `twosides` VARCHAR(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+//   CHANGE `draw_datetime` `bordgames` VARCHAR(30) NULL DEFAULT NULL,
+//   ADD `manytable` VARCHAR(30) NULL DEFAULT NULL AFTER `bordgames`,
+//   ADD `trend` VARCHAR(30) NULL DEFAULT NULL AFTER `manytable`,
+//   ADD `roadbet` VARCHAR(30) NULL DEFAULT NULL AFTER `trend`,
+//   ADD `longdragon` VARCHAR(30) NULL DEFAULT NULL AFTER `roadbet`;

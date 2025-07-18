@@ -139,9 +139,7 @@ $(function () {
     };
 
     const render = (data) => {
-        //   console.log("Rendering to Table Body:", data);
         var html = AccountTransactions(data);
-        // console.log("Generated HTML:", html);
         $("#dataContainer").html(html);
     };
 
@@ -242,7 +240,6 @@ $(function () {
             background: "rgb(90,106,133,0.1)",
             size: 3,
         });
-
         fetchTrasaction(currentPage, pageLimit);
     });
 

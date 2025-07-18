@@ -461,17 +461,11 @@ $(document).on("change", "#allGameNamesLottery", function () {
     };
 
     const getGameTranslation = (key) => {
-        const span = document.getElementById(`trans-${key}`);
-        return span?.dataset.translation || key;
-    };
-
-    const secondDropdown = $("#allmodels");
-    secondDropdown.empty();
-
-    const options = optionsMap[selectedValue] || [];
-    options.forEach((gameKey) => {
-        const translatedLabel = getGameTranslation(gameKey);
-        secondDropdown.append(new Option(translatedLabel, gameKey.toLowerCase()));
+     const span = document.getElementById(`trans-${key}`);return span?.dataset.translation || key};
+     const secondDropdown = $("#allmodels");
+     secondDropdown.empty();
+     const options = optionsMap[selectedValue] || [];
+    options.forEach((gameKey) => { const translatedLabel = getGameTranslation(gameKey); secondDropdown.append(new Option(translatedLabel, gameKey.toLowerCase()));
     });
 });
 
@@ -500,7 +494,7 @@ $(document).on("change", "#allGameNamesLottery", function () {
 
 
  
-    // Get all rows in the table
+
 
   // Sticky header for bonus table
   function tableScrollBonus() {

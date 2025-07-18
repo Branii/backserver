@@ -688,6 +688,11 @@ return [
     //（Platform Settings）平台设置
     'Platform Settings' => 'Platform Settings',
     'Period Management' => 'Period Management',
+    'Lottery Exception' => 'Lottery Exception',
+    'Total Counts' => 'Total Counts',
+    'Total Bet Settled' => 'Total Bet Settled',
+    'Total Bet Unsettled' => 'Total Bet Unsettled',
+    'Cancel / Refund' =>'Cancel / Refund',
 
   //(Basic Platform Configuration)
   'SMS Configuration' => 'SMS Configuration',

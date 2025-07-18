@@ -151,4 +151,11 @@ class gameController extends Controller
         $this->view->render();
     }
 
+
+  ////////////// LOTTERY EXCEPTION FUNCTIONS  - //////////
+    public function lotteryexception($pageNumber, $limit)
+    {
+        $this->view('exec/game_management', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'lotteryexception']);
+        $this->view->render();
+    }
 }
