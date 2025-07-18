@@ -1,5 +1,5 @@
 <?php
-
+ini_set("display errors_errors",1);
 $dsn = 'mysql:host=192.168.1.51;dbname=lottery_test'; // Fixed variable name and removed extra space
 $pass = "enzerhub";
 $user = "enzerhub";
@@ -249,7 +249,7 @@ try {
 // Set the timezone for the server (Berlin time)
 
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -322,7 +322,7 @@ try {
   </script>
 
 </body>
-</html>
+</html> -->
 
 <?php
 // 1. What timezone is the server set to?
@@ -362,7 +362,7 @@ try {
 //     return  $otherTzName."  ".sprintf('%s%02d', $s, $h, );
 // }
 
-echo  diffFromServerTz();
+// echo  diffFromServerTz();
 
 
 // use MaxMind\Db\Reader;
@@ -372,3 +372,243 @@ echo  diffFromServerTz();
 
 // // record['location']['time_zone'] holds the tz string
 // echo $record['location']['time_zone'];  // e.g. "America/Chicago"
+
+
+
+    // public function createNewGame(array $gameData, string $gamesTable)
+    // {
+    //     $logo = "logo911699540141axesdfd654cecad3c4c7.webp";
+    //     $sql = Query::createNewGameQuery($gamesTable);
+    //     $linker = bin2hex(random_bytes(7));
+    //     //file_put_contents('./log.txt',json_encode($this->checkIfLotteryExist($gameData['name']),JSON_PRETTY_PRINT));
+    //     if (count($this->checkIfLotteryExist($gameData['name'])) > 0) {
+    //         return ['type' => 'error', 'message' => 'Lottery name already exist'];
+    //     }
+    //     $result = $this->Helper->insert($sql, (new Params())->addNewLotteryGameParam($gameData, $logo, $linker));
+    //     //file_put_contents('./log.txt',json_encode($result));
+
+    //     if ($result >= 1) {
+    //         $lotteryId = $this->getGameByLinker($linker)[0]['gt_id'];
+    //         //file_put_contents('./log.txt',json_encode($lotteryId));
+
+    //         $mapData = [
+    //             'game_type' => $lotteryId,
+    //             'draw_table' => 'dt_' . str_replace(' ', '', $gameData['name']),
+    //             'draw_storage' => 'ds_' . str_replace(' ', '', $gameData['name']),
+    //             'bet_table' => 'bt_' . str_replace(' ', '', $gameData['name']),
+    //             'lottery_type' => $gameData['lottery_type'],
+    //             'game_group' => $gameData['game_group']
+    //         ];
+    //         $sqlMap = Query::addNewGameToMapQuery();
+    //         $yes = $this->Helper->insert($sqlMap, (new Params())->addNewGamesTableMapParam($mapData));
+    //         //file_put_contents('./log.txt',json_encode($yes,JSON_PRETTY_PRINT));
+    //         if ($yes >= 1) {
+    //             $sql1 = "CREATE TABLE " . $mapData['draw_table'] . " LIKE dt_1kb5d1m";
+    //             $sql2 = "CREATE TABLE " . $mapData['draw_storage'] . " LIKE ds_1kb5d1m";
+    //             $sql3 = "CREATE TABLE " . $mapData['bet_table'] . " LIKE bt_1kb5d1m";
+    //             (new Helper())->Executequery($sql1);
+    //             (new Helper())->Executequery($sql2);
+    //             (new Helper())->Executequery($sql3);
+    //             return ['type' => 'success', 'message' => 'New game created successfully'];
+    //         }
+
+    //     } else {
+    //         return ['type' => 'error', 'message' => 'Lottery game could not be created'];
+    //     }
+    // }
+
+
+
+
+    // public static function createNewGameQuery(string $gamesTable)
+    // {
+
+    //     $sql = "INSERT INTO $gamesTable (
+    //     name,logo,alias,starttime,stoptime,state,game_type,draw_type,lottery_type,seconds_per_issue,
+    //     total_num_issue,closing_time,num_balls,min_ball,max_ball,lottery_model,game_group,last_updated,date_created,linker)VALUES
+    //     (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+    //     return $sql;
+    // }
+
+
+    // public function checkIfLotteryExist(string $lotteryName)
+    // {
+    //     $sql = "SELECT * FROM game_type WHERE name = ? ";
+    //     return $this->Helper->selectAll($sql, [$lotteryName]);
+    // }
+
+
+    // public function addNewLotteryGameParam(array $gameData, string $logo, string $linker){
+    //     return [
+    //         (string) $gameData['name'],
+    //         (string) $logo,
+    //         (string) $gameData['name'] . $gameData['seconds_per_issue'], //alias
+    //         (string) $gameData['starttime'],
+    //         (string) $gameData['stoptime'], 
+    //         (string) 1, // lottery state 1
+    //         (string) 1, // game type
+    //         (string) 1, // draw type
+    //         (string) $gameData['lottery_type'],
+    //         (string) $gameData['seconds_per_issue'],
+    //         (string) $gameData['total_num_issue'], 
+    //         (string) 1, // closing time
+    //         (string) $gameData['num_of_balls'],
+    //         (string) $gameData['min_ball'],
+    //         (string) $gameData['max_ball'],
+    //         (string) $gameData['lottery_model'],
+    //         (string) $gameData['game_group'], 
+    //         (string) date("Y-m-d"),
+    //         (string) date("Y-m-d"),
+    //         $linker
+    //     ];
+    // }
+
+
+
+    // public function getGameByLinker(string $linker)
+    // {
+    //     $sql = "SELECT gt_id FROM game_type WHERE linker  = ? ";
+    //     return $this->Helper->selectAll($sql, [$linker]);
+    // }
+
+
+    // public function addNewGamesTableMapParam(array $gameData){
+    //     return [
+    //         (string) $gameData['game_type'],
+    //         (string) $gameData['draw_table'],
+    //         (string) $gameData['draw_storage'],
+    //         (string) $gameData['bet_table'],
+    //         (string) $gameData['lottery_type'],
+    //         (string) $gameData['game_group']
+    //     ];
+    // }
+
+
+
+
+    //  function getAllGamesPlayByLotteryType($pdo, $lotteryType=6)  {
+      
+    //     try {  
+    //                 $sql = "SELECT gn_id, name, odds, total_bets, lottery_type, standard_odds, standard_total_bets FROM game_name WHERE lottery_type = ?";
+    //         return $pdo->selectAll($sql, [$lotteryType]);        } catch (\Throwable $th) {
+    //              return [];
+    //     }    }
+
+    //     print_r(getAllGamesPlayByLotteryType($pdo));
+    //     exit;
+
+function getAllGamesPlayByLotteryType($pdo,$lotteryType) {
+    try {
+        $sql = "SELECT gn_id, name, odds, total_bets, lottery_type, standard_odds, standard_total_bets FROM game_name WHERE lottery_type = ?";
+         $stmt = $pdo->prepare($sql); // ✅ Correct
+        $stmt->execute([$lotteryType]); 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (\Throwable $th) {
+        echo "Error: " . $th->getMessage();
+        return [];
+    }
+}
+
+// echo"<pre>";
+// print_r(getAllGamesPlayByLotteryType($pdo));
+// exit;
+
+
+
+function updateSpecificGamePlays($pdo,$lotteryType, $gameTypeId)
+{
+    // $gameTypes = (new GameModel())->getGameFromTable();
+    $gamePlay = getAllGamesPlayByLotteryType($pdo,$lotteryType);
+
+    // $oddsGroup = (new GameModel())->getAllOddsGroup();
+    $standardOdds = [];
+    // print_r($gamePlay);exit;
+    // $db = (new DBUtils)->openLink(); // Get PDO instance
+    // $sql = "UPDATE game_name SET standard_odds = ?, standard_total_bets = ? WHERE gn_id = ?";
+    // $req = $db->prepare($sql);
+
+    foreach ($gamePlay as $play) {
+        $singleOdds = [];
+        $singleTBets = [];
+            $newAppendStandardOdds = json_decode($play['standard_odds'], true);
+            $newAppendStandardTotalBets = json_decode($play['standard_total_bets'], true);
+            $newAppendStandardOdds[$gameTypeId] = $play['odds'];
+            $newAppendStandardTotalBets[$gameTypeId] = $play['total_bets'];
+
+
+            $singleOdds = $newAppendStandardOdds;
+            $singleTBets = $newAppendStandardTotalBets;
+
+        $jsonOdds = json_encode($singleOdds); // Convert array to JSON string
+        $jsonTBets = json_encode($singleTBets); // Convert array to JSON string
+        $req->execute([$jsonOdds, $jsonTBets, $play['gn_id']]);
+
+        // $standardOdds[] = [
+        //     "play_id" => $play['gn_id'],
+        //     "play_name" => $play['name'],
+        //     "lottery_type" => $play['lottery_type'],
+        //     "play_odds" => ['odds' => $singleOdds, 'bets' => $singleTBets],
+        // ];
+    }
+    print_r($standardOdds);
+
+}
+
+$gamelotteries = updateSpecificGamePlays($pdo,$lotteryType="3",$gameTypeId="97");
+echo"<pre>";
+print_r($gamelotteries);
+// echo $gamelotteries;
+
+
+// for odds group
+
+// public function getAllOddsGroupByLotteryType(string $lotteryType): array
+//     {
+//         try {
+//             $sql = "SELECT gn.gn_id, gn.lottery_type, ogg.odds, ogg.label, ogg.game_play_id, ogg.odds_group_id, ogg.std_odds FROM game_name gn
+//                     JOIN odds_group ogg ON gn.gn_id = ogg.game_play_id WHERE gn.lottery_type = ?";
+//             return $this->Helper->selectAll($sql, [$lotteryType]);
+//         } catch (\Throwable $th) {
+//             Monolog::log($th);
+//             return [];
+//         }
+//     }
+
+
+// function updateSpecificGamePlayOddsGroup($lotteryType, $gameTypeId)
+// {
+//     $oddsGroup = (new GameModel())->getAllOddsGroupByLotteryType($lotteryType);
+//     $standardOdds = [];
+//     // print_r($oddsGroup);
+//     // exit;
+//     $db = (new DBUtils)->openLink(); // Get PDO instance
+//     // $sql = "UPDATE game_name SET standard_odds = ?, standard_total_bets = ? WHERE gn_id = ?";
+//     $sql = "UPDATE odds_group SET std_odds = ? WHERE odds_group_id = ?";
+
+//     $req = $db->prepare($sql);
+
+//     foreach ($oddsGroup as $play) {
+//         $singleOdds = [];
+//         $newAppendStandardOdds = json_decode($play['std_odds'], true);
+//         $newAppendStandardOdds[$gameTypeId] = $play['odds'];
+//         $singleOdds = $newAppendStandardOdds;
+
+//         $jsonOdds = json_encode($singleOdds); // Convert array to JSON string
+//         // echo $jsonOdds;
+//         // echo ',</br>';
+//         // print_r($jsonTBets);exit;
+//         $req->execute([$jsonOdds, $play['odds_group_id']]);
+
+//         $standardOdds[] = [
+//             "play_id" => $play['gn_id'],
+//             "play_name" => $play['label'],
+//             "lottery_type" => $play['lottery_type'],
+//             "play_odds" => ['odds' => $singleOdds],
+//         ];
+//     }
+//     print_r($standardOdds);
+
+// }
+
+
+

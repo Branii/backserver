@@ -17,48 +17,116 @@ if ($flag == "update-params") {
 
     parse_str($_POST["data"], $userData); // parse the data from the client request
     $results = GameManageModel::updateLotterState($userData); // update the lottery state and send the response back.
-}else if($flag == 'fetch-lottery-basic-params'){
+}
+// else if($flag == 'fetch-lottery-basic-params'){
 
-    try{
+//     try{
 
    
-    $path =  'https://winsstarts.com/chairman_test/app/lottery_images/';//'http://localhost/task/admin/assets/lottery';
-    $lottery_id = isset($this->viewData['lottery_id']) ? $this->viewData['lottery_id']: ""; 
+//     $path =  'https://winsstarts.com/chairman_test/app/lottery_images/';
+//      $baseImagePath = 'https://winsstarts.com/chairman_test/app/lottery_images/';
+//     //'http://localhost/task/admin/assets/lottery';
+//     $lottery_id = isset($this->viewData['lottery_id']) ? $this->viewData['lottery_id']: ""; 
         
-    $model = GameManageModel::fetchGameTypesForLottery($lottery_id,$page);
+//     $model = GameManageModel::fetchGameTypesForLottery($lottery_id,$page);
 
 
-    if($model['status'] === 'error') return ['status' => 'error', 'data' => "Internal Server Error."];
+//     if($model['status'] === 'error') return ['status' => 'error', 'data' => "Internal Server Error."];
 
   
-    $model = $model['data'];
-    $final_results = [];
-    $total_count = 0;
-    if(!empty($model)) $total_count = $model[0]->total_count; 
-    foreach($model as $data){
-        //  $lottrytype = GameManageModel::fetchLotteryType($data->lottery_type)['name'];
-         $lottrytype = $data->name;
-         $state = '';
+//     $model = $model['data'];
+//     $final_results = [];
+//     $total_count = 0;
+//     if(!empty($model)) $total_count = $model[0]->total_count; 
+//     foreach($model as $data){
+//         //  $lottrytype = GameManageModel::fetchLotteryType($data->lottery_type)['name'];
+//          $lottrytype = $data->name;
+//          $state = '';
 
-         if ($data->state == 1) {
-            $state = "<span class='tag'  id='state-{$data->gt_id}'>Turned On</span>";
-         } elseif ($data->state  == 0) {
-            $state = "<span class='tag' id='state-{$data->gt_id}'>Stopped</span>";
-         } elseif ($data->state  == -1) {
-            $state = "<span class='tag' id='state-{$data->gt_id}'>Turned Off</span>";
-         }
+//          if ($data->state == 1) {
+//             $state = "<span class='tag'  id='state-{$data->gt_id}'>Turned On</span>";
+//          } elseif ($data->state  == 0) {
+//             $state = "<span class='tag' id='state-{$data->gt_id}'>Stopped</span>";
+//          } elseif ($data->state  == -1) {
+//             $state = "<span class='tag' id='state-{$data->gt_id}'>Turned Off</span>";
+//          }
 
-        $final_results[] = ["id" => $data->gt_id,'sort_weight' => json_decode($data->sort_weight), 'lottery_id' => $data->lt_id,'lottery_image' => $path . '/' . $data->logo,'lottery_name' =>
-        $data->name, 'lottery_type' => $lottrytype, 'alias' => $data->alias , 'max_prize_per_bet' =>  trim($data->maximum_prize_per_bet) , 'max_win' =>  trim($data->maximum_win_per_issue) , 'max_amt_per_issue' =>  trim($data->maximum_amount_per_issue) , 'mn_amt_per_issue' => trim($data->minimum_amount_per_issue) , 'clsing' => trim($data->closing_time) , 'state' => $state ];
+//         $final_results[] = ["id" => $data->gt_id,'sort_weight' => json_decode($data->sort_weight), 'lottery_id' => $data->lt_id,'lottery_image' => $path . '/' . $data->logo,'lottery_name' =>
+//         $data->name, 'lottery_type' => $lottrytype, 'alias' => $data->alias , 'max_prize_per_bet' =>  trim($data->maximum_prize_per_bet) , 'max_win' =>  trim($data->maximum_win_per_issue) , 'max_amt_per_issue' =>  trim($data->maximum_amount_per_issue) , 'mn_amt_per_issue' => trim($data->minimum_amount_per_issue) , 'clsing' => trim($data->closing_time) , 'state' => $state ];
        
+//         }
+
+//         $results = ['data'=> $final_results, 'totalCount'=>$total_count];
+//     }catch(Exception $e){
+        
+//         $results = ['status' => 'error', 'data' => 'Internal Server Error.'.$e->getMessage()];
+//     }
+// // echo json_encode($final_results);
+
+// }
+else if ($flag == 'fetch-lottery-basic-params') {
+    try {
+        $lottery_id = isset($this->viewData['lottery_id']) ? $this->viewData['lottery_id'] : "";
+        $page = isset($this->viewData['page']) ? $this->viewData['page'] : 1;
+
+        $model = GameManageModel::fetchGameTypesForLottery($lottery_id, $page);
+
+        if ($model['status'] === 'error') {
+            echo json_encode(['status' => 'error', 'data' => "Internal Server Error."]);
+            return;
+        }
+
+        $model = $model['data'];
+        $final_results = [];
+        $total_count = !empty($model) ? $model[0]->total_count : 0;
+
+        foreach ($model as $data) {
+            $lottrytype = $data->name;
+            $state = '';
+
+            if ($data->state == 1) {
+                $state = "<span class='tag' id='state-{$data->gt_id}'>Turned On</span>";
+            } elseif ($data->state == 0) {
+                $state = "<span class='tag' id='state-{$data->gt_id}'>Stopped</span>";
+            } elseif ($data->state == -1) {
+                $state = "<span class='tag' id='state-{$data->gt_id}'>Turned Off</span>";
+            }
+
+           $filename = $data->logo;
+            $localFilePath = $_SERVER['DOCUMENT_ROOT'] . "/admin/app/assets/images/" . $filename;
+            $localImageURL = "http://localhost/admin/app/assets/images/" . $filename;
+            $publicImageURL = "https://winsstarts.com/chairman_test/app/lottery_images/" . $filename;
+
+            $finalImagePath = file_exists($localFilePath) ? $localImageURL : $publicImageURL;
+
+
+            $final_results[] = [
+                "id" => $data->gt_id,
+                'sort_weight' => json_decode($data->sort_weight),
+                'lottery_id' => $data->lt_id,
+                'lottery_image' => $finalImagePath,
+                'lottery_name' => $data->name,
+                'lottery_type' => $lottrytype,
+                'alias' => $data->alias,
+                'max_prize_per_bet' => trim($data->maximum_prize_per_bet),
+                'max_win' => trim($data->maximum_win_per_issue),
+                'max_amt_per_issue' => trim($data->maximum_amount_per_issue),
+                'mn_amt_per_issue' => trim($data->minimum_amount_per_issue),
+                'clsing' => trim($data->closing_time),
+                'state' => $state
+            ];
         }
 
         $results = ['data'=> $final_results, 'totalCount'=>$total_count];
-    }catch(Exception $e){
-        
-        $results = ['status' => 'error', 'data' => 'Internal Server Error.'.$e->getMessage()];
+    } catch (Exception $e) {
+       $results = ['status' => 'error', 'data' => 'Internal Server Error.'.$e->getMessage()];
     }
-}else if($flag === "updateLottery"){
+    // echo json_encode($final_results);
+}
+
+
+
+else if($flag === "updateLottery"){
    
     try{    
 
@@ -95,114 +163,69 @@ if ($flag == "update-params") {
        $results = ["status" => "error", "data" => "Request Failed."];
     }
 
+
+}
 echo json_encode($results);
 
-}if ($flag == "addlottery") {
-    // Step 1: Handle file upload
-    $logoFileName = '';
-
-    if (isset($_FILES['lottery_logo_file']) && $_FILES['lottery_logo_file']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = '../app/assets/images/';
-        $originalName = basename($_FILES['lottery_logo_file']['name']);
-
-        // Sanitize and make name unique
-        $safeName = preg_replace('/[^A-Za-z0-9.\-_]/', '', $originalName);
-        $uniqueName = time() . "_" . $safeName;
-        $targetPath = $uploadDir . $uniqueName;
-
-        if (move_uploaded_file($_FILES['lottery_logo_file']['tmp_name'], $targetPath)) {
-            $logoFileName = $uniqueName;
-        } else {
-            echo json_encode("Failed to upload image");
-            exit;
-        }
-    } else {
-        echo json_encode("No file uploaded or file error");
-        exit;
-    }
-
-    // Step 2: Retrieve values from viewData
-    $name            = $this->viewData['name'] ?? "";
-    $gamegroups      = $this->viewData['gamegroups'] ?? "";
-    $numberofballs   = $this->viewData['numberofballs'] ?? "";
-    $minball         = $this->viewData['minball'] ?? "";
-    $maxball         = $this->viewData['maxball'] ?? "";
-    $secondsperissue = $this->viewData['secondsperissue'] ?? "";
-    $starttime       = $this->viewData['starttime'] ?? "";
-    $stoptime        = $this->viewData['stoptime'] ?? "";
-    $lotterymodel    = $this->viewData['lotterymodel'] ?? "";
-    $lotteryType     = $this->viewData['lotteryType'] ?? "";
-
-    // 🔍 Debug output
-    var_dump([
-        'name'            => $name,
-        'gamegroups'      => $gamegroups,
-        'numberofballs'   => $numberofballs,
-        'minball'         => $minball,
-        'maxball'         => $maxball,
-        'secondsperissue' => $secondsperissue,
-        'starttime'       => $starttime,
-        'stoptime'        => $stoptime,
-        'lotterymodel'    => $lotterymodel,
-        'lotteryType'     => $lotteryType,
-        'logoFileName'    => $logoFileName
-    ]);
-    exit; // 👈 Remove this line when done debugging
-
-    // Step 3: Insert into DB
-    $result = GameManageModel::addLotterygames(
-        $name,
-        $gamegroups,
-        $numberofballs,
-        $minball,
-        $maxball,
-        $secondsperissue,
-        $starttime,
-        $stoptime,
-        $lotterymodel,
-        $lotteryType,
-        $logoFileName
-    );
-
-    // Step 4: Respond
-    echo json_encode($result ? "success" : "failed");
+// Add lottery games flag starts here 
+if ($flag == "addlottery") {
+    $logoFileName     = $this->viewData['logoFileName'] ?? "";
+    $name             = $this->viewData['name'] ?? "";
+    $alias            = $this->viewData['alias'] ?? "";
+    $gamegroups       = $this->viewData['gamegroups'] ?? "";
+    $numberofballs    = $this->viewData['numberofballs'] ?? "";
+    $min_ball         = $this->viewData['min_ball'] ?? "";
+    $max_ball         = $this->viewData['max_ball'] ?? "";
+    $secondsperissue  = $this->viewData['secondsperissue'] ?? "";
+    $starttime        = $this->viewData['starttime'] ?? "";
+    $stoptime         = $this->viewData['stoptime'] ?? "";
+    $lotterymodel     = $this->viewData['lotterymodel'] ?? "";
+    $lotteryType      = strtolower($this->viewData['lotteryType'] ?? "");
+    $secondsperissue  = is_numeric($secondsperissue) ? (int)$secondsperissue : 0;
+    if ($secondsperissue === 0) {
+        echo json_encode(['type' => 'error', 'message' => 'Invalid seconds per issue. Cannot divide by zero.']);
+        return;
 }
 
+    $total_num_issue = floor(86400 / $secondsperissue);
+
+    $gameData = [
+        'logoFileName'=>   $logoFileName,
+        'name'              => $name,
+        'alias'             => $alias ?: $name . $secondsperissue,
+        'lottery_type'      => $gamegroups,
+        'seconds_per_issue' => $secondsperissue,
+        'total_num_issue'   => $total_num_issue,
+        'starttime'         => $starttime,
+        'stoptime'          => $stoptime,
+        'num_of_balls'      => $numberofballs,
+        'min_ball'          => $min_ball,
+        'max_ball'          => $max_ball,
+        'lottery_model'     => $lotterymodel,
+        'game_group'        => $lotteryType
+    ];
+    $result = GameManageModel::createNewGame($gameData, "game_type");
+    // echo json_encode($gameData['game_group']);
+    echo json_encode($result);
+
+}
+// Add lottery games flag  ends here 
+
+// Update game image flag starts here
+if ($flag === 'updategameimage') {
+    // header('Content-Type: application/json'); 
+   ob_clean();
+    $gameId = isset($this->viewData['gameId']) ? $this->viewData['gameId']: "";
+    $filename = isset($this->viewData['filename']) ? $this->viewData['filename']: "";
+    $results = GameManageModel::UpdateGameimage($gameId,$filename);
+    echo json_encode($results);
+    
+}
+// Update game image flag ends here
 
 
-// else if ($flag == "addlottery") {
-//     $name = $this->viewData['name'] ?? "";
-//     $gamegroups = $this->viewData['gamegroups'] ?? "";
-//     $numberofballs = $this->viewData['numberofballs'] ?? "";
-//     $minball = $this->viewData['minball'] ?? "";
-//     $maxball = $this->viewData['maxball'] ?? "";
-//     $secondsperissue = $this->viewData['secondsperissue'] ?? "";
-//     $starttime = $this->viewData['starttime'] ?? "";
-//     $stoptime = $this->viewData['stoptime'] ?? "";
-//     $lotterymodel = $this->viewData['lotterymodel'] ?? "";
-//     $lotteryType = $this->viewData['lotteryType'] ?? "";
-//     $logoFileName = $this->viewData['logoFileName'] ?? "";
 
-//     // // Dump all variables for inspection
-//     var_dump([
-//         'name' => $name,
-//         'gamegroups' => $gamegroups,
-//         'numberofballs' => $numberofballs,
-//         'minball' => $minball,
-//         'maxball' => $maxball,
-//         'secondsperissue' => $secondsperissue,
-//         'starttime' => $starttime,
-//         'stoptime' => $stoptime,
-//         'lotterymodel' => $lotterymodel,
-//         'lotteryType' => $lotteryType,
-//         'logoFileName' => $logoFileName
-//     ]);
 
-//     // Stop execution here to only debug
-//     exit;
 
-//     // If not debugging, uncomment this line to proceed
-//      $result = GameManageModel::addLotterygames($name, $gamegroups, $numberofballs, $minball, $maxball, $secondsperissue, $starttime, $stoptime,$lotterymodel, $lotteryType, $logoFileName) ?? [];
-//     echo json_encode($result);
-// }
+
 

@@ -26,6 +26,8 @@ if ($flag == "getAllGamesLottery") {
     }
 } 
 
+
+
 if ($flag == "getLotteryGames") {
     $gameId = isset($this->viewData['gameId']) ? $this->viewData['gameId'] : '';
     $tableData = isset($this->viewData['tables']) ? $this->viewData['tables'] : '';
@@ -121,9 +123,18 @@ if ($flag == "getDraws") {
 }
 
 
-
 if ($flag == "getTimegames") {
     $result = (new GameManageModel())->getTimegames();
+    if($result){
+        echo json_encode($result);
+    } else {
+        echo json_encode(['type'=>'error','message'=>'Some error occured']);
+    }
+} 
+
+
+if ($flag == "getAllGamesModels") {
+    $result = (new GameManageModel())->getAllGamesModel();
     if($result){
         echo json_encode($result);
     } else {
