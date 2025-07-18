@@ -49,7 +49,9 @@ $(function () {
                 <td>${item.server_date + " / " + item.server_time}</td>
                 <td>${timezone}</td>
                 <td>
-              <button class="setexcepts"  value ="${item.gt_id}|${item.draw_period}|${item.draw_number}" style="background:none;border:none;color:#868c87;cursor:pointer;">Settle Bet</button>
+              <button class="setexcepts"  value ="${item.gt_id}|${item.draw_period}|${item.draw_number}"
+               style="padding: 6px 12px; background-color: #e9ecef;border: 1px solid #ccc;border-radius: 6px; color: #333;cursor: pointer;font-size: 14px;
+              transition: background-color 0.2s ease;"onmouseover="this.style.backgroundColor='#d6d8db';" onmouseout="this.style.backgroundColor='#e9ecef';"">Settle Bet</button>
             </td>
             </tr>`;
         });

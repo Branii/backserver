@@ -125,25 +125,6 @@ if ($flag == "lotteryexception") {
  $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1; // Ensure valid page number
  $limit = isset($this->viewData['limit']) ? (int)$this->viewData['limit'] :""; // Ensure valid limit
  $result = GameManageModel::lotteryExceptionData($page, $limit);
-//  $gameTypeId  = GameManageModel::GamesMapIdTable($gametype = 1)[0];
-//  $lotteryName = GameManageModel::getSingleLottery($gameTypeId['game_type'])['name'];
-//  $lotteryid = $gameTypeId['game_type'];
-//  $finalResults = [];
-//  foreach ($result['data']  as $drawPeriodRow) {
-//   $drawPeriod = $drawPeriodRow['period']; // assuming your `$result` has 'period' key
-//     $counts = GameManageModel::getBetCounts($gameTypeId['bet_table']);
-//     $finalResults[] = [
-//         'period'          => $drawPeriod,
-//         'lottery_name'    => $lotteryName,
-//         'gametypeid'      => $gameTypeId['game_type'],
-//         'total_count'     => $counts['total_count'],
-//         'settled_count'   => $counts['settled_count'],
-//         'unsettled_count' => $counts['unsettled_count'],
-//         'timezone'       => $counts['timezone'],
-//         'dates' => date('Y-m-d').' / '.date('H:i:s')
-//         // 'state'          => GameManageModel::getBetState($drawPeriod, $gameTypeId['bet_table']),
-//     ];
-//     }
     echo json_encode([
       'lotexception' => $result['data'],
      'totalPages' => ceil($result['total'] / $limit),

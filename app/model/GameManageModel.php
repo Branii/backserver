@@ -609,85 +609,11 @@ class GameManageModel extends MEDOOHelper
 
 
     //lottery exception
-    public static function GamesMapIdTable($gametype)
-    {
-        $gametype = (int) ($gametype ?? 1); // Ensure it's an integer
-        $data = parent::selectAll('gamestable_map', '*', ['game_type' => $gametype]);
-        return $data ?? ''; // return as string
-    }
-
-    public static function getSingleLottery($gametypeid)
-    {
-         $sql = 'SELECT name,seconds_per_issue,closing_time FROM game_type WHERE gt_id = :gt_id';
-         $data= parent::query($sql,['gt_id'=> $gametypeid]);
-        return $data[0];
-    }
-      //# get totalbet  
-      public static function getBetCounts($table): array
-        {
-            $sql = "
-                 SELECT timezone,draw_period,
-                    COUNT(*) AS total_count,
-                    COUNT(CASE WHEN state = 1 THEN 1 END) AS settled_count,
-                    COUNT(CASE WHEN state = 2 THEN 1 END) AS unsettled_count
-                FROM `$table`
-                 ORDER BY draw_period DESC
-            ";
-            $data = parent::query($sql);
-             return $data[0] ?? ['total_count' => 0, 'settled_count' => 0, 'unsettled_count' => 0];
-        }
-    public static function getBetTotalCount($drawPeriod, $table)
-    {
-        $sql = "SELECT COUNT(*) AS TOTALCOUNT FROM $table WHERE draw_period = :draw_period ";
-        $data= parent::query($sql,['draw_period'=> $drawPeriod]);
-        return (int) $data[0]['TOTALCOUNT'];
-    }
-
-     //# settled bet
-    public static function getBetStatusCount($drawPeriod, $table): int
-    {
-        $drawstates = 1;
-        $sql = "SELECT COUNT(*) AS TOTALCOUNT FROM $table WHERE draw_period = :draw_period AND state = :state";
-        $data= parent::query($sql,['draw_period'=> $drawPeriod,'state' =>$drawstates]);
-        return (int) $data[0]['TOTALCOUNT'];
-    }
-       //# unsettled bet
-     public static function getBetUsettledCount($drawPeriod, $table): int
-    {
-        $drawstates = 2;
-        $sql = "SELECT COUNT(*) AS TOTALCOUNT FROM $table WHERE draw_period = :draw_period AND state = :state";
-        $data= parent::query($sql,['draw_period'=> $drawPeriod,'state' =>$drawstates]);
-        return (int) $data[0]['TOTALCOUNT'];
-    }
-
-     public static function getBetState($drawPeriod, $table)
-    {
-        $drawstates = 4;  $drawstatess = 7;
-        $sql = "SELECT COUNT(*) AS TOTALCOUNT FROM $table WHERE draw_period = :draw_period AND state IN (:state1, :state2";
-        $data= parent::query($sql,['draw_period'=> $drawPeriod,'state1' =>$drawstates,'state2'=>$drawstatess]);
-        return (int) $data[0]['TOTALCOUNT'];
-    }
-
-
+  
     public static function lotteryExceptionData($page,$limit)
     {
-        // $gametype = 1; // Default to 1 if not provided
-        // $drawtable = self::GamesMapIdTable($gametype)[0]['draw_table'];
-        // $startpoint = $page * $limit - $limit;
-        // $sql  = "SELECT period FROM $drawtable ORDER BY draw_id DESC LIMIT :offset, :limit";
-        // $data = parent::query($sql, [':offset' => $startpoint, ':limit' => $limit]);
-        // return ["data" =>$data , "total" => count($data)]; 
-
+        
          $offset = ($page - 1) * $limit;
-    //   $sql = "
-    //     SELECT GROUP_CONCAT(
-    //         CONCAT(
-    //             'SELECT bt.draw_period,bt.bet_code,bt.game_label,bt.game_type,
-    //              bt.bet_status,bt.state,bt.bet_time,bt.bet_date,bt.game_model,
-    //             bt.server_date,bt.server_time,bt.timezone,
-    //              gt.name As game_type,gt.gt_id AS gt_id FROM ', table_name, ' bt
-    //             INNER JOIN  game_type gt ON gt.gt_id = bt.game_type') SEPARATOR ' UNION ALL '
-    //     ) AS query FROM information_schema.tables WHERE table_schema = 'lottery_test' AND table_name LIKE 'bt_%'";
             $sql = "
             SELECT GROUP_CONCAT(
                 CONCAT(
