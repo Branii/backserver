@@ -12,7 +12,7 @@ $(function () {
     }
    const translatorScript = document.querySelector(".translations"); // Get the script tag
     const translator = JSON.parse(translatorScript.textContent);
-      const LotteryException = (data) => {
+    const LotteryException = (data) => {
            const gamemodel = {
               1: translator["Standard"],
               2: translator["Two Sides"],
@@ -58,24 +58,19 @@ $(function () {
         return html;
     };
 
-   const render = (data) => {
+    const render = (data) => {
     var html = LotteryException(data);
     $("#lotteryexceptionholder").html(html);
     };
 
-
      let currentPage = 1;
      let pageLimit = 20;
 
-   
     async function fetchLotteryException(currentPage, pageLimit) {
         try {
             const response = await fetch(`../game/lotteryexception/${currentPage}/${pageLimit}`);
             const data = await response.json();
-            console.log("Fetched data:", data);
-
             $("#maskexcept").LoadingOverlay("hide");
-
             render(data.lotexception);
             renderPaginationex(data.totalPages, currentPage, fetchLotteryException);
             document.getElementById("paging_infoexcept").innerHTML = `${translator["Page"]} ${currentPage} ${translator["Of"]} ${data.totalPages} ${translator["Page"]}`;
@@ -211,5 +206,56 @@ $(function () {
         });
       fetchLotteryException(currentPage, pageLimit);
     });
+
+    
+     $(".fetchexcept").click(function () {
+        if ($(".typelotterys").val() == "" && $("#drawperiod").val() == "" && $("#exceptdate").val() == "" && $("#exceptdates").val() =="") {
+              showToast("Heads up!!", "Select one or more data fields to filter", "info");
+         //   showToast(headsUpText, selectFieldsText, "info"); == "" 
+            return;
+        }
+         const gamestype = $(".typelotterys").val();
+         const drawperiod = $("#drawperiod").val();
+         const startsdates = $("#exceptdate").val();
+         const endsdates = $("#exceptdates").val();
+         filterlotteryexceptdata(gamestype,drawperiod, startsdates, endsdates, currentPage, pageLimit);
+         $(".loaderexcept").removeClass("bx bx-check-double").addClass("bx bx-loader bx-spin");
+     //  console.log(gametype,drawperiod,startdates,enddates)
+    });
+
+   async function filterlotteryexceptdata(gamestype, drawperiod, startsdates, endsdates, currentPage, pageLimit) {
+    $.post(`../game/filterlotteryexceptdata/${gamestype}/${drawperiod}/${startsdates}/${endsdates}/${currentPage}/${pageLimit}`, function (response) {
+        try {
+            const data = JSON.parse(response);
+            console.log(data);
+            //return
+
+            $(".loaderexcept").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+
+            if (data.lotexceptiondata.length < 1) {
+                let html = `
+                    <tr class="no-results">
+                        <td colspan="9">
+                            <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                        </td>
+                    </tr>`;
+                $("#maskbet").LoadingOverlay("hide");
+                $("#lotteryexceptionholder").html(html);
+                return;
+            }
+
+            $("#maskexcept").LoadingOverlay("hide");
+            render(data.lotexceptiondata);
+            renderPaginationex(data.totalPages, currentPage, filterlotteryexceptdata);
+            document.getElementById("paging_infoexcept").innerHTML = `${translator["Page"]} ${currentPage} ${translator["Of"]} ${data.totalPages} ${translator["Page"]}`;
+        } catch (error) {
+            console.error("Error parsing JSON response:", error);
+            $(".loaderexcept").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+        }
+
+        $(".loaderexcept").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
+    });
+   }
+
 
 })

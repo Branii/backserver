@@ -158,4 +158,19 @@ class gameController extends Controller
         $this->view('exec/game_management', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'lotteryexception']);
         $this->view->render();
     }
+
+    public function filterlotteryexceptdata($gametype,$drawperiod,$startdates,$enddates,$page,$limit){
+        $this->view('exec/game_management', [
+        'gametype' =>$gametype,
+        'drawperiod' =>$drawperiod,
+        'startdates' =>$startdates,
+        'enddates' => $enddates,
+        'page' => $page, 
+        'limit' => $limit,
+        'flag' => 'filterexception'
+        ]);
+        $this->view->render();
+     
+    }
+    //filterlotteryexceptdatafilterlotteryexceptdata(gametype,drawperiod, startdates, enddates, currentPage, pageLimit)
 }

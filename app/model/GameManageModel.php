@@ -97,7 +97,7 @@ class GameManageModel extends MEDOOHelper
     public static function UpdateOddsTotalbets($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent, $gametype, $isSpecial)
     {
         $jsonKey  = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
-        $jsonPath = "$.\"$jsonKey\""; 
+        $jsonPath = "$.\"$jsonKey\"";
         if ($isSpecial === "true") {
             $data = self::UpdateOddsGroupTable($gameId, $newodds, $oddpercent, $jsonPath);
             if ($data > 1) {
@@ -409,16 +409,16 @@ class GameManageModel extends MEDOOHelper
     }
 
     //reset all odds
-   public static function resetAllOdds()
-   {
-      $gameNameReset  = Utils::updateAllGamePlays();
-      $oddGroupReset  = Utils::updateAllOddGroup();
-      if ($gameNameReset && $oddGroupReset) {
-         return ['status' => "success"];
-      } else {
-         return ['status' => "faliled"];
-      }
-   }
+    public static function resetAllOdds()
+    {
+        $gameNameReset = Utils::updateAllGamePlays();
+        $oddGroupReset = Utils::updateAllOddGroup();
+        if ($gameNameReset && $oddGroupReset) {
+            return ['status' => "success"];
+        } else {
+            return ['status' => "faliled"];
+        }
+    }
 
     public static function updateLotteryData($maxPrizeAmountPerBet, $maxAmtPerIssue, $maxWinPerPersonPerIssue, $minBetAmtPerIssue, $lockTimeForClsing, $sortingWeight, $lottery_type, $game_type_id): array
     {
@@ -607,14 +607,13 @@ class GameManageModel extends MEDOOHelper
         }
     }
 
-
     //lottery exception
-  
-    public static function lotteryExceptionData($page,$limit)
+    
+    public static function lotteryExceptionData($page, $limit)
     {
-        
-         $offset = ($page - 1) * $limit;
-            $sql = "
+
+        $offset = ($page - 1) * $limit;
+        $sql    = "
             SELECT GROUP_CONCAT(
                 CONCAT(
                     'SELECT bt.draw_period,bt.server_date,bt.server_time,bt.timezone,
@@ -632,19 +631,98 @@ class GameManageModel extends MEDOOHelper
             FROM information_schema.tables
             WHERE table_schema = 'lottery_test' AND table_name LIKE 'bt_%'";
 
-
-      $pdo = (new Database())->openLink();
-      $pdo->exec("SET SESSION group_concat_max_len = 1000000");
-      $stmt = $pdo->prepare($sql);
-      $stmt->execute();
-      $mergedQuery = $stmt->fetchColumn();
-      $paginatedQuery = "$mergedQuery ORDER BY server_date DESC, server_time DESC LIMIT $limit OFFSET $offset";
-      $finalStmt = $pdo->prepare($paginatedQuery);
-      $finalStmt->execute();
-      $data = $finalStmt->fetchAll(PDO::FETCH_ASSOC);
-      $stmtt = $pdo->prepare($mergedQuery);
-      $stmtt->execute();
-      $totalcount = $stmtt->fetchAll(PDO::FETCH_ASSOC);
-      return ['data' => $data, 'total' => count($totalcount)];
+        $pdo = (new Database())->openLink();
+        $pdo->exec("SET SESSION group_concat_max_len = 1000000");
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $mergedQuery    = $stmt->fetchColumn();
+        $paginatedQuery = "$mergedQuery ORDER BY server_date DESC, server_time DESC LIMIT $limit OFFSET $offset";
+        $finalStmt      = $pdo->prepare($paginatedQuery);
+        $finalStmt->execute();
+        $data  = $finalStmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmtt = $pdo->prepare($mergedQuery);
+        $stmtt->execute();
+        $totalcount = $stmtt->fetchAll(PDO::FETCH_ASSOC);
+        return ['data' => $data, 'total' => count($totalcount)];
     }
+
+    public static function FilterExceptionData($gametype, $drawperiod, $startdates, $enddates, $page, $limit)
+    {
+        $offset = ($page - 1) * $limit;
+        $pdo    = (new Database())->openLink();
+        $pdo->exec("SET SESSION group_concat_max_len = 1000000");
+
+        // Generate the filter query using the filterBetData method
+        $subquery    = self::filterData($gametype, $drawperiod, $startdates, $enddates);
+        $whereClause = $subquery['query'];
+
+        $sql = "
+                SELECT GROUP_CONCAT(
+                    CONCAT(
+                        'SELECT bt.draw_period, bt.server_date, bt.server_time, bt.timezone,
+                                bt.game_label, gt.name AS game_type, gt.gt_id AS gt_id, bt.game_model,
+                                COUNT(*) AS total_bets,
+                                COUNT(CASE WHEN bt.state = 1 THEN 1 END) AS settled_bets,
+                                COUNT(CASE WHEN bt.state = 2 THEN 1 END) AS unsettled_bets,
+                                COUNT(CASE WHEN bt.state IN (4, 7) THEN 1 END) AS cancelled_bets
+                        FROM ', table_name, ' bt
+                        INNER JOIN game_type gt ON gt.gt_id = bt.game_type $whereClause GROUP BY bt.draw_period')
+                    SEPARATOR ' UNION ALL ') AS query
+                    FROM information_schema.tables
+                    WHERE table_schema = 'lottery_test'
+                    AND table_name LIKE 'bt_%';
+               ";
+
+        $mergedQuery = $pdo->query($sql)->fetchColumn();
+
+        // Prepare to count the total number of records (without pagination)
+        $countStmt = $pdo->prepare("SELECT COUNT(*) AS total FROM ($mergedQuery) AS subquery");
+        $countStmt->execute($subquery['params']);
+        $totalRecords = $countStmt->fetchColumn();
+
+        // Prepare to fetch paginated data
+        $dataStmt = $pdo->prepare("$mergedQuery ORDER BY server_date DESC, server_time DESC LIMIT $limit OFFSET $offset");
+        $dataStmt->execute($subquery['params']);
+        $data = $dataStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return ['data' => $data, 'total' => $totalRecords];
+    }
+
+    public static function filterData($gametype, $drawperiod, $startdates, $enddates)
+    {
+        $filterConditions = [];
+        $params           = [];
+        $betstate         = 2;
+
+        if (! empty($drawperiod)) {
+            $filterConditions[]    = "bt.draw_period = :draw_period";
+            $params['draw_period'] = $drawperiod;
+        }
+
+        if (! empty($gametype)) {
+            $filterConditions[]  = "bt.game_type = :game_type";
+            $params['game_type'] = $gametype;
+        }
+
+        if (! empty($betstate)) {
+            $filterConditions[] = "bt.state = :state";
+            $params['state']    = $betstate;
+        }
+
+        if (! empty($startdate) && ! empty($enddate)) {
+            $filterConditions[]  = "bt.server_date BETWEEN :startdate AND :enddate";
+            $params['startdate'] = $startdate;
+            $params['enddate']   = $enddate;
+        } elseif (! empty($startdate)) {
+            $filterConditions[]  = "bt.server_date = :startdate";
+            $params['startdate'] = $startdate;
+        } elseif (! empty($enddate)) {
+            $filterConditions[] = "bt.server_date = :enddate";
+            $params['enddate']  = $enddate;
+        }
+
+        $whereClause = ! empty($filterConditions) ? 'WHERE ' . implode(' AND ', $filterConditions) : '';
+        return ['query' => $whereClause, 'params' => $params];
+    }
+
 }

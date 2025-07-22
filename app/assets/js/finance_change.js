@@ -234,6 +234,7 @@ $(function () {
         const username = $("#financefunds").val();
         const startfinance = $(".startfinances").val();
         const endfinance = $(".endfinances").val();
+        console.log(username)
         filterfinance(username, financetype, startfinance, endfinance, currentPage, pageLimit);
         $(".loaderfinance").removeClass("bx-check-double").addClass("bx-loader bx-spin");
     });
@@ -280,47 +281,7 @@ $(function () {
     });
 
 
-    //   let debounceTimeout = null;
-    // $(document).ready(function () {
-    //     // Event listener for keyup on #myInput
-    //     $(document).on('keyup', '#financeinput', function () {
-    //         const query = $(this).val().trim();
-    
-    //         // Only trigger if input is more than 2 characters
-    //         if (query.length > 1) {
-    //             clearTimeout(debounceTimeout); // Clear any existing timeout
-    //             debounceTimeout = setTimeout(fetchUserss, 500, query); // Call fetchUsers with the query after 500ms delay
-    //         } else {
-    //             $('.financeDropdowns').hide(); // Hide dropdown if input is less than 3 characters
-    //         }
-    //     });
-    
-    //     // Handle dropdown item selection
-    //     $(document).on('change', '.financeDropdowns', function () {
-    //         const selectedOption = $(this).find('option:selected');
-    //         const selectedUserId = selectedOption.val();
-    //         const selectedUsername = selectedOption.data('usernames');
-    
-    //         if (selectedUserId) {
-    //             $('#financeinput').val(selectedUsername);
-    //             $('.userIdFields').val(selectedUserId);
-    //             $('.financeDropdowns').hide();
-    //         }
-    //     });
-    
-    //     $(document).on("click", function (e) {
-    //       const $dropdownbet = $("#userfinaceDropdown");
-    //       if (!$(e.target).closest("#financeinput, #userfinaceDropdown").length) {
-    //           $dropdownbet.hide();
-    //       }
-    //   });
-    //     // Handle manual input clearing
-    //     $(document).on('input', '#financeDropdowns', function () {
-    //         if (!$(this).val()) {
-    //             $('.userIdFields').val(''); // Reset user ID if input is cleared
-    //         }
-    //     });
-    // });
+  
     
     // Function to fetch and display users
     function fetchUserss(query) {
@@ -351,7 +312,7 @@ $(function () {
              }
           
               // Append the option to the optionsHtml string
-              optionsHtml += `<option class="optionlist" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
+              optionsHtml += `<option class="optionlists" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
           });
                 $('.financeDropdowns').html(optionsHtml).show();
             } catch (error) {
@@ -364,8 +325,6 @@ $(function () {
         });
     }
     
-
-
     //add money
     $(document).on("click", ".addmoneybtn", function () {
         // const deposity = $("#financeinput").val()
@@ -503,4 +462,62 @@ $(function () {
         });
     }
     tableScrollFinance();
+
+   let cachedUsers = []; // Store recent users to support paste
+    const userrs = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('regname'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: `../admin/searchusername/%QUERY`,
+            wildcard: '%QUERY',
+            transform: function(res) {
+            if (!Array.isArray(res)) return [];
+
+            const mapped = res.map(userr => {
+                const regname = userr[userr.regtype] || userr.uid;
+                return {
+                    uid: userr.uid,
+                    regname: regname,
+                    reg_type: userr.regtype
+                };
+            });
+
+             cachedUsers = mapped; // Store for paste support
+             return mapped;
+         }
+        }
+    });
+
+    $('#financeinputs').typeahead(
+    {
+        hint: true,
+        highlight: true,
+        minLength: 2
+    },
+    {
+        name: 'users',
+        display: 'regname',
+        source: userrs,
+        templates: {
+        suggestion: data => `<div class="user-suggestion"><strong>${data.regname}</strong> </div>`,
+        empty: () => `<div class="text-danger user-suggestion">No user found...</div>`
+        }
+    });
+
+   $('#financeinputs').bind('typeahead:select', function (e, userr) {
+    console.log('Selected UID:', userr.uid);
+    $(".userIdFields").val(userr.uid);
+    });
+
+//   $('#financeinputs').on('input', function () {
+//     const inputVal = $(this).val().trim();
+//     const found = cachedUsers.find(user => user.regname === inputVal);
+//     if (found) {
+//         $(".userIdFields").val(found.uid);
+//     } else {
+//         $(".userIdFields").val('');
+//     }
+// });
+
+
 });

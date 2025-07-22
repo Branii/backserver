@@ -107,22 +107,11 @@ class adminController extends Controller
         $this->view->render();
     }
 
-   
-
-    
     public function backup()
     {
         $this->view('exec/admins_exec', ['flag' => 'backup']);
         $this->view->render();
     }
-
-    // side bar datas adminLogs
-
-    // public function transactiondata($pageNumber, $limit)
-    // {
-    //     $this->view('exec/businessflow', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'transactiondata']);
-    //     $this->view->render();
-    // }
 
     public function gamebetdata($pageNumber, $limit)
     {
@@ -130,37 +119,6 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    // public function filterusername($username)
-    // {
-    //     $this->view('exec/businessflow', ['username' => $username, 'flag' => 'filterusername']);
-    //     $this->view->render();
-    // }
-
-     // public function filtertransactions($username, $orderid, $ordertype, $partneruid, $startdate, $enddate, $pageNumber, $limit)
-    // {
-
-    //     $this->view('exec/businessflow', [
-    //         'username' => $username,
-    //         'orderid' => $orderid,
-    //         'ordertype' => $ordertype,
-    //         'partneruid' => $partneruid,
-    //         'startdate' => $startdate,
-    //         'enddate' => $enddate,
-    //         'flag' => 'filtertransactions',
-    //         'page' => $pageNumber,
-    //         'limit' => $limit,
-
-    //     ]);
-    //     $this->view->render();
-    // }
-
-    // public function getTransactionBet($transactionId)
-    // {
-    //     $this->view('exec/businessflow', ['transactionId' => $transactionId, 'flag' => 'getTransactionBet']);
-    //     $this->view->render();
-    // }
-
-   
 
     public function searchusername($username)
     {
@@ -183,16 +141,7 @@ class adminController extends Controller
     }
    
 
-
-    // --- MUNIRU ----
-    // public function searchLotteryName($partnerID, $lottery_name)
-    // {
-    //     $this->view('exec/win_loss', ['partner_id' => $partnerID, 'lottery_name' => $lottery_name, 'flag' => 'filter-lotteries']);
-    //     $this->view->render();
-    // }
-  
-
- public function fetchLotteryname()
+    public function fetchLotteryname()
     {
         $this->view('exec/businessflow', ['flag' => 'fetchLotteryname']);
         $this->view->render();
@@ -229,13 +178,6 @@ class adminController extends Controller
     }
 
     
-
-
- 
-
-
-
-
   
     public function  searchPaymentPlatform($platformName, $currency, $status, $startDate, $endDate, $page, $limit)
     {
@@ -251,17 +193,6 @@ class adminController extends Controller
         $this->view->render();
     }
 
-
-    //   public function  addNewPartner($partnerName, $currency, $encodedSiteUrl, $encodedAdminSiteUrl)
-    // {
-
-        
-    //     $this->view('exec/partners', ["partner_name" => $partnerName, "currency" => $currency, "site_url" => $encodedSiteUrl, "admin_site_url" => $encodedAdminSiteUrl, 'flag' => 'addNewPartner']);
-    //     $this->view->render();
-    // }
-
-
-    
 
 
     public function  fetchBonusTwoSides($lotteryID, $lotteryGameGroup)
@@ -287,8 +218,6 @@ class adminController extends Controller
     }
 
    
-    
-    
     public function fetchLoterytype()
     {
         $this->view('exec/account_manage', ["flag" => 'fetchLoterytype']);
@@ -296,8 +225,8 @@ class adminController extends Controller
     }
 
    
-    
 
+ 
 
    
     //NOTE -
@@ -316,44 +245,6 @@ class adminController extends Controller
 
 
 
-    //NOTE -
-    //////////////Deposit Records -//////////
-    // 
-    // public function fetchDeposit($pageNumber, $limit)
-    // {
-    //     $this->view('exec/financial_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchDeposit']);
-    //     $this->view->render();
-    // }
-
-    // public function filterdeposits($uid, $depositchanel, $depositid, $stautsdeposit, $startdepo, $enddepo, $page, $pageLimit)
-    // {
-    //     $this->view('exec/financial_manage', [
-
-    //         'uid' => $uid,
-    //         'states' => $depositchanel,
-    //         'depositid' => $depositid,
-    //         'depostatus' => $stautsdeposit,
-    //         'startdate' => $startdepo,
-    //         'enddate' => $enddepo,
-    //         'page' => $page,
-    //         'limit' => $pageLimit,
-    //         'flag' => 'filterdeposit'
-    //     ]);
-    //     $this->view->render();
-    // }
-
-
-    // NOTE -
-    //////////////Withdrawal Records -//////////
-    // public function fetchwithdraw($partnerID, $pageNumber, $limit)
-    // {
-    //     $this->view('exec/financial_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchwithdraw']);
-    //     $this->view->render();
-    // }
-
-
-    // NOTE -
-    ////////////// Bank Cardlist Records - //////////
  
 
     //NOTE -
@@ -364,153 +255,6 @@ class adminController extends Controller
         $this->view('exec/game_manage', ['flag' => 'fetchgames']);
         $this->view->render();
     }
-
-    // public function fetchgamebyid($gameid,$tablename){
-    //     $this->view('exec/game_manage',['gameid' =>$gameid,'tablename'=>$tablename, 'flag' => 'fetchgamebyid']);
-    //     $this->view->render();
-    // }
-
-
-  
-    //annoucement
-    // function createannoucement($messagetype, $messagetitle, $usernames, $description, $startdate, $enddate, $sendby)
-    // {
-    //     $this->view('exec/annoucement_management', [
-
-    //         'flag' => 'message',
-    //         'messagetype' => $messagetype,
-    //         'messagetitle' => $messagetitle,
-    //         'usernames' => $usernames,
-    //         'description' => $description,
-    //         'startdate' => $startdate,
-    //         'enddate' => $enddate,
-    //         'sendby' => $sendby
-
-    //     ]);
-    //     $this->view->render();
-    // }
-
-    // public function fetchmessage($pageNumber, $limit)
-    // {
-    //     $this->view('exec/annoucement_management', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchmessage']);
-    //     $this->view->render();
-    // }
-
-    // public function deleteannoucement($messageid)
-    // {
-    //     $this->view('exec/annoucement_management', ['messageid' => $messageid, 'flag' => 'deleteannoucement']);
-    //     $this->view->render();
-    // }
-
-    // public function filtermessage($username, $messagestype, $startdepo, $enddepo, $page, $pageLimit)
-    // {
-    //     $this->view('exec/annoucement_management', [
-
-    //         'username' => $username,
-    //         'messagestype' => $messagestype,
-    //         'startdate' => $startdepo,
-    //         'enddate' => $enddepo,
-    //         'page' => $page,
-    //         'limit' => $pageLimit,
-    //         'flag' => 'filtermessage'
-    //     ]);
-    //     $this->view->render();
-    // }
-
-    // public function editannoucement($msgid)
-    // {
-    //     $this->view('exec/annoucement_management', [
-
-    //         'msgid' => $msgid,
-    //         'flag' => 'editannoucement'
-    //     ]);
-    //     $this->view->render();
-    // }
-
-    // public function updateannoucement($msgtitle, $msgcontent, $msgid)
-    // {
-    //     $this->view('exec/annoucement_management', [
-
-    //         'msgtitle' => $msgtitle,
-    //         'msgcontent' => $msgcontent,
-    //         'msgid' => $msgid,
-    //         'flag' => 'updateannoucement'
-    //     ]);
-    //     $this->view->render();
-    // }
-
-    //for user notification
-    // public function fetchusernotification($pageNumber, $limit)
-    // {
-    //     $this->view('exec/annoucement_management', [
-    //         'flag' => 'viewnotification',
-    //         'page' => $pageNumber,
-    //         'limit' => $limit
-    //     ]);
-    //     $this->view->render();
-    // }
-
-    //    public function filteruserNotifys($username, $messagestype, $startdepo, $enddepo, $page, $pageLimit)
-    // {
-    //     $this->view('exec/annoucement_management', [ 'username' => $username, 'messagestype' => $messagestype,'startdate' => $startdepo, 'enddate' => $enddepo,'page' => $page, 'limit' => $pageLimit,'flag' => 'filterusernotfys' ]);
-    //     $this->view->render();
-    // }
-
-
-   
-  
-
-
-    // public function addnewpayment()
-    // {
-    //     $this->view('exec/payment_platform', ['flag' => 'addpayment']);
-    //     $this->view->render();
-    // }
-
-    // public function deletepayment($payid)
-    // {
-    //     $this->view('exec/payment_platform', ['payid' => $payid, 'flag' => 'deletepayment']);
-    //     $this->view->render();
-    // }
-
-
-    // public function editpayment($payid)
-    // {
-    //     $this->view('exec/payment_platform', ['payid' => $payid, 'flag' => 'editpayment']);
-    //     $this->view->render();
-    // }
-
-    // public function updateplatform($typecurrency, $maxiamounts, $minamount, $statecurrent, $paymentids)
-    // {
-    //     $this->view('exec/payment_platform', [
-    //         'typecurrency' => $typecurrency,
-    //         'maxiamounts' => $maxiamounts,
-    //         'minamount' => $minamount,
-    //         'statecurrent' => $statecurrent,
-    //         'paymentids' => $paymentids,
-    //         'flag' => 'updateplatform'
-    //     ]);
-    //     $this->view->render();
-    // }
-
-    // stash change.
-    // public function filterpayments($partnerID, $curencytypes, $stautspayment, $startdepo, $enddepo, $page, $pageLimit)
-    // {
-    //     $this->view('exec/payment_platform', [
-    //         'partner_id' => $partnerID,
-    //         'curencytypes' => $curencytypes,
-    //         'stautspayment' => $stautspayment,
-    //         'startdate' => $startdepo,
-    //         'enddate' => $enddepo,
-    //         'page' => $page,
-    //         'limit' => $pageLimit,
-    //         'flag' => 'filterpayments'
-    //     ]);
-    //     $this->view->render();
-    // }
-
-
- 
 
     //languages
 
@@ -737,6 +481,8 @@ class adminController extends Controller
     ]);
     $this->view->render();
 }
+
+   
 
     //filteradmindata
 }

@@ -75,10 +75,22 @@ class financialController extends Controller
     }
 
    
-
-
+   public function filterfinance($uid, $depositestate, $startfinance, $endfinance, $page, $pageLimit)
+    {
+        $this->view('exec/financial_manage', [
+            'uid' => $uid,
+            'status' => $depositestate,
+            'startdate' => $startfinance,
+            'enddate' => $endfinance,
+            'page' => $page,
+            'limit' => $pageLimit,
+            'flag' => 'filterfinance'
+        ]);
+        $this->view->render();
+    }
+    
       
-       public function Searchusername($username)
+    public function Searchusername($username)
     {
         $this->view('exec/businessflow', ['username' => $username, 'flag' => 'searchusername']);
         $this->view->render();

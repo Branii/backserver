@@ -192,12 +192,17 @@
     <div class="px-4 py-3 border-bottom pagerlist1">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 110%;">
-                <select name="betsate" class="form-control form-select queryholderlistt typelottery selectlottery" data-bs-placeholder="Select Type"  style="width: 70%;">
+                <select name="betsate" class="form-control form-select queryholderlistt typelotterys selectlottery" data-bs-placeholder="Select Type"  style="width: 70%;">
                     <option value="0">--<?= $translator['Select Lottery']; ?>--</option>
                    
                  </select>
 
-                <select name="lotteryname" class="form-control form-select queryholderlistt selectpartner" style="width: 70%;"> </select>
+                <select name="lotteryname" class="form-control form-select queryholderlistt selectpartner" style="width: 70%;"> 
+
+                </select>
+                 <input type="text" class="form-control queryholderlistt" id="drawperiod" aria-describedby="name"placeholder="Search Drawnumber" style="width: 70%;"/>
+                 <input type="date" class="form-control queryholderlistt" id="exceptdate" aria-describedby="name"placeholder="Name" />
+                <input type="date" class="form-control queryholderlistt" id="exceptdates" aria-describedby="name"placeholder="Name" />
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
