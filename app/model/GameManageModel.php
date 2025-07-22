@@ -578,6 +578,7 @@ public static function createNewGame(array $gameData, string $gamesTable)
         'game_type'     => $gameTypeId,
         'draw_table'    => 'dt_' . str_replace(' ', '', $gameData['name']),
         'draw_storage'  => 'ds_' . str_replace(' ', '', $gameData['name']),
+        'draw_period'   => 'dp_' . str_replace(' ', '', $gameData['name']),
         'bet_table'     => 'bt_' . str_replace(' ', '', $gameData['name']),
         'lottery_type'  => $gameData['lottery_type'],
         'lottery_name'  => $gameData['game_group']
@@ -590,6 +591,7 @@ public static function createNewGame(array $gameData, string $gamesTable)
         // Create game-related tables
         self::execute("CREATE TABLE {$mapData['draw_table']} LIKE dt_1kb5d1m");
         self::execute("CREATE TABLE {$mapData['draw_storage']} LIKE ds_1kb5d1m");
+        self::execute("CREATE TABLE {$mapData['draw_period']} LIKE dp_1kb5d1m");
         self::execute("CREATE TABLE {$mapData['bet_table']} LIKE bt_1kb5d1m");
         self::updateSpecificGamePlays($mapData['lottery_type'], $gameTypeId);
         self::updateSpecificGamePlayOddsGroup($mapData['lottery_type'], $gameTypeId);
@@ -705,26 +707,26 @@ public static function addNewLotteryGameParam(array $gameData, string $logo, str
             (string) $linker
         ];
     }
-
-public static function addNewGameToMapQuery()
-        {
-            return "INSERT INTO gamestable_map (
-                game_type, draw_table, draw_storage, bet_table,
-                lottery_type, lottery_name
-            ) VALUES (?, ?, ?, ?, ?, ?)";
-        }
+    public static function addNewGameToMapQuery()
+{
+    return "INSERT INTO gamestable_map (
+        game_type, draw_table, draw_storage, draw_period, bet_table,
+        lottery_type, lottery_name
+    ) VALUES (?, ?, ?, ?, ?, ?, ?)";
+}
 
 public static function addNewGamesTableMapParam(array $gameData)
-    {
-        return [
-            (int) $gameData['game_type'],
-            (string) $gameData['draw_table'],
-            (string) $gameData['draw_storage'],
-            (string) $gameData['bet_table'],
-            (string) $gameData['lottery_type'],
-            (string) $gameData['lottery_name'] ?? ''
-        ];
-    }
+{
+    return [
+        (int) $gameData['game_type'],
+        (string) $gameData['draw_table'],
+        (string) $gameData['draw_storage'],
+        (string) $gameData['draw_period'], 
+        (string) $gameData['bet_table'],
+        (string) $gameData['lottery_type'],
+        (string) $gameData['lottery_name'] ?? ''
+    ];
+}
 
 ////  CREATE GAME TABLE ENDS HERE WITH THE UPDATE FOR SPECIFIEDS ODDS 
 

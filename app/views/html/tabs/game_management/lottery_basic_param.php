@@ -645,9 +645,9 @@
                                 <label class="form-label">Select default image</label>
                                 <select id="" class="form-select gameimage" id="lottery_logo_name" style="width: 100%;">
                                 <option value="" disabled selected>select corresponding game image</option>
-                                <option value="Royal-5" >Royal-5.jpg</option>
-                                <option value="Max-3D.jpg" >Max-3D.jpg</option>
-                                <option value="Fast-3.jpg" >Fast-3.jpg</option>
+                                <option value="Royal-5.jpg">Royal-5.jpg</option>
+                                <option value="Max-3D.jpg">Max-3D.jpg</option>
+                                <option value="Fast-3.jpg">Fast-3.jpg</option>
                                 <option value="Royal-Pk-10.jpg">Royal-Pk-10.jpg</option>
                                 <option value="Rapid-11x5.jpg">Rapid-11x5.jpg</option>
                                 <option value="Radip-Mark6.jpg">Radip-Mark6.jpg</option>
@@ -681,20 +681,19 @@
           </div>
         </div>
 
-        <form id="lotteryImageForm" enctype="multipart/form-data">
-          <input type="text" name="lottery_game_id" id="lottery_game_id" readonly/>
-
+        <form id="lotteryImageFormmm">
+            <input type="hidden" name="lottery_game_id" id="lottery_game_id" readonly/>
+             <!-- <input type="text" class="form-control" id="lottery_image" name="currentImage" readonly> -->
           <div class="mb-3 text-center">
             <img id="imagePreview" src="#" alt="Image Preview" style="display:none; max-height:200px;" />
           </div>
-
           <div class="mb-3">
             <label for="lottery_logo_file" class="form-label">Select Image</label>
             <input type="file" class="form-control" name="lottery_logo_file" id="lottery_logo_file" accept="image/*" required />
           </div>
 
           <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-primary update-game-image-btn">Confirm</button>
+            <button type="button" class="btn btn-primary updateee-game-image-btn" id="upload">Confirm</button>
           </div>
         </form>
       </div>

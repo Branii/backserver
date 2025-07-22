@@ -18,54 +18,9 @@ if ($flag == "update-params") {
     parse_str($_POST["data"], $userData); // parse the data from the client request
     $results = GameManageModel::updateLotterState($userData); // update the lottery state and send the response back.
 }
-// else if($flag == 'fetch-lottery-basic-params'){
-
-//     try{
-
-   
-//     $path =  'https://winsstarts.com/chairman_test/app/lottery_images/';
-//      $baseImagePath = 'https://winsstarts.com/chairman_test/app/lottery_images/';
-//     //'http://localhost/task/admin/assets/lottery';
-//     $lottery_id = isset($this->viewData['lottery_id']) ? $this->viewData['lottery_id']: ""; 
-        
-//     $model = GameManageModel::fetchGameTypesForLottery($lottery_id,$page);
-
-
-//     if($model['status'] === 'error') return ['status' => 'error', 'data' => "Internal Server Error."];
-
-  
-//     $model = $model['data'];
-//     $final_results = [];
-//     $total_count = 0;
-//     if(!empty($model)) $total_count = $model[0]->total_count; 
-//     foreach($model as $data){
-//         //  $lottrytype = GameManageModel::fetchLotteryType($data->lottery_type)['name'];
-//          $lottrytype = $data->name;
-//          $state = '';
-
-//          if ($data->state == 1) {
-//             $state = "<span class='tag'  id='state-{$data->gt_id}'>Turned On</span>";
-//          } elseif ($data->state  == 0) {
-//             $state = "<span class='tag' id='state-{$data->gt_id}'>Stopped</span>";
-//          } elseif ($data->state  == -1) {
-//             $state = "<span class='tag' id='state-{$data->gt_id}'>Turned Off</span>";
-//          }
-
-//         $final_results[] = ["id" => $data->gt_id,'sort_weight' => json_decode($data->sort_weight), 'lottery_id' => $data->lt_id,'lottery_image' => $path . '/' . $data->logo,'lottery_name' =>
-//         $data->name, 'lottery_type' => $lottrytype, 'alias' => $data->alias , 'max_prize_per_bet' =>  trim($data->maximum_prize_per_bet) , 'max_win' =>  trim($data->maximum_win_per_issue) , 'max_amt_per_issue' =>  trim($data->maximum_amount_per_issue) , 'mn_amt_per_issue' => trim($data->minimum_amount_per_issue) , 'clsing' => trim($data->closing_time) , 'state' => $state ];
-       
-//         }
-
-//         $results = ['data'=> $final_results, 'totalCount'=>$total_count];
-//     }catch(Exception $e){
-        
-//         $results = ['status' => 'error', 'data' => 'Internal Server Error.'.$e->getMessage()];
-//     }
-// // echo json_encode($final_results);
-
-// }
 else if ($flag == 'fetch-lottery-basic-params') {
     try {
+        
         $lottery_id = isset($this->viewData['lottery_id']) ? $this->viewData['lottery_id'] : "";
         $page = isset($this->viewData['page']) ? $this->viewData['page'] : 1;
 
@@ -91,15 +46,15 @@ else if ($flag == 'fetch-lottery-basic-params') {
             } elseif ($data->state == -1) {
                 $state = "<span class='tag' id='state-{$data->gt_id}'>Turned Off</span>";
             }
-
-           $filename = $data->logo;
+            // $filename = $data->logo;
+           $filename = basename($data->logo);
+          
             $localFilePath = $_SERVER['DOCUMENT_ROOT'] . "/admin/app/assets/images/" . $filename;
             $localImageURL = "http://localhost/admin/app/assets/images/" . $filename;
             $publicImageURL = "https://winsstarts.com/chairman_test/app/lottery_images/" . $filename;
+           
 
             $finalImagePath = file_exists($localFilePath) ? $localImageURL : $publicImageURL;
-
-
             $final_results[] = [
                 "id" => $data->gt_id,
                 'sort_weight' => json_decode($data->sort_weight),
@@ -113,7 +68,8 @@ else if ($flag == 'fetch-lottery-basic-params') {
                 'max_amt_per_issue' => trim($data->maximum_amount_per_issue),
                 'mn_amt_per_issue' => trim($data->minimum_amount_per_issue),
                 'clsing' => trim($data->closing_time),
-                'state' => $state
+                'state' => $state,
+                'logo' => $filename,
             ];
         }
 
@@ -123,6 +79,8 @@ else if ($flag == 'fetch-lottery-basic-params') {
     }
     // echo json_encode($final_results);
 }
+
+
 
 
 
