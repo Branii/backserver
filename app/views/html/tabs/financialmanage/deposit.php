@@ -94,7 +94,6 @@
         background-color: #fff;
     }
 
-   
     .optionlink {
         text-align: left;
         border-bottom: solid 1px #eee;
@@ -185,7 +184,7 @@
         border-radius: 5px;
         padding: 5px;
         top: 90%;
-        z-index:9;
+        z-index: 9;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         display: none;
     }
@@ -214,36 +213,33 @@
         background: #aaa;
         /* Darker handle color on hover */
     }
-
 </style>
 
 <!-- toast messages -->
 
-<span id="trans-failed-inactive" data-translation="<?= $translator['FailedToSetInactive']; ?>" style="display:none;"></span>
-<span id="trans-inactive-success" data-translation="<?= $translator['SetInactiveSuccess']; ?>" style="display:none;"></span>
-<span id="trans-select-fields" data-translation="<?= $translator['SelectFilterFields']; ?>" style="display:none;"></span>
-<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display:none;"></span>
-<span id="trans-alert" data-translation="<?= $translator['Alert']; ?>" style="display:none;"></span>
-<span id="trans-user-does-not-exist" data-translation="<?= $translator['UserDoesNotExist']; ?>" style="display:none;"></span>
+<span id="trans-failed-inactive" data-translation="<?= $translator['FailedToSetInactive']; ?>" style="display: none;"></span>
+<span id="trans-inactive-success" data-translation="<?= $translator['SetInactiveSuccess']; ?>" style="display: none;"></span>
+<span id="trans-select-fields" data-translation="<?= $translator['SelectFilterFields']; ?>" style="display: none;"></span>
+<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display: none;"></span>
+<span id="trans-alert" data-translation="<?= $translator['Alert']; ?>" style="display: none;"></span>
+<span id="trans-user-does-not-exist" data-translation="<?= $translator['UserDoesNotExist']; ?>" style="display: none;"></span>
 
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
-
 
 <!-- Hidden spans with translated text -->
 <span id="tr_page" style="display: none;"><?= $translator['Page'] ?></span>
 <span id="tr_of" style="display: none;"><?= $translator['of'] ?></span>
 <span id="tr_pages" style="display: none;"><?= $translator['pages'] ?></span>
 
-<span id="channel_manual_deposit" style="display:none;"><?= $translator['channel_manual_deposit'] ?></span>
-<span id="channel_bank_transfer" style="display:none;"><?= $translator['channel_bank_transfer'] ?></span>
-<span id="channel_momo" style="display:none;"><?= $translator['channel_momo'] ?></span>
-<span id="channel_crypto" style="display:none;"><?= $translator['channel_crypto'] ?></span>
+<span id="channel_manual_deposit" style="display: none;"><?= $translator['channel_manual_deposit'] ?></span>
+<span id="channel_bank_transfer" style="display: none;"><?= $translator['channel_bank_transfer'] ?></span>
+<span id="channel_momo" style="display: none;"><?= $translator['channel_momo'] ?></span>
+<span id="channel_crypto" style="display: none;"><?= $translator['channel_crypto'] ?></span>
 
-<span id="status_pending" style="display:none;"><?= $translator['status_pending'] ?></span>
-<span id="status_success" style="display:none;"><?= $translator['status_success'] ?></span>
-<span id="status_failed" style="display:none;"><?= $translator['status_failed'] ?></span>
-
+<span id="status_pending" style="display: none;"><?= $translator['status_pending'] ?></span>
+<span id="status_success" style="display: none;"><?= $translator['status_success'] ?></span>
+<span id="status_failed" style="display: none;"><?= $translator['status_failed'] ?></span>
 
 <!-- toast messages ends here -->
 
@@ -254,12 +250,10 @@
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width:120%;">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 120%;">
                 <input type="text" id="Depositinput" class="form-control queryholderdeposit userdeposit" placeholder="<?= $translator['Search usernames']; ?>" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
-                <select class="form-control DepositDropdown" size="5" style="display: none;" id="userfinaceDepo">
-              
-                </select>
+                <select class="form-control DepositDropdown" size="5" style="display: none;" id="userfinaceDepo"> </select>
                 <input type="text" class="form-control queryholderdeposit depositids" id="nametextss" aria-describedby="name" placeholder="<?= $translator['Enter Deposit ID']; ?>" />
 
                 <select name="betsate" class="form-control form-select queryholderdeposit depositchanel" data-bs-placeholder="Select Type">
@@ -276,10 +270,8 @@
                     <option value="success"><?= $translator['Success']; ?></option>
                     <option value="failed"><?= $translator['Failed']; ?></option>
                 </select>
-                <select name="lotteryname" class="form-control form-select queryholderdeposit selectpartner"> 
+                <select name="lotteryname" class="form-control form-select queryholderdeposit selectpartner"> </select>
 
-                </select>
- 
                 <input name="startdate" type="date" class="form-control queryholderdeposit startdepo" aria-describedby="name" placeholder="Name" />
 
                 <input name="enddate" type="date" class="form-control queryholderdeposit enddepo" aria-describedby="name" placeholder="Name" />
@@ -335,8 +327,8 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Deposit Time']; ?></h6>
                         </th>
                         <th>
-                        <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
-                       </th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
+                        </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Receiving Bank']; ?></h6>
                         </th>
@@ -392,11 +384,11 @@
                 <option value="100">100</option>
                 <option value="200">200</option>
                 <option value="500">500</option> -->
-             <option value="20"><?= $translator['20'] ?? '20' ?></option>
-                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
-    <option value="100"><?= $translator['100'] ?? '100' ?></option>
-    <option value="200"><?= $translator['200'] ?? '200' ?></option>
-    <option value="500"><?= $translator['500'] ?? '500' ?></option>
+                <option value="20"><?= $translator['20'] ?? '20' ?></option>
+                <option value="50"><?= $translator['50'] ?? '50' ?></option>
+                <option value="100"><?= $translator['100'] ?? '100' ?></option>
+                <option value="200"><?= $translator['200'] ?? '200' ?></option>
+                <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
             <span class="toplist-right" id="paginationdeposits" aria-label="Page navigation example">
                 <!--Dynamic pagination-->

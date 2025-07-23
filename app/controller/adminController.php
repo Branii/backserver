@@ -34,12 +34,7 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    // public function admins($data)
-    // {
-    //     $this->view('exec/admins_exec', ['flag' => 'addNewAdmin', 'data' => $data]);
-    //     $this->view->render();
-    // }
-
+  
     public function admins($data)
     {
         $view = $this->view('exec/admins_exec', [
@@ -228,29 +223,17 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    
-
-
- 
-
-
-
-
-  
     public function  searchPaymentPlatform($platformName, $currency, $status, $startDate, $endDate, $page, $limit)
     {
         $this->view('exec/payment_platform', ["platformName" => $platformName, "currency" => $currency, "status" => $status, "startDate" => $startDate, "endDate" => $endDate, "page" => $page, "limit" => $limit, 'flag' => 'searchPaymentPlatform']);
         $this->view->render();
     }
 
-
-    
     public function  addNewPaymentPlaftorm($partnerID, $paymentType, $paymentTypeName, $currency, $status, $fee, $maxAmount, $minAmount, $siteUrl, $adminSiteUrl, $info, $priority, $countries)
     {
         $this->view('exec/payment_platform', ['partner_id' => $partnerID, "paymentType" => $paymentType, "paymentTypeName" => $paymentTypeName, "currency" => $currency, "status" => $status, "fee" => $fee, "maxAmount" => $maxAmount, "minAmount" => $minAmount, "siteUrl" => $siteUrl, "adminSiteUrl" => $adminSiteUrl, "info" => $info, "priority" => $priority, "countries" => $countries, 'flag' => 'addNewPaymentPlaftorm']);
         $this->view->render();
     }
-
 
     //   public function  addNewPartner($partnerName, $currency, $encodedSiteUrl, $encodedAdminSiteUrl)
     // {
@@ -259,10 +242,6 @@ class adminController extends Controller
     //     $this->view('exec/partners', ["partner_name" => $partnerName, "currency" => $currency, "site_url" => $encodedSiteUrl, "admin_site_url" => $encodedAdminSiteUrl, 'flag' => 'addNewPartner']);
     //     $this->view->render();
     // }
-
-
-    
-
 
     public function  fetchBonusTwoSides($lotteryID, $lotteryGameGroup)
     {
@@ -285,9 +264,6 @@ class adminController extends Controller
         $this->view('exec/account_manage', ["flag" => 'getallgamegroup']);
         $this->view->render();
     }
-
-   
-    
     
     public function fetchLoterytype()
     {
@@ -315,46 +291,6 @@ class adminController extends Controller
 
 
 
-
-    //NOTE -
-    //////////////Deposit Records -//////////
-    // 
-    // public function fetchDeposit($pageNumber, $limit)
-    // {
-    //     $this->view('exec/financial_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchDeposit']);
-    //     $this->view->render();
-    // }
-
-    // public function filterdeposits($uid, $depositchanel, $depositid, $stautsdeposit, $startdepo, $enddepo, $page, $pageLimit)
-    // {
-    //     $this->view('exec/financial_manage', [
-
-    //         'uid' => $uid,
-    //         'states' => $depositchanel,
-    //         'depositid' => $depositid,
-    //         'depostatus' => $stautsdeposit,
-    //         'startdate' => $startdepo,
-    //         'enddate' => $enddepo,
-    //         'page' => $page,
-    //         'limit' => $pageLimit,
-    //         'flag' => 'filterdeposit'
-    //     ]);
-    //     $this->view->render();
-    // }
-
-
-    // NOTE -
-    //////////////Withdrawal Records -//////////
-    // public function fetchwithdraw($partnerID, $pageNumber, $limit)
-    // {
-    //     $this->view('exec/financial_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchwithdraw']);
-    //     $this->view->render();
-    // }
-
-
-    // NOTE -
-    ////////////// Bank Cardlist Records - //////////
- 
 
     //NOTE -
     //////////////lottery bounus Parameter -//////////

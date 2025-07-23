@@ -266,7 +266,8 @@ class FinancialManageModel extends MEDOOHelper
             return $res;   
     }
 
-    public static function timezoneConverter(string $otherTzName = ""){
+    public static function timezoneConverter(string $otherTzName = "")
+    {
         date_default_timezone_set("Africa/Accra");  
         $serverZone = new DateTimeZone(date_default_timezone_get());
         $otherTzName  = "Asia/Shanghai";

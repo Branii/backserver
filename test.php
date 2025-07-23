@@ -249,80 +249,7 @@ try {
 // Set the timezone for the server (Berlin time)
 
 ?>
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Testnet Bitcoin Payment</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      text-align: center;
-    }
-    #wallet-box {
-      margin: 20px auto;
-      width: 320px;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      text-align: center;
-    }
-    button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    #qrcode {
-      margin-top: 30px;
-      position: relative;
-      left: 42%;
-    }
-  </style>
-</head>
-<body>
 
-  <h2>Send or Scan to Pay (Testnet)</h2>
-  <p>Scan the QR code or copy the testnet wallet address below</p>
-
-  <div id="wallet-box">
-    <input type="text" id="wallet-address" readonly>
-    <button onclick="copyWallet()">Copy Wallet Address</button>
-  </div>
-
-  <div id="qrcode">
-
-  </div>
-
-  <script>
-    // Replace this with your own Bitcoin testnet address
-    const walletAddress = "bc1q3dvptrtjvt9807875wvsnej2spvw07r9g8kwd7";
-
-    window.onload = function () {
-      document.getElementById("wallet-address").value = walletAddress;
-
-      new QRCode(document.getElementById("qrcode"), {
-        text: `bitcoin:${walletAddress}?amount=0.001`,
-        width: 256,
-        height: 256
-      });
-    };
-
-    function copyWallet() {
-      const input = document.getElementById("wallet-address");
-      input.select();
-      input.setSelectionRange(0, 99999); // Mobile
-      document.execCommand("copy");
-      alert("Wallet address copied!");
-    }
-  </script>
-
-</body>
-</html> -->
 
 <?php
 // 1. What timezone is the server set to?
@@ -497,17 +424,17 @@ try {
     //     print_r(getAllGamesPlayByLotteryType($pdo));
     //     exit;
 
-function getAllGamesPlayByLotteryType($pdo,$lotteryType) {
-    try {
-        $sql = "SELECT gn_id, name, odds, total_bets, lottery_type, standard_odds, standard_total_bets FROM game_name WHERE lottery_type = ?";
-         $stmt = $pdo->prepare($sql); // ✅ Correct
-        $stmt->execute([$lotteryType]); 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (\Throwable $th) {
-        echo "Error: " . $th->getMessage();
-        return [];
-    }
-}
+// function getAllGamesPlayByLotteryType($pdo,$lotteryType) {
+//     try {
+//         $sql = "SELECT gn_id, name, odds, total_bets, lottery_type, standard_odds, standard_total_bets FROM game_name WHERE lottery_type = ?";
+//          $stmt = $pdo->prepare($sql); 
+//         $stmt->execute([$lotteryType]); 
+//         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+//     } catch (\Throwable $th) {
+//         echo "Error: " . $th->getMessage();
+//         return [];
+//     }
+// }
 
 // echo"<pre>";
 // print_r(getAllGamesPlayByLotteryType($pdo));
@@ -515,48 +442,48 @@ function getAllGamesPlayByLotteryType($pdo,$lotteryType) {
 
 
 
-function updateSpecificGamePlays($pdo,$lotteryType, $gameTypeId)
-{
-    // $gameTypes = (new GameModel())->getGameFromTable();
-    $gamePlay = getAllGamesPlayByLotteryType($pdo,$lotteryType);
+// function updateSpecificGamePlays($pdo,$lotteryType, $gameTypeId)
+// {
+//     // $gameTypes = (new GameModel())->getGameFromTable();
+//     $gamePlay = getAllGamesPlayByLotteryType($pdo,$lotteryType);
 
-    // $oddsGroup = (new GameModel())->getAllOddsGroup();
-    $standardOdds = [];
-    // print_r($gamePlay);exit;
-    // $db = (new DBUtils)->openLink(); // Get PDO instance
-    // $sql = "UPDATE game_name SET standard_odds = ?, standard_total_bets = ? WHERE gn_id = ?";
-    // $req = $db->prepare($sql);
+//     // $oddsGroup = (new GameModel())->getAllOddsGroup();
+//     $standardOdds = [];
+//     // print_r($gamePlay);exit;
+//     // $db = (new DBUtils)->openLink(); // Get PDO instance
+//     // $sql = "UPDATE game_name SET standard_odds = ?, standard_total_bets = ? WHERE gn_id = ?";
+//     // $req = $db->prepare($sql);
 
-    foreach ($gamePlay as $play) {
-        $singleOdds = [];
-        $singleTBets = [];
-            $newAppendStandardOdds = json_decode($play['standard_odds'], true);
-            $newAppendStandardTotalBets = json_decode($play['standard_total_bets'], true);
-            $newAppendStandardOdds[$gameTypeId] = $play['odds'];
-            $newAppendStandardTotalBets[$gameTypeId] = $play['total_bets'];
+//     foreach ($gamePlay as $play) {
+//         $singleOdds = [];
+//         $singleTBets = [];
+//             $newAppendStandardOdds = json_decode($play['standard_odds'], true);
+//             $newAppendStandardTotalBets = json_decode($play['standard_total_bets'], true);
+//             $newAppendStandardOdds[$gameTypeId] = $play['odds'];
+//             $newAppendStandardTotalBets[$gameTypeId] = $play['total_bets'];
 
 
-            $singleOdds = $newAppendStandardOdds;
-            $singleTBets = $newAppendStandardTotalBets;
+//             $singleOdds = $newAppendStandardOdds;
+//             $singleTBets = $newAppendStandardTotalBets;
 
-        $jsonOdds = json_encode($singleOdds); // Convert array to JSON string
-        $jsonTBets = json_encode($singleTBets); // Convert array to JSON string
-        $req->execute([$jsonOdds, $jsonTBets, $play['gn_id']]);
+//         $jsonOdds = json_encode($singleOdds); // Convert array to JSON string
+//         $jsonTBets = json_encode($singleTBets); // Convert array to JSON string
+//         $req->execute([$jsonOdds, $jsonTBets, $play['gn_id']]);
 
-        // $standardOdds[] = [
-        //     "play_id" => $play['gn_id'],
-        //     "play_name" => $play['name'],
-        //     "lottery_type" => $play['lottery_type'],
-        //     "play_odds" => ['odds' => $singleOdds, 'bets' => $singleTBets],
-        // ];
-    }
-    print_r($standardOdds);
+//         // $standardOdds[] = [
+//         //     "play_id" => $play['gn_id'],
+//         //     "play_name" => $play['name'],
+//         //     "lottery_type" => $play['lottery_type'],
+//         //     "play_odds" => ['odds' => $singleOdds, 'bets' => $singleTBets],
+//         // ];
+//     }
+//     print_r($standardOdds);
 
-}
+// }
 
-$gamelotteries = updateSpecificGamePlays($pdo,$lotteryType="3",$gameTypeId="97");
-echo"<pre>";
-print_r($gamelotteries);
+// $gamelotteries = updateSpecificGamePlays($pdo,$lotteryType="3",$gameTypeId="97");
+// echo"<pre>";
+// print_r($gamelotteries);
 // echo $gamelotteries;
 
 
@@ -612,5 +539,3 @@ print_r($gamelotteries);
 
 
 
-
-{"monday":["12:00:00","04:00:00","08:00:00"],"tuesday":["12:00:00","04:00:00","08:00:00"],"evening":["08:00:00"]},"wednesday":{"daytime":["12:00:00","04:00:00"],"evening":["08:00:00"]},"thursday":{"daytime":["12:00:00","04:00:00"],"evening":["08:00:00"]},"friday":{"daytime":["12:00:00","04:00:00"],"evening":["08:00:00"]},"saturday":{"daytime":["12:00:00","04:00:00"],"evening":["08:00:00"]},"sunday":{"daytime":["12:00:00","04:00:00"],"evening":["08:00:00"]}}

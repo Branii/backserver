@@ -204,7 +204,6 @@
 <span id="trans-turnedon" style="display: none;" class="hidden"><?= $translator['Turned On'] ?? 'Turned On' ?></span>
 <span id="trans-turnedoff" style="display: none;" class="hidden"><?= $translator['Turned Off'] ?? 'Turned Off' ?></span>
 
-
 <div id="lb-edit" class="modal fade" tabindex="-1" style="display: none;" aria-modal="true" role="dialog">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
@@ -435,7 +434,6 @@
     </div>
 </div>
 
-
 <div id="addnewgames" class="modal fade" tabindex="-1" aria-modal="true" role="dialog">
     <div class="modal-dialog-scrollable modal-lg">
         <div class="modal-content modal-filled" style="background-color: #f9f9f9;">
@@ -516,13 +514,13 @@
                                 <input type="time" id="stoptime" name="stoptime" />
                             </div> -->
                             <div class="form-group">
-                            <label for="starttime">Start Time*</label>
-                            <input type="time" id="starttime" name="starttime" step="1" />
-                        </div>
-                        <div class="form-group">
-                            <label for="stoptime">Stop Time*</label>
-                            <input type="time" id="stoptime" name="stoptime" step="1" />
-                        </div>
+                                <label for="starttime">Start Time*</label>
+                                <input type="time" id="starttime" name="starttime" step="1" />
+                            </div>
+                            <div class="form-group">
+                                <label for="stoptime">Stop Time*</label>
+                                <input type="time" id="stoptime" name="stoptime" step="1" />
+                            </div>
 
                             <div class="form-group">
                                 <label for="lottery_model">Lottery Model*</label>
@@ -556,9 +554,6 @@
     </div>
 </div>
 
-
-
-
 <!-- add lottery game  modal start -->
 <div id="addlottery-modals" class="modal fade" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -569,38 +564,35 @@
             </div>
 
             <div class="modal-body">
-        
-                    <form id="lotteryForm" name="lotteryForm">
-                        <hr>
+                <form id="lotteryForm" name="lotteryForm">
+                    <hr />
                     <div class="col-md-12">
                         <center>
-                        <img id="logoPreview" src="#" alt="Logo Preview" style="max-width: 200px; display: none; max-height:150px;" />
+                            <img id="logoPreview" src="#" alt="Logo Preview" style="max-width: 200px; display: none; max-height: 150px;" />
                         </center>
                     </div>
-                        <hr>
+                    <hr />
                     <div class="row g-3">
                         <!-- Row 1 -->
                         <div class="col-md-6">
                             <label class="form-label">Lottery name*</label>
-                            <input type="text" class="form-control" name="name" id="namee"  />
+                            <input type="text" class="form-control" name="name" id="namee" />
                         </div>
 
-                         <div class="col-md-6">
+                        <div class="col-md-6">
                             <label class="form-label">Alias*</label>
-                            <input type="text" class="form-control" name="alias" id="alias"  />
+                            <input type="text" class="form-control" name="alias" id="alias" />
                         </div>
-                    
+
                         <div class="col-md-4">
                             <label class="form-label">Lottery Type*</label>
-                         
+
                             <?= $translator['Select Lottery']; ?>
-              
-                        <!-- Game Group -->
-                       <select  class="form-select lotteryTypeSelect game_groups"  name="game_groups" id="lottery_types"style="width: 100%;">
-                            <option value="" disabled selected>Select Game Group</option>
-                        </select>
 
-
+                            <!-- Game Group -->
+                            <select class="form-select lotteryTypeSelect game_groups" name="game_groups" id="lottery_types" style="width: 100%;">
+                                <option value="" disabled selected>Select Game Group</option>
+                            </select>
                         </div>
 
                         <!-- Row 2 -->
@@ -611,9 +603,8 @@
                         <div class="col-md-4">
                             <label class="form-label">Seconds Issue</label>
                             <select class="form-select secondsselect" name="seconds_per_issue" id="secondss_per_issue">
-                            <option value="" disabled selected><?= $translator['Select Seconds']; ?></option>
+                                <option value="" disabled selected><?= $translator['Select Seconds']; ?></option>
                             </select>
-
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Min Ball*</label>
@@ -642,8 +633,8 @@
                         </div>
                         <!-- Row 5 -->
                         <div class="col-md-12">
-                                <label class="form-label">Select default image</label>
-                                <select id="" class="form-select gameimage" id="lottery_logo_name" style="width: 100%;">
+                            <label class="form-label">Select default image</label>
+                            <select id="" class="form-select gameimage" id="lottery_logo_name" style="width: 100%;">
                                 <option value="" disabled selected>select corresponding game image</option>
                                 <option value="Royal-5.jpg">Royal-5.jpg</option>
                                 <option value="Max-3D.jpg">Max-3D.jpg</option>
@@ -652,9 +643,8 @@
                                 <option value="Rapid-11x5.jpg">Rapid-11x5.jpg</option>
                                 <option value="Radip-Mark6.jpg">Radip-Mark6.jpg</option>
                                 <option value="Rapid-Happy-8.jpg">Rapid-Happy-8.jpg</option>
-                                </select>
-
-                         </div>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="text-center mt-4">
@@ -667,37 +657,35 @@
 </div>
 <!-- Add lottery  game Modal ends here -->
 
-
-
 <!-- Update game Modal starts here -->
 <div id="lb-uploadimage" class="modal fade" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg">
-    <div class="modal-content" style="width: 75%;">
-      <div class="modal-body">
-        <div class="text-center mt-2 mb-4">
-          <div class="d-flex justify-content-between align-items-center">
-            <h5 class="text-info">Update Image</h5>
-            <i class="bx bx-message-square-x lb-tclose" data-bs-dismiss="modal" style="cursor: pointer;"></i>
-          </div>
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content" style="width: 75%;">
+            <div class="modal-body">
+                <div class="text-center mt-2 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="text-info">Update Image</h5>
+                        <i class="bx bx-message-square-x lb-tclose" data-bs-dismiss="modal" style="cursor: pointer;"></i>
+                    </div>
+                </div>
+
+                <form id="lotteryImageFormmm">
+                    <input type="hidden" name="lottery_game_id" id="lottery_game_id" readonly />
+                  
+                    <div class="mb-3 text-center">
+                        <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-height: 200px;" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="lottery_logo_file" class="form-label">Select Image</label>
+                        <input type="file" class="form-control" name="lottery_logo_file" id="lottery_logo_file" accept="image/*" required />
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-primary updateee-game-image-btn" id="upload">Confirm</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <form id="lotteryImageFormmm">
-            <input type="hidden" name="lottery_game_id" id="lottery_game_id" readonly/>
-             <!-- <input type="text" class="form-control" id="lottery_image" name="currentImage" readonly> -->
-          <div class="mb-3 text-center">
-            <img id="imagePreview" src="#" alt="Image Preview" style="display:none; max-height:200px;" />
-          </div>
-          <div class="mb-3">
-            <label for="lottery_logo_file" class="form-label">Select Image</label>
-            <input type="file" class="form-control" name="lottery_logo_file" id="lottery_logo_file" accept="image/*" required />
-          </div>
-
-          <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-primary updateee-game-image-btn" id="upload">Confirm</button>
-          </div>
-        </form>
-      </div>
     </div>
-  </div>
 </div>
 <!-- Update game Modal ends here -->

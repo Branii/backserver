@@ -1092,7 +1092,6 @@ class UserManageModel extends MEDOOHelper{
                     'message' => 'User not found.',
                 ];
             }
-
             if ((int) $current['login_attempt'] === 0) {
                 return [
                     'status'  => 'info',

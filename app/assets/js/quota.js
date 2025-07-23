@@ -110,26 +110,10 @@ const QUOTA_UPDATED = document.getElementById("quota_success").innerText;
       $("#addContactModal").modal("show");
   });
 
-//   $(document).on("click", "#btn-setallquota", function () {
-//       const quotaval = $("#c-quota").val();
-//       try {
-//           $.post(`../admin/UpdateAllquota/${quotaval}`, function (response) {
-//               if (response) {
-//                   showToast("Success", "quota updated successfully", "success");
-//                   fetchquota(currentPagequota, pageLimit);
-//               }
-//           });
-//           // const data = await response.json();
-//       } catch (error) {
-//           console.error("Error fetching data:", error);
-//       }
-//   });
 
 
 
 
-// showToast(ALL_FIELDS_REQUIRED, ENTER_QUOTA_VALUE, "error");
-// showToast(SUCCESS_TEXT, QUOTA_UPDATED, "success");
 $(document).on("click", "#btn-setallquota", function () {
     const quotaval = $("#c-quota").val().trim();
 

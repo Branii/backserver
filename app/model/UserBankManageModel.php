@@ -140,7 +140,8 @@ class UserBankManageModel extends MEDOOHelper
         return parent::query($updateSql, $updateParams); // Return the result (affected rows)
     }
     //search usernames
-    public static function Searchusername(string $username){
+   public static function Searchusername(string $username)
+    {
     $query = trim($username); // Clean input
     $data = parent::query(
         "SELECT uid, username, email, contact, reg_type
@@ -169,7 +170,7 @@ class UserBankManageModel extends MEDOOHelper
     );
 
     return $data;
-}
+    }
     //GET USERNAME
     public static function getUserIdByUsername(string $key)
     {

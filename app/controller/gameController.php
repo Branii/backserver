@@ -153,16 +153,22 @@ class gameController extends Controller
         $alias = urldecode($alias);
         $gamegroups = urldecode($gamegroups);
         $logoFileName = urldecode($logoFileName);
-        $this->view('exec/lottery_basic_params', ['name' => $name,'alias' => $alias,'gamegroups' => $gamegroups,'numberofballs' => $numberofballs,'min_ball' => $min_ball,'max_ball' => $max_ball,'secondsperissue' => $secondsperissue,'starttime' => $starttime,'stoptime' => $stoptime,'lotterymodel' => $lotterymodel,'lotteryType' => $lotteryType,'logoFileName' => $logoFileName,'flag' => 'addlottery', ]);
+        $this->view('exec/lottery_basic_params', [
+            'name' => $name,
+            'alias' => $alias,
+            'gamegroups' => $gamegroups,
+            'numberofballs' => $numberofballs,
+            'min_ball' => $min_ball,
+            'max_ball' => $max_ball,
+            'secondsperissue' => $secondsperissue,
+            'starttime' => $starttime,
+            'stoptime' => $stoptime,
+            'lotterymodel' => $lotterymodel,
+            'lotteryType' => $lotteryType,
+            'logoFileName' => $logoFileName,
+            'flag' => 'addlottery',
+        ]);
         $this->view->render();
-    }
-
-
-    public function Updateimage($gameId,$filename)
-
-    { 
-    $this->view('exec/lottery_basic_params', ['gameId'=> $gameId,'filename'=>$filename,'flag'=>'updategameimage']);
-    $this->view->render();
     }
 
     public function getTimegames()

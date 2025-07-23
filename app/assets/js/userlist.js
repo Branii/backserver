@@ -59,8 +59,8 @@ $(function () {
     const selectFieldsText = document.getElementById("trans-select-fields").textContent;
 
     const txtPage = document.getElementById("trans-page").innerText;
-const txtOf = document.getElementById("trans-of").innerText;
-const txtPages = document.getElementById("trans-pages").innerText;
+    const txtOf = document.getElementById("trans-of").innerText;
+    const txtPages = document.getElementById("trans-pages").innerText;
 
     // editting the user from the userlist table
     $(document).on("click", ".manage-user-btn,.user-restrictions-btn", function () {
@@ -176,20 +176,16 @@ const txtPages = document.getElementById("trans-pages").innerText;
 
     const viewText = document.getElementById("view-text")?.dataset.translation || "View";
 
-   const quotaText = getTranslation("quota-text", "Quota");
-   const subsText = getTranslation("subs-text", "Subs");
-   const accountChangeText = getTranslation("account-change-text", "Account Change");
-   const lotteryNameText = getTranslation("lottery-name-text", "Lottery Name");
-   const whiteListText = getTranslation("whitelist-text", "White List");
-   const deleteUserText = getTranslation("delete-user-text", "Delete User");
-   const deactivateUserText = getTranslation("deactivate-user-text", "Deactivate User");
-   const gamegroupTextss = getTranslation("deactivate-game-text", "Game Name");
-   const gamenameTexts = getTranslation("deactivate-game-type", "Game Type");
-   const gamegroupTexts = getTranslation("deactivate-game-group", "Game Group");
-
-
-
-   
+    const quotaText = getTranslation("quota-text", "Quota");
+    const subsText = getTranslation("subs-text", "Subs");
+    const accountChangeText = getTranslation("account-change-text", "Account Change");
+    const lotteryNameText = getTranslation("lottery-name-text", "Lottery Name");
+    const whiteListText = getTranslation("whitelist-text", "White List");
+    const deleteUserText = getTranslation("delete-user-text", "Delete User");
+    const deactivateUserText = getTranslation("deactivate-user-text", "Deactivate User");
+    const gamegroupTextss = getTranslation("deactivate-game-text", "Game Name");
+    const gamenameTexts = getTranslation("deactivate-game-type", "Game Type");
+    const gamegroupTexts = getTranslation("deactivate-game-group", "Game Group");
 
     function formatMoney(money) {
         let moneyStr = String(money);
@@ -203,62 +199,62 @@ const txtPages = document.getElementById("trans-pages").innerText;
         return moneyStr;
     }
 
-   const UserlistData = (data) => {
-      let html = "";
-      const status = {
-         1: "Enable", // Green
-         2: "Suspend", // Orange
-         3: "Forbbiden", // Light Blue
-         4: "Blocked", // Red
-      };
+    const UserlistData = (data) => {
+        let html = "";
+        const status = {
+            1: "Enable", // Green
+            2: "Suspend", // Orange
+            3: "Forbbiden", // Light Blue
+            4: "Blocked", // Red
+        };
 
-      //   const account_type = {
-      //     1 :"customer",
-      //     2 : "agent",
-      //     3 : "sub agent",        // Red
-      //   };
+        //   const account_type = {
+        //     1 :"customer",
+        //     2 : "agent",
+        //     3 : "sub agent",        // Red
+        //   };
 
-      const recharges = {
-         1: "momo",
-         2: "bank Transfer",
-         3: "bank card",
-         4: "crypto", // Red
-      };
+        const recharges = {
+            1: "momo",
+            2: "bank Transfer",
+            3: "bank card",
+            4: "crypto", // Red
+        };
 
-      data.forEach((item) => {
-         //  // console.log(item)
-         let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+        data.forEach((item) => {
+            //  // console.log(item)
+            let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
 
-         let subordinate;
-         if (item.account_type == 2) {
-            subordinate = "Top Agent";
-         } else if (item.account_type == 3 && item.sub_count == 0) {
-            subordinate = "Sub Agent";
-         } else if (item.account_type == 3 && item.sub_count == 1) {
-            subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates;
-         } else if (item.account_type == 3 && item.sub_count == 2) {
-            subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",")[0];
-         } else if (item.account_type == 3 && item.sub_count > 2) {
-            subordinate = username + " <i class='bx bx-dots-horizontal-rounded' ></i>" + item.subordinates.split(",")[0];
-         } else if (item.account_type == 1 && item.sub_count == 0) {
-            subordinate = "---";
-         }
+            let subordinate;
+            if (item.account_type == 2) {
+                subordinate = "Top Agent";
+            } else if (item.account_type == 3 && item.sub_count == 0) {
+                subordinate = "Sub Agent";
+            } else if (item.account_type == 3 && item.sub_count == 1) {
+                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates;
+            } else if (item.account_type == 3 && item.sub_count == 2) {
+                subordinate = username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",")[0];
+            } else if (item.account_type == 3 && item.sub_count > 2) {
+                subordinate = username + " <i class='bx bx-dots-horizontal-rounded' ></i>" + item.subordinates.split(",")[0];
+            } else if (item.account_type == 1 && item.sub_count == 0) {
+                subordinate = "---";
+            }
 
-         const formattedSubordinates = item.subordinates ? username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",").join(" <i class='bx bx-right-arrow-alt'></i> ") : "None";
-         //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-         let logincount = item.logincount == null ? "0" : item.logincount;
-         const [date, time] = item.created_at.split(" ");
-         let dates = "";
-         let times = "";
-         if (item.last_login && item.last_login !== "*****") {
-            [dates, times] = item.last_login.split(" ");
-         } else {
-            dates = item.last_login || ""; // Use empty string if null/undefined
-            times = item.last_login || "";
-         }
-         //  // console.log(item.subordinates)
+            const formattedSubordinates = item.subordinates ? username + " <i class='bx bx-right-arrow-alt'></i> " + item.subordinates.split(",").join(" <i class='bx bx-right-arrow-alt'></i> ") : "None";
+            //  let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+            let logincount = item.logincount == null ? "0" : item.logincount;
+            const [date, time] = item.created_at.split(" ");
+            let dates = "";
+            let times = "";
+            if (item.last_login && item.last_login !== "*****") {
+                [dates, times] = item.last_login.split(" ");
+            } else {
+                dates = item.last_login || ""; // Use empty string if null/undefined
+                times = item.last_login || "";
+            }
+            //  // console.log(item.subordinates)
 
-         html += `
+            html += `
                   <tr id="usrl-tr-${item.uid}">
                      <td>${username}</td>
                       <td>${item.nickname}</td>
@@ -284,7 +280,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
                                   </a>
                                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${
-                                       item.uid
+                                        item.uid
                                     }">
                                       <i class="bx bx-show fs-5"></i>${viewText}
                                     </a>
@@ -314,15 +310,15 @@ const txtPages = document.getElementById("trans-pages").innerText;
                      
                   </tr>
               `;
-      });
-      return html;
-   };
+        });
+        return html;
+    };
 
-   $(document).on("click", ".usrl-listclose", function () {
-      const parent = $(this).parents(".modal").first();
-      parent.removeClass("show");
-      parent.css({ display: "none" });
-   });
+    $(document).on("click", ".usrl-listclose", function () {
+        const parent = $(this).parents(".modal").first();
+        parent.removeClass("show");
+        parent.css({ display: "none" });
+    });
 
     $(document).on("click", ".usr-deactivate-user, .block-userbtn", function () {
         showDialog("usl-deactivate-user-dialog");
@@ -340,91 +336,83 @@ const txtPages = document.getElementById("trans-pages").innerText;
         fetchUserLogs();
     });
 
-   let parsedGameIds = []
-   $(document).on("click", ".user-lottery-name", function () {
-       $("#idHolder").val($(this).attr("data-uid")); 
-      let niiData = $(this).closest('tr').find(".nii").text()
-      console.log(niiData)
-      if(niiData != "*****"){
-        parsedGameIds = JSON.parse(niiData).lti 
-          $("#usl-lottery-name-modal").modal("show")
-         fetchLotteryTypes(parsedGameIds);
-      }else{
-         $("#usl-lottery-name-modal").modal("show")
-         fetchLotteryTypes([]);
-      }
-    
-   });
-
-   $(document).on("click", ".listclose", function () {
-      $("#usl-lottery-name-modal").modal("hide")
-       
-   });
-
-   $(document).on("click", ".usr-delete-user,.usrl-delete-userbtn", function () {
-      showDialog("usl-delete-user-dialog");
-      if ($(this).hasClass("usr-delete-user")) {
-         $("#idHolder").val($(this).attr("data-uid"));
-      }
-      if ($(this).hasClass("usrl-delete-userbtn")) {
-         manageUser("deleteUser");
-      }
-   });
-
-
-// block user account
-// Open modal when "block user" clicked in dropdown
-$(document).on("click", ".usr-block-user", function () {
-    const userID = $(this).attr("data-uid");
-    // console.log("Dropdown Clicked UID:", userID);
-    $("#idHolder").val(userID);
-    $("#usl-reset-user-dialog").modal("show");
-});
-
-// Confirm block user button inside modal
-$(document).on("click", ".usrl-block-userbtn", function () {
-    const userID = $("#idHolder").val();
-    // console.log("Block Confirmed for UID:", userID);
-
-    $.ajax({
-        url: `../user/resetUser/${userID}`,
-        type: "POST",
-        beforeSend: function () {
-            // console.log("Sending block request for UID:", userID);
-        },
-        success: function (response) {
-            // console.log("Server Response:", response);
-
-            let res;
-            try {
-                res = JSON.parse(response);
-            } catch (e) {
-                // console.error("Invalid JSON from server.");
-                showToast("Error", "Unexpected server response.", "error");
-                return;
-            }
-
-            if (res.status === "success") {
-                $("#usl-reset-user-dialog").modal("hide");
-                showToast("Completed", res.message, "success");
-
-                $(`#usrl-state-${userID}`).text("Blocked");
-            } else {
-                $("#usl-reset-user-dialog").modal("hide");
-                showToast("Heads Up", res.message, "info");
-            }
-        },
-        error: function (xhr, status, error) {
-            // console.error("Block Error:", error);
-            showToast("Error", "An error occurred, please try again.", "error");
-        },
+    let parsedGameIds = [];
+    $(document).on("click", ".user-lottery-name", function () {
+        $("#idHolder").val($(this).attr("data-uid"));
+        let niiData = $(this).closest("tr").find(".nii").text();
+        console.log(niiData);
+        if (niiData != "*****") {
+            parsedGameIds = JSON.parse(niiData).lti;
+            $("#usl-lottery-name-modal").modal("show");
+            fetchLotteryTypes(parsedGameIds);
+        } else {
+            $("#usl-lottery-name-modal").modal("show");
+            fetchLotteryTypes([]);
+        }
     });
-});
 
+    $(document).on("click", ".listclose", function () {
+        $("#usl-lottery-name-modal").modal("hide");
+    });
 
+    $(document).on("click", ".usr-delete-user,.usrl-delete-userbtn", function () {
+        showDialog("usl-delete-user-dialog");
+        if ($(this).hasClass("usr-delete-user")) {
+            $("#idHolder").val($(this).attr("data-uid"));
+        }
+        if ($(this).hasClass("usrl-delete-userbtn")) {
+            manageUser("deleteUser");
+        }
+    });
 
+    // block user account
+    // Open modal when "block user" clicked in dropdown
+    $(document).on("click", ".usr-block-user", function () {
+        const userID = $(this).attr("data-uid");
+        // console.log("Dropdown Clicked UID:", userID);
+        $("#idHolder").val(userID);
+        $("#usl-reset-user-dialog").modal("show");
+    });
 
+    // Confirm block user button inside modal
+    $(document).on("click", ".usrl-block-userbtn", function () {
+        const userID = $("#idHolder").val();
+        // console.log("Block Confirmed for UID:", userID);
 
+        $.ajax({
+            url: `../user/resetUser/${userID}`,
+            type: "POST",
+            beforeSend: function () {
+                // console.log("Sending block request for UID:", userID);
+            },
+            success: function (response) {
+                // console.log("Server Response:", response);
+
+                let res;
+                try {
+                    res = JSON.parse(response);
+                } catch (e) {
+                    // console.error("Invalid JSON from server.");
+                    showToast("Error", "Unexpected server response.", "error");
+                    return;
+                }
+
+                if (res.status === "success") {
+                    $("#usl-reset-user-dialog").modal("hide");
+                    showToast("Completed", res.message, "success");
+
+                    $(`#usrl-state-${userID}`).text("Blocked");
+                } else {
+                    $("#usl-reset-user-dialog").modal("hide");
+                    showToast("Heads Up", res.message, "info");
+                }
+            },
+            error: function (xhr, status, error) {
+                // console.error("Block Error:", error);
+                showToast("Error", "An error occurred, please try again.", "error");
+            },
+        });
+    });
 
     const renderuserlist = (data) => {
         if (data.length === 0) {
@@ -467,8 +455,6 @@ $(document).on("click", ".usrl-block-userbtn", function () {
                     renderPaginationlist(totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlist(newPage, pageLimit));
                     // document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + totalPages + " pages";
                     document.getElementById("paging_infolist").innerHTML = `${txtPage} ${page} ${txtOf} ${totalPages} ${txtPages}`;
-
-                   
                 },
                 error: function () {},
                 complete: function () {
@@ -777,15 +763,14 @@ $(document).on("click", ".usrl-block-userbtn", function () {
         $("#addagentmodal").modal("hide");
     });
 
-   async function fetchRebatedata() {
-     try {
-        
-      const response = await fetch(`../user/fetchRebatedata`);
-         if (!response.ok) {
-             throw new Error(`HTTP error! Status: ${response.status}`);
-         }
+    async function fetchRebatedata() {
+        try {
+            const response = await fetch(`../user/fetchRebatedata`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
             const data = await response.json(); // Parse JSON response
-           //  console.log(data);
+            //  console.log(data);
             let html = "";
 
             // Check if data is not empty and iterate over it to generate options
@@ -798,13 +783,13 @@ $(document).on("click", ".usrl-block-userbtn", function () {
             }
 
             $("#usererebate").html(html);
-     } catch (error) {
-         console.error("Error fetching data:", error);
-        $("#usererebate").html(`<option value="">Error loading rebates</option>`);
-   }
-   }
- 
-   fetchRebatedata();
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            $("#usererebate").html(`<option value="">Error loading rebates</option>`);
+        }
+    }
+
+    fetchRebatedata();
 
     $(document).on("click", ".btnaddagent", function () {
         const datas = $("#agentform").serialize();
@@ -968,63 +953,61 @@ $(document).on("click", ".usrl-block-userbtn", function () {
 
         $(".loaderquota").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
         //
-        $.post(`../user/updateUsedquota/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`,
-            function (result) {
-                setTimeout(function () {
-                    $(".loaderquota").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
-                    if (result) {
-                        $("#viewquota").modal("hide");
-                        // showToast("Success", "quota updated successfullly", "success");
-                        showToast(translations.success, translations.quotaUpdated, "success");
-                    } else {
-                        // showToast("Heads up !!", "no changes made", "info");
-                        showToast(headsUp, noChanges, "info");
-                    }
-                }, 500); // Duration before showing the toast
-            }
-        );
+        $.post(`../user/updateUsedquota/${uid}/${rebate_group}/${bonus_group}/${quata_group}/${count_group}/`, function (result) {
+            setTimeout(function () {
+                $(".loaderquota").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
+                if (result) {
+                    $("#viewquota").modal("hide");
+                    // showToast("Success", "quota updated successfullly", "success");
+                    showToast(translations.success, translations.quotaUpdated, "success");
+                } else {
+                    // showToast("Heads up !!", "no changes made", "info");
+                    showToast(headsUp, noChanges, "info");
+                }
+            }, 500); // Duration before showing the toast
+        });
     });
 
-   //fetch_sub
-   let navigationHistory = [];
-   $(document).on("click", ".viewsub", function () {
-      const userID = $(this).attr("data-agent-id").trim();
-      // // console.log("Navigation History:", navigationHistory);
-      fetchsubagent(userID, currentPage, pageLimit, this);
-   });
+    //fetch_sub
+    let navigationHistory = [];
+    $(document).on("click", ".viewsub", function () {
+        const userID = $(this).attr("data-agent-id").trim();
+        // // console.log("Navigation History:", navigationHistory);
+        fetchsubagent(userID, currentPage, pageLimit, this);
+    });
 
-   const fetchsubagent = (userID, currentPage, pageLimit, element) => {
-      $.ajax({
-         url: `../user/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
-         type: "POST",
-         beforeSend: function () {
-            //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
-            //  $("#ngp-wl-tbl-wrapper").LoadingOverlay("show");
-         },
-         success: function (response) {
-            response = JSON.parse(response);
-            const data = response.data;
-            // console.log(data);
-            if (response.status === "error") {
-               showToast("Error", data, "error");
-               // $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${data}</td></tr>`);
-               return;
-            }
-            if (data.length === 0) {
-               const content = $("#userlistContainer").html();
-               const pagesInfo = $("#paging_infolist").html();
-               const pagination = $("#paginationuserlist").html();
-               navigationHistory.push({ content: content, pagination: pagination, pagesInfo: pagesInfo });
-               $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
-               return;
-            }
-            const content = $("#userlistContainer").html();
-            const pagesInfo = $("#paging_infolist").html();
-            const pagination = $("#paginationuserlist").html();
-            navigationHistory.push({ content: content, pagination: pagination, pagesInfo: pagesInfo });
-            $("#userlistContainer").html(UserlistDataV2(response));
-            renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray, newPage, pageLimit));
-            document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+    const fetchsubagent = (userID, currentPage, pageLimit, element) => {
+        $.ajax({
+            url: `../user/agent_subordinate/${userID}/${currentPage}/${pageLimit}`,
+            type: "POST",
+            beforeSend: function () {
+                //    $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
+                //  $("#ngp-wl-tbl-wrapper").LoadingOverlay("show");
+            },
+            success: function (response) {
+                response = JSON.parse(response);
+                const data = response.data;
+                // console.log(data);
+                if (response.status === "error") {
+                    showToast("Error", data, "error");
+                    // $("#ngp-winLossDtholder").html(`<tr class="no-resultslist"><td colspan="13">Error: ${data}</td></tr>`);
+                    return;
+                }
+                if (data.length === 0) {
+                    const content = $("#userlistContainer").html();
+                    const pagesInfo = $("#paging_infolist").html();
+                    const pagination = $("#paginationuserlist").html();
+                    navigationHistory.push({ content: content, pagination: pagination, pagesInfo: pagesInfo });
+                    $("#userlistContainer").html(`<tr class="no-resultslist"><td colspan="13"> <img src="/admin/app/assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark"></td></tr>`);
+                    return;
+                }
+                const content = $("#userlistContainer").html();
+                const pagesInfo = $("#paging_infolist").html();
+                const pagination = $("#paginationuserlist").html();
+                navigationHistory.push({ content: content, pagination: pagination, pagesInfo: pagesInfo });
+                $("#userlistContainer").html(UserlistDataV2(response));
+                renderPaginationlist(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchsubagent(nameArray, newPage, pageLimit));
+                document.getElementById("paging_infolist").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
 
                 return;
             },
@@ -1120,7 +1103,7 @@ $(document).on("click", ".usrl-block-userbtn", function () {
                 times = item.last_login || "";
             }
 
-          html += `
+            html += `
               <tr id="usrl-tr-${item.uid}">
                  <td>${username}</td>
                   <td>${item.nickname}</td>
@@ -1193,9 +1176,9 @@ $(document).on("click", ".usrl-block-userbtn", function () {
                  
               </tr>
           `;
-      });
-       return html;
-   };
+        });
+        return html;
+    };
 
     function toggleBackButton() {
         if (navigationHistory.length > 1) {
@@ -1303,52 +1286,52 @@ $(document).on("click", ".usrl-block-userbtn", function () {
         });
     };
 
-     let GamesArr = [];
-   const fetchLotteryTypes = (datas) => {
-   $.post('../admin/fetchLoterytype', function (data) {
-      let maindata = JSON.parse(data);
-      let html = ""; 
-      maindata.data.map((lottery) => {
-         let check = datas.includes(lottery.lt_id);
-         // Avoid duplicate entries in GamesArr
-         if (check && !GamesArr.includes(lottery.lt_id)) {
-         GamesArr.push(lottery.lt_id);
-         }
-         html += `
+    let GamesArr = [];
+    const fetchLotteryTypes = (datas) => {
+        $.post("../admin/fetchLoterytype", function (data) {
+            let maindata = JSON.parse(data);
+            let html = "";
+            maindata.data.map((lottery) => {
+                let check = datas.includes(lottery.lt_id);
+                // Avoid duplicate entries in GamesArr
+                if (check && !GamesArr.includes(lottery.lt_id)) {
+                    GamesArr.push(lottery.lt_id);
+                }
+                html += `
          <tr>
             <td>${lottery.name}</td>
             <td>
-               <input class="form-check-input toggle-lot" type="checkbox" ${check ? 'checked' : ''} value="${lottery.lt_id}">
+               <input class="form-check-input toggle-lot" type="checkbox" ${check ? "checked" : ""} value="${lottery.lt_id}">
             </td>
          </tr>
          `;
-      });
+            });
 
-      $('#usrl-lot-dtholder').html(html);
+            $("#usrl-lot-dtholder").html(html);
+        });
+    };
+
+    $(document).on("click", ".toggle-lot", function () {
+        let id = parseInt($(this).val());
+        if ($(this).is(":checked")) {
+            if (!GamesArr.includes(id)) GamesArr.push(id);
+        } else {
+            GamesArr = GamesArr.filter((item) => item !== id);
+        }
     });
-   };
 
-   $(document).on("click", ".toggle-lot", function () {
-      let id = parseInt($(this).val());
-      if ($(this).is(":checked")) {
-         if (!GamesArr.includes(id)) GamesArr.push(id);
-      } else {
-         GamesArr = GamesArr.filter(item => item !== id);
-      }
-   });
-
-   $(document).on("click", ".updategames", function () {
-       const userID = $("#idHolder").val();
-       $.post(`../admin/updatesGames/${userID}/${JSON.stringify(GamesArr)}`,function(res){
-           if(res = "success"){
-            $("#usl-lottery-name-modal").modal("hide")
-            showToast("Heads Up", "User Games Updated sucessfully","success")
-            fetchUserlist(page = 1, pageLimit = 20);
-           }else{
-              showToast("Heads Up", "User Games not  Updated","info")
-           }
-       })
-   });
+    $(document).on("click", ".updategames", function () {
+        const userID = $("#idHolder").val();
+        $.post(`../admin/updatesGames/${userID}/${JSON.stringify(GamesArr)}`, function (res) {
+            if ((res = "success")) {
+                $("#usl-lottery-name-modal").modal("hide");
+                showToast("Heads Up", "User Games Updated sucessfully", "success");
+                fetchUserlist((page = 1), (pageLimit = 20));
+            } else {
+                showToast("Heads Up", "User Games not  Updated", "info");
+            }
+        });
+    });
 
     $(document).on("click", ".toggle-ip-state", function () {
         if ($(this).is(":checked")) {
@@ -1397,14 +1380,14 @@ $(document).on("click", ".usrl-block-userbtn", function () {
         });
     };
 
-   const updateUserData = () => {
-      const userID = $("#idHolder").val();
-      const flag = "updateUserInfo";
-      const depositLimit = $("#usrl-deposit-limit").val();
-      const withdrawalLimit = $("#usrl-withdrawal-limit").val();
-      const rebate = $("#usrl-rebate").val();
-      const state = $("#usrl-filter-state").val();
-      const dailyBettingLimit = $("#usrl-daily-betting-total-limit").val();
+    const updateUserData = () => {
+        const userID = $("#idHolder").val();
+        const flag = "updateUserInfo";
+        const depositLimit = $("#usrl-deposit-limit").val();
+        const withdrawalLimit = $("#usrl-withdrawal-limit").val();
+        const rebate = $("#usrl-rebate").val();
+        const state = $("#usrl-filter-state").val();
+        const dailyBettingLimit = $("#usrl-daily-betting-total-limit").val();
 
         $.ajax({
             url: `../user/updateUserData/${userID}/${depositLimit}/${withdrawalLimit}/${rebate}/${state}/${dailyBettingLimit}/${flag}`,
@@ -1451,10 +1434,10 @@ $(document).on("click", ".usrl-block-userbtn", function () {
         }
     };
 
-   const fetchUserInfo = () => {
-      const userID = $("#idHolder").val();
-      const flag = "fetchUserInfo";
-      const lotteryID = "all";
+    const fetchUserInfo = () => {
+        const userID = $("#idHolder").val();
+        const flag = "fetchUserInfo";
+        const lotteryID = "all";
 
         $.ajax({
             url: `../user/manageUser/${userID}/${lotteryID}/${flag}`,
@@ -1511,15 +1494,15 @@ $(document).on("click", ".usrl-block-userbtn", function () {
                 // console.log(response);
                 response = JSON.parse(response);
 
-            if (response.state == 0) return;
-            if (response.status == "error") {
-               showToast("Error", response.data, "error");
-               return;
-            }
+                if (response.state == 0) return;
+                if (response.status == "error") {
+                    showToast("Error", response.data, "error");
+                    return;
+                }
 
-            if (response.data == 0) {
-               // showToast("Not Done", "Already blocked", "info");
-               showToast(translations.notDone, translations.alreadyBlocked, "info");
+                if (response.data == 0) {
+                    // showToast("Not Done", "Already blocked", "info");
+                    showToast(translations.notDone, translations.alreadyBlocked, "info");
 
                     return;
                 }
@@ -1535,10 +1518,10 @@ $(document).on("click", ".usrl-block-userbtn", function () {
         });
     };
 
-   const fetchUserLogs = () => {
-      const userID = $("#idHolder").val();
-      const flag = "fetchUserLogs";
-      const lotteryID = "all";
+    const fetchUserLogs = () => {
+        const userID = $("#idHolder").val();
+        const flag = "fetchUserLogs";
+        const lotteryID = "all";
 
         $.ajax({
             url: `../user/manageUser/${userID}/${lotteryID}/${flag}`,
@@ -1871,46 +1854,45 @@ $(document).on("click", ".usrl-block-userbtn", function () {
         var passwordField = $("#agentpassword");
         var toggleIcon = $(".showpass");
 
-      // Check if the type is password and toggle between text and password
-      if (passwordField.attr("type") === "password") {
-         passwordField.attr("type", "text"); // Change input to text (show password)
-         toggleIcon.removeClass("bx-show").addClass("bx-hide"); // Change icon to "hide"
-      } else {
-         passwordField.attr("type", "password"); // Change input to password (hide password)
-         toggleIcon.removeClass("bx-hide").addClass("bx-show"); // Change icon to "show"
-      }
-   });
+        // Check if the type is password and toggle between text and password
+        if (passwordField.attr("type") === "password") {
+            passwordField.attr("type", "text"); // Change input to text (show password)
+            toggleIcon.removeClass("bx-show").addClass("bx-hide"); // Change icon to "hide"
+        } else {
+            passwordField.attr("type", "password"); // Change input to password (hide password)
+            toggleIcon.removeClass("bx-hide").addClass("bx-show"); // Change icon to "show"
+        }
+    });
 
-  //game type
+    //game type
 
-   let allGamesData;
-   let parsedGamenameIds = []
-   let bigArr = [];
-   $(document).on("click", ".usr-gametype", function () {
-      $("#usl-lottery-gameType-modal").modal("show");
-      $("#idHolder").val($(this).attr("data-uid"));  
-      let niiData = $(this).closest('tr').find(".nii").text()
-      if(niiData != "*****"){
-         let parsed = JSON.parse(niiData);
-           parsedGamenameIds = Array.isArray(parsed.gti) ? parsed.gti : [];
-        //  console.log(parsedGamenameIds) 
-      }else{
-         parsedGamenameIds = [];
-         bigArr = [];
-      }
-      $.post(`../user/getallgametype`, function (response) {
+    let allGamesData;
+    let parsedGamenameIds = [];
+    let bigArr = [];
+    $(document).on("click", ".usr-gametype", function () {
+        $("#usl-lottery-gameType-modal").modal("show");
+        $("#idHolder").val($(this).attr("data-uid"));
+        let niiData = $(this).closest("tr").find(".nii").text();
+        if (niiData != "*****") {
+            let parsed = JSON.parse(niiData);
+            parsedGamenameIds = Array.isArray(parsed.gti) ? parsed.gti : [];
+            //  console.log(parsedGamenameIds)
+        } else {
+            parsedGamenameIds = [];
+            bigArr = [];
+        }
+        $.post(`../user/getallgametype`, function (response) {
+            const data = JSON.parse(response);
+            allGamesData = data;
+            // console.log(data);
+            const keys = ["5d", "3d", "fast3", "pk10", "11x5", "mark6", "happy8", "pk6"];
 
-         const data = JSON.parse(response);
-         allGamesData = data
-        // console.log(data);
-         const keys = ["5d", "3d", "fast3", "pk10", "11x5", "mark6", "happy8", "pk6"];
+            let html = "";
 
-         let html = "";
+            keys.forEach((item) => {
+                if (!data[item]) return; // skip if key doesn't exist
 
-         keys.forEach((item) => {
-               if (!data[item]) return; // skip if key doesn't exist
-
-               html +=`
+                html += `
                <div class="accordion-item accord-item">  
                   <div class="accordion-header togglethis">
                      <span style="margin-left: 15px; display: flex; justify-content: space-between;">
@@ -1921,296 +1903,285 @@ $(document).on("click", ".usrl-block-userbtn", function () {
                   <div class="accordion-content">
                      <ul class="custom-list">
              `;
-               data[item].forEach((key) => {
-                  console.log(key)
+                data[item].forEach((key) => {
+                    console.log(key);
                     let check = parsedGamenameIds.includes(key.id);
-              //    Avoid duplicate entries in bigArr
-                  if (check && !bigArr.includes(key.id)) {
-                  bigArr.push(key.id); 
-                  }
-                  console.log(check)
-                  html += `
+                    //    Avoid duplicate entries in bigArr
+                    if (check && !bigArr.includes(key.id)) {
+                        bigArr.push(key.id);
+                    }
+                    console.log(check);
+                    html += `
                <li class="tab-buttonc item" style="height:45px;display: flex; justify-content: space-between; align-items: center; padding: 5px 10px;">
                   <span style="margin-left: 7px; font-size: 14px;"'>${key.name}</span>
-                  <input type="checkbox" ${check ? 'checked' : ''} id="${key.id}" class="chkgameids" data-gameid='${key.id}'style="width:20px;height:20px"/>
+                  <input type="checkbox" ${check ? "checked" : ""} id="${key.id}" class="chkgameids" data-gameid='${key.id}'style="width:20px;height:20px"/>
                </li>
          `;
-               });
+                });
 
-               html += `
+                html += `
                </ul>
             </div>
          </div>
          `;
-         });
+            });
 
-         $(".gamediv").html(html);
-      });
-    
-      // return;
-      
-   });
+            $(".gamediv").html(html);
+        });
 
-   $(document).on("change", ".chkgameids", function() {
-   const gameid = parseInt($(this).data("gameid"));
-   if ($(this).is(":checked")) {
-      if (!bigArr.includes(gameid)) bigArr.push(gameid);
-   } else {
-      bigArr = bigArr.filter(id => id !== gameid);
-      // Also uncheck the related "check all" if exists for this game type
-      const gametype = $(this).data("gametype");
-      if ($(".checkall[data-gametype='" + gametype + "']").length) {
-         $(".checkall[data-gametype='" + gametype + "']").prop("checked", false);
-      }
-   }
-   console.log(bigArr);
-   });
+        // return;
+    });
 
-   $(document).on("change", ".checkall", function() {
-   const gametype = $(this).data("gametype");
-   if ($(this).is(":checked")) {
-      // Add all game IDs from this gametype
-      allGamesData[gametype].forEach(item => {
-         if (!bigArr.includes(item.id)) bigArr.push(item.id);
-         $("#" + item.id).prop("checked", true);
-      });
-   } else {
-      // Remove all game IDs from this gametype
-      allGamesData[gametype].forEach(item => {
-         bigArr = bigArr.filter(id => id !== item.id);
-         $("#" + item.id).prop("checked", false);
-      });
-   }
-   console.log(bigArr);
-   });
+    $(document).on("change", ".chkgameids", function () {
+        const gameid = parseInt($(this).data("gameid"));
+        if ($(this).is(":checked")) {
+            if (!bigArr.includes(gameid)) bigArr.push(gameid);
+        } else {
+            bigArr = bigArr.filter((id) => id !== gameid);
+            // Also uncheck the related "check all" if exists for this game type
+            const gametype = $(this).data("gametype");
+            if ($(".checkall[data-gametype='" + gametype + "']").length) {
+                $(".checkall[data-gametype='" + gametype + "']").prop("checked", false);
+            }
+        }
+        console.log(bigArr);
+    });
 
-   // Accordion toggle
-   $(document).on("click", ".togglethis", function () {
-   toggleAccordion(this);
-   });
+    $(document).on("change", ".checkall", function () {
+        const gametype = $(this).data("gametype");
+        if ($(this).is(":checked")) {
+            // Add all game IDs from this gametype
+            allGamesData[gametype].forEach((item) => {
+                if (!bigArr.includes(item.id)) bigArr.push(item.id);
+                $("#" + item.id).prop("checked", true);
+            });
+        } else {
+            // Remove all game IDs from this gametype
+            allGamesData[gametype].forEach((item) => {
+                bigArr = bigArr.filter((id) => id !== item.id);
+                $("#" + item.id).prop("checked", false);
+            });
+        }
+        console.log(bigArr);
+    });
 
-// Prevent toggleAccordion when clicking .checkall
-   $(document).on("click", ".checkall", e => e.stopPropagation());
+    // Accordion toggle
+    $(document).on("click", ".togglethis", function () {
+        toggleAccordion(this);
+    });
 
-// Check/uncheck logic
-   $(document).on("click", ".updategametype", function () {
+    // Prevent toggleAccordion when clicking .checkall
+    $(document).on("click", ".checkall", (e) => e.stopPropagation());
+
+    // Check/uncheck logic
+    $(document).on("click", ".updategametype", function () {
         let userID = $("#idHolder").val();
-      $.post(`../user/updatesGamesnames/${userID}/${JSON.stringify(bigArr)}`,function(res){
-         console.log(res)
-          if(res ="success"){
-              $("#usl-lottery-gameType-modal").modal("hide"); 
-            showToast("Heads Up", "User Games Updated sucessfully","success")
-            fetchUserlist(currentPage, pageLimit);
-           }else{
-              showToast("Heads Up", "User Games not  Updated","info")
-           }
-      })
-   });
+        $.post(`../user/updatesGamesnames/${userID}/${JSON.stringify(bigArr)}`, function (res) {
+            console.log(res);
+            if ((res = "success")) {
+                $("#usl-lottery-gameType-modal").modal("hide");
+                showToast("Heads Up", "User Games Updated sucessfully", "success");
+                fetchUserlist(currentPage, pageLimit);
+            } else {
+                showToast("Heads Up", "User Games not  Updated", "info");
+            }
+        });
+    });
 
     // gametabs
-   let parsedGamegroupIds = []
-   let steveData;
-   let gameGr = []
-   $(document).on("click", ".usergamegroup", function () {
-      $("#gamegrouptype").html("");
-      $("#usl-lottery-gamegroup-modal").modal("show");
-      $("#idHolder").val($(this).attr("data-uid"));  
-      steveData = $(this).closest('tr').find(".nii").text()   
-    
-   });
+    let parsedGamegroupIds = [];
+    let steveData;
+    let gameGr = [];
+    $(document).on("click", ".usergamegroup", function () {
+        $("#gamegrouptype").html("");
+        $("#usl-lottery-gamegroup-modal").modal("show");
+        $("#idHolder").val($(this).attr("data-uid"));
+        steveData = $(this).closest("tr").find(".nii").text();
+    });
 
-   $(document).on("click", ".executegroups", function () {
-      let lotteryId = $("#lotterys").val();
-      let models = $("#allgroup").val();
-      if(steveData != "*****"){
-        let getCurrentGame = JSON.parse(steveData).tabs
-        parsedGamegroupIds = getCurrentGame[lotteryId] ?? []
-      }
-     else{
-       parsedGamegroupIds = []
-       gameGr = [];
-     }
-   //      // Fetch game group data from server
+    $(document).on("click", ".executegroups", function () {
+        let lotteryId = $("#lotterys").val();
+        let models = $("#allgroup").val();
+        if (steveData != "*****") {
+            let getCurrentGame = JSON.parse(steveData).tabs;
+            parsedGamegroupIds = getCurrentGame[lotteryId] ?? [];
+        } else {
+            parsedGamegroupIds = [];
+            gameGr = [];
+        }
+        //      // Fetch game group data from server
         $.post(`../user/fetchgamesTab/${lotteryId}/${models}`, function (res) {
-         // console.log(res);
-             try {
-                 let maindata = JSON.parse(res);
-                 let html = "";
+            // console.log(res);
+            try {
+                let maindata = JSON.parse(res);
+                let html = "";
                 // let gameGr = [];
 
-                 maindata.data.forEach((gamegroup) => {
-                     let check = parsedGamegroupIds.includes(gamegroup.name);
-            //         // Avoid duplicate entries
-                     if (check && !gameGr.includes(gamegroup.name)) {
-                         gameGr.push(gamegroup.name);
-                     }
+                maindata.data.forEach((gamegroup) => {
+                    let check = parsedGamegroupIds.includes(gamegroup.name);
+                    //         // Avoid duplicate entries
+                    if (check && !gameGr.includes(gamegroup.name)) {
+                        gameGr.push(gamegroup.name);
+                    }
 
                     html += `
                         <tr>
                             <td class="tabname">${gamegroup.name}</td>
                             <td>
-                                <input class="form-check-input gametoggle" type="checkbox" ${check ? 'checked' : ''} value="${gamegroup.gp_id}">
+                                <input class="form-check-input gametoggle" type="checkbox" ${check ? "checked" : ""} value="${gamegroup.gp_id}">
                             </td>
                         </tr>
                     `;
                 });
 
-              $("#gamegrouptype").html(html);
-          } catch (err) {
+                $("#gamegrouptype").html(html);
+            } catch (err) {
                 console.error("Error parsing game group data:", err);
-             }
+            }
         });
-   //}
-      
-   });
+        //}
+    });
 
-
-   $(document).on("change", ".gametoggle", function () {
-       const val = $(this).closest("tr").find(".tabname").text()
+    $(document).on("change", ".gametoggle", function () {
+        const val = $(this).closest("tr").find(".tabname").text();
         if ($(this).is(":checked")) {
-            if (!gameGr.includes(val)) gameGr.push(val);        
+            if (!gameGr.includes(val)) gameGr.push(val);
         } else {
             gameGr = gameGr.filter((item) => item !== val);
         }
-   });
+    });
 
-   // updategamegroup
-   $(document).on("click", ".updategamegroup", function () {
+    // updategamegroup
+    $(document).on("click", ".updategamegroup", function () {
         let userID = $("#idHolder").val();
         let models = $("#lotterys").val();
-      $.post(`../admin/updatesGamegroup/${userID}/${models}/${JSON.stringify(gameGr)}`,function(res){
-      
-          if(res ="success"){
-            $("#usl-lottery-gamegroup-modal").modal("hide"); 
-            showToast("Heads Up", "User Games Updated sucessfully","success")
-            fetchUserlist(currentPage, pageLimit);
-           }else{
-              showToast("Heads Up", "User Games not  Updated","info")
-           }
-         
-      })
-   });
+        $.post(`../admin/updatesGamegroup/${userID}/${models}/${JSON.stringify(gameGr)}`, function (res) {
+            if ((res = "success")) {
+                $("#usl-lottery-gamegroup-modal").modal("hide");
+                showToast("Heads Up", "User Games Updated sucessfully", "success");
+                fetchUserlist(currentPage, pageLimit);
+            } else {
+                showToast("Heads Up", "User Games not  Updated", "info");
+            }
+        });
+    });
 
-   //gamenames headerRowUserList
-    let parsedGamegroupIdss = []
-    let niiDatas
-    let gameName = []
-   $(document).on("click", ".usergamename", function () {
-      $('#gamenametbl').html("");
-      $("#usl-lottery-gamenems-modal").modal("show");
-      $("#idHolder").val($(this).attr("data-uid"));  
-      niiDatas = $(this).closest('tr').find(".nii").text()       
-   });
-  
-   $(document).on("click", ".executegnames", function () {
-      let lotteryId = $(".gamenametype").val().split("|")[1];
-      let models = $("#allgames").val();
-      let gamenametype = $(".gamenametype").val().split("|")[0];
-      console.log(lotteryId,gamenametype)
-      if(niiDatas != "*****"){
-        let getCurrentGames = JSON.parse(niiDatas).gpi
-        parsedGamegroupIdss = getCurrentGames[gamenametype] ?? []
-       // console.log(niiData)
-      }else{
-       $.post(`../admin/fetchGameNames/${lotteryId}/${models}`,function(res){
-       //  console.log(res)
-         // return
-           let maindata = JSON.parse(res);
-           let html = ""; 
-           gameName = []
-          maindata.data.map((gamename) => {
-         let check = parsedGamegroupIdss.includes(gamename.gn_id) ??[];
-         // Avoid duplicate entries in GamesArr
-         if (check && !gameName.includes(gamename.gn_id)) {
-         gameName.push(gamename.gp_id);
-         }
-     
-         html += `
+    //gamenames headerRowUserList
+    let parsedGamegroupIdss = [];
+    let niiDatas;
+    let gameName = [];
+    $(document).on("click", ".usergamename", function () {
+        $("#gamenametbl").html("");
+        $("#usl-lottery-gamenems-modal").modal("show");
+        $("#idHolder").val($(this).attr("data-uid"));
+        niiDatas = $(this).closest("tr").find(".nii").text();
+    });
+
+    $(document).on("click", ".executegnames", function () {
+        let lotteryId = $(".gamenametype").val().split("|")[1];
+        let models = $("#allgames").val();
+        let gamenametype = $(".gamenametype").val().split("|")[0];
+        console.log(lotteryId, gamenametype);
+        if (niiDatas != "*****") {
+            let getCurrentGames = JSON.parse(niiDatas).gpi;
+            parsedGamegroupIdss = getCurrentGames[gamenametype] ?? [];
+            // console.log(niiData)
+        } else {
+            $.post(`../admin/fetchGameNames/${lotteryId}/${models}`, function (res) {
+                //  console.log(res)
+                // return
+                let maindata = JSON.parse(res);
+                let html = "";
+                gameName = [];
+                maindata.data.map((gamename) => {
+                    let check = parsedGamegroupIdss.includes(gamename.gn_id) ?? [];
+                    // Avoid duplicate entries in GamesArr
+                    if (check && !gameName.includes(gamename.gn_id)) {
+                        gameName.push(gamename.gp_id);
+                    }
+
+                    html += `
          <tr>
             <td>${gamename.name}</td>
             <td>
-               <input class="form-check-input gamenametoggle" type="checkbox" ${check ? 'checked' : ''}  value="${gamename.gn_id}">
+               <input class="form-check-input gamenametoggle" type="checkbox" ${check ? "checked" : ""}  value="${gamename.gn_id}">
             </td>
          </tr>
          `;
-      });
-          $('#gamenametbl').html(html);
-      });
-      }
-      //return
-    
-   })
-   
-   $(document).on("change", ".gamenametoggle", function () {
-        const val = parseInt($(this).val()); 
-       // console.log(val)
+                });
+                $("#gamenametbl").html(html);
+            });
+        }
+        //return
+    });
+
+    $(document).on("change", ".gamenametoggle", function () {
+        const val = parseInt($(this).val());
+        // console.log(val)
         if ($(this).is(":checked")) {
             if (!gameName.includes(val)) gameName.push(val);
-            console.log(gameName)
+            console.log(gameName);
         } else {
             gameName = gameName.filter((item) => item !== val);
-            console.log(gameName)
+            console.log(gameName);
         }
+    });
 
-   });
+    //  $(document).on('change', '#checkAllGames', function () {
+    //  const isChecked = $(this).is(':checked');
+    //  $('.gamenametoggle').prop('checked', isChecked);
+    //  })
 
-   //  $(document).on('change', '#checkAllGames', function () {
-   //  const isChecked = $(this).is(':checked');
-   //  $('.gamenametoggle').prop('checked', isChecked);
-   //  })
+    // updategamegrou
 
-   // updategamegrou
+    $(document).on("click", ".updategamenames", function () {
+        let userID = $("#idHolder").val();
+        let gamenametypes = $(".gamenametype").val().split("|")[0];
+        console.log(userID, gamenametypes);
+        $.post(`../admin/updatesGameNamess/${userID}/${gamenametypes}/${JSON.stringify(gameName)}`, function (res) {
+            // console.log(res)
+            if ((res = "success")) {
+                $("#usl-lottery-gamename-modal").modal("hide");
+                showToast("Heads Up", "User Games Updated sucessfully", "success");
+                fetchUserlist(currentPage, pageLimit);
+            } else {
+                showToast("Heads Up", "User Games not  Updated", "info");
+            }
+        });
+    });
 
-   $(document).on("click", ".updategamenames", function () {
-       let userID = $("#idHolder").val();
-       let gamenametypes = $(".gamenametype").val().split("|")[0];
-       console.log(userID, gamenametypes)
-      $.post(`../admin/updatesGameNamess/${userID}/${gamenametypes}/${JSON.stringify(gameName)}`,function(res){
-         // console.log(res)
-          if(res ="success"){
-             $("#usl-lottery-gamename-modal").modal("hide"); 
-            showToast("Heads Up", "User Games Updated sucessfully","success")
-            fetchUserlist(currentPage, pageLimit);
-           }else{
-              showToast("Heads Up", "User Games not  Updated","info")
-           }
-         
-      })
-   });
-
-  async function fetchLotteryname() {
-      try {
-          const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
-          if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          const data = await response.json(); // Parse JSON response
-          let html = `<option value="">${translator['Lottery Type']}</option>`;
-          data.forEach((lottery) => {
-            html += `<option value="${lottery.gt_id}|${lottery.lottery_type}">${lottery.name}</option>`;
-          });
-          $(".gamenametype").html(html);
-      } catch (error) {
-          console.error("Error fetching data:", error);
-      }
-  }
-  fetchLotteryname();
-                   
+    async function fetchLotteryname() {
+        try {
+            const response = await fetch(`../admin/fetchLotteryname/${partnerID}`); // Await the fetch call
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json(); // Parse JSON response
+            let html = `<option value="">${translator["Lottery Type"]}</option>`;
+            data.forEach((lottery) => {
+                html += `<option value="${lottery.gt_id}|${lottery.lottery_type}">${lottery.name}</option>`;
+            });
+            $(".gamenametype").html(html);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+    fetchLotteryname();
 });
 
 const lotteriesMarkup = (lottery, blockedLotteries) => {
-   const lotteryID = lottery.lt_id;
+    const lotteryID = lottery.lt_id;
     const status = blockedLotteries.includes(`${lotteryID}`) ? "Disabled" : "Active";
-   // const checkedState = status == "Active" ? "checked" : "";
-   return `<tr>
+    // const checkedState = status == "Active" ? "checked" : "";
+    return `<tr>
             <td><span class="lottery-name"> ${lottery.name}</span></td>
             <td><input class="form-check-input toggle-lot" type="checkbox" value="${lotteryID}"></td>
             </tr>`;
 };
 const userIpsMarkup = (data) => {
-   const checkedState = data.ip_state === "allowed" ? "checked" : "";
-   const ipState = data.ip_state === "allowed" ? "Allowed" : "Blocked";
-   return `<tr>
+    const checkedState = data.ip_state === "allowed" ? "checked" : "";
+    const ipState = data.ip_state === "allowed" ? "Allowed" : "Blocked";
+    return `<tr>
             <td><b class="">${data.ip} </b></td>
             <td><span class="lottery-status">${data.login_date} / ${data.login_time}</span></td>
             <td><span class="">${ipState}</span></td>
@@ -2218,7 +2189,7 @@ const userIpsMarkup = (data) => {
             </tr>`;
 };
 const showDialog = (btnID) => {
-   const modalElement = $("#" + btnID);
-   modalElement.hasClass("show") ? modalElement.css({ display: "none" }) : modalElement.css({ display: "block" });
-   modalElement.toggleClass("show");
+    const modalElement = $("#" + btnID);
+    modalElement.hasClass("show") ? modalElement.css({ display: "none" }) : modalElement.css({ display: "block" });
+    modalElement.toggleClass("show");
 };
