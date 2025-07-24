@@ -53,32 +53,7 @@ $(function () {
         }
         return moneyStr;
     }
-    // const FinanceData = (data) => {
-    //   let html = "";
-
-    //   data.forEach((item) => {
-    //     let total_income = item.deposit_withdrawal_type == 1 ? `+${item.deposit_and_withdrawal_amount}` :
-    //     item.deposit_withdrawal_type == 4 ? `-${item.deposit_and_withdrawal_amount}` : 0;
-
-    //       let types = item.deposit_withdrawal_type == 1 ? 'Deposit':item.deposit_withdrawal_type == 4 ? 'Withdrawal' : '';
-    //       let username = item.reg_type === "email" ? item.email : (item.reg_type === "username" ? item.username : item.contact);
-    //       let timezone = item.timezone.split(" ");
-    //         timezone     = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`
-    //      html += `
-    //           <tr>
-    //           <td>${username}</td>
-    //           <td>VIP</td>
-    //           <td>${types}</td>
-    //           <td>${formatMoney(total_income)}</td>
-    //           <td>${formatMoney(item.recharge_balance_in_advance)}</td>
-    //           <td>${item.date_created +' / '+item.deposit_and_withdrawal_time}</td>
-    //           <td>${timezone}</td>
-    //           <td>${item.remark.charAt(0).toUpperCase() + item.remark.slice(1)}</td>
-    //           </tr>
-    //               `;
-    //      });
-    //   return html;
-    // };
+  
     const financeTypes = {
         1: document.getElementById("finance_deposit").innerText,
         4: document.getElementById("finance_withdrawal").innerText,
@@ -89,26 +64,23 @@ $(function () {
 
         data.forEach((item) => {
             let total_income = item.deposit_withdrawal_type == 1 ? `+${item.deposit_and_withdrawal_amount}` : item.deposit_withdrawal_type == 4 ? `-${item.deposit_and_withdrawal_amount}` : 0;
-
             let types = financeTypes[item.deposit_withdrawal_type] ?? "";
-
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-
             let timezone = item.timezone.split(" ");
             timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
-
             html += `
-      <tr>
-        <td>${username}</td>
-        <td>VIP</td>
-        <td>${types}</td>
-        <td>${formatMoney(total_income)}</td>
-        <td>${formatMoney(item.recharge_balance_in_advance)}</td>
-        <td>${item.date_created} / ${item.deposit_and_withdrawal_time}</td>
-        <td>${timezone}</td>
-        <td>${item.remark.charAt(0).toUpperCase() + item.remark.slice(1)}</td>             
-      </tr>
-    `;
+         <tr>
+            <td>${username}</td>
+            <td>VIP</td>
+            <td>${types}</td>
+            <td>${formatMoney(total_income)}</td>
+            <td>${formatMoney(item.recharge_balance_in_advance)}</td>
+            <td>${item.date_created} / ${item.deposit_and_withdrawal_time}</td>
+            <td>${timezone}</td>
+            <td>${item.remark.charAt(0).toUpperCase() + item.remark.slice(1)}</td>            
+            <td>${item.approved_by}</td>   
+        </tr>
+        `;
         });
 
         return html;
@@ -239,92 +211,6 @@ $(function () {
         $(".loaderfinance").removeClass("bx-check-double").addClass("bx-loader bx-spin");
     });
 
-    let debounceTimeout = null;
-    $(document).ready(function () {
-        // Event listener for keyup on #myInput
-        $(document).on("keyup", "#financeinput", function () {
-            const query = $(this).val().trim();
-            // Only trigger if input is more than 2 characters
-            if (query.length > 1) {
-                clearTimeout(debounceTimeout); // Clear any existing timeout
-                debounceTimeout = setTimeout(fetchUserss, 500, query); // Call fetchUsers with the query after 500ms delay
-            } else {
-                $(".financeDropdowns").hide(); // Hide dropdown if input is less than 3 characters
-            }
-        });
-
-        // Handle dropdown item selection
-        $(document).on("change", ".financeDropdowns", function () {
-            const selectedOption = $(this).find("option:selected");
-            const selectedUserId = selectedOption.val();
-            const selectedUsername = selectedOption.data("usernames");
-
-            if (selectedUserId) {
-                $("#financeinput").val(selectedUsername);
-                $(".userIdFields").val(selectedUserId);
-                $(".financeDropdowns").hide();
-            }
-        });
-
-        $(document).on("click", function (e) {
-            const $dropdownbet = $("#userfinaceDropdown");
-            if (!$(e.target).closest("#financeinput, #userfinaceDropdown").length) {
-                $dropdownbet.hide();
-            }
-        });
-        // Handle manual input clearing
-        $(document).on("input", "#financeDropdowns", function () {
-            if (!$(this).val()) {
-                $(".userIdFields").val(""); // Reset user ID if input is cleared
-            }
-        });
-    });
-
-
-  
-    
-    // Function to fetch and display users
-    function fetchUserss(query) {
-        let optionsHtml = '';
-    
-        $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
-            try {
-                response = typeof response === 'string' ? JSON.parse(response) : response;
-
-           //     console.log(response);
-              
-          response.forEach(user => {
-           let   displayValue;
-           let regname;
-            // Display based on regtype
-            if (user.regtype === "email") {
-               displayValue = user.email;
-               regname = user.email;  // Show email
-            } else if (user.regtype === "username") {
-              displayValue = user.username;
-              regname = user.username;  // Show username
-            } else if (user.regtype === "contact") {
-              displayValue = user.contact;
-              regname  = user.contact;  // Show contact
-            }else{
-              displayValue = 'no data found ...';
-              regname = 'no data found ...';  // Show contact
-             }
-          
-              // Append the option to the optionsHtml string
-              optionsHtml += `<option class="optionlists" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
-          });
-                $('.financeDropdowns').html(optionsHtml).show();
-            } catch (error) {
-                console.error("Error parsing response: ", error);
-                $('.financeDropdowns').hide();
-            }
-        }).fail(function () {
-            console.error("Error fetching users.");
-            $('.financeDropdowns').hide();
-        });
-    }
-    
     //add money
     $(document).on("click", ".addmoneybtn", function () {
         // const deposity = $("#financeinput").val()
@@ -333,6 +219,7 @@ $(function () {
         const amount = $(".amount").val();
         const review = $(".review").val();
         const approvedby = $(".approved").val();
+     
         if (amount === "" || review === "" || usernames === "" || approvedby === "") {
              showToast("Heads up!!", "All field are required", "info");
 
@@ -505,8 +392,8 @@ $(function () {
     });
 
    $('#financeinputs').bind('typeahead:select', function (e, userr) {
-    console.log('Selected UID:', userr.uid);
-    $(".userIdFields").val(userr.uid);
+        console.log('Selected UID:', userr.uid);
+        $(".userIdFields").val(userr.uid);
     });
 
 //   $('#financeinputs').on('input', function () {

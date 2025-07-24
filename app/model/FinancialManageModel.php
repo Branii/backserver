@@ -146,7 +146,7 @@ class FinancialManageModel extends MEDOOHelper
         $success = false; // Initialize a success fla
 
         if ($desposittype == 1) {
-            $depositSuccess     = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance);
+            $depositSuccess     = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $username);
             $newDepositSuccess  = self::insertIntoDepositsNew($uid, $amount, $username, $Data['contact']);
             $transactionSuccess = self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data);
 
@@ -156,9 +156,9 @@ class FinancialManageModel extends MEDOOHelper
             }
 
         } elseif ($desposittype == 4) {
-            $depositSuccess        = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance);
+            $depositSuccess        = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance,$username);
             $transactionSuccess    = self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data);
-            $withdrawManageSuccess = self::insertIntoWithdrawManage($uid, $amount, $username, $Data['contact']);
+            $withdrawManageSuccess = self::insertIntoWithdrawManage($uid, $amount, $Data['contact']);
 
             if ($depositSuccess && $transactionSuccess && $withdrawManageSuccess) {
                 self::updateBalance($uid, $recharge_balance);
@@ -169,7 +169,7 @@ class FinancialManageModel extends MEDOOHelper
         return $success ? "success" : "failed";
     }
 
-    public static function insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance)
+    public static function insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $username)
     {
         $params = [
             'user_id'                       => $uid,
@@ -181,6 +181,7 @@ class FinancialManageModel extends MEDOOHelper
             'deposit_and_withdrawal_time'   => date("H:i:s"),
             'date_created'                  => date("Y-m-d"),
             'remark'                        => $review,
+            'approved_by'                   => $username,
         ];
         return $inserdata = parent::insert("deposits_and_withdrawals", $params);
     }
@@ -220,7 +221,7 @@ class FinancialManageModel extends MEDOOHelper
         return $res;
     }
 
-    public static function insertIntoWithdrawManage($uid, $amount, $username, $contact)
+    public static function insertIntoWithdrawManage($uid, $amount, $contact)
     {
         $manualusername  = "Enzerhub";
         $manualemail     = "enzerhub@gmail.com";
@@ -238,8 +239,8 @@ class FinancialManageModel extends MEDOOHelper
             'user_level'                  => 'Vip',
             'bank_type'                   => 'MTN',
             'withdrawal_channel'          => '4',
-            'card_holder'                 => 'Enzerhub',
-            'bank_card_number'            => 'Company Number',
+            'card_holder'                 => 'user',
+            'bank_card_number'            => $contact,
             'withdrawal_amount'           => $amount,
             'actual_withdrawal_amount'    => $amount,
             'withdrawal_application_time' => $currentDateTime,
@@ -247,9 +248,9 @@ class FinancialManageModel extends MEDOOHelper
             'withdrawal_time'             => $currentTime,
             'withdrawal_date'             => $currentDate,
             'withdrawal_timezone'         => self::timezoneConverter(),
-            'withdrawal_state'            => '2',
+            'withdrawal_state'            => '1',
             'review'                      => 'Done',
-            'approved_by'                 => $username,
+            // 'approved_by'                 => $username,
         ];
 
         $res      = parent::insert("withdrawal_manage", $params);
@@ -414,69 +415,125 @@ class FinancialManageModel extends MEDOOHelper
     //NOTE -
     //////////////Withdrawal Records -//////////
     //
-    public static function WithrawalDataRecords($partnerID = 0, $page = 1, $limit = 10): array
+    public static function WithrawalDataRecords($page, $limit): array
     {
         try {
-            $startpoint = ($page - 1) * $limit;
-            $table_name = "withdrawal_manage";
-            $db         = parent::openLink();
-            // $data = parent::query("SELECT *,(SELECT COUNT(*) FROM {$table_name}) AS total_records FROM withdrawal_manage ORDER BY withdrawalid DESC LIMIT :offset, :limit", ['offset' => $startpoint, 'limit' => $limit]);
-            $stmt = $db->query("SELECT *,(SELECT COUNT(*) FROM {$table_name}) AS total_records FROM withdrawal_manage ORDER BY withdrawalid DESC LIMIT :offset, :limit", [':offset' => $startpoint, ':limit' => $limit]);
-            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return ["status" => "success", 'data' => $data];
+
+            $startpoint = $page * $limit - $limit;
+            $data       = parent::query(
+                "SELECT withdrawal_manage.*,users_test.email,users_test.contact,users_test.reg_type,users_test.username
+             FROM withdrawal_manage
+             LEFT JOIN users_test ON users_test.uid = withdrawal_manage.uid
+             ORDER BY withdrawal_manage.withdrawalid DESC
+             LIMIT :offset, :limit",
+                ['offset' => $startpoint, 'limit' => $limit]
+            );
+
+            $totalRecords = parent::count('withdrawal_manage');
+            return ['data' => $data, 'total' => $totalRecords];
         } catch (Exception $e) {
             return ["status" => "error", 'data' => "Internal Server Error."];
         }
-        // $totalRecords  = parent::count('withdrawal_manage');
-        // // $trasationIds = array_column($data, 'order_id');
-        // return ['data' => $data, 'total' => $totalRecords];
     }
 
-    public static function filterWidrlRecords($partnerID, $userData, $page = 1, $limit = 10): array
+    public static function Withdrawsubquery($username, $widrlChannels, $widrlStatus, $withdrawid, $startdate, $enddate)
+    {
+        $filterConditions = [];
+
+        if (! empty($username)) {
+            $filterConditions[] = "uid = '$username'";
+        }
+
+        if (! empty($widrlChannels)) {
+            $filterConditions[] = "withdrawal_channel = '$widrlChannels'";
+        }
+        if (! empty($withdrawid)) {
+            $filterConditions[] = "withdrawal_id = '$withdrawid'";
+        }
+
+        if (! empty($widrlStatus)) {
+            $filterConditions[] = "withdrawal_state = '$widrlStatus'";
+        }
+
+        if (! empty($startdate) && ! empty($enddate)) {
+            $filterConditions[] = "DATE(withdrawal_date) BETWEEN '$startdate' AND '$enddate'";
+        } elseif (! empty($startdate)) {
+            $filterConditions[] = "DATE(withdrawal_date) = '$startdate'";
+        } elseif (! empty($enddate)) {
+            $filterConditions[] = "DATE(withdrawal_date) = '$enddate'";
+        }
+
+        if (! empty($filterConditions)) {
+            $subQuery = implode(' AND ', $filterConditions);
+        }
+        // Add ordering and limit to the query
+        $subQuery .= "ORDER BY withdrawal_manage.withdrawal_date DESC";
+
+        return $subQuery;
+    }
+
+    public static function FilterWithdrawData($subQuerys, $page, $limit)
+    {
+        $startpoint = ($page - 1) * $limit;
+
+        $sql = "
+                SELECT
+                    temp_tables.*,
+                    users_test.email AS email,
+                    users_test.reg_type,
+                    users_test.username AS username,
+                    users_test.contact
+                FROM
+                    (
+                        SELECT *
+                        FROM withdrawal_manage
+                        WHERE $subQuerys
+                    ) AS temp_tables
+                 LEFT JOIN
+                    users_test ON users_test.uid = temp_tables.uid
+                LIMIT :offset, :limit
+            ";
+
+        // Define the query to count total records
+        $countSqlss = "
+                SELECT
+                    COUNT(*) AS totals_count
+                FROM
+                    withdrawal_manage
+                WHERE
+                    $subQuerys
+            ";
+
+        // Execute the main SQL query
+        $data                = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
+        $totalRecordsResults = parent::query($countSqlss);
+        $totalRecords        = $totalRecordsResults[0]['totals_count'];
+
+        return ['data' => $data, 'total' => $totalRecords];
+    }
+
+        //NOTE -
+            //////////////Withdrawal Records -//////////
+            //
+    public static function WithrawalDataManage($page, $limit): array
     {
         try {
-            $offset     = ($page - 1) * $limit;
-            $table_name = "withdrawal_manage";
-            $db         = parent::openLink();
 
-            $where_clause = "";
-            $params       = ['offset' => (int) $offset, 'limit' => (int) $limit];
+            $startpoint = $page * $limit - $limit;
+            $data       = parent::query(
+                "SELECT withdrawal_manage.*,users_test.email,users_test.contact,users_test.reg_type,users_test.username
+             FROM withdrawal_manage
+             LEFT JOIN users_test ON users_test.uid = withdrawal_manage.uid
+             ORDER BY withdrawal_manage.withdrawalid DESC
+             LIMIT :offset, :limit",
+                ['offset' => $startpoint, 'limit' => $limit]
+            );
 
-            foreach ($userData as $key => $value) {
-                if ($value === "all" || in_array($key, ["start_date", "end_date"]) || in_array($key, ["start_date", "end_date"])) {
-                    continue;
-                }
-                $key               = $key == "username" && filter_var($value, FILTER_VALIDATE_EMAIL) ? "user_email" : $key;
-                $params[":{$key}"] = $value;
-                $where_clause .= empty($where_clause) ? " WHERE {$key}=:{$key}" : " AND {$key}=:{$key}";
-            }
-
-            // Handle date conditions
-            $startDate = $userData['start_date'];
-            $endDate   = $userData['end_date'];
-
-            if ($startDate !== "all" && $endDate === "all") {
-                $where_clause .= empty($where_clause) ? " WHERE withdrawal_date = :start_date" : " AND withdrawal_date = :start_date ";
-                $params[':start_date'] = $startDate;
-            } elseif ($startDate === "all" && $endDate !== "all") {
-                $where_clause .= empty($where_clause) ? " WHERE withdrawal_date = :end_date" : " AND withdrawal_date = :end_date ";
-                $params[':end_date'] = $endDate;
-            } elseif ($startDate !== "all" && $endDate !== "all") {
-                $start = min($startDate, $endDate);
-                $end   = max($startDate, $endDate);
-                $where_clause .= empty($where_clause) ? " WHERE withdrawal_date BETWEEN :start_date AND :end_date " : " AND withdrawal_date BETWEEN :start_date AND :end_date ";
-                $params[':start_date'] = $start;
-                $params[':end_date']   = $end;
-            }
-
-            $sql  = "SELECT *, (SELECT COUNT(*) FROM {$table_name} {$where_clause}) AS total_records FROM {$table_name} $where_clause ORDER BY withdrawalid DESC LIMIT :offset, :limit";
-            $stmt = $db->query($sql, $params);
-
-            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
-            // $trasationIds = array_column($data, 'order_id');
-            return ["status" => true, 'data' => $data];
-        } catch (\Exception $e) {
-            return ['status' => false, 'data' => "Interval Server Error. " . $e->getMessage()];
+            $totalRecords = parent::count('withdrawal_manage');
+            return ['data' => $data, 'total' => $totalRecords];
+        } catch (Exception $e) {
+            return ["status" => "error", 'data' => "Internal Server Error."];
         }
     }
+
 }

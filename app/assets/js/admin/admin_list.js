@@ -551,23 +551,24 @@ const txtPages = document.getElementById("trans-pages").innerText;
             25: { title: "User Payment Method", content: "usernotsi" },
             26: { title: "SMS Configuration", content: "smsconfig" },
             27: { title: "Email Configuration", content: "emailconfigure" },
-            28: { title: "Email Configuration", content: "emailconfigure" },
+            28: { title: "Lottery Exception", content: "lottery" },
+            29: { title: "Withdrawal Manage", content: "wlottery" }
        
         };
         const sidebarMain = {
             1: { category: "Business flow", items: [1, 2, 3, 4] },
-            2: { category: "Financial Management", items: [5, 6, 7] },
+            2: { category: "Financial Management", items: [5, 6, 7, 29] },
             3: { category: "Report Management", items: [8, 19] },
             4: { category: "User Management", items: [9, 10, 24] },
             5: { category: "Promotion Management", items: [11] },
             6: { category: "User Bank Management", items: [12, 25] },
-            7: { category: "Game Management", items: [14, 15, 16,28] },
+            7: { category: "Game Management", items: [14, 15, 16, 28] },
             8: { category: "Agent Management", items: [13] },
             9: { category: "System Management", items: [17, 18] },
             10: { category: "System Announcement", items: [20, 21] },
             11: { category: "Payment Platform", items: [22] },
             12: { category: "Partner Management", items: [23] },
-            13: { category: "Platform Setting", items: [26,27] },
+            13: { category: "Platform Setting", items: [26, 27] },
         
         };
         let html = "";

@@ -386,16 +386,16 @@ $(() => {
                 ? `<li class="name-items"> No Data Found.</li>`
                 : `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
           }
-          $("#user-list-wrapper").html(optionsHtml);
-          $(".usr-res-wrapper").show();
+           $("#user-list-wrapper").html(optionsHtml);
+         $(".usr-res-wrapper").show();
         } catch (error) {
           console.error("Error parsing response: ", error);
-          $(".userDropdown").hide();
+           $(".userDropdown").hide();
         }
       }
     ).fail(function () {
       console.error("Error fetching users.");
-      $(".userDropdown").hide();
+      // $(".userDropdown").hide();
     });
   };
 

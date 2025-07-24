@@ -72,7 +72,7 @@
         cursor: pointer;
     }
 
-    .table-wrapperwithdraw {
+    .table-wrapperwithdraws {
         overflow: hidden;
         /* Hide the default scrollbar */
         white-space: nowrap;
@@ -142,27 +142,27 @@
     }
 
     /* Custom Scrollbar for Webkit Browsers */
-    .table-wrapperwithdraw::-webkit-scrollbar {
+    .table-wrapperwithdraws::-webkit-scrollbar {
         width: 5px;
         /* Slimmer scrollbar width */
         height: 5px;
         /* Slimmer scrollbar height for horizontal scrolling */
     }
 
-    .table-wrapperwithdraw::-webkit-scrollbar-track {
+    .table-wrapperwithdraws::-webkit-scrollbar-track {
         background: #f1f1f1;
         /* Lighter background for track */
         border-radius: 5px;
     }
 
-    .table-wrapperwithdraw::-webkit-scrollbar-thumb {
+    .table-wrapperwithdraws::-webkit-scrollbar-thumb {
         background-color: #ccc;
         /* Blue color for thumb */
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .table-wrapperwithdraw::-webkit-scrollbar-thumb:hover {
+    .table-wrapperwithdraws::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
         /* Darker blue on hover */
     }
@@ -262,20 +262,20 @@
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0"><?= $translator['Withdrawal Records']; ?></h4>
+        <h4 class="card-title mb-0"><?= $translator['Withdrawal Manage']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 130%;">
-                <input type="text" id="withdrawalname" class="form-control widrl-queryholdertrans widrl-username mytrans" placeholder="<?= $translator['Search usernames']; ?>">
-                <input name="usernames" type="hidden"  id="widrl-userID" class="userIdtrans widrl-queryholdertrans">
-                <select class="form-control withdrawDropdowns" size="5" style="display: none;" id="users-options-wrapper" >
+                <input type="text" id="withdrawalnames" class="form-control widrl-queryholdertrans widrl-username mytrans" placeholder="<?= $translator['Search usernames']; ?>">
+                <input name="usernames" type="hidden"  id="widrl-userIDs" class="userIdtrans widrl-queryholdertrans">
+                <select class="form-control withdrawDropdowns" size="5" style="display: none;" id="users-options-wrappers" >
 
                 </select>
-                <input type="text" class="form-control widrl-queryholdertrans orderid" id="widrl-ID" aria-describedby="name" placeholder=" <?= $translator['Search Withdrawal ID']; ?>">
+                <input type="text" class="form-control widrl-queryholdertrans orderid" id="widrl-IDs" aria-describedby="name" placeholder=" <?= $translator['Search Withdrawal ID']; ?>">
 
-                <select name="lotteryname" id="widrl-channels" class="form-control form-select widrl-queryholdertrans tracklotery " data-bs-placeholder="Select Type">
+                <select name="lotteryname" id="widrl-channelss" class="form-control form-select widrl-queryholdertrans tracklotery " data-bs-placeholder="Select Type">
                     <option value=""><?= $translator['Withdrawal Channels']; ?></option>
                     <option value="3"><?= $translator['Momo']; ?></option>
                     <option value="2"><?= $translator['Bank']; ?></option>
@@ -283,7 +283,7 @@
                     <option value="4"><?= $translator['Manual']; ?></option>
                 </select>
 
-                <select name="lotteryname" id="widrl-state" class="form-control form-select widrl-queryholdertrans tracklotery " data-bs-placeholder="Select Type">
+                <select name="lotteryname" id="widrl-states" class="form-control form-select widrl-queryholdertrans tracklotery " data-bs-placeholder="Select Type">
                     <option value=""><?= $translator['Withdrawal Status']; ?></option>
                     <option value="2"><?= $translator['Approved']; ?></option>
                     <option value="1"><?= $translator['Pending']; ?></option>
@@ -294,8 +294,8 @@
 
                 </select>
                  
-                <input type="date"  class="form-control widrl-queryholdertrans wdrl-startdate" id="widrl-startDate" aria-describedby="name" placeholder="Start Date">
-                <input type="date"  class="form-control widrl-queryholdertrans wdrl-enddate"   id="widrl-endDate" aria-describedby="name" placeholder="End Date">
+                <input type="date"  class="form-control widrl-queryholdertrans wdrl-startdates"  aria-describedby="name" placeholder="Start Date">
+                <input type="date"  class="form-control widrl-queryholdertrans wdrl-enddates"    aria-describedby="name" placeholder="End Date">
 
             </div>
        
@@ -309,13 +309,13 @@
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
                 
-                <button type="button" class="btn bg-white-subtle player refreshwithdrawa" value="right" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle player refreshwithdrawas" value="right" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle widrl-search" value="end" aria-label="Execute"
+                <button type="button" class="btn bg-white-subtle widrl-searchs" value="end" aria-label="Execute"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                    <i class='bx bx-check-double loaderwithdraw' style="font-size:20px"></i>
+                    <i class='bx bx-check-double loaderwithdraws' style="font-size:20px"></i>
                 </button>
             </div>
 
@@ -324,7 +324,7 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperwithdraw" id="maskwithdraw" style="height:530px;overflow-y:scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperwithdraws" id="maskwithdraws" style="height:530px;overflow-y:scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4 table-head-widrl">
                     <tr class="tbl-row-widrl">
@@ -335,22 +335,7 @@
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Level']; ?></h6>
-                        </th>
-						<th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bank Type']; ?></h6>
-                        </th>
-						<th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Withdrawal Channel']; ?></h6>
-                        </th>
-						<th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Cardholder']; ?></h6>
-                        </th>
-						
-						<th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bank Card Number']; ?>
-                        </th>
+					
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Withdrawal Amount']; ?></h6>
                         </th>
@@ -372,10 +357,13 @@
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Approved By']; ?></h6>
                         </th>
+                         <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
+                        </th>
                         
                     </tr>
                 </thead>
-                <tbody id="withdrawContainer">
+                <tbody id="withdrawContainers">
 
                     <tr class="no-resultslist">
                         <td colspan="9">
@@ -391,10 +379,10 @@
         <span class="toplist-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-                <button type="button" class="btn bg-white-subtle playerwithdraw" data-page="widrl-leftlinks">
+                <button type="button" class="btn bg-white-subtle playerwithdraws" data-page="widrl-leftlinkss">
                     <i class='bx bx-chevron-left' style="font-size:20px"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle playerwithdraw" data-page="widrl-rightlinks">
+                <button type="button" class="btn bg-white-subtle playerwithdraws" data-page="widrl-rightlinkss">
                     <i class='bx bx-chevron-right' style="font-size:20px"></i>
                 </button>
                 
@@ -402,18 +390,18 @@
         </span>
         <span class="toplist-center" aria-label=" navigation example">
 
-            <span id="paging_infowithdraw" style="color:#aaa">---</span>
+            <span id="paging_infowithdraws" style="color:#aaa">---</span>
 
         </span>
         <span class="top-right-btn"  aria-label="Page navigation example">
-           <select class="left-element form-control numrowstrans" id="widrl-numrowstans" style="font-size: 12px;">
+           <select class="left-element form-control numrowstrans" id="widrl-numrowstanss" style="font-size: 12px;">
             <option value="20"><?= $translator['20'] ?? '20' ?></option>
             <option value="50"><?= $translator['50'] ?? '50' ?></option>
             <option value="100"><?= $translator['100'] ?? '100' ?></option>
             <option value="200"><?= $translator['200'] ?? '200' ?></option>
             <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
-            <span class="right-element" id="paginationwithdraw">
+            <span class="right-element" id="paginationwithdraws">
                 <!--Dynamic pagination-->
             </span>
 
@@ -424,39 +412,3 @@
 </div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="add=ContactMbodavoc" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-flex align-items-center">
-                <div>  <h5><?= $translator['withdraw']; ?></h5></div>
-                <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' ></i></div>
-            </div>
-            <div class="modal-body">
-                <div class="add-contact-box">
-                    <div class="add-contact-content">
-                        <form id="add=CbontactModalTitle">
-                             
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mb-3 contact-location">
-                                        <input type="text" id="c-b-withdraw" class="form-control" placeholder="Update all withdraw" />
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="d-flex gap-6 m-0">
-                    <!-- <button id="btn-add" class="btn btn-light">Add</button> -->
-                    <button id="btn-setalldeposibt[" class="btn btn-light" data-bs-dismiss="modal">Save</button>
-                    <button class="btn bg-danger-subtle text-danger" data-bs-dismiss="modal"> Discard
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>

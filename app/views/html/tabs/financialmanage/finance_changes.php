@@ -144,19 +144,6 @@
     background-color: #fff;
 }
 
-.financeDropdowns {
-    /* position: absolute; */
-    /* background-color: #fff; */
-    /* color: #aaa; */
-    /* max-height: 500px; */
-    /* overflow-y: scroll; */
-    /* border-radius: 5px; */
-    /* padding: 10px; */
-    /* top: 90%; */
-    /* z-index: 9999; */
-    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
-    /* display: none; */
-}
 
 .financefunds {
     width: 19%;
@@ -231,7 +218,7 @@
     color: #909aa9;
     margin: 0px 1rem;
     }
-    .tt-menu {
+.tt-menu {
   width: 100%;
   background: #fff;
   border: 1px solid #ccc;
@@ -410,6 +397,9 @@
                        </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Reviews']; ?></h6>
+                        </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Approved By']; ?></h6>
                         </th>
                       
                     </tr>

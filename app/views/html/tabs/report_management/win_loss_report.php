@@ -230,7 +230,7 @@
     }
 
     li.name-items {
-        color: #5a6a85;
+        /* color: #5a6a85; */
         padding: 9px 12px;
     }
     li.name-items:last-child {
@@ -239,7 +239,7 @@
     }
     .usr-res-wrapper {
         position: absolute;
-        width: 17%;
+        width: 10%;
         border-radius: 5px;
         max-height: fit-content;
         background: #fff;
@@ -248,8 +248,12 @@
         z-index: 10;
     }
     li.name-items:hover {
-        background: #0c2f6b !important;
-        color: #fff;
+        /* background: #0c2f6b !important; */
+         background: #eee !important;
+        /* color: #fff; */
+         text-align: left;
+        border-bottom: solid 1px #eee;
+        padding: 5px;
     }
 
     .lot-res-wrapper {
@@ -365,7 +369,7 @@
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 120%;">
                 <div style="width: 65%;">
                     <input name="usernamelist" class="queryholderlist form-control bring-forward" id="wl-username" data-user-id="" placeholder="<?= $translator['Username']; ?>" autocomplete="off" style="width: 97%;" />
-                    <div class="usr-res-wrapper" style="width: 26.5%;"><ul style="max-height: 403px; margin: 0px; overflow-y: auto;" id="user-list-wrapper"></ul></div>
+                    <div class="usr-res-wrapper" style="width: 22.5%;"><ul style="max-height: 403px; margin: 0px; overflow-y: auto;" id="user-list-wrapper"></ul></div>
                 </div>
 
                 <div class="custom-dropdown" style="width: 57%; margin-right: 5px;">
@@ -463,19 +467,13 @@
             <span id="paging_infowl" style="color: #aaa;">---</span>
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
-            <select class="left-element form-control numrowstrans" id="wl-numrowstans" style="font-size: 12px;">
-                <!-- <option value="10">10</option>
-            <select class="left-element form-control" id="wl-numrowstans" style="font-size: 12px;">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option value="50">50</option> -->
-    <option value="10"><?= $translator['10'] ?? '10' ?></option>
+            <select class="left-element form-control numrowstrans" id="wl-numrowstans" style="font-size: 12px;">     
+            <option value="10"><?= $translator['10'] ?? '10' ?></option>
             <option value="20"><?= $translator['20'] ?? '20' ?></option>
-                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
-    <option value="100"><?= $translator['100'] ?? '100' ?></option>
-    <option value="200"><?= $translator['200'] ?? '200' ?></option>
-    <option value="500"><?= $translator['500'] ?? '500' ?></option>
+            <option value="50"><?= $translator['50'] ?? '50' ?></option>
+            <option value="100"><?= $translator['100'] ?? '100' ?></option>
+            <option value="200"><?= $translator['200'] ?? '200' ?></option>
+            <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
             <span id="wl-pagination-wrapper" class="right-element">lsdsdsa;fdjs;lfda </span>
         </span>

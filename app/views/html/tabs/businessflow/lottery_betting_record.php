@@ -60,7 +60,7 @@
 
     .topplist-right {
         position: absolute;
-        top: 10px;
+        /* top: 8px; */
         /* Distance from the top */
         right: 10px;
         /* Distance from the right */
@@ -79,11 +79,6 @@
     }
 
 
-    .optionlist:hover {
-        background-color: #eee;
-    }
-
-   
     .no-resultslist {
         text-align: center;
         /* Center horizontally */
@@ -98,7 +93,7 @@
         position: relative;
         top: 100px;
     }
-    
+
     .table-wrapperlottery {
         overflow: hidden;
         /* Hide the default scrollbar */
@@ -180,26 +175,16 @@
         /* Rounded corners for the track */
     }
 
-    .tbl-header {
-        position: sticky;
-        top: 0;
-    }
-
-    .sticky-header {
-        position: relative;
-        bottom: 1px;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-    }
 
     .userDropdownb {
-        width: 12%;
+        width: 11.5%;
         position: absolute;
         background-color: #fff;
         color: #aaa;
         max-height: 300px;
         overflow-y: scroll;
         border-radius: 5px;
-        padding: 10px;
+        padding: 2px;
         top: 90%;
         z-index: 9999;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -296,67 +281,63 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   }
 
-  .arr {
-    color: #909aa9;
-    margin: 0px 1rem;
-    }
 </style>
 
 
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
-<span id="gamemodel_1" style="display:none;"><?= $translator['gamemodel_standard'] ?></span>
-<span id="gamemodel_2" style="display:none;"><?= $translator['gamemodel_two_sides'] ?></span>
-<span id="gamemodel_3" style="display:none;"><?= $translator['gamemodel_road_bets'] ?></span>
-<span id="gamemodel_4" style="display:none;"><?= $translator['gamemodel_long_dragon'] ?></span>
-<span id="gamemodel_5" style="display:none;"><?= $translator['gamemodel_many_tables'] ?></span>
-<span id="gamemodel_6" style="display:none;"><?= $translator['gamemodel_board_games'] ?></span>
-<span id="gamemodel_7" style="display:none;"><?= $translator['gamemodel_fantan'] ?></span>
-<span id="gamemodel_8" style="display:none;"><?= $translator['gamemodel_trend'] ?></span>
+<span id="gamemodel_1" style="display:none;"><?php echo $translator['gamemodel_standard']?></span>
+<span id="gamemodel_2" style="display:none;"><?php echo $translator['gamemodel_two_sides']?></span>
+<span id="gamemodel_3" style="display:none;"><?php echo $translator['gamemodel_road_bets']?></span>
+<span id="gamemodel_4" style="display:none;"><?php echo $translator['gamemodel_long_dragon']?></span>
+<span id="gamemodel_5" style="display:none;"><?php echo $translator['gamemodel_many_tables']?></span>
+<span id="gamemodel_6" style="display:none;"><?php echo $translator['gamemodel_board_games']?></span>
+<span id="gamemodel_7" style="display:none;"><?php echo $translator['gamemodel_fantan']?></span>
+<span id="gamemodel_8" style="display:none;"><?php echo $translator['gamemodel_trend']?></span>
 
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0"><?= $translator['Lottery Betting Record']; ?></h4>
+        <h4 class="card-title mb-0"><?php echo $translator['Lottery Betting Record'];?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist1">
         <form action="" class="betform">
             <span class="top-left-btn">
-                <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:98%">
-                    <input type="text" id="myInput" class="form-control queryholderbet usernames" placeholder="<?= $translator['Search Username']; ?>" />
+                <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:6px;width:auto">
+                    <input type="text" id="myInput" class="form-control queryholderbet usernames" placeholder="<?php echo $translator['Search Username'];?>" />
                     <input name="usernames" type="hidden" class="userIdbet" />
-                    <input type="text" id="lot-betID" class="form-control queryholderbet search-betID" placeholder="<?= $translator['Search Bet Order ID']; ?>" />
+                    <input type="text" id="lot-betID" class="form-control queryholderbet search-betID" placeholder="<?php echo $translator['Search Bet Order ID'];?>" />
                     <select class="form-control userDropdownb" size="5" style="display: none;" id="userlotteryDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>
-            
-                    <select name="lotteryname" class="form-control form-select queryholderbet typelottery selectlottery" data-bs-placeholder="Select Type"> 
+                      <div class="custom-dropdown" style="width:30%; margin-right: 5px;">
+                        <select name="lotteryname" class="form-control form-select queryholderbet typelottery selectlottery" data-bs-placeholder="Select Type">
 
-                    </select>
+                        </select>
+                        </div>
 
                     <select name="betsate" class="form-control form-select queryholderbet betsate" data-bs-placeholder="Select Type">
-                        <option value=""> -<?= $translator['State']; ?>-</option>
-                        <option value="1"> <?= $translator['Settled']; ?></option>
-                        <option value="2"><?= $translator['Unsettled']; ?></option>
-                        <option value="4"> <?= $translator['Cancelled Bet']; ?></option>
-                       
-                       
+                        <option value=""> -<?php echo $translator['State'];?>-</option>
+                        <option value="1"> <?php echo $translator['Settled'];?></option>
+                        <option value="2"><?php echo $translator['Unsettled'];?></option>
+                        <option value="4"> <?php echo $translator['Cancelled Bet'];?></option>
+
                     </select>
 
                     <select name="betstatus" class="form-control form-select queryholderbet betstatus" data-bs-placeholder="Select Type">
                         <option value="">
                             -
-                            <?= $translator['Bet Status']; ?>-
+                            <?php echo $translator['Bet Status'];?>-
                         </option>
-                        <option value="2"><?= $translator['Win']; ?></option>
-                        <option value="3"><?= $translator['Loss']; ?></option>
-                        <option value="5"><?= $translator['Pending']; ?></option>
-                        <option value="6"><?= $translator['Void']; ?></option>
-                        <option value="7"><?= $translator['Refund']; ?></option>
+                        <option value="2"><?php echo $translator['Win'];?></option>
+                        <option value="3"><?php echo $translator['Loss'];?></option>
+                        <option value="5"><?php echo $translator['Pending'];?></option>
+                        <option value="6"><?php echo $translator['Void'];?></option>
+                        <option value="7"><?php echo $translator['Refund'];?></option>
                     </select>
 
-                    <select name="lotteryname" class="form-control form-select queryholderbet selectpartner"> 
+                    <select name="lotteryname" class="form-control form-select queryholderbet selectpartner">
 
                      </select>
 
@@ -364,7 +345,7 @@
 
                     <input name="enddate" type="date" class="form-control queryholderbet enddates" aria-describedby="name" placeholder="Name" />
 
-               
+
                 </div>
             </span>
             <span class="toplist-center" aria-label=" navigation example">
@@ -390,61 +371,50 @@
                 <tr class="headrowbet">
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">
-                                <?= $translator['Bet Order ID']; ?>
+                                <?php echo $translator['Bet Order ID'];?>
                             </h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Username'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Issue Number']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Issue Number'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Type']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Lottery Type'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Game Model']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Game Model'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Game Type']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Game Type'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Time']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Bet Time'];?></h6>
                         </th>
                         <th>
-                         <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
+                         <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Time Zone/Hrs'];?></h6>
                         </th>
-                                  <!-- <th>
-                        <h6 class="fs-4 fw-semibold mb-0">Bet Type</h6>
-                      </th> -->
-                                  <!-- <th>
-                        <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Prize']; ?></h6>
-                      </th> -->
-                       
+
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Unit Stake']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Unit Stake'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Multiplier']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Multiplier'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bet Amount']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Total Bet Amount'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win Amount']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Win Amount'];?></h6>
                         </th>
-                        <!-- <th>
-                    <h6 class="fs-4 fw-semibold mb-0">Rebate Amount</h6>
-                  </th> -->
+                     
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win/Loss']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Win/Loss'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Status'];?></h6>
                         </th>
-                        <!-- <th>
-                    <h6 class="fs-4 fw-semibold mb-0">IP</h6>
-                  </th> -->
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
                         </th>
@@ -482,17 +452,17 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowsbet" style="font-size: 12px;">
-            <option value="100"><?= $translator['100'] ?? '100' ?></option>
-            <option value="200"><?= $translator['200'] ?? '200' ?></option>
-            <option value="500"><?= $translator['500'] ?? '500' ?></option>
+            <option value="100"><?php echo $translator['100'] ?? '100'?></option>
+            <option value="200"><?php echo $translator['200'] ?? '200'?></option>
+            <option value="500"><?php echo $translator['500'] ?? '500'?></option>
             </select>
             <span class="toplist-right" id="paginationbet" class="right-element">
             <!-- paginationation -->
             </span>
-           
+
         </span>
-     
-      
+
+
     </div>
 </div>
 
@@ -505,7 +475,7 @@
             <div class="modal-body">
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between">
-                        <div><?= $translator['Bet Info']; ?></div>
+                        <div><?php echo $translator['Bet Info'];?></div>
                         <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
                     </div>
                 </div>

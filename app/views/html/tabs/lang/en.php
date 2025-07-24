@@ -693,6 +693,10 @@ return [
     'Total Bet Settled' => 'Total Bet Settled',
     'Total Bet Unsettled' => 'Total Bet Unsettled',
     'Cancel / Refund' =>'Cancel / Refund',
+    'Withdrawal Status' =>'Withdrawal Status',
+    'Approved' =>'Approved',
+    'Rejected' =>'Rejected',
+    'Withdrawal Manage' =>'Withdrawal Manage',
 
   //(Basic Platform Configuration)
   'SMS Configuration' => 'SMS Configuration',

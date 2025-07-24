@@ -147,7 +147,7 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    public function  fetchPartnername($partnerID)
+    public function  fetchPartnername()
     {
         $this->view('exec/businessflow', ['flag' => 'partnernames']);
         $this->view->render();
