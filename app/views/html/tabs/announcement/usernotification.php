@@ -233,16 +233,14 @@
     }
 </style>
 
+<span id="Editt-text" data-translation="<?= $translator['Edit'] ?? 'Edit'; ?>" style="display: none;"></span>
+<span id="Deletee-text" data-translation="<?= $translator['Delete'] ?? 'Delete'; ?>" style="display: none;"></span>
 
-
-<span id="Editt-text" data-translation="<?= $translator['Edit'] ?? 'Edit'; ?>" style="display:none;"></span>
-<span id="Deletee-text" data-translation="<?= $translator['Delete'] ?? 'Delete'; ?>" style="display:none;"></span>
-  
 <!-- Hidden translation spans -->
-<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp'] ?? 'Heads up!!'; ?>" style="display:none;"></span>
-<span id="trans-select-fields" data-translation="<?= $translator['Select one or more data fields to filter'] ?? 'Select one or more data fields to filter'; ?>" style="display:none;"></span>
-<span id="trans-all-fields" data-translation="<?= $translator['AllFieldsRequired'] ?? 'All fields are required'; ?>" style="display:none;"></span>
-<span id="trans-failed" data-translation="<?= $translator['Failed'] ?? 'Failed'; ?>" style="display:none;"></span>
+<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp'] ?? 'Heads up!!'; ?>" style="display: none;"></span>
+<span id="trans-select-fields" data-translation="<?= $translator['Select one or more data fields to filter'] ?? 'Select one or more data fields to filter'; ?>" style="display: none;"></span>
+<span id="trans-all-fields" data-translation="<?= $translator['AllFieldsRequired'] ?? 'All fields are required'; ?>" style="display: none;"></span>
+<span id="trans-failed" data-translation="<?= $translator['Failed'] ?? 'Failed'; ?>" style="display: none;"></span>
 
 <span id="trans-no-user-selected-title" style="display: none;"><?php echo $translator['NO_USER_SELECTED_TITLE']; ?></span>
 <span id="trans-no-user-selected-msg" style="display: none;"><?php echo $translator['NO_USER_SELECTED_MSG']; ?></span>
@@ -250,12 +248,9 @@
 <span id="trans-read" style="display: none;"><?php echo $translator['READ']; ?></span>
 <span id="trans-unread" style="display: none;"><?php echo $translator['UNREAD']; ?></span>
 
-<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
-
-
-
+<span id="trans-page" class="hidden" style="display: none;"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden" style="display: none;"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden" style="display: none;"><?= $translator['pages'] ?? 'pages' ?></span>
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
@@ -370,12 +365,11 @@
                 <option value="200">200</option> -->
                 <option value="500">500</option>
 
-
-               <option value="20"><?= $translator['20'] ?? '20' ?></option>
-                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
-    <option value="100"><?= $translator['100'] ?? '100' ?></option>
-    <option value="200"><?= $translator['200'] ?? '200' ?></option>
-    <option value="500"><?= $translator['500'] ?? '500' ?></option>
+                <option value="20"><?= $translator['20'] ?? '20' ?></option>
+                <option value="50"><?= $translator['50'] ?? '50' ?></option>
+                <option value="100"><?= $translator['100'] ?? '100' ?></option>
+                <option value="200"><?= $translator['200'] ?? '200' ?></option>
+                <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
             <span class="toplist-right" id="paginationnoti" aria-label="Page navigation example">
                 <!--Dynamic pagination-->

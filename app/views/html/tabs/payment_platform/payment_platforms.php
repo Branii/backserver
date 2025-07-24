@@ -285,10 +285,9 @@
 <span id="trans-currencyselect" data-translation="<?= $translator['CurrencySelect'] ?? 'Currency Select'; ?>" style="display: none;"></span>
 <span id="trans-approvedby" data-translation="<?= $translator['ApprovedBy'] ?? 'Approved By'; ?>" style="display: none;"></span>
 
-<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
-
+<span id="trans-page" class="hidden" style="display: none;"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden" style="display: none;"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden" style="display: none;"><?= $translator['pages'] ?? 'pages' ?></span>
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
@@ -429,11 +428,10 @@
                 <option value="200">200</option>
                 <option value="500">500</option> -->
 
-
-                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
-    <option value="100"><?= $translator['100'] ?? '100' ?></option>
-    <option value="200"><?= $translator['200'] ?? '200' ?></option>
-    <option value="500"><?= $translator['500'] ?? '500' ?></option>
+                <option value="50"><?= $translator['50'] ?? '50' ?></option>
+                <option value="100"><?= $translator['100'] ?? '100' ?></option>
+                <option value="200"><?= $translator['200'] ?? '200' ?></option>
+                <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
             <span class="toplist-right" id="paginationpayments" aria-label="Page navigation example">
                 <!--Dynamic pagination-->

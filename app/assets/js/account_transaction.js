@@ -50,7 +50,8 @@ $(function () {
             9: { title: translator["Sending Red Envelope"], color: "#FF5722" }, // Deep Orange
             10: { title: translator["Red Envelope Receive"], color: "#795548" }, // Brown
             11: { title: translator["Bet Refund"], color: "#FFC107" }, // Amber
-            13: { title: translator["Profit Limit"], color: "#FFC106" } // Amber
+            13: { title: translator["Profit Limit"], color: "#FFC106" }, // Amber
+              12: { title: translator["Bet Lost"], color: "#FFC106" } // Amber
         };
 
         let completes = translator["Completed"];

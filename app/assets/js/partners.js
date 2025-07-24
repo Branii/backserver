@@ -653,9 +653,10 @@ $(() => {
         const currency = $("#ptns-currency").val();
         const siteUrl = $("#ptns-site-url").val();
         const adminSiteUrl = $("#ptns-admin-site-url").val();
-
-        const encodedSiteUrl = encodeURIComponent(siteUrl).replace(/%2F/g, "%252F");
-        const encodedAdminSiteUrl = encodeURIComponent(adminSiteUrl).replace(/%2F/g, "%252F");
+        // const encodedSiteUrl = encodeURIComponent(siteUrl).replace(/%2F/g, "%252F");
+        // const encodedAdminSiteUrl = encodeURIComponent(adminSiteUrl).replace(/%2F/g, "%252F");
+        const encodedSiteUrl = encodeURIComponent(siteUrl);
+        const encodedAdminSiteUrl = encodeURIComponent(adminSiteUrl);
 
         $.post(`../partner/addNewPartner/${partnerName}/${currency}/${encodedSiteUrl}/${encodedAdminSiteUrl}`, function (response) {
             try {

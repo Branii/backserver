@@ -201,9 +201,9 @@
 <!-- Title -->
 <span id="trans-heads-up" data-translation="<?= htmlspecialchars($translator['HeadsUp'] ?? 'Heads up!') ?>" style="display: none;"></span>
 
-<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+<span id="trans-page" class="hidden" style="display: none;"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden" style="display: none;"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden" style="display: none;"><?= $translator['pages'] ?? 'pages' ?></span>
 
 <!-- Store translated and original text for "select fields" -->
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>

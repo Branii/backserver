@@ -1,200 +1,200 @@
 <style>
-.pagerlist {
-    position: relative;
-    /* Sets positioning context for absolute elements inside */
-    padding: 20px;
-    height: 80px;
-    background-color: #f9f9f9;
-}
+    .pagerlist {
+        position: relative;
+        /* Sets positioning context for absolute elements inside */
+        padding: 20px;
+        height: 80px;
+        background-color: #f9f9f9;
+    }
 
-.pagerlist {
-    position: relative;
-    /* Sets positioning context for absolute elements inside */
-    padding: 20px;
-    height: 80px;
-    background-color: #f9f9f9;
-}
+    .pagerlist {
+        position: relative;
+        /* Sets positioning context for absolute elements inside */
+        padding: 20px;
+        height: 80px;
+        background-color: #f9f9f9;
+    }
 
-.toplist-left-btn {
-    position: absolute;
-    top: 10px;
-    /* Distance from the top */
-    left: 10px;
-    /* Distance from the left */
-    padding: 5px 10px;
-    /* background-color: #007bff; */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    .toplist-left-btn {
+        position: absolute;
+        top: 10px;
+        /* Distance from the top */
+        left: 10px;
+        /* Distance from the left */
+        padding: 5px 10px;
+        /* background-color: #007bff; */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-.toplist-center {
-    position: absolute;
-    top: 50%;
-    /* Vertically centers the button */
-    left: 50%;
-    /* Horizontally centers the button */
-    transform: translate(-50%, -50%);
-    /* Adjusts for button size */
-    padding: 5px 15px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    .toplist-center {
+        position: absolute;
+        top: 50%;
+        /* Vertically centers the button */
+        left: 50%;
+        /* Horizontally centers the button */
+        transform: translate(-50%, -50%);
+        /* Adjusts for button size */
+        padding: 5px 15px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-.toplist-right-btn {
-    position: absolute;
-    top: 10px;
-    /* Distance from the top */
-    right: 10px;
-    /* Distance from the right */
-    padding: 5px 10px;
-    /* background-color: #28a745; */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    .toplist-right-btn {
+        position: absolute;
+        top: 10px;
+        /* Distance from the top */
+        right: 10px;
+        /* Distance from the right */
+        padding: 5px 10px;
+        /* background-color: #28a745; */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-.topplist-right {
-    position: absolute;
-    top: 10px;
-    /* Distance from the top */
-    right: 10px;
-    /* Distance from the right */
-    padding: 5px 10px;
-    /* background-color: #28a745; */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    .topplist-right {
+        position: absolute;
+        top: 10px;
+        /* Distance from the top */
+        right: 10px;
+        /* Distance from the right */
+        padding: 5px 10px;
+        /* background-color: #28a745; */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-.table-wrapperbankcard {
-    overflow: hidden;
-    /* Hide the default scrollbar */
-    white-space: nowrap;
-    max-width: 100%;
-    /* Adjust based on your needs */
-    margin-bottom: 10px;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 10px;
-    background: rgb(38, 57, 77) 0px 20px 30px -10px;
-    /* Ensure it doesn't interfere with content */
-    z-index: 10;
-}
+    .table-wrapperbankcard {
+        overflow: hidden;
+        /* Hide the default scrollbar */
+        white-space: nowrap;
+        max-width: 100%;
+        /* Adjust based on your needs */
+        margin-bottom: 10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: rgb(38, 57, 77) 0px 20px 30px -10px;
+        /* Ensure it doesn't interfere with content */
+        z-index: 10;
+    }
 
-.queryholderbankcard {
-    width: 33%;
-    margin-right: 5px;
-    background-color: #fff;
-}
+    .queryholderbankcard {
+        width: 33%;
+        margin-right: 5px;
+        background-color: #fff;
+    }
 
-.queryholderlinks {
-    width: 33%;
-    position: absolute;
-    background-color: #fff;
-    color: #aaa;
-    max-height: 300px;
-    overflow-y: scroll;
-    border-radius: 5px;
-    padding: 10px;
-    top: 90%;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    display: none;
-}
+    .queryholderlinks {
+        width: 33%;
+        position: absolute;
+        background-color: #fff;
+        color: #aaa;
+        max-height: 300px;
+        overflow-y: scroll;
+        border-radius: 5px;
+        padding: 10px;
+        top: 90%;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        display: none;
+    }
 
-.optionlink {
-    text-align: left;
-    border-bottom: solid 1px #eee;
-    padding: 5px;
-}
+    .optionlink {
+        text-align: left;
+        border-bottom: solid 1px #eee;
+        padding: 5px;
+    }
 
-.optionlink:hover {
-    background-color: #eee;
-}
+    .optionlink:hover {
+        background-color: #eee;
+    }
 
-#userDropdownlist {
-    max-height: 300px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
+    #userDropdownlist {
+        max-height: 300px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
 
-.no-resultslist {
-    text-align: center;
-    /* Center horizontally */
-    vertical-align: middle;
-    /* Center vertically */
-    height: 20px;
-    /* Set a minimum height to ensure centering */
-    border: none;
-}
+    .no-resultslist {
+        text-align: center;
+        /* Center horizontally */
+        vertical-align: middle;
+        /* Center vertically */
+        height: 20px;
+        /* Set a minimum height to ensure centering */
+        border: none;
+    }
 
-.no-resultslist img {
-    position: relative;
-    top: 100px;
-}
+    .no-resultslist img {
+        position: relative;
+        top: 100px;
+    }
 
-/* Custom Scrollbar for Webkit Browsers */
-.table-wrapperbankcard::-webkit-scrollbar {
-    width: 5px;
-    /* Slimmer scrollbar width */
-    height: 5px;
-    /* Slimmer scrollbar height for horizontal scrolling */
-}
+    /* Custom Scrollbar for Webkit Browsers */
+    .table-wrapperbankcard::-webkit-scrollbar {
+        width: 5px;
+        /* Slimmer scrollbar width */
+        height: 5px;
+        /* Slimmer scrollbar height for horizontal scrolling */
+    }
 
-.table-wrapperbankcard::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    /* Lighter background for track */
-    border-radius: 5px;
-}
+    .table-wrapperbankcard::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        /* Lighter background for track */
+        border-radius: 5px;
+    }
 
-.table-wrapperbankcard::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    /* Blue color for thumb */
-    border-radius: 10px;
-    cursor: pointer;
-}
+    .table-wrapperbankcard::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        /* Blue color for thumb */
+        border-radius: 10px;
+        cursor: pointer;
+    }
 
-.table-wrapperbankcard::-webkit-scrollbar-thumb:hover {
-    background-color: #aaa;
-    /* Darker blue on hover */
-}
+    .table-wrapperbankcard::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+        /* Darker blue on hover */
+    }
 
-.editable {
-    /* cursor: pointer; */
-    background-color: #f9f9f9;
-}
+    .editable {
+        /* cursor: pointer; */
+        background-color: #f9f9f9;
+    }
 
-.editable:focus {
-    outline: 1px solid #ccc;
-    background-color: #fff;
-    /* Optional: Make it stand out */
-}
+    .editable:focus {
+        outline: 1px solid #ccc;
+        background-color: #fff;
+        /* Optional: Make it stand out */
+    }
 
-.bl-users-wrapper,
-.bl-bank-type-wrapper {
-    position: absolute;
-    width: 17%;
-    border-radius: 5px;
-    max-height: fit-content;
-    background: #fff;
-    border: 1px solid #dfe5ef;
-    display: none;
-    z-index: 10;
-}
+    .bl-users-wrapper,
+    .bl-bank-type-wrapper {
+        position: absolute;
+        width: 17%;
+        border-radius: 5px;
+        max-height: fit-content;
+        background: #fff;
+        border: 1px solid #dfe5ef;
+        display: none;
+        z-index: 10;
+    }
 
-#bl-names-wrapper {
-    max-height: 403px;
-    margin: 0px;
-    overflow-y: auto;
-}
+    #bl-names-wrapper {
+        max-height: 403px;
+        margin: 0px;
+        overflow-y: auto;
+    }
 
-/* .tbl-bl-headeruserlist {
+    /* .tbl-bl-headeruserlist {
     position: sticky;
     z-index: 999;
     top: 0;
@@ -207,82 +207,77 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 } */
 
-.tbl-headeruserbank {
-    position: sticky;
-    top: 0;
-}
+    .tbl-headeruserbank {
+        position: sticky;
+        top: 0;
+    }
 
-.sticky-headeruserbank {
-    position: relative;
-    bottom: 1px;
-    background-color: red;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-}
+    .sticky-headeruserbank {
+        position: relative;
+        bottom: 1px;
+        background-color: red;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    }
 
-/* Custom Scrollbar for Webkit Browsers */
-.table-wrapperbankcard::-webkit-scrollbar {
-    width: 5px;
-    /* Slimmer scrollbar width */
-    height: 5px;
-    /* Slimmer scrollbar height for horizontal scrolling */
-}
+    /* Custom Scrollbar for Webkit Browsers */
+    .table-wrapperbankcard::-webkit-scrollbar {
+        width: 5px;
+        /* Slimmer scrollbar width */
+        height: 5px;
+        /* Slimmer scrollbar height for horizontal scrolling */
+    }
 
-.table-wrapperbankcard::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    /* Lighter background for track */
-    border-radius: 5px;
-}
+    .table-wrapperbankcard::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        /* Lighter background for track */
+        border-radius: 5px;
+    }
 
-.table-wrapperbankcard::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    /* Blue color for thumb */
-    border-radius: 10px;
-    cursor: pointer;
-}
+    .table-wrapperbankcard::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        /* Blue color for thumb */
+        border-radius: 10px;
+        cursor: pointer;
+    }
 
-.table-wrapperbankcard::-webkit-scrollbar-thumb:hover {
-    background-color: #aaa;
-    /* Darker blue on hover */
-}
+    .table-wrapperbankcard::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+        /* Darker blue on hover */
+    }
 
-.table-wrapperbankcard {
-    overflow: hidden;
-    /* Hide the default scrollbar */
-    white-space: nowrap;
-    max-width: 100%;
-    /* Adjust based on your needs */
-    margin-bottom: 10px;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 10px;
-    background: rgb(38, 57, 77) 0px 20px 30px -10px;
-    /* Ensure it doesn't interfere with content */
-    z-index: 10;
-}
+    .table-wrapperbankcard {
+        overflow: hidden;
+        /* Hide the default scrollbar */
+        white-space: nowrap;
+        max-width: 100%;
+        /* Adjust based on your needs */
+        margin-bottom: 10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: rgb(38, 57, 77) 0px 20px 30px -10px;
+        /* Ensure it doesn't interfere with content */
+        z-index: 10;
+    }
 
-.arr {
-    color: #909aa9;
-    margin: 0px 1rem;
+    .arr {
+        color: #909aa9;
+        margin: 0px 1rem;
     }
 </style>
-
-
 
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
 
+<span id="bank_state_1" style="display: none;"><?= $translator['bank_state_in_force'] ?></span>
+<span id="bank_state_2" style="display: none;"><?= $translator['bank_state_not_active'] ?></span>
+<span id="bank_state_3" style="display: none;"><?= $translator['bank_state_terminated'] ?></span>
+<span id="bank_state_4" style="display: none;"><?= $translator['bank_state_deleted'] ?></span>
 
-<span id="bank_state_1" style="display:none;"><?= $translator['bank_state_in_force'] ?></span>
-<span id="bank_state_2" style="display:none;"><?= $translator['bank_state_not_active'] ?></span>
-<span id="bank_state_3" style="display:none;"><?= $translator['bank_state_terminated'] ?></span>
-<span id="bank_state_4" style="display:none;"><?= $translator['bank_state_deleted'] ?></span>
-
-
-<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
-
+<span id="trans-page" class="hidden" style="display: none;"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden" style="display: none;"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden" style="display: none;"><?= $translator['pages'] ?? 'pages' ?></span>
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
@@ -294,28 +289,24 @@
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 120%;">
                 <input id="bl-idholder" type="hidden" value="" />
                 <div style="width: 65%;">
-                    <input name="usernamelist" class="form-control bring-forward" id="bl-username" data-user-id=""
-                        placeholder="<?= $translator['Search usernames']; ?>" autocomplete="off" style="width: 97%;" />
+                    <input name="usernamelist" class="form-control bring-forward" id="bl-username" data-user-id="" placeholder="<?= $translator['Search usernames']; ?>" autocomplete="off" style="width: 97%;" />
                     <div class="bl-users-wrapper" style="width: 24.5%;">
                         <ul style="max-height: 403px; margin: 0px; overflow-y: auto;" id="bl-names-wrapper"></ul>
                     </div>
                 </div>
 
                 <div style="width: 65%;">
-                    <input name="bank-type" class="form-control bring-forward" id="bl-bank-type"
-                        placeholder="<?= $translator['Search Bank Type']; ?>" autocomplete="off" style="width: 97%;" />
+                    <input name="bank-type" class="form-control bring-forward" id="bl-bank-type" placeholder="<?= $translator['Search Bank Type']; ?>" autocomplete="off" style="width: 97%;" />
                     <div class="bl-bank-type-wrapper" style="width: 24.5%;">
                         <ul style="max-height: 403px; margin: 0px; overflow-y: auto;" id="bl-bank-type-wrapper"></ul>
                     </div>
                 </div>
                 <div style="width: 65%;">
-                    <input name="card-number" type="text" class="form-control bring-forward" value=""
-                        id="bl-card-number" placeholder="<?= $translator['Search Card Number']; ?>" autocomplete="off" style="width: 97%;" />
+                    <input name="card-number" type="text" class="form-control bring-forward" value="" id="bl-card-number" placeholder="<?= $translator['Search Card Number']; ?>" autocomplete="off" style="width: 97%;" />
                 </div>
 
                 <div class="custom-dropdown" style="width: 57%; margin-right: 5px;">
-                    <select name="lotteryname" class="form-control form-select" id="bl-status"
-                        data-bs-placeholder="Select Type">
+                    <select name="lotteryname" class="form-control form-select" id="bl-status" data-bs-placeholder="Select Type">
                         <option value="0"><?= $translator['Status']; ?></option>
                         <option value="1"><?= $translator['In Force']; ?></option>
                         <option value="2"><?= $translator['Not Active']; ?></option>
@@ -332,14 +323,11 @@
             <!--enter is free-->
         </span>
         <span class="topplist-right" id="paginations" aria-label="Page navigation example">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example"
-                style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-                <button type="button" class="btn bg-white-subtle player refreshbankcard" value="" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                <button type="button" class="btn bg-white-subtle player refreshbankcard" value="" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle bl-search" value="" aria-label="Search"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Search">
+                <button type="button" class="btn bg-white-subtle bl-search" value="" aria-label="Search" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Search">
                     <i class="bx loaderlist bx-check-double" style="font-size: 20px;"></i>
                 </button>
             </div>
@@ -347,8 +335,7 @@
     </div>
 
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperbankcard" id="maskbanks"
-            style="height: 530px; overflow-y: scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperbankcard" id="maskbanks" style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4 tbl-headeruserbank">
                     <tr class="headrowuserbank">
@@ -387,8 +374,7 @@
                 <tbody id="bankcardContainer">
                     <tr class="no-resultslist">
                         <td colspan="9">
-                            <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo"
-                                alt="Logo-Dark" />
+                            <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
                         </td>
                     </tr>
                 </tbody>
@@ -397,8 +383,7 @@
     </div>
     <div class="px-4 py-3 border-top pagerlist">
         <span class="toplist-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example"
-                style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
                 <button type="button" class="btn bg-white-subtle playerbankcard" value="leftlinks">
                     <i class="bx bx-chevron-left" style="font-size: 20px;"></i>
                 </button>
@@ -437,16 +422,14 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="addContactMbodavov" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle"
-    aria-hidden="true">
+<div class="modal fade" id="addContactMbodavov" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header d-flex align-items-center">
                 <div>
                     <h5>bankcard</h5>
                 </div>
-                <div><i class="bx bx-message-square-x tclose"
-                        style="color: #868c87; font-size: 25px; cursor: pointer;"></i></div>
+                <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;"></i></div>
             </div>
             <div class="modal-body">
                 <div class="add-contact-box">
@@ -455,8 +438,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-3 contact-location">
-                                        <input type="text" id="c-b-bankcardr" class="form-control"
-                                            placeholder="Update all bankcard" />
+                                        <input type="text" id="c-b-bankcardr" class="form-control" placeholder="Update all bankcard" />
                                     </div>
                                 </div>
                             </div>

@@ -353,9 +353,9 @@
 <span id="trans-status-deactivated" style="display:none;"><?php echo $translator['STATUS_DEACTIVATED']; ?></span>
 
 
-<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+<span id="trans-page" class="hidden" style="display:none;"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden" style="display:none;"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden" style="display:none;"><?= $translator['pages'] ?? 'pages' ?></span>
 
 
 

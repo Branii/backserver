@@ -263,9 +263,9 @@
 <span id="all_fields_required_text" style="display:none;"><?php echo $translator['ALL_FIELDS_REQUIRED']; ?></span>
 <span id="cannot_update_if_empty_text" style="display:none;"><?php echo $translator['CANNOT_UPDATE_IF_EMPTY']; ?></span>
 
-<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+<span id="trans-page" class="hidden" style="display:none;"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden" style="display:none;"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden" style="display:none;"><?= $translator['pages'] ?? 'pages' ?></span>
 
 
 
