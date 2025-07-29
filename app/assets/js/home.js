@@ -1,8 +1,8 @@
-$(function () {
+$(function() {
   //NOTE -
   //////////////ACCOUNT TRANSACTION-//////////
 
-  const AccountTransactionxs = (data) => {
+  const AccountTransactionxs = data => {
     let html = "";
     const status = {
       1: "Deposit",
@@ -15,10 +15,10 @@ $(function () {
       8: "Self Rebate",
       9: "Send Red Envelope",
       10: "Receive Red Envelope",
-      11: "Bet Refund",
+      11: "Bet Refund"
     };
 
-    data.forEach((item) => {
+    data.forEach(item => {
       html += `
                   <tr>
                       <td>${item.order_id.substring(0, 7)}</td>
@@ -36,7 +36,7 @@ $(function () {
     return html;
   };
 
-  const render = (data) => {
+  const render = data => {
     var html = AccountTransactionxs(data);
     $("#dataContainerx").html(html);
   };
@@ -72,9 +72,8 @@ $(function () {
     // Previous Button
     pagLink += `
               <li class='page-item ${currentPage === 1 ? "disabled" : ""}'>
-                  <a class='page-link' href='#' data-page='${
-                    currentPage - 1
-                  }'><i class='bx bx-chevron-left'></i></a>
+                  <a class='page-link' href='#' data-page='${currentPage -
+                    1}'><i class='bx bx-chevron-left'></i></a>
               </li>
           `;
 
@@ -95,12 +94,11 @@ $(function () {
 
     // Next Button
     pagLink += `
-              <li class='page-item ${
-                currentPage === totalPages ? "disabled" : ""
-              }'>
-                  <a class='page-link' href='#' data-page='${
-                    currentPage + 1
-                  }'><i class='bx bx-chevron-right'></i></a>
+              <li class='page-item ${currentPage === totalPages
+                ? "disabled"
+                : ""}'>
+                  <a class='page-link' href='#' data-page='${currentPage +
+                    1}'><i class='bx bx-chevron-right'></i></a>
               </li>
           `;
 
@@ -108,8 +106,8 @@ $(function () {
     document.getElementById("pagination").innerHTML = pagLink;
 
     // Add click event listeners to pagination links
-    document.querySelectorAll("#paginationx .page-link").forEach((link) => {
-      link.addEventListener("click", function (e) {
+    document.querySelectorAll("#paginationx .page-link").forEach(link => {
+      link.addEventListener("click", function(e) {
         e.preventDefault();
         const newPage = parseInt(this.getAttribute("data-page"));
         if (newPage > 0 && newPage <= totalPages) {
@@ -124,13 +122,13 @@ $(function () {
 
   fetchTrasaction(currentPage);
 
-  $(".player").click(function () {
+  $(".player").click(function() {
     let direction = $(this).val();
     const tableWrapper = $(".table-wrapperx");
     const tableWrappers = document.querySelector(".table-wrapper");
     const scrollAmount = 1000; // Adjust as needed
     const scrollOptions = {
-      behavior: "smooth",
+      behavior: "smooth"
     };
     if (tableWrapper.length) {
       switch (direction) {
@@ -155,31 +153,31 @@ $(function () {
     }
   });
 
-  $(".refresh").click(function () {
+  $(".refresh").click(function() {
     $("#mask").LoadingOverlay("show", {
       background: "rgb(90,106,133,0.1)",
-      size: 3,
+      size: 3
     });
     fetchTrasaction(currentPage);
   });
 
-  $(".execute").click(function () {
+  $(".execute").click(function() {
     console.log("spinning");
     $(".loader").remove("bx bx-check-double").addClass("bx bx-loader bx-spin");
   });
-  
+
   let debounceTimeout;
-  $(".username").keyup(function () {
+  $(".username").keyup(function() {
     let searchkey = $(this).val();
     const dropdown = $("#userDropdown");
     dropdown.empty(); // Clear existing options
     clearTimeout(debounceTimeout);
     debounceTimeout = setTimeout(() => {
-      $.post(`../admin/filterusername/${searchkey}`, function (response) {
+      $.post(`../admin/filterusername/${searchkey}`, function(response) {
         if (response) {
           $("#userDropdown").show();
           let html = "";
-          response.forEach((user) => {
+          response.forEach(user => {
             html += `<div value="${user.username}" class="option">${user.username}</div>`;
           });
           console.log("html  " + html);
@@ -192,12 +190,12 @@ $(function () {
     }, 300);
   });
 
-  $(document).on("click", ".option", function () {
+  $(document).on("click", ".option", function() {
     $(".username").val($(this).text());
     $("#userDropdown").hide();
   });
 
-  $(document).on("click", ".execu", function () {
+  $(document).on("click", ".execu", function() {
     const username = $(".username").val();
     const order_id = $(".orderid").val();
     const odertype = $(".ordertype").val();
@@ -207,6 +205,4 @@ $(function () {
     $(".loader").remove("bx bx-check-double").addClass("bx bx-loader bx-spin");
     console.log(username, order_id, odertype, startdate, enddate);
   });
-
-
 });

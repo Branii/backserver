@@ -161,12 +161,12 @@
         /* Darker blue on hover */
     }
     /* .left-element {
-  position: relative;
-  bottom:8px;
-  height: 35px;
-  background-color: #fff;
-  margin-right: 5px;
-} */
+        position: relative;
+        bottom:8px;
+        height: 35px;
+        background-color: #fff;
+        margin-right: 5px;
+        } */
 
     .active > .page-link {
         background-color: orangered !important;

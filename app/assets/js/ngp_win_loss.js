@@ -14,31 +14,26 @@ $(() => {
     });
   }
 
-  const noUserTitle = document.getElementById(
-    "trans-no-user-selected-title"
-  ).textContent;
-  const noUserMessage = document.getElementById(
-    "trans-no-user-selected-msg"
-  ).textContent;
+  const noUserTitle = document.getElementById("trans-no-user-selected-title")
+    .textContent;
+  const noUserMessage = document.getElementById("trans-no-user-selected-msg")
+    .textContent;
   // Error toast
   const errorTitle = document.getElementById("trans-error-title").textContent;
   const errorMsg = document.getElementById("trans-error-msg").textContent;
 
   // No User Selected
-  const noUser2Title = document.getElementById(
-    "trans-no-user-2-title"
-  ).textContent;
+  const noUser2Title = document.getElementById("trans-no-user-2-title")
+    .textContent;
   const noUser2Msg = document.getElementById("trans-no-user-2-msg").textContent;
 
   // Too Many Users
-  const tooManyTitle = document.getElementById(
-    "trans-too-many-title"
-  ).textContent;
+  const tooManyTitle = document.getElementById("trans-too-many-title")
+    .textContent;
   const tooManyMsg = document.getElementById("trans-too-many-msg").textContent;
 
-  const noDataTitle = document.getElementById(
-    "trans-no-data-title"
-  ).textContent;
+  const noDataTitle = document.getElementById("trans-no-data-title")
+    .textContent;
   const noDataMsg = document.getElementById("trans-no-data-msg").textContent;
   // showToast(noDataTitle, noDataMsg, "info");
   // showToast(tooManyTitle, tooManyMsg, "info");
@@ -59,10 +54,10 @@ $(() => {
       url: "../controller/datareport/winlossreport",
       type: "POST",
       data: { data: data, flag: flag },
-      beforeSend: function () {
+      beforeSend: function() {
         $("#win-loss-loader").css("display", "flex");
       },
-      success: function (response) {
+      success: function(response) {
         $("#subs-back-btn").hide();
         response = JSON.parse(response);
 
@@ -88,12 +83,12 @@ $(() => {
         // historyStack = [htmlMarkup];
         pagesStack = [];
       },
-      error: function (xhr, status, error) {
+      error: function(xhr, status, error) {
         // showToast("Error", "");
 
         showToast(errorTitle, errorMsg, "info");
       },
-      complete: function () {
+      complete: function() {
         $("#win-loss-loader").css("display", "none");
       }
     });
@@ -104,16 +99,18 @@ $(() => {
       $.ajax({
         url: `../admin/fetchLotteryname/${partnerID}`,
         type: "POST",
-        success: function (data) {
+        success: function(data) {
           data = JSON.parse(data);
-          let html1 = `<option value="all">${translator["Lottery Type"]}</option>`;
-          data.forEach((lottery) => {
+          let html1 = `<option value="all">${translator[
+            "Lottery Type"
+          ]}</option>`;
+          data.forEach(lottery => {
             html1 += `<option value="${lottery.gt_id}">${lottery.name}</option>`;
           });
 
           $("#ngp-wl-selectlottery").html(html1);
         },
-        error: function (xhr, status, error) {}
+        error: function(xhr, status, error) {}
       });
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -122,7 +119,7 @@ $(() => {
   fetchLotteryNames();
 
   //
-  $(document).on("click", ".ngp-go-back", function () {
+  $(document).on("click", ".ngp-go-back", function() {
     if (historyStack.length === 0) {
       // showToast("No Data", "No data to show", "info");
       showToast(noDataTitle, noDataMsg, "info");
@@ -139,7 +136,7 @@ $(() => {
   });
 
   // Handle dropdown item selection
-  $(document).on("change", ".userDropdown", function () {
+  $(document).on("change", ".userDropdown", function() {
     const selectedOption = $(this).find("option:selected");
     const selectedUserId = selectedOption.val();
     const selectedUsername = selectedOption.data("username");
@@ -154,7 +151,7 @@ $(() => {
   let debounceTimeout = null;
 
   // filter user name
-  $(document).on("keyup", "#ngp-wl-username", function () {
+  $(document).on("keyup", "#ngp-wl-username", function() {
     const query = $(this).val().trim();
     if (query.length < 1) {
       $(".ngp-usr-res-wrapper").hide();
@@ -169,7 +166,7 @@ $(() => {
     }
   });
   // filter user name
-  $(document).on("click", ".ngp-fetch-user-win-loss", function () {
+  $(document).on("click", ".ngp-fetch-user-win-loss", function() {
     const userID = $("#ngp-wl-username").attr("data-user-id");
 
     let lotteryID = $("#ngp-wl-selectlottery").val();
@@ -194,12 +191,12 @@ $(() => {
     $.ajax({
       url: `../report/searchWinLossUser/${partnerID}/${userID}/${lotteryID}/${startDate}/${endDate}/`,
       type: "POST",
-      beforeSend: function () {
+      beforeSend: function() {
         $($(element).find("i")[0])
           .removeClass("bx-check-double")
           .addClass("bx-loader bx-spin");
       },
-      success: function (response) {
+      success: function(response) {
         $("#subs-back-btn").hide();
         response = JSON.parse(response);
         if (response.status === "error") {
@@ -223,12 +220,12 @@ $(() => {
         htmlMarkup = getUserRowMarkupNGP(userObj);
         $("#ngp-winLossDtholder").html(htmlMarkup);
       },
-      error: function (xhr, status, error) {
+      error: function(xhr, status, error) {
         // showToast("Error", "An Error occured, please try again later.", "info");
 
         showToast(errorTitle, errorMsg, "info");
       },
-      complete: function () {
+      complete: function() {
         $($(element).find("i")[0])
           .removeClass("bx-loader bx-spin")
           .addClass("bx-check-double");
@@ -238,7 +235,7 @@ $(() => {
   });
 
   // filter user name
-  $(document).on("click", ".ngp-fetch-user-details", function () {
+  $(document).on("click", ".ngp-fetch-user-details", function() {
     const numTableRows = $("#ngp-winLossDtholder").find("tr.ngp-wl-results");
 
     if (numTableRows.length === 0) {
@@ -281,12 +278,12 @@ $(() => {
     $.ajax({
       url: `../report/getUserDetails/${userID}/${lotteryID}/${startDate}/${endDate}/`,
       type: "POST",
-      beforeSend: function () {
+      beforeSend: function() {
         $($(element).find("i")[0])
           .removeClass("bx-check-double")
           .addClass("bx-loader bx-spin");
       },
-      success: function (response) {
+      success: function(response) {
         $("#subs-back-btn").hide();
         response = JSON.parse(response);
         if (response.status === "error") {
@@ -314,12 +311,12 @@ $(() => {
         pagingInfo.push($("#ngp-paging_infowl").html());
         $("#ngp-winLossDtholder").html(htmlMarkup);
       },
-      error: function (xhr, status, error) {
+      error: function(xhr, status, error) {
         // showToast("Error", "Request Error, please try again.", "Error");
 
         showToast(errorTitle, errorMsg, "info");
       },
-      complete: function () {
+      complete: function() {
         $($(element).find("i")[0])
           .removeClass("bx-loader bx-spin")
           .addClass("bx-check-double");
@@ -328,7 +325,7 @@ $(() => {
     });
   });
 
-  $(document).on("keyup", "#ngp-wl-lottery", function () {
+  $(document).on("keyup", "#ngp-wl-lottery", function() {
     const query = $(this).val().trim();
     if (query.length < 1) {
       $(".lot-res-wrapper").hide();
@@ -345,7 +342,7 @@ $(() => {
   });
 
   // Handle dropdown item selection
-  $(document).on("click", ".ngp-name-items", function () {
+  $(document).on("click", ".ngp-name-items", function() {
     if ($(this).attr("data-username") != undefined) {
       $("#ngp-wl-username").val($(this).attr("data-username"));
       $("#ngp-wl-username").attr("data-user-id", $(this).attr("data-user-id"));
@@ -358,7 +355,7 @@ $(() => {
   });
 
   // Get Top Agents
-  $(document).on("click", ".ngp-fetch-top-agents", function () {
+  $(document).on("click", ".ngp-fetch-top-agents", function() {
     let page = 1;
     if ($(this).hasClass("page-link"))
       page = parseInt($(this).attr("data-page"));
@@ -366,12 +363,12 @@ $(() => {
   });
 
   // Get Top Agents
-  $(document).on("click", ".ngp-fetch-agent-subs", function () {
+  $(document).on("click", ".ngp-fetch-agent-subs", function() {
     fetchAgentSubs(this, 1);
   });
 
   // refresh list
-  $(document).on("click", ".ngp-wl-refreshlist", function () {
+  $(document).on("click", ".ngp-wl-refreshlist", function() {
     $("#ngp-wl-username").attr("data-user-id", "");
     $("#ngp-wl-username").val("");
     $("#ngp-wl-lottery").attr("data-lot-id", "");
@@ -388,56 +385,55 @@ $(() => {
   });
 
   // Function to fetch and display users
-  const fetchbetUser = (query) => {
+  const fetchbetUser = query => {
     let optionsHtml = "";
 
-    $.post(
-      `../admin/Searchusername/${encodeURIComponent(query)}`,
-      function (response) {
-        try {
-          const getDisplayName = (user) => {
-            if (
-              user.username !== "" &&
-              user.username != undefined &&
-              user.username !== "*****"
-            )
-              return user.username;
-            if (user.email !== undefined && user.email != "") return user.email;
-            if (user.contact != undefined && user.contact != "")
-              return user.contact;
-          };
-          response =
-            typeof response === "string" ? JSON.parse(response) : response;
-          for (let index = 0; index < response.length; index++) {
-            const user = response[index];
-            const username = user[user.regtype];
-            optionsHtml +=
-              username === undefined
-                ? `<li class="name-items ngp-name-items"> No Data Found.</li>`
-                : `<li class="name-items ngp-name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
-          }
-          $("#ngp-user-list-wrapper").html(optionsHtml);
-          $(".ngp-usr-res-wrapper").show();
-        } catch (error) {
-          console.error("Error parsing response: ", error);
-          $(".userDropdown").hide();
+    $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function(
+      response
+    ) {
+      try {
+        const getDisplayName = user => {
+          if (
+            user.username !== "" &&
+            user.username != undefined &&
+            user.username !== "*****"
+          )
+            return user.username;
+          if (user.email !== undefined && user.email != "") return user.email;
+          if (user.contact != undefined && user.contact != "")
+            return user.contact;
+        };
+        response =
+          typeof response === "string" ? JSON.parse(response) : response;
+        for (let index = 0; index < response.length; index++) {
+          const user = response[index];
+          const username = user[user.regtype];
+          optionsHtml +=
+            username === undefined
+              ? `<li class="name-items ngp-name-items"> No Data Found.</li>`
+              : `<li class="name-items ngp-name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
         }
+        $("#ngp-user-list-wrapper").html(optionsHtml);
+        $(".ngp-usr-res-wrapper").show();
+      } catch (error) {
+        console.error("Error parsing response: ", error);
+        $(".userDropdown").hide();
       }
-    ).fail(function () {
+    }).fail(function() {
       console.error("Error fetching users.");
       $(".userDropdown").hide();
     });
   };
 
   // Function to fetch and display users
-  const fetchLotteryname = (lotteryName) => {
+  const fetchLotteryname = lotteryName => {
     let optionsHtml = "";
 
     $.post(
       `../admin/searchLotteryName/${encodeURIComponent(lotteryName)}`,
-      function (response) {
+      function(response) {
         try {
-          const getDisplayName = (user) => {
+          const getDisplayName = user => {
             if (
               user.username !== "" &&
               user.username != undefined &&
@@ -462,13 +458,13 @@ $(() => {
           $(".userDropdown").hide();
         }
       }
-    ).fail(function () {
+    ).fail(function() {
       console.error("Error fetching users.");
       $(".userDropdown").hide();
     });
   };
 
-  $(document).on("click", ".ngp-wl-pagination", function () {
+  $(document).on("click", ".ngp-wl-pagination", function() {
     if ($(this).parent().hasClass("active")) return;
     const page = $(this).attr("data-page").trim();
     const lottery_id = $("#ngp-wl-lottery").attr("data-lot-id");
@@ -477,7 +473,7 @@ $(() => {
     // fetchUsersWinLoss(lottery_id,startDate,endDate,page);
   });
 
-  $(".ngp-playerWinLoss").click(function (e) {
+  $(".ngp-playerWinLoss").click(function(e) {
     let direction = $(this).val();
     const tableWrapper = $(".ngp-table-wrapperWl");
     const tableWrappers = $(".ngp-table-wrapperWl")[0];
@@ -498,7 +494,7 @@ $(() => {
     // e.stopPropagation(); // Prevent event bubbling
   });
 
-  const fetchTopAgents = (currentPage) => {
+  const fetchTopAgents = currentPage => {
     let lotteryID = $("#ngp-wl-selectlottery").val();
     let startDate = $("#ngp-wl-startdate").val();
     let endDate = $("#ngp-wl-enddate").val();
@@ -515,12 +511,12 @@ $(() => {
     $.ajax({
       url: `../report/fetchTopAgents/${lotteryID}/${startDate}/${endDate}/${currentPage}/${limit}`,
       type: "POST",
-      beforeSend: function () {
+      beforeSend: function() {
         $($(element).find("i")[0])
           .removeClass("bx-check-double")
           .addClass("bx-loader bx-spin");
       },
-      success: function (response) {
+      success: function(response) {
         $("#subs-back-btn").hide();
         response = JSON.parse(response);
         if (response.status === "error") {
@@ -545,7 +541,7 @@ $(() => {
         const totalPages = Math.ceil(userObjs[0].total_records / 10);
 
         htmlMarkup = "";
-        userObjs.forEach((userObj) => {
+        userObjs.forEach(userObj => {
           htmlMarkup += getUserRowMarkupNGP(userObj);
         });
         $("#ngp-winLossDtholder").html(htmlMarkup);
@@ -560,12 +556,12 @@ $(() => {
           "ngp-page-top-agents"
         );
       },
-      error: function (xhr, status, error) {
+      error: function(xhr, status, error) {
         // showToast("Error", "An Error occured, please try again later.", "info");
 
         showToast(errorTitle, errorMsg, "info");
       },
-      complete: function () {
+      complete: function() {
         $($(element).find("i")[0])
           .removeClass("bx-loader bx-spin")
           .addClass("bx-check-double");
@@ -592,13 +588,13 @@ $(() => {
       // url: `../admin/fetchAgentSubs/${agentID}/${lotteryID}/${startDate}/${endDate}/${currentPage}/${limit}`,
       url: `../report/fetchAgentSubs/${partnerID}/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
       type: "POST",
-      beforeSend: function () {
+      beforeSend: function() {
         $($(element).find("i")[0])
           .removeClass("bx-check-double")
           .addClass("bx-loader bx-spin");
         //  $("#ngp-wl-tbl-wrapper").LoadingOverlay("show");
       },
-      success: function (response) {
+      success: function(response) {
         $("#subs-back-btn").hide();
         response = JSON.parse(response);
         if (response.status === "error") {
@@ -624,7 +620,7 @@ $(() => {
         //     if(!$(".get-user-details-btn").hasClass("btn-disabled")) $(".get-user-details-btn").addClass("btn-disabled");
         // }
         htmlMarkup = "";
-        userObjs.forEach((userObj) => {
+        userObjs.forEach(userObj => {
           htmlMarkup += getUserRowMarkupNGP(userObj);
         });
         historyStack.push($("#ngp-winLossDtholder").html());
@@ -643,12 +639,12 @@ $(() => {
           "ngp-page-agent-subs"
         );
       },
-      error: function (xhr, status, error) {
+      error: function(xhr, status, error) {
         // showToast("Error", "An Error occured, please try again later.", "info");
 
         showToast(errorTitle, errorMsg, "info");
       },
-      complete: function () {
+      complete: function() {
         $("#ngp-wl-tbl-wrapper").LoadingOverlay("hide");
         // $($(element).find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx-check-double");
         // $("#ngp-wl-pagination").html("")
@@ -656,19 +652,17 @@ $(() => {
     });
   };
 
-  $(document).on(
-    "click",
-    ".ngp-page-top-agents,.ngp-page-agent-subs",
-    function () {
-      const page = parseInt($(this).attr("data-page"));
-      if (page < 1) return;
-      if ($(this).hasClass("ngp-page-top-agents")) {
-        fetchTopAgents(page);
-      } else if ($(this).hasClass("ngp-page-agent-subs")) {
-        fetchAgentSubs(this, page);
-      }
+  $(
+    document
+  ).on("click", ".ngp-page-top-agents,.ngp-page-agent-subs", function() {
+    const page = parseInt($(this).attr("data-page"));
+    if (page < 1) return;
+    if ($(this).hasClass("ngp-page-top-agents")) {
+      fetchTopAgents(page);
+    } else if ($(this).hasClass("ngp-page-agent-subs")) {
+      fetchAgentSubs(this, page);
     }
-  );
+  });
 });
 
 const renderPaginationNGP = (
@@ -681,9 +675,8 @@ const renderPaginationNGP = (
   // Previous Button
   pagLink += `
       <li class='page-item ${currentPagewithdraw === 1 ? "disabled" : ""}'>
-        <a class='page-link ${type}' href='#' data-page='${
-    currentPagewithdraw - 1
-  }'><i class='bx bx-chevron-left'></i></a>
+        <a class='page-link ${type}' href='#' data-page='${currentPagewithdraw -
+    1}'><i class='bx bx-chevron-left'></i></a>
       </li>
     `;
 
@@ -704,21 +697,20 @@ const renderPaginationNGP = (
 
   // Next Button
   pagLink += `
-      <li class='page-item ${
-        currentPagewithdraw === totalPages ? "disabled" : ""
-      }'>
-        <a class='page-link ${type}' href='#' data-page='${
-    currentPagewithdraw + 1
-  }'><i class='bx bx-chevron-right'></i></a>
+      <li class='page-item ${currentPagewithdraw === totalPages
+        ? "disabled"
+        : ""}'>
+        <a class='page-link ${type}' href='#' data-page='${currentPagewithdraw +
+    1}'><i class='bx bx-chevron-right'></i></a>
       </li>
     `;
 
   pagLink += "</ul>";
   document.getElementById("ngp-wl-pagination-wrapper").innerHTML = pagLink;
   $("#ngp-paging_infowl").text(
-    `Page ${currentPagewithdraw} of ${totalPages} ${
-      totalPages === 1 ? " Page " : " Pages "
-    } `
+    `Page ${currentPagewithdraw} of ${totalPages} ${totalPages === 1
+      ? " Page "
+      : " Pages "} `
   );
   // Add click event listeners to pagination links
   // document.querySelectorAll("#paginationwithdraw .page-link").forEach((link) => {
@@ -737,7 +729,7 @@ const renderPaginationNGP = (
   // });
 };
 
-const getUserRowMarkupNGP = (userData) => {
+const getUserRowMarkupNGP = userData => {
   const subsBtn =
     parseInt(userData.account_type) === 2 ||
     parseInt(userData.account_type) === 3
@@ -745,11 +737,11 @@ const getUserRowMarkupNGP = (userData) => {
              <button type="button" class="btn bg-white-subtle ngp-playerWinLoss" value="ngp-wl-rightlist"> Subs </button></div>`
       : "";
 
-  return `<tr id='user-id-${userData.user_id}' id='${
-    userData.account_type > 1 ? "agent" : ""
-  }' class='ngp-wl-results' data-acc-type='${
-    userData.account_type > 1 ? "agent" : ""
-  }'>
+  return `<tr id='user-id-${userData.user_id}' id='${userData.account_type > 1
+    ? "agent"
+    : ""}' class='ngp-wl-results' data-acc-type='${userData.account_type > 1
+    ? "agent"
+    : ""}'>
         <td> ${userData.username} </td>
         <td> ${userData.num_bettors} </td>
         <td> ${userData.num_bet_tickets} </td>

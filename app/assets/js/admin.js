@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
   function showToast(title, message, type) {
     $.toast({
       position: "bottom-right",
@@ -18,7 +18,7 @@ $(function () {
     let elem = $(".load");
     elem.addClass("bx-loader bx-spin").removeClass("bx-check-shieldn");
     setTimeout(() => {
-      $.post(url, params, function (result) {
+      $.post(url, params, function(result) {
         if (JSON.parse(result).type == "success") {
           elem.removeClass("bx-loader bx-spin").addClass("bx-check-shieldn");
           showToast(
@@ -26,7 +26,7 @@ $(function () {
             translator["Signin successful"],
             "success"
           );
-          setTimeout(function () {
+          setTimeout(function() {
             window.location.href = JSON.parse(result).url;
           }, 1000);
         } else {
@@ -41,13 +41,13 @@ $(function () {
     }, 1000);
   };
 
-  $(".signin").on("click", function (evt) {
+  $(".signin").on("click", function(evt) {
     evt.preventDefault();
     let params = {
       email: $(".email").val().trim(),
       password: $(".password").val().trim()
     };
-    let isEmpty = Object.values(params).some((param) => param === "");
+    let isEmpty = Object.values(params).some(param => param === "");
     !isEmpty
       ? request("admin/signin", params)
       : showToast(
@@ -57,9 +57,9 @@ $(function () {
         );
   });
 
-  $(".lang").on("change", function () {
+  $(".lang").on("change", function() {
     const language = $(this).val();
-    $.post("/admin/limvo/admin/changelang/" + language, function () {
+    $.post("/admin/limvo/admin/changelang/" + language, function() {
       window.location.href = "";
     });
   });

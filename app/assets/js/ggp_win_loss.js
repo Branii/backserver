@@ -18,49 +18,43 @@ $(() => {
   const translatorScript = document.querySelector(".translations"); // Get the script tag
   const translator = JSON.parse(translatorScript.textContent);
 
-  const noUserTitle = document.getElementById(
-    "trans-no-user-selected-title"
-  ).textContent;
-  const noUserMessage = document.getElementById(
-    "trans-no-user-selected-msg"
-  ).textContent;
+  const noUserTitle = document.getElementById("trans-no-user-selected-title")
+    .textContent;
+  const noUserMessage = document.getElementById("trans-no-user-selected-msg")
+    .textContent;
   // Error toast
   const errorTitle = document.getElementById("trans-error-title").textContent;
   const errorMsg = document.getElementById("trans-error-msg").textContent;
 
   // No User Selected
-  const noUser2Title = document.getElementById(
-    "trans-no-user-2-title"
-  ).textContent;
+  const noUser2Title = document.getElementById("trans-no-user-2-title")
+    .textContent;
   const noUser2Msg = document.getElementById("trans-no-user-2-msg").textContent;
 
   // Too Many Users
-  const tooManyTitle = document.getElementById(
-    "trans-too-many-title"
-  ).textContent;
+  const tooManyTitle = document.getElementById("trans-too-many-title")
+    .textContent;
   const tooManyMsg = document.getElementById("trans-too-many-msg").textContent;
 
-  const noDataTitle = document.getElementById(
-    "trans-no-data-title"
-  ).textContent;
+  const noDataTitle = document.getElementById("trans-no-data-title")
+    .textContent;
   const noDataMsg = document.getElementById("trans-no-data-msg").textContent;
- 
 
   const fetchLotteryNames = () => {
     try {
       $.ajax({
         url: `../admin/fetchLotteryname/${partnerID}`,
         type: "POST",
-        success: function (data) {
+        success: function(data) {
           data = JSON.parse(data);
           let html = `<option value="">${translator["Lottery Type"]}</option>`;
-          data.forEach((lottery) => {
+          data.forEach(lottery => {
             html += `<option value="${lottery.gt_id}">${lottery.name}</option>`;
           });
 
           $(".wl-selectlottery").html(html);
         },
-        error: function (xhr, status, error) {}
+        error: function(xhr, status, error) {}
       });
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -69,7 +63,7 @@ $(() => {
   fetchLotteryNames();
 
   //
-  $(document).on("click", ".go-back", function () {
+  $(document).on("click", ".go-back", function() {
     if (historyStack.length === 0) {
       // showToast("No Data","No data to show","info");
 
@@ -87,7 +81,7 @@ $(() => {
   });
 
   // Handle dropdown item selection
-  $(document).on("change", ".userDropdown", function () {
+  $(document).on("change", ".userDropdown", function() {
     const selectedOption = $(this).find("option:selected");
     const selectedUserId = selectedOption.val();
     const selectedUsername = selectedOption.data("username");
@@ -102,7 +96,7 @@ $(() => {
   let debounceTimeout = null;
 
   // filter user name
-  $(document).on("keyup", "#wl-username", function () {
+  $(document).on("keyup", "#wl-username", function() {
     const query = $(this).val().trim();
     if (query.length < 1) {
       $(".usr-res-wrapper").hide();
@@ -117,7 +111,7 @@ $(() => {
     }
   });
   // filter user name
-  $(document).on("click", ".fetch-user-win-loss", function () {
+  $(document).on("click", ".fetch-user-win-loss", function() {
     const userID = $("#wl-username").attr("data-user-id");
 
     let lotteryID = $("#wl-selectlottery").val();
@@ -140,12 +134,12 @@ $(() => {
     $.ajax({
       url: `../report/searchWinLossUser/${partnerID}/${userID}/${lotteryID}/${startDate}/${endDate}/`,
       type: "POST",
-      beforeSend: function () {
+      beforeSend: function() {
         $($(element).find("i")[0])
           .removeClass("bx-check-double")
           .addClass("bx-loader bx-spin");
       },
-      success: function (response) {
+      success: function(response) {
         $("#subs-back-btn").hide();
         // console.log(response);
 
@@ -171,12 +165,12 @@ $(() => {
         htmlMarkup = getUserRowMarkup(userObj);
         $("#winLossDtholder").html(htmlMarkup);
       },
-      error: function (xhr, status, error) {
+      error: function(xhr, status, error) {
         // showToast("Error","An Error occured, please try again later.","info");
 
         showToast(errorTitle, errorMsg, "info");
       },
-      complete: function () {
+      complete: function() {
         $($(element).find("i")[0])
           .removeClass("bx-loader bx-spin")
           .addClass("bx-check-double");
@@ -186,7 +180,7 @@ $(() => {
   });
 
   // filter user name
-  $(document).on("click", ".fetch-user-details", function () {
+  $(document).on("click", ".fetch-user-details", function() {
     const numTableRows = $("#winLossDtholder").find("tr.wl-results");
 
     if (numTableRows.length === 0) {
@@ -230,12 +224,12 @@ $(() => {
     $.ajax({
       url: `../report/getUserDetails/${userID}/${lotteryID}/${startDate}/${endDate}/`,
       type: "POST",
-      beforeSend: function () {
+      beforeSend: function() {
         $($(element).find("i")[0])
           .removeClass("bx-check-double")
           .addClass("bx-loader bx-spin");
       },
-      success: function (response) {
+      success: function(response) {
         $("#subs-back-btn").hide();
         response = JSON.parse(response);
         if (response.status === "error") {
@@ -263,12 +257,12 @@ $(() => {
         pagingInfo.push($("#paging_infowl").html());
         $("#winLossDtholder").html(htmlMarkup);
       },
-      error: function (xhr, status, error) {
+      error: function(xhr, status, error) {
         // showToast("Error","Request Error, please try again.","Error");
 
         showToast(errorTitle, errorMsg, "info");
       },
-      complete: function () {
+      complete: function() {
         $($(element).find("i")[0])
           .removeClass("bx-loader bx-spin")
           .addClass("bx-check-double");
@@ -277,7 +271,7 @@ $(() => {
     });
   });
 
-  $(document).on("keyup", "#wl-lottery", function () {
+  $(document).on("keyup", "#wl-lottery", function() {
     const query = $(this).val().trim();
     if (query.length < 1) {
       $(".lot-res-wrapper").hide();
@@ -294,7 +288,7 @@ $(() => {
   });
 
   // Handle dropdown item selection
-  $(document).on("click", ".name-items", function () {
+  $(document).on("click", ".name-items", function() {
     if ($(this).attr("data-username") != undefined) {
       $("#wl-username").val($(this).attr("data-username"));
       $("#wl-username").attr("data-user-id", $(this).attr("data-user-id"));
@@ -307,17 +301,17 @@ $(() => {
   });
 
   // Get Top Agents
-  $(document).on("click", ".fetch-top-agents", function () {
+  $(document).on("click", ".fetch-top-agents", function() {
     fetchTopAgents(1);
   });
 
   // Get Top Agents
-  $(document).on("click", ".fetch-agent-subs", function () {
+  $(document).on("click", ".fetch-agent-subs", function() {
     fetchAgentSubs(this, 1);
   });
 
   // refresh list
-  $(document).on("click", ".wl-refreshlist", function () {
+  $(document).on("click", ".wl-refreshlist", function() {
     $("#wl-username").attr("data-user-id", "");
     $("#wl-username").val("");
     $("#wl-lottery").attr("data-lot-id", "");
@@ -334,7 +328,7 @@ $(() => {
   });
 
   // handle the back button action
-  $(document).on("click", ".back-btn", function () {
+  $(document).on("click", ".back-btn", function() {
     const lastHistory = historyStack.pop(); // get the previous history html markup
     const latestPage = pagesStack.pop(); // get the previous pages html markup
 
@@ -356,58 +350,57 @@ $(() => {
   });
 
   // Function to fetch and display users
-  const fetchbetUser = (query) => {
+  const fetchbetUser = query => {
     let optionsHtml = "";
 
-    $.post(
-      `../admin/Searchusername/${encodeURIComponent(query)}`,
-      function (response) {
-        try {
-          const getDisplayName = (user) => {
-            if (
-              user.username !== "" &&
-              user.username != undefined &&
-              user.username !== "*****"
-            )
-              return user.username;
-            if (user.email !== undefined && user.email != "") return user.email;
-            if (user.contact != undefined && user.contact != "")
-              return user.contact;
-          };
-          response =
-            typeof response === "string" ? JSON.parse(response) : response;
+    $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function(
+      response
+    ) {
+      try {
+        const getDisplayName = user => {
+          if (
+            user.username !== "" &&
+            user.username != undefined &&
+            user.username !== "*****"
+          )
+            return user.username;
+          if (user.email !== undefined && user.email != "") return user.email;
+          if (user.contact != undefined && user.contact != "")
+            return user.contact;
+        };
+        response =
+          typeof response === "string" ? JSON.parse(response) : response;
 
-          for (let index = 0; index < response.length; index++) {
-            const user = response[index];
-            const username = user[user.regtype];
+        for (let index = 0; index < response.length; index++) {
+          const user = response[index];
+          const username = user[user.regtype];
 
-            optionsHtml +=
-              username === undefined
-                ? `<li class="name-items"> No Data Found.</li>`
-                : `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
-          }
-          $("#user-list-wrapper").html(optionsHtml);
-          $(".usr-res-wrapper").show();
-        } catch (error) {
-          console.error("Error parsing response: ", error);
-          $(".userDropdown").hide();
+          optionsHtml +=
+            username === undefined
+              ? `<li class="name-items"> No Data Found.</li>`
+              : `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
         }
+        $("#user-list-wrapper").html(optionsHtml);
+        $(".usr-res-wrapper").show();
+      } catch (error) {
+        console.error("Error parsing response: ", error);
+        $(".userDropdown").hide();
       }
-    ).fail(function () {
+    }).fail(function() {
       console.error("Error fetching users.");
       $(".userDropdown").hide();
     });
   };
 
   // Function to fetch and display users
-  const fetchLotteryname = (lotteryName) => {
+  const fetchLotteryname = lotteryName => {
     let optionsHtml = "";
 
     $.post(
       `../admin/searchLotteryName/${encodeURIComponent(lotteryName)}`,
-      function (response) {
+      function(response) {
         try {
-          const getDisplayName = (user) => {
+          const getDisplayName = user => {
             if (
               user.username !== "" &&
               user.username != undefined &&
@@ -432,13 +425,13 @@ $(() => {
           $(".userDropdown").hide();
         }
       }
-    ).fail(function () {
+    ).fail(function() {
       console.error("Error fetching users.");
       $(".userDropdown").hide();
     });
   };
 
-  $(document).on("click", ".wl-pagination", function () {
+  $(document).on("click", ".wl-pagination", function() {
     if ($(this).parent().hasClass("active")) return;
     const page = $(this).attr("data-page").trim();
     const lottery_id = $("#wl-lottery").attr("data-lot-id");
@@ -447,7 +440,7 @@ $(() => {
     // fetchUsersWinLoss(lottery_id,startDate,endDate,page);
   });
 
-  $(document).on("change", "#wl-numrowstans", function () {
+  $(document).on("change", "#wl-numrowstans", function() {
     const page = $($("#wl-pagination").find(".page-item.active page-link")[0])
       .attr("data-page")
       .trim();
@@ -458,7 +451,7 @@ $(() => {
     // fetchUsersWinLoss(lottery_id,startDate,endDate,page,pageLimit , false);
   });
 
-  $(".playerWinLoss").click(function (e) {
+  $(".playerWinLoss").click(function(e) {
     let direction = $(this).val();
     const tableWrapper = $(".table-wrapperWl");
     const tableWrappers = $(".table-wrapperWl")[0];
@@ -479,7 +472,7 @@ $(() => {
     e.stopPropagation(); // Prevent event bubbling
   });
 
-  const fetchTopAgents = (currentPage) => {
+  const fetchTopAgents = currentPage => {
     let lotteryID = $("#wl-selectlottery").val();
     let startDate = $("#wl-startdate").val();
     let endDate = $("#wl-enddate").val();
@@ -496,12 +489,12 @@ $(() => {
     $.ajax({
       url: `../report/fetchTopAgents/${lotteryID}/${startDate}/${endDate}/${currentPage}/${limit}`,
       type: "POST",
-      beforeSend: function () {
+      beforeSend: function() {
         $($(element).find("i")[0])
           .removeClass("bx-check-double")
           .addClass("bx-loader bx-spin");
       },
-      success: function (response) {
+      success: function(response) {
         $("#subs-back-btn").hide();
         response = JSON.parse(response);
         if (response.status === "error") {
@@ -526,7 +519,7 @@ $(() => {
         const totalPages = Math.ceil(userObjs[0].total_records / 10);
 
         htmlMarkup = "";
-        userObjs.forEach((userObj) => {
+        userObjs.forEach(userObj => {
           htmlMarkup += getUserRowMarkup(userObj);
         });
         $("#winLossDtholder").html(htmlMarkup);
@@ -542,12 +535,12 @@ $(() => {
           "page-top-agents"
         );
       },
-      error: function (xhr, status, error) {
+      error: function(xhr, status, error) {
         // showToast("Error","An Error occured, please try again later.","info");
 
         showToast(errorTitle, errorMsg, "info");
       },
-      complete: function () {
+      complete: function() {
         $($(element).find("i")[0])
           .removeClass("bx-loader bx-spin")
           .addClass("bx-check-double");
@@ -573,13 +566,13 @@ $(() => {
     $.ajax({
       url: `../report/fetchAgentSubs/${partnerID}/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
       type: "POST",
-      beforeSend: function () {
+      beforeSend: function() {
         $($(element).find("i")[0])
           .removeClass("bx-check-double")
           .addClass("bx-loader bx-spin");
         //  $("#wl-tbl-wrapper").LoadingOverlay("show");
       },
-      success: function (response) {
+      success: function(response) {
         $("#subs-back-btn").hide();
         response = JSON.parse(response);
         if (response.status === "error") {
@@ -605,7 +598,7 @@ $(() => {
         //     if(!$(".get-user-details-btn").hasClass("btn-disabled")) $(".get-user-details-btn").addClass("btn-disabled");
         // }
         htmlMarkup = "";
-        userObjs.forEach((userObj) => {
+        userObjs.forEach(userObj => {
           htmlMarkup += getUserRowMarkup(userObj);
         });
         historyStack.push($("#winLossDtholder").html());
@@ -624,12 +617,12 @@ $(() => {
           "page-agent-subs"
         );
       },
-      error: function (xhr, status, error) {
+      error: function(xhr, status, error) {
         // showToast("Error","An Error occured, please try again later.","info");
 
         showToast(errorTitle, errorMsg, "info");
       },
-      complete: function () {
+      complete: function() {
         $("#wl-tbl-wrapper").LoadingOverlay("hide");
         // $($(element).find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx-check-double");
         // $("#wl-pagination").html("")
@@ -637,7 +630,7 @@ $(() => {
     });
   };
 
-  $(document).on("click", ".page-top-agents,.page-agent-subs", function () {
+  $(document).on("click", ".page-top-agents,.page-agent-subs", function() {
     const page = parseInt($(this).attr("data-page"));
     if (page < 1) return;
     if ($(this).hasClass("page-top-agents")) {
@@ -657,9 +650,8 @@ $(() => {
     // Previous Button
     pagLink += `
       <li class='page-item ${currentPagewithdraw === 1 ? "disabled" : ""}'>
-        <a class='page-link ${type}' href='#' data-page='${
-      currentPagewithdraw - 1
-    }'><i class='bx bx-chevron-left'></i></a>
+        <a class='page-link ${type}' href='#' data-page='${currentPagewithdraw -
+      1}'><i class='bx bx-chevron-left'></i></a>
       </li>
     `;
 
@@ -683,30 +675,29 @@ $(() => {
 
     // Next Button
     pagLink += `
-      <li class='page-item ${
-        currentPagewithdraw === totalPages ? "disabled" : ""
-      }'>
-        <a class='page-link ${type}' href='#' data-page='${
-      currentPagewithdraw + 1
-    }'><i class='bx bx-chevron-right'></i></a>
+      <li class='page-item ${currentPagewithdraw === totalPages
+        ? "disabled"
+        : ""}'>
+        <a class='page-link ${type}' href='#' data-page='${currentPagewithdraw +
+      1}'><i class='bx bx-chevron-right'></i></a>
       </li>
     `;
 
     pagLink += "</ul>";
     document.getElementById("wl-pagination-wrapper").innerHTML = pagLink;
     $("#paging_infowl").text(
-      `Page ${currentPagewithdraw} of ${totalPages} ${
-        totalPages === 1 ? " Page " : " Pages "
-      } `
+      `Page ${currentPagewithdraw} of ${totalPages} ${totalPages === 1
+        ? " Page "
+        : " Pages "} `
     );
   };
 });
 
 const renderPaginationGGP = (elementID, totalPages, currentPage) => {
   const createPageLink = (i, label = i, disabled = false, active = false) =>
-    `<li class='page-item ${disabled ? "disabled" : ""} ${
-      active ? "active" : ""
-    }'>
+    `<li class='page-item ${disabled ? "disabled" : ""} ${active
+      ? "active"
+      : ""}'>
         <a class='page-link wl-pagination' href='#' data-page='${i}'>${label}</a>
     </li>`;
   let pagLink = `<ul class='pagination justify-content-end'>`;
@@ -738,8 +729,8 @@ const renderPaginationGGP = (elementID, totalPages, currentPage) => {
   document.getElementById(elementID).innerHTML = pagLink;
 
   // Add click event listeners
-  document.querySelectorAll(`#${elementID} .page-link`).forEach((link) => {
-    link.addEventListener("click", function (e) {
+  document.querySelectorAll(`#${elementID} .page-link`).forEach(link => {
+    link.addEventListener("click", function(e) {
       e.preventDefault();
       const newPage = +this.getAttribute("data-page");
       if (newPage > 0 && newPage <= totalPages) {
@@ -753,7 +744,7 @@ const renderPaginationGGP = (elementID, totalPages, currentPage) => {
   });
 };
 
-const getUserRowMarkup = (userData) => {
+const getUserRowMarkup = userData => {
   const subsBtn =
     parseInt(userData.account_type) === 2 ||
     parseInt(userData.account_type) === 3
@@ -761,11 +752,11 @@ const getUserRowMarkup = (userData) => {
              <button type="button" class="btn bg-white-subtle playerWinLoss" value="wl-rightlist"> Subs </button></div>`
       : "";
 
-  return `<tr id='user-id-${userData.user_id}' id='${
-    userData.account_type > 1 ? "agent" : ""
-  }' class='wl-results' data-acc-type='${
-    userData.account_type > 1 ? "agent" : ""
-  }'>
+  return `<tr id='user-id-${userData.user_id}' id='${userData.account_type > 1
+    ? "agent"
+    : ""}' class='wl-results' data-acc-type='${userData.account_type > 1
+    ? "agent"
+    : ""}'>
         <td> ${userData.username} </td>
         <td> ${userData.num_bettors} </td>
         <td> ${userData.num_bet_tickets} </td>

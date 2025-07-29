@@ -1,218 +1,219 @@
 <style>
-    .pagerlist {
-        position: relative;
-        /* Sets positioning context for absolute elements inside */
-        padding: 20px;
-        height: 80px;
-        background-color: #f9f9f9;
-    }
+.pagerlist {
+	position: relative;
+	/* Sets positioning context for absolute elements inside */
+	padding: 20px;
+	height: 80px;
+	background-color: #f9f9f9;
+}
 
-    .pagerlist {
-        position: relative;
-        /* Sets positioning context for absolute elements inside */
-        padding: 20px;
-        height: 80px;
-        background-color: #f9f9f9;
-    }
+.pagerlist {
+	position: relative;
+	/* Sets positioning context for absolute elements inside */
+	padding: 20px;
+	height: 80px;
+	background-color: #f9f9f9;
+}
 
-    .toplist-left-btn {
-        position: absolute;
-        top: 10px;
-        /* Distance from the top */
-        left: 10px;
-        /* Distance from the left */
-        padding: 5px 10px;
-        /* background-color: #007bff; */
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+.toplist-left-btn {
+	position: absolute;
+	top: 10px;
+	/* Distance from the top */
+	left: 10px;
+	/* Distance from the left */
+	padding: 5px 10px;
+	/* background-color: #007bff; */
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
 
-    .toplist-center {
-        position: absolute;
-        top: 50%;
-        /* Vertically centers the button */
-        left: 50%;
-        /* Horizontally centers the button */
-        transform: translate(-50%, -50%);
-        /* Adjusts for button size */
-        padding: 5px 15px;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+.toplist-center {
+	position: absolute;
+	top: 50%;
+	/* Vertically centers the button */
+	left: 50%;
+	/* Horizontally centers the button */
+	transform: translate(-50%, -50%);
+	/* Adjusts for button size */
+	padding: 5px 15px;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
 
-    .toplist-right-btn {
-        position: absolute;
-        top: 10px;
-        /* Distance from the top */
-        right: 10px;
-        /* Distance from the right */
-        padding: 5px 10px;
-        /* background-color: #28a745; */
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+.toplist-right-btn {
+	position: absolute;
+	top: 10px;
+	/* Distance from the top */
+	right: 10px;
+	/* Distance from the right */
+	padding: 5px 10px;
+	/* background-color: #28a745; */
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
 
-    .topplist-right {
-        position: absolute;
-        top: 10px;
-        /* Distance from the top */
-        right: 10px;
-        /* Distance from the right */
-        padding: 5px 10px;
-        /* background-color: #28a745; */
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+.topplist-right {
+	position: absolute;
+	top: 10px;
+	/* Distance from the top */
+	right: 10px;
+	/* Distance from the right */
+	padding: 5px 10px;
+	/* background-color: #28a745; */
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
 
-    .table-wrapperdeposit {
-        overflow: hidden;
-        /* Hide the default scrollbar */
-        white-space: nowrap;
-        max-width: 100%;
-        /* Adjust based on your needs */
-        margin-bottom: 10px;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 10px;
-        background: rgb(38, 57, 77) 0px 20px 30px -10px;
-        /* Ensure it doesn't interfere with content */
-        z-index: 10;
-    }
+.table-wrapperdeposit {
+	overflow: hidden;
+	/* Hide the default scrollbar */
+	white-space: nowrap;
+	max-width: 100%;
+	/* Adjust based on your needs */
+	margin-bottom: 10px;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 10px;
+	background: rgb(38, 57, 77) 0px 20px 30px -10px;
+	/* Ensure it doesn't interfere with content */
+	z-index: 10;
+}
 
-    .queryholderdeposit {
-        width: 30%;
-        margin-right: 5px;
-        background-color: #fff;
-    }
+.queryholderdeposit {
+	width: 30%;
+	margin-right: 5px;
+	background-color: #fff;
+}
 
-    .optionlink {
-        text-align: left;
-        border-bottom: solid 1px #eee;
-        padding: 5px;
-    }
+.optionlink {
+	text-align: left;
+	border-bottom: solid 1px #eee;
+	padding: 5px;
+}
 
-    .optionlink:hover {
-        background-color: #eee;
-    }
+.optionlink:hover {
+	background-color: #eee;
+}
 
-    #userDropdownlist {
-        max-height: 300px;
-        overflow-y: scroll;
-        overflow-x: hidden;
-    }
+#userDropdownlist {
+	max-height: 300px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
 
-    .no-resultslist {
-        text-align: center;
-        /* Center horizontally */
-        vertical-align: middle;
-        /* Center vertically */
-        height: 20px;
-        /* Set a minimum height to ensure centering */
-        border: none;
-    }
+.no-resultslist {
+	text-align: center;
+	/* Center horizontally */
+	vertical-align: middle;
+	/* Center vertically */
+	height: 20px;
+	/* Set a minimum height to ensure centering */
+	border: none;
+}
 
-    .no-resultslist img {
-        position: relative;
-        top: 100px;
-    }
+.no-resultslist img {
+	position: relative;
+	top: 100px;
+}
 
-    /* Custom Scrollbar for Webkit Browsers */
-    .table-wrapperdeposit::-webkit-scrollbar {
-        width: 5px;
-        /* Slimmer scrollbar width */
-        height: 5px;
-        /* Slimmer scrollbar height for horizontal scrolling */
-    }
+/* Custom Scrollbar for Webkit Browsers */
+.table-wrapperdeposit::-webkit-scrollbar {
+	width: 5px;
+	/* Slimmer scrollbar width */
+	height: 5px;
+	/* Slimmer scrollbar height for horizontal scrolling */
+}
 
-    .table-wrapperdeposit::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        /* Lighter background for track */
-        border-radius: 5px;
-    }
+.table-wrapperdeposit::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	/* Lighter background for track */
+	border-radius: 5px;
+}
 
-    .table-wrapperdeposit::-webkit-scrollbar-thumb {
-        background-color: #ccc;
-        /* Blue color for thumb */
-        border-radius: 10px;
-        cursor: pointer;
-    }
+.table-wrapperdeposit::-webkit-scrollbar-thumb {
+	background-color: #ccc;
+	/* Blue color for thumb */
+	border-radius: 10px;
+	cursor: pointer;
+}
 
-    .table-wrapperdeposit::-webkit-scrollbar-thumb:hover {
-        background-color: #aaa;
-        /* Darker blue on hover */
-    }
+.table-wrapperdeposit::-webkit-scrollbar-thumb:hover {
+	background-color: #aaa;
+	/* Darker blue on hover */
+}
 
-    .editable {
-        /* cursor: pointer; */
-        background-color: #f9f9f9;
-    }
+.editable {
+	/* cursor: pointer; */
+	background-color: #f9f9f9;
+}
 
-    .editable:focus {
-        outline: 1px solid #ccc;
-        background-color: #fff;
-        /* Optional: Make it stand out */
-    }
+.editable:focus {
+	outline: 1px solid #ccc;
+	background-color: #fff;
+	/* Optional: Make it stand out */
+}
 
-    .tbl-depositheader {
-        position: sticky;
-        top: 0;
-    }
+.tbl-depositheader {
+	position: sticky;
+	top: 0;
+}
 
-    .sticky-depositheader {
-        position: relative;
-        bottom: 1px;
-        background-color: red;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-    }
+.sticky-depositheader {
+	position: relative;
+	bottom: 1px;
+	background-color: red;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
 
-    .DepositDropdown {
-        width: 14%;
-        position: absolute;
-        background-color: #fff;
-        color: #aaa;
-        max-height: 300px;
-        overflow-y: scroll;
-        border-radius: 5px;
-        padding: 5px;
-        top: 90%;
-        z-index: 9;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-        display: none;
-    }
+.DepositDropdown {
+	width: 14%;
+	position: absolute;
+	background-color: #fff;
+	color: #aaa;
+	max-height: 300px;
+	overflow-y: scroll;
+	border-radius: 5px;
+	padding: 5px;
+	top: 90%;
+	z-index: 9;
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+	display: none;
+}
 
-    /* Style for the scrollbar */
-    .DepositDropdown::-webkit-scrollbar {
-        width: 3px;
-        /* Width of the scrollbar */
-    }
+/* Style for the scrollbar */
+.DepositDropdown::-webkit-scrollbar {
+	width: 3px;
+	/* Width of the scrollbar */
+}
 
-    .DepositDropdown::-webkit-scrollbar-track {
-        background: #f0f0f0;
-        /* Background of the scrollbar track */
-        border-radius: 5px;
-        /* Rounded corners */
-    }
+.DepositDropdown::-webkit-scrollbar-track {
+	background: #f0f0f0;
+	/* Background of the scrollbar track */
+	border-radius: 5px;
+	/* Rounded corners */
+}
 
-    .DepositDropdown::-webkit-scrollbar-thumb {
-        background: #ccc;
-        /* Color of the scrollbar handle */
-        border-radius: 5px;
-        /* Rounded corners */
-    }
+.DepositDropdown::-webkit-scrollbar-thumb {
+	background: #ccc;
+	/* Color of the scrollbar handle */
+	border-radius: 5px;
+	/* Rounded corners */
+}
 
-    .DepositDropdown::-webkit-scrollbar-thumb:hover {
-        background: #aaa;
-        /* Darker handle color on hover */
-    }
+.DepositDropdown::-webkit-scrollbar-thumb:hover {
+	background: #aaa;
+	/* Darker handle color on hover */
+}
+
 </style>
 
 <!-- toast messages -->
@@ -223,26 +224,20 @@
 <span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display: none;"></span>
 <span id="trans-alert" data-translation="<?= $translator['Alert']; ?>" style="display: none;"></span>
 <span id="trans-user-does-not-exist" data-translation="<?= $translator['UserDoesNotExist']; ?>" style="display: none;"></span>
-
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
-
 <!-- Hidden spans with translated text -->
 <span id="tr_page" style="display: none;"><?= $translator['Page'] ?></span>
 <span id="tr_of" style="display: none;"><?= $translator['of'] ?></span>
 <span id="tr_pages" style="display: none;"><?= $translator['pages'] ?></span>
-
 <span id="channel_manual_deposit" style="display: none;"><?= $translator['channel_manual_deposit'] ?></span>
 <span id="channel_bank_transfer" style="display: none;"><?= $translator['channel_bank_transfer'] ?></span>
 <span id="channel_momo" style="display: none;"><?= $translator['channel_momo'] ?></span>
 <span id="channel_crypto" style="display: none;"><?= $translator['channel_crypto'] ?></span>
-
 <span id="status_pending" style="display: none;"><?= $translator['status_pending'] ?></span>
 <span id="status_success" style="display: none;"><?= $translator['status_success'] ?></span>
 <span id="status_failed" style="display: none;"><?= $translator['status_failed'] ?></span>
-
 <!-- toast messages ends here -->
-
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Deposit Record']; ?></h4>

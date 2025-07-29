@@ -279,11 +279,11 @@
 </style>
 
 <!-- toast messages -->
-<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp']; ?>" style="display:none;"></span>
-<span id="trans-failed-inactive" data-translation="<?= $translator['FailedToSetInactive']; ?>" style="display:none;"></span>
-<span id="trans-inactive-success" data-translation="<?= $translator['SetInactiveSuccess']; ?>" style="display:none;"></span>
-<span id="trans-select-fields" data-translation="<?= $translator['Select One Or More Fields']; ?>" style="display:none;"></span>
-<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display:none;"></span>
+<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp']; ?>" style="display: none;"></span>
+<span id="trans-failed-inactive" data-translation="<?= $translator['FailedToSetInactive']; ?>" style="display: none;"></span>
+<span id="trans-inactive-success" data-translation="<?= $translator['SetInactiveSuccess']; ?>" style="display: none;"></span>
+<span id="trans-select-fields" data-translation="<?= $translator['Select One Or More Fields']; ?>" style="display: none;"></span>
+<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display: none;"></span>
 
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
@@ -298,12 +298,9 @@
     <div class="px-4 py-3 border-bottom pagerlist1">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 150%;">
-
-
                 <input type="hidden" class="userIdtrans" />
                 <div style="width: 65%;">
-                    <input name="transuserpayment" class="form-control bring-forward" id="transuserpayment" data-user-id=""
-                        placeholder="<?= $translator['Search usernames']; ?>" autocomplete="off"  >
+                    <input name="transuserpayment" class="form-control bring-forward" id="transuserpayment" data-user-id="" placeholder="<?= $translator['Search usernames']; ?>" autocomplete="off" />
 
                     <select class="form-control queryholderuserpayment" size="5" style="display: none;" id="userpaymentAccountDropdown">
                         <!-- Options will be populated dynamically -->
@@ -344,26 +341,22 @@
             <!--enter is free-->
         </span>
         <span class="topplist-right" id="paginations" aria-label="Page navigation example">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example"
-                style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
-                <button type="button" class="btn bg-white-subtle player refreshuserpayment" value="" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+                <button type="button" class="btn bg-white-subtle player refreshuserpayment" value="" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle  Searchuserpaymentrans" value="" aria-label="Searchuserpayment"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Searchuserpayment">
+                <button type="button" class="btn bg-white-subtle Searchuserpaymentrans" value="" aria-label="Searchuserpayment" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Searchuserpayment">
                     <i class="bx loaderlist bx-check-double" style="font-size: 20px;"></i>
                 </button>
             </div>
         </span>
     </div>
 
-<!-- language tranlate relates with js file start -->
-    <span id="inactive-text" data-translation="<?= $translator['Inactive']; ?>" style="display:none;"></span>
-<!-- language tranlate relates with js file end   -->
+    <!-- language tranlate relates with js file start -->
+    <span id="inactive-text" data-translation="<?= $translator['Inactive']; ?>" style="display: none;"></span>
+    <!-- language tranlate relates with js file end   -->
     <div class="card-body p-4">
-        <div class="table-responsive mb-4 border rounded-1 table-wrapperuserpaymentcard" id="maskuserpayment"
-            style="height: 530px; overflow-y: scroll;">
+        <div class="table-responsive mb-4 border rounded-1 table-wrapperuserpaymentcard" id="maskuserpayment" style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4 tbl-headeruserpayment">
                     <tr class="headrowuserpayment">
@@ -378,17 +371,15 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Payment Type']; ?></h6>
                         </th>
 
-
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
                         </th>
                     </tr>
                 </thead>
                 <tbody id="usercardContainer">
                     <tr class="no-resultslist">
                         <td colspan="9">
-                            <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo"
-                                alt="Logo-Dark" />
+                            <img src="<?php echo BASE_URL; ?>assets/images/not_found.jpg" class="dark-logo" alt="Logo-Dark" />
                         </td>
                     </tr>
                 </tbody>
@@ -397,8 +388,7 @@
     </div>
     <div class="px-4 py-3 border-top pagerlist">
         <span class="toplist-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example"
-                style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
                 <button type="button" class="btn bg-white-subtle playerusercard" value="leftlinks">
                     <i class="bx bx-chevron-left" style="font-size: 20px;"></i>
                 </button>
@@ -437,16 +427,14 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="addContactMbodavov" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle"
-    aria-hidden="true">
+<div class="modal fade" id="addContactMbodavov" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header d-flex align-items-center">
                 <div>
                     <h5><?= $translator['User Payment Method']; ?></h5>
                 </div>
-                <div><i class="bx bx-message-square-x tclose"
-                        style="color: #868c87; font-size: 25px; cursor: pointer;"></i></div>
+                <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;"></i></div>
             </div>
             <div class="modal-body">
                 <div class="add-contact-box">
@@ -455,8 +443,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-3 contact-location">
-                                        <input type="text" id="c-b-bankcard" class="form-control"
-                                            placeholder="Update all User Payment Method<?= $translator['Timezone/Hrs']; ?>" />
+                                        <input type="text" id="c-b-bankcard" class="form-control" placeholder="Update all User Payment Method<?= $translator['Timezone/Hrs']; ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -476,16 +463,13 @@
 </div>
 
 <div id="Userpaymentmodal" class="modal fade" tabindex="-1" aria-hidden="true">
-
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between">
                         <div><?= $translator['Bank Payment Method']; ?></div>
-                        <div><i class="bx bx-message-square-x tclose"
-                                style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
-                                aria-label="Close"></i></div>
+                        <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
                     </div>
                 </div>
                 <form>
@@ -503,8 +487,7 @@
                     </div>
                 </form>
 
-                <div id="loadingIndicator" class="spinner-border text-primary" role="status"
-                    style="display: none; position: relative; left: 40%;">
+                <div id="loadingIndicator" class="spinner-border text-primary" role="status" style="display: none; position: relative; left: 40%;">
                     <span class="sr-only">Loading...</span>
                 </div>
 
@@ -517,21 +500,15 @@
                                 <th class="font-weight-normal"><?= $translator['Payment Type']; ?></th>
                                 <th class="font-weight-normal"><?= $translator['Status']; ?></th>
                                 <th class="font-weight-normal"><?= $translator['Action']; ?></th>
-
                             </tr>
                         </thead>
-                        <tbody class="">
-
-                        </tbody>
+                        <tbody class=""></tbody>
                     </table>
                 </div>
 
-                <div id="loadingIndicator" class="spinner-border text-primary" role="status"
-                    style="display: none; position: relative; left: 40%;">
+                <div id="loadingIndicator" class="spinner-border text-primary" role="status" style="display: none; position: relative; left: 40%;">
                     <span class="sr-only">Loading...</span>
                 </div>
-
-
             </div>
         </div>
         <!-- /.modal-content -->

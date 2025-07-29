@@ -559,7 +559,7 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content rounded-4 p-4" style="background-image: url('your-background-image.jpg'); background-size: cover; background-position: center; backdrop-filter: blur(3px);">
             <div class="modal-header border-0">
-                <h5 class="modal-title w-100 text-center fw-bold text-dark">Add New Lottery</h5>
+                <h5 class="modal-title w-100 text-center fw-bold text-dark"><?= $translator['Add New Lottery']; ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -575,67 +575,67 @@
                     <div class="row g-3">
                         <!-- Row 1 -->
                         <div class="col-md-6">
-                            <label class="form-label">Lottery name*</label>
+                            <label class="form-label"><?= $translator['Lottery name']; ?></label>
                             <input type="text" class="form-control" name="name" id="namee" />
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">Alias*</label>
+                            <label class="form-label"><?= $translator['Alias']; ?></label>
                             <input type="text" class="form-control" name="alias" id="alias" />
                         </div>
 
                         <div class="col-md-4">
-                            <label class="form-label">Lottery Type*</label>
+                            <label class="form-label"><?= $translator['Lottery Type']; ?></label>
 
                             <?= $translator['Select Lottery']; ?>
 
                             <!-- Game Group -->
                             <select class="form-select lotteryTypeSelect game_groups" name="game_groups" id="lottery_types" style="width: 100%;">
-                                <option value="" disabled selected>Select Game Group</option>
+                                <option value="" disabled selected><?= $translator['Select Game Group']; ?></option>
                             </select>
                         </div>
 
                         <!-- Row 2 -->
                         <div class="col-md-4">
-                            <label class="form-label">Number of Balls*</label>
+                            <label class="form-label"><?= $translator['Number of Balls']; ?></label>
                             <input type="number" class="form-control" name="number_of_balls" id="numm_of_balls" readonly />
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Seconds Issue</label>
+                            <label class="form-label"><?= $translator['Seconds Issue']; ?></label>
                             <select class="form-select secondsselect" name="seconds_per_issue" id="secondss_per_issue">
                                 <option value="" disabled selected><?= $translator['Select Seconds']; ?></option>
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Min Ball*</label>
+                            <label class="form-label"><?= $translator['Min Ball']; ?></label>
                             <input type="number" class="form-control" name="minn_ball" id="minn_ball" readonly />
                         </div>
                         <!-- Row 3 -->
                         <div class="col-md-6">
-                            <label class="form-label">Max Ball*</label>
+                            <label class="form-label"><?= $translator['Max Ball']; ?></label>
                             <input type="number" class="form-control" name="maxx_ball" id="maxx_ball" readonly />
                         </div>
 
                         <!-- Row 4 -->
                         <div class="col-md-4">
-                            <label class="form-label">Start time*</label>
+                            <label class="form-label"><?= $translator['Start time']; ?></label>
                             <input type="time" class="form-control" name="starttime" id="starttimee" />
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Stop time*</label>
+                            <label class="form-label"><?= $translator['Stop time']; ?></label>
                             <input type="time" class="form-control" name="stoptime" id="stoptimee" />
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Lottery model*</label>
+                            <label class="form-label"><?= $translator['Lottery model']; ?></label>
                             <select class="form-select modelTypess" name="lottery_model" id="lottery_model">
-                                <option value="" disabled selected>Select Game Model</option>
+                                <option value="" disabled selected> <?= $translator['Select Game Model']; ?></option>
                             </select>
                         </div>
                         <!-- Row 5 -->
                         <div class="col-md-12">
-                            <label class="form-label">Select default image</label>
+                            <label class="form-label"> <?= $translator['Select default image']; ?></label>
                             <select id="" class="form-select gameimage" id="lottery_logo_name" style="width: 100%;">
-                                <option value="" disabled selected>select corresponding game image</option>
+                                <option value="" disabled selected><?= $translator['select corresponding game image']; ?></option>
                                 <option value="Royal-5.jpg">Royal-5.jpg</option>
                                 <option value="Max-3D.jpg">Max-3D.jpg</option>
                                 <option value="Fast-3.jpg">Fast-3.jpg</option>
@@ -648,7 +648,7 @@
                     </div>
 
                     <div class="text-center mt-4">
-                        <button type="submit" class="btn btn-primary px-4 addLottery">Submit Lottery</button>
+                        <button type="submit" class="btn btn-primary px-4 addLottery"><?= $translator['Submit Lottery']; ?></button>
                     </div>
                 </form>
             </div>
@@ -664,7 +664,7 @@
             <div class="modal-body">
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="text-info">Update Image</h5>
+                        <h5 class="text-info"><?= $translator['Update Image']; ?></h5>
                         <i class="bx bx-message-square-x lb-tclose" data-bs-dismiss="modal" style="cursor: pointer;"></i>
                     </div>
                 </div>
@@ -676,12 +676,12 @@
                         <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-height: 200px;" />
                     </div>
                     <div class="mb-3">
-                        <label for="lottery_logo_file" class="form-label">Select Image</label>
+                        <label for="lottery_logo_file" class="form-label"><?= $translator['Select Image']; ?></label>
                         <input type="file" class="form-control" name="lottery_logo_file" id="lottery_logo_file" accept="image/*" required />
                     </div>
 
                     <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-primary updateee-game-image-btn" id="upload">Confirm</button>
+                        <button type="button" class="btn btn-primary updateee-game-image-btn" id="upload"><?= $translator['Confirm']; ?></button>
                     </div>
                 </form>
             </div>

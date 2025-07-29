@@ -163,7 +163,7 @@
     background-color: #aaa;
     /* Darker blue on hover */
   }
-  .left-element {
+ .left-element {
   position: relative;
   bottom:8px;
   height: 35px;

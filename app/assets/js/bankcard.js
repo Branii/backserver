@@ -9,9 +9,9 @@ $(function () {
       duration: 3000 // auto-dismiss after 3s
     });
   }
-const txtPage = document.getElementById("trans-page").innerText;
-const txtOf = document.getElementById("trans-of").innerText;
-const txtPages = document.getElementById("trans-pages").innerText;
+  const txtPage = document.getElementById("trans-page").innerText;
+  const txtOf = document.getElementById("trans-of").innerText;
+  const txtPages = document.getElementById("trans-pages").innerText;
   const headsUpText = document.getElementById("trans-heads-up").textContent;
   const selectFieldsText = document.getElementById(
     "trans-select-fields"
@@ -27,11 +27,11 @@ const txtPages = document.getElementById("trans-pages").innerText;
     // };
 
     const bankStates = {
-  1: document.getElementById('bank_state_1').innerText,
-  2: document.getElementById('bank_state_2').innerText,
-  3: document.getElementById('bank_state_3').innerText,
-  4: document.getElementById('bank_state_4').innerText
-};
+      1: document.getElementById("bank_state_1").innerText,
+      2: document.getElementById("bank_state_2").innerText,
+      3: document.getElementById("bank_state_3").innerText,
+      4: document.getElementById("bank_state_4").innerText
+    };
     let html = "";
 
     data.forEach((item) => {
@@ -101,8 +101,9 @@ const txtPages = document.getElementById("trans-pages").innerText;
       );
       // document.getElementById("paging_infobankcard").innerHTML =
       //   "Page " + pagebankcard + " of " + totalPages + " pages";
-        document.getElementById("paging_infobankcard").innerHTML =
-    `${txtPage} ${pagebankcard} ${txtOf} ${totalPages} ${txtPages}`;
+      document.getElementById(
+        "paging_infobankcard"
+      ).innerHTML = `${txtPage} ${pagebankcard} ${txtOf} ${totalPages} ${txtPages}`;
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -288,8 +289,9 @@ const txtPages = document.getElementById("trans-pages").innerText;
           );
           // document.getElementById("paging_infobankcard").innerHTML =
           //   "Page " + currentPage + " of " + totalPages + " pages";
-            document.getElementById("paging_infobankcard").innerHTML =
-    `${txtPage} ${pagebankcard} ${txtOf} ${totalPages} ${txtPages}`;
+          document.getElementById(
+            "paging_infobankcard"
+          ).innerHTML = `${txtPage} ${pagebankcard} ${txtOf} ${totalPages} ${txtPages}`;
         },
         error: function (xhr, status, error) {
           showToast(

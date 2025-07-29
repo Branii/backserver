@@ -3,18 +3,12 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     // Throw an Exception with the error message and details
     throw new \Exception("$errstr in $errfile on line $errline", $errno);
 });
-// declare(strict_types=1);
-// header('Content-Type: application/json');
-
 
 $flag  = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 $page  = isset($this->viewData['page']) ? max((int)$this->viewData['page'], 1) : 1; // Ensure valid page number
 // $limit = isset($this->viewData['limit']) ? max((int)$this->viewData['limit'], 1) : 20; // Ensure valid limit 
-
 $results = [];
-
 if ($flag == "users-win-loss") {
-
     $partnerID = $this->viewData['partner_id'];
     $lottery_id = $this->viewData['lottery_id'];
     $start_date = $this->viewData['start_date'];
@@ -42,12 +36,9 @@ if ($flag == "users-win-loss") {
         echo json_encode(['error' => "No User Selected."]);
         return true;
     }
-
     $user_res = DataReportModel::filterWinLossRecordsForUser($partnerID,$user_id,["game_type"=> $lottery_id,"start_date" => $start_date, "end_date" => $end_date]);
     echo json_encode($user_res);
-
-    return ;      
-   
+    return ;        
 } else if ($flag === "get-top-agents") {
   
     // get the filter parameters

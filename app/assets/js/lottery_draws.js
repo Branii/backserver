@@ -1,38 +1,35 @@
-$(function () {
-
-const partnerID = $('#partner-holder').attr('data-partner-id');
+$(function() {
+  const partnerID = $("#partner-holder").attr("data-partner-id");
 
   function showToast(title, message, type) {
     $.toast({
-      position: 'bottom-right',
+      position: "bottom-right",
       title: title,
       message: message,
       type: type,
-      duration: 3000, // auto-dismiss after 3s
+      duration: 3000 // auto-dismiss after 3s
     });
   }
 
-  const SETTLED_TEXT = document.getElementById('settled_text').innerText;
-  const UNSETTLED_TEXT = document.getElementById('unsettled_text').innerText;
-  const PENDING_TEXT = document.getElementById('pending_text').innerText;
+  const SETTLED_TEXT = document.getElementById("settled_text").innerText;
+  const UNSETTLED_TEXT = document.getElementById("unsettled_text").innerText;
+  const PENDING_TEXT = document.getElementById("pending_text").innerText;
 
   const txtPage = document.getElementById("trans-page").innerText;
   const txtOf = document.getElementById("trans-of").innerText;
   const txtPages = document.getElementById("trans-pages").innerText;
 
-
-
-  const drawTables = (data) => {
+  const drawTables = data => {
     let html = "";
 
     const statusMap = {
       done: SETTLED_TEXT,
       waiting: UNSETTLED_TEXT,
-      pending: PENDING_TEXT,
+      pending: PENDING_TEXT
     };
 
-    data.forEach((item) => {
-      let timezone = item.timezone.split(' ');
+    data.forEach(item => {
+      let timezone = item.timezone.split(" ");
       timezone =
         timezone[0] + `<span style="margin-left: 1rem;">${timezone[1]}</span>`;
 
@@ -48,93 +45,99 @@ const partnerID = $('#partner-holder').attr('data-partner-id');
                   <td>${item.actual_draw_time}</td>
                   <td>${timezone}</td>
                   <td>${item.settlement_completion_time}</td>
-                  <td><span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${
-                    statusMap[item.status] || item.status
-                  }</span></td>
+                  <td><span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${statusMap[
+                    item.status
+                  ] || item.status}</span></td>
               </tr>`;
     });
 
     return html;
   };
 
-  const renderDrawTable = (data) => {
+  const renderDrawTable = data => {
     var html = drawTables(data);
-    $('#dataContainerDrawsss').html(html);
+    $("#dataContainerDrawsss").html(html);
   };
 
   let currentPage = 1;
   let pageLimit = 20;
-  let sibling = '';
+  let sibling = "";
 
   async function getAllGames() {
-      try {
-        const response = await fetch(`../game/getAllgames`);
-        const data = await response.json();
-        let html = '';
-        data.forEach((item) => {
-          html += `<option value='${item.gt_id}'>${item.name}</option>`;
-        });
-        $('#allGameNames').html(html);
-      } catch (error) {
-        console.error('Error fetching data:', error);  
+    try {
+      const response = await fetch(`../game/getAllgames`);
+      const data = await response.json();
+      let html = "";
+      data.forEach(item => {
+        html += `<option value='${item.gt_id}'>${item.name}</option>`;
+      });
+      $("#allGameNames").html(html);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
   }
-  getAllGames() 
+  getAllGames();
 
+  const getAllSpecificDraws = (currentPage, pageLimit, element) => {
+    const gameID = $("#allGameNames").val();
+    const issueNumber = $("#ltd-issuenumber").val();
+    const status = $("#ltd-status").val();
+    const startDate = $("#ltd-start-date").val();
+    const endDate = $("#ltd-end-date").val();
 
-    const  getAllSpecificDraws = (currentPage, pageLimit,element) => {
-      const gameID       =  $("#allGameNames").val() ;
-      const issueNumber  = $("#ltd-issuenumber").val();
-      const status       = $("#ltd-status").val();
-      const startDate    = $("#ltd-start-date").val();
-      const endDate      = $("#ltd-end-date").val();
+    try {
+      $.ajax({
+        url: `../game/getSpecificDraws/${partnerID}/${gameID}/${issueNumber}/${status}/${startDate}/${endDate}/${currentPage}/${pageLimit}`,
+        type: "POST",
+        beforeSend: function() {
+          $($(element).find("i")[0])
+            .removeClass("bx-check-double")
+            .addClass("bx-loader bx-spin");
+        },
+        success: function(response) {
+          response = JSON.parse(response);
+          if (response.status === "error") {
+            showToast("Error", response.data, "error");
+            return;
+          }
 
+          if (response.data.length === 0) {
+            $("#dataContainerDrawsss").html(
+              `<tr class="no-results"><td colspan="12"><img src="/admin/app/assets/images/notfound.png" class="dark-logo" alt="Logo-Dark"></td></tr>`
+            );
+            return;
+          }
+          const data = response.data;
+          renderDrawTable(data);
+          $("#maskkk").LoadingOverlay("hide");
+          const totalPages = Math.ceil(data[0].total_records / pageLimit);
+          renderPaginationForDraws(
+            totalPages,
+            currentPage,
+            (currentPage, pageLimit) =>
+              getAllSpecificDraws(currentPage, pageLimit)
+          );
+          // document.getElementById("ltd_paging_info_draws").innerHTML =
+          // "Page " + currentPage + " of " + totalPages + " pages";
 
-      try {
-        $.ajax({
-          url:`../game/getSpecificDraws/${partnerID}/${gameID}/${issueNumber}/${status}/${startDate}/${endDate}/${currentPage}/${pageLimit}`,
-          type: "POST",
-          beforeSend: function(){
-              $($(element).find("i")[0]).removeClass("bx-check-double").addClass("bx-loader bx-spin");
-
-          },
-          success: function(response){
-              response  = JSON.parse(response);
-              if(response.status === 'error'){
-                showToast("Error", response.data, "error");
-                return;
-              }
-
-              if(response.data.length === 0){
-                $("#dataContainerDrawsss").html(`<tr class="no-results"><td colspan="12"><img src="/admin/app/assets/images/notfound.png" class="dark-logo" alt="Logo-Dark"></td></tr>`)
-                return;
-              }
-              const data = response.data;
-              renderDrawTable(data);
-              $("#maskkk").LoadingOverlay("hide")
-              const totalPages = Math.ceil(data[0].total_records / pageLimit);
-              renderPaginationForDraws(totalPages, currentPage,(currentPage,pageLimit)=> getAllSpecificDraws(currentPage,pageLimit));
-              // document.getElementById("ltd_paging_info_draws").innerHTML =
-              // "Page " + currentPage + " of " + totalPages + " pages";
-
-              document.getElementById("ltd_paging_info_draws").innerHTML =
-           `${txtPage} ${currentPage} ${txtOf} ${totalPages} ${txtPages}`;
-          },
-          error: function (xhr,status,error){
-            showToast("Error", "Request Error, please contact admin",'error');
-          },
-          complete: function (){
-            $($(element).find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx-check-double");
-          },
-       
-        });
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+          document.getElementById(
+            "ltd_paging_info_draws"
+          ).innerHTML = `${txtPage} ${currentPage} ${txtOf} ${totalPages} ${txtPages}`;
+        },
+        error: function(xhr, status, error) {
+          showToast("Error", "Request Error, please contact admin", "error");
+        },
+        complete: function() {
+          $($(element).find("i")[0])
+            .removeClass("bx-loader bx-spin")
+            .addClass("bx-check-double");
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
-  
+  };
 
- 
   // const getAllSpecificDraws = (currentPage, pageLimit, element) => {
   //   const gameID = $('#allGameNames').val();
   //   const issueNumber = $('#ltd-issuenumber').val();
@@ -194,35 +197,45 @@ const partnerID = $('#partner-holder').attr('data-partner-id');
 
   function renderPaginationForDraws(totalPages, currentPage, callback) {
     const createPageLink = (i, label = i, disabled = false, active = false) =>
-      `<li class='page-item ${disabled ? 'disabled' : ''} ${active ? 'active' : ''}'>
+      `<li class='page-item ${disabled ? "disabled" : ""} ${active
+        ? "active"
+        : ""}'>
               <a class='page-link' href='#' data-page='${i}'>${label}</a>
       </li>`;
     let pagLink = `<ul class='pagination justify-content-end'>`;
 
     // Previous Button
-    pagLink += createPageLink(currentPage - 1,`<i class='bx bx-chevron-left'></i>`, currentPage === 1);
+    pagLink += createPageLink(
+      currentPage - 1,
+      `<i class='bx bx-chevron-left'></i>`,
+      currentPage === 1
+    );
     // Page numbers with ellipsis
     for (let i = 1; i <= totalPages; i++) {
       if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
         pagLink += createPageLink(i, i, false, i === currentPage);
       } else if (i === currentPage - 3 || i === currentPage + 3) {
-        pagLink += createPageLink(i, '...', true);
+        pagLink += createPageLink(i, "...", true);
       }
     }
 
     // Next Button
-    pagLink += createPageLink( currentPage + 1,`<i class='bx bx-chevron-right'></i>`, currentPage === totalPages
+    pagLink += createPageLink(
+      currentPage + 1,
+      `<i class='bx bx-chevron-right'></i>`,
+      currentPage === totalPages
     );
-    pagLink += '</ul>';
+    pagLink += "</ul>";
 
-    document.getElementById('ltd_paginationDraws').innerHTML = pagLink;
+    document.getElementById("ltd_paginationDraws").innerHTML = pagLink;
 
     // Add click event listeners
-    document.querySelectorAll('#ltd_paginationDraws .page-link')
-      .forEach((link) => {
-        link.addEventListener('click', function (e) {
+    document
+      .querySelectorAll("#ltd_paginationDraws .page-link")
+      .forEach(link => {
+        link.addEventListener("click", function(e) {
           e.preventDefault();
-          const newPage = +this.getAttribute('data-page');
+          const newPage = +this.getAttribute("data-page");
           if (newPage > 0 && newPage <= totalPages) {
             //getAllBackups(newPage, pageLimit);
             callback(newPage, pageLimit);
@@ -231,38 +244,38 @@ const partnerID = $('#partner-holder').attr('data-partner-id');
       });
   }
 
-  $('.executegetdrawsb').on('click', function () {
+  $(".executegetdrawsb").on("click", function() {
     getAllSpecificDraws(currentPage, pageLimit, this);
   });
 
-  $('.refreshdraws').on('click', function () {
-    $('#allGameNames').val(1);
-    $('#ltd-issuenumber').val('');
-    $('#ltd-status').val(0);
-    $('#ltd-start-date').val('');
-    $('#ltd-end-date').val('');
+  $(".refreshdraws").on("click", function() {
+    $("#allGameNames").val(1);
+    $("#ltd-issuenumber").val("");
+    $("#ltd-status").val(0);
+    $("#ltd-start-date").val("");
+    $("#ltd-end-date").val("");
     getAllSpecificDraws(currentPage, pageLimit, this);
   });
 
-  $('.numrowsbackup').change(function () {
+  $(".numrowsbackup").change(function() {
     const numrow = $(this).val();
     getAllBackups(currentPage, numrow);
   });
 
-  $('.ld_data_scroll').click(function () {
+  $(".ld_data_scroll").click(function() {
     let direction = $(this).val();
-    const tableWrapper = $('.ld-table-wrapperDraws');
-    const tableWrappers = document.querySelector('.ld-table-wrapperDraws');
+    const tableWrapper = $(".ld-table-wrapperDraws");
+    const tableWrappers = document.querySelector(".ld-table-wrapperDraws");
     const scrollAmount = 1300; // Adjust as needed
     const scrollOptions = {
-      behavior: 'smooth',
+      behavior: "smooth"
     };
     if (tableWrapper.length) {
       switch (direction) {
-        case 'left':
+        case "left":
           tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
           break;
-        case 'right':
+        case "right":
           tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
           break;
         default:
@@ -271,7 +284,7 @@ const partnerID = $('#partner-holder').attr('data-partner-id');
     }
   });
 
-  const transformInputLd = (str) => {
+  const transformInputLd = str => {
     // Trim whitespace from both ends
     str = str.trim();
 
@@ -279,17 +292,17 @@ const partnerID = $('#partner-holder').attr('data-partner-id');
     if (/^\d+x\d+/.test(str)) {
       // Take everything before the first space as the prefix
       const prefix = str.split(/\s+/)[0];
-      return prefix.charAt(0).toUpperCase() + prefix.slice(1) + '1001';
+      return prefix.charAt(0).toUpperCase() + prefix.slice(1) + "1001";
     } else {
       // Rule 2: Process as a name-like string
 
       // Remove any trailing digits (e.g., "RoodevFast3" -> "RoodevFast")
-      str = str.replace(/\d+$/, '');
+      str = str.replace(/\d+$/, "");
 
       let words = [];
 
       // If there's a space, split on whitespace
-      if (str.includes(' ')) {
+      if (str.includes(" ")) {
         words = str.split(/\s+/);
       } else {
         // Otherwise, try splitting on CamelCase: sequences of capital letter + subsequent lowercase
@@ -312,7 +325,7 @@ const partnerID = $('#partner-holder').attr('data-partner-id');
       let abbreviation = words[0].charAt(0);
 
       // 2) Append the first consonant (non-vowel) that follows in the first word
-      const vowels = 'aeiouAEIOU';
+      const vowels = "aeiouAEIOU";
       for (let i = 1; i < words[0].length; i++) {
         if (!vowels.includes(words[0][i])) {
           abbreviation += words[0][i];
@@ -332,27 +345,25 @@ const partnerID = $('#partner-holder').attr('data-partner-id');
 
       // Capitalize and append "500"
       return (
-        abbreviation.charAt(0).toUpperCase() + abbreviation.slice(1) + '500'
+        abbreviation.charAt(0).toUpperCase() + abbreviation.slice(1) + "500"
       );
     }
   };
 
   function tableScrollDraws() {
     const tableContainerDraws = document.querySelector(
-      '.ld-table-wrapperDraws'
+      ".ld-table-wrapperDraws"
     );
-    const headerRowDraws = document.querySelector('.headrowDraws');
+    const headerRowDraws = document.querySelector(".headrowDraws");
 
-    tableContainerDraws.addEventListener('scroll', function () {
+    tableContainerDraws.addEventListener("scroll", function() {
       if (tableContainerDraws.scrollTop > 0) {
-        headerRowDraws.classList.add('sticky-headerDraws');
+        headerRowDraws.classList.add("sticky-headerDraws");
       } else {
-        headerRowDraws.classList.remove('sticky-headerDraws');
+        headerRowDraws.classList.remove("sticky-headerDraws");
       }
     });
   }
 
   tableScrollDraws();
-
-
-})
+});
