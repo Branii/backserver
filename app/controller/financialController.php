@@ -47,25 +47,35 @@ class financialController extends Controller
         $this->view('exec/financial_manage',
          [
           'uid' => $uid, 
-          'widrl_channels' => $widrlChannels,
-          'widrl_status' => $widrlStatus, 
+          'widrlchannels' => $widrlChannels,
+          'widrlstatus' => $widrlStatus, 
           'withdrawid' =>$withdrawid,
           'startdate' => $widrlStartDate, 
-          'nddate' => $widrlEndDate,
+          'enddate' => $widrlEndDate,
           'page' => $page, 
           'limit' => $limit, 
-        'flag' => 'filterwithraw'
+         'flag' => 'filterwithraw'
         ]);
         $this->view->render();
     }
   // NOTE -
     //////////////Withdrawal Manage -//////////
-      public function fetchwithdrawmanage($pageNumber, $limit)
+    public function fetchwithdrawmanage($pageNumber, $limit)
     {
         $this->view('exec/financial_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchwithdrawmanage']);
         $this->view->render();
     }
-    
+
+    public function approvewithdraw($withdrawalId,$approvedBy,)
+    {
+        $this->view('exec/financial_manage', [
+            'withdrawalId' => $withdrawalId,
+            'approvedBy' => $approvedBy,
+            'flag' => 'approvewithdraw'
+        ]);
+        $this->view->render();
+    }
+
         //NOTE -
     //////////////Finance funds Records -//////////
     // 

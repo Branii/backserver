@@ -94,20 +94,20 @@ $(function () {
   let currentPage = 1;
   let pageLimit = 20;
 
-  async function fetchwithdraw(currentPage,pageLimit) {
-      try {
-         
-          let response = await fetch(`../financial/fetchwithdraw/${currentPage}/${pageLimit}`);
-          data = await response.json();
-          $("#maskwithdraw").LoadingOverlay("hide");
-          renderwithdraw(data.withdraw);
-          renderwithdrawPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchwithdraw(newPage, pageLimit));
-         document.getElementById("paging_infowithdraw").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
-      } catch (error) {
-          console.error("Error fetching data:", error);
-      }
-  }
-  fetchwithdraw(currentPage,pageLimit)
+    async function fetchwithdraw(currentPage,pageLimit) {
+        try {
+            
+            let response = await fetch(`../financial/fetchwithdraw/${currentPage}/${pageLimit}`);
+            data = await response.json();
+            $("#maskwithdraw").LoadingOverlay("hide");
+            renderwithdraw(data.withdraw);
+            renderwithdrawPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchwithdraw(newPage, pageLimit));
+            document.getElementById("paging_infowithdraw").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+   fetchwithdraw(currentPage,pageLimit)
 
      function renderwithdrawPagination(totalPages, currentPage, pageLimit, callback) {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
@@ -150,7 +150,6 @@ $(function () {
         });
     }
 
-
     $(".playerwithdraw").click(function (e) {
         let direction = $(this).attr("data-page");
         const tableWrapper = $(".table-wrapperwithdraw");
@@ -181,8 +180,8 @@ $(function () {
         fetchwithdraw(currentPage, pageLimit);
     });
 
-     $(document).on("click", ".widrl-search", function () {
-        if ($("#withdrawalname").val() == "" && $("#widrl-channels").val() == ""&& $("widrl-state").val() == ""&& $("widrl-ID").val() == ""
+    $(document).on("click", ".widrl-search", function () {
+        if ($("#withdrawalname").val() == "" && $("#widrl-channels").val() == "" && $("#widrl-state").val() == ""&& $("#widrl-ID").val() == ""
         && $(".wdrl-startdate").val() == ""  && $(".wdrl-enddate").val() == "" ) {
             // $("#danger-finance").modal("show");
              showToast("Heads up!!","Select one or more data fields to filter","info")
@@ -195,8 +194,8 @@ $(function () {
         const withdrawid = $("#widrl-ID").val();
         const startwithdraw= $(".wdrl-startdate").val();
         const endwithdraw= $(".wdrl-enddate").val();
-       // console.log(username,withrawchanels,withdrawstate,withdrawid,startwithdraw,endwithdraw)
-        // return
+     //   console.log(username,withrawchanels,withdrawstate,withdrawid,startwithdraw,endwithdraw)
+       //  return
         filterwithdraw(username, withrawchanels, withdrawstate, withdrawid,startwithdraw,endwithdraw, currentPage, pageLimit);
         $(".loaderwithdraw").removeClass("bx-check-double").addClass("bx-loader bx-spin");
     });
@@ -205,7 +204,7 @@ $(function () {
         $.post(`../financial/filterwithdraw/${username}/${withrawchanels}/${withdrawstate}/${withdrawid}/${startwithdraw}/${endwithdraw}/${currentPage}/${pageLimit}`, function (response) {
             try {
                 const data = JSON.parse(response);
-                console.log(data)
+                //console.log(data)
                //  return
                 $(".loaderwithdraw").removeClass("bx-loader bx-spin").addClass("bx-check-double");
                 if (data.withdrawx.length < 1) {
@@ -232,7 +231,6 @@ $(function () {
             $(".loaderwithdraw").removeClass("bx-loader bx-spin").addClass("bx-check-double");
         });
     }
-
 
     let debounceTimeout = null;
     $(document).ready(function () {

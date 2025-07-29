@@ -86,8 +86,8 @@ if ($flag == "fetchwithdraw") {
 
 if ($flag == "filterwithraw") {
     $uid           = isset($this->viewData['uid']) ? $this->viewData['uid'] : "";
-    $widrlChannels = isset($this->viewData['widrl_channels']) ? $this->viewData['widrl_channels'] : "";
-    $widrlStatus   = isset($this->viewData['widrlStatus']) ? $this->viewData['widrlStatus'] : "";
+    $widrlChannels = isset($this->viewData['widrlchannels']) ? $this->viewData['widrlchannels'] : "";
+    $widrlStatus   = isset($this->viewData['widrlstatus']) ? $this->viewData['widrlstatus'] : "";
     $withdrawid    = isset($this->viewData['withdrawid']) ? $this->viewData['withdrawid'] : "";
     $startdate     = isset($this->viewData['startdate']) ? $this->viewData['startdate'] : "";
     $enddate       = isset($this->viewData['enddate']) ? $this->viewData['enddate'] : "";
@@ -112,4 +112,12 @@ if ($flag == "fetchwithdrawmanage") {
         'withdraws'   => $result['data'],
         'totalPages' => ceil($result['total'] / $limit),
     ]);
+}
+
+if ($flag == "approvewithdraw") {
+    $withdrawalId = isset($this->viewData['withdrawalId']) ? $this->viewData['withdrawalId'] : "";
+    $approvedBy   = isset($this->viewData['approvedBy']) ? $this->viewData['approvedBy'] : "";
+    $approvedBy = urldecode($approvedBy);
+    $result       = FinancialManageModel::ApproveWithdraw($withdrawalId,$approvedBy);
+    echo json_encode($result);
 }

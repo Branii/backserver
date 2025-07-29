@@ -81,11 +81,11 @@ $(function () {
                         <i class='bx bx-dots-vertical-rounded'></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
-                            <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="">
-                                <i class="bx bx-show fs-5"></i>Approved
+                            <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 btnapprove" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#al-info-alert" data-uid="${item.withdrawalid}">
+                                <i class="bx bx-check-double"></i>Approved
                             </a>
-                            <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="">
-                                <i class="bx bx-show fs-5"></i>Reject
+                            <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="er" data-uid="">
+                                <i class="bx bx-message-square-x fs-5"></i>Reject
                             </a> 
                         </div>
                     </div>
@@ -101,27 +101,27 @@ $(function () {
       $("#withdrawContainers").html(html);
   };
 
-  let currentPage = 1;
-  let pageLimit = 17;
+    let currentPage = 1;
+    let pageLimit = 20;
 
-  async function fetchwithdrawmanage(currentPage,pageLimit) {
-      try {
-         
-          let response = await fetch(`../financial/fetchwithdrawmanage/${currentPage}/${pageLimit}`);
-          data = await response.json();
-          console.log(data)
-          //return
-          $("#maskwithdraws").LoadingOverlay("hide");
-          renderwithdraws(data.withdraws);
-          renderwithdrawsPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchwithdrawmanage(newPage, pageLimit));
-         document.getElementById("paging_infowithdraws").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
-      } catch (error) {
-          console.error("Error fetching data:", error);
-      }
-  }
-  fetchwithdrawmanage(currentPage,pageLimit)
+    async function fetchwithdrawmanage(currentPage,pageLimit) {
+        try {
+            
+            let response = await fetch(`../financial/fetchwithdrawmanage/${currentPage}/${pageLimit}`);
+            data = await response.json();
+            console.log(data)
+            //return
+            $("#maskwithdraws").LoadingOverlay("hide");
+            renderwithdraws(data.withdraws);
+            renderwithdrawsPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchwithdrawmanage(newPage, pageLimit));
+            document.getElementById("paging_infowithdraws").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+    fetchwithdrawmanage(currentPage,pageLimit)
 
-     function renderwithdrawsPagination(totalPages, currentPage, pageLimit, callback) {
+    function renderwithdrawsPagination(totalPages, currentPage, pageLimit, callback) {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
             `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
           <a class='page-link' href='#' data-page='${i}'>${label}</a>
@@ -193,8 +193,8 @@ $(function () {
         fetchwithdrawmanage(currentPage, pageLimit);
     });
 
-     $(document).on("click", ".widrl-search", function () {
-        if ($("#withdrawalnames").val() == "" && $("#widrl-channelss").val() == ""&& $("widrl-states").val() == ""&& $("widrl-IDs").val() == ""
+     $(document).on("click", ".widrl-searchs", function () {
+        if ($("#withdrawalnames").val() == "" && $("#widrl-channelss").val() == ""&& $("#widrl-states").val() == ""&& $("#widrl-IDs").val() == ""
         && $(".wdrl-startdates").val() == ""  && $(".wdrl-enddates").val() == "" ) {
             // $("#danger-finance").modal("show");
              showToast("Heads up!!","Select one or more data fields to filter","info")
@@ -202,13 +202,13 @@ $(function () {
             return;
         }
         const username = $("#withdrawalnames").val();
-        const withrawchanels = $("#widrl-channels").val();
-        const withdrawstate = $("#widrl-state").val();
+        const withrawchanels = $("#widrl-channelss").val();
+        const withdrawstate = $("#widrl-states").val();
         const withdrawid = $("#widrl-ID").val();
-        const startwithdraw= $(".wdrl-startdate").val();
-        const endwithdraw= $(".wdrl-enddate").val();
+        const startwithdraw= $(".wdrl-startdates").val();
+        const endwithdraw= $(".wdrl-enddates").val();
        // console.log(username,withrawchanels,withdrawstate,withdrawid,startwithdraw,endwithdraw)
-        // return
+       //  return
         filterwithdraw(username, withrawchanels, withdrawstate, withdrawid,startwithdraw,endwithdraw, currentPage, pageLimit);
         $(".loaderwithdraw").removeClass("bx-check-double").addClass("bx-loader bx-spin");
     });
@@ -217,17 +217,17 @@ $(function () {
         $.post(`../financial/filterwithdraw/${username}/${withrawchanels}/${withdrawstate}/${withdrawid}/${startwithdraw}/${endwithdraw}/${currentPage}/${pageLimit}`, function (response) {
             try {
                 const data = JSON.parse(response);
-                console.log(data)
+              //  console.log(data)
                //  return
                 $(".loaderwithdraw").removeClass("bx-loader bx-spin").addClass("bx-check-double");
                 if (data.withdrawx.length < 1) {
-                    $("#withdrawContainer").html(`
-                <tr class="no-results">
-                  <td colspan="9">
-                    <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
-                  </td>
-                </tr>
-              `);
+                    $("#withdrawContainers").html(`
+                    <tr class="no-results">
+                    <td colspan="9">
+                        <img src="http://localhost/admin/app/assets/images/not_found1.jpg" width="150px" height="150px" />
+                    </td>
+                    </tr>
+               `);
                     return;
                 }
                   $("#maskwithdraw").LoadingOverlay("hide");
@@ -245,7 +245,6 @@ $(function () {
         });
     }
 
-
     let debounceTimeout = null;
     $(document).ready(function () {
         // Event listener for keyup on #myInput
@@ -256,12 +255,12 @@ $(function () {
                 clearTimeout(debounceTimeout); // Clear any existing timeout
                 debounceTimeout = setTimeout(fetchUserss, 500, query); // Call fetchUsers with the query after 500ms delay
             } else {
-                $(".withdrawDropdowns").hide(); // Hide dropdown if input is less than 3 characters
+                $(".withdrawsDropdowns").hide(); // Hide dropdown if input is less than 3 characters
             }
         });
 
         // Handle dropdown item selection
-        $(document).on("change", ".withdrawDropdowns", function () {
+        $(document).on("change", ".withdrawsDropdowns", function () {
             const selectedOption = $(this).find("option:selected");
             const selectedUserId = selectedOption.val();
             const selectedUsername = selectedOption.data("usernames");
@@ -269,7 +268,7 @@ $(function () {
             if (selectedUserId) {
                 $("#withdrawalnames").val(selectedUsername);
                 $(".userIdFields").val(selectedUserId);
-                $(".withdrawDropdowns").hide();
+                $(".withdrawsDropdowns").hide();
             }
         });
 
@@ -294,7 +293,7 @@ $(function () {
         $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
             try {
              response = typeof response === 'string' ? JSON.parse(response) : response;
-          response.forEach(user => {
+             response.forEach(user => {
            let   displayValue;
            let regname;
             // Display based on regtype
@@ -313,16 +312,49 @@ $(function () {
               // Append the option to the optionsHtml string
               optionsHtml += `<option class="optionlists" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
           });
-                $('.withdrawDropdowns').html(optionsHtml).show();
+                $('.withdrawsDropdowns').html(optionsHtml).show();
             } catch (error) {
                 console.error("Error parsing response: ", error);
-                $('.withdrawDropdowns').hide();
+                $('.withdrawsDropdowns').hide();
             }
         }).fail(function () {
             console.error("Error fetching users.");
-            $('.withdrawDropdowns').hide();
+            $('.withdrawsDropdowns').hide();
         });
     }
+
+
+    //approved function
+    $(document).on("click", ".tcloses", function () {
+        $("#al-info-alert").modal("hide");
+    });
+    let withdrawalId;
+    $(document).on("click", ".btnapprove", function () {
+         withdrawalId = $(this).data("uid")
+    });
+
+    $(document).on("click", ".btncontinue", function () {
+         const approvedby = $(".approved").val();
+
+        $.post(`../financial/approvewithdraw/${withdrawalId}/${approvedby}`, function (response) {
+            try {
+                const data = JSON.parse(response);
+              //  console.log(data)
+                //return
+                if (data === "success") {
+                    showToast("Success", "Withdrawal approved successfully", "success");
+                    fetchwithdrawmanage(currentPage, pageLimit); // Refresh the list
+                } else {
+                    showToast("Error", "Failed to approve withdrawal", "error");
+                }
+            } catch (error) {
+                console.error("Error parsing response:", error);
+                showToast("Error", "An error occurred while processing your request", "error");
+            }
+        }).fail(function () {
+            showToast("Error", "Failed to connect to the server", "error");
+        });
+    });
 
 });
 

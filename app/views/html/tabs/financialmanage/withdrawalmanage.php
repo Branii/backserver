@@ -200,7 +200,7 @@
     margin: 0px 1rem;
     }
 
-    .withdrawDropdowns {
+    .withdrawsDropdowns {
       width: 11%;
     position: absolute;
     background-color: #fff;
@@ -216,26 +216,26 @@
 }
 
 
-.withdrawDropdowns::-webkit-scrollbar {
+.withdrawsDropdowns::-webkit-scrollbar {
     width: 3px;
     /* Width of the scrollbar */
 }
 
-.withdrawDropdowns::-webkit-scrollbar-track {
+.withdrawsDropdowns::-webkit-scrollbar-track {
     background: #f0f0f0;
     /* Background of the scrollbar track */
     border-radius: 5px;
     /* Rounded corners */
 }
 
-.withdrawDropdowns::-webkit-scrollbar-thumb {
+.withdrawsDropdowns::-webkit-scrollbar-thumb {
     background: #ccc;
     /* Color of the scrollbar handle */
     border-radius: 5px;
     /* Rounded corners */
 }
 
-.withdrawDropdowns::-webkit-scrollbar-thumb:hover {
+.withdrawsDropdowns::-webkit-scrollbar-thumb:hover {
     background: #aaa;
     /* Darker handle color on hover */
 }
@@ -270,7 +270,7 @@
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 130%;">
                 <input type="text" id="withdrawalnames" class="form-control widrl-queryholdertrans widrl-username mytrans" placeholder="<?= $translator['Search usernames']; ?>">
                 <input name="usernames" type="hidden"  id="widrl-userIDs" class="userIdtrans widrl-queryholdertrans">
-                <select class="form-control withdrawDropdowns" size="5" style="display: none;" id="users-options-wrappers" >
+                <select class="form-control withdrawsDropdowns" size="5" style="display: none;" id="users-options-wrappers" >
 
                 </select>
                 <input type="text" class="form-control widrl-queryholdertrans orderid" id="widrl-IDs" aria-describedby="name" placeholder=" <?= $translator['Search Withdrawal ID']; ?>">
@@ -309,7 +309,7 @@
             <div class="btn-group mb-2" role="group" aria-label="Basic example"
                 style="border:solid 1px #eee;color:#bbb;background-color:#fff">
                 
-                <button type="button" class="btn bg-white-subtle player refreshwithdrawas" value="right" aria-label="Refresh"
+                <button type="button" class="btn bg-white-subtle player refreshwithdraws" value="right" aria-label="Refresh"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class='bx bx-refresh' style="font-size:20px"></i>
                 </button>
@@ -410,5 +410,38 @@
     </div>
 
 </div>
+
+
+
+   
+    <!-- Button trigger modal -->
+    <!-- <button type="button" class="btn mb-1 bg-info-subtle text-info  px-4 fs-4 " data-bs-toggle="modal" data-bs-target="#al-info-alert">
+        Info Alert
+    </button> -->
+
+    <!-- Vertically centered modal -->
+    <div class="modal fade" id="al-info-alert" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content modal-filled bg-info-subtle">
+                <div class="modal-body p-4">
+                    <div class="text-center text-gray">
+                        <i class="bx bx-message-square-x tcloses fs-7"></i>
+                        <h4 class="mt-2">Heads up!</h4>
+                        <p class="mt-3">
+                           Are you sure you want to approve this withdrawal?
+                        </p>
+                        <button type="button" class="btn btn-light my-2 btncontinue" data-bs-dismiss="modal">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+ 
+  
+
+  
 
 

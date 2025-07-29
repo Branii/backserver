@@ -70,6 +70,7 @@ $(function () {
         try {
             const response = await fetch(`../game/lotteryexception/${currentPage}/${pageLimit}`);
             const data = await response.json();
+            console.log("Fetched data:", data);
             $("#maskexcept").LoadingOverlay("hide");
             render(data.lotexception);
             renderPaginationex(data.totalPages, currentPage, fetchLotteryException);
@@ -136,14 +137,16 @@ $(function () {
         });
     }
 
-    $(document).on("click",".setexcepts", function(){
+       $(document).on("click",".setexcepts", function(){
             let gametypeId = $(this).val().split("|")[0]
             let drawperiod = $(this).val().split("|")[1]
             let  draw_number =  $(this).val().split("|")[2]
-            console.log(gametypeId,drawperiod,draw_number);
-            if (draw_number === null) {
-                showToast("Heads Up!!!", "no drawnumber or issue number does not exit", "info");
-            }
+            
+               if (draw_number == 'null') {
+                    showToast("Heads Up!!!", "No draw number or issue number exists", "info");
+                    return
+                }
+        
             //https://winsstarts.com
             // https://157.173.97.174 /api/v1/limvo/processBetSlipIfSkipped
            $.ajax({

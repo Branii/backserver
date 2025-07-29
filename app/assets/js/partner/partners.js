@@ -452,7 +452,7 @@ $(() => {
 
                 success: function (response) {
                     response = JSON.parse(response);
-                    //   console.log(response);
+                       console.log(response);
                     if (response.status === "error") {
                         showToast("Error", "Error loading data for Payment Platforms", "error");
                         return;
@@ -469,7 +469,7 @@ $(() => {
                     }
 
                     let html = "";
-                    response.data.forEach((data) => {
+                     response.data.forEach((data) => {
                         html += partnersMarkup(data);
                     });
 
@@ -853,18 +853,18 @@ $(() => {
         });
     };
 
-    $(".playerWinLoss").click(function (e) {
+    $(".playerpartner").click(function (e) {
         let direction = $(this).val();
-        const tableWrapper = $(".table-wrapperPP");
-        const tableWrappers = $(".table-wrapperPP")[0];
+        const tableWrapper = $(".table-wrapperpartner");
+        const tableWrappers = $(".table-wrapperpartner")[0];
         const scrollAmount = 1000; // Adjust as needed
         const scrollOptions = { behavior: "smooth" };
         if (tableWrapper.length) {
             switch (direction) {
-                case "pp-leftlist":
+                case "leftpart":
                     tableWrappers.scrollBy({ left: -scrollAmount, ...scrollOptions });
                     break;
-                case "pp-rightlist":
+                case "rightpart":
                     tableWrappers.scrollBy({ left: scrollAmount, ...scrollOptions });
                     break;
                 default:
@@ -958,6 +958,22 @@ $(() => {
     };
 
     populateCurrencies();
+
+    function tableScrollPartner() {
+        const tableContainerPartner = document.querySelector(".table-wrapperpartner");
+        const headerRowPartner = document.querySelector(".partheadrows");
+
+        tableContainerPartner.addEventListener("scroll", function () {
+            if (tableContainerPartner.scrollTop > 0) {
+                headerRowPartner.classList.add("sticky-partnerheads");
+            } else {
+                headerRowPartner.classList.remove("sticky-partnerheads");
+            }
+        });
+    }
+
+  tableScrollPartner();
+
 });
 
 // --------------------------------------------------------------------

@@ -10,9 +10,9 @@ $(function () {
             duration: 3000, // auto-dismiss after 3s
         });
     }
-const txtPage = document.getElementById("trans-page").innerText;
-const txtOf = document.getElementById("trans-of").innerText;
-const txtPages = document.getElementById("trans-pages").innerText;
+    const txtPage = document.getElementById("trans-page").innerText;
+    const txtOf = document.getElementById("trans-of").innerText;
+    const txtPages = document.getElementById("trans-pages").innerText;
 
 
 
@@ -41,25 +41,11 @@ const txtPages = document.getElementById("trans-pages").innerText;
         approvedby: getTranslation("trans-approvedby", "Approved By"),
     };
 
-    // Example key
-    // const key = "Username"; // or dynamically looped key
-    // const requiredMessage = replacePlaceholder(fieldRequiredTemplate, key);
-
-    // Proceed with your form submission here if validation passes
-
-    // Show toast
-    // showToast(headsUpText, requiredMessage, "info");
-
-    // Get translations
-
+   
     const selectFieldsText = getTranslation("trans-select-fields", "Select one or more data fields to filter");
     const allFieldsText = getTranslation("trans-all-fields", "All fields are required");
     const failedText = getTranslation("trans-failed", "Failed");
 
-    // ✅ Toast with translation
-    // showToast(headsUpText, selectFieldsText, "info");
-    // showToast(headsUpText, allFieldsText, "info");
-    // showToast(headsUpText, failedText, "info");
     function formatMoney(money) {
         let moneyStr = String(money);
         if (moneyStr.includes(".")) {

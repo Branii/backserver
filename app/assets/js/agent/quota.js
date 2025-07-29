@@ -132,14 +132,11 @@ const QUOTA_UPDATED = document.getElementById("quota_success").innerText;
 // showToast(SUCCESS_TEXT, QUOTA_UPDATED, "success");
 $(document).on("click", "#btn-setallquota", function () {
     const quotaval = $("#c-quota").val().trim();
-
-    // ✅ Check if the field is empty
     if (quotaval === "") {
         // showToast("All Fields Required", "Please enter a quota value before saving.", "error");
         showToast(ALL_FIELDS_REQUIRED, ENTER_QUOTA_VALUE, "error");
         return;
     }
-
     // Proceed to send the POST request
     try {
         $.post(`../agent/UpdateAllquota/${quotaval}`, function (response) {
@@ -158,7 +155,7 @@ $(document).on("click", "#btn-setallquota", function () {
   $(document).on("keyup", ".userrebatess", function () {
       const inputValue = $(this).val().trim(); 
       let datarebate = parseFloat(inputValue).toFixed(1);
-   
+
       if (isNaN(datarebate)) {
           fetchquota(currentPagequota, pageLimit);
           let html = `
@@ -170,7 +167,6 @@ $(document).on("click", "#btn-setallquota", function () {
           $("#quotaContainer").html(html);
           return;
       }
-
       // If valid number, make the API call
       try {
           $.post(`../agent/filterRebate/${datarebate}`, function (response) {

@@ -373,7 +373,7 @@ const Depositdata = (data) => {
     const depositid = $(".depositids").val();
     const startdepo = $(".startdepo").val();
     const enddepo = $(".enddepo").val();
-    console.log(username);
+   // console.log(username);
     //  return
 
     filterdeposit(

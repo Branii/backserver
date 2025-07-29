@@ -1,9 +1,9 @@
 <?php
 date_default_timezone_set('Asia/Shanghai');
-set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-    // Throw an Exception with the error message and details
-    throw new \Exception("$errstr in $errfile on line $errline", $errno);
-});
+// set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+//     // Throw an Exception with the error message and details
+//     throw new \Exception("$errstr in $errfile on line $errline", $errno);
+// });
 
 class FinancialManageModel extends MEDOOHelper
 {
@@ -439,7 +439,7 @@ class FinancialManageModel extends MEDOOHelper
     public static function Withdrawsubquery($username, $widrlChannels, $widrlStatus, $withdrawid, $startdate, $enddate)
     {
         $filterConditions = [];
-
+         $subQuery  = "";
         if (! empty($username)) {
             $filterConditions[] = "uid = '$username'";
         }
@@ -447,62 +447,56 @@ class FinancialManageModel extends MEDOOHelper
         if (! empty($widrlChannels)) {
             $filterConditions[] = "withdrawal_channel = '$widrlChannels'";
         }
-        if (! empty($withdrawid)) {
-            $filterConditions[] = "withdrawal_id = '$withdrawid'";
-        }
-
+        
         if (! empty($widrlStatus)) {
             $filterConditions[] = "withdrawal_state = '$widrlStatus'";
         }
 
+        if (! empty($withdrawid)) {
+            $filterConditions[] = "withdrawal_id = '$withdrawid'";
+        }
+
         if (! empty($startdate) && ! empty($enddate)) {
-            $filterConditions[] = "DATE(withdrawal_date) BETWEEN '$startdate' AND '$enddate'";
+            $filterConditions[] = "withdrawal_date BETWEEN '$startdate' AND '$enddate'";
         } elseif (! empty($startdate)) {
-            $filterConditions[] = "DATE(withdrawal_date) = '$startdate'";
+            $filterConditions[] = "withdrawal_date = '$startdate'";
         } elseif (! empty($enddate)) {
-            $filterConditions[] = "DATE(withdrawal_date) = '$enddate'";
+            $filterConditions[] = "withdrawal_date = '$enddate'";
         }
 
         if (! empty($filterConditions)) {
             $subQuery = implode(' AND ', $filterConditions);
         }
         // Add ordering and limit to the query
-        $subQuery .= "ORDER BY withdrawal_manage.withdrawal_date DESC";
+        //  $subQuery .= "ORDER BY withdrawal_manage.withdrawalid DESC";
 
         return $subQuery;
     }
 
-    public static function FilterWithdrawData($subQuerys, $page, $limit)
+    public static function FilterWithdrawData($subquery, $page, $limit)
     {
         $startpoint = ($page - 1) * $limit;
 
-        $sql = "
-                SELECT
-                    temp_tables.*,
-                    users_test.email AS email,
-                    users_test.reg_type,
-                    users_test.username AS username,
-                    users_test.contact
-                FROM
-                    (
-                        SELECT *
-                        FROM withdrawal_manage
-                        WHERE $subQuerys
-                    ) AS temp_tables
-                 LEFT JOIN
-                    users_test ON users_test.uid = temp_tables.uid
-                LIMIT :offset, :limit
+       $sql = "
+            SELECT
+            temp_tables.*,
+            users_test.email AS email,
+            users_test.reg_type,
+            users_test.username AS username,
+            users_test.contact
+        FROM
+            (
+                SELECT *
+                FROM withdrawal_manage
+                WHERE $subquery
+            ) AS temp_tables
+        LEFT JOIN
+            users_test ON users_test.uid = temp_tables.uid
+        LIMIT :offset, :limit
             ";
 
         // Define the query to count total records
-        $countSqlss = "
-                SELECT
-                    COUNT(*) AS totals_count
-                FROM
-                    withdrawal_manage
-                WHERE
-                    $subQuerys
-            ";
+        $countSqlss = "SELECT COUNT(*) AS totals_count FROM withdrawal_manage WHERE $subquery";
 
         // Execute the main SQL query
         $data                = parent::query($sql, ['offset' => $startpoint, 'limit' => $limit]);
@@ -512,9 +506,7 @@ class FinancialManageModel extends MEDOOHelper
         return ['data' => $data, 'total' => $totalRecords];
     }
 
-        //NOTE -
-            //////////////Withdrawal Records -//////////
-            //
+     //NOTE -//////////////Withdrawal Records -////////////
     public static function WithrawalDataManage($page, $limit): array
     {
         try {
@@ -534,6 +526,20 @@ class FinancialManageModel extends MEDOOHelper
         } catch (Exception $e) {
             return ["status" => "error", 'data' => "Internal Server Error."];
         }
+    }
+
+    public static function ApproveWithdraw($withdrawalId,$approvedBy)
+    {
+
+        $params = [
+            'withdrawal_state' => '2' ,// Assuming 2 is the approved state
+            'approved_by'      => $approvedBy
+        ];
+        $data =  parent::update("withdrawal_manage", $params, ["withdrawalid" => $withdrawalId]);
+        if($data){
+            return "success";
+        }
+        
     }
 
 }
