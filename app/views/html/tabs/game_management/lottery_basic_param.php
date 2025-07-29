@@ -575,7 +575,7 @@
                     <div class="row g-3">
                         <!-- Row 1 -->
                         <div class="col-md-6">
-                            <label class="form-label"><?= $translator['Lottery name']; ?></label>
+                            <label class="form-label"><?= $translator['Lottery Name']; ?></label>
                             <input type="text" class="form-control" name="name" id="namee" />
                         </div>
 
