@@ -558,22 +558,9 @@ $(() => {
         const lotteryType = $("#lottery_types").val().split("|")[0];
         const logoFileName = $(".gameimage").val();
 
-        if (
-            !name ||
-            !alias ||
-            !gamegroups ||
-            !lotteryType ||
-            !numberOfBalls ||
-            !min_ball ||
-            !max_ball ||
-            !secondsperissue ||
-            isNaN(secondsperissue) ||
-            parseInt(secondsperissue) <= 0 ||
-            !starttime ||
-            !stoptime ||
-            !lotterymodel ||
-            !logoFileName
-        ) {
+        if (!name ||!alias ||!gamegroups || !lotteryType ||!numberOfBalls ||!min_ball || !max_ball || !secondsperissue ||
+            isNaN(secondsperissue) || parseInt(secondsperissue) <= 0 || !starttime ||!stoptime ||!lotterymodel ||!logoFileName) 
+         {
             showToast("Heads up!!", "All fields are required and seconds per issue must be a positive number", "info");
 
             return;
