@@ -724,5 +724,166 @@ class GameManageModel extends MEDOOHelper
         $whereClause = ! empty($filterConditions) ? 'WHERE ' . implode(' AND ', $filterConditions) : '';
         return ['query' => $whereClause, 'params' => $params];
     }
+    
+    //create a new lottery type
+     public static function createNewGame(array $gameData, string $gamesTable)
+    {
+        $pdo    = (new Database())->openLink();
+        $logo   = $gameData['logoFileName'] ?? "";
+        $linker = bin2hex(random_bytes(7));
+        // Check for existing game name
+        if (count(self::checkIfLotteryExist($gameData['name'])) > 0) {
+            return ['status' => 'error', 'message' => 'Lottery name already exists'];
+        }
+        // Insert into game_type
+        $sql    = self::createNewGameQuery($gamesTable);
+        $params = self::addNewLotteryGameParam($gameData, $logo, $linker);
+        try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+        } catch (PDOException $e) {
+            return ['status' => 'error', 'message' => 'Game Insert Error: ' . $e->getMessage()];
+        }
+        // Retrieve new game's ID
+        $lottery    = self::getGameByLinker($linker);
+        $gameTypeId = $lottery[0]['gt_id'] ?? null;
+        if (! $gameTypeId) {
+            return ['status' => 'error', 'message' => 'Failed to get inserted lottery ID'];
+        }
+        // Map game to gamestable_map
+        $mapData = [
+            'game_type'    => $gameTypeId,
+            'draw_table'   => 'dt_' . str_replace(' ', '', $gameData['name']),
+            'draw_storage' => 'ds_' . str_replace(' ', '', $gameData['name']),
+            'draw_period'  => 'dp_' . str_replace(' ', '', $gameData['name']),
+            'bet_table'    => 'bt_' . str_replace(' ', '', $gameData['name']),
+            'lottery_type' => $gameData['lottery_type'],
+            'lottery_name' => $gameData['game_group'],
+        ];
+        $mapSql    = self::addNewGameToMapQuery();
+        $mapParams = self::addNewGamesTableMapParam($mapData);
+        try {
+            $stmt = $pdo->prepare($mapSql);
+            $stmt->execute($mapParams);
+            // Create game-related tables
+            self::execute("CREATE TABLE {$mapData['draw_table']} LIKE dt_1kb5d1m");
+            self::execute("CREATE TABLE {$mapData['draw_storage']} LIKE ds_1kb5d1m");
+            self::execute("CREATE TABLE {$mapData['draw_period']} LIKE dp_1kb5d1m");
+            self::execute("CREATE TABLE {$mapData['bet_table']} LIKE bt_1kb5d1m");
+            self::updateSpecificGamePlays($mapData['lottery_type'], $gameTypeId);
+            self::updateSpecificGamePlayOddsGroup($mapData['lottery_type'], $gameTypeId);
+            return ['status' => 'success', 'message' => 'New game created and odds updated successfully'];
+        } catch (PDOException $e) {
+            return ['status' => 'error', 'message' => 'Mapping DB Error: ' . $e->getMessage()];
+        }
+    }
+
+     public static function createNewGameQuery(string $gamesTable)
+    {
+        return "INSERT INTO $gamesTable (name, logo, alias, starttime, stoptime, state, game_type, draw_type,
+            lottery_type, seconds_per_issue, total_num_issue, closing_time,num_balls, min_ball, max_ball, lottery_model, game_group,last_updated, date_created, linker
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    }
+
+    public static function addNewLotteryGameParam(array $gameData, string $logo, string $linker)
+    {
+        return [
+            (string) $gameData['name'],
+            (string) $logo,
+            (string) $gameData['alias'],
+            (string) $gameData['starttime'],
+            (string) $gameData['stoptime'],
+            1, // state
+            1, // game_type
+            1, // draw_type
+            (string) $gameData['lottery_type'],
+            (int) $gameData['seconds_per_issue'],
+            (int) $gameData['total_num_issue'],
+            1, // closing_time
+            (int) $gameData['num_of_balls'],
+            (int) $gameData['min_ball'],
+            (int) $gameData['max_ball'],
+            (string) $gameData['lottery_model'],
+            (string) $gameData['game_group'],
+            date("Y-m-d"),
+            date("Y-m-d"),
+            (string) $linker,
+        ];
+    }
+
+    public static function getGameByLinker(string $linker)
+    {
+        $pdo  = (new Database())->openLink();
+        $stmt = $pdo->prepare("SELECT gt_id FROM game_type WHERE linker = ?");
+        $stmt->execute([$linker]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function addNewGameToMapQuery()
+    {
+        return "INSERT INTO gamestable_map (game_type, draw_table, draw_storage, draw_period, bet_table,lottery_type, lottery_name) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    }
+
+     public static function addNewGamesTableMapParam(array $gameData)
+    {
+         return [
+            (int) $gameData['game_type'],
+            (string) $gameData['draw_table'],
+            (string) $gameData['draw_storage'],
+            (string) $gameData['draw_period'],
+            (string) $gameData['bet_table'],
+            (string) $gameData['lottery_type'],
+            (string) $gameData['lottery_name'] ?? '',
+        ];
+    }
+
+    public static function updateSpecificGamePlays($lotteryType, $gameTypeId)
+    {
+        $pdo  = (new Database())->openLink();
+        $sql  = "SELECT gn_id, name, odds, total_bets, lottery_type, standard_odds, standard_total_bets FROM game_name WHERE lottery_type = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$lotteryType]);
+        $gamePlay  = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sqlUpdate = "UPDATE game_name SET standard_odds = ?, standard_total_bets = ? WHERE gn_id = ?";
+        $req       = $pdo->prepare($sqlUpdate);
+
+        foreach ($gamePlay as $play) {
+            $stdOdds = json_decode($play['standard_odds'], true) ?: [];
+            $stdBets = json_decode($play['standard_total_bets'], true) ?: [];
+
+            $stdOdds[$gameTypeId] = trim($play['odds'], '[]');
+            $stdBets[$gameTypeId] = trim($play['total_bets'], '[]');
+
+            $req->execute([
+                json_encode($stdOdds),
+                json_encode($stdBets),
+                $play['gn_id'],
+            ]);
+        }
+    }
+    public static function updateSpecificGamePlayOddsGroup($lotteryType, $gameTypeId)
+    {
+        $pdo = (new Database())->openLink();
+        $sql = "SELECT gn.gn_id, gn.lottery_type, ogg.odds, ogg.label, ogg.game_play_id, ogg.odds_group_id, ogg.std_odds
+                FROM game_name gn
+                JOIN odds_group ogg ON gn.gn_id = ogg.game_play_id
+                WHERE gn.lottery_type = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$lotteryType]);
+        $oddsGroup = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $sqlUpdate = "UPDATE odds_group SET std_odds = ? WHERE odds_group_id = ?";
+        $req       = $pdo->prepare($sqlUpdate);
+
+        foreach ($oddsGroup as $play) {
+            $stdOdds              = json_decode($play['std_odds'], true) ?: [];
+            $stdOdds[$gameTypeId] = trim($play['odds'], '[]');
+
+            $req->execute([
+                json_encode($stdOdds),
+                $play['odds_group_id'],
+            ]);
+        }
+    }
 
 }

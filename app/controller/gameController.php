@@ -172,5 +172,38 @@ class gameController extends Controller
         $this->view->render();
      
     }
-    //filterlotteryexceptdatafilterlotteryexceptdata(gametype,drawperiod, startdates, enddates, currentPage, pageLimit)
+           
+    public function addlottery($name, $alias, $gamegroups, $numberofballs, $min_ball, $max_ball, $secondsperissue, $starttime, $stoptime, $lotterymodel, $lotteryType, $logoFileName)
+    {
+        
+        $this->view('exec/lottery_basic_params', [
+            'name' => $name,
+            'alias' => $alias,
+            'gamegroups' => $gamegroups,
+            'numberofballs' => $numberofballs,
+            'min_ball' => $min_ball,
+            'max_ball' => $max_ball,
+            'secondsperissue' => $secondsperissue,
+            'starttime' => $starttime,
+            'stoptime' => $stoptime,
+            'lotterymodel' => $lotterymodel,
+            'lotteryType' => $lotteryType,
+            'logoFileName' => $logoFileName,
+            'flag' => 'addlottery',
+        ]);
+        $this->view->render();
+    }
+
+     public function getTimegames()
+    {
+        $this->view('exec/game_management', ['flag' => 'getTimegames']);
+        $this->view->render();
+    }
+
+    public function getAllGameModels()
+    {
+        $this->view('exec/game_management', ['flag' => 'getAllGamesModels']);
+        $this->view->render();
+    }
+
 }
