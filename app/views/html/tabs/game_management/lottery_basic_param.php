@@ -565,13 +565,13 @@
 
             <div class="modal-body">
                 <form id="lotteryForm" name="lotteryForm">
-                    <hr />
+                 
                     <div class="col-md-12">
                         <center>
                             <img id="logoPreview" src="#" alt="Logo Preview" style="max-width: 200px; display: none; max-height: 150px;" />
                         </center>
                     </div>
-                    <hr />
+                 
                     <div class="row g-3">
                         <!-- Row 1 -->
                         <div class="col-md-6">

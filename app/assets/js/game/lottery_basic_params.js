@@ -569,19 +569,12 @@ $(() => {
         $("#lotteryForm")[0].reset();
         $("#addlottery-modals").modal("hide");
 
-        $.post(
-            `../game/addlottery/${encodeURIComponent(name)}/${encodeURIComponent(alias)}/${encodeURIComponent(
-                gamegroups
-            )}/${numberOfBalls}/${min_ball}/${max_ball}/${secondsperissue}/${starttime}/${stoptime}/${lotterymodel}/${encodeURIComponent(lotteryType)}/${encodeURIComponent(logoFileName)}`,
+        $.post(`../game/addlottery/${encodeURIComponent(name)}/${encodeURIComponent(alias)}/${encodeURIComponent(gamegroups)}/${numberOfBalls}/${min_ball}/${max_ball}/${secondsperissue}/${starttime}/${stoptime}/${lotterymodel}/${encodeURIComponent(lotteryType)}/${encodeURIComponent(logoFileName)}`,
             function (response) {
-                console.log(response);
-
                 if (response.status === "success") {
                     showToast("Success", response.message || "Lottery Game Added and odds updated successfully", "success");
                     //    $("#myFormsss")[0].reset();
-
                     fetchLotteryBasicParams(1);
-
                     $("#lotteryForm")[0].reset(); // This one line replaces all individual resets
                     $("#logoPreview").hide(); // Hide the preview if shown
                     $("#addlottery-modals").modal("hide");
@@ -682,7 +675,6 @@ $(() => {
     $(document).on("click", ".addgamemodal", function () {
         const id = $(this).data("id");
         $("#lottery_game_id").val(id);
-
         $("#imagePreview").hide().attr("src", "#");
         $("#lottery_logo_file").val("");
         $("#lb-uploadimage").modal("show");
