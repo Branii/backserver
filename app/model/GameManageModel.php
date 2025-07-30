@@ -608,7 +608,7 @@ class GameManageModel extends MEDOOHelper
     }
 
     //lottery exception
-    
+
     public static function lotteryExceptionData($page, $limit)
     {
 
@@ -724,9 +724,9 @@ class GameManageModel extends MEDOOHelper
         $whereClause = ! empty($filterConditions) ? 'WHERE ' . implode(' AND ', $filterConditions) : '';
         return ['query' => $whereClause, 'params' => $params];
     }
-    
+
     //create a new lottery type
-     public static function createNewGame(array $gameData, string $gamesTable)
+    public static function createNewGame(array $gameData, string $gamesTable)
     {
         $pdo    = (new Database())->openLink();
         $logo   = $gameData['logoFileName'] ?? "";
@@ -778,7 +778,7 @@ class GameManageModel extends MEDOOHelper
         }
     }
 
-     public static function createNewGameQuery(string $gamesTable)
+    public static function createNewGameQuery(string $gamesTable)
     {
         return "INSERT INTO $gamesTable (name, logo, alias, starttime, stoptime, state, game_type, draw_type,
             lottery_type, seconds_per_issue, total_num_issue, closing_time,num_balls, min_ball, max_ball, lottery_model, game_group,last_updated, date_created, linker
@@ -824,9 +824,9 @@ class GameManageModel extends MEDOOHelper
         return "INSERT INTO gamestable_map (game_type, draw_table, draw_storage, draw_period, bet_table,lottery_type, lottery_name) VALUES (?, ?, ?, ?, ?, ?, ?)";
     }
 
-     public static function addNewGamesTableMapParam(array $gameData)
+    public static function addNewGamesTableMapParam(array $gameData)
     {
-         return [
+        return [
             (int) $gameData['game_type'],
             (string) $gameData['draw_table'],
             (string) $gameData['draw_storage'],
@@ -884,6 +884,17 @@ class GameManageModel extends MEDOOHelper
                 $play['odds_group_id'],
             ]);
         }
+    }
+
+    public static function getTimegames()
+    {
+        return $data = parent::query("SELECT tid,seconds FROM game_time_set ");
+    }
+
+    public static function getAllGamesModel()
+    {
+        return $data = parent::query("SELECT model_id,model_name FROM game_model");
+
     }
 
 }

@@ -144,3 +144,14 @@ if ($flag == "filterexception") {
      'totalPages' => ceil($result['total'] / $limit),
     ]);
 }
+
+ if ($flag == "getTimegames") {
+    $result = (new GameManageModel())->getTimegames();
+     echo json_encode($result);
+} 
+
+
+if ($flag == "getAllGamesModels") {
+    $result = (new GameManageModel())->getAllGamesModel();
+    echo json_encode($result);
+} 
