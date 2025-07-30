@@ -467,14 +467,15 @@ $(document).on("change", "#allGameNamesLottery", function () {
 
   // reset all odds
   $(document).on("click", ".resetodds", function () {
-     $("#maskrfeferal").LoadingOverlay("show", {
-         background: "rgb(90,106,133,0.1)", size: 3,
-       });
+    //  $("#maskrfeferal").LoadingOverlay("show", {
+    //      background: "rgb(90,106,133,0.1)", size: 3,
+    //    });
     $.post(`../game/resetallodds`, function (response) {
        
      const data = JSON.parse(response);
       console.log(data);
-      if (data.status =="success") {
+     // return
+      if (data.status === "success") {
         showToast(SUCCESS_TEXT, UPDATED_SUCCESSFULLY, "success");
            $("#maskrfeferal").LoadingOverlay("hide");
         // Optionally, you can refresh the lottery games after resetting odds
@@ -486,10 +487,7 @@ $(document).on("change", "#allGameNamesLottery", function () {
         showToast("Error", "Failed to reset odds", "error");
            $("#maskrfeferal").LoadingOverlay("hide");
       }
-    } ).fail(function (xhr, status, error) {
-      console.error("Error resetting odds:", error);
-      showToast("Error", "Failed to reset odds", "error");
-     });
+    } )
   });
 
 

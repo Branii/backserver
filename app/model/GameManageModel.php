@@ -1,9 +1,9 @@
 <?php
 date_default_timezone_set('Asia/Singapore');
-set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-    // Throw an Exception with the error message and details
-    throw new \Exception("$errstr in $errfile on line $errline", $errno);
-});
+// set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+//     // Throw an Exception with the error message and details
+//     throw new \Exception("$errstr in $errfile on line $errline", $errno);
+// });
 
 class GameManageModel extends MEDOOHelper
 {
@@ -173,9 +173,7 @@ class GameManageModel extends MEDOOHelper
                 SET std_odds = JSON_SET(std_odds, '{$jsonPath}',:subodds), oddspercentage = :oddspercentage
                 WHERE odds_group_id = :odds_group_id
             ";
-
-        $data = parent::query($sql, ['subodds' => $formate, 'oddspercentage' => $oddpercent,
-            'odds_group_id'                        => $gameId]);
+        $data = parent::query($sql, ['subodds' => $formate, 'oddspercentage' => $oddpercent, 'odds_group_id'  => $gameId]);
 
     }
 
@@ -412,12 +410,10 @@ class GameManageModel extends MEDOOHelper
     public static function resetAllOdds()
     {
         $gameNameReset = Utils::updateAllGamePlays();
-        $oddGroupReset = Utils::updateAllOddGroup();
+         $oddGroupReset = Utils::updateAllOddGroup();
         if ($gameNameReset && $oddGroupReset) {
             return ['status' => "success"];
-        } else {
-            return ['status' => "failed"];
-        }
+        } 
     }
 
     public static function updateLotteryData($maxPrizeAmountPerBet, $maxAmtPerIssue, $maxWinPerPersonPerIssue, $minBetAmtPerIssue, $lockTimeForClsing, $sortingWeight, $lottery_type, $game_type_id): array
