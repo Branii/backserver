@@ -894,6 +894,13 @@ class GameManageModel extends MEDOOHelper
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    
+    public static function execute(string $sql)
+    {
+        $pdo = (new Database())->openLink();
+        return $pdo->exec($sql);
+    }
+
     public static function getTimegames()
     {
         return $data = parent::query("SELECT tid,seconds FROM game_time_set ");
