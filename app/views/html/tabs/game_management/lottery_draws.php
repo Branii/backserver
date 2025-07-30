@@ -203,6 +203,14 @@
         <h4 class="card-title mb-0">Lottery draw records</h4>
     </div>
 
+  <div class="px-4 py-3 border-bottom pager1">
+    <span class="top-left-btn">
+    <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:100%;">
+          <div class="custom-dropdown" style="width:30%; margin-right: 5px;">
+      <select name="order_type" id="allGameNames" class="form-control form-select queryholder ordertype" data-bs-placeholder="<?= $translator['Select Type']; ?>" style="widthx: 15%;">
+      <option value="1">Royal 5</option>
+      </select>
+      </div>
     <div class="px-4 py-3 border-bottom pager1">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 100%;">

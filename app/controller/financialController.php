@@ -36,19 +36,45 @@ class financialController extends Controller
 
      // NOTE -
     //////////////Withdrawal Records -//////////
-    public function fetchwithdraw($partnerID, $pageNumber, $limit)
+    public function fetchwithdraw($pageNumber, $limit)
     {
         $this->view('exec/financial_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchwithdraw']);
         $this->view->render();
     }
 
-      public function searchWidrlRecords($userID, $widrlID, $widrlChannels, $widrlStatus, $widrlStartDate, $widrlEndDate, $page, $limit)
+    public function filterwithdraw($uid, $widrlChannels, $widrlStatus,$withdrawid, $widrlStartDate, $widrlEndDate, $page, $limit)
     {
-
-        $this->view('exec/withdrawal_records', ['user_id' => $userID, 'widrl_id' => $widrlID, 'widrl_channels' => $widrlChannels, 'widrl_status' => $widrlStatus, 'widrl_start_date' => $widrlStartDate, 'widrl_end_date' => $widrlEndDate, 'page' => $page, 'limit' => $limit, 'flag' => 'filter_records']);
+        $this->view('exec/financial_manage',
+         [
+          'uid' => $uid, 
+          'widrlchannels' => $widrlChannels,
+          'widrlstatus' => $widrlStatus, 
+          'withdrawid' =>$withdrawid,
+          'startdate' => $widrlStartDate, 
+          'enddate' => $widrlEndDate,
+          'page' => $page, 
+          'limit' => $limit, 
+         'flag' => 'filterwithraw'
+        ]);
+        $this->view->render();
+    }
+  // NOTE -
+    //////////////Withdrawal Manage -//////////
+    public function fetchwithdrawmanage($pageNumber, $limit)
+    {
+        $this->view('exec/financial_manage', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchwithdrawmanage']);
         $this->view->render();
     }
 
+    public function approvewithdraw($withdrawalId,$approvedBy,)
+    {
+        $this->view('exec/financial_manage', [
+            'withdrawalId' => $withdrawalId,
+            'approvedBy' => $approvedBy,
+            'flag' => 'approvewithdraw'
+        ]);
+        $this->view->render();
+    }
 
         //NOTE -
     //////////////Finance funds Records -//////////
@@ -75,10 +101,22 @@ class financialController extends Controller
     }
 
    
-
-
+   public function filterfinance($uid, $depositestate, $startfinance, $endfinance, $page, $pageLimit)
+    {
+        $this->view('exec/financial_manage', [
+            'uid' => $uid,
+            'status' => $depositestate,
+            'startdate' => $startfinance,
+            'enddate' => $endfinance,
+            'page' => $page,
+            'limit' => $pageLimit,
+            'flag' => 'filterfinance'
+        ]);
+        $this->view->render();
+    }
+    
       
-       public function Searchusername($username)
+    public function Searchusername($username)
     {
         $this->view('exec/businessflow', ['username' => $username, 'flag' => 'searchusername']);
         $this->view->render();

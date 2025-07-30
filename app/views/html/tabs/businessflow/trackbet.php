@@ -161,35 +161,10 @@
         background-color: #FFF;
     }
 
-    .queryholderxxt {
-        width: 19%;
-        position: absolute;
-        background-color: #fff;
-        color: #aaa;
-        max-height: 300px;
-        overflow-y: scroll;
-        border-radius: 5px;
-        padding: 10px;
-        top: 90%;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-        display: none;
-    }
-
-    .queryholderxxt .optionlist {
-        text-align: left;
-        border-bottom: solid 1px #eee;
-        padding: 5px;
-    }
-
     .optionlist:hover {
         background-color: #eee;
     }
 
-    #userDropdownlist {
-        max-height: 300px;
-        overflow-y: scroll;
-        overflow-x: hidden;
-    }
 
     .no-resultslist {
         text-align: center;
@@ -207,7 +182,7 @@
 
     }
 
-   
+
 
     .scrollable-container {
         max-height: 600px;
@@ -271,9 +246,9 @@
     background-color: red;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
   }
-  
+
   .trackdown {
-        width: 14%;
+        width: 13%;
         position: absolute;
         background-color: #fff;
         color: #aaa;
@@ -394,32 +369,29 @@
         /* Rounded corners for the track */
     }
 
-    .arr {
-        color: #909aa9;
-        margin: 0px 1rem;
-    }
+
 
 </style>
 
 
-<span id="trans-user-does-not-exist" data-translation="<?= $translator['UserDoesNotExist']; ?>" style="display:none;"></span>
+<span id="trans-user-does-not-exist" data-translation="<?php echo $translator['UserDoesNotExist'];?>" style="display:none;"></span>
 
-<span id="trans-select-data-fields" data-translation="<?= $translator['SelectDataFields']; ?>" style="display:none;"></span>
+<span id="trans-select-data-fields" data-translation="<?php echo $translator['SelectDataFields'];?>" style="display:none;"></span>
 
-<span id="trans-alert" data-translation="<?= $translator['Alert']; ?>" style="display:none;"></span>
-<span id="trans-user-does-not-exist" data-translation="<?= $translator['UserDoesNotExist']; ?>" style="display:none;"></span>
+<span id="trans-alert" data-translation="<?php echo $translator['Alert'];?>" style="display:none;"></span>
+<span id="trans-user-does-not-exist" data-translation="<?php echo $translator['UserDoesNotExist'];?>" style="display:none;"></span>
 
-<span id="trans-heads-upp" data-translation="<?= $translator['HeadsUp']; ?>" style="display:none;"></span>
-<span id="trans-failed-inactivee" data-translation="<?= $translator['FailedToSetInactive']; ?>" style="display:none;"></span>
-<span id="trans-inactive-successs" data-translation="<?= $translator['SetInactiveSuccess']; ?>" style="display:none;"></span>
-<span id="trans-select-fieldss" data-translation="<?= $translator['SelectFilterFields']; ?>" style="display:none;"></span>
-<span id="trans-successs" data-translation="<?= $translator['Success']; ?>" style="display:none;"></span>
+<span id="trans-heads-upp" data-translation="<?php echo $translator['HeadsUp'];?>" style="display:none;"></span>
+<span id="trans-failed-inactivee" data-translation="<?php echo $translator['FailedToSetInactive'];?>" style="display:none;"></span>
+<span id="trans-inactive-successs" data-translation="<?php echo $translator['SetInactiveSuccess'];?>" style="display:none;"></span>
+<span id="trans-select-fieldss" data-translation="<?php echo $translator['SelectFilterFields'];?>" style="display:none;"></span>
+<span id="trans-successs" data-translation="<?php echo $translator['Success'];?>" style="display:none;"></span>
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
 
-<span id="trans-norule" style="display:none;"><?= $translator['No Rule'] ?? 'No Rule' ?></span>
-<span id="trans-stopifnotwin" style="display:none;"><?= $translator['Stop If Not Win'] ?? 'Stop If Not Win' ?></span>
-<span id="trans-stopifwin" style="display:none;"><?= $translator['Stop If Win'] ?? 'Stop If Win' ?></span>
+<span id="trans-norule" style="display:none;"><?php echo $translator['No Rule'] ?? 'No Rule'?></span>
+<span id="trans-stopifnotwin" style="display:none;"><?php echo $translator['Stop If Not Win'] ?? 'Stop If Not Win'?></span>
+<span id="trans-stopifwin" style="display:none;"><?php echo $translator['Stop If Win'] ?? 'Stop If Win'?></span>
 
 
 
@@ -427,34 +399,35 @@
 <div class="card w-100 position-relative overflow-hidden">
 
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0"><?= $translator['Track Records']; ?></h4>
+        <h4 class="card-title mb-0"><?php echo $translator['Track Records'];?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist1">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:auto">
 
-                <input type="text" id="trackinput" class="form-control queryholderlist usernames" placeholder="<?= $translator['Search Username']; ?>" />
+                <input type="text" id="trackinput" class="form-control queryholderlist usernames" placeholder="<?php echo $translator['Search Username'];?>" />
                     <input name="usernames" type="hidden" class="userIdbet" />
                     <select class="form-control trackdown" size="5" style="display: none;" id="usertrackDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>
-                    <input name="usernames"  class="form-control queryholderlist clearitem"  id="trackcode" placeholder="<?=$translator['Search Track Id']?>"/>
+                    <input name="usernames"  class="form-control queryholderlist clearitem"  id="trackcode" placeholder="<?php echo $translator['Search Track Id']?>"/>
                    <select name="recharge" class="form-control form-select queryholderlist trackstatus"
                     data-bs-placeholder="Select Type">
-                    <option value="">-<?=$translator['Track Status']?>-</option>
-                    <option value="1"><?= $translator['Running'];?></option>
-                    <option value="2"><?= $translator['Self Stop Track'];?></option>
-                    <option value="3"><?= $translator['Completed'];?></option>
-                    <option value="4"><?= $translator['Stop If Win'];?></option>
-                    <option value="5"><?= $translator['Stop If Not Win'];?></option>
+                    <option value="">-<?php echo $translator['Track Status']?>-</option>
+                    <option value="1"><?php echo $translator['Running'];?></option>
+                    <option value="2"><?php echo $translator['Self Stop Track'];?></option>
+                    <option value="3"><?php echo $translator['Completed'];?></option>
+                    <option value="4"><?php echo $translator['Stop If Win'];?></option>
+                    <option value="5"><?php echo $translator['Stop If Not Win'];?></option>
                    </select>
 
+                   <div class="custom-dropdown" style="width:30%; margin-right: 5px;">
                     <select name="lotteryname" class="form-control form-select queryholderlist tracklotery selectlottery" data-bs-placeholder="Select Type">
 
                     </select>
-
-                   <select name="lotteryname" class="form-control form-select queryholderlist selectpartner"> 
+                   </div>
+                   <select name="lotteryname" class="form-control form-select queryholderlist selectpartner">
 
                    </select>
 
@@ -505,40 +478,40 @@
                     <tr class ="trackheadrow">
                     <th>
                     <h6 class="fs-4 fw-semibold mb-0">
-                    <?= $translator['Tracking ID']; ?></h6>
+                    <?php echo $translator['Tracking ID'];?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username'];?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Username'];?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Type'];?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Lottery Type'];?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Start Issue']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Start Issue'];?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Tracked/Total Issues']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Tracked/Total Issues'];?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Amount/Total Bet Amount']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Bet Amount/Total Bet Amount'];?></h6>
                   </th>
-                 
+
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win/Loss']; ?></h6>
-                  </th>
-                  <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Rule']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Win/Loss'];?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Time']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Track Rule'];?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Track Time'];?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Status']; ?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Time Zone/Hrs'];?></h6>
                   </th>
-                
+                  <th>
+                    <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Track Status'];?></h6>
+                  </th>
+
                     <th>
                         <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
                     </th>
@@ -579,22 +552,18 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowstrack" style="font-size: 12px;">
-                <!-- <option value="50">50</option>
-                <option value="100">100</option>
-                <option value="200">200</option>
-                <option value="500">500</option> -->
-               <option value="20"><?= $translator['20'] ?? '20' ?></option>
-                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
-    <option value="100"><?= $translator['100'] ?? '100' ?></option>
-    <option value="200"><?= $translator['200'] ?? '200' ?></option>
-    <option value="500"><?= $translator['500'] ?? '500' ?></option>
+            <option value="20"><?php echo $translator['20'] ?? '20'?></option>
+            <option value="50"><?php echo $translator['50'] ?? '50'?></option>
+            <option value="100"><?php echo $translator['100'] ?? '100'?></option>
+            <option value="200"><?php echo $translator['200'] ?? '200'?></option>
+            <option value="500"><?php echo $translator['500'] ?? '500'?></option>
             </select>
             <span class="toplist-right" id="paginationtrack" aria-label="Page navigation example">
             <!--Dynamic pagination-->
             </span>
-           
+
         </span>
-       
+
 
     </div>
 
@@ -608,11 +577,11 @@
   <div class="modal-dialog modal-dialog-scrollable modal-xl">
     <div class="modal-content">
       <div class="modal-body">
-     
+
 
         <div class="text-center mt-2 mb-4">
           <div class="d-flex justify-content-between">
-            <div><?= $translator['Track Bet Info']; ?></div>
+            <div><?php echo $translator['Track Bet Info'];?></div>
             <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
           </div>
         </div>
@@ -620,7 +589,7 @@
          <form>
           <div class="row">
             <div class="col-md-6">
-              <table class="table table-bordered table-striped"> 
+              <table class="table table-bordered table-striped">
                 <tbody id="rowtrack">
                 </tbody>
               </table>
@@ -641,12 +610,12 @@
 					<thead class="tbl-trackerhead">
 						<tr class="trackerheasrow">
 							<!-- <th class="font-weight-normal">#</th> -->
-							<th class="font-weight-normal"><?=$translator['Draw Results']?></th>
-							<th class="font-weight-normal"><?=$translator['Issue Number']?></th>
-							<th class="font-weight-normal"><?=$translator['Multiplier']?></th>
-							<th class="font-weight-normal"><?=$translator['Bet Amount']?></th>
-							<th class="font-weight-normal"><?=$translator['Progress']?></th>
-							<th class="font-weight-normal"><?=$translator['Track Status']?></th>
+							<th class="font-weight-normal"><?php echo $translator['Draw Results']?></th>
+							<th class="font-weight-normal"><?php echo $translator['Issue Number']?></th>
+							<th class="font-weight-normal"><?php echo $translator['Multiplier']?></th>
+							<th class="font-weight-normal"><?php echo $translator['Bet Amount']?></th>
+							<th class="font-weight-normal"><?php echo $translator['Progress']?></th>
+							<th class="font-weight-normal"><?php echo $translator['Track Status']?></th>
 
 						</tr>
 					</thead>

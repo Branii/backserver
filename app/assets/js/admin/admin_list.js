@@ -523,33 +523,22 @@ const txtPages = document.getElementById("trans-pages").innerText;
         userId = userdata.admin_id;
 
         const sidebarMenu = {
-            1: {
-                title: "Account Transaction Details",
-                content: "account_transaction",
-            },
+            1: { title: "Account Transaction Details", content: "account_transaction"},
             2: { title: "Game Betting Statistics", content: "Game" },
             3: { title: "Lottery Betting Record", content: "Lottery" },
             4: { title: "Track Records", content: "Track" },
-
             5: { title: "Deposit Record", content: "Deposit" },
             6: { title: "Withdrawal Records", content: "Withdrawal" },
             7: { title: "Finance Fund Changes", content: "Finance" },
-
             8: { title: "GPP Win/Loss Report", content: "Win" },
-
             9: { title: "User List", content: "Userlist" },
             10: { title: "User Logs", content: "Userlogs" },
-
             11: { title: "Invitation & Referral Links", content: "Invitation" },
-
-            12: { title: "Bank Card List", content: "Bank" },
-
+            12: { title: "Bank Card List", content: "Bank" },   
             13: { title: "Quota Settings", content: "quota" },
-
             14: { title: "Lottery Draw Records", content: "lotterydraws" },
             15: { title: "Lottery Basic Parameters", content: "lotterybasic" },
             16: { title: "Lottery Bonus Parameters", content: "lotterybonus" },
-
             17: { title: "Administrator List", content: "administrator_list" },
             18: { title: "Backup & Recovery", content: "bacrecovery" },
             19: { title: "NGP Win/Loss Report", content: "backup_recovery" },
@@ -562,21 +551,25 @@ const txtPages = document.getElementById("trans-pages").innerText;
             25: { title: "User Payment Method", content: "usernotsi" },
             26: { title: "SMS Configuration", content: "smsconfig" },
             27: { title: "Email Configuration", content: "emailconfigure" },
+            28: { title: "Lottery Exception", content: "lottery" },
+            29: { title: "Withdrawal Manage", content: "wlottery" }
+       
         };
         const sidebarMain = {
             1: { category: "Business flow", items: [1, 2, 3, 4] },
-            2: { category: "Financial Management", items: [5, 6, 7] },
+            2: { category: "Financial Management", items: [5, 6, 7, 29] },
             3: { category: "Report Management", items: [8, 19] },
             4: { category: "User Management", items: [9, 10, 24] },
             5: { category: "Promotion Management", items: [11] },
             6: { category: "User Bank Management", items: [12, 25] },
-            7: { category: "Game Management", items: [14, 15, 16] },
+            7: { category: "Game Management", items: [14, 15, 16, 28] },
             8: { category: "Agent Management", items: [13] },
             9: { category: "System Management", items: [17, 18] },
             10: { category: "System Announcement", items: [20, 21] },
             11: { category: "Payment Platform", items: [22] },
             12: { category: "Partner Management", items: [23] },
-            13: { category: "Platform Setting", items: [26,27] },
+            13: { category: "Platform Setting", items: [26, 27] },
+        
         };
         let html = "";
         for (let key in sidebarMain) {
@@ -589,7 +582,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
               <ul class="custom-list">`;
             // Check if the permissions object has the key
             if (sidebarMain.hasOwnProperty(key)) {
-                //console.log(`Value: ${sidebarMain[key].items}`);
+               // console.log(`Value: ${sidebarMain[key].items}`);
 
                 sidebarMain[key].items.forEach((item) => {
                     const value = `${key} ${item}`;
@@ -639,7 +632,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
         $(".chk").each(function () {
             $(this).prop("checked", isChecked);
             const val = $(this).val();
-            if (isChecked && !bigArr.includes(val)) {
+            if (isChecked && !bigArrs.includes(val)) {
                 bigArrs.push(val);
             }
         });
@@ -701,7 +694,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
     $(document).on("click", ".admin_logs", function () {
         const userdata = JSON.parse($(this).attr("value"));
         adminId = JSON.parse(userdata.admin_id);
-        console.log(adminId);
+      // console.log(adminId);
         $(".logname").text(userdata.full_name);
         getAdminLogs(currentPage, pageLimit, adminId);
     });

@@ -3,7 +3,9 @@ $controller = new Controller;
 $adminEmail = $controller->getSeesion("isUserLoggedIn");
 $userPermissions = $controller->getUserPermissions($adminEmail);
 $definedPermissions = $controller->getPermissionSidebars();
-// steve
+// echo "<pre/>";
+// print_r($definedPermissions);
+// // steve
 
 foreach ($userPermissions as $sidebar => $menu): ?>
     <div class="accordion-item accord-item">  

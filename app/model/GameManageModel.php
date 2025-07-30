@@ -1,9 +1,17 @@
 <?php
+<<<<<<< HEAD
 
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     // Throw an Exception with the error message and details
     throw new \Exception("$errstr in $errfile on line $errline", $errno);
 });
+=======
+date_default_timezone_set('Asia/Singapore');
+// set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+//     // Throw an Exception with the error message and details
+//     throw new \Exception("$errstr in $errfile on line $errline", $errno);
+// });
+>>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
 
 class GameManageModel extends MEDOOHelper
 {
@@ -33,7 +41,10 @@ class GameManageModel extends MEDOOHelper
 
     public static function getLotteryGamesById($lotteryId, $gamemodel, $gametype)
     {
+<<<<<<< HEAD
         // $bigData = [];JSON_UNQUOTE(JSON_EXTRACT({$tableName}.standard_odds, CONCAT('$.', :game_types))) AS standardodds
+=======
+>>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
 
         if (in_array($lotteryId, [1, 2, 3, 5, 6, 8, 10, 11]) && in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
             $tableMap = [
@@ -48,6 +59,7 @@ class GameManageModel extends MEDOOHelper
             $tableName = $tableMap[$gamemodel];
             $jsonKey   = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
             $jsonPath  = "$." . $jsonKey;
+<<<<<<< HEAD
             $sql       = "
             SELECT
                {$tableName}.gn_id,
@@ -73,6 +85,46 @@ class GameManageModel extends MEDOOHelper
                JOIN lottery_type ON lottery_type.lt_id={$tableName}.lottery_type
             WHERE
                {$tableName}.lottery_type = :lotteryId
+=======
+
+            $sql = "SELECT
+                  gn.gn_id AS gn_id,
+                  gn.name AS name,
+                  gn.modified_odds,
+                  gn.isSpecial As isSpecial,
+                  gn.oddspercentage AS oddspercentage,
+                  gn.totalbetpercentage AS totalbetpercentage,
+                  gn.gameplay_name AS gameplay_name,gn.model AS model,
+                  gn.game_group AS game_group,gn.lottery_type AS lottery_type,
+                  gn.total_bets AS total_bets,
+                  JSON_UNQUOTE(JSON_EXTRACT(gn.standard_total_bets, CONCAT('$.\"',$jsonKey, '\"'))) AS standardtotalbets,
+                  gn.state AS state,
+                  gn.group_type AS group_type,
+                  gg.state AS group_state,
+                  og.odds_group_id AS subgame_id,
+                  og.label AS label,
+                  gn.odds AS mainOdds,
+                  og.odds AS mainSubOdds, og.oddspercentage AS subOddsPercentage,
+                  JSON_UNQUOTE(JSON_EXTRACT(gn.standard_odds, CONCAT('$.\"',$jsonKey, '\"'))) AS standardodds,
+                  IF(
+                     og.odds IS NOT NULL,
+                     JSON_UNQUOTE(JSON_EXTRACT(og.std_odds, CONCAT('$.\"',$jsonKey, '\"'))),
+                  JSON_UNQUOTE(JSON_EXTRACT(gn.standard_odds, CONCAT('$.\"',$jsonKey, '\"')))
+                  ) AS currentodds,
+                  IF(og.odds IS NOT NULL, true,false) AS isSubOdds,
+                  lottery_type.state AS lottery_state
+
+            FROM
+                  $tableName gn
+            JOIN
+                  game_group gg ON gn.game_group = gg.gp_id
+
+            LEFT JOIN
+                  odds_group og ON gn.gn_id = og.game_play_id
+            JOIN lottery_type ON lottery_type.lt_id= gn.lottery_type
+            WHERE
+                  gn.lottery_type = :lotteryId
+>>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
             ";
 
             $data = parent::query($sql, ['lotteryId' => $lotteryId]);
@@ -82,9 +134,36 @@ class GameManageModel extends MEDOOHelper
         }
     }
 
+<<<<<<< HEAD
     public static function UpdateOddsTotalbets($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent, $gametype)
     {
         if (in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
+=======
+    public static function UpdateOddsTotalbets($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent, $gametype, $isSpecial)
+    {
+        $jsonKey  = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
+        $jsonPath = "$.\"$jsonKey\"";
+        if ($isSpecial === "true") {
+            $data = self::UpdateOddsGroupTable($gameId, $newodds, $oddpercent, $jsonPath);
+            if ($data > 1) {
+                self::getLotteryGamesById($gameId, $gamemodel, $gametype);
+            }
+            return ['success' => true, 'message' => 'Update successful'];
+        } else {
+            $data = self::UpdateGameNameTable($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent, $jsonPath);
+             if ($data > 1) {
+                self::getLotteryGamesById($gameId, $gamemodel, $gametype);
+            }
+         return ['success' => true, 'message' => 'Update successful'];
+        }
+
+    }
+
+    public static function UpdateGameNameTable($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent, $jsonPath)
+    {
+        if (in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
+            // Sanitize
+>>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
             $tableMap = [
                 'standard'   => 'game_name',
                 'twosides'   => 'twosides',
@@ -94,12 +173,25 @@ class GameManageModel extends MEDOOHelper
                 'fantan'     => 'fantan',
                 'manytables' => 'manytables',
             ];
+<<<<<<< HEAD
             $tableName = $tableMap[$gamemodel];
             // Sanitize
             $jsonKey  = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
             $jsonPath = "$.\"$jsonKey\""; // correct MySQL JSON path syntax with quoted key
 
             $sql = "
+=======
+        }
+
+        // Check if model exists in map
+        if (! isset($tableMap[$gamemodel])) {
+            return "Invalid game model";
+        }
+
+        $tableName = $tableMap[$gamemodel];
+
+        $sql = "
+>>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
             UPDATE {$tableName}
             SET
                 modified_odds = :modified_odds,
@@ -111,6 +203,7 @@ class GameManageModel extends MEDOOHelper
                 gn_id = :gn_id
         ";
 
+<<<<<<< HEAD
             try {
                 $data = parent::query($sql, [
                     'modified_odds'         => $newodds,
@@ -149,6 +242,54 @@ class GameManageModel extends MEDOOHelper
             $jsonKey  = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
             $jsonPath = "$.\"$jsonKey\""; // correct MySQL JSON path syntax with quoted key
 
+=======
+        try {
+            $data = parent::query($sql, [
+                'modified_odds'         => $newodds,
+                'oddspercentage'        => $oddpercent,
+                'modified_totalbet'     => $newtotalbet,
+                'totalbetpercentage'    => $totalbetpercent,
+                'new_standard_odds'     => $newodds,     // same value as modified_odds
+                'new_standard_totalbet' => $newtotalbet, // same value as modified_totalbet
+                'gn_id'                 => $gameId,
+            ]);
+
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => 'Database update failed', 'error' => $e->getMessage()];
+        }
+    }
+
+    public static function UpdateOddsGroupTable($gameId, $newodds, $oddpercent, $jsonPath)
+    {
+
+        $formate = number_format(round((float) json_decode($newodds)[0], 5), 5, '.', ''); // Output: 1.00000
+        $sql     = "
+                UPDATE odds_group
+                SET std_odds = JSON_SET(std_odds, '{$jsonPath}',:subodds), oddspercentage = :oddspercentage
+                WHERE odds_group_id = :odds_group_id
+            ";
+        $data = parent::query($sql, ['subodds' => $formate, 'oddspercentage' => $oddpercent, 'odds_group_id'  => $gameId]);
+
+    }
+
+    public static function ResetTotalbets($gameId, $gamemodel, $newtotalbet, $totalbetpercent, $gametype)
+    {
+        if (in_array($gamemodel, ['standard', 'twosides', 'longdragon', 'boardgames', 'roadbet'])) {
+            $tableMap = [
+                'standard'   => 'game_name',
+                'twosides'   => 'twosides',
+                'longdragon' => 'longdragon',
+                'boardgames' => 'boardgames',
+                'roadbet'    => 'roadbet',
+                'fantan'     => 'fantan',
+                'manytables' => 'manytables',
+            ];
+            $tableName = $tableMap[$gamemodel];
+            // Sanitize
+            $jsonKey  = preg_replace('/[^a-zA-Z0-9_]/', '', $gametype);
+            $jsonPath = "$.\"$jsonKey\""; // correct MySQL JSON path syntax with quoted key
+
+>>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
             $sql = "UPDATE {$tableName} SET  modified_totalbet = :modified_totalbet,totalbetpercentage = :totalbetpercentage,
              standard_total_bets = JSON_SET(standard_total_bets, '{$jsonPath}', :new_standard_totalbet)
           WHERE gn_id = :gn_id";
@@ -361,6 +502,19 @@ class GameManageModel extends MEDOOHelper
         }
     }
 
+<<<<<<< HEAD
+=======
+    //reset all odds
+    public static function resetAllOdds()
+    {
+        $gameNameReset = Utils::updateAllGamePlays();
+         $oddGroupReset = Utils::updateAllOddGroup();
+        if ($gameNameReset && $oddGroupReset) {
+            return ['status' => "success"];
+        } 
+    }
+
+>>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
     public static function updateLotteryData($maxPrizeAmountPerBet, $maxAmtPerIssue, $maxWinPerPersonPerIssue, $minBetAmtPerIssue, $lockTimeForClsing, $sortingWeight, $lottery_type, $game_type_id): array
     {
         try {
@@ -547,6 +701,7 @@ class GameManageModel extends MEDOOHelper
             return ["status" => "error", "data" => $e->getMessage()];
         }
     }
+<<<<<<< HEAD
 
     //  CREATE GAME TABLE STARTS HERE WITH THE UPDATE FOR SPECIFIEDS ODDS
     public static function createNewGame(array $gameData, string $gamesTable)
@@ -745,5 +900,312 @@ class GameManageModel extends MEDOOHelper
     //Get game models  ends here
 
 
+=======
+
+    //lottery exception
+
+    public static function lotteryExceptionData($page, $limit)
+    {
+
+        $offset = ($page - 1) * $limit;
+        $sql    = "
+            SELECT GROUP_CONCAT(
+                CONCAT(
+                    'SELECT bt.draw_period,bt.server_date,bt.server_time,bt.timezone,
+                     bt.game_label,gt.name As game_type,gt.gt_id AS gt_id ,bt.game_model,
+                     bt.draw_number,
+                        COUNT(*) AS total_bets,
+                        COUNT(CASE WHEN bt.state = 1 THEN 1 END) AS settled_bets,
+                        COUNT(CASE WHEN bt.state = 2 THEN 1 END) AS unsettled_bets,
+                        COUNT(CASE WHEN bt.state IN (4, 7) THEN 1 END) AS cancelled_bets
+                    FROM ', table_name, ' bt
+                    INNER JOIN game_type gt ON gt.gt_id = bt.game_type
+                     WHERE bt.state = 2 GROUP BY bt.draw_period'
+                ) SEPARATOR ' UNION ALL '
+            ) AS query
+            FROM information_schema.tables
+            WHERE table_schema = 'lottery_test' AND table_name LIKE 'bt_%'";
+
+        $pdo = (new Database())->openLink();
+        $pdo->exec("SET SESSION group_concat_max_len = 1000000");
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $mergedQuery    = $stmt->fetchColumn();
+        $paginatedQuery = "$mergedQuery ORDER BY server_date DESC, server_time DESC LIMIT $limit OFFSET $offset";
+        $finalStmt      = $pdo->prepare($paginatedQuery);
+        $finalStmt->execute();
+        $data  = $finalStmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmtt = $pdo->prepare($mergedQuery);
+        $stmtt->execute();
+        $totalcount = $stmtt->fetchAll(PDO::FETCH_ASSOC);
+        return ['data' => $data, 'total' => count($totalcount)];
+    }
+
+    public static function FilterExceptionData($gametype, $drawperiod, $startdates, $enddates, $page, $limit)
+    {
+        $offset = ($page - 1) * $limit;
+        $pdo    = (new Database())->openLink();
+        $pdo->exec("SET SESSION group_concat_max_len = 1000000");
+
+        // Generate the filter query using the filterBetData method
+        $subquery    = self::filterData($gametype, $drawperiod, $startdates, $enddates);
+        $whereClause = $subquery['query'];
+
+        $sql = "
+                SELECT GROUP_CONCAT(
+                    CONCAT(
+                        'SELECT bt.draw_period, bt.server_date, bt.server_time, bt.timezone,
+                                bt.game_label, gt.name AS game_type, gt.gt_id AS gt_id, bt.game_model,
+                                COUNT(*) AS total_bets,
+                                COUNT(CASE WHEN bt.state = 1 THEN 1 END) AS settled_bets,
+                                COUNT(CASE WHEN bt.state = 2 THEN 1 END) AS unsettled_bets,
+                                COUNT(CASE WHEN bt.state IN (4, 7) THEN 1 END) AS cancelled_bets
+                        FROM ', table_name, ' bt
+                        INNER JOIN game_type gt ON gt.gt_id = bt.game_type $whereClause GROUP BY bt.draw_period')
+                    SEPARATOR ' UNION ALL ') AS query
+                    FROM information_schema.tables
+                    WHERE table_schema = 'lottery_test'
+                    AND table_name LIKE 'bt_%';
+               ";
+
+        $mergedQuery = $pdo->query($sql)->fetchColumn();
+
+        // Prepare to count the total number of records (without pagination)
+        $countStmt = $pdo->prepare("SELECT COUNT(*) AS total FROM ($mergedQuery) AS subquery");
+        $countStmt->execute($subquery['params']);
+        $totalRecords = $countStmt->fetchColumn();
+
+        // Prepare to fetch paginated data
+        $dataStmt = $pdo->prepare("$mergedQuery ORDER BY server_date DESC, server_time DESC LIMIT $limit OFFSET $offset");
+        $dataStmt->execute($subquery['params']);
+        $data = $dataStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return ['data' => $data, 'total' => $totalRecords];
+    }
+
+    public static function filterData($gametype, $drawperiod, $startdates, $enddates)
+    {
+        $filterConditions = [];
+        $params           = [];
+        $betstate         = 2;
+
+        if (! empty($drawperiod)) {
+            $filterConditions[]    = "bt.draw_period = :draw_period";
+            $params['draw_period'] = $drawperiod;
+        }
+
+        if (! empty($gametype)) {
+            $filterConditions[]  = "bt.game_type = :game_type";
+            $params['game_type'] = $gametype;
+        }
+
+        if (! empty($betstate)) {
+            $filterConditions[] = "bt.state = :state";
+            $params['state']    = $betstate;
+        }
+
+        if (! empty($startdate) && ! empty($enddate)) {
+            $filterConditions[]  = "bt.server_date BETWEEN :startdate AND :enddate";
+            $params['startdate'] = $startdate;
+            $params['enddate']   = $enddate;
+        } elseif (! empty($startdate)) {
+            $filterConditions[]  = "bt.server_date = :startdate";
+            $params['startdate'] = $startdate;
+        } elseif (! empty($enddate)) {
+            $filterConditions[] = "bt.server_date = :enddate";
+            $params['enddate']  = $enddate;
+        }
+
+        $whereClause = ! empty($filterConditions) ? 'WHERE ' . implode(' AND ', $filterConditions) : '';
+        return ['query' => $whereClause, 'params' => $params];
+    }
+
+    //create a new lottery type
+    public static function createNewGame(array $gameData, string $gamesTable)
+    {
+        $pdo    = (new Database())->openLink();
+        $logo   = $gameData['logoFileName'] ?? "";
+        $linker = bin2hex(random_bytes(7));
+        // Check for existing game name
+        if (count(self::checkIfLotteryExist($gameData['name'])) > 0) {
+            return ['status' => 'error', 'message' => 'Lottery name already exists'];
+        }
+        // Insert into game_type
+        $sql    = self::createNewGameQuery($gamesTable);
+        $params = self::addNewLotteryGameParam($gameData, $logo, $linker);
+        try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+        } catch (PDOException $e) {
+            return ['status' => 'error', 'message' => 'Game Insert Error: ' . $e->getMessage()];
+        }
+        // Retrieve new game's ID
+        $lottery    = self::getGameByLinker($linker);
+        $gameTypeId = $lottery[0]['gt_id'] ?? null;
+        if (! $gameTypeId) {
+            return ['status' => 'error', 'message' => 'Failed to get inserted lottery ID'];
+        }
+        // Map game to gamestable_map
+        $mapData = [
+            'game_type'    => $gameTypeId,
+            'draw_table'   => 'dt_' . str_replace(' ', '', $gameData['name']),
+            'draw_storage' => 'ds_' . str_replace(' ', '', $gameData['name']),
+            'draw_period'  => 'dp_' . str_replace(' ', '', $gameData['name']),
+            'bet_table'    => 'bt_' . str_replace(' ', '', $gameData['name']),
+            'lottery_type' => $gameData['lottery_type'],
+            'lottery_name' => $gameData['game_group'],
+        ];
+        $mapSql    = self::addNewGameToMapQuery();
+        $mapParams = self::addNewGamesTableMapParam($mapData);
+        try {
+            $stmt = $pdo->prepare($mapSql);
+            $stmt->execute($mapParams);
+            // Create game-related tables
+            self::execute("CREATE TABLE {$mapData['draw_table']} LIKE dt_1kb5d1m");
+            self::execute("CREATE TABLE {$mapData['draw_storage']} LIKE ds_1kb5d1m");
+            self::execute("CREATE TABLE {$mapData['draw_period']} LIKE dp_1kb5d1m");
+            self::execute("CREATE TABLE {$mapData['bet_table']} LIKE bt_1kb5d1m");
+            self::updateSpecificGamePlays($mapData['lottery_type'], $gameTypeId);
+            self::updateSpecificGamePlayOddsGroup($mapData['lottery_type'], $gameTypeId);
+            return ['status' => 'success', 'message' => 'New game created and odds updated successfully'];
+        } catch (PDOException $e) {
+            return ['status' => 'error', 'message' => 'Mapping DB Error: ' . $e->getMessage()];
+        }
+    }
+
+    public static function createNewGameQuery(string $gamesTable)
+    {
+        return "INSERT INTO $gamesTable (name, logo, alias, starttime, stoptime, state, game_type, draw_type,
+            lottery_type, seconds_per_issue, total_num_issue, closing_time,num_balls, min_ball, max_ball, lottery_model, game_group,last_updated, date_created, linker
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    }
+
+    public static function addNewLotteryGameParam(array $gameData, string $logo, string $linker)
+    {
+        return [
+            (string) $gameData['name'],
+            (string) $logo,
+            (string) $gameData['alias'],
+            (string) $gameData['starttime'],
+            (string) $gameData['stoptime'],
+            1, // state
+            1, // game_type
+            1, // draw_type
+            (string) $gameData['lottery_type'],
+            (int) $gameData['seconds_per_issue'],
+            (int) $gameData['total_num_issue'],
+            1, // closing_time
+            (int) $gameData['num_of_balls'],
+            (int) $gameData['min_ball'],
+            (int) $gameData['max_ball'],
+            (string) $gameData['lottery_model'],
+            (string) $gameData['game_group'],
+            date("Y-m-d"),
+            date("Y-m-d"),
+            (string) $linker,
+        ];
+    }
+
+    public static function getGameByLinker(string $linker)
+    {
+        $pdo  = (new Database())->openLink();
+        $stmt = $pdo->prepare("SELECT gt_id FROM game_type WHERE linker = ?");
+        $stmt->execute([$linker]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function addNewGameToMapQuery()
+    {
+        return "INSERT INTO gamestable_map (game_type, draw_table, draw_storage, draw_period, bet_table,lottery_type, lottery_name) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    }
+
+    public static function addNewGamesTableMapParam(array $gameData)
+    {
+        return [
+            (int) $gameData['game_type'],
+            (string) $gameData['draw_table'],
+            (string) $gameData['draw_storage'],
+            (string) $gameData['draw_period'],
+            (string) $gameData['bet_table'],
+            (string) $gameData['lottery_type'],
+            (string) $gameData['lottery_name'] ?? '',
+        ];
+    }
+
+    public static function updateSpecificGamePlays($lotteryType, $gameTypeId)
+    {
+        $pdo  = (new Database())->openLink();
+        $sql  = "SELECT gn_id, name, odds, total_bets, lottery_type, standard_odds, standard_total_bets FROM game_name WHERE lottery_type = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$lotteryType]);
+        $gamePlay  = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sqlUpdate = "UPDATE game_name SET standard_odds = ?, standard_total_bets = ? WHERE gn_id = ?";
+        $req       = $pdo->prepare($sqlUpdate);
+
+        foreach ($gamePlay as $play) {
+            $stdOdds = json_decode($play['standard_odds'], true) ?: [];
+            $stdBets = json_decode($play['standard_total_bets'], true) ?: [];
+
+            $stdOdds[$gameTypeId] = trim($play['odds'], '[]');
+            $stdBets[$gameTypeId] = trim($play['total_bets'], '[]');
+
+            $req->execute([
+                json_encode($stdOdds),
+                json_encode($stdBets),
+                $play['gn_id'],
+            ]);
+        }
+    }
+    public static function updateSpecificGamePlayOddsGroup($lotteryType, $gameTypeId)
+    {
+        $pdo = (new Database())->openLink();
+        $sql = "SELECT gn.gn_id, gn.lottery_type, ogg.odds, ogg.label, ogg.game_play_id, ogg.odds_group_id, ogg.std_odds
+                FROM game_name gn
+                JOIN odds_group ogg ON gn.gn_id = ogg.game_play_id
+                WHERE gn.lottery_type = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$lotteryType]);
+        $oddsGroup = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $sqlUpdate = "UPDATE odds_group SET std_odds = ? WHERE odds_group_id = ?";
+        $req       = $pdo->prepare($sqlUpdate);
+
+        foreach ($oddsGroup as $play) {
+            $stdOdds              = json_decode($play['std_odds'], true) ?: [];
+            $stdOdds[$gameTypeId] = trim($play['odds'], '[]');
+
+            $req->execute([
+                json_encode($stdOdds),
+                $play['odds_group_id'],
+            ]);
+        }
+    }
+
+     public static function checkIfLotteryExist(string $name)
+    {
+        $pdo  = (new Database())->openLink();
+        $stmt = $pdo->prepare("SELECT * FROM game_type WHERE name = ?");
+        $stmt->execute([$name]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    
+    public static function execute(string $sql)
+    {
+        $pdo = (new Database())->openLink();
+        return $pdo->exec($sql);
+    }
+
+    public static function getTimegames()
+    {
+        return $data = parent::query("SELECT tid,seconds FROM game_time_set ");
+    }
+
+    public static function getAllGamesModel()
+    {
+        return $data = parent::query("SELECT model_id,model_name FROM game_model");
+
+    }
+>>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
 
 }

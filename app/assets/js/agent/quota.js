@@ -118,14 +118,11 @@ $(function() {
 
   $(document).on("click", "#btn-setallquota", function() {
     const quotaval = $("#c-quota").val().trim();
-
-    // ✅ Check if the field is empty
     if (quotaval === "") {
       // showToast("All Fields Required", "Please enter a quota value before saving.", "error");
       showToast(ALL_FIELDS_REQUIRED, ENTER_QUOTA_VALUE, "error");
       return;
     }
-
     // Proceed to send the POST request
     try {
       $.post(`../agent/UpdateAllquota/${quotaval}`, function(response) {

@@ -687,6 +687,16 @@ return [
     'Action' => 'Action',
     //（Platform Settings）平台设置
     'Platform Settings' => 'Platform Settings',
+    'Period Management' => 'Period Management',
+    'Lottery Exception' => 'Lottery Exception',
+    'Total Counts' => 'Total Counts',
+    'Total Bet Settled' => 'Total Bet Settled',
+    'Total Bet Unsettled' => 'Total Bet Unsettled',
+    'Cancel / Refund' =>'Cancel / Refund',
+    'Withdrawal Status' =>'Withdrawal Status',
+    'Approved' =>'Approved',
+    'Rejected' =>'Rejected',
+    'Withdrawal Manage' =>'Withdrawal Manage',
 
     //(Basic Platform Configuration)
     'SMS Configuration' => 'SMS Configuration',
@@ -1549,8 +1559,8 @@ return [
     'game_name' => 'Game Name',
     'game_type' => 'Game Type',
     'game_group' => 'Game Group',
-    'Reset user Account' => 'Reset user Account',
-    'Profit Limit' => 'Profit Limit',
+    'Reset user Account'=> 'Reset user Account',
+   'Profit Limit'=> 'Profit Limit',
     'Select Lottery Type' => 'Select Lottery Type',
     'Select Seconds' => 'Select Seconds',
     'Error' => 'Error',

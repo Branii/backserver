@@ -214,20 +214,76 @@
         box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
     }
 
-    .optionlist {
-        text-align: left;
-        border-bottom: solid 1px #eee;
-        padding: 5px;
-    }
+.optionlists {
+    text-align: left;
+    border-bottom: solid 1px #eee;
+    padding: 5px;
+}
 
-    .optionlist:hover {
-        background-color: #eee;
-    }
+.optionlists:hover {
+    background-color: #eee;
+}
 
-    .arr {
-        color: #909aa9;
-        margin: 0px 1rem;
+.arr {
+    color: #909aa9;
+    margin: 0px 1rem;
     }
+.tt-menu {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 5px 0;
+  max-height: 250px;
+  overflow-y: auto;         /* Enable vertical scroll */
+  overflow-x: hidden;       /* Hide horizontal scrollbar */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.tt-suggestion {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.tt-suggestion:last-child {
+  border-bottom: none;
+}
+
+.tt-suggestion:hover,
+.tt-suggestion.tt-cursor {
+  background-color: #f0f4f8;
+}
+
+.user-suggestion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info .regname {
+  font-weight: bold;
+  color: #333;
+}
+
+.user-info .regtype {
+  font-size: 12px;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.tt-highlight {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.tt-suggestion {
+  padding: 10px 15px;
+  white-space: nowrap;      /* Keeps text in one line */
+  overflow: hidden;         /* Hides extra content */
+  text-overflow: ellipsis;  /* Adds ... at the end */
+}
 </style>
 
 <!-- toast messages -->
@@ -271,10 +327,20 @@
                     <option value="">-<?= $translator['Transaction Type']; ?>-</option>
                     <option value="1"><?= $translator['Deposit']; ?></option>
                     <option value="4"><?= $translator['Withdrawal']; ?></option>
-                </select>
-                <select name="lotteryname" class="form-control form-select queryholderlistt selectpartner"> </select>
-                <input name="startdate" type="date" class="form-control queryholderlistt startfinances" placeholder="Name" />
-                <input name="enddate" type="date" class="form-control queryholderlistt endfinances" placeholder="Name" />
+                 </select>
+                 <select name="lotteryname" class="form-control form-select queryholderlistt selectpartner"> 
+
+                 </select>
+                 <input name="startdate" type="date" class="form-control queryholderlistt startfinances" placeholder="Name" />
+                 <input name="enddate" type="date" class="form-control queryholderlistt endfinances" placeholder="Name" />
+
+                  <!-- <div id="the-basics">
+                <input class="typeahead form-control" type="text" placeholder="Countries" />
+              </div> -->
+               <!-- <input type="text" id="" class="form-control" placeholder="Search user..." /> -->
+                <!-- <div id="bloodhound">
+                <input class="typeahead form-control" type="text" placeholder="Countries" />
+              </div> -->
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
@@ -326,6 +392,10 @@
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Reviews']; ?></h6>
                         </th>
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Approved By']; ?></h6>
+                        </th>
+                      
                     </tr>
                 </thead>
                 <tbody id="financeContainer">
@@ -406,19 +476,13 @@
                         </label>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input type="text" id="financeinput" class="form-control" placeholder="Search usernames" />
-                        <input type="hidden" class="userIdFields" />
-                        <select name="usernames" class="form-control financeDropdowns" size="5" style="display: none;" id="userfinaceDropdown">
-                            <!-- Options will be populated dynamically -->
-                        </select>
-
-                        <label>
-                            <i class="bx bx-user me-2 fs-4 text-infod"></i>
-                            <span class="border-start ps-3"><?=$translator['Username']; ?></span>
-                        </label>
+                    <div class="form-floating mb-3 ">
+                        <input type="text" id="financeinputs" style="height:60px" class="form-control" placeholder="Search usernames" />
+                        <input type="" hidden class="form-control userIdFields" placeholder="Search usernames" />
                     </div>
-
+                        <!-- <input type="text" id="" class="form-control" placeholder="Search usernames" /> -->
+                      
+                        
                     <div class="form-floating mb-3">
                         <input name="agentname" type="text" class="form-control border amount" placeholder="Username" />
                         <label>
@@ -442,6 +506,8 @@
                             <span class="border-start ps-3"><?=$translator['Approved By']; ?></span>
                         </label>
                     </div>
+
+                     
 
                     <!-- Submit Button -->
                     <div class="d-md-flex align-items-center">

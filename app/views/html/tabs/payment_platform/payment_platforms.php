@@ -176,20 +176,7 @@
         /* Optional: Make it stand out */
     }
 
-    .financeDropdowns {
-        /* width: 23%; */
-        position: absolute;
-        background-color: #fff;
-        color: #aaa;
-        max-height: 300px;
-        overflow-y: scroll;
-        border-radius: 5px;
-        padding: 10px;
-        top: 90%;
-        z-index: 9999;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-        display: none;
-    }
+   
 
     .financeDropdown {
         width: 24%;
@@ -297,7 +284,7 @@
         <span class="top-left-btn" style="width: 70%;">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 100%;">
                 <div style="width: 35%;">
-                    <input name="resultsList" class="queryholderlist form-control bring-forward" id="platformNames" data-user-id="" placeholder="<?= $translator['Platform Names']; ?>" autocomplete="off" style="width: 98%;" />
+                    <input name="resultsList" class="queryholderlist form-control bring-forward" id="platfomNamess" data-user-id="" placeholder="<?= $translator['Platform Names']; ?>" autocomplete="off" style="width: 98%;" />
                     <div class="pp-names-wrapper ngp-usr-res-wrapper" style="width: 20.5%;">
                         <ul style="max-height: 403px; margin: 0px; overflow-y: auto;" id="pp-names-list-wrapper"></ul>
                     </div>

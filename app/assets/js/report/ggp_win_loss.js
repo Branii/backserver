@@ -375,10 +375,23 @@ $(() => {
           const user = response[index];
           const username = user[user.regtype];
 
+<<<<<<< HEAD:app/assets/js/ggp_win_loss.js
           optionsHtml +=
             username === undefined
               ? `<li class="name-items"> No Data Found.</li>`
               : `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
+=======
+            optionsHtml +=
+              username === undefined
+                ? `<li class="name-items"> No Data Found.</li>`
+                : `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
+          }
+           $("#user-list-wrapper").html(optionsHtml);
+         $(".usr-res-wrapper").show();
+        } catch (error) {
+          console.error("Error parsing response: ", error);
+           $(".userDropdown").hide();
+>>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350:app/assets/js/report/ggp_win_loss.js
         }
         $("#user-list-wrapper").html(optionsHtml);
         $(".usr-res-wrapper").show();
@@ -388,7 +401,7 @@ $(() => {
       }
     }).fail(function() {
       console.error("Error fetching users.");
-      $(".userDropdown").hide();
+      // $(".userDropdown").hide();
     });
   };
 

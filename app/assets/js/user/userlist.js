@@ -272,7 +272,7 @@ $(function () {
                       <td>${logincount}</td>
                       <td id="usrl-state-${item.uid}">${status[item.user_state]}</td>
                  
-   //                      <td>
+                        <td>
                           
                            <div class="dropdown">
                                   <a class="dropdown-toggles" href="javascript:void(0)" role="button" id="dropdownMenuLink-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">

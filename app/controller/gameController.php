@@ -67,20 +67,25 @@ class gameController extends Controller
         $this->view->render();
     }
 
+<<<<<<< HEAD
     ////////////// LOTTERY  PARAM FUNCTIONS  - //////////
 
+=======
+    ////////////// LOTTERY BONUS  PARAMETERS FUNCTIONS  - //////////
+>>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
     public function getAllGamesLottery()
     {
         $this->view('exec/game_management', ['flag' => 'getAllGamesLottery']);
         $this->view->render();
     }
 
-    public function getLotteryGames(string $lotterId, string $tables)
+    public function getLotteryGames(string $lotterId, string $tables, string $gametypes)
     {
         $this->view('exec/game_management', [
             'flag' => 'getLotteryGames',
             'gameId' => $lotterId,
             'tables' => $tables,
+            'gametypes'   => $gametypes
         ]);
         $this->view->render();
     }
@@ -97,7 +102,7 @@ class gameController extends Controller
         $this->view->render();
     }
 
-    public function updateoddstotalbets($lotterId, $gamemodel, $oddpercent, $newodds, $totalbetpercent, $newtotalbet)
+    public function updateoddstotalbets($lotterId, $gamemodel, $oddpercent, $newodds, $totalbetpercent, $newtotalbet,$gametype, $isSpecial)
     {
         $this->view('exec/game_management', [
             'flag' => 'updateoddstotalbets',
@@ -106,7 +111,14 @@ class gameController extends Controller
             'oddpercent' => $oddpercent,
             'newodds' => $newodds,
             'totalbetpercent' => $totalbetpercent,
+<<<<<<< HEAD
             'newtotalbet' => $newtotalbet,
+=======
+            'newtotalbet'     => $newtotalbet,
+            'gametype'        => $gametype,
+            'isSpecial'       => $isSpecial
+
+>>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
         ]);
         $this->view->render();
     }
@@ -146,6 +158,7 @@ class gameController extends Controller
         $this->view->render();
     }
 
+<<<<<<< HEAD
     public function addlottery($name, $alias, $gamegroups, $numberofballs, $min_ball, $max_ball, $secondsperissue, $starttime, $stoptime, $lotterymodel, $lotteryType, $logoFileName)
     {
         // Decode all parameters
@@ -153,6 +166,40 @@ class gameController extends Controller
         $alias = urldecode($alias);
         $gamegroups = urldecode($gamegroups);
         $logoFileName = urldecode($logoFileName);
+=======
+    //reset all odds
+    public function resetAllOdds()
+    {
+        $this->view('exec/game_management', ['flag' => 'resetAllOdds']);
+        $this->view->render();
+    }
+
+
+  ////////////// LOTTERY EXCEPTION FUNCTIONS  - //////////
+    public function lotteryexception($pageNumber, $limit)
+    {
+        $this->view('exec/game_management', ['page' => $pageNumber, 'limit' => $limit, 'flag' => 'lotteryexception']);
+        $this->view->render();
+    }
+
+    public function filterlotteryexceptdata($gametype,$drawperiod,$startdates,$enddates,$page,$limit){
+        $this->view('exec/game_management', [
+        'gametype' =>$gametype,
+        'drawperiod' =>$drawperiod,
+        'startdates' =>$startdates,
+        'enddates' => $enddates,
+        'page' => $page, 
+        'limit' => $limit,
+        'flag' => 'filterexception'
+        ]);
+        $this->view->render();
+     
+    }
+           
+    public function addlottery($name, $alias, $gamegroups, $numberofballs, $min_ball, $max_ball, $secondsperissue, $starttime, $stoptime, $lotterymodel, $lotteryType, $logoFileName)
+    {
+        
+>>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
         $this->view('exec/lottery_basic_params', [
             'name' => $name,
             'alias' => $alias,
@@ -171,7 +218,11 @@ class gameController extends Controller
         $this->view->render();
     }
 
+<<<<<<< HEAD
     public function getTimegames()
+=======
+     public function getTimegames()
+>>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
     {
         $this->view('exec/game_management', ['flag' => 'getTimegames']);
         $this->view->render();
@@ -182,4 +233,8 @@ class gameController extends Controller
         $this->view('exec/game_management', ['flag' => 'getAllGamesModels']);
         $this->view->render();
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
 }

@@ -558,10 +558,10 @@ $(() => {
             return;
           }
 
-          let html = "";
-          response.data.forEach(data => {
-            html += partnersMarkup(data);
-          });
+                    let html = "";
+                     response.data.forEach((data) => {
+                        html += partnersMarkup(data);
+                    });
 
           $("#ptns-pp-dtholder").html(html);
         },
