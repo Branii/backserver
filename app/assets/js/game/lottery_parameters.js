@@ -344,23 +344,17 @@ const NO_CHANGES_MADE = document.getElementById("no_changes_made").innerText;
     let gametypeId = $(this).val().split("|")[0]; // Extract gametypeId from button value
     let isSpecial = $(this).val().split("|")[1]; // Extract isSpecial from button value
     let gamemodel = $(this).attr("datas");
-    console.log("Saving:", {percentageOne,scaledValuesOne,gametypeId,isSpecial,gametypes});
-    //return
+   
     updateoddstotalbets(gametypeId,gamemodel,percentageOne,scaledValuesOne,percentageTwo,scaledValueTwo,gametypes,isSpecial);
-    //getLotteryGames(gametypeId, gamemodel)
   });
 
   async function updateoddstotalbets(gametypeId,gamemodel,percentageOne,scaledValuesOne, percentageTwo, scaledValueTwo,gametypes,isSpecial) {
     try {
       const response = await fetch( `../game/updateoddstotalbets/${gametypeId}/${gamemodel}/${percentageOne}/${scaledValuesOne}/${percentageTwo}/${scaledValueTwo}/${gametypes}/${isSpecial}`);
       const data = await response.json();
-      // console.log(data);
-      // return
-      if (data) {
+      if (data.success) {
         // showToast("Success", "updated succesfully", "success");
         showToast(SUCCESS_TEXT, UPDATED_SUCCESSFULLY, "success");
-
-        // getLotteryGames(gametypeId, gamemodel);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -473,22 +467,28 @@ $(document).on("change", "#allGameNamesLottery", function () {
 
   // reset all odds
   $(document).on("click", ".resetodds", function () {
+     $("#maskrfeferal").LoadingOverlay("show", {
+         background: "rgb(90,106,133,0.1)", size: 3,
+       });
     $.post(`../game/resetallodds`, function (response) {
-   //   const data = JSON.parse(response);
-      console.log(response);
-    //   if (data.success) {
-    //     showToast(SUCCESS_TEXT, UPDATED_SUCCESSFULLY, "success");
-    //     // Optionally, you can refresh the lottery games after resetting odds
-    //     // let lotteryId = $("#allGameNamesLottery").val();
-    //     // let models = $("#allmodels").val();
-    //     // gametypes= $(".gamebonus").val().split("|")[0];
-    //     // getLotteryGames(lotteryId, models,gametypes);
-    //   } else {
-    //     showToast("Error", "Failed to reset odds", "error");
-    //   }
-    // } ).fail(function (xhr, status, error) {
-    //   console.error("Error resetting odds:", error);
-    //   showToast("Error", "Failed to reset odds", "error");
+       
+     const data = JSON.parse(response);
+      console.log(data);
+      if (data.status =="success") {
+        showToast(SUCCESS_TEXT, UPDATED_SUCCESSFULLY, "success");
+           $("#maskrfeferal").LoadingOverlay("hide");
+        // Optionally, you can refresh the lottery games after resetting odds
+        // let lotteryId = $("#allGameNamesLottery").val();
+        // let models = $("#allmodels").val();
+        // gametypes= $(".gamebonus").val().split("|")[0];
+        // getLotteryGames(lotteryId, models,gametypes);
+      } else {
+        showToast("Error", "Failed to reset odds", "error");
+           $("#maskrfeferal").LoadingOverlay("hide");
+      }
+    } ).fail(function (xhr, status, error) {
+      console.error("Error resetting odds:", error);
+      showToast("Error", "Failed to reset odds", "error");
      });
   });
 

@@ -301,17 +301,10 @@
 
     <div class="px-4 py-3 border-bottom pagerlist1">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 110%;">
-                <select name="betsate" class="form-control form-select queryholderlistt depositestate" data-bs-placeholder="Select Type" id="lottery" style="width: 70%;">
-                    <option value="0">--<?= $translator['Select Lottery']; ?>--</option>
-                    <option value="1" id="lt_1" name="lottery_type">5D</option>
-                    <option value="2" id="lt_2" name="lottery_type">PK10</option>
-                    <option value="3" id="lt_3" name="lottery_type">FAST3</option>
-                    <option value="5" id="lt_5" name="lottery_type">3D</option>
-                    <option value="6" id="lt_6" name="lottery_type">11x5</option>
-                    <option value="8" id="lt_8" name="lottery_type">Mark6</option>
-                    <option value="9" id="lt_9" name="lottery_type">PC28</option>
-                    <option value="10" id="lt_10" name="lottery_type">Happy</option>
+            <div class="btn-group mb-2" role="group" aria-label="Basic example " style="padding: 5px; width: 110%;">
+                <select name="betsate" class="form-control form-select queryholderlistt lotteryTypes depositestate" data-bs-placeholder="Select Type" id="lottery" style="width: 70%;">
+                <option value="">--<?= $translator['Select Lottery']; ?>--</option>
+                   
                 </select>
 
                 <select name="lotteryname" class="form-control form-select queryholderlistt selectpartner" style="width: 70%;"> </select>
@@ -325,7 +318,7 @@
                 <button type="button" class="btn bg-white-subtle addnewlottery" value="" aria-label="Search" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="add new lottery">
                     <i class="bx bx-plus loaderlist" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" class="btn bg-white-subtle player lb-refreshlist refreshgame" value="" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+                <button type="button" class="btn bg-white-subtle player lb-refreshlist" value="" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle fetch-lotter-basic-records" value="" aria-label="Search" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Search">

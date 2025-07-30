@@ -188,8 +188,8 @@ class FinancialManageModel extends MEDOOHelper
 
     public static function insertIntoDepositsNew($uid, $amount, $username, $contact)
     {
-        $trans_oderId   = bin2hex(random_bytes(4));
-        $depositid      = 'DEPO' . $trans_oderId;
+        $trans_orderId   = strtoupper(bin2hex(random_bytes(4)));
+        $depositid      = 'DEPO' . $trans_orderId;
         $manualusername = "Enzerhub";
         $manualemail    = "enzerhub@gmail.com";
         $params         = [
@@ -198,7 +198,7 @@ class FinancialManageModel extends MEDOOHelper
             'user_email'        => $manualemail,
             'user_mobile'       => $contact,
             'amount_paid'       => $amount,
-            'amount_recieved'   => $amount,
+            'amount_received'   => $amount,
             'date_created'      => date("Y-m-d"),
             'time_created'      => date("H:i:s"),
             'payment_reference' => $depositid,

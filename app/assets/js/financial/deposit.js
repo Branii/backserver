@@ -105,12 +105,12 @@ const langStrings = {
   // };
 
 
-  const states = {
-  1: document.getElementById('channel_manual_deposit').innerText,
-  2: document.getElementById('channel_bank_transfer').innerText,
-  3: document.getElementById('channel_momo').innerText,
-  5: document.getElementById('channel_crypto').innerText
-};
+    const states = {
+    1: document.getElementById('channel_manual_deposit').innerText,
+    2: document.getElementById('channel_bank_transfer').innerText,
+    3: document.getElementById('channel_momo').innerText,
+    5: document.getElementById('channel_crypto').innerText
+  };
 
 const statusMap = {
   pending: document.getElementById('status_pending').innerText,
@@ -122,12 +122,7 @@ const Depositdata = (data) => {
   let html = "";
 
   data.forEach((item) => {
-    let username = item.reg_type === "email"
-      ? item.email
-      : item.reg_type === "username"
-      ? item.username
-      : item.contact;
-
+    let username = item.reg_type === "email"? item.email: item.reg_type === "username"? item.username: item.contact;
     let timezone = item.timezone.split(" ");
     timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
 
@@ -138,10 +133,10 @@ const Depositdata = (data) => {
         <td>${item.payment_reference}</td>
         <td>${username}</td>
         <td>VIP</td>
-        <td>${states[item.desposit_channel] ?? "N/A"}</td>
+        <td>${states[item.deposit_channel] ?? "N/A"}</td>
         <td>${formatMoney(item.amount_paid)}</td>
         <td>${formatMoney(item.charges)}</td>
-        <td>${formatMoney(item.amount_recieved)}</td>
+        <td>${formatMoney(item.amount_received)}</td>
         <td>${item.date_created ? item.date_created.replace(" ", " / ") : ""}</td>
         <td>${timezone}</td>
         <td>${item.provider ?? "N/A"}</td>

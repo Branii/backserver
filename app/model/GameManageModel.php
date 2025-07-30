@@ -105,7 +105,11 @@ class GameManageModel extends MEDOOHelper
             }
             return ['success' => true, 'message' => 'Update successful'];
         } else {
-            self::UpdateGameNameTable($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent, $jsonPath);
+            $data = self::UpdateGameNameTable($gameId, $gamemodel, $newodds, $oddpercent, $newtotalbet, $totalbetpercent, $jsonPath);
+             if ($data > 1) {
+                self::getLotteryGamesById($gameId, $gamemodel, $gametype);
+            }
+         return ['success' => true, 'message' => 'Update successful'];
         }
 
     }
@@ -155,10 +159,6 @@ class GameManageModel extends MEDOOHelper
                 'gn_id'                 => $gameId,
             ]);
 
-            if ($data > 1) {
-                self::getLotteryGamesById($gameId, $gamemodel, $gametype);
-            }
-            return ['success' => true, 'message' => 'Update successful'];
         } catch (Exception $e) {
             return ['success' => false, 'message' => 'Database update failed', 'error' => $e->getMessage()];
         }
@@ -416,7 +416,7 @@ class GameManageModel extends MEDOOHelper
         if ($gameNameReset && $oddGroupReset) {
             return ['status' => "success"];
         } else {
-            return ['status' => "faliled"];
+            return ['status' => "failed"];
         }
     }
 

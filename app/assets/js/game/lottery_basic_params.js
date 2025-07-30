@@ -183,8 +183,14 @@ $(() => {
     });
     // Handle dropdown item selection
     $(document).on("click", ".lb-refreshlist", function () {
-        $("#lottery").val(0);
-        fetchLotteryBasicParams(1, this);
+        //  $(".queryholderlistt").val("");
+        $("#masklotterygames").LoadingOverlay("show", {
+        background: "rgb(90,106,133,0.1)",
+        size: 3
+      });
+
+        const lottery_id = $("#lottery").val(1);
+        fetchLotteryBasicParams(1, lottery_id);
     });
 
     $(document).on("click", ".fetch-lotter-basic-records", function () {
@@ -310,6 +316,7 @@ $(() => {
     const fetchLotteryBasicParams = (page, element) => {
         const lottery_id = $("#lottery").val();
         // console.log(lottery_id);
+           $("#masklotterygames").LoadingOverlay("hide");
         $.ajax({
             url: `../game/fetch_lottery_basic_params/${partnerID}/${lottery_id}/${page}`,
             type: "POST",
@@ -558,9 +565,22 @@ $(() => {
         const lotteryType = $("#lottery_types").val().split("|")[0];
         const logoFileName = $(".gameimage").val();
 
-        if (!name ||!alias ||!gamegroups || !lotteryType ||!numberOfBalls ||!min_ball || !max_ball || !secondsperissue ||
-            isNaN(secondsperissue) || parseInt(secondsperissue) <= 0 || !starttime ||!stoptime ||!lotterymodel ||!logoFileName) 
-         {
+        if (
+            !name ||
+            !alias ||
+            !gamegroups ||
+            !lotteryType ||
+            !numberOfBalls ||
+            !min_ball ||
+            !max_ball ||
+            !secondsperissue ||
+            isNaN(secondsperissue) ||
+            parseInt(secondsperissue) <= 0 ||
+            !starttime ||
+            !stoptime ||
+            !lotterymodel ||
+            !logoFileName
+        ) {
             showToast("Heads up!!", "All fields are required and seconds per issue must be a positive number", "info");
 
             return;
@@ -569,7 +589,10 @@ $(() => {
         $("#lotteryForm")[0].reset();
         $("#addlottery-modals").modal("hide");
 
-        $.post(`../game/addlottery/${encodeURIComponent(name)}/${encodeURIComponent(alias)}/${encodeURIComponent(gamegroups)}/${numberOfBalls}/${min_ball}/${max_ball}/${secondsperissue}/${starttime}/${stoptime}/${lotterymodel}/${encodeURIComponent(lotteryType)}/${encodeURIComponent(logoFileName)}`,
+        $.post(
+            `../game/addlottery/${encodeURIComponent(name)}/${encodeURIComponent(alias)}/${encodeURIComponent(
+                gamegroups
+            )}/${numberOfBalls}/${min_ball}/${max_ball}/${secondsperissue}/${starttime}/${stoptime}/${lotterymodel}/${encodeURIComponent(lotteryType)}/${encodeURIComponent(logoFileName)}`,
             function (response) {
                 if (response.status === "success") {
                     showToast("Success", response.message || "Lottery Game Added and odds updated successfully", "success");
@@ -588,21 +611,15 @@ $(() => {
         );
     });
 
-    $(document).on("click", ".refreshgame", function () {
-        // Show loading overlay
-        $("#masklotterygames").LoadingOverlay("show", {
-            background: "rgba(90,106,133,0.1)",
-            size: 3,
-        });
-        $("#lottery").val("0");
-        $("#partnerSelect").val("0");
-
-        $(".userIdtrans").val("");
-        setTimeout(() => {
-            $("#masklotterygames").LoadingOverlay("hide");
-            fetchLotteryBasicParams(1);
-        }, 3000);
-    });
+    //  $(document).on("click", ".refreshgame", function () {
+    //      // Show loading overlay
+    //      $(".queryholderlistt").val("");
+    //      $("#masklotterygames").LoadingOverlay("show", {
+    //          background: "rgba(90,106,133,0.1)",
+    //          size: 3,
+    //      });
+    //         fetchLotteryBasicParams(1);
+    //  });
 
     async function getAllGamesLottery() {
         try {

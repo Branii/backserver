@@ -70,7 +70,7 @@ $(function () {
         try {
             const response = await fetch(`../game/lotteryexception/${currentPage}/${pageLimit}`);
             const data = await response.json();
-            console.log("Fetched data:", data);
+         //   console.log("Fetched data:", data);
             $("#maskexcept").LoadingOverlay("hide");
             render(data.lotexception);
             renderPaginationex(data.totalPages, currentPage, fetchLotteryException);
