@@ -573,30 +573,30 @@ $(() => {
 
   tableScrolluserListsquota();
 
-  const lotterySettings = {
-    1: { name: "5D", num_of_balls: 5, min_ball: 0, max_ball: 9 },
-    2: { name: "PK10", num_of_balls: 10, min_ball: 1, max_ball: 10 },
-    3: { name: "FAST3", num_of_balls: 3, min_ball: 1, max_ball: 6 },
-    5: { name: "3D", num_of_balls: 3, min_ball: 0, max_ball: 9 },
-    6: { name: "11x5", num_of_balls: 5, min_ball: 1, max_ball: 11 },
-    8: { name: "Mark6", num_of_balls: 7, min_ball: 1, max_ball: 49 },
-    10: { name: "Happy8", num_of_balls: 8, min_ball: 1, max_ball: 80 },
-    11: { name: "PK6", num_of_balls: 6, min_ball: 1, max_ball: 6 }
-  };
+  // const lotterySettings = {
+  //   1: { name: "5D", num_of_balls: 5, min_ball: 0, max_ball: 9 },
+  //   2: { name: "PK10", num_of_balls: 10, min_ball: 1, max_ball: 10 },
+  //   3: { name: "FAST3", num_of_balls: 3, min_ball: 1, max_ball: 6 },
+  //   5: { name: "3D", num_of_balls: 3, min_ball: 0, max_ball: 9 },
+  //   6: { name: "11x5", num_of_balls: 5, min_ball: 1, max_ball: 11 },
+  //   8: { name: "Mark6", num_of_balls: 7, min_ball: 1, max_ball: 49 },
+  //   10: { name: "Happy8", num_of_balls: 8, min_ball: 1, max_ball: 80 },
+  //   11: { name: "PK6", num_of_balls: 6, min_ball: 1, max_ball: 6 }
+  // };
 
-  $(document).on("change", ".game_groups", function() {
-    const selectedID = $(this).val().split("|")[1]; // e.g., "2"
-    // console.log(selectedID);
-    const settings = lotterySettings[selectedID];
+  // $(document).on("change", ".game_groups", function() {
+  //   const selectedID = $(this).val().split("|")[1]; // e.g., "2"
+  //   // console.log(selectedID);
+  //   const settings = lotterySettings[selectedID];
 
-    if (settings) {
-      $("#numm_of_balls").val(settings.num_of_balls);
-      $("#minn_ball").val(settings.min_ball);
-      $("#maxx_ball").val(settings.max_ball);
-    } else {
-      console.warn(" No settings found for this lottery ID.");
-    }
-  });
+  //   if (settings) {
+  //     $("#numm_of_balls").val(settings.num_of_balls);
+  //     $("#minn_ball").val(settings.min_ball);
+  //     $("#maxx_ball").val(settings.max_ball);
+  //   } else {
+  //     console.warn(" No settings found for this lottery ID.");
+  //   }
+  // });
 
   $(document).on("click", ".addLottery", function(evt) {
     evt.preventDefault();
@@ -672,14 +672,9 @@ $(() => {
           $("#logoPreview").hide(); // Hide the preview if shown
           $("#addlottery-modals").modal("hide");
         } else if (
-          response.status === "error" &&
-          response.message.includes("already exists")
+          response.status === "error" && response.message.includes("already exists")
         ) {
-          showToast(
-            "Already Exists",
-            response.message || "Lottery already added",
-            "warning"
-          );
+          showToast("Already Exists", response.message || "Lottery already added", "warning" );
         } else if (response.status === "error") {
           showToast("Error", response.message || "Operation failed", "error");
         }
@@ -724,6 +719,7 @@ $(() => {
   }
 
   getAllGamesLottery();
+  
 
   async function getTimegames() {
     try {
