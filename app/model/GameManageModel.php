@@ -886,6 +886,14 @@ class GameManageModel extends MEDOOHelper
         }
     }
 
+     public static function checkIfLotteryExist(string $name)
+    {
+        $pdo  = (new Database())->openLink();
+        $stmt = $pdo->prepare("SELECT * FROM game_type WHERE name = ?");
+        $stmt->execute([$name]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public static function getTimegames()
     {
         return $data = parent::query("SELECT tid,seconds FROM game_time_set ");
