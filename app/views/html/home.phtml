@@ -629,18 +629,17 @@ $fullname = (new Controller)->getUsername($adminEmail);
             <?php include "tabs/businessflow/account_transaction.php" ?>
           </div>
 
-          <div class="chrome__tab game_getting_statistics">
-            <?php include "tabs/businessflow/game_getting_statistics.php" ?>
-          </div>
-
-          <div class="chrome__tab Lottery">
+           <div class="chrome__tab Lottery">
             <?php include "tabs/businessflow/lottery_betting_record.php" ?>
           </div>
 
-          <div class="chrome__tab Track">
+           <div class="chrome__tab Track">
             <?php include "tabs/businessflow/trackbet.php" ?>
           </div>
-
+              
+           <div class="chrome__tab game_getting_statistics">
+            <?php include "tabs/businessflow/game_getting_statistics.php" ?>
+          </div>
 
           <!--financial management-->
           <div class="chrome__tab Deposit">
@@ -654,6 +653,11 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab Withdrawal">
             <?php include "tabs/financialmanage/withdrawal.php" ?>
           </div>
+
+           <div class="chrome__tab withdrawmanage">
+            <?php include "tabs/financialmanage/withdrawalmanage.php" ?>
+           </div>
+
           <!--User management-->
           <div class="chrome__tab Userlogs">
             <?php include "tabs/accountmanage/userlogs.php" ?>
@@ -671,10 +675,12 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab Invitation">
             <?php include "tabs/promotionmanage/invitation_referallink.php" ?>
           </div>
+
           <!--Agent management-->
           <div class="chrome__tab quota">
             <?php include "tabs/agentmanage/quota.php" ?>
           </div>
+
           <!--User Bank management-->
           <div class="chrome__tab  Bank">
             <?php include "tabs/userbank/bankcard.php" ?>
@@ -688,30 +694,42 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab Win">
             <?php include "tabs/report_management/win_loss_report.php" ?>
           </div>
+
           <div class="chrome__tab NGPWin">
             <?php include "tabs/report_management/ngp_win_loss_report.php" ?>
           </div>
+
           <!--system managenet-->
           <div class="chrome__tab administrator_list">
             <?php include "tabs/system_management/administrator_list.php" ?>
           </div>
+
           <div class="chrome__tab backup_recovery">
             <?php include "tabs/system_management/backup_recovery.php" ?>
           </div>
+
           <!--game management-->
           <div class="chrome__tab  lottery_parameters">
             <?php include "tabs/game_management/lottery_parameters.php" ?>
           </div>
+
           <div class="chrome__tab  lottery_draw">
             <?php include "tabs/game_management/lottery_draws.php" ?>
           </div>
+
           <div class="chrome__tab  lottery_basic_params">
             <?php include "tabs/game_management/lottery_basic_param.php" ?>
           </div>
+
+            <div class="chrome__tab  lottery_exception">
+            <?php include "tabs/game_management/lottery_exception.php" ?>
+           </div>
+
           <!--announcement-->
           <div class="chrome__tab announcement">
             <?php include "tabs/announcement/announcement.php" ?>
           </div>
+
           <div class="chrome__tab unotification">
             <?php include "tabs/announcement/usernotification.php" ?>
           </div>
@@ -719,7 +737,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab partners">
             <?php include "tabs/partners/partners.php" ?>
           </div>
-
+          <!--platform-->
            <div class="chrome__tab smsconfig">
             <?php include "tabs/plartform_manage/smscofigure.php" ?>
           </div>
@@ -732,7 +750,6 @@ $fullname = (new Controller)->getUsername($adminEmail);
           <div class="chrome__tab payment_platform">
             <?php include "tabs/payment_platform/payment_platforms.php" ?>
           </div>
-
     
         </div>
       </div>
@@ -744,6 +761,7 @@ $fullname = (new Controller)->getUsername($adminEmail);
     </div>
     <div class="dark-transparent sidebartoggler"></div>
     <script src="<?php echo BASE_URL; ?>assets/js/vendor.min.js"></script>
+ 
     <!-- Import Js Files -->
     <script src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/draggabilly.js"></script>
@@ -763,40 +781,46 @@ $fullname = (new Controller)->getUsername($adminEmail);
     <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.init.js"></script>
     <!--custom js-->
     <script src="<?php echo BASE_URL; ?>assets/js/chairman.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/account_transaction.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/lotterybet.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/trackbet.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/lottery_draws.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/admin_list.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/userlist.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/backup.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/userlogs.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/referrallink.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/quota.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/finance_change.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/deposit.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/withdrawal.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/bankcard.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/ggp_win_loss.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/ngp_win_loss.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/lottery_basic_params.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/lottery_parameters.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/lottery_draws.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/businessflow/account_transaction.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/businessflow/lotterybet.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/businessflow/trackbet.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/game/lottery_draws.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/admin/admin_list.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/user/userlist.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/admin/backup.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/user/userlogs.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/promotion/referrallink.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/agent/quota.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/financial/finance_change.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/financial/deposit.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/financial/withdrawal.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/financial/withdrawalmanage.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/userbank/bankcard.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/report/ggp_win_loss.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/report/ngp_win_loss.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/game/lottery_basic_params.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/game/lottery_parameters.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/game/lottery_draws.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/lang.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/m_lottery_bonus_parameters.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/annoucement.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/partners.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/payment_platforms.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/usernotification.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/useroverview.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/game/m_lottery_bonus_parameters.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/announcement/annoucement.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/partner/partners.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/payment/payment_platforms.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/announcement/usernotification.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/user/useroverview.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/googletwofa.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/userpaymentmethod.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/sms_config.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/email_config.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/userbank/userpaymentmethod.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/platform/sms_config.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/platform/email_config.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/game/lottery_exception.js"></script>
 
     <script src="<?php echo BASE_URL; ?>assets/toast/toast-plugin.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.init.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/libs/daterangepicker/daterangepicker.js"></script>
+     <script src="<?php echo BASE_URL; ?>assets/js/typeahead.jquery.min.js"></script>
+      <script src="<?php echo BASE_URL; ?>assets/js/bloodhound.min.js"></script>
+     <script src="<?php echo BASE_URL; ?>assets/js/typeahead.init.js"></script>
+   
     <!-- Bootstrap 5 CSS (in the <head> of your HTML) -->
     <!-- Your HTML content goes here -->
     <!-- solar icons -->

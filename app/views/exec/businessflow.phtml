@@ -27,7 +27,8 @@ $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 
 if ($flag == "searchusername") {
     $username = isset($this->viewData['username']) ? $this->viewData['username'] : '';
-    $result = (new BusinessFlowModel())->Searchusername($username);
+    $username  = urldecode($username);
+    $result =  BusinessFlowModel::Searchusername($username);
 
     $results = [];
     foreach ($result as $value) {

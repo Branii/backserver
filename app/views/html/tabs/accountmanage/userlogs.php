@@ -267,7 +267,9 @@
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
 
-
+<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
 <!-- toast messages ends here -->
 
 <div class="card w-100 position-relative overflow-hidden">
@@ -332,7 +334,7 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Login Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Timezone/Hrs</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Timezone/Hrs']; ?></h6>
                         </th>
                         <!-- <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Login Count']; ?></h6>
@@ -394,10 +396,16 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowslog" style="font-size: 12px;">
-                <option value="50">50</option>
+                <!-- <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
-                <option value="500">500</option>
+                <option value="500">500</option> -->
+              <option value="20"><?= $translator['20'] ?? '20' ?></option>
+                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+    <option value="100"><?= $translator['100'] ?? '100' ?></option>
+    <option value="200"><?= $translator['200'] ?? '200' ?></option>
+    <option value="500"><?= $translator['500'] ?? '500' ?></option>
+
             </select>
             <span class="toplist-right" id="paginationlogs" aria-label="Page navigation example">
             <!--Dynamic pagination-->

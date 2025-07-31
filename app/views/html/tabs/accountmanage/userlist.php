@@ -504,33 +504,31 @@
 <span id="trans-no-pages" data-translation="<?= $translator['NoPages']; ?>" style="display: none;"></span>
 <span id="trans-main-page-notice" data-translation="<?= $translator['MainPageNotice']; ?>" style="display: none;"></span>
 
-<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display: none;"></span>
-<span id="trans-agent-added" data-translation="<?= $translator['AgentAdded']; ?>" style="display: none;"></span>
-<span id="trans-quota-updated" data-translation="<?= $translator['QuotaUpdated']; ?>" style="display: none;"></span>
-<span id="trans-blocked" data-translation="<?= $translator['Blocked']; ?>" style="display: none;"></span>
-<span id="trans-already-blocked" data-translation="<?= $translator['AlreadyBlocked']; ?>" style="display: none;"></span>
-<span id="trans-delete" data-translation="<?= $translator['Delete']; ?>" style="display: none;"></span>
-<span id="trans-invalid-operation" data-translation="<?= $translator['InvalidOperation']; ?>" style="display: none;"></span>
-<span id="trans-error" data-translation="<?= $translator['Error']; ?>" style="display: none;"></span>
-<span id="trans-generic-error" data-translation="<?= $translator['GenericError']; ?>" style="display: none;"></span>
-<span id="trans-request-error" data-translation="<?= $translator['RequestError']; ?>" style="display: none;"></span>
-<span id="trans-enabled" data-translation="<?= $translator['Enabled']; ?>" style="display: none;"></span>
-<span id="trans-lottery-enabled" data-translation="<?= $translator['LotteryEnabled']; ?>" style="display: none;"></span>
-<span id="trans-disabled" data-translation="<?= $translator['Disabled']; ?>" style="display: none;"></span>
-<span id="trans-lottery-disabled" data-translation="<?= $translator['LotteryDisabled']; ?>" style="display: none;"></span>
-<span id="trans-error-processing" data-translation="<?= $translator['ErrorProcessing']; ?>" style="display: none;"></span>
-<span id="trans-successful" data-translation="<?= $translator['Successful']; ?>" style="display: none;"></span>
-<span id="trans-records-updated" data-translation="<?= $translator['RecordsUpdated']; ?>" style="display: none;"></span>
-<span id="trans-not-done" data-translation="<?= $translator['NotDone']; ?>" style="display: none;"></span>
-<span id="trans-ip-updated" data-translation="<?= $translator['IPUpdated']; ?>" style="display: none;"></span>
-<span id="trans-no-agent" data-translation="<?= $translator['NoAgent']; ?>" style="display: none;"></span>
-<span id="trans-no-agent-message" data-translation="<?= $translator['NoAgentMessage']; ?>" style="display: none;"></span>
-
+<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display:  none;"></span>
+<span id="trans-agent-added" data-translation="<?= $translator['AgentAdded']; ?>" style="display:  none;"></span>
+<span id="trans-quota-updated" data-translation="<?= $translator['QuotaUpdated']; ?>" style="display:  none;"></span>
+<span id="trans-blocked" data-translation="<?= $translator['Blocked']; ?>" style="display:  none;"></span>
+<span id="trans-already-blocked" data-translation="<?= $translator['AlreadyBlocked']; ?>" style="display:  none;"></span>
+<span id="trans-delete" data-translation="<?= $translator['Delete']; ?>" style="display:  none;"></span>
+<span id="trans-invalid-operation" data-translation="<?= $translator['InvalidOperation']; ?>" style="display:  none;"></span>
+<span id="trans-error" data-translation="<?= $translator['Error']; ?>" style="display:  none;"></span>
+<span id="trans-generic-error" data-translation="<?= $translator['GenericError']; ?>" style="display:  none;"></span>
+<span id="trans-request-error" data-translation="<?= $translator['RequestError']; ?>" style="display:  none;"></span>
+<span id="trans-enabled" data-translation="<?= $translator['Enabled']; ?>" style="display:  none;"></span>
+<span id="trans-lottery-enabled" data-translation="<?= $translator['LotteryEnabled']; ?>" style="display:  none;"></span>
+<span id="trans-disabled" data-translation="<?= $translator['Disabled']; ?>" style="display:  none;"></span>
+<span id="trans-lottery-disabled" data-translation="<?= $translator['LotteryDisabled']; ?>" style="display:  none;"></span>
+<span id="trans-error-processing" data-translation="<?= $translator['ErrorProcessing']; ?>" style="display:  none;"></span>
+<span id="trans-successful" data-translation="<?= $translator['Successful']; ?>" style="display:  none;"></span>
+<span id="trans-records-updated" data-translation="<?= $translator['RecordsUpdated']; ?>" style="display:  none;"></span>
+<span id="trans-not-done" data-translation="<?= $translator['NotDone']; ?>" style="display:  none;"></span>
+<span id="trans-ip-updated" data-translation="<?= $translator['IPUpdated']; ?>" style="display:  none;"></span>
+<span id="trans-no-agent" data-translation="<?= $translator['NoAgent']; ?>" style="display:  none;"></span>
+<span id="trans-no-agent-message" data-translation="<?= $translator['NoAgentMessage']; ?>" style="display:  none;"></span>
 <span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
 
 <!-- toast messages ends here -->
-
 <!-- //userlist info -->
 
 <span id="trans-heads-up" data-translation="<?= $translator['HeadsUp']; ?>" style="display: none;"></span>
@@ -546,7 +544,6 @@
 
 <!-- //userlist info ends here -->
 <!-- button icons -->
-
 <span id="view-text" data-translation="<?= $translator['View'] ?? 'View'; ?>" style="display: none;"></span>
 <span id="quota-text" data-translation="<?= $translator['Quota'] ?? 'Quota'; ?>" style="display: none;"></span>
 <span id="subs-text" data-translation="<?= $translator['Subs'] ?? 'Subs'; ?>" style="display: none;"></span>
@@ -555,8 +552,27 @@
 <span id="whitelist-text" data-translation="<?= $translator['White List'] ?? 'White List'; ?>" style="display: none;"></span>
 <span id="delete-user-text" data-translation="<?= $translator['Delete User'] ?? 'Delete User'; ?>" style="display: none;"></span>
 <span id="deactivate-user-text" data-translation="<?= $translator['Deactivate User'] ?? 'Deactivate User'; ?>" style="display: none;"></span>
-
+<span id="reset-user-text" data-translation="<?= $translator['Reset Login Attempt'] ?? 'Reset Login Attempt'; ?>" style="display: none;"></span>
+<!-- User Status Translations for JS -->
+<span id="status_enable" style="display: none;"><?= $translator['status_enable'] ?></span>
+<span id="status_suspend" style="display: none;"><?= $translator['status_suspend'] ?></span>
+<span id="status_forbid_login" style="display: none;"><?= $translator['status_forbid_login'] ?></span>
+<span id="status_blocked" style="display: none;"><?= $translator['status_blocked'] ?></span>
+<span id="status_forbid_deposit" style="display: none;"><?= $translator['status_forbid_deposit'] ?></span>
+<span id="status_forbid_withdraw" style="display: none;"><?= $translator['status_forbid_withdraw'] ?></span>
+<!-- Hidden spans to hold translated text -->
+<span id="toast-title-error" class="d-none"><?= $translator['Error']; ?></span>
+<span id="toast-msg-unexpected" class="d-none"><?= $translator['UnexpectedError']; ?></span>
 <!-- button icons -->
+
+<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+
+<span id="deactivate-game-text" class="hidden"><?= $translator['game_name'] ?? 'Game Name' ?></span>
+<span id="deactivate-game-type" class="hidden"><?= $translator['game_type'] ?? 'Game Type' ?></span>
+<span id="deactivate-game-group" class="hidden"><?= $translator['game_group'] ?? 'Game Group' ?></span>
+
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
@@ -704,10 +720,17 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowsbet" style="font-size: 12px;">
-                <option value="50">50</option>
+                <!-- <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
-                <option value="500">500</option>
+                <option value="500">500</option> -->
+ 
+ 
+                <option value="20"><?= $translator['20'] ?? '20' ?></option>
+                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+    <option value="100"><?= $translator['100'] ?? '100' ?></option>
+    <option value="200"><?= $translator['200'] ?? '200' ?></option>
+    <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
             <span class="toplist-right" id="paginationuserlist" class="right-element">
                 <!-- paginationation -->
@@ -1029,7 +1052,7 @@
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="text-infos"><?= $translator['Lottery Name']; ?></h5>
-                        <i class="bx bx-message-square-x listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
+                        <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
                 </div>
 
@@ -1089,6 +1112,46 @@
                             <button type="button" class="btn hstack gap-6 usrl-delete-userbtn" style="border: solid 1px #ccc; color: #e60e38 !important;">
                                 <i class="bx bx-trash loaderquota"></i>
                                 <?= $translator['Delete User']; ?>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="usl-reset-user-dialog" class="modal fade" tabindex="-1" aria-modal="true" role="dialog" style="display: none; top: 363px; left: 191px;">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content" style="width: 75%;">
+            <div class="modal-body">
+                <!-- Modal Header -->
+                <div class="text-center mt-2 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="text-infos" style="color: #e60e38;"><?= $translator['Reset Login Attempt']; ?></h5>
+                        <i class="bx bx-message-square-x usrl-listclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form>
+                    <input type="hidden" id="idHolder" />
+                    <div class="modal-body scrollable-container">
+                        <div style="overflow: hidden; text-align: center; font-size: large; font-weight: bold;">
+                            <p>
+                                <i class="bx bx-info-circle loaderquota me-2"></i>
+                                <?= $translator['Are you sure you want to Reset Login Attempt']; ?>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-md-flex align-items-center">
+                        <div class="mt-3 mt-md-0 ms-auto">
+                           <button type="button" class="btn hstack gap-6 usrl-block-userbtn" style="border: solid 1px #ccc; color: #e60e38 !important;">
+                                <i class="bx bx-log-in loaderquota"></i>
+                  
+                         <?= $translator['Reset user Account']; ?>
+                          
                             </button>
                         </div>
                     </div>
@@ -1305,10 +1368,16 @@
                             </span>
                             <span class="top-right-btn" aria-label="Page navigation example">
                                 <select class="left-element form-control numrowschange" style="font-size: 12px;">
-                                    <option value="50">50</option>
+                                    <!-- <option value="50">50</option>
                                     <option value="100">100</option>
                                     <option value="200">200</option>
-                                    <option value="500">500</option>
+                                    <option value="500">500</option> -->
+                            
+  
+    <option value="50"><?= $translator['Fifty'] ?></option>
+    <option value="100"><?= $translator['One Hundred'] ?></option>
+    <option value="200"><?= $translator['Two Hundred'] ?></option>
+    <option value="500"><?= $translator['Five Hundred'] ?></option>
                                 </select>
                                 <span class="toplist-right" id="paginationacc" class="right-element">
                                     <!-- paginationation -->

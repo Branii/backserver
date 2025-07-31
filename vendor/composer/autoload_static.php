@@ -322,7 +322,17 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'Zenoph\\Notify\\Utils\\PhoneUtil' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Utils/PhoneUtil.php',
         'Zenoph\\Notify\\Utils\\RequestUtil' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Utils/RequestUtil.php',
         'adminController' => __DIR__ . '/../..' . '/app/controller/adminController.php',
+        'agentController' => __DIR__ . '/../..' . '/app/controller/agentController.php',
+        'announceController' => __DIR__ . '/../..' . '/app/controller/announceController.php',
         'businessflowController' => __DIR__ . '/../..' . '/app/controller/businessflowController.php',
+        'financialController' => __DIR__ . '/../..' . '/app/controller/financialController.php',
+        'gameController' => __DIR__ . '/../..' . '/app/controller/gameController.php',
+        'partnerController' => __DIR__ . '/../..' . '/app/controller/partnerController.php',
+        'paymentController' => __DIR__ . '/../..' . '/app/controller/paymentController.php',
+        'promotionController' => __DIR__ . '/../..' . '/app/controller/promotionController.php',
+        'reportController' => __DIR__ . '/../..' . '/app/controller/reportController.php',
+        'userController' => __DIR__ . '/../..' . '/app/controller/userController.php',
+        'userbankController' => __DIR__ . '/../..' . '/app/controller/userbankController.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

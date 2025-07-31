@@ -108,15 +108,16 @@
         display: none;
     }
 
-    .optionlink {
+    .optionlists {
         text-align: left;
         border-bottom: solid 1px #eee;
         padding: 5px;
-    }
+     }
 
-    .optionlink:hover {
+    .optionlists:hover {
         background-color: #eee;
     }
+
 
     #userDropdownlist {
         max-height: 300px;
@@ -178,7 +179,6 @@
     }
 
     .widrl-queryholdertrans {   
-
         width: 11%;
         margin-right: 5px;
         background-color: #fff;
@@ -199,7 +199,65 @@
     color: #909aa9;
     margin: 0px 1rem;
     }
+
+    .withdrawDropdowns {
+      width: 11%;
+    position: absolute;
+    background-color: #fff;
+    color: #aaa;
+    max-height: 300px;
+    overflow-y: scroll;
+    border-radius: 5px;
+    padding: 10px;
+    top: 90%;
+    z-index: 9;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    display: none;
+}
+
+
+.withdrawDropdowns::-webkit-scrollbar {
+    width: 3px;
+    /* Width of the scrollbar */
+}
+
+.withdrawDropdowns::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    /* Background of the scrollbar track */
+    border-radius: 5px;
+    /* Rounded corners */
+}
+
+.withdrawDropdowns::-webkit-scrollbar-thumb {
+    background: #ccc;
+    /* Color of the scrollbar handle */
+    border-radius: 5px;
+    /* Rounded corners */
+}
+
+.withdrawDropdowns::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+    /* Darker handle color on hover */
+}
+
+
 </style>
+
+
+
+<span id="tr_page" style="display:none"><?= $translator['Page'] ?></span>
+<span id="tr_of" style="display:none"><?= $translator['of'] ?></span>
+<span id="tr_pages" style="display:none"><?= $translator['pages'] ?></span>
+
+<span id="status_pending" style="display:none;"><?= $translator['status_pending'] ?></span>
+<span id="status_success" style="display:none;"><?= $translator['status_success'] ?></span>
+<span id="status_failed" style="display:none;"><?= $translator['status_failed'] ?></span>
+
+<span id="channel_momo" style="display:none;"><?= $translator['channel_momo'] ?></span>
+<span id="channel_crypto" style="display:none;"><?= $translator['channel_crypto'] ?></span>
+<span id="channel_bank" style="display:none;"><?= $translator['channel_bank'] ?></span>
+<span id="channel_manual" style="display:none;"><?= $translator['channel_manual'] ?></span>
+
 
 <div class="card w-100 position-relative overflow-hidden">
 
@@ -209,18 +267,28 @@
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
-            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 165%;">
-                <input type="text" id="mytrans" class="form-control widrl-queryholdertrans widrl-username mytrans" placeholder="<?= $translator['Search usernames']; ?>">
+            <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 130%;">
+                <input type="text" id="withdrawalname" class="form-control widrl-queryholdertrans widrl-username mytrans" placeholder="<?= $translator['Search usernames']; ?>">
                 <input name="usernames" type="hidden"  id="widrl-userID" class="userIdtrans widrl-queryholdertrans">
-                <select class="form-control trackdown" size="5" style="display: none; width: 11%;background:#fff;" id="users-options-wrapper" ></select>
+                <select class="form-control withdrawDropdowns" size="5" style="display: none;" id="users-options-wrapper" >
+
+                </select>
                 <input type="text" class="form-control widrl-queryholdertrans orderid" id="widrl-ID" aria-describedby="name" placeholder=" <?= $translator['Search Withdrawal ID']; ?>">
 
                 <select name="lotteryname" id="widrl-channels" class="form-control form-select widrl-queryholdertrans tracklotery " data-bs-placeholder="Select Type">
-                    <option value="0"><?= $translator['Withdrawal Channels']; ?></option>
+                    <option value=""><?= $translator['Withdrawal Channels']; ?></option>
                     <option value="3"><?= $translator['Momo']; ?></option>
                     <option value="2"><?= $translator['Bank']; ?></option>
                     <option value="5"><?= $translator['Crypto']; ?></option>
                     <option value="4"><?= $translator['Manual']; ?></option>
+                </select>
+
+                <select name="lotteryname" id="widrl-state" class="form-control form-select widrl-queryholdertrans tracklotery " data-bs-placeholder="Select Type">
+                    <option value=""><?= $translator['Withdrawal Status']; ?></option>
+                    <option value="2"><?= $translator['Approved']; ?></option>
+                    <option value="1"><?= $translator['Pending']; ?></option>
+                    <option value="3"><?= $translator['Rejected']; ?></option>
+
                 </select>
                 <select name="lotteryname" class="form-control form-select widrl-queryholdertrans selectpartner"> 
 
@@ -247,7 +315,7 @@
                 </button>
                 <button type="button" class="btn bg-white-subtle widrl-search" value="end" aria-label="Execute"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                    <i class='bx bx-check-double loaderlinks' style="font-size:20px"></i>
+                    <i class='bx bx-check-double loaderwithdraw' style="font-size:20px"></i>
                 </button>
             </div>
 
@@ -296,7 +364,7 @@
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Withdrawal Application Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0">Timezone/hrs</h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Timezone/hrs']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
@@ -338,11 +406,12 @@
 
         </span>
         <span class="top-right-btn"  aria-label="Page navigation example">
-           <select class="left-element form-control" id="widrl-numrowstans" style="font-size: 12px;">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option value="50">50</option>
+           <select class="left-element form-control numrowstrans" id="widrl-numrowstans" style="font-size: 12px;">
+            <option value="20"><?= $translator['20'] ?? '20' ?></option>
+            <option value="50"><?= $translator['50'] ?? '50' ?></option>
+            <option value="100"><?= $translator['100'] ?? '100' ?></option>
+            <option value="200"><?= $translator['200'] ?? '200' ?></option>
+            <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
             <span class="right-element" id="paginationwithdraw">
                 <!--Dynamic pagination-->

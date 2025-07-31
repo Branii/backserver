@@ -228,6 +228,11 @@
 <span id="trans-backup-inactive" style="display:none;"><?php echo $translator['BACKUP_STATUS_INACTIVE']; ?></span>
 <span id="trans-backup-suspended" style="display:none;"><?php echo $translator['BACKUP_STATUS_SUSPENDED']; ?></span>
 
+<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+
+
 
 
 
@@ -366,10 +371,18 @@
         <!-- <option value="5" class="fromnumrows">5</option>
             <option value="10">10</option>
             <option value="20">20</option> -->
-        <option value="50">50</option>
+        <!-- <option value="50">50</option>
         <option value="100">100</option>
         <option value="200">200</option>
-        <option value="500">500</option>
+        <option value="500">500</option> -->
+
+   
+      <option value="10"><?= $translator['10'] ?? '10' ?></option>
+            <option value="20"><?= $translator['20'] ?? '20' ?></option>
+                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+    <option value="100"><?= $translator['100'] ?? '100' ?></option>
+    <option value="200"><?= $translator['200'] ?? '200' ?></option>
+    <option value="500"><?= $translator['500'] ?? '500' ?></option>
       </select>
       <span id="paginationBackup" class="right-element"> </span>
     </span>
