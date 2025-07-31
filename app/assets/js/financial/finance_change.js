@@ -228,7 +228,7 @@ $(function () {
             return false;
         }
         $("#addfinancemodal").modal("hide");
-        $(".userIdFields, .amount,.review,#financeinput").val("");
+        $(".userIdFields, .amount,.review,#financeinputs").val("");
         $(".loaderfinanc").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
         $.post(`../financial/addmoney/${depositype}/${usernames}/${amount}/${approvedby}/${review}`, function (response) {
             const result = JSON.parse(response);
@@ -392,7 +392,7 @@ $(function () {
     });
 
    $('#financeinputs').bind('typeahead:select', function (e, userr) {
-        console.log('Selected UID:', userr.uid);
+        // console.log('Selected UID:', userr.uid);
         $(".userIdFields").val(userr.uid);
     });
 

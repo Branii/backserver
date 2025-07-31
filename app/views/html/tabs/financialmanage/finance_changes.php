@@ -243,7 +243,7 @@
 
 .tt-suggestion:hover,
 .tt-suggestion.tt-cursor {
-  background-color: #f0f4f8;
+  background-color: #ccc !important;
 }
 
 .user-suggestion {
@@ -264,7 +264,7 @@
 }
 
 .tt-highlight {
-  color: #007bff;
+  /* color: #d9dbddff; */
   font-weight: bold;
 }
 
