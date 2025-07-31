@@ -206,7 +206,7 @@ class FinancialManageModel extends MEDOOHelper
             'status'            => 'success',
             'charges'           => '0',
             'approved_by'       => $username,
-            'desposit_channel'  => '1',
+            'deposit_channel'  => '1',
         ];
         $res      = $inserdata      = parent::insert("deposit_new", $params);
         $provider = PLatFormSettingModel::getActiveProvider('deposit');
