@@ -109,7 +109,7 @@ $(function () {
             
             let response = await fetch(`../financial/fetchwithdrawmanage/${currentPage}/${pageLimit}`);
             data = await response.json();
-            console.log(data)
+           // console.log(data)
             //return
             $("#maskwithdraws").LoadingOverlay("hide");
             renderwithdraws(data.withdraws);

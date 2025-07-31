@@ -565,13 +565,13 @@
 <span id="toast-msg-unexpected" class="d-none"><?= $translator['UnexpectedError']; ?></span>
 <!-- button icons -->
 
-<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+<span id="trans-page" hidden class="hidden"><?= $translator['Page'] ?? '' ?></span>
+<span id="trans-of" hidden class="hidden"><?= $translator['of'] ?? '' ?></span>
+<span id="trans-pages"  hidden class="hidden"><?= $translator['pages'] ?? '' ?></span>
 
-<span id="deactivate-game-text" class="hidden"><?= $translator['game_name'] ?? 'Game Name' ?></span>
-<span id="deactivate-game-type" class="hidden"><?= $translator['game_type'] ?? 'Game Type' ?></span>
-<span id="deactivate-game-group" class="hidden"><?= $translator['game_group'] ?? 'Game Group' ?></span>
+<span id="deactivate-game-text" hidden class="hidden"><?= $translator['game_name'] ?? '' ?></span>
+<span id="deactivate-game-type" hidden class="hidden"><?= $translator['game_type'] ?? '' ?></span>
+<span id="deactivate-game-group" hidden class="hidden"><?= $translator['game_group'] ?? '' ?></span>
 
 
 <div class="card w-100 position-relative overflow-hidden">

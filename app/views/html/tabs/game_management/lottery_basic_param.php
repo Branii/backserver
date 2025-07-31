@@ -197,9 +197,9 @@
 <span id="state_on" style="display: none;"><?= $translator['state_on'] ?></span>
 <span id="state_off" style="display: none;"><?= $translator['state_off'] ?></span>
 
-<span id="trans-page" style="display: none;" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" style="display: none;" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" style="display: none;" class="hidden"><?= $translator['pages'] ?? 'Pages' ?></span>
+<span id="trans-page" style="display: none;" hidden class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" style="display: none;" hidden class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" style="display: none;" hidden class="hidden"><?= $translator['pages'] ?? 'Pages' ?></span>
 
 <span id="trans-turnedon" style="display: none;" class="hidden"><?= $translator['Turned On'] ?? 'Turned On' ?></span>
 <span id="trans-turnedoff" style="display: none;" class="hidden"><?= $translator['Turned Off'] ?? 'Turned Off' ?></span>

@@ -209,4 +209,19 @@ const backupTable = (data) => {
       getAllBackups(currentPage,numrow);
     })
 
+
+
+     function tableScrollBackup() {
+        const tableContainerBackup = document.querySelector(".table-wrappereBackup");
+        const headerRowBackup = document.querySelector(".headrowBackup");
+
+        tableContainerBackup.addEventListener("scroll", function () {
+            if (tableContainerBackup.scrollTop > 0) {
+                headerRowBackup.classList.add("sticky-headerBackup");
+            } else {
+                headerRowBackup.classList.remove("sticky-headerBackup");
+            }
+        });
+    }
+    tableScrollBackup();
 })

@@ -287,7 +287,7 @@
         <span class="toplist-center" aria-label=" navigation example">
             <!--enter is free-->
         </span>
-        <span class="topplist-right" id="ptns-paginations" aria-label="Page navigation example">
+         <span class="topplist-right" id="ptns-paginations" aria-label="Page navigation example">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="border: solid 1px #eee; color: #bbb; background-color: #fff;">
                 <!-- <i ' ></i> -->
                 <button type="button" class="btn bg-white-subtle" id="ptns-addPartnerBtn" value="right" aria-label="Refresh" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add Payment partner">

@@ -79,7 +79,7 @@
 
   }
 
-  .table-wrapperBackup {
+  .table-wrappereBackup{
     overflow: hidden;
     /* Hide the default scrollbar */
     white-space: nowrap;
@@ -142,27 +142,27 @@
   }
 
   /* Custom Scrollbar for Webkit Browsers */
-  .table-wrapper::-webkit-scrollbar {
+  .table-wrappereBackup::-webkit-scrollbar {
     width: 5px;
     /* Slimmer scrollbar width */
     height: 5px;
     /* Slimmer scrollbar height for horizontal scrolling */
   }
 
-  .table-wrapper::-webkit-scrollbar-track {
+  .table-wrappereBackup::-webkit-scrollbar-track {
     background: #f1f1f1;
     /* Lighter background for track */
     border-radius: 5px;
   }
 
-  .table-wrapper::-webkit-scrollbar-thumb {
+  .table-wrappereBackup::-webkit-scrollbar-thumb {
     background-color: #ccc;
     /* Blue color for thumb */
     border-radius: 10px;
     cursor: pointer;
   }
 
-  .table-wrapper::-webkit-scrollbar-thumb:hover {
+  .table-wrappereBackup::-webkit-scrollbar-thumb:hover {
     background-color: #aaa;
     /* Darker blue on hover */
   }
@@ -228,9 +228,9 @@
 <span id="trans-backup-inactive" style="display:none;"><?php echo $translator['BACKUP_STATUS_INACTIVE']; ?></span>
 <span id="trans-backup-suspended" style="display:none;"><?php echo $translator['BACKUP_STATUS_SUSPENDED']; ?></span>
 
-<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+<span id="trans-page" hidden class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" hidden class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" hidden class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
 
 
 
@@ -289,7 +289,7 @@
   </div>
 
   <div class="card-body p-4">
-    <div class="table-responsive mb-4 border rounded-1 table-wrappereBackup table-wrapper" id="maskk" style="height:530px;overflow-y:scroll;">
+    <div class="table-responsive mb-4 border rounded-1 table-wrappereBackup " id="maskk" style="height:530px;overflow-y:scroll;">
       <table class="table text-nowrap mb-0 align-middle table-bordered table-hover ">
         <thead class="text-dark fs-4 tbl-headerBackup">
           <tr class="headrowBackup">
