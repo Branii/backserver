@@ -176,20 +176,7 @@
         /* Optional: Make it stand out */
     }
 
-    .financeDropdowns {
-        /* width: 23%; */
-        position: absolute;
-        background-color: #fff;
-        color: #aaa;
-        max-height: 300px;
-        overflow-y: scroll;
-        border-radius: 5px;
-        padding: 10px;
-        top: 90%;
-        z-index: 9999;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-        display: none;
-    }
+   
 
     .financeDropdown {
         width: 24%;
@@ -285,6 +272,11 @@
 <span id="trans-currencyselect" data-translation="<?= $translator['CurrencySelect'] ?? 'Currency Select'; ?>" style="display: none;"></span>
 <span id="trans-approvedby" data-translation="<?= $translator['ApprovedBy'] ?? 'Approved By'; ?>" style="display: none;"></span>
 
+<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+
+
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Payment Platform']; ?></h4>
@@ -293,7 +285,7 @@
         <span class="top-left-btn" style="width: 70%;">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: 100%;">
                 <div style="width: 35%;">
-                    <input name="resultsList" class="queryholderlist form-control bring-forward" id="platformNames" data-user-id="" placeholder="<?= $translator['Platform Names']; ?>" autocomplete="off" style="width: 98%;" />
+                    <input name="resultsList" class="queryholderlist form-control bring-forward" id="platfomNamess" data-user-id="" placeholder="<?= $translator['Platform Names']; ?>" autocomplete="off" style="width: 98%;" />
                     <div class="pp-names-wrapper ngp-usr-res-wrapper" style="width: 20.5%;">
                         <ul style="max-height: 403px; margin: 0px; overflow-y: auto;" id="pp-names-list-wrapper"></ul>
                     </div>
@@ -419,10 +411,16 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowspay" style="font-size: 12px;">
-                <option value="50">50</option>
+                <!-- <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
-                <option value="500">500</option>
+                <option value="500">500</option> -->
+
+
+                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+    <option value="100"><?= $translator['100'] ?? '100' ?></option>
+    <option value="200"><?= $translator['200'] ?? '200' ?></option>
+    <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
             <span class="toplist-right" id="paginationpayments" aria-label="Page navigation example">
                 <!--Dynamic pagination-->

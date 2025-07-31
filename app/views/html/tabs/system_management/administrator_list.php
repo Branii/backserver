@@ -241,9 +241,7 @@
     height: 530px;
     overflow-y: auto;
   }
-</style>
 
-<style>
   .search-icon-wrapper {
     position: relative;
     display: inline-block;
@@ -355,6 +353,9 @@
 <span id="trans-status-deactivated" style="display:none;"><?php echo $translator['STATUS_DEACTIVATED']; ?></span>
 
 
+<span id="trans-page" hidden class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" hidden class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" hidden class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
 
 
 
@@ -422,17 +423,17 @@
           <i class="bx bx-refresh" style="font-size: 20px;"></i>
         </button>
 <!-- search button starts -->
- <button type="button" class="btn bg-white-subtle search-icon-wrapper" value="end" aria-label="Execute" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
-                    <i class="bx bx-check-double loadernotfys" style="font-size: 20px;"></i>
-                     <div class="search-icon-overlay">
-              <div class="spinner"></div>
-            </div>
-                </button>
-                <!-- search button sends -->
-        <button type="button" class="btn bg-white-subtle" value="end" aria-label="Execute" data-bs-toggle="modal" data-bs-target="#add-new"
+    <button type="button" class="btn bg-white-subtle" value="end" aria-label="Execute" data-bs-toggle="modal" data-bs-target="#add-new"
           data-bs-placement="top" data-bs-title="Add new">
           <i class='bx bx-plus' style="font-size:20px"></i>
         </button>
+ 
+                <!-- search button sends -->
+     
+          <button type="button" class="btn bg-white-subtle  search-icon-wrapper" value="" aria-label="Execute"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Execute">
+                    <i class="bx loaderlist bx-check-double" style="font-size: 20px;"></i>
+                </button>
       </div>
 
     </span>
@@ -518,10 +519,16 @@
         <!-- <option value="5" class="fromnumrows">5</option>
             <option value="10">10</option>
             <option value="20">20</option> -->
-        <option value="50">50</option>
+        <!-- <option value="50">50</option>
         <option value="100">100</option>
         <option value="200">200</option>
-        <option value="500">500</option>
+        <option value="500">500</option> -->
+
+
+                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+    <option value="100"><?= $translator['100'] ?? '100' ?></option>
+    <option value="200"><?= $translator['200'] ?? '200' ?></option>
+    <option value="500"><?= $translator['500'] ?? '500' ?></option>
       </select>
       <span id="paginationAdmin" class="right-element"> </span>
     </span>
@@ -786,7 +793,7 @@
        <div class="form-check d-flex align-items-center justify-content-end">
     <input class="form-check-input me-1" type="checkbox" id="selectAllPermissions" name="permissions[]" value="view_users">
     <label class="form-check-label" for="selectAllPermissions" style="font-size: 14px;">Check All Permissions</label>
-</div>
+  </div>
 
       <p></p>
       <div class="permissionholder" style="overflow-y:scroll; max-height:500px;">

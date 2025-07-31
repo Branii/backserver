@@ -1,10 +1,8 @@
 <?php
-
+date_default_timezone_set('Asia/Singapore');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
-
 
 $flag = isset($this->viewData['flag']) ? $this->viewData['flag'] : null;
 
@@ -29,14 +27,12 @@ if ($flag == "getAllGamesLottery") {
 if ($flag == "getLotteryGames") {
     $gameId = isset($this->viewData['gameId']) ? $this->viewData['gameId'] : '';
     $tableData = isset($this->viewData['tables']) ? $this->viewData['tables'] : '';
+    $gametypes = isset($this->viewData['gametypes']) ? $this->viewData['gametypes'] : '';
     // $decodedUrl = urldecode($tableData);
     // $tables = json_decode($decodedUrl);
-    $result = (new GameManageModel())->getLotteryGamesById($gameId,$tableData);
-    echo json_encode([
-        'bonus' => $result['data'],
-    ]);
+    $result = (new GameManageModel())->getLotteryGamesById($gameId,$tableData,$gametypes);
+    echo json_encode(['bonus' => $result['data'] ]);
 }
-
 
 if ($flag == "updateoddstotalbets") {
     $gameId = isset($this->viewData['gameId']) ? $this->viewData['gameId'] : '';
@@ -45,9 +41,11 @@ if ($flag == "updateoddstotalbets") {
     $oddpercent = isset($this->viewData['oddpercent']) ? $this->viewData['oddpercent'] : '';
     $newtotalbet =isset($this->viewData['newtotalbet']) ? $this->viewData['newtotalbet'] : '';
     $totalbetpercent =isset($this->viewData['totalbetpercent']) ? $this->viewData['totalbetpercent'] : '';
+    $gametype = isset($this->viewData['gametype']) ? $this->viewData['gametype'] : '';
+    $isSpecial = isset($this->viewData['isSpecial']) ? $this->viewData['isSpecial'] : '';
     $newodds = array_map('floatval', explode(',', $newodds));
     $newodds =   json_encode($newodds);
-   $result = (new GameManageModel())->UpdateOddsTotalbets($gameId,$gamemodel,$newodds,$oddpercent,$newtotalbet,$totalbetpercent);
+    $result =  GameManageModel::UpdateOddsTotalbets($gameId,$gamemodel,$newodds,$oddpercent,$newtotalbet,$totalbetpercent,$gametype,$isSpecial);
     echo json_encode($result);
 }
 
@@ -55,8 +53,9 @@ if ($flag == "resettotalbet") {
     $gameId = isset($this->viewData['gameId']) ? $this->viewData['gameId'] : '';
     $gamemodel = isset($this->viewData['models']) ? $this->viewData['models'] : '';
     $newtotalbet =isset($this->viewData['newtotalbet']) ? $this->viewData['newtotalbet'] : '';
-    $totalbetpercent =isset($this->viewData['totalbetpercent']) ? $this->viewData['totalbetpercent'] : '';   
-    $result = (new GameManageModel())->ResetTotalbets($gameId,$gamemodel,$newtotalbet,$totalbetpercent);
+    $totalbetpercent =isset($this->viewData['totalbetpercent']) ? $this->viewData['totalbetpercent'] : '';
+    $gametype = isset($this->viewData['gametype']) ? $this->viewData['gametype'] : '';
+    $result = (new GameManageModel())->ResetTotalbets($gameId,$gamemodel,$newtotalbet,$totalbetpercent,$gametype);
     echo json_encode($result);
 }
 
@@ -68,6 +67,24 @@ if ($flag == "updategamestatus") {
     echo json_encode($result);
 }
 
+if ($flag == "updategamegroup") {
+    $gamegroupid = isset($this->viewData['gamegroupid']) ? $this->viewData['gamegroupid'] : '';
+    $gametate =isset($this->viewData['gametate']) ? $this->viewData['gametate'] : ''; 
+    $result = GameManageModel::UpdateGameGroup($gamegroupid,$gametate);
+    echo json_encode($result);
+}
+
+if ($flag == "updategamelottery") {
+    $lotteryid = isset($this->viewData['lotteryid']) ? $this->viewData['lotteryid'] : '';
+    $gametate =isset($this->viewData['gametate']) ? $this->viewData['gametate'] : ''; 
+    $result = GameManageModel::UpdateGameLotteryType($lotteryid,$gametate);
+    echo json_encode($result);
+}
+
+if ($flag == "getallgametype") {
+    $result = GameManageModel::GetAllGameTypes();
+    echo json_encode($result);
+}
 
 if($flag == "getSpecificDraws") {
     $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1;
@@ -96,4 +113,45 @@ if ($flag == "getDraws") {
     $result = GameManageModel::getDrawTableInfo($game_id,$issue_number,$draw_status,$start_date,$end_date,$page,$limit);
     echo json_encode($result );
     
-    }
+}
+
+if ($flag == "resetAllOdds") {
+ $result = GameManageModel::resetAllOdds();
+ echo json_encode($result); 
+    
+}
+
+if ($flag == "lotteryexception") {
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1; // Ensure valid page number
+    $limit = isset($this->viewData['limit']) ? (int)$this->viewData['limit'] :""; // Ensure valid limit
+    $result = GameManageModel::lotteryExceptionData($page, $limit);
+    echo json_encode([
+      'lotexception' => $result['data'],
+     'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
+
+if ($flag == "filterexception") {
+    $gametype = isset($this->viewData['gametype']) ? (int) $this->viewData['gametype'] : ""; 
+    $drawperiod = isset($this->viewData['drawperiod']) ?  $this->viewData['drawperiod'] : "";
+    $startdates = isset($this->viewData['startdates']) ? $this->viewData['startdates'] : "";
+    $enddates = isset($this->viewData['enddates']) ? $this->viewData['enddates'] : "";
+    $page = isset($this->viewData['page']) ? (int) $this->viewData['page'] : 1; // Ensure valid page number
+    $limit = isset($this->viewData['limit']) ? (int)$this->viewData['limit'] :20; // Ensure valid limit
+    $result = GameManageModel::FilterExceptionData($gametype,$drawperiod,$startdates,$enddates,$page,$limit);
+    echo json_encode([
+      'lotexceptiondata' => $result['data'],
+     'totalPages' => ceil($result['total'] / $limit),
+    ]);
+}
+
+ if ($flag == "getTimegames") {
+    $result = (new GameManageModel())->getTimegames();
+     echo json_encode($result);
+} 
+
+
+if ($flag == "getAllGamesModels") {
+    $result = (new GameManageModel())->getAllGamesModel();
+    echo json_encode($result);
+} 

@@ -73,7 +73,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
- 
+
 
   }
 
@@ -90,7 +90,7 @@
     height: 10px;
     background: rgb(38, 57, 77) 0px 20px 30px -10px;
     /* Ensure it doesn't interfere with content */
-   
+
   }
 
   .queryholder {
@@ -186,7 +186,7 @@
   position: relative;
   bottom:1px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
- 
+
 }
 
 .pins{
@@ -194,7 +194,7 @@
   border-bottom: solid 1px rgb(110,129,146,0.1);
 }
 
-/* From Uiverse.io by victoryamaykin */ 
+/* From Uiverse.io by victoryamaykin */
 .switch {
  position: relative;
  display: inline-block;
@@ -446,7 +446,7 @@ input:checked + .lpd-slider:after {
     font-family: Verdana, sans-serif;
 }
 
-/* From Uiverse.io by Subaashbala */ 
+/* From Uiverse.io by Subaashbala */
 /* The switch - the box around the slider */
 .switches {
   font-size: 17px;
@@ -510,52 +510,55 @@ input:checked + .lpd-slider:after {
 </style>
 
 <?php
-$gameOptions = ['Standard', 'Fantan', 'BoardGames', 'Manytables', 'Logdragon', 'Roadbet', 'Twosides'];
-foreach ($gameOptions as $game) {
-    $translation = $translator[$game] ?? $game; // use your translation array
-    echo "<span id=\"trans-$game\" data-translation=\"$translation\" style=\"display:none;\"></span>";
-}
+    $gameOptions = ['Standard', 'Fantan', 'BoardGames', 'Manytables', 'Logdragon', 'Roadbet', 'Twosides'];
+    foreach ($gameOptions as $game) {
+        $translation = $translator[$game] ?? $game; // use your translation array
+        echo "<span id=\"trans-$game\" data-translation=\"$translation\" style=\"display:none;\"></span>";
+    }
 ?>
-<span id="trans-partner-name" data-translation="<?= htmlspecialchars($translator['Partner Name'] ?? 'Partner Name') ?>" style="display:none;"></span>
-<span id="trans-SelectGame" data-translation="<?= $translator['Select Game'] ?>"></span>
+<span id="trans-partner-name" data-translation="<?php echo htmlspecialchars($translator['Partner Name'] ?? 'Partner Name')?>" style="display:none;"></span>
+<span id="trans-SelectGame" data-translation="<?php echo $translator['Select Game']?>"></span>
 
-<span id="success_text" style="display: none;"><?= $translator['SUCCESS']; ?></span>
-<span id="updated_successfully" style="display: none;"><?= $translator['UPDATED_SUCCESSFULLY']; ?></span>
-<span id="game_state_updated" style="display: none;"><?= $translator['GAME_STATE_UPDATED']; ?></span>
-<span id="no_changes_made" style="display: none;"><?= $translator['NO_CHANGES_MADE']; ?></span>
+<span id="success_text" style="display: none;"><?php echo $translator['SUCCESS'];?></span>
+<span id="updated_successfully" style="display: none;"><?php echo $translator['UPDATED_SUCCESSFULLY'];?></span>
+<span id="game_state_updated" style="display: none;"><?php echo $translator['GAME_STATE_UPDATED'];?></span>
+<span id="no_changes_made" style="display: none;"><?php echo $translator['NO_CHANGES_MADE'];?></span>
 
 
-<span id="savee-text" data-translation="<?= $translator['Save'] ?? 'Save'; ?>" style="display:none;"></span>
+<span id="savee-text" data-translation="<?php echo $translator['Save'] ?? 'Save';?>" style="display:none;"></span>
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
-    <h4 class="card-title mb-0"><?= $translator['Lottery Bonus Parameters']; ?></h4>
+    <h4 class="card-title mb-0"><?php echo $translator['Lottery Bonus Parameters'];?></h4>
   </div>
 
   <div class="px-4 py-3 border-bottom pager1">
     <span class="top-left-btn">
-      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:173%">
+      <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:140%">
 
         <select name="order_type" id="allGameNamesLottery" class="form-control form-select  lotteryTypes " style ="width:90%;">
 
         </select>
         <select name="order_type" class="form-control form-select"  style= "margin-left:15px" id="allmodels"
-        data-bs-placeholder="Select Type<?= $translator['Game Model']; ?>">
-        <!-- <option value="">-<?= $translator['Game Model']; ?>-</option>
-        <option value="standard"><?= $translator['Standard']; ?></option>
-        <option value="twosides"><?= $translator['Two Sides']; ?></option>
-        <option value="longdragon"> <?= $translator['Long Dragon']; ?></option>
-        <option value="boardgames"><?= $translator['Board Games']; ?></option>
-        <option value="roadbet"><?= $translator['Road Bet']; ?></option>
-        <option value="fantan"><?= $translator['Fantan']; ?></option>
-        <option value="manytables"><?= $translator['Many Tables']; ?></option> -->
+        data-bs-placeholder="Select Type<?php echo $translator['Game Model'];?>">
+        <!-- <option value="">-<?php echo $translator['Game Model'];?>-</option>
+        <option value="standard"><?php echo $translator['Standard'];?></option>
+        <option value="twosides"><?php echo $translator['Two Sides'];?></option>
+        <option value="longdragon"> <?php echo $translator['Long Dragon'];?></option>
+        <option value="boardgames"><?php echo $translator['Board Games'];?></option>
+        <option value="roadbet"><?php echo $translator['Road Bet'];?></option>
+        <option value="fantan"><?php echo $translator['Fantan'];?></option>
+        <option value="manytables"><?php echo $translator['Many Tables'];?></option> -->
           </select>
-
 
           <select name="order_type" class="form-control form-select" style= "margin-left:15px; display: none;" id="game_groups">
-       
+
           </select>
-          <select name="lotteryname" class="form-control form-select  selectpartner" style= "margin-left:15px"> 
+          <select name="gamebonus" class="form-control form-select gamebonus" style= "margin-left:15px">
+
+         </select>
+
+          <select name="lotteryname" class="form-control form-select  selectpartner" style= "margin-left:15px">
 
          </select>
 
@@ -572,19 +575,19 @@ foreach ($gameOptions as $game) {
 
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
         style="border:solid 1px #eee;color:#bbb;background-color:#fff">
-        <button type="button" class="btn bg-white-subtle " value="right" aria-label="Refresh"
+        <!-- <button type="button" class="btn bg-white-subtle " value="right" aria-label="Refresh"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PDF">
           <i class='bx bx-file' style="font-size:20px"></i>
-        </button>
-        <button type="button" class="btn bg-white-subtle " value="right" aria-label="Refresh"
+        </button> -->
+        <!-- <button type="button" class="btn bg-white-subtle " value="right" aria-label="Refresh"
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="XLS">
           <i class='bx bx-file-blank' style="font-size:20px"></i>
-        </button>
-        <button type="button" class="btn bg-white-subtle" value="right">
+        </button> -->
+        <!-- <button type="button" class="btn bg-white-subtle" value="right">
          ::
-        </button>
-        <button type="button" class="btn bg-white-subtle  refreshdrawskk" value="right" aria-label="Refresh"
-          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh">
+        </button> -->
+        <button type="button" class="btn bg-white-subtle  resetodds" value="right" aria-label="Reset All"
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reset All">
           <i class='bx bx-refresh' style="font-size:20px"></i>
         </button>
         <button type="button" class="btn bg-white-subtle executegetparams" id="lbp_search" value="end" aria-label="Execute"
@@ -601,28 +604,30 @@ foreach ($gameOptions as $game) {
             <table class="table text-nowrap mb-0 align-middle table-bordered">
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">
+                       <tr>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Game Type'];?></h6>
+                        </th>
+
+                        <th>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Play Group'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Play Group']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Lottery Games'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Games']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Lottery Odds'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Odds']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Total Bets Control'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets Control']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Total Bets'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Game Status'];?></h6>
                         </th>
-                        <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Game Status']; ?></h6>
-                        </th>
-                        
+
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
                         </th>
@@ -645,25 +650,25 @@ foreach ($gameOptions as $game) {
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?> </h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Game Type'];?> </h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Play Group']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Play Group'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Games']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Lottery Games'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Odds']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Lottery Odds'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets Control']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Total Bets Control'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Total Bets'];?></h6>
                         </th>
-                       
-                        
+
+
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
                         </th>
@@ -686,25 +691,25 @@ foreach ($gameOptions as $game) {
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?>  </h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Game Type'];?>  </h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Play Group']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Play Group'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Games']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Lottery Games'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Odds']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Lottery Odds'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets Control']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Total Bets Control'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Total Bets'];?></h6>
                         </th>
-                       
-                        
+
+
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
                         </th>
@@ -727,25 +732,25 @@ foreach ($gameOptions as $game) {
                 <thead class="text-dark fs-4 tbl-headerbonus">
                     <tr class="headrowbonus">
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?=  $translator['Game Type']; ?>  </h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Game Type'];?>  </h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Play Group']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Play Group'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Games']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Lottery Games'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Odds']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Lottery Odds'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets Control']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Total Bets Control'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bets']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Total Bets'];?></h6>
                         </th>
-                       
-                        
+
+
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
                         </th>
@@ -766,7 +771,7 @@ foreach ($gameOptions as $game) {
 
 
     </div>
-<!--   
+<!--
   <div class="px-4 py-3 border-top pager">
     <span class="top-left-btn">
       <div class="btn-group mb-2" role="group" aria-label="Basic example"
@@ -790,9 +795,6 @@ foreach ($gameOptions as $game) {
       <span id="paging_info_draws" style="color:#aaa">---</span>
 
     </span>
-
-   
-      
 
     <span class="top-right-btn"  aria-label="Page navigation example">
     <select class="left-element form-control numrows" style="font-size:12px">

@@ -199,6 +199,11 @@
 <span id="unsettled_text" style="display:none;"><?= $translator['UNSETTLED']; ?></span>
 <span id="pending_text" style="display:none;"><?= $translator['PENDING']; ?></span>
 
+<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+
+
 
 <div class="card w-100 position-relative overflow-hidden">
 
@@ -209,10 +214,11 @@
   <div class="px-4 py-3 border-bottom pager1">
     <span class="top-left-btn">
     <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:5px;width:100%;">
-
+          <div class="custom-dropdown" style="width:30%; margin-right: 5px;">
       <select name="order_type" id="allGameNames" class="form-control form-select queryholder ordertype" data-bs-placeholder="<?= $translator['Select Type']; ?>" style="widthx: 15%;">
       <option value="1">Royal 5</option>
       </select>
+      </div>
 
       
     <input name="issuenumber" class="queryholder form-control bring-forward" id="ltd-issuenumber" placeholder="<?= $translator['Search Issue Number']; ?>" autocomplete="off" style="widthx:97%;">
@@ -341,18 +347,14 @@
 
     </span>
 
-   
-      
-
     <span class="top-right-btn"  aria-label="Page navigation example">
-    <select class="left-element form-control numrows" style="font-size:12px">
-            <!-- <option value="5" class="fromnumrows">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option> -->
-            <option value="50">50</option>
-            <option value="100">100</option>
-            <option value="200">200</option>
-            <option value="500">500</option>
+    <select class="left-element form-control numrows" style="font-size:12px"> 
+      <option value="20"><?= $translator['20'] ?? '20' ?></option>
+      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+     <option value="100"><?= $translator['100'] ?? '100' ?></option>
+     <option value="200"><?= $translator['200'] ?? '200' ?></option>
+     <option value="500"><?= $translator['500'] ?? '500' ?></option>
+            
      </select>
       <span id="ltd_paginationDraws" class="right-element"> </span>
     </span>

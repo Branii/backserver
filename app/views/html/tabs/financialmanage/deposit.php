@@ -230,6 +230,19 @@
 <span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
 
 
+<!-- Hidden spans with translated text -->
+<span id="tr_page" style="display: none;"><?= $translator['Page'] ?></span>
+<span id="tr_of" style="display: none;"><?= $translator['of'] ?></span>
+<span id="tr_pages" style="display: none;"><?= $translator['pages'] ?></span>
+
+<span id="channel_manual_deposit" style="display:none;"><?= $translator['channel_manual_deposit'] ?></span>
+<span id="channel_bank_transfer" style="display:none;"><?= $translator['channel_bank_transfer'] ?></span>
+<span id="channel_momo" style="display:none;"><?= $translator['channel_momo'] ?></span>
+<span id="channel_crypto" style="display:none;"><?= $translator['channel_crypto'] ?></span>
+
+<span id="status_pending" style="display:none;"><?= $translator['status_pending'] ?></span>
+<span id="status_success" style="display:none;"><?= $translator['status_success'] ?></span>
+<span id="status_failed" style="display:none;"><?= $translator['status_failed'] ?></span>
 
 
 <!-- toast messages ends here -->
@@ -375,10 +388,15 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowsdeposit" style="font-size: 12px;">
-                <option value="50">50</option>
+                <!-- <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="200">200</option>
-                <option value="500">500</option>
+                <option value="500">500</option> -->
+             <option value="20"><?= $translator['20'] ?? '20' ?></option>
+                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
+    <option value="100"><?= $translator['100'] ?? '100' ?></option>
+    <option value="200"><?= $translator['200'] ?? '200' ?></option>
+    <option value="500"><?= $translator['500'] ?? '500' ?></option>
             </select>
             <span class="toplist-right" id="paginationdeposits" aria-label="Page navigation example">
                 <!--Dynamic pagination-->

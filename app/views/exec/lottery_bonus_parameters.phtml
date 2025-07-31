@@ -30,7 +30,6 @@ if ($flag == "fetchBonusTwoSides") {
     $data = isset($this->viewData['data']) ? $this->viewData['data'] : "";
     $data = urldecode($data);
     $data = json_decode($data,true);
-   
     $results = GameManageModel::updateGameGroupData($data);
     if($results['status'] === "error") return ['status' => "error", 'data' => "Internal Server Error."];
 

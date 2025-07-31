@@ -28,6 +28,7 @@ class PartnersModel extends MedooOrm{
         $table_name = "partners_v1";
         $offset = ($page - 1) * $limit;
         $res = parent::openLink()->query("SELECT * FROM {$table_name} ORDER BY partner_id DESC LIMIT :offset,:limit", [":offset" => $offset, ":limit" => $limit ])->fetchAll(PDO::FETCH_OBJ);
+        
         return ["status" => "success", "data" => $res];
     }catch(Exception $e){
         return self::response("Internal Server Error.",false,);

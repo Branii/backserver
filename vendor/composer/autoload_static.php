@@ -226,6 +226,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'Controller' => __DIR__ . '/../..' . '/app/core/Controller.php',
         'DataReportModel' => __DIR__ . '/../..' . '/app/model/DataReportModel.php',
         'Database' => __DIR__ . '/../..' . '/app/database/Database.php',
+        'EmailProviderModel' => __DIR__ . '/../..' . '/app/model/EmailProviderModel.php',
         'FinancialManageModel' => __DIR__ . '/../..' . '/app/model/FinancialManageModel.php',
         'GameManageModel' => __DIR__ . '/../..' . '/app/model/GameManageModel.php',
         'GearmanWorker' => __DIR__ . '/../..' . '/app/services/GearmanWorker.php',
@@ -240,6 +241,7 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'PaymentPlatformModel' => __DIR__ . '/../..' . '/app/model/PaymentPlatformModel.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
         'PromotionManageModel' => __DIR__ . '/../..' . '/app/model/PromotionManageModel.php',
+        'Publisher' => __DIR__ . '/../..' . '/app/model/Publisher.php',
         'SmsPreferenceScheduler' => __DIR__ . '/../..' . '/app/model/SmsPreferenceScheduler.php',
         'SmsPromotionWorker' => __DIR__ . '/../..' . '/app/model/SmsPromotionWorker.php',
         'SmsProvider' => __DIR__ . '/../..' . '/app/model/SmsProvider.php',
@@ -320,6 +322,17 @@ class ComposerStaticInit81388c764ae66d0de34f2c06dd688103
         'Zenoph\\Notify\\Utils\\PhoneUtil' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Utils/PhoneUtil.php',
         'Zenoph\\Notify\\Utils\\RequestUtil' => __DIR__ . '/../..' . '/app/assets/Zenoph/Notify/Utils/RequestUtil.php',
         'adminController' => __DIR__ . '/../..' . '/app/controller/adminController.php',
+        'agentController' => __DIR__ . '/../..' . '/app/controller/agentController.php',
+        'announceController' => __DIR__ . '/../..' . '/app/controller/announceController.php',
+        'businessflowController' => __DIR__ . '/../..' . '/app/controller/businessflowController.php',
+        'financialController' => __DIR__ . '/../..' . '/app/controller/financialController.php',
+        'gameController' => __DIR__ . '/../..' . '/app/controller/gameController.php',
+        'partnerController' => __DIR__ . '/../..' . '/app/controller/partnerController.php',
+        'paymentController' => __DIR__ . '/../..' . '/app/controller/paymentController.php',
+        'promotionController' => __DIR__ . '/../..' . '/app/controller/promotionController.php',
+        'reportController' => __DIR__ . '/../..' . '/app/controller/reportController.php',
+        'userController' => __DIR__ . '/../..' . '/app/controller/userController.php',
+        'userbankController' => __DIR__ . '/../..' . '/app/controller/userbankController.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
