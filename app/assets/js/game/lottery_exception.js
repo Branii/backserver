@@ -150,7 +150,7 @@ $(function () {
             //https://winsstarts.com
             // https://157.173.97.174 /api/v1/limvo/processBetSlipIfSkipped
            $.ajax({
-                url: "http://192.168.1.51/chairman_test/api/v1/limvo/processBetSlipIfSkipped",
+                url: "https://winsstarts.com/chairman_test/api/v1/limvo/processBetSlipIfSkipped",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
@@ -260,5 +260,23 @@ $(function () {
     });
    }
 
+
+
+    function tableScrollExeception() {
+    const tableContainerExeception = document.querySelector(".table-wrapperexcept");
+    const headerRowExeception = document.querySelector(".headrowexcept");
+
+    if (tableContainerExeception && headerRowExeception) {
+      tableContainerExeception.addEventListener("scroll", function () {
+        if (tableContainerExeception.scrollTop > 0) {
+          headerRowExeception.classList.add("sticky-headerexcept");
+        } else {
+          headerRowExeception.classList.remove("sticky-headerexcept");
+        }
+      });
+    }
+  }
+  // Initialize sticky scroll
+  tableScrollExeception();
 
 })

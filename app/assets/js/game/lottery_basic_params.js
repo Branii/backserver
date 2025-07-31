@@ -507,20 +507,7 @@ $(() => {
     };
 
     fetchLotteryBasicParams(1);
-    function tableScrolluserListsquota() {
-        const tableContainerUsersquota = document.querySelector(".table-wrapperbaic");
-        const headerRowUserListsquota = document.querySelector(".headrowDraws");
-
-        tableContainerUsersquota.addEventListener("scroll", function () {
-            if (tableContainerUsersquota.scrollTop > 0) {
-                headerRowUserListsquota.classList.add("sticky-headrowDraws");
-            } else {
-                headerRowUserListsquota.classList.remove("sticky-headrowDraws");
-            }
-        });
-    }
-
-    tableScrolluserListsquota();
+  
 
     const lotterySettings = {
         1: { name: "5D", num_of_balls: 5, min_ball: 0, max_ball: 9 },
@@ -611,15 +598,7 @@ $(() => {
         );
     });
 
-    //  $(document).on("click", ".refreshgame", function () {
-    //      // Show loading overlay
-    //      $(".queryholderlistt").val("");
-    //      $("#masklotterygames").LoadingOverlay("show", {
-    //          background: "rgba(90,106,133,0.1)",
-    //          size: 3,
-    //      });
-    //         fetchLotteryBasicParams(1);
-    //  });
+   
 
     async function getAllGamesLottery() {
         try {
@@ -734,9 +713,9 @@ $(() => {
             showToast("Error", "Image is too large. Max 1MB allowed.", "error");
             return;
         }
-
+            //http://192.168.1.51
         $.post(
-            "http://192.168.1.51/chairman_test/api/v1/limvo/udateGameImage",
+            "https://winsstarts.com/chairman_test/api/v1/limvo/udateGameImage",
             JSON.stringify({
                 imageData: base64String,
                 gameId: imageData[0],
@@ -775,23 +754,22 @@ $(() => {
         });
     });
 
-    // $(".refreshgame").click(function () {
-    //   // Show loading overlay
-    //   $("#masklotterygames").LoadingOverlay("show", {
-    //     background: "rgb(90,106,133,0.1)",
-    //     size: 3
-    //   });
+    function tableScrollBasciParam() {
+        const tableContainerBasciParam = document.querySelector(".table-wrapperbaic");
+        const headerRowBasciParam = document.querySelector(".headrowbasic");
 
-    //   // Clear all input fields
-    //   $("#bl-idholder").val("");
-    //   $("#bl-username").val("");
-    //   $("#bl-bank-type").val("");
-    //   $("#bl-card-number").val("");
-    //   $("#bl-status").val(0);
-    //   $("#transuserpayment").val("");
-    //   $(".queryholderuserpayment").hide().html("");
-    //   $(".userIdtrans").val("");
+        if (tableContainerBasciParam && headerRowBasciParam) {
+        tableContainerBasciParam.addEventListener("scroll", function () {
+            if (tableContainerBasciParam.scrollTop > 0) {
+            headerRowBasciParam.classList.add("sticky-headerbasic");
+            } else {
+            headerRowBasciParam.classList.remove("sticky-headerbasic");
+            }
+        });
+        }
+    }
+  // Initialize sticky scroll
+  tableScrollBasciParam();
 
-    //   fetchLotteryBasicParams(1); // Also removed 'this' here
-    // });
+    
 });
