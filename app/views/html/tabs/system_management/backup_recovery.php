@@ -228,9 +228,9 @@
 <span id="trans-backup-inactive" style="display:none;"><?php echo $translator['BACKUP_STATUS_INACTIVE']; ?></span>
 <span id="trans-backup-suspended" style="display:none;"><?php echo $translator['BACKUP_STATUS_SUSPENDED']; ?></span>
 
-<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+<span id="trans-page" hidden class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of" hidden class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" hidden class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
 
 
 

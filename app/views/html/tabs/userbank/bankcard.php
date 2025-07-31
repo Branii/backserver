@@ -279,9 +279,9 @@
 <span id="bank_state_4" style="display:none;"><?= $translator['bank_state_deleted'] ?></span>
 
 
-<span id="trans-page" class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" class="hidden"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
+<span id="trans-page" hidden class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
+<span id="trans-of"  hidden class="hidden"><?= $translator['of'] ?? 'of' ?></span>
+<span id="trans-pages" hidden class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
 
 
 <div class="card w-100 position-relative overflow-hidden">

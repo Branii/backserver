@@ -452,7 +452,7 @@ $(() => {
 
                 success: function (response) {
                     response = JSON.parse(response);
-                       console.log(response);
+                     //  console.log(response);
                     if (response.status === "error") {
                         showToast("Error", "Error loading data for Payment Platforms", "error");
                         return;
