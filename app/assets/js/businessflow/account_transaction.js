@@ -10,16 +10,7 @@ $(function () {
             duration: 3000, // auto-dismiss after 3s
         });
     }
-    const translations = {
-        headsUp: document.getElementById("trans-heads-up").dataset.translation,
-        selectDataFields: document.getElementById("trans-select-data-fields").dataset.translation,
-        failedInactive: document.getElementById("trans-failed-inactive").dataset.translation,
-        inactiveSuccess: document.getElementById("trans-inactive-success").dataset.translation,
-        success: document.getElementById("trans-success").dataset.translation,
-    };
-
-    // Example toast usage
-    // showToast(translations.headsUp, translations.selectDataFields, "info");
+  
 
     function formatMoney(money) {
         let moneyStr = String(money);
@@ -32,7 +23,6 @@ $(function () {
         }
         return moneyStr;
     }
-    const unknownText = document.getElementById("trans-unknown").innerText;
     const translatorScript = document.querySelector(".translations");
     const translator = JSON.parse(translatorScript.textContent);
     const AccountTransactions = (data) => {

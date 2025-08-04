@@ -218,56 +218,44 @@
     }
 
 </style>
-<!-- Toast Messages Translations (Hidden Elements) -->
-<span id="trans-heads-up" data-translation="<?php echo htmlspecialchars($translator['HeadsUp'] ?? 'Heads up!') ?>" style="display:none;"></span>
-<span id="trans-failed-inactive" data-translation="<?php echo htmlspecialchars($translator['FailedToSetInactive'] ?? 'Failed to set inactive') ?>" style="display:none;"></span>
-<span id="trans-inactive-success" data-translation="<?php echo htmlspecialchars($translator['SetInactiveSuccess'] ?? 'Set to inactive successfully') ?>" style="display:none;"></span>
-<span id="trans-select-data-fields" data-translation="<?php echo htmlspecialchars($translator['SelectFilterFields'] ?? 'Select one or more data fields to filter') ?>" style="display:none;"></span>
-<span id="trans-success" data-translation="<?php echo htmlspecialchars($translator['Success'] ?? 'Success') ?>" style="display:none;"></span>
-<!-- Field Label Translations (Hidden Elements) -->
-<span id="trans-partner-name" data-translation="<?php echo htmlspecialchars($translator['Partner Name'] ?? 'Partner Name') ?>" style="display:none;"></span>
-<span id="trans-unknown" class="hidden" hidden><?php echo $translator['Unknown'] ?? 'Unknown' ?></span>
-
-
-<!-- toast messages ends here -->
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0"><?php echo $translator['Account Transaction Details']; ?></h4>
+        <h4 class="card-title mb-0"><?=$translator['Account Transaction Details']; ?></h4>
     </div>
     <div class="px-4 py-3 border-bottom pager1">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width:105%;">
-                <input type="text" id="transuser" class="form-control queryholdertransaction usernames transuser" placeholder="<?php echo $translator['Search Username']; ?>" />
+                <input type="text" id="transuser" class="form-control queryholdertransaction usernames transuser" placeholder="<?=$translator['Search Username']; ?>" />
                 <input name="usernames" type="hidden" class="" />
                 <select class="form-control useraccount" size="5" style="display: none;" id="userAccountDropdown">
                     <!-- Options will be populated dynamically -->
                 </select>
-                <input type="text" class="form-control queryholdertransaction clearitem" id="transactionId" aria-describedby="name" placeholder="<?php echo $translator['Search Transaction ID']; ?>" />
+                <input type="text" class="form-control queryholdertransaction clearitem" id="transactionId" aria-describedby="name" placeholder="<?=$translator['Search Transaction ID']; ?>" />
 
                 <select name="order_type" class="form-control form-select queryholdertransaction " id="ordertypetrans"
                     data-bs-placeholder="Select Type">
-                    <option value="">-<?php echo $translator['Transaction Type']; ?>-</option>
-                    <option value="1"><?php echo $translator['Deposit']; ?></option>
-                    <option value="2"><?php echo $translator['Win Bonus']; ?></option>
-                    <option value="3"><?php echo $translator['Bet Awarded']; ?></option>
-                    <option value="4"><?php echo $translator['Withdrawal']; ?></option>
-                    <option value="6"><?php echo $translator['Bet Cancelled']; ?></option>
-                    <option value="5"><?php echo $translator['Bet Deduct']; ?></option>
-                    <option value="7"><?php echo $translator['Rebates']; ?></option>
-                    <option value="8"><?php echo $translator['Self Rebate']; ?></option>
-                    <option value="9"><?php echo $translator['Sending Red Envelope']; ?></option>
-                    <option value="10"><?php echo $translator['Red Envelope Receive']; ?></option>
-                    <option value="11"><?php echo $translator['Bet Refund']; ?></option>
-                     <option value="13"><?php echo $translator['Profit Limit']; ?></option>
+                    <option value="">-<?=$translator['Transaction Type']; ?>-</option>
+                    <option value="1"><?=$translator['Deposit']; ?></option>
+                    <option value="2"><?=$translator['Win Bonus']; ?></option>
+                    <option value="3"><?=$translator['Bet Awarded']; ?></option>
+                    <option value="4"><?=$translator['Withdrawal']; ?></option>
+                    <option value="6"><?=$translator['Bet Cancelled']; ?></option>
+                    <option value="5"><?=$translator['Bet Deduct']; ?></option>
+                    <option value="7"><?=$translator['Rebates']; ?></option>
+                    <option value="8"><?=$translator['Self Rebate']; ?></option>
+                    <option value="9"><?=$translator['Sending Red Envelope']; ?></option>
+                    <option value="10"><?=$translator['Red Envelope Receive']; ?></option>
+                    <option value="11"><?=$translator['Bet Refund']; ?></option>
+                     <option value="13"><?=$translator['Profit Limit']; ?></option>
                 </select>
 
                 <select name="order_type" class="form-control form-select queryholdertransaction " id="ordertypetruans"
                     data-bs-placeholder="Select Type">
-                    <option value="">-<?php echo $translator['Status']; ?>-</option>
-                    <option value="1"><?php echo $translator['Completed']; ?></option>
-                    <option value="2"><?php echo $translator['Pending']; ?></option>
-                    <option value="3"><?php echo $translator['Failed']; ?></option>
+                    <option value="">-<?=$translator['Status']; ?>-</option>
+                    <option value="1"><?=$translator['Completed']; ?></option>
+                    <option value="2"><?=$translator['Pending']; ?></option>
+                    <option value="3"><?=$translator['Failed']; ?></option>
                 </select>
 
 
@@ -298,11 +286,11 @@
                     ::
                 </button>
                 <button type="button" class="btn bg-white-subtle accountrefresh" value="right" aria-label="Refresh"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="<?php echo $translator['Refresh']; ?>">
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="<?=$translator['Refresh']; ?>">
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle executetrans" value="end" aria-label="Execute"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="<?php echo $translator['Execute']; ?>">
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="<?=$translator['Execute']; ?>">
                     <i class="bx bx-check-double loadertrans" style="font-size: 20px;"></i>
                 </button>
             </div>
@@ -315,35 +303,35 @@
                 <thead class="text-dark fs-4 tbl-header">
                     <tr class="accheaderrow">
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['ID Number']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=$translator['ID Number']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Username']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=$translator['Username']; ?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Partner Name']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=$translator['Partner Name']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Transaction Type']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=$translator['Transaction Type']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Amount']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=$translator['Amount']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Balance']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=$translator['Balance']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Transaction Time']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=$translator['Transaction Time']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Time Zone/Hrs']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=$translator['Time Zone/Hrs']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Transaction ID']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=$translator['Transaction ID']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Status']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?=$translator['Status']; ?></h6>
                         </th>
                         <th>
 
@@ -358,7 +346,7 @@
                 <tbody id="dataContainer" class="tbl-content">
                     <tr class="no-results">
                         <td colspan="9">
-                            <img src="<?php echo BASE_URL; ?>assets/images/notfound.png" class="dark-logo"
+                            <img src="<?=BASE_URL; ?>assets/images/notfound.png" class="dark-logo"
                                 alt="Logo-Dark" />
                         </td>
                     </tr>
@@ -394,10 +382,10 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowstrans" style="font-size: 12px;">
-            <option value="50"><?php echo $translator['50'] ?></option>
-            <option value="100"><?php echo $translator['100'] ?></option>
-            <option value="200"><?php echo $translator['200'] ?></option>
-            <option value="500"><?php echo $translator['500'] ?></option>
+            <option value="50"><?=$translator['50'] ?></option>
+            <option value="100"><?=$translator['100'] ?></option>
+            <option value="200"><?=$translator['200'] ?></option>
+            <option value="500"><?=$translator['500'] ?></option>
             </select>
             <span id="pagination" class="right-element">--pagination--- </span>
         </span>
@@ -410,7 +398,7 @@
             <div class="modal-body">
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between">
-                        <div><?php echo $translator['Transaction Info']; ?></div>
+                        <div><?=$translator['Transaction Info']; ?></div>
                         <div><i class="bx bx-message-square-x tclose"
                                 style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
                                 aria-label="Close"></i></div>
@@ -441,15 +429,15 @@
                         <thead>
                             <tr>
                                 <!-- <th class="font-weight-normal">#</th> -->
-                                <th class="font-weight-normal"><?php echo $translator['Username']; ?></th>
-                                <th class="font-weight-normal"><?php echo $translator['Level']; ?></th>
-                                <th class="font-weight-normal"><?php echo $translator['Deposit/Withdrawal Type']; ?></th>
-                                <th class="font-weight-normal"><?php echo $translator['Transaction Amount']; ?></th>
-                                <th class="font-weight-normal"><?php echo $translator['Balance']; ?></th>
-                                <th class="font-weight-normal"><?php echo $translator['Transaction Time']; ?></th>
-                                <!-- <th class="font-weight-normal"><?php echo $translator['Turnover Requirement']; ?></th> -->
+                                <th class="font-weight-normal"><?=$translator['Username']; ?></th>
+                                <th class="font-weight-normal"><?=$translator['Level']; ?></th>
+                                <th class="font-weight-normal"><?=$translator['Deposit/Withdrawal Type']; ?></th>
+                                <th class="font-weight-normal"><?=$translator['Transaction Amount']; ?></th>
+                                <th class="font-weight-normal"><?=$translator['Balance']; ?></th>
+                                <th class="font-weight-normal"><?=$translator['Transaction Time']; ?></th>
+                                <!-- <th class="font-weight-normal"><?=$translator['Turnover Requirement']; ?></th> -->
                                 <!-- <th class="font-weight-normal">Bet Slip</th> -->
-                                <th class="font-weight-normal"><?php echo $translator['Reviews']; ?></th>
+                                <th class="font-weight-normal"><?=$translator['Reviews']; ?></th>
                             </tr>
                         </thead>
                         <tbody class="">
@@ -469,17 +457,17 @@
                     <table class="table table-hover table-bordered text-nowrap mb-0 table-responsive" id="transtbls">
                         <thead>
                             <tr>
-                                <th class="font-weight-normal"><?php echo $translator['ID Number']; ?></th>
-                                <th class="font-weight-normal"><?php echo $translator['Username']; ?></th>
-                                <th class="font-weight-normal"><?php echo $translator['Transaction Type']; ?></th>
-                                <th class="font-weight-normal"><?php echo $translator['Amount']; ?></th>
-                                <!-- <th class="font-weight-normal"><?php echo $translator['Credit Amount']; ?></th> -->
-                                <th class="font-weight-normal"><?php echo $translator['Balance']; ?></th>
-                                <th class="font-weight-normal"><?php echo $translator['Transaction Time']; ?></th>
-                                <!-- <th class="font-weight-normal"><?php echo $translator['Game']; ?></th> -->
-                                <th class="font-weight-normal"><?php echo $translator['Transaction ID']; ?></th>
-                                <th class="font-weight-normal"><?php echo $translator['Status']; ?></th>
-                                <!-- <th class="font-weight-normal"><?php echo $translator['Reviews']; ?></th> -->
+                                <th class="font-weight-normal"><?=$translator['ID Number']; ?></th>
+                                <th class="font-weight-normal"><?=$translator['Username']; ?></th>
+                                <th class="font-weight-normal"><?=$translator['Transaction Type']; ?></th>
+                                <th class="font-weight-normal"><?=$translator['Amount']; ?></th>
+                                <!-- <th class="font-weight-normal"><?=$translator['Credit Amount']; ?></th> -->
+                                <th class="font-weight-normal"><?=$translator['Balance']; ?></th>
+                                <th class="font-weight-normal"><?=$translator['Transaction Time']; ?></th>
+                                <!-- <th class="font-weight-normal"><?=$translator['Game']; ?></th> -->
+                                <th class="font-weight-normal"><?=$translator['Transaction ID']; ?></th>
+                                <th class="font-weight-normal"><?=$translator['Status']; ?></th>
+                                <!-- <th class="font-weight-normal"><?=$translator['Reviews']; ?></th> -->
                             </tr>
                         </thead>
                         <tbody class="">
@@ -497,5 +485,5 @@
 </div>
 
 <script class="translations" type="application/json">
-<?php echo json_encode($translator); ?>
+<?=json_encode($translator); ?>
 </script>
