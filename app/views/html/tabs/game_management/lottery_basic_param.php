@@ -580,8 +580,6 @@
                         <div class="col-md-4">
                             <label class="form-label"><?= $translator['Lottery Type']; ?></label>
 
-                            <?= $translator['Select Lottery']; ?>
-
                             <!-- Game Group -->
                             <select class="form-select lotteryTypeSelect game_groups" name="game_groups" id="lottery_types" style="width: 100%;">
                                 <option value="" disabled selected><?= $translator['Select Game Group']; ?></option>

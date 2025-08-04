@@ -154,28 +154,28 @@ class adminController extends Controller
     }
 
     /// ----- WIN LOSS REPORT --------------------------------
-    public function users_win_loss($partnerID, $lottery_id, $start_date, $end_date, $page, $limit)
-    {
-        $this->view('exec/win_loss', ['partner_id' => $partnerID, 'lottery_id' => $lottery_id, 'start_date' => $start_date, 'end_date' => $end_date, 'page' => $page, "limit" => $limit, 'flag' => 'users-win-loss']);
-        $this->view->render();
-    }
-    public function get_top_agents($partnerID, $lottery_id, $start_date, $end_date, $page)
-    {
+    // public function users_win_loss($partnerID, $lottery_id, $start_date, $end_date, $page, $limit)
+    // {
+    //     $this->view('exec/win_loss', ['partner_id' => $partnerID, 'lottery_id' => $lottery_id, 'start_date' => $start_date, 'end_date' => $end_date, 'page' => $page, "limit" => $limit, 'flag' => 'users-win-loss']);
+    //     $this->view->render();
+    // }
+    // public function get_top_agents($partnerID, $lottery_id, $start_date, $end_date, $page)
+    // {
 
-        $this->view('exec/win_loss', ['partner_id' => $partnerID, 'lottery_id' => $lottery_id, 'start_date' => $start_date, 'end_date' => $end_date, 'page' => $page, 'flag' => 'get-top-agents']);
-        $this->view->render();
-    }
-    public function get_subs($partnerID, $user_id, $lottery_id, $start_date, $end_date, $page)
-    {
+    //     $this->view('exec/win_loss', ['partner_id' => $partnerID, 'lottery_id' => $lottery_id, 'start_date' => $start_date, 'end_date' => $end_date, 'page' => $page, 'flag' => 'get-top-agents']);
+    //     $this->view->render();
+    // }
+    // public function get_subs($partnerID, $user_id, $lottery_id, $start_date, $end_date, $page)
+    // {
 
-        $this->view('exec/win_loss', ['partner_id' => $partnerID, 'user_id' => $user_id, 'lottery' => $lottery_id, 'start_date' => $start_date, 'end_date' => $end_date, 'page' => $page, 'flag' => 'get-subs']);
-        $this->view->render();
-    }
-    public function get_user_details($partnerID, $user_id, $lottery_id, $start_date, $end_date, $page)
-    {
-        $this->view('exec/win_loss', ['partner_id' => $partnerID, 'user_id' => $user_id, 'lottery' => $lottery_id, 'start_date' => $start_date, 'end_date' => $end_date, 'flag' => 'get-user-details']);
-        $this->view->render();
-    }
+    //     $this->view('exec/win_loss', ['partner_id' => $partnerID, 'user_id' => $user_id, 'lottery' => $lottery_id, 'start_date' => $start_date, 'end_date' => $end_date, 'page' => $page, 'flag' => 'get-subs']);
+    //     $this->view->render();
+    // }
+    // public function get_user_details($partnerID, $user_id, $lottery_id, $start_date, $end_date, $page)
+    // {
+    //     $this->view('exec/win_loss', ['partner_id' => $partnerID, 'user_id' => $user_id, 'lottery' => $lottery_id, 'start_date' => $start_date, 'end_date' => $end_date, 'flag' => 'get-user-details']);
+    //     $this->view->render();
+    // }
 
     
   
@@ -197,7 +197,6 @@ class adminController extends Controller
 
     public function  fetchBonusTwoSides($lotteryID, $lotteryGameGroup)
     {
-
         $this->view('exec/lottery_bonus_parameters', ["lottery_type" => $lotteryID, "game_group" => $lotteryGameGroup, "flag" => "fetchBonusTwoSides"]);
         $this->view->render();
     }
@@ -224,28 +223,6 @@ class adminController extends Controller
         $this->view->render();
     }
 
-   
-
- 
-
-   
-    //NOTE -
-    ////////////// USER OvERVIEW -//////////
-
-    public function userviewdata()
-    {
-        $this->view('exec/account_manage', ['flag' => 'userviewdata']);
-        $this->view->render();
-    }
-
-
-
-
-
-
-
-
- 
 
     //NOTE -
     //////////////lottery bounus Parameter -//////////
@@ -353,88 +330,6 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    //sms configuration
-    public function fetchsmsplatform($page, $pageLimit){
-      $this->view('exec/platform_settings', ['page' => $page, 'pageLimit' => $pageLimit, 'flag' => 'fetchsms']);
-      $this->view->render();
-    }
-    public function addprovider($smsprovider,$sendename){
-      $this->view('exec/platform_settings', ['smsprovider' => $smsprovider, 'sendename' => $sendename, 'flag' => 'addprovider']);
-      $this->view->render();
-    }
-
-     public function smspreferences(){
-      $this->view('exec/platform_settings', ['flag' => 'savepreferences']);
-      $this->view->render();
-    }
-    public function savesmspreferencestate(){
-      $this->view('exec/platform_settings', ['flag' => 'savesmspreferencestate']);
-      $this->view->render();
-    }
-     public function fetchsmsprovider(){
-      $this->view('exec/platform_settings', ['flag' => 'fetchsmsprovider']);
-      $this->view->render();
-     }
-
-     public function deletesms($smsid){
-      $this->view('exec/platform_settings', ['sms'=>$smsid,'flag' => 'deletesms']);
-      $this->view->render();
-     }
-     
-
-     public function  filtersms($smsprovider,$smsstatus,$startdate,$enddate,$page,$limit){
-      $this->view('exec/platform_settings', [
-        'smsprovider'=>$smsprovider,
-        'smsstatus'=>$smsstatus,
-        'startdate'=>$startdate,
-        'enddate'=>$enddate,
-        'page'=>$page,
-        'limit'=>$limit,
-        'flag' => 'filtersms']);
-      $this->view->render();
-     }
-
-   //email configuration
-      public function fetchemaildata($page, $pageLimit){
-      $this->view('exec/platform_settings', ['page' => $page, 'pageLimit' => $pageLimit, 'flag' => 'fetchemaildata']);
-      $this->view->render();
-    }
-
-     public function emailaddprovider($emailprovider,$sendename){
-      $this->view('exec/platform_settings', ['emailprovider' =>$emailprovider, 'sendename' => $sendename, 'flag' => 'emailaddprovider']);
-      $this->view->render();
-    }
-
-     public function fetchemailprovider(){
-      $this->view('exec/platform_settings', ['flag' => 'fetchemailprovider']);
-      $this->view->render();
-     }
-
-      public function emailpreferences(){
-      $this->view('exec/platform_settings', ['flag' => 'savepreferencesemail']);
-      $this->view->render();
-    }
-    public function savedemailpreferencestate(){
-      $this->view('exec/platform_settings', ['flag' => 'savedemailpreferencestate']);
-      $this->view->render();
-    }
-
-     public function deleteemail($emailid){
-      $this->view('exec/platform_settings', ['email'=>$emailid,'flag' => 'deleteemail']);
-      $this->view->render();
-     }
-     public function  filteremail($emailprovider,$emailstatus,$startdate,$enddate,$page,$limit){
-        $this->view('exec/platform_settings', [
-            'emailprovider'=>$emailprovider,
-            'emailstatus'=>$emailstatus,
-            'startdate'=>$startdate,
-            'enddate'=>$enddate,
-            'page'=>$page,
-            'limit'=>$limit,
-            'flag' => 'filteremail']);
-        $this->view->render();
-     }
-     
      
     // public function searchusername($username)
     // {

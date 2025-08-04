@@ -79,7 +79,7 @@ $(function () {
  
     async function fetchemaildata(page,pageLimit) {
       try {
-        const response = await fetch( `../admin/fetchemaildata/${page}/${pageLimit}`);
+        const response = await fetch( `../platform/fetchemaildata/${page}/${pageLimit}`);
         const data = await response.json();
           // console.log(data)
       //   return
@@ -138,7 +138,7 @@ $(function () {
   
   async function  filteremail(emailprovider,emailstatus,startemail,endemail,currentPage,pageLimit) {
     try {
-        let  response = await fetch(`../admin/filteremail/${emailprovider}/${emailstatus}/${startemail}/${endemail}/${currentPage}/${pageLimit}`);
+        let  response = await fetch(`../platform/filteremail/${emailprovider}/${emailstatus}/${startemail}/${endemail}/${currentPage}/${pageLimit}`);
         const data =  await response.json();
       //  console.log(data)
         ///return
@@ -224,7 +224,7 @@ $(function () {
   })
 
   $(document).on('click', '#addemailsettings', function () {
-    $.post(`../admin/savedemailpreferencestate`, function (response) {
+    $.post(`../platform/savedemailpreferencestate`, function (response) {
       // console.log(response);
       //  return
         let data = typeof response === "string" ? JSON.parse(response)[0] : response;
@@ -264,7 +264,7 @@ $(function () {
     
   //   $(".loaderemails").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
   //   $(".form-reset").val('');
-    $.post(`../admin/emailaddprovider/${emailprovider}/${sendename}`, function (response){
+    $.post(`../platform/emailaddprovider/${emailprovider}/${sendename}`, function (response){
       const results = JSON.parse(response)
       //  console.log(results)
       if(results == "success"){
@@ -283,7 +283,7 @@ $(function () {
   //delete message
   $(document).on("click", ".deleteemail", function () {
       const emailid = $(this).attr("datas");
-      $.post(`../admin/deleteemail/${emailid}`, function (response) {
+      $.post(`../platform/deleteemail/${emailid}`, function (response) {
       if (response) {
           showToast("Success",JSON.parse(response), "success");
           fetchemaildata(currentPage,pageLimit)
@@ -351,12 +351,12 @@ $(function () {
     // console.log(provider)
 
       $.ajax({
-            url: `../admin/emailpreferences`,
+            url: `../platform/emailpreferences`,
             method: "POST",
             contentType: "application/json",
             data: JSON.stringify(emailload),
               success: function (response) {
-                console.log(response)
+                // console.log(response)
               let res = typeof response === "string" ? JSON.parse(response) : response;
                 if(res === "success"){
                   showToast("Heads up!!","Email settings saved","success")
@@ -373,7 +373,7 @@ $(function () {
 
   async function fetchemailprovider() {
         try {
-            const response = await fetch(`../admin/fetchemailprovider`); // Await the fetch call
+            const response = await fetch(`../platform/fetchemailprovider`); // Await the fetch call
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);

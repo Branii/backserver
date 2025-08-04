@@ -115,15 +115,32 @@ class FinancialManageModel extends MEDOOHelper
 
     public static function getUserDataByUsername($uid)
     {
-        return $userInfo = parent::query("SELECT balance,contact FROM users_test WHERE uid = :uid", ["uid" => $uid]);
+        $userInfo = parent::query("SELECT balance, contact, email, reg_type, username FROM users_test   WHERE uid = :uid", ["uid" => $uid]);
+
+        $user = $userInfo[0]; // Since `query()` returns an array of rows
+        if ($user['reg_type'] == 'username') {
+            $username = $user['username'];
+        } elseif ($user['reg_type'] == 'contact') {
+            $username = $user['contact'];
+        } else {
+            $username = $user['email'];
+        }
+
+        return [
+            'balance'  => $user['balance'],
+            'username' => $username,
+            'contact'  => $user['contact'],
+            'email'    => $user['email'],
+        ];
+
     }
 
     public static function addMoneyData($desposittype, $uid, $amount, $username, $review)
     {
 
-        $trans_oderId = bin2hex(random_bytes(4));
+        $trans_oderId = strtoupper(bin2hex(random_bytes(6)));
         $depositid    = $desposittype == 1 ? 'DEPO' . $trans_oderId : 'WITHD' . $trans_oderId;
-        $Data         = self::getUserDataByUsername($uid)[0];
+        $Data         = self::getUserDataByUsername($uid);
 
         if ($desposittype == 1) {
             if ($amount <= 0) {
@@ -147,7 +164,7 @@ class FinancialManageModel extends MEDOOHelper
 
         if ($desposittype == 1) {
             $depositSuccess     = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $username);
-            $newDepositSuccess  = self::insertIntoDepositsNew($uid, $amount, $username, $Data['contact']);
+            $newDepositSuccess  = self::insertIntoDepositsNew($uid, $amount, $username, $Data['contact'],$Data['username'],$Data['email']);
             $transactionSuccess = self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data);
 
             if ($depositSuccess && $newDepositSuccess && $transactionSuccess) {
@@ -156,9 +173,9 @@ class FinancialManageModel extends MEDOOHelper
             }
 
         } elseif ($desposittype == 4) {
-            $depositSuccess        = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance,$username);
+            $depositSuccess        = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $username);
             $transactionSuccess    = self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data);
-            $withdrawManageSuccess = self::insertIntoWithdrawManage($uid, $amount, $Data['contact']);
+            $withdrawManageSuccess = self::insertIntoWithdrawManage($uid, $amount, $Data['contact'],$Data['username'],$Data['email']);
 
             if ($depositSuccess && $transactionSuccess && $withdrawManageSuccess) {
                 self::updateBalance($uid, $recharge_balance);
@@ -186,16 +203,16 @@ class FinancialManageModel extends MEDOOHelper
         return $inserdata = parent::insert("deposits_and_withdrawals", $params);
     }
 
-    public static function insertIntoDepositsNew($uid, $amount, $username, $contact)
+    public static function insertIntoDepositsNew($uid, $amount, $username, $contact, $usernames, $email)
     {
-        $trans_orderId   = strtoupper(bin2hex(random_bytes(4)));
+        $trans_orderId  = strtoupper(bin2hex(random_bytes(6)));
         $depositid      = 'DEPO' . $trans_orderId;
         $manualusername = "Enzerhub";
         $manualemail    = "enzerhub@gmail.com";
         $params         = [
             'user_id'           => $uid,
-            'user_name'         => $manualusername,
-            'user_email'        => $manualemail,
+            'user_name'         => $usernames,
+            'user_email'        => $email,
             'user_mobile'       => $contact,
             'amount_paid'       => $amount,
             'amount_received'   => $amount,
@@ -206,7 +223,7 @@ class FinancialManageModel extends MEDOOHelper
             'status'            => 'success',
             'charges'           => '0',
             'approved_by'       => $username,
-            'deposit_channel'  => '1',
+            'deposit_channel'   => '1',
         ];
         $res      = $inserdata      = parent::insert("deposit_new", $params);
         $provider = PLatFormSettingModel::getActiveProvider('deposit');
@@ -221,20 +238,20 @@ class FinancialManageModel extends MEDOOHelper
         return $res;
     }
 
-    public static function insertIntoWithdrawManage($uid, $amount, $contact)
+    public static function insertIntoWithdrawManage($uid, $amount, $contact, $username, $email)
     {
         $manualusername  = "Enzerhub";
         $manualemail     = "enzerhub@gmail.com";
         $currentDateTime = date('Y-m-d H:i:s');
         $currentTime     = date('H:i:s');
         $currentDate     = date('Y-m-d');
-        $trans_oderId    = bin2hex(random_bytes(4));
+        $trans_oderId    = bin2hex(random_bytes(6));
         $depositid       = 'WITHD' . $trans_oderId;
         $params          = [
             'uid'                         => $uid,
             'withdrawal_id'               => $depositid,
-            'username'                    => $manualusername,
-            'user_email'                  => $manualemail,
+            'username'                    => $username,
+            'user_email'                  => $email,
             'contact'                     => $contact,
             'user_level'                  => 'Vip',
             'bank_type'                   => 'MTN',
@@ -345,7 +362,7 @@ class FinancialManageModel extends MEDOOHelper
         }
 
         if (! empty($states)) {
-            $filterConditions[] = "desposit_channel = '$states'";
+            $filterConditions[] = "deposit_channel = '$states'";
         }
         if (! empty($depositid)) {
             $filterConditions[] = "payment_reference = '$depositid'";
@@ -439,7 +456,7 @@ class FinancialManageModel extends MEDOOHelper
     public static function Withdrawsubquery($username, $widrlChannels, $widrlStatus, $withdrawid, $startdate, $enddate)
     {
         $filterConditions = [];
-         $subQuery  = "";
+        $subQuery         = "";
         if (! empty($username)) {
             $filterConditions[] = "uid = '$username'";
         }
@@ -447,7 +464,7 @@ class FinancialManageModel extends MEDOOHelper
         if (! empty($widrlChannels)) {
             $filterConditions[] = "withdrawal_channel = '$widrlChannels'";
         }
-        
+
         if (! empty($widrlStatus)) {
             $filterConditions[] = "withdrawal_state = '$widrlStatus'";
         }
@@ -477,7 +494,7 @@ class FinancialManageModel extends MEDOOHelper
     {
         $startpoint = ($page - 1) * $limit;
 
-       $sql = "
+        $sql = "
             SELECT
             temp_tables.*,
             users_test.email AS email,
@@ -506,7 +523,7 @@ class FinancialManageModel extends MEDOOHelper
         return ['data' => $data, 'total' => $totalRecords];
     }
 
-     //NOTE -//////////////Withdrawal Records -////////////
+    //NOTE -//////////////Withdrawal Records -////////////
     public static function WithrawalDataManage($page, $limit): array
     {
         try {
@@ -528,18 +545,18 @@ class FinancialManageModel extends MEDOOHelper
         }
     }
 
-    public static function ApproveWithdraw($withdrawalId,$approvedBy)
+    public static function ApproveWithdraw($withdrawalId, $approvedBy)
     {
 
         $params = [
-            'withdrawal_state' => '2' ,// Assuming 2 is the approved state
-            'approved_by'      => $approvedBy
+            'withdrawal_state' => '2', // Assuming 2 is the approved state
+            'approved_by'      => $approvedBy,
         ];
-        $data =  parent::update("withdrawal_manage", $params, ["withdrawalid" => $withdrawalId]);
-        if($data){
+        $data = parent::update("withdrawal_manage", $params, ["withdrawalid" => $withdrawalId]);
+        if ($data) {
             return "success";
         }
-        
+
     }
 
 }

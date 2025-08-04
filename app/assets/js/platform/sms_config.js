@@ -79,7 +79,7 @@ $(function () {
  
     async function fetchsmsplatform(page,pageLimit) {
       try {
-        const response = await fetch( `../admin/fetchsmsplatform/${page}/${pageLimit}`);
+        const response = await fetch( `../platform/fetchsmsplatform/${page}/${pageLimit}`);
         const data = await response.json();
           // console.log(data)
       //   return
@@ -138,7 +138,7 @@ $(function () {
   
   async function  filtersms(smsprovider,smsstatus,startsms,endsms,currentPage,pageLimit) {
     try {
-        let  response = await fetch(`../admin/filtersms/${smsprovider}/${smsstatus}/${startsms}/${endsms}/${currentPage}/${pageLimit}`);
+        let  response = await fetch(`../platform/filtersms/${smsprovider}/${smsstatus}/${startsms}/${endsms}/${currentPage}/${pageLimit}`);
         const data =  await response.json();
       //  console.log(data)
         ///return
@@ -266,7 +266,7 @@ $(function () {
     
   //   $(".loadersmss").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader")
   //   $(".form-reset").val('');
-    $.post(`../admin/addprovider/${smsprovider}/${sendename}`, function (response){
+    $.post(`../platform/addprovider/${smsprovider}/${sendename}`, function (response){
       const results = JSON.parse(response)
       //  console.log(results)
       if(results == "success"){
@@ -287,7 +287,7 @@ $(function () {
       const smsid = $(this).attr("datas");
       // console.log(smsid)
       // return
-      $.post(`../admin/deletesms/${smsid}`, function (response) {
+      $.post(`../platform/deletesms/${smsid}`, function (response) {
       if (response) {
           showToast("Success",JSON.parse(response), "success");
             fetchsmsplatform(currentPage,pageLimit)
@@ -301,7 +301,7 @@ $(function () {
   $(document).on("click", ".editsms", function () {
       $("#editsmsplatform").modal("show");
       const smsid = $(this).attr("datas");
-      $.post(`../admin/editsms/${smsid}`, function (response) {
+      $.post(`../platform/editsms/${smsid}`, function (response) {
           const data = JSON.parse(response)[0];
           $("#maxiamounts").val(data.max_withdrawal);
           $("#minamount").val(data.max_deposit);
@@ -354,7 +354,7 @@ $(function () {
     // $(".loadersmsanup").removeClass("bx-send").addClass("bx-loader-circle bx-spin loader");
 
       $.ajax({
-            url: `../admin/smspreferences`,
+            url: `../platform/smspreferences`,
             method: "POST",
             contentType: "application/json",
             data: JSON.stringify(smsload),
@@ -376,7 +376,7 @@ $(function () {
 
   async function fetchsmsprovider() {
         try {
-            const response = await fetch(`../admin/fetchsmsprovider`); // Await the fetch call
+            const response = await fetch(`../platform/fetchsmsprovider`); // Await the fetch call
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
