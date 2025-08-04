@@ -95,12 +95,11 @@ $(function () {
       getTimeDifferenceFromNow(storedDate);
 
       html += `
-                <tr>
-                    <td>${item.subject}</td>
-                    
+                 <tr>
+                    <td>${item.subject}</td> 
                     <td title="${item.message}" style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            ${truncateToWords(item.message, 10)}
-        </td>
+                      ${truncateToWords(item.message, 10)}
+                   </td>
                     <td>${item.created_at}</td>
                     <td>${timezone}</td>
                     <td>${getTimeDifferenceFromNow(storedDate)}</td>
