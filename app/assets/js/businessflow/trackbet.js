@@ -23,16 +23,7 @@ $(function() {
     return moneyStr;
   }
 
-  const formatText = text => {
-    return text
-      .split("_") // Split the string into parts based on underscores
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
-      .join(" "); // Join the parts back with spaces
-  };
-  const txtNoRule = document.getElementById("trans-norule").innerText;
-  const txtStopIfNotWin = document.getElementById("trans-stopifnotwin")
-    .innerText;
-  const txtStopIfWin = document.getElementById("trans-stopifwin").innerText;
+ 
 
   const translatorScript = document.querySelector(".translations"); // Get the script tag
   const translator = JSON.parse(translatorScript.textContent);
@@ -62,13 +53,8 @@ $(function() {
         item.reg_type === "email"
           ? item.email
           : item.reg_type === "username" ? item.username : item.contact;
-      // let trackrule = item.track_rule == "no_rule" ? "No Rule" : item.track_rule == "stop_if_not_win" ? "Stop If Not Win" : item.track_rule == "stop_if_win" ? "Stop If Win" : "";
-      let trackrule =
-        item.track_rule === "no_rule"
-          ? txtNoRule
-          : item.track_rule === "stop_if_not_win"
-            ? txtStopIfNotWin
-            : item.track_rule === "stop_if_win" ? txtStopIfWin : "";
+       let trackrule = item.track_rule == "no_rule" ? translator['No Rule'] : item.track_rule == "stop_if_not_win" ? translator['Stop If Not Win']: item.track_rule == "stop_if_win" ? translator['Stop If Win']: "";
+    
 
       let timezone = item.timezone.split(" ");
       timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
@@ -213,7 +199,7 @@ $(function() {
 
       const data = await response.json();
       if (data.response == "error") {
-        showToast("Alert", "User does not exist", "info");
+        showToast(translator['Alert'], translator['User does not exist'], "info");
         $(".loader")
           .removeClass("bx bx-loader bx-spin")
           .addClass("bx bx-check-double");
@@ -376,11 +362,7 @@ $(function() {
       $(".startdatetrack").val() == "" &&
       $("#trackcode").val() == ""
     ) {
-      showToast(
-        "Heads up!!",
-        "Select one or more data fields to filter",
-        "info"
-      );
+      showToast(translator['Heads up!!'],translator['Select one or more data fields to filter'],"info");
       return;
     }
     const usernames = $("#trackinput").val();
@@ -460,9 +442,9 @@ $(function() {
         };
 
         const states = {
-          1: "Settled",
-          2: "Unsettled",
-          4: "Cancelled",
+          1:  translator["Settled"],
+          2:  translator["Unsettled"],
+          4:  translator["Cancelled"],
           7: translator["Refund"]
         };
         row.innerHTML = `

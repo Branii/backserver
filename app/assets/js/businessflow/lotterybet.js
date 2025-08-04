@@ -28,27 +28,18 @@ $(function () {
     const Lottery = (data) => {
         let htmls = "";
         // translator["Deposit"]
-        //   const gamemodel = {
-        //       1: translator["Standard"],
-        //       2: translator["Two Sides"],
-        //       3: translator["Road Bets"],
-        //       4: translator["Long Dragon"],
-        //       5: translator["Many Tables"],
-        //       6: translator["Board Games"],
-        //       7: translator["Fantan"],
-        //       8: translator["Trend"],
-        //   };
+          const gamemodel = {
+              1: translator["Standard"],
+              2: translator["Two Sides"],
+              3: translator["Road Bets"],
+              4: translator["Long Dragon"],
+              5: translator["Many Tables"],
+              6: translator["Board Games"],
+              7: translator["Fantan"],
+              8: translator["Trend"],
+          };
 
-        const gamemodel = {
-            1: document.getElementById("gamemodel_1").innerText,
-            2: document.getElementById("gamemodel_2").innerText,
-            3: document.getElementById("gamemodel_3").innerText,
-            4: document.getElementById("gamemodel_4").innerText,
-            5: document.getElementById("gamemodel_5").innerText,
-            6: document.getElementById("gamemodel_6").innerText,
-            7: document.getElementById("gamemodel_7").innerText,
-            8: document.getElementById("gamemodel_8").innerText,
-        };
+    
 
         const betstatus = {
             2: translator["Win"],
