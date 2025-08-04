@@ -7,7 +7,6 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 
 class UserBankManageModel extends MEDOOHelper
 {
-
     //NOTE -
     ////////////// Bank Card  LIST -//////////
     public static function FetchBankcardlistData(array $filters = [], $page = 1, $limit = 20): array
@@ -17,13 +16,11 @@ class UserBankManageModel extends MEDOOHelper
             $offset = ($page - 1) * $limit;
             $whereClause = "";
             $table_name = "user_bank";
-            $params  = [":offset" => $offset, ":limit" => $limit];
+            $params = [":offset" => $offset, ":limit" => $limit];
 
             foreach ($filters as $db_column => $value) {
                 if (!empty($value)) {
-                    $whereClause .= empty($whereClause) ?
-                        " {$table_name}.{$db_column} = :{$db_column} " :
-                        " AND {$table_name}.{$db_column} = :{$db_column}";
+                    $whereClause .= empty($whereClause) ? " {$table_name}.{$db_column} = :{$db_column} " : " AND {$table_name}.{$db_column} = :{$db_column}";
                     $params[":{$db_column}"] = $value;
                 }
             }
@@ -54,13 +51,9 @@ class UserBankManageModel extends MEDOOHelper
     }
     public static function fetchBankTypes($bank_type): array
     {
-
         try {
-            $db = parent::getLink();
-            $stmt = $db->query(
-                "SELECT bank_type FROM user_bank WHERE bank_type LIKE :bank_type GROUP BY bank_type ORDER BY bank_type DESC ",
-                [":bank_type" => "%{$bank_type}%"]
-            );
+            $db = parent::openLink();
+            $stmt = $db->query("SELECT bank_type FROM user_bank WHERE bank_type LIKE :bank_type GROUP BY bank_type ORDER BY bank_type DESC ", [":bank_type" => "%{$bank_type}%"]);
 
             $data = $stmt->fetchAll(PDO::FETCH_OBJ);
             return ["status" => "success", "data" => $data];
@@ -140,11 +133,11 @@ class UserBankManageModel extends MEDOOHelper
         return parent::query($updateSql, $updateParams); // Return the result (affected rows)
     }
     //search usernames
-   public static function Searchusername(string $username)
+    public static function Searchusername(string $username)
     {
-    $query = trim($username); // Clean input
-    $data = parent::query(
-        "SELECT uid, username, email, contact, reg_type
+        $query = trim($username); // Clean input
+        $data = parent::query(
+            "SELECT uid, username, email, contact, reg_type
          FROM users_test
          WHERE 
             (LOWER(username) LIKE LOWER(:search) 
@@ -162,19 +155,21 @@ class UserBankManageModel extends MEDOOHelper
             END,
             username ASC
          LIMIT 50",
-        [
-            'search' => "%$query%",
-            'startsWith' => "$query%",
-            'exactMatch' => $query
-        ]
-    );
+            [
+                'search' => "%$query%",
+                'startsWith' => "$query%",
+                'exactMatch' => $query,
+            ]
+        );
 
-    return $data;
+        return $data;
     }
     //GET USERNAME
     public static function getUserIdByUsername(string $key)
     {
-        if (empty($key)) return [];
+        if (empty($key)) {
+            return [];
+        }
         $db = parent::openLink();
         return parent::query(
             "SELECT uid, username FROM users_test WHERE 
@@ -182,7 +177,7 @@ class UserBankManageModel extends MEDOOHelper
             ['key' => $key]
         );
     }
-    //filter search 
+    //filter search
     public static function FilterpaymentDataSubQuery($uid)
     {
         $filterConditions = [];
@@ -195,12 +190,13 @@ class UserBankManageModel extends MEDOOHelper
         $subQuery .= " ORDER BY u.uid DESC"; // Fixed space before ORDER
         return $subQuery;
     }
-    //filter data in table 
+
+    //filter data in table
     public static function filterpaymentdata($uid, $page, $limit)
     {
         try {
-            $startpoint = (int)(($page - 1) * $limit);
-            $limit = (int)$limit;
+            $startpoint = (int) (($page - 1) * $limit);
+            $limit = (int) $limit;
 
             $sql = "
             SELECT 
@@ -229,7 +225,7 @@ class UserBankManageModel extends MEDOOHelper
         ";
 
             $params = [
-                'uid' => $uid
+                'uid' => $uid,
             ];
 
             $data = parent::query($sql, $params);
@@ -247,6 +243,70 @@ class UserBankManageModel extends MEDOOHelper
             return ['data' => $data, 'total' => $totalRecords];
         } catch (Exception $e) {
             return ["status" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public static function banksubquery($uid, $bankType, $cardNumber, $state)
+    {
+        $filters = [];
+
+        if (!empty($uid)) {
+            $filters["uid"] = $uid;
+        }
+
+        if (!empty($bankType)) {
+            $filters["bank_type"] = $bankType;
+        }
+
+        if (!empty($cardNumber)) {
+            $filters["card_number"] = $cardNumber;
+        }
+
+        if (!empty($state)) {
+            $filters["status"] = $state;
+        }
+
+        return $filters;
+    }
+
+    public static function FilterbankData(array $filters = [], $currentPage = 1, $pageLimit = 20): array
+    {
+        try {
+            $db = parent::openLink();
+            $offset = ($currentPage - 1) * $pageLimit;
+            $table_name = "user_bank";
+            $params = [":offset" => $offset, ":limit" => $pageLimit];
+
+            $whereClause = "";
+            foreach ($filters as $column => $value) {
+                if (!empty($value)) {
+                    $whereClause .= (empty($whereClause) ? "" : " AND ") . "{$table_name}.{$column} = :{$column}";
+                    $params[":{$column}"] = $value;
+                }
+            }
+
+            $whereClause = empty($whereClause) ? "" : " WHERE $whereClause";
+
+            $sql = "
+            SELECT 
+                user_bank.*,
+                (SELECT COUNT(*) FROM user_bank {$whereClause}) AS total_records,
+                users_test.username, 
+                users_test.nickname, 
+                users_test.email
+            FROM user_bank
+            JOIN users_test ON user_bank.uid = users_test.uid 
+            {$whereClause}
+            ORDER BY bank_id DESC
+            LIMIT :offset, :limit
+        ";
+
+            $stmt = $db->query($sql, $params);
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+            return ["status" => "success", "data" => $data];
+        } catch (Exception $e) {
+            return ["status" => "error", "data" => "Internal Server Error."];
         }
     }
 }

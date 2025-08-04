@@ -45,7 +45,7 @@ $(() => {
       $.ajax({
         url: `../admin/fetchLotteryname/${partnerID}`,
         type: "POST",
-        success: function(data) {
+        success: function (data) {
           data = JSON.parse(data);
           let html = `<option value="">${translator["Lottery Type"]}</option>`;
           data.forEach(lottery => {
@@ -54,7 +54,7 @@ $(() => {
 
           $(".wl-selectlottery").html(html);
         },
-        error: function(xhr, status, error) {}
+        error: function (xhr, status, error) { }
       });
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -63,7 +63,7 @@ $(() => {
   fetchLotteryNames();
 
   //
-  $(document).on("click", ".go-back", function() {
+  $(document).on("click", ".go-back", function () {
     if (historyStack.length === 0) {
       // showToast("No Data","No data to show","info");
 
@@ -81,7 +81,7 @@ $(() => {
   });
 
   // Handle dropdown item selection
-  $(document).on("change", ".userDropdown", function() {
+  $(document).on("change", ".userDropdown", function () {
     const selectedOption = $(this).find("option:selected");
     const selectedUserId = selectedOption.val();
     const selectedUsername = selectedOption.data("username");
@@ -96,7 +96,7 @@ $(() => {
   let debounceTimeout = null;
 
   // filter user name
-  $(document).on("keyup", "#wl-username", function() {
+  $(document).on("keyup", "#wl-username", function () {
     const query = $(this).val().trim();
     if (query.length < 1) {
       $(".usr-res-wrapper").hide();
@@ -111,7 +111,7 @@ $(() => {
     }
   });
   // filter user name
-  $(document).on("click", ".fetch-user-win-loss", function() {
+  $(document).on("click", ".fetch-user-win-loss", function () {
     const userID = $("#wl-username").attr("data-user-id");
 
     let lotteryID = $("#wl-selectlottery").val();
@@ -134,12 +134,12 @@ $(() => {
     $.ajax({
       url: `../report/searchWinLossUser/${partnerID}/${userID}/${lotteryID}/${startDate}/${endDate}/`,
       type: "POST",
-      beforeSend: function() {
+      beforeSend: function () {
         $($(element).find("i")[0])
           .removeClass("bx-check-double")
           .addClass("bx-loader bx-spin");
       },
-      success: function(response) {
+      success: function (response) {
         $("#subs-back-btn").hide();
         // console.log(response);
 
@@ -165,12 +165,12 @@ $(() => {
         htmlMarkup = getUserRowMarkup(userObj);
         $("#winLossDtholder").html(htmlMarkup);
       },
-      error: function(xhr, status, error) {
+      error: function (xhr, status, error) {
         // showToast("Error","An Error occured, please try again later.","info");
 
         showToast(errorTitle, errorMsg, "info");
       },
-      complete: function() {
+      complete: function () {
         $($(element).find("i")[0])
           .removeClass("bx-loader bx-spin")
           .addClass("bx-check-double");
@@ -180,7 +180,7 @@ $(() => {
   });
 
   // filter user name
-  $(document).on("click", ".fetch-user-details", function() {
+  $(document).on("click", ".fetch-user-details", function () {
     const numTableRows = $("#winLossDtholder").find("tr.wl-results");
 
     if (numTableRows.length === 0) {
@@ -224,12 +224,12 @@ $(() => {
     $.ajax({
       url: `../report/getUserDetails/${userID}/${lotteryID}/${startDate}/${endDate}/`,
       type: "POST",
-      beforeSend: function() {
+      beforeSend: function () {
         $($(element).find("i")[0])
           .removeClass("bx-check-double")
           .addClass("bx-loader bx-spin");
       },
-      success: function(response) {
+      success: function (response) {
         $("#subs-back-btn").hide();
         response = JSON.parse(response);
         if (response.status === "error") {
@@ -257,12 +257,12 @@ $(() => {
         pagingInfo.push($("#paging_infowl").html());
         $("#winLossDtholder").html(htmlMarkup);
       },
-      error: function(xhr, status, error) {
+      error: function (xhr, status, error) {
         // showToast("Error","Request Error, please try again.","Error");
 
         showToast(errorTitle, errorMsg, "info");
       },
-      complete: function() {
+      complete: function () {
         $($(element).find("i")[0])
           .removeClass("bx-loader bx-spin")
           .addClass("bx-check-double");
@@ -271,7 +271,7 @@ $(() => {
     });
   });
 
-  $(document).on("keyup", "#wl-lottery", function() {
+  $(document).on("keyup", "#wl-lottery", function () {
     const query = $(this).val().trim();
     if (query.length < 1) {
       $(".lot-res-wrapper").hide();
@@ -288,7 +288,7 @@ $(() => {
   });
 
   // Handle dropdown item selection
-  $(document).on("click", ".name-items", function() {
+  $(document).on("click", ".name-items", function () {
     if ($(this).attr("data-username") != undefined) {
       $("#wl-username").val($(this).attr("data-username"));
       $("#wl-username").attr("data-user-id", $(this).attr("data-user-id"));
@@ -301,17 +301,17 @@ $(() => {
   });
 
   // Get Top Agents
-  $(document).on("click", ".fetch-top-agents", function() {
+  $(document).on("click", ".fetch-top-agents", function () {
     fetchTopAgents(1);
   });
 
   // Get Top Agents
-  $(document).on("click", ".fetch-agent-subs", function() {
+  $(document).on("click", ".fetch-agent-subs", function () {
     fetchAgentSubs(this, 1);
   });
 
   // refresh list
-  $(document).on("click", ".wl-refreshlist", function() {
+  $(document).on("click", ".wl-refreshlist", function () {
     $("#wl-username").attr("data-user-id", "");
     $("#wl-username").val("");
     $("#wl-lottery").attr("data-lot-id", "");
@@ -328,7 +328,7 @@ $(() => {
   });
 
   // handle the back button action
-  $(document).on("click", ".back-btn", function() {
+  $(document).on("click", ".back-btn", function () {
     const lastHistory = historyStack.pop(); // get the previous history html markup
     const latestPage = pagesStack.pop(); // get the previous pages html markup
 
@@ -353,7 +353,7 @@ $(() => {
   const fetchbetUser = query => {
     let optionsHtml = "";
 
-    $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function(
+    $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (
       response
     ) {
       try {
@@ -375,23 +375,10 @@ $(() => {
           const user = response[index];
           const username = user[user.regtype];
 
-<<<<<<< HEAD:app/assets/js/ggp_win_loss.js
           optionsHtml +=
             username === undefined
               ? `<li class="name-items"> No Data Found.</li>`
               : `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
-=======
-            optionsHtml +=
-              username === undefined
-                ? `<li class="name-items"> No Data Found.</li>`
-                : `<li class="name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
-          }
-           $("#user-list-wrapper").html(optionsHtml);
-         $(".usr-res-wrapper").show();
-        } catch (error) {
-          console.error("Error parsing response: ", error);
-           $(".userDropdown").hide();
->>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350:app/assets/js/report/ggp_win_loss.js
         }
         $("#user-list-wrapper").html(optionsHtml);
         $(".usr-res-wrapper").show();
@@ -399,7 +386,8 @@ $(() => {
         console.error("Error parsing response: ", error);
         $(".userDropdown").hide();
       }
-    }).fail(function() {
+
+    }).fail(function () {
       console.error("Error fetching users.");
       // $(".userDropdown").hide();
     });
@@ -411,7 +399,7 @@ $(() => {
 
     $.post(
       `../admin/searchLotteryName/${encodeURIComponent(lotteryName)}`,
-      function(response) {
+      function (response) {
         try {
           const getDisplayName = user => {
             if (
@@ -438,13 +426,13 @@ $(() => {
           $(".userDropdown").hide();
         }
       }
-    ).fail(function() {
+    ).fail(function () {
       console.error("Error fetching users.");
       $(".userDropdown").hide();
     });
   };
 
-  $(document).on("click", ".wl-pagination", function() {
+  $(document).on("click", ".wl-pagination", function () {
     if ($(this).parent().hasClass("active")) return;
     const page = $(this).attr("data-page").trim();
     const lottery_id = $("#wl-lottery").attr("data-lot-id");
@@ -453,7 +441,7 @@ $(() => {
     // fetchUsersWinLoss(lottery_id,startDate,endDate,page);
   });
 
-  $(document).on("change", "#wl-numrowstans", function() {
+  $(document).on("change", "#wl-numrowstans", function () {
     const page = $($("#wl-pagination").find(".page-item.active page-link")[0])
       .attr("data-page")
       .trim();
@@ -464,7 +452,7 @@ $(() => {
     // fetchUsersWinLoss(lottery_id,startDate,endDate,page,pageLimit , false);
   });
 
-  $(".playerWinLoss").click(function(e) {
+  $(".playerWinLoss").click(function (e) {
     let direction = $(this).val();
     const tableWrapper = $(".table-wrapperWl");
     const tableWrappers = $(".table-wrapperWl")[0];
@@ -502,12 +490,12 @@ $(() => {
     $.ajax({
       url: `../report/fetchTopAgents/${lotteryID}/${startDate}/${endDate}/${currentPage}/${limit}`,
       type: "POST",
-      beforeSend: function() {
+      beforeSend: function () {
         $($(element).find("i")[0])
           .removeClass("bx-check-double")
           .addClass("bx-loader bx-spin");
       },
-      success: function(response) {
+      success: function (response) {
         $("#subs-back-btn").hide();
         response = JSON.parse(response);
         if (response.status === "error") {
@@ -548,12 +536,12 @@ $(() => {
           "page-top-agents"
         );
       },
-      error: function(xhr, status, error) {
+      error: function (xhr, status, error) {
         // showToast("Error","An Error occured, please try again later.","info");
 
         showToast(errorTitle, errorMsg, "info");
       },
-      complete: function() {
+      complete: function () {
         $($(element).find("i")[0])
           .removeClass("bx-loader bx-spin")
           .addClass("bx-check-double");
@@ -579,13 +567,13 @@ $(() => {
     $.ajax({
       url: `../report/fetchAgentSubs/${partnerID}/${agentID}/${lotteryID}/${startDate}/${endDate}/${flag}/${currentPage}/${limit}`,
       type: "POST",
-      beforeSend: function() {
+      beforeSend: function () {
         $($(element).find("i")[0])
           .removeClass("bx-check-double")
           .addClass("bx-loader bx-spin");
         //  $("#wl-tbl-wrapper").LoadingOverlay("show");
       },
-      success: function(response) {
+      success: function (response) {
         $("#subs-back-btn").hide();
         response = JSON.parse(response);
         if (response.status === "error") {
@@ -630,12 +618,12 @@ $(() => {
           "page-agent-subs"
         );
       },
-      error: function(xhr, status, error) {
+      error: function (xhr, status, error) {
         // showToast("Error","An Error occured, please try again later.","info");
 
         showToast(errorTitle, errorMsg, "info");
       },
-      complete: function() {
+      complete: function () {
         $("#wl-tbl-wrapper").LoadingOverlay("hide");
         // $($(element).find("i")[0]).removeClass("bx-loader bx-spin").addClass("bx-check-double");
         // $("#wl-pagination").html("")
@@ -643,7 +631,7 @@ $(() => {
     });
   };
 
-  $(document).on("click", ".page-top-agents,.page-agent-subs", function() {
+  $(document).on("click", ".page-top-agents,.page-agent-subs", function () {
     const page = parseInt($(this).attr("data-page"));
     if (page < 1) return;
     if ($(this).hasClass("page-top-agents")) {
@@ -743,7 +731,7 @@ const renderPaginationGGP = (elementID, totalPages, currentPage) => {
 
   // Add click event listeners
   document.querySelectorAll(`#${elementID} .page-link`).forEach(link => {
-    link.addEventListener("click", function(e) {
+    link.addEventListener("click", function (e) {
       e.preventDefault();
       const newPage = +this.getAttribute("data-page");
       if (newPage > 0 && newPage <= totalPages) {
@@ -760,7 +748,7 @@ const renderPaginationGGP = (elementID, totalPages, currentPage) => {
 const getUserRowMarkup = userData => {
   const subsBtn =
     parseInt(userData.account_type) === 2 ||
-    parseInt(userData.account_type) === 3
+      parseInt(userData.account_type) === 3
       ? `<div class="btn-group mb-2 fetch-agent-subs" role="group" aria-label="Basic example" data-agent-id="${userData.user_id}" style="border:solid 1px #eee;color:#bbb;background-color:#fff;margin: 0px !important;">
              <button type="button" class="btn bg-white-subtle playerWinLoss" value="wl-rightlist"> Subs </button></div>`
       : "";
@@ -768,8 +756,8 @@ const getUserRowMarkup = userData => {
   return `<tr id='user-id-${userData.user_id}' id='${userData.account_type > 1
     ? "agent"
     : ""}' class='wl-results' data-acc-type='${userData.account_type > 1
-    ? "agent"
-    : ""}'>
+      ? "agent"
+      : ""}'>
         <td> ${userData.username} </td>
         <td> ${userData.num_bettors} </td>
         <td> ${userData.num_bet_tickets} </td>

@@ -572,21 +572,9 @@
                             <input type="text" class="form-control" name="name" id="namee" />
                         </div>
 
-                        <!-- Row 2 -->
-                        <div class="col-md-4">
-                            <label class="form-label"><?= $translator['Number of Balls']; ?></label>
-                            <input type="number" class="form-control" name="number_of_balls" id="numm_of_balls" readonly />
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label"><?= $translator['Seconds Issue']; ?></label>
-                            <select class="form-select secondsselect" name="seconds_per_issue" id="secondss_per_issue">
-                                <option value="" disabled selected><?= $translator['Select Seconds']; ?></option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label"><?= $translator['Min Ball']; ?></label>
-                            <input type="number" class="form-control" name="minn_ball" id="minn_ball" readonly />
-                        </div>
+                     
+                       
+                       
                         <!-- Row 3 -->
                         <div class="col-md-6">
                             <label class="form-label"><?= $translator['Alias']; ?></label>

@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
   const partnerID = $("#partner-holder").attr("data-partner-id");
 
   function showToast(title, message, type) {
@@ -46,8 +46,8 @@ $(function() {
                   <td>${timezone}</td>
                   <td>${item.settlement_completion_time}</td>
                   <td><span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${statusMap[
-                    item.status
-                  ] || item.status}</span></td>
+        item.status
+        ] || item.status}</span></td>
               </tr>`;
     });
 
@@ -89,12 +89,12 @@ $(function() {
       $.ajax({
         url: `../game/getSpecificDraws/${partnerID}/${gameID}/${issueNumber}/${status}/${startDate}/${endDate}/${currentPage}/${pageLimit}`,
         type: "POST",
-        beforeSend: function() {
+        beforeSend: function () {
           $($(element).find("i")[0])
             .removeClass("bx-check-double")
             .addClass("bx-loader bx-spin");
         },
-        success: function(response) {
+        success: function (response) {
           response = JSON.parse(response);
           if (response.status === "error") {
             showToast("Error", response.data, "error");
@@ -124,10 +124,10 @@ $(function() {
             "ltd_paging_info_draws"
           ).innerHTML = `${txtPage} ${currentPage} ${txtOf} ${totalPages} ${txtPages}`;
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           showToast("Error", "Request Error, please contact admin", "error");
         },
-        complete: function() {
+        complete: function () {
           $($(element).find("i")[0])
             .removeClass("bx-loader bx-spin")
             .addClass("bx-check-double");
@@ -233,7 +233,7 @@ $(function() {
     document
       .querySelectorAll("#ltd_paginationDraws .page-link")
       .forEach(link => {
-        link.addEventListener("click", function(e) {
+        link.addEventListener("click", function (e) {
           e.preventDefault();
           const newPage = +this.getAttribute("data-page");
           if (newPage > 0 && newPage <= totalPages) {
@@ -244,11 +244,11 @@ $(function() {
       });
   }
 
-  $(".executegetdrawsb").on("click", function() {
+  $(".executegetdrawsb").on("click", function () {
     getAllSpecificDraws(currentPage, pageLimit, this);
   });
 
-  $(".refreshdraws").on("click", function() {
+  $(".refreshdraws").on("click", function () {
     $("#allGameNames").val(1);
     $("#ltd-issuenumber").val("");
     $("#ltd-status").val(0);
@@ -257,12 +257,12 @@ $(function() {
     getAllSpecificDraws(currentPage, pageLimit, this);
   });
 
-  $(".numrowsbackup").change(function() {
+  $(".numrowsbackup").change(function () {
     const numrow = $(this).val();
     getAllBackups(currentPage, numrow);
   });
 
-  $(".ld_data_scroll").click(function() {
+  $(".ld_data_scroll").click(function () {
     let direction = $(this).val();
     const tableWrapper = $(".ld-table-wrapperDraws");
     const tableWrappers = document.querySelector(".ld-table-wrapperDraws");
@@ -356,7 +356,7 @@ $(function() {
     );
     const headerRowDraws = document.querySelector(".headrowDraws");
 
-    tableContainerDraws.addEventListener("scroll", function() {
+    tableContainerDraws.addEventListener("scroll", function () {
       if (tableContainerDraws.scrollTop > 0) {
         headerRowDraws.classList.add("sticky-headerDraws");
       } else {

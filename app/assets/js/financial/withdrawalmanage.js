@@ -1,47 +1,47 @@
 $(function () {
     const partnerID = $("#partner-holder").attr("data-partner-id");
-  function tableScrollWithdraw() {
-      const tableContainerFinanceWidrl = document.querySelector(".table-wrapperwithdraw");
-      const headerRowFinanceWidrl = document.querySelector(".tbl-row-widrl");
+    function tableScrollWithdraw() {
+        const tableContainerFinanceWidrl = document.querySelector(".table-wrapperwithdraw");
+        const headerRowFinanceWidrl = document.querySelector(".tbl-row-widrl");
 
-      tableContainerFinanceWidrl.addEventListener("scroll", function () {
-          if (tableContainerFinanceWidrl.scrollTop > 0) {
-              headerRowFinanceWidrl.classList.add("sticky-table-head-widrl");
-          } else {
-              headerRowFinanceWidrl.classList.remove("sticky-table-head-widrl");
-          }
-      });
-  }
-  tableScrollWithdraw();
+        tableContainerFinanceWidrl.addEventListener("scroll", function () {
+            if (tableContainerFinanceWidrl.scrollTop > 0) {
+                headerRowFinanceWidrl.classList.add("sticky-table-head-widrl");
+            } else {
+                headerRowFinanceWidrl.classList.remove("sticky-table-head-widrl");
+            }
+        });
+    }
+    tableScrollWithdraw();
 
-  function showToast(title, message, type) {
-      $.toast({
-          position: "bottom-right",
-          title: title,
-          message: message,
-          type: type,
-          duration: 3000, // auto-dismiss after 3s
-      });
-  }
+    function showToast(title, message, type) {
+        $.toast({
+            position: "bottom-right",
+            title: title,
+            message: message,
+            type: type,
+            duration: 3000, // auto-dismiss after 3s
+        });
+    }
 
     const langStrings = {
-    Page: document.getElementById("tr_page").textContent,
-    of: document.getElementById("tr_of").textContent,
-    pages: document.getElementById("tr_pages").textContent
+        Page: document.getElementById("tr_page").textContent,
+        of: document.getElementById("tr_of").textContent,
+        pages: document.getElementById("tr_pages").textContent
     };
 
 
     const status = {
-    1: document.getElementById('status_pending').innerText,
-    2: document.getElementById('status_success').innerText,
-    3: document.getElementById('status_failed').innerText
+        1: document.getElementById('status_pending').innerText,
+        2: document.getElementById('status_success').innerText,
+        3: document.getElementById('status_failed').innerText
     };
 
     const withdrawal_channel = {
-    3: document.getElementById('channel_momo').innerText,
-    5: document.getElementById('channel_crypto').innerText,
-    2: document.getElementById('channel_bank').innerText,
-    4: document.getElementById('channel_manual').innerText
+        3: document.getElementById('channel_momo').innerText,
+        5: document.getElementById('channel_crypto').innerText,
+        2: document.getElementById('channel_bank').innerText,
+        4: document.getElementById('channel_manual').innerText
     };
     function formatMoney(money) {
         let moneyStr = String(money);
@@ -55,16 +55,16 @@ $(function () {
         return moneyStr;
     }
 
-  const withdrawdatas = (data) => {
-      let html = "";
-      const status = { 1: "Pending", 2: "Approved", 3: "Rejected" };
-      const withdrawal_channel = { 3: "Momo", 5: "Crypto", 2: "Bank", 4: "Manual" }; // 3:momo 5:crypto 2:bank 4:manual
-      
-      data.forEach((item) => {
-         let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-        let timezone = item.withdrawal_timezone.split(" ");
-        timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
-          html += `
+    const withdrawdatas = (data) => {
+        let html = "";
+        const status = { 1: "Pending", 2: "Approved", 3: "Rejected" };
+        const withdrawal_channel = { 3: "Momo", 5: "Crypto", 2: "Bank", 4: "Manual" }; // 3:momo 5:crypto 2:bank 4:manual
+
+        data.forEach((item) => {
+            let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+            let timezone = item.withdrawal_timezone.split(" ");
+            timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
+            html += `
         <tr>
             <td>${item.withdrawal_id}</td>
             <td>${username}</td>
@@ -92,24 +92,24 @@ $(function () {
              </td>
         </tr>
           `;
-      });
-      return html;
-  };
+        });
+        return html;
+    };
 
-  const renderwithdraws = (data) => {
-      var html = withdrawdatas(data);
-      $("#withdrawContainers").html(html);
-  };
+    const renderwithdraws = (data) => {
+        var html = withdrawdatas(data);
+        $("#withdrawContainers").html(html);
+    };
 
     let currentPage = 1;
     let pageLimit = 20;
 
-    async function fetchwithdrawmanage(currentPage,pageLimit) {
+    async function fetchwithdrawmanage(currentPage, pageLimit) {
         try {
-            
+
             let response = await fetch(`../financial/fetchwithdrawmanage/${currentPage}/${pageLimit}`);
             data = await response.json();
-            console.log(data)
+            // console.log(data)
             //return
             $("#maskwithdraws").LoadingOverlay("hide");
             renderwithdraws(data.withdraws);
@@ -119,7 +119,7 @@ $(function () {
             console.error("Error fetching data:", error);
         }
     }
-    fetchwithdrawmanage(currentPage,pageLimit)
+    fetchwithdrawmanage(currentPage, pageLimit)
 
     function renderwithdrawsPagination(totalPages, currentPage, pageLimit, callback) {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
@@ -193,11 +193,11 @@ $(function () {
         fetchwithdrawmanage(currentPage, pageLimit);
     });
 
-     $(document).on("click", ".widrl-searchs", function () {
-        if ($("#withdrawalnames").val() == "" && $("#widrl-channelss").val() == ""&& $("#widrl-states").val() == ""&& $("#widrl-IDs").val() == ""
-        && $(".wdrl-startdates").val() == ""  && $(".wdrl-enddates").val() == "" ) {
+    $(document).on("click", ".widrl-searchs", function () {
+        if ($("#withdrawalnames").val() == "" && $("#widrl-channelss").val() == "" && $("#widrl-states").val() == "" && $("#widrl-IDs").val() == ""
+            && $(".wdrl-startdates").val() == "" && $(".wdrl-enddates").val() == "") {
             // $("#danger-finance").modal("show");
-             showToast("Heads up!!","Select one or more data fields to filter","info")
+            showToast("Heads up!!", "Select one or more data fields to filter", "info")
             // showToast(headsUpText, selectFieldsText, "info");
             return;
         }
@@ -205,20 +205,20 @@ $(function () {
         const withrawchanels = $("#widrl-channelss").val();
         const withdrawstate = $("#widrl-states").val();
         const withdrawid = $("#widrl-ID").val();
-        const startwithdraw= $(".wdrl-startdates").val();
-        const endwithdraw= $(".wdrl-enddates").val();
-       // console.log(username,withrawchanels,withdrawstate,withdrawid,startwithdraw,endwithdraw)
-       //  return
-        filterwithdraw(username, withrawchanels, withdrawstate, withdrawid,startwithdraw,endwithdraw, currentPage, pageLimit);
+        const startwithdraw = $(".wdrl-startdates").val();
+        const endwithdraw = $(".wdrl-enddates").val();
+        // console.log(username,withrawchanels,withdrawstate,withdrawid,startwithdraw,endwithdraw)
+        //  return
+        filterwithdraw(username, withrawchanels, withdrawstate, withdrawid, startwithdraw, endwithdraw, currentPage, pageLimit);
         $(".loaderwithdraw").removeClass("bx-check-double").addClass("bx-loader bx-spin");
     });
 
-    async function filterwithdraw(username, withrawchanels, withdrawstate,withdrawid, startwithdraw,endwithdraw, currentPage, pageLimit){
+    async function filterwithdraw(username, withrawchanels, withdrawstate, withdrawid, startwithdraw, endwithdraw, currentPage, pageLimit) {
         $.post(`../financial/filterwithdraw/${username}/${withrawchanels}/${withdrawstate}/${withdrawid}/${startwithdraw}/${endwithdraw}/${currentPage}/${pageLimit}`, function (response) {
             try {
                 const data = JSON.parse(response);
-              //  console.log(data)
-               //  return
+                //  console.log(data)
+                //  return
                 $(".loaderwithdraw").removeClass("bx-loader bx-spin").addClass("bx-check-double");
                 if (data.withdrawx.length < 1) {
                     $("#withdrawContainers").html(`
@@ -230,10 +230,10 @@ $(function () {
                `);
                     return;
                 }
-                  $("#maskwithdraw").LoadingOverlay("hide");
+                $("#maskwithdraw").LoadingOverlay("hide");
                 renderwithdraws(data.withdrawx);
-                renderwithdrawsPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) =>filterwithdraw(username, withrawchanels, withdrawstate, startwithdraw,endwithdraw, newPage, pageLimit));
-               document.getElementById("paging_infowithdraw").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+                renderwithdrawsPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterwithdraw(username, withrawchanels, withdrawstate, startwithdraw, endwithdraw, newPage, pageLimit));
+                document.getElementById("paging_infowithdraw").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
             } catch (error) {
                 console.error("Error parsing JSON response:", error);
             } finally {
@@ -289,29 +289,29 @@ $(function () {
     // Function to fetch and display users
     function fetchUserss(query) {
         let optionsHtml = '';
-    
+
         $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
             try {
-             response = typeof response === 'string' ? JSON.parse(response) : response;
-             response.forEach(user => {
-           let   displayValue;
-           let regname;
-            // Display based on regtype
-            if (user.regtype === "email") {
-               displayValue = user.email;
-               regname = user.email;  // Show email
-            } else if (user.regtype === "username") {
-              displayValue = user.username;
-              regname = user.username;  // Show username
-            } else if (user.regtype === "contact") {
-              displayValue = user.contact;
-              regname  = user.contact;  // Show contact
-            }else{
-              displayValue = 'no data found ...';
-             }
-              // Append the option to the optionsHtml string
-              optionsHtml += `<option class="optionlists" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
-          });
+                response = typeof response === 'string' ? JSON.parse(response) : response;
+                response.forEach(user => {
+                    let displayValue;
+                    let regname;
+                    // Display based on regtype
+                    if (user.regtype === "email") {
+                        displayValue = user.email;
+                        regname = user.email;  // Show email
+                    } else if (user.regtype === "username") {
+                        displayValue = user.username;
+                        regname = user.username;  // Show username
+                    } else if (user.regtype === "contact") {
+                        displayValue = user.contact;
+                        regname = user.contact;  // Show contact
+                    } else {
+                        displayValue = 'no data found ...';
+                    }
+                    // Append the option to the optionsHtml string
+                    optionsHtml += `<option class="optionlists" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
+                });
                 $('.withdrawsDropdowns').html(optionsHtml).show();
             } catch (error) {
                 console.error("Error parsing response: ", error);
@@ -330,16 +330,16 @@ $(function () {
     });
     let withdrawalId;
     $(document).on("click", ".btnapprove", function () {
-         withdrawalId = $(this).data("uid")
+        withdrawalId = $(this).data("uid")
     });
 
     $(document).on("click", ".btncontinue", function () {
-         const approvedby = $(".approved").val();
+        const approvedby = $(".approved").val();
 
         $.post(`../financial/approvewithdraw/${withdrawalId}/${approvedby}`, function (response) {
             try {
                 const data = JSON.parse(response);
-              //  console.log(data)
+                //  console.log(data)
                 //return
                 if (data === "success") {
                     showToast("Success", "Withdrawal approved successfully", "success");

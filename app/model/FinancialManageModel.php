@@ -206,7 +206,7 @@ class FinancialManageModel extends MEDOOHelper
             'status'            => 'success',
             'charges'           => '0',
             'approved_by'       => $username,
-            'desposit_channel'  => '1',
+            'deposit_channel'  => '1',
         ];
         $res      = $inserdata      = parent::insert("deposit_new", $params);
         $provider = PLatFormSettingModel::getActiveProvider('deposit');
@@ -268,21 +268,12 @@ class FinancialManageModel extends MEDOOHelper
 
     public static function timezoneConverter(string $otherTzName = "")
     {
-<<<<<<< HEAD
-        date_default_timezone_set("Africa/Accra");  
-        $serverZone = new DateTimeZone(date_default_timezone_get());
-        $otherTzName  = "Asia/Shanghai";
-        $otherZone  = new DateTimeZone($otherTzName);
-        $now        = new DateTime('now', $serverZone);
-    
-=======
         date_default_timezone_set("Africa/Accra");
         $serverZone  = new DateTimeZone(date_default_timezone_get());
         $otherTzName = "Asia/Shanghai";
         $otherZone   = new DateTimeZone($otherTzName);
         $now         = new DateTime('now', $serverZone);
 
->>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
         $serverOffset = $serverZone->getOffset($now);
         $otherOffset  = $otherZone->getOffset($now);
         $diffSeconds  = $otherOffset - $serverOffset;
@@ -354,7 +345,7 @@ class FinancialManageModel extends MEDOOHelper
         }
 
         if (! empty($states)) {
-            $filterConditions[] = "desposit_channel = '$states'";
+            $filterConditions[] = "deposit_channel = '$states'";
         }
         if (! empty($depositid)) {
             $filterConditions[] = "payment_reference = '$depositid'";

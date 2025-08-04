@@ -67,12 +67,7 @@ class gameController extends Controller
         $this->view->render();
     }
 
-<<<<<<< HEAD
-    ////////////// LOTTERY  PARAM FUNCTIONS  - //////////
-
-=======
     ////////////// LOTTERY BONUS  PARAMETERS FUNCTIONS  - //////////
->>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
     public function getAllGamesLottery()
     {
         $this->view('exec/game_management', ['flag' => 'getAllGamesLottery']);
@@ -111,14 +106,10 @@ class gameController extends Controller
             'oddpercent' => $oddpercent,
             'newodds' => $newodds,
             'totalbetpercent' => $totalbetpercent,
-<<<<<<< HEAD
-            'newtotalbet' => $newtotalbet,
-=======
             'newtotalbet'     => $newtotalbet,
             'gametype'        => $gametype,
             'isSpecial'       => $isSpecial
 
->>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
         ]);
         $this->view->render();
     }
@@ -158,15 +149,6 @@ class gameController extends Controller
         $this->view->render();
     }
 
-<<<<<<< HEAD
-    public function addlottery($name, $alias, $gamegroups, $numberofballs, $min_ball, $max_ball, $secondsperissue, $starttime, $stoptime, $lotterymodel, $lotteryType, $logoFileName)
-    {
-        // Decode all parameters
-        $name = urldecode($name);
-        $alias = urldecode($alias);
-        $gamegroups = urldecode($gamegroups);
-        $logoFileName = urldecode($logoFileName);
-=======
     //reset all odds
     public function resetAllOdds()
     {
@@ -198,8 +180,19 @@ class gameController extends Controller
            
     public function addlottery($name, $alias, $gamegroups, $numberofballs, $min_ball, $max_ball, $secondsperissue, $starttime, $stoptime, $lotterymodel, $lotteryType, $logoFileName)
     {
-        
->>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
+    //     var_dump($name);
+    // var_dump($alias);
+    // var_dump($gamegroups);
+    // var_dump($numberofballs);
+    // var_dump($min_ball);
+    // var_dump($max_ball);
+    // var_dump($secondsperissue);
+    // var_dump($starttime);
+    // var_dump($stoptime);
+    // var_dump($lotterymodel);
+    // var_dump($lotteryType);
+    // var_dump($logoFileName);
+    // exit;
         $this->view('exec/lottery_basic_params', [
             'name' => $name,
             'alias' => $alias,
@@ -218,11 +211,7 @@ class gameController extends Controller
         $this->view->render();
     }
 
-<<<<<<< HEAD
-    public function getTimegames()
-=======
      public function getTimegames()
->>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
     {
         $this->view('exec/game_management', ['flag' => 'getTimegames']);
         $this->view->render();
@@ -233,8 +222,4 @@ class gameController extends Controller
         $this->view('exec/game_management', ['flag' => 'getAllGamesModels']);
         $this->view->render();
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
 }

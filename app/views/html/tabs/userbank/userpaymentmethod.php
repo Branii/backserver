@@ -487,9 +487,7 @@
                     </div>
                 </form>
 
-                <div id="loadingIndicator" class="spinner-border text-primary" role="status" style="display: none; position: relative; left: 40%;">
-                    <span class="sr-only">Loading...</span>
-                </div>
+                
 
                 <div id="userpaymenttbl">
                     <table class="table table-hover table-bordered text-nowrap mb-0 table-responsive" id="uerpaymenttbl">
@@ -506,9 +504,7 @@
                     </table>
                 </div>
 
-                <div id="loadingIndicator" class="spinner-border text-primary" role="status" style="display: none; position: relative; left: 40%;">
-                    <span class="sr-only">Loading...</span>
-                </div>
+              
             </div>
         </div>
         <!-- /.modal-content -->

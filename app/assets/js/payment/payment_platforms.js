@@ -10,149 +10,7 @@ $(function() {
       duration: 3000 // auto-dismiss after 3s
     });
   }
-  const txtPage = document.getElementById("trans-page").innerText;
-  const txtOf = document.getElementById("trans-of").innerText;
-  const txtPages = document.getElementById("trans-pages").innerText;
-
-  function getTranslation(id, fallback) {
-      return document.getElementById(id)?.dataset.translation || fallback;
-  }
-
-  function replacePlaceholder(template, value) {
-      return template.replace("{field}", value);
-  }
-
-  const EdittText = document.getElementById("Editt-text")?.dataset.translation || "Edit";
-  const DeleteeText = getTranslation("Deletee-text", "Delete");
-
-  const headsUpText = getTranslation("trans-heads-up", "Heads up!");
-  const fieldRequiredTemplate = getTranslation("trans-field-required", "Field {field} is required.");
-
-  const fieldNameTranslations = {
-      paymentname: getTranslation("trans-paymentname", "Payment Name"),
-      currencytype: getTranslation("trans-currencytype", "Currency Type"),
-      paylogo: getTranslation("trans-paylogo", "Pay Logo"),
-      currencystate: getTranslation("trans-currencystate", "Currency State"),
-      maxiamount: getTranslation("trans-maxiamount", "Max Amount"),
-      miniamount: getTranslation("trans-miniamount", "Min Amount"),
-      currencyselect: getTranslation("trans-currencyselect", "Currency Select"),
-      approvedby: getTranslation("trans-approvedby", "Approved By"),
-  };
-
-  // Example key
-  // const key = "Username"; // or dynamically looped key
-  // const requiredMessage = replacePlaceholder(fieldRequiredTemplate, key);
-
-  // Proceed with your form submission here if validation passes
-
-  // Show toast
-  // showToast(headsUpText, requiredMessage, "info");
-
-  // Get translations
-
-  const selectFieldsText = getTranslation(
-    "trans-select-fields",
-    "Select one or more data fields to filter"
-  );
-  const allFieldsText = getTranslation(
-    "trans-all-fields",
-    "All fields are required"
-  );
-  const failedText = getTranslation("trans-failed", "Failed");
-
-  // ✅ Toast with translation
-  // showToast(headsUpText, selectFieldsText, "info");
-  // showToast(headsUpText, allFieldsText, "info");
-  // showToast(headsUpText, failedText, "info");
-  function formatMoney(money) {
-    let moneyStr = String(money);
-    if (moneyStr.includes(".")) {
-      let parts = moneyStr.split(".");
-      if (parts[1].length > 2) {
-        parts[1] = parts[1].substring(0, 4);
-      }
-      moneyStr = parts.join(".").replace(/\.?0+$/, "");
-    }
-<<<<<<< HEAD:app/assets/js/payment_platforms.js
-    return moneyStr;
-  }
-  const states = {
-    1: "Manual payment",
-    2: "Bank Transfer",
-    3: "Momo",
-    5: "Crypto"
-  };
-=======
-    const txtPage = document.getElementById("trans-page").innerText;
-    const txtOf = document.getElementById("trans-of").innerText;
-    const txtPages = document.getElementById("trans-pages").innerText;
->>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350:app/assets/js/payment/payment_platforms.js
-
-  const activeText = document.getElementById("translate-active").dataset.value;
-  const inactiveText = document.getElementById("translate-inactive").dataset
-    .value;
-  const hiddenText = document.getElementById("translate-hidden").dataset.value;
-  const paymentdata = data => {
-    let html = "";
-
-    data.forEach(item => {
-      const bankstatus =
-        item.bank_status === "active"
-          ? `<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">${activeText}</span>`
-          : item.bank_status === "inactive"
-            ? `<span class="badge fw-semibold py-1 w-85 bg-info-subtle text-warning">${inactiveText}</span>`
-            : `<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-info">${hiddenText}</span>`;
-      //  const bankstatus = item.bank_status === 'active' ? '<span class="badge fw-semibold py-1 w-85 bg-success-subtle text-success">Active</span>':item.bank_status=="inactive" ? '<span class="badge fw-semibold py-1 w-85 bg-info-subtle text-warning">Inactive</span>':'<span class="badge fw-semibold py-1 w-85 bg-warning-subtle text-info">Hidden</span>'
-
-      let timezone = item.timezone.split(" ");
-      timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
-
-<<<<<<< HEAD:app/assets/js/payment_platforms.js
-      html += `
-=======
-    function replacePlaceholder(template, value) {
-        return template.replace("{field}", value);
-    }
-
-    const EdittText = document.getElementById("Editt-text")?.dataset.translation || "Edit";
-    const DeleteeText = getTranslation("Deletee-text", "Delete");
-
-    const headsUpText = getTranslation("trans-heads-up", "Heads up!");
-    const fieldRequiredTemplate = getTranslation("trans-field-required", "Field {field} is required.");
-
-    const fieldNameTranslations = {
-        paymentname: getTranslation("trans-paymentname", "Payment Name"),
-        currencytype: getTranslation("trans-currencytype", "Currency Type"),
-        paylogo: getTranslation("trans-paylogo", "Pay Logo"),
-        currencystate: getTranslation("trans-currencystate", "Currency State"),
-        maxiamount: getTranslation("trans-maxiamount", "Max Amount"),
-        miniamount: getTranslation("trans-miniamount", "Min Amount"),
-        currencyselect: getTranslation("trans-currencyselect", "Currency Select"),
-        approvedby: getTranslation("trans-approvedby", "Approved By"),
-    };
-
-   
-    const selectFieldsText = getTranslation("trans-select-fields", "Select one or more data fields to filter");
-    const allFieldsText = getTranslation("trans-all-fields", "All fields are required");
-    const failedText = getTranslation("trans-failed", "Failed");
-
-    function formatMoney(money) {
-        let moneyStr = String(money);
-        if (moneyStr.includes(".")) {
-            let parts = moneyStr.split(".");
-            if (parts[1].length > 2) {
-                parts[1] = parts[1].substring(0, 4);
-            }
-            moneyStr = parts.join(".").replace(/\.?0+$/, "");
-        }
-        return moneyStr;
-    }
-    const states = {
-        1: "Manual payment",
-        2: "Bank Transfer",
-        3: "Momo",
-        5: "Crypto",
-    };
+ 
 
     const activeText = document.getElementById("translate-active").dataset.value;
     const inactiveText = document.getElementById("translate-inactive").dataset.value;
@@ -173,7 +31,6 @@ $(function() {
             timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
 
             html += `
->>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350:app/assets/js/payment/payment_platforms.js
                       <tr>
                           <td>${item.name}</td>
                           <td>${item.bank_type}</td>
@@ -191,10 +48,10 @@ $(function() {
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"> 
                             <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 editpayment" href="javascript:void(0);" datas ="${item.bankid}"> 
-                                <i class="bx bx-edit fs-5" ></i>${EdittText}
+                                <i class="bx bx-edit fs-5" ></i>Edit
                             </a>
                                 <a class="dropdown-item deletepayment cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="${item.bankid}">
-                                <i class="bx bx-trash fs-5"></i>${DeleteeText}
+                                <i class="bx bx-trash fs-5"></i>Delete
                             </a>
                             </div>
                             </div>
@@ -228,10 +85,10 @@ $(function() {
         pageLimit,
         (newPage, pageLimit) => fetchPaymentPlatform(newPage, pageLimit)
       );
-      // document.getElementById("paging_infopayment").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
-      document.getElementById(
-        "paging_infopayment"
-      ).innerHTML = `${txtPage} ${page} ${txtOf} ${data.totalPages} ${txtPages}`;
+      document.getElementById("paging_infopayment").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+      // document.getElementById(
+      //   "paging_infopayment"
+      // ).innerHTML = `${txtPage} ${page} ${txtOf} ${data.totalPages} ${txtPages}`;
     } catch (error) {
       console.error("Error fetching data:", error);
     }

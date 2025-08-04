@@ -245,16 +245,17 @@
     color: #909aa9;
     margin: 0px 1rem;
     }
+
 </style>
 
-<span id="Editt-text" data-translation="<?= $translator['Edit'] ?? 'Edit'; ?>" style="display:none;"></span>
-<span id="Deletee-text" data-translation="<?= $translator['Delete'] ?? 'Delete'; ?>" style="display:none;"></span>
-  
+<span id="Editt-text" data-translation="<?php echo $translator['Edit'] ?? 'Edit';?>" style="display:none;"></span>
+<span id="Deletee-text" data-translation="<?php echo $translator['Delete'] ?? 'Delete';?>" style="display:none;"></span>
+
 <!-- Hidden translation spans -->
-<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp'] ?? 'Heads up!!'; ?>" style="display:none;"></span>
-<span id="trans-select-fields" data-translation="<?= $translator['Select one or more data fields to filter'] ?? 'Select one or more data fields to filter'; ?>" style="display:none;"></span>
-<span id="trans-all-fields" data-translation="<?= $translator['AllFieldsRequired'] ?? 'All fields are required'; ?>" style="display:none;"></span>
-<span id="trans-failed" data-translation="<?= $translator['Failed'] ?? 'Failed'; ?>" style="display:none;"></span>
+<span id="trans-heads-up" data-translation="<?php echo $translator['HeadsUp'] ?? 'Heads up!!';?>" style="display:none;"></span>
+<span id="trans-select-fields" data-translation="<?php echo $translator['Select one or more data fields to filter'] ?? 'Select one or more data fields to filter';?>" style="display:none;"></span>
+<span id="trans-all-fields" data-translation="<?php echo $translator['AllFieldsRequired'] ?? 'All fields are required';?>" style="display:none;"></span>
+<span id="trans-failed" data-translation="<?php echo $translator['Failed'] ?? 'Failed';?>" style="display:none;"></span>
 
 
 <span id="trans-no-user-selected-title" style="display: none;"><?php echo $translator['NO_USER_SELECTED_TITLE']; ?></span>
@@ -263,9 +264,9 @@
 <span id="all_fields_required_text" style="display:none;"><?php echo $translator['ALL_FIELDS_REQUIRED']; ?></span>
 <span id="cannot_update_if_empty_text" style="display:none;"><?php echo $translator['CANNOT_UPDATE_IF_EMPTY']; ?></span>
 
-<span id="trans-page" class="hidden" style="display:none;"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" class="hidden" style="display:none;"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" class="hidden" style="display:none;"><?= $translator['pages'] ?? 'pages' ?></span>
+<span id="trans-page" class="hidden" style="display:none;"><?php echo $translator['Page'] ?? 'Page'?></span>
+<span id="trans-of" class="hidden" style="display:none;"><?php echo $translator['of'] ?? 'of'?></span>
+<span id="trans-pages" class="hidden" style="display:none;"><?php echo $translator['pages'] ?? 'pages'?></span>
 
 
 
@@ -275,26 +276,26 @@
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0"><?= $translator['Announcement List']; ?></h4>
+        <h4 class="card-title mb-0"><?php echo $translator['Announcement List'];?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist">
         <span class="top-left-btn">
             <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding: 5px; width: auto;">
                 <input type="text" id="financeDropdownnotify" class="form-control queryholderlistt usernames"
-                    placeholder=" <?= $translator['Search usernames']; ?>" />
+                    placeholder=" <?php echo $translator['Search usernames'];?>" />
                 <input name="usernames" type="hidden" class="userIdfinance" />
                 <select class="form-control annoucementDropdown" size="5" style="display: none;" id="userfinaceDropdownnotify">
                     <!-- Options will be populated dynamically -->
-                    
+
                 </select>
 
                 <select name="betsate" class="form-control form-select queryholderlistt messagestype"
                     data-bs-placeholder="Select Type">
-                    <option value="">-<?= $translator['Message Type']; ?>-</option>
-                    <option value="general"><?= $translator['Annoucememnt']; ?></option>
-                    <option value="personal"><?= $translator['Notification']; ?></option>
-                 
+                    <option value="">-<?php echo $translator['Message Type'];?>-</option>
+                    <option value="general"><?php echo $translator['Annoucememnt'];?></option>
+                    <option value="personal"><?php echo $translator['Notification'];?></option>
+
                 </select>
 
                 <input name="startdate" type="date" class="form-control queryholderlistt startfmessage"
@@ -343,39 +344,39 @@
                 <thead class="text-dark fs-4 tbl-financeheads">
                     <tr class="financeheadrows">
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Title']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Title'];?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Content']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Content'];?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Message Time']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Message Time'];?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Timezone/Hrs']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Timezone/Hrs'];?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Message Duration']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Message Duration'];?></h6>
                         </th>
 
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Message Type']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Message Type'];?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['All User/Personal']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['All User/Personal'];?></h6>
                         </th>
-                      
-                      
+
+
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Created By']; ?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?php echo $translator['Created By'];?></h6>
                         </th>
-                       
-                        
+
+
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class='bx bx-dots-vertical-rounded'></i></h6>
                         </th>
@@ -419,12 +420,12 @@
                 <option value="100">100</option>
                 <option value="200">200</option>
                 <option value="500">500</option> -->
-            <option value="20"><?= $translator['20'] ?? '20' ?></option>
-                      <option value="50"><?= $translator['50'] ?? '50' ?></option>
-    <option value="100"><?= $translator['100'] ?? '100' ?></option>
-    <option value="200"><?= $translator['200'] ?? '200' ?></option>
-    <option value="500"><?= $translator['500'] ?? '500' ?></option>
-  
+            <option value="20"><?php echo $translator['20'] ?? '20'?></option>
+                      <option value="50"><?php echo $translator['50'] ?? '50'?></option>
+    <option value="100"><?php echo $translator['100'] ?? '100'?></option>
+    <option value="200"><?php echo $translator['200'] ?? '200'?></option>
+    <option value="500"><?php echo $translator['500'] ?? '500'?></option>
+
             </select>
             <span class="toplist-right" id="paginationmessage" aria-label="Page navigation example">
                 <!--Dynamic pagination-->
@@ -444,7 +445,7 @@
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div><?= $translator['Annoucement']; ?></div>
+                        <div><?php echo $translator['Annoucement'];?></div>
                         <div><i class="bx bx-message-square-x tclose"style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
                     </div>
                 </div>
@@ -455,19 +456,19 @@
                     <!-- Rebate Field -->
                     <div class="form-floating mb-3">
                         <select name="deposit" class="form-select form-control borders border-infos messagetype">
-                        <option value="general"><?= $translator['General Announcement (All Users)']; ?></option>
-                        <option value="new_users"><?= $translator['Newly Registered Users Only']; ?></option>
-                        <option value="personal"><?= $translator['User-Specific Announcement']; ?></option>
-                        <option value="vipusers"><?= $translator['VIP Users Only']; ?></option>
+                        <option value="general"><?php echo $translator['General Announcement (All Users)'];?></option>
+                        <option value="new_users"><?php echo $translator['Newly Registered Users Only'];?></option>
+                        <option value="personal"><?php echo $translator['User-Specific Announcement'];?></option>
+                        <option value="vipusers"><?php echo $translator['VIP Users Only'];?></option>
                         </select>
                         <label>
                             <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
-                            <span class="border-start ps-3"><?= $translator['Annoucement Type']; ?></span>
+                            <span class="border-start ps-3"><?php echo $translator['Annoucement Type'];?></span>
                         </label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" id="financeinputnot" class="form-control" placeholder="<?= $translator['Search usernames']; ?>" />
+                        <input type="text" id="financeinputnot" class="form-control" placeholder="<?php echo $translator['Search usernames'];?>" />
                         <input type="hidden" class="userIdFieldss" />
                         <select name="usernames" class="form-control financeDropdownu" size="5" style="display: none;"
                             id="userfinaceDropdownl">
@@ -476,14 +477,14 @@
 
                         <label>
                             <i class="bx bx-user me-2 fs-4 text-infod"></i>
-                            <span class="border-start ps-3"><?=$translator['Username']; ?></span>
+                            <span class="border-start ps-3"><?php echo $translator['Username'];?></span>
                         </label>
                     </div>
 
                     <div class="input-group mb-3">
                     <span class="input-group-text" id="" style="background-color:rgb(238,238,238,.4);border:solid 1px #ddd"><i class='bx bxs-calendar' style="font-size:18px;"></i></span>
-                    <input type="date" class="form-control notistartdate" placeholder=" <?=$translator['Search']; ?>..." id="combinedatess" aria-describedby="basic-addon1" />
-                    <input type="date" class="form-control notienddates" placeholder="<?=$translator['Search']; ?>..." id="combinedates" aria-describedby="basic-addon1" />
+                    <input type="date" class="form-control notistartdate" placeholder=" <?php echo $translator['Search'];?>..." id="combinedatess" aria-describedby="basic-addon1" />
+                    <input type="date" class="form-control notienddates" placeholder="<?php echo $translator['Search'];?>..." id="combinedates" aria-describedby="basic-addon1" />
                     </div>
 
                     <div class="form-floating mb-3">
@@ -494,20 +495,20 @@
                         </select>
                         <label>
                             <i class="bx bx-list-ul me-2 fs-4 text-infos"></i>
-                            <span class="border-start ps-3"><?=$translator['Audience']; ?></span>
+                            <span class="border-start ps-3"><?php echo $translator['Audience'];?></span>
                         </label>
                       </div>
 
                          <div class="col-md-12 mb-3">
                             <div class="note-title">
                               <!-- <label class="form-label">Note Title</label> -->
-                              <input type="text" id="note-has-title" class="form-control" minlength="25" placeholder="<?=$translator['Title']; ?>" />
+                              <input type="text" id="note-has-title" class="form-control" minlength="25" placeholder="<?php echo $translator['Title'];?>" />
                             </div>
                           </div>
                           <div class="col-md-12">
                             <div class="note-description">
                               <!-- <label class="form-label">Note Description</label> -->
-                              <textarea id="description" class="form-control" minlength="60" placeholder="<?=$translator['Description']; ?>" rows="3"></textarea>
+                              <textarea id="description" class="form-control" minlength="60" placeholder="<?php echo $translator['Description'];?>" rows="3"></textarea>
                             </div>
                       </div>
                        <p></p>
@@ -516,7 +517,7 @@
                             placeholder="Approved by" value="<?php echo $fullname['full_name']; ?>" readonly/>
                         <label>
                             <!-- <i class="bx bx-message me-2 fs-4 text-infod"></i> -->
-                            <span class="border-start ps-3"><?=$translator['Approved By']; ?></span>
+                            <span class="border-start ps-3"><?php echo $translator['Approved By'];?></span>
                         </label>
                     </div>
 
@@ -524,13 +525,13 @@
                     <div class="d-md-flex align-items-center">
                         <div class="form-check">
                             <!-- <input type="checkbox" class="form-check-input" id="sf2" value="check" /> -->
-                            <!-- <label class="form-check-label" for="sf2"><?=$translator['Verify before submit']; ?></label> -->
+                            <!-- <label class="form-check-label" for="sf2"><?php echo $translator['Verify before submit'];?></label> -->
                         </div>
                         <div class="mt-3 mt-md-0 ms-auto">
                             <button type="button" class="btn hstack gap-6 sendmessagebtn" style="border: solid 1px #ccc;"
                                 data-bss-dismiss="modal" aria-label="Close">
                                 <i class="bx bx-send loaderfinancc"></i>
-                                <?=$translator['Submit']; ?>
+                                <?php echo $translator['Submit'];?>
                             </button>
                         </div>
                     </div>
@@ -550,7 +551,7 @@
                 <!-- Modal Header -->
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div> <?=$translator['Edit Annoucement']; ?></div>
+                        <div> <?php echo $translator['Edit Annoucement'];?></div>
                         <div><i class="bx bx-message-square-x tclose"
                                 style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal"
                                 aria-label="Close"></i></div>
@@ -561,7 +562,7 @@
                 <form>
                     <!-- Username Field -->
                      <input type= "text" id="updatemsgid" hidden/>
-                 
+
                     <!-- <div class="form-floating mb-3">
                         <select name="deposit" class="form-select form-control borders border-infos depositt">
                             <option value="1">All Users</option>
@@ -576,13 +577,13 @@
 
                      <div class="col-md-12 mb-3">
                             <div class="note-title">
-                              <label class="form-label"><?=$translator['Title']; ?></label>
+                              <label class="form-label"><?php echo $translator['Title'];?></label>
                               <input type="text" id="note-has-titles" class="form-control" minlength="25" placeholder="Title" />
                             </div>
                           </div>
                           <div class="col-md-12">
                             <div class="note-description">
-                              <label class="form-label"><?=$translator['Description']; ?></label>
+                              <label class="form-label"><?php echo $translator['Description'];?></label>
                               <textarea id="descriptions" class="form-control" minlength="60" placeholder="Description" rows="3"></textarea>
                             </div>
                           </div>
@@ -592,7 +593,7 @@
                             placeholder="Approved by" value="<?php echo $fullname['full_name']; ?>" readonly/>
                         <label>
                             <!-- <i class="bx bx-message me-2 fs-4 text-infod"></i> -->
-                            <span class="border-start ps-3"><?=$translator['Approved By']; ?></span>
+                            <span class="border-start ps-3"><?php echo $translator['Approved By'];?></span>
                         </label>
                     </div>
 
@@ -600,13 +601,13 @@
                     <div class="d-md-flex align-items-center">
                         <div class="form-check">
                             <!-- <input type="checkbox" class="form-check-input" id="sf2" value="check" /> -->
-                            <!-- <label class="form-check-label" for="sf2"><?=$translator['Verify before submit']; ?></label> -->
+                            <!-- <label class="form-check-label" for="sf2"><?php echo $translator['Verify before submit'];?></label> -->
                         </div>
                         <div class="mt-3 mt-md-0 ms-auto">
                             <button type="button" class="btn hstack gap-6 updatemessagebtn" style="border: solid 1px #ccc;"
                                 data-bss-dismiss="modal" aria-label="Close">
                                 <i class="bx bx-send loaderfinanup"></i>
-                                <?=$translator['Submit']; ?>
+                                <?php echo $translator['Submit'];?>
                             </button>
                         </div>
                     </div>

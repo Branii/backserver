@@ -225,13 +225,8 @@
 <span id="trans-select-data-fields" data-translation="<?php echo htmlspecialchars($translator['SelectFilterFields'] ?? 'Select one or more data fields to filter') ?>" style="display:none;"></span>
 <span id="trans-success" data-translation="<?php echo htmlspecialchars($translator['Success'] ?? 'Success') ?>" style="display:none;"></span>
 <!-- Field Label Translations (Hidden Elements) -->
-<<<<<<< HEAD
-<span id="trans-partner-name" data-translation="<?= htmlspecialchars($translator['Partner Name'] ?? 'Partner Name') ?>" style="display:none;"></span>
-<span id="trans-unknown" class="hidden" style="display:none;"><?= $translator['Unknown'] ?? 'Unknown' ?></span>
-=======
 <span id="trans-partner-name" data-translation="<?php echo htmlspecialchars($translator['Partner Name'] ?? 'Partner Name') ?>" style="display:none;"></span>
 <span id="trans-unknown" class="hidden" hidden><?php echo $translator['Unknown'] ?? 'Unknown' ?></span>
->>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
 
 
 <!-- toast messages ends here -->

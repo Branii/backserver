@@ -328,7 +328,7 @@
                     <i class="bx bx-refresh" style="font-size: 20px;"></i>
                 </button>
                 <button type="button" class="btn bg-white-subtle bl-search" value="" aria-label="Search" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Search">
-                    <i class="bx loaderlist bx-check-double" style="font-size: 20px;"></i>
+                    <i class="bx loaderlistt bx-check-double" style="font-size: 20px;"></i>
                 </button>
             </div>
         </span>

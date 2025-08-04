@@ -117,16 +117,6 @@ if ($flag == "getDraws") {
     
 }
 
-<<<<<<< HEAD
-
-if ($flag == "getTimegames") {
-    $result = (new GameManageModel())->getTimegames();
-    if($result){
-        echo json_encode($result);
-    } else {
-        echo json_encode(['type'=>'error','message'=>'Some error occured']);
-    }
-=======
 if ($flag == "resetAllOdds") {
  $result = GameManageModel::resetAllOdds();
  echo json_encode($result); 
@@ -160,19 +150,10 @@ if ($flag == "filterexception") {
  if ($flag == "getTimegames") {
     $result = (new GameManageModel())->getTimegames();
      echo json_encode($result);
->>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
 } 
 
 
 if ($flag == "getAllGamesModels") {
     $result = (new GameManageModel())->getAllGamesModel();
-<<<<<<< HEAD
-    if($result){
-        echo json_encode($result);
-    } else {
-        echo json_encode(['type'=>'error','message'=>'Some error occured']);
-    }
-=======
     echo json_encode($result);
->>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
 } 

@@ -371,16 +371,7 @@ const Depositdata = (data) => {
    // console.log(username);
     //  return
 
-    filterdeposit(
-      username,
-      depositchanel,
-      depositid,
-      stautsdeposit,
-      startdepo,
-      enddepo,
-      currentPage,
-      pageLimit
-    );
+    filterdeposit(username,depositchanel,depositid,stautsdeposit,startdepo,enddepo,currentPage,pageLimit);
     //   // Show loader
     $(".loaderdeposit")
       .removeClass("bx-check-double")

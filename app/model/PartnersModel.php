@@ -22,20 +22,6 @@ class PartnersModel extends MedooOrm
         }
     }
 
-<<<<<<< HEAD
-    public static function fetch_partners($page = 1, $limit = 20): Mixed
-    {
-        try {
-            $table_name = "partners_v1";
-            $offset = ($page - 1) * $limit;
-            $res = parent::openLink()
-                ->query("SELECT * FROM {$table_name} ORDER BY partner_id DESC LIMIT :offset,:limit", [":offset" => $offset, ":limit" => $limit])
-                ->fetchAll(PDO::FETCH_OBJ);
-            return ["status" => "success", "data" => $res];
-        } catch (Exception $e) {
-            return self::response("Internal Server Error.", false);
-        }
-=======
     public static function fetch_partners($page = 1,$limit = 20): Mixed{
 
         try{
@@ -47,7 +33,6 @@ class PartnersModel extends MedooOrm
     }catch(Exception $e){
         return self::response("Internal Server Error.",false,);
     }
->>>>>>> d33f9770d94f1c2db3005cde4336a0003a8f4350
     }
 
     public static function searchPartners($searchData = []): Mixed
