@@ -11,15 +11,15 @@ class userbankController extends Controller
 
             // NOTE -
     ////////////// Bank Cardlist Records - //////////
-     public function searchBankTypes($partnerID, $bank_type)
+     public function searchBankTypes($bank_type)
     {
         // echo $bank_type;
-        $this->view('exec/userbank_manage', ['partner_id' => $partnerID, 'bank_type' => urldecode($bank_type), 'flag' => 'search-bank-name']);
+        $this->view('exec/userbank_manage', ['bank_type' => urldecode($bank_type), 'flag' => 'search-bank-name']);
         $this->view->render();
     }
 
 
-    public function   fetchbankcard($partnerID, $uid, $bank_type, $card_number, $status, $pageNumber, $limit, $miscelleanous)
+    public function   fetchbankcard($partnerID, $uid, $bank_type, $card_number, $status, $pageNumber, $limit)
     {
 
         $this->view('exec/userbank_manage', ['partner_id' => $partnerID, 'uid' => $uid, 'bank_type' => urldecode($bank_type), 'card_number' => $card_number, 'status' => $status, 'page' => $pageNumber, 'limit' => $limit, 'flag' => 'fetchbankcard']);
@@ -52,6 +52,22 @@ class userbankController extends Controller
         ]);
         $this->view->render();
     }
+
+  public function filterbankdata($uid,$bankType,$cardNumber,$state, $currentPage, $pageLimit)
+    {
+  
+        $this->view('exec/userbank_manage', [
+            'uid' => $uid,
+            'bankType' => $bankType,
+            'cardNumber' => $cardNumber,
+            'state'=>$state,
+            'flag' => 'filterbankdata',
+            'currentPage' => $currentPage,
+            'pageLimit' => $pageLimit,
+        ]);
+        $this->view->render();
+    }
+ 
 
      public function fetchuserpaymentmethod($page, $pageLimit)
     {

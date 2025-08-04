@@ -284,11 +284,11 @@ if ($flag == "fetch_partners") {
 } else if ($flag == "addNewPartner") {
 
     try {
-        $partnerName     = isset($this->viewData['partner_name']) ? $this->viewData['partner_name'] : "";
+        $partnerName     = isset($this->viewData['partner_name']) ? urldecode($this->viewData['partner_name']): "";
          $partnerName = urldecode($partnerName);
         $currency     = isset($this->viewData['currency']) ? $this->viewData['currency'] : "";
-        $siteUrl         = isset($this->viewData['site_url']) ? $this->viewData['site_url'] : "";
-        $adminSiteUrl    = isset($this->viewData['admin_site_url']) ? $this->viewData['admin_site_url'] : "";
+        $siteUrl         = isset($this->viewData['site_url']) ? urldecode($this->viewData['site_url']) : "";
+        $adminSiteUrl    = isset($this->viewData['admin_site_url']) ? urldecode($this->viewData['admin_site_url']) : "";
         $currentDate     = date("Y-m-d / H:i:s");
 
         if (empty($partnerName) || empty($siteUrl) || empty($adminSiteUrl) || !in_array($currency, $valid_currencies)) {

@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
   const partnerID = $("#partner-holder").attr("data-partner-id");
   function showToast(title, message, type) {
     $.toast({
@@ -11,19 +11,16 @@ $(function () {
   }
 
   const headsUpText = document.getElementById("trans-heads-up").textContent;
-  const selectFieldsText = document.getElementById(
-    "trans-select-fields"
-  ).textContent;
+  const selectFieldsText = document.getElementById("trans-select-fields")
+    .textContent;
 
   // showToast(headsUpText, selectFieldsText, "info");
 
   // showToast(headsUp, selectFields, "info");
 
-  const UserOverviewData = (data) => {
+  const UserOverviewData = data => {
     let html = "";
-
     //   data.forEach((item) => {
-
     // let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
     html += `
                     <tr>
@@ -44,14 +41,13 @@ $(function () {
     return html;
   };
 
-  const renderuseroverview = (data) => {
+  const renderuseroverview = data => {
     var html = UserOverviewData(data);
     $("#useroverviewContainer").html(html);
   };
 
   let currentPage = 1;
   let pageLimit = 20;
-
 
   async function fetchuseroverview(usernamelog, startdatelog, enddatelog) {
     try {
@@ -111,9 +107,9 @@ $(function () {
     callback
   ) {
     const createPageLink = (i, label = i, disabled = false, active = false) =>
-      `<li class='page-item ${disabled ? "disabled" : ""} ${
-        active ? "active" : ""
-      }'>
+      `<li class='page-item ${disabled ? "disabled" : ""} ${active
+        ? "active"
+        : ""}'>
         <a class='page-link' href='#' data-page='${i}'>${label}</a>
     </li>`;
     let pagLink = `<ul class='pagination justify-content-end'>`;
@@ -145,8 +141,8 @@ $(function () {
     document.getElementById("paginationlogs").innerHTML = pagLink;
 
     // Add click event listeners
-    document.querySelectorAll("#paginationlogs .page-link").forEach((link) => {
-      link.addEventListener("click", function (e) {
+    document.querySelectorAll("#paginationlogs .page-link").forEach(link => {
+      link.addEventListener("click", function(e) {
         e.preventDefault();
         const newPage = +this.getAttribute("data-page");
         if (newPage > 0 && newPage <= totalPages) {
@@ -160,7 +156,7 @@ $(function () {
     });
   }
 
-  $(".playerlogs").click(function () {
+  $(".playerlogs").click(function() {
     let direction = $(this).val();
     const tableWrapper = $(".table-wrapperlogs");
     const tableWrappers = document.querySelector(".table-wrapperlogs");
@@ -191,7 +187,7 @@ $(function () {
     }
   });
 
-  $(".refreshoverview").click(function () {
+  $(".refreshoverview").click(function() {
     $(".queryholderoverview").val("");
     $("#maskoverview").LoadingOverlay("show", {
       background: "rgb(90,106,133,0.1)",
@@ -200,7 +196,7 @@ $(function () {
     fetchUserlogs(currentPage, pageLimit);
   });
 
-  $(".numrowslog").change(function () {
+  $(".numrowslog").change(function() {
     $("#maskoverview").LoadingOverlay("show", {
       background: "rgb(90,106,133,0.1)",
       size: 3
@@ -209,7 +205,7 @@ $(function () {
     fetchUserlogs(currentPage, numrow);
   });
 
-  $(document).on("click", ".executeuseroverview", function () {
+  $(document).on("click", ".executeuseroverview", function() {
     if ($("#userloginputs").val() == "" && $(".startdateover").val() == "") {
       // showToast("Heads up!!", "Select one or more data fields to filter", "info");
       showToast(headsUpText, selectFieldsText, "info");
@@ -232,15 +228,15 @@ $(function () {
     );
   });
 
-  $(document).on("click", function () {
+  $(document).on("click", function() {
     $(".queryholderxxx").hide();
   });
 
   let debounceTimeoutlogs = null;
 
-  $(document).ready(function () {
+  $(document).ready(function() {
     // Event listener for keyup on #myInput
-    $(document).on("keyup", "#userloginputs", function () {
+    $(document).on("keyup", "#userloginputs", function() {
       const query = $(this).val().trim();
 
       // Only trigger if input is more than 2 characters
@@ -253,7 +249,7 @@ $(function () {
     });
 
     // Handle dropdown item selection
-    $(document).on("change", ".userlogdropdowns", function () {
+    $(document).on("change", ".userlogdropdowns", function() {
       const selectedOption = $(this).find("option:selected");
       const selectedUserId = selectedOption.val();
       const selectedUsername = selectedOption.data("username");
@@ -266,14 +262,14 @@ $(function () {
       }
     });
 
-    $(document).on("click", function (e) {
+    $(document).on("click", function(e) {
       const $dropdown = $("#userfinaceuserlogss");
       if (!$(e.target).closest("#userloginputs, #userfinaceuserlogss").length) {
         $dropdown.hide();
       }
     });
     // Handle manual input clearing
-    $(document).on("input", "#userloginputs", function () {
+    $(document).on("input", "#userloginputs", function() {
       if (!$(this).val()) {
         $(".userover").val(""); // Reset user ID if input is cleared
       }
@@ -284,39 +280,38 @@ $(function () {
   function fetchUserslogss(query) {
     let optionsHtml = "";
 
-    $.post(
-      `../admin/Searchusername/${encodeURIComponent(query)}`,
-      function (response) {
-        try {
-          response =
-            typeof response === "string" ? JSON.parse(response) : response;
-          response.forEach((user) => {
-            let displayValues;
-            let regnames;
-            // Display based on regtype
-            if (user.regtype === "email") {
-              displayValues = user.email;
-              regnames = user.email; // Show email
-            } else if (user.regtype === "username") {
-              displayValues = user.username;
-              regnames = user.username; // Show username
-            } else if (user.regtype === "contact") {
-              displayValues = user.contact;
-              regnames = user.contact; // Show contact
-            } else {
-              displayValues = "no data found..";
-              regnames = "no data found..";
-            }
-            optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regnames}">${displayValues}</option>`;
-          });
+    $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function(
+      response
+    ) {
+      try {
+        response =
+          typeof response === "string" ? JSON.parse(response) : response;
+        response.forEach(user => {
+          let displayValues;
+          let regnames;
+          // Display based on regtype
+          if (user.regtype === "email") {
+            displayValues = user.email;
+            regnames = user.email; // Show email
+          } else if (user.regtype === "username") {
+            displayValues = user.username;
+            regnames = user.username; // Show username
+          } else if (user.regtype === "contact") {
+            displayValues = user.contact;
+            regnames = user.contact; // Show contact
+          } else {
+            displayValues = "no data found..";
+            regnames = "no data found..";
+          }
+          optionsHtml += `<option class="optionlist" value="${user.uid}" data-username="${regnames}">${displayValues}</option>`;
+        });
 
-          $(".userlogdropdowns").html(optionsHtml).show();
-        } catch (error) {
-          console.error("Error parsing response: ", error);
-          $(".userlogdropdowns").hide();
-        }
+        $(".userlogdropdowns").html(optionsHtml).show();
+      } catch (error) {
+        console.error("Error parsing response: ", error);
+        $(".userlogdropdowns").hide();
       }
-    ).fail(function () {
+    }).fail(function() {
       console.error("Error fetching users.");
       $(".userlogdropdowns").hide();
     });
@@ -328,7 +323,7 @@ $(function () {
     );
     const headerRowUserLogs = document.querySelector(".userlogheadrow");
 
-    tableContainerUserLogs.addEventListener("scroll", function () {
+    tableContainerUserLogs.addEventListener("scroll", function() {
       if (tableContainerUserLogs.scrollTop > 0) {
         headerRowUserLogs.classList.add("sticky-userloghead");
       } else {

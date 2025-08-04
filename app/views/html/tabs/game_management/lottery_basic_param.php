@@ -572,6 +572,10 @@
                             <input type="text" class="form-control" name="name" id="namee" />
                         </div>
 
+                     
+                       
+                       
+                        <!-- Row 3 -->
                         <div class="col-md-6">
                             <label class="form-label"><?= $translator['Alias']; ?></label>
                             <input type="text" class="form-control" name="alias" id="alias" />

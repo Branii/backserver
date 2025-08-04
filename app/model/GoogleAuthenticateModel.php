@@ -31,7 +31,8 @@ class GoogleAuthenticateModel extends MEDOOHelper
       }
   }
 
-  public static function VerifyOtpCode($email,$otpcode){
+  public static function VerifyOtpCode($email,$otpcode)
+  {
     $data = parent::query( "SELECT admin_id,email, otp_secret FROM system_administrators WHERE email = :email",['email' => $email]);
     $secretcode = $data[0]['otp_secret'];
     $g = new GoogleAuthenticator();
@@ -45,7 +46,8 @@ class GoogleAuthenticateModel extends MEDOOHelper
     }
   }
 
-  public static function GetSecreteCode($email,$otpcodes,$flagtype){
+  public static function GetSecreteCode($email,$otpcodes,$flagtype)
+  {
 
      if($flagtype == "mobile"){
           $data = parent::query( "SELECT admin_id,email, otp_secret FROM system_administrators WHERE email = :email",['email' => $email]);

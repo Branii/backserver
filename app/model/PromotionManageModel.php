@@ -37,9 +37,7 @@ class PromotionManageModel extends MEDOOHelper
         LEFT JOIN users_test ON users_test.uid = referral_link.agent_id
         WHERE $subQuery
         LIMIT :offset, :limit
-  ";
-
-        // Define the query to count total records
+  ";       // Define the query to count total records
         $countSqls = "
             SELECT 
                 COUNT(*) AS total_counts

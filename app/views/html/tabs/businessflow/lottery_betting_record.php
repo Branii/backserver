@@ -269,7 +269,7 @@
         /* Rounded corners */
     }
 
-    .tbl-headerbet {
+ .tbl-headerbet {
     position: sticky;
     top: 0;
   }

@@ -14,31 +14,26 @@ $(() => {
     });
   }
 
-  const noUserTitle = document.getElementById(
-    "trans-no-user-selected-title"
-  ).textContent;
-  const noUserMessage = document.getElementById(
-    "trans-no-user-selected-msg"
-  ).textContent;
+  const noUserTitle = document.getElementById("trans-no-user-selected-title")
+    .textContent;
+  const noUserMessage = document.getElementById("trans-no-user-selected-msg")
+    .textContent;
   // Error toast
   const errorTitle = document.getElementById("trans-error-title").textContent;
   const errorMsg = document.getElementById("trans-error-msg").textContent;
 
   // No User Selected
-  const noUser2Title = document.getElementById(
-    "trans-no-user-2-title"
-  ).textContent;
+  const noUser2Title = document.getElementById("trans-no-user-2-title")
+    .textContent;
   const noUser2Msg = document.getElementById("trans-no-user-2-msg").textContent;
 
   // Too Many Users
-  const tooManyTitle = document.getElementById(
-    "trans-too-many-title"
-  ).textContent;
+  const tooManyTitle = document.getElementById("trans-too-many-title")
+    .textContent;
   const tooManyMsg = document.getElementById("trans-too-many-msg").textContent;
 
-  const noDataTitle = document.getElementById(
-    "trans-no-data-title"
-  ).textContent;
+  const noDataTitle = document.getElementById("trans-no-data-title")
+    .textContent;
   const noDataMsg = document.getElementById("trans-no-data-msg").textContent;
   // showToast(noDataTitle, noDataMsg, "info");
   // showToast(tooManyTitle, tooManyMsg, "info");
@@ -106,14 +101,16 @@ $(() => {
         type: "POST",
         success: function (data) {
           data = JSON.parse(data);
-          let html1 = `<option value="all">${translator["Lottery Type"]}</option>`;
-          data.forEach((lottery) => {
+          let html1 = `<option value="all">${translator[
+            "Lottery Type"
+          ]}</option>`;
+          data.forEach(lottery => {
             html1 += `<option value="${lottery.gt_id}">${lottery.name}</option>`;
           });
 
           $("#ngp-wl-selectlottery").html(html1);
         },
-        error: function (xhr, status, error) {}
+        error: function (xhr, status, error) { }
       });
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -388,56 +385,55 @@ $(() => {
   });
 
   // Function to fetch and display users
-  const fetchbetUser = (query) => {
+  const fetchbetUser = query => {
     let optionsHtml = "";
 
-    $.post(
-      `../admin/Searchusername/${encodeURIComponent(query)}`,
-      function (response) {
-        try {
-          const getDisplayName = (user) => {
-            if (
-              user.username !== "" &&
-              user.username != undefined &&
-              user.username !== "*****"
-            )
-              return user.username;
-            if (user.email !== undefined && user.email != "") return user.email;
-            if (user.contact != undefined && user.contact != "")
-              return user.contact;
-          };
-          response =
-            typeof response === "string" ? JSON.parse(response) : response;
-          for (let index = 0; index < response.length; index++) {
-            const user = response[index];
-            const username = user[user.regtype];
-            optionsHtml +=
-              username === undefined
-                ? `<li class="name-items ngp-name-items"> No Data Found.</li>`
-                : `<li class="name-items ngp-name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
-          }
-          $("#ngp-user-list-wrapper").html(optionsHtml);
-          $(".ngp-usr-res-wrapper").show();
-        } catch (error) {
-          console.error("Error parsing response: ", error);
-          $(".userDropdown").hide();
+    $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (
+      response
+    ) {
+      try {
+        const getDisplayName = user => {
+          if (
+            user.username !== "" &&
+            user.username != undefined &&
+            user.username !== "*****"
+          )
+            return user.username;
+          if (user.email !== undefined && user.email != "") return user.email;
+          if (user.contact != undefined && user.contact != "")
+            return user.contact;
+        };
+        response =
+          typeof response === "string" ? JSON.parse(response) : response;
+        for (let index = 0; index < response.length; index++) {
+          const user = response[index];
+          const username = user[user.regtype];
+          optionsHtml +=
+            username === undefined
+              ? `<li class="name-items ngp-name-items"> No Data Found.</li>`
+              : `<li class="name-items ngp-name-items" data-user-id="${user.uid}" data-username="${username}">${username}</li>`;
         }
+        $("#ngp-user-list-wrapper").html(optionsHtml);
+        $(".ngp-usr-res-wrapper").show();
+      } catch (error) {
+        console.error("Error parsing response: ", error);
+        $(".userDropdown").hide();
       }
-    ).fail(function () {
+    }).fail(function () {
       console.error("Error fetching users.");
       $(".userDropdown").hide();
     });
   };
 
   // Function to fetch and display users
-  const fetchLotteryname = (lotteryName) => {
+  const fetchLotteryname = lotteryName => {
     let optionsHtml = "";
 
     $.post(
       `../admin/searchLotteryName/${encodeURIComponent(lotteryName)}`,
       function (response) {
         try {
-          const getDisplayName = (user) => {
+          const getDisplayName = user => {
             if (
               user.username !== "" &&
               user.username != undefined &&
@@ -498,7 +494,7 @@ $(() => {
     // e.stopPropagation(); // Prevent event bubbling
   });
 
-  const fetchTopAgents = (currentPage) => {
+  const fetchTopAgents = currentPage => {
     let lotteryID = $("#ngp-wl-selectlottery").val();
     let startDate = $("#ngp-wl-startdate").val();
     let endDate = $("#ngp-wl-enddate").val();
@@ -545,7 +541,7 @@ $(() => {
         const totalPages = Math.ceil(userObjs[0].total_records / 10);
 
         htmlMarkup = "";
-        userObjs.forEach((userObj) => {
+        userObjs.forEach(userObj => {
           htmlMarkup += getUserRowMarkupNGP(userObj);
         });
         $("#ngp-winLossDtholder").html(htmlMarkup);
@@ -624,7 +620,7 @@ $(() => {
         //     if(!$(".get-user-details-btn").hasClass("btn-disabled")) $(".get-user-details-btn").addClass("btn-disabled");
         // }
         htmlMarkup = "";
-        userObjs.forEach((userObj) => {
+        userObjs.forEach(userObj => {
           htmlMarkup += getUserRowMarkupNGP(userObj);
         });
         historyStack.push($("#ngp-winLossDtholder").html());
@@ -656,19 +652,17 @@ $(() => {
     });
   };
 
-  $(document).on(
-    "click",
-    ".ngp-page-top-agents,.ngp-page-agent-subs",
-    function () {
-      const page = parseInt($(this).attr("data-page"));
-      if (page < 1) return;
-      if ($(this).hasClass("ngp-page-top-agents")) {
-        fetchTopAgents(page);
-      } else if ($(this).hasClass("ngp-page-agent-subs")) {
-        fetchAgentSubs(this, page);
-      }
+  $(
+    document
+  ).on("click", ".ngp-page-top-agents,.ngp-page-agent-subs", function () {
+    const page = parseInt($(this).attr("data-page"));
+    if (page < 1) return;
+    if ($(this).hasClass("ngp-page-top-agents")) {
+      fetchTopAgents(page);
+    } else if ($(this).hasClass("ngp-page-agent-subs")) {
+      fetchAgentSubs(this, page);
     }
-  );
+  });
 });
 
 const renderPaginationNGP = (
@@ -681,9 +675,8 @@ const renderPaginationNGP = (
   // Previous Button
   pagLink += `
       <li class='page-item ${currentPagewithdraw === 1 ? "disabled" : ""}'>
-        <a class='page-link ${type}' href='#' data-page='${
-    currentPagewithdraw - 1
-  }'><i class='bx bx-chevron-left'></i></a>
+        <a class='page-link ${type}' href='#' data-page='${currentPagewithdraw -
+    1}'><i class='bx bx-chevron-left'></i></a>
       </li>
     `;
 
@@ -704,21 +697,20 @@ const renderPaginationNGP = (
 
   // Next Button
   pagLink += `
-      <li class='page-item ${
-        currentPagewithdraw === totalPages ? "disabled" : ""
-      }'>
-        <a class='page-link ${type}' href='#' data-page='${
-    currentPagewithdraw + 1
-  }'><i class='bx bx-chevron-right'></i></a>
+      <li class='page-item ${currentPagewithdraw === totalPages
+      ? "disabled"
+      : ""}'>
+        <a class='page-link ${type}' href='#' data-page='${currentPagewithdraw +
+    1}'><i class='bx bx-chevron-right'></i></a>
       </li>
     `;
 
   pagLink += "</ul>";
   document.getElementById("ngp-wl-pagination-wrapper").innerHTML = pagLink;
   $("#ngp-paging_infowl").text(
-    `Page ${currentPagewithdraw} of ${totalPages} ${
-      totalPages === 1 ? " Page " : " Pages "
-    } `
+    `Page ${currentPagewithdraw} of ${totalPages} ${totalPages === 1
+      ? " Page "
+      : " Pages "} `
   );
   // Add click event listeners to pagination links
   // document.querySelectorAll("#paginationwithdraw .page-link").forEach((link) => {
@@ -737,19 +729,19 @@ const renderPaginationNGP = (
   // });
 };
 
-const getUserRowMarkupNGP = (userData) => {
+const getUserRowMarkupNGP = userData => {
   const subsBtn =
     parseInt(userData.account_type) === 2 ||
-    parseInt(userData.account_type) === 3
+      parseInt(userData.account_type) === 3
       ? `<div class="btn-group mb-2 ngp-fetch-agent-subs" role="group" aria-label="Basic example" data-agent-id="${userData.user_id}" style="border:solid 1px #eee;color:#bbb;background-color:#fff;margin: 0px !important;">
              <button type="button" class="btn bg-white-subtle ngp-playerWinLoss" value="ngp-wl-rightlist"> Subs </button></div>`
       : "";
 
-  return `<tr id='user-id-${userData.user_id}' id='${
-    userData.account_type > 1 ? "agent" : ""
-  }' class='ngp-wl-results' data-acc-type='${
-    userData.account_type > 1 ? "agent" : ""
-  }'>
+  return `<tr id='user-id-${userData.user_id}' id='${userData.account_type > 1
+    ? "agent"
+    : ""}' class='ngp-wl-results' data-acc-type='${userData.account_type > 1
+      ? "agent"
+      : ""}'>
         <td> ${userData.username} </td>
         <td> ${userData.num_bettors} </td>
         <td> ${userData.num_bet_tickets} </td>

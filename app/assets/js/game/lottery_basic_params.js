@@ -185,9 +185,9 @@ $(() => {
     $(document).on("click", ".lb-refreshlist", function () {
         //  $(".queryholderlistt").val("");
         $("#masklotterygames").LoadingOverlay("show", {
-        background: "rgb(90,106,133,0.1)",
-        size: 3
-      });
+            background: "rgb(90,106,133,0.1)",
+            size: 3
+        });
 
         const lottery_id = $("#lottery").val(1);
         fetchLotteryBasicParams(1, lottery_id);
@@ -316,7 +316,7 @@ $(() => {
     const fetchLotteryBasicParams = (page, element) => {
         const lottery_id = $("#lottery").val();
         // console.log(lottery_id);
-           $("#masklotterygames").LoadingOverlay("hide");
+        $("#masklotterygames").LoadingOverlay("hide");
         $.ajax({
             url: `../game/fetch_lottery_basic_params/${partnerID}/${lottery_id}/${page}`,
             type: "POST",
@@ -552,24 +552,9 @@ $(() => {
         const lotteryType = $("#lottery_types").val().split("|")[0];
         const logoFileName = $(".gameimage").val();
 
-        if (
-            !name ||
-            !alias ||
-            !gamegroups ||
-            !lotteryType ||
-            !numberOfBalls ||
-            !min_ball ||
-            !max_ball ||
-            !secondsperissue ||
-            isNaN(secondsperissue) ||
-            parseInt(secondsperissue) <= 0 ||
-            !starttime ||
-            !stoptime ||
-            !lotterymodel ||
-            !logoFileName
-        ) {
+        if (!name || !alias || !gamegroups || !lotteryType || !numberOfBalls || !min_ball || !max_ball || !secondsperissue || isNaN(secondsperissue) || parseInt(secondsperissue) <= 0 || !starttime || !stoptime || !lotterymodel || !logoFileName) {
             showToast("Heads up!!", "All fields are required and seconds per issue must be a positive number", "info");
-
+            $("#lotteryForm")[0].reset();
             return;
         }
 
@@ -577,9 +562,8 @@ $(() => {
         $("#addlottery-modals").modal("hide");
 
         $.post(
-            `../game/addlottery/${encodeURIComponent(name)}/${encodeURIComponent(alias)}/${encodeURIComponent(
-                gamegroups
-            )}/${numberOfBalls}/${min_ball}/${max_ball}/${secondsperissue}/${starttime}/${stoptime}/${lotterymodel}/${encodeURIComponent(lotteryType)}/${encodeURIComponent(logoFileName)}`,
+
+            `../game/addlottery/${encodeURIComponent(name)}/${encodeURIComponent(alias)}/${encodeURIComponent(gamegroups)}/${numberOfBalls}/${min_ball}/${max_ball}/${secondsperissue}/${starttime}/${stoptime}/${lotterymodel}/${encodeURIComponent(lotteryType)}/${encodeURIComponent(logoFileName)}`,
             function (response) {
                 if (response.status === "success") {
                     showToast("Success", response.message || "Lottery Game Added and odds updated successfully", "success");
@@ -725,7 +709,8 @@ $(() => {
                 // console.log(response);
                 if (response.type === "success") {
                     showToast("Success", response.message, "success");
-                    fetchLotteryBasicParams(1);
+                    //    fetchLotteryBasicParams(1);
+                    fetchLotteryBasicParams(1, this);
                     $("#lb-uploadimage").modal("hide");
                     $("#lottery_logo_file").val("");
                 } else {
@@ -753,6 +738,7 @@ $(() => {
             //  console.log(base64String)
         });
     });
+
 
     function tableScrollBasciParam() {
         const tableContainerBasciParam = document.querySelector(".table-wrapperbaic");

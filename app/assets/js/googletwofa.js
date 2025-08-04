@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
   function showToast(title, message, type) {
     $.toast({
       position: "bottom-right",
@@ -9,19 +9,19 @@ $(function () {
     });
   }
 
-  $(document).on("click", ".settingsbtn", function () {
+  $(document).on("click", ".settingsbtn", function() {
     $("#autho").modal("show");
   });
 
   //password settings form
-  $(".changepasswordbtn").click(function () {
+  $(".changepasswordbtn").click(function() {
     $("#autho").modal("hide");
     $("#authopassword").modal("show");
   });
 
   //updatepassword
 
-  $(document).on("submit", "#passwordChangeForm", function (e) {
+  $(document).on("submit", "#passwordChangeForm", function(e) {
     e.preventDefault();
     const email = $("#adminEmail").val().trim();
     const currentPassword = $("#currentPassword").val().trim();
@@ -46,20 +46,27 @@ $(function () {
       $.ajax({
         type: "POST",
         url: `../admin/changerAdminpassword/${email}/${repeatPassword}`,
-        success: function (response) {
+        success: function(response) {
           setTimeout(() => {
             const result = JSON.parse(response);
             if (result.success) {
-              showToast("Success!",result.message || "Password changed successfully!", "success"
+              showToast(
+                "Success!",
+                result.message || "Password changed successfully!",
+                "success"
               );
               $("#passwordChangeForm")[0].reset();
             } else {
-              showToast("Error!",  result.message || "Failed to change password!","error" );
+              showToast(
+                "Error!",
+                result.message || "Failed to change password!",
+                "error"
+              );
             }
             resetButton();
           }, 2000);
         },
-        error: function () {
+        error: function() {
           setTimeout(() => {
             showToast("Error!", "Something went wrong!", "error");
             resetButton();
@@ -74,21 +81,25 @@ $(function () {
     }
   });
 
-  $(document).on("click", ".settingsbtn", function () {
+  $(document).on("click", ".settingsbtn", function() {
     $("#autho").modal("show");
   });
 
-  $(document).on("click", ".setupauth", function () {
-      const email = $(this).val(); // Button value should be user's email
-      $.post(`../admin/activateotp/${email}`, function (response) {
-         const result = JSON.parse(response);
-       
-        if (result.status === "success") {
-            showToast("2FA Setup", "Scan the QR code to complete setup.", "success");
-            $("#autho").modal("hide")
-            $("#authot").modal("show")
-            // Dynamically display the QR code and secret
-            $("#qr-container").html(`
+  $(document).on("click", ".setupauth", function() {
+    const email = $(this).val(); // Button value should be user's email
+    $.post(`../admin/activateotp/${email}`, function(response) {
+      const result = JSON.parse(response);
+
+      if (result.status === "success") {
+        showToast(
+          "2FA Setup",
+          "Scan the QR code to complete setup.",
+          "success"
+        );
+        $("#autho").modal("hide");
+        $("#authot").modal("show");
+        // Dynamically display the QR code and secret
+        $("#qr-container").html(`
                 <p>Scan the QR code using Google Authenticator</p>
                 <img src="${result.qrUrl}" alt="QR Code" style="max-width:200px;">
                 <div id="otp-inputs" class="otp-input-container">
@@ -105,81 +116,87 @@ $(function () {
                 </button>
                 <div id="otp-status"></div>
             `);
-            
-        } else {
-            showToast( "Unable to enable 2FA.", "error");
-        }
-      });
+      } else {
+        showToast("Unable to enable 2FA.", "error");
+      }
     });
+  });
 
+  $(document).on("input", ".otp-box", function() {
+    const $input = $(this);
+    const value = $input.val();
+    // Remove non-digit characters
+    const digit = value.replace(/\D/g, "");
+    $input.val(digit); // Set only digit
+    if (digit.length === 1) {
+      $input.next(".otp-box").focus();
+    }
+  });
 
-    $(document).on("input", ".otp-box", function () {
-        const $input = $(this);
-        const value = $input.val();
-        // Remove non-digit characters
-        const digit = value.replace(/\D/g, "");
-        $input.val(digit); // Set only digit
-        if (digit.length === 1) {
-        $input.next(".otp-box").focus();
-        }
+  $(document).on("keydown", ".otp-box", function(e) {
+    if (e.key === "Backspace" && $(this).val() === "") {
+      $(this).prev(".otp-box").focus();
+    }
+  });
+
+  $(document).on("click", ".verify-otp-btn", function() {
+    const otpcode = $(".otp-box")
+      .map(function() {
+        return $(this).val();
+      })
+      .get()
+      .join("");
+
+    if (!otpcode) {
+      $("#otp-status").html(
+        "<p style='color:red;'>Please enter the OTP code.</p>"
+      );
+      return;
+    }
+
+    $(".verifyme").show();
+    $.post(`../admin/verifyotp/${otpcode}`, function(response) {
+      const result = JSON.parse(response);
+      if (result === "success") {
+        showToast(
+          "2FA Verified",
+          "Your two-factor authentication has been successfully verified.",
+          "success"
+        );
+        $("#authot").modal("hide");
+      } else {
+        $("#otp-status").html(
+          `<p style='color:red;'> Invalid OTP code entered</p>`
+        );
+        $(".verifyme").hide();
+      }
     });
+  });
 
-    $(document).on('keydown', '.otp-box', function (e) {
-        if (e.key === "Backspace" && $(this).val() === "") {
-            $(this).prev('.otp-box').focus();
-        }
+  //mobile......
+  $(document).on("click", ".setupmobile", function() {
+    const email = $(this).val(); // Button value should be user's email
+    $.post(`../admin/activateotpmobile/${email}`, function(response) {
+      const result = JSON.parse(response);
+      if (result.status === "success") {
+        showToast("2FA Setup successfully", "success");
+        $("#autho").modal("hide");
+      } else {
+        showToast("Unable to enable 2FA.", "error");
+      }
     });
-        
-    $(document).on('click', '.verify-otp-btn', function () {
-          const otpcode = $('.otp-box').map(function () {
-            return $(this).val();
-          }).get().join('');
-       
-            if (!otpcode) {
-                $("#otp-status").html("<p style='color:red;'>Please enter the OTP code.</p>");
-                return;
-            }
+  });
 
-            $(".verifyme").show()
-            $.post(`../admin/verifyotp/${otpcode}`, function (response) {
-                const result = JSON.parse(response);
-                if (result ==="success") {
-                    showToast("2FA Verified", "Your two-factor authentication has been successfully verified.", "success");
-                    $("#authot").modal("hide");
-                } else {
-                    $("#otp-status").html(`<p style='color:red;'> Invalid OTP code entered</p>`);
-                    $(".verifyme").hide()
-                }
-           }); 
-     });
-
- 
-    //mobile......
-    $(document).on("click", ".setupmobile", function () {
-       const email = $(this).val(); // Button value should be user's email
-        $.post(`../admin/activateotpmobile/${email}`, function (response) {
-            const result = JSON.parse(response);
-            if (result.status === "success") {
-                showToast("2FA Setup successfully",  "success");
-                $("#autho").modal("hide")
-            } else {
-                showToast( "Unable to enable 2FA.", "error");
-            }
-        });
+  //reset
+  $(document).on("click", ".resetauth", function() {
+    $.post(`../admin/resetauth`, function(response) {
+      const result = JSON.parse(response);
+      if (result.status === "success") {
+        showToast("2FA Disabled", "successfully", "success");
+        $("#autho").modal("hide");
+      } else {
+        showToast("Unable to enable 2FA.", "error");
+      }
     });
- 
-    //reset
-    $(document).on("click", ".resetauth", function () {
-      $.post(`../admin/resetauth`, function (response) {
-            const result = JSON.parse(response);
-            if (result.status === "success") {
-                showToast("2FA Disabled", "successfully", "success");
-                  $("#autho").modal("hide")
-            } else {
-                showToast( "Unable to enable 2FA.", "error");
-            }
-        });
-    })
-    
-
+  });
 });

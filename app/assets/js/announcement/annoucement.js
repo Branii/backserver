@@ -15,8 +15,8 @@ $(function () {
   }
 
   const txtPage = document.getElementById("trans-page").innerText;
-const txtOf = document.getElementById("trans-of").innerText;
-const txtPages = document.getElementById("trans-pages").innerText;
+  const txtOf = document.getElementById("trans-of").innerText;
+  const txtPages = document.getElementById("trans-pages").innerText;
 
 
   const EdittText =
@@ -69,6 +69,11 @@ const txtPages = document.getElementById("trans-pages").innerText;
     }
   }
 
+  function truncateToWords(text, maxWords = 10) {
+    const words = text.split(/\s+/); // Split by whitespace
+    if (words.length <= maxWords) return text;
+    return words.slice(0, maxWords).join(' ') + '...';
+  }
   const AnnoucementData = (data) => {
     let html = "";
 
@@ -77,10 +82,10 @@ const txtPages = document.getElementById("trans-pages").innerText;
         item.ms_type == "general"
           ? "Announcement"
           : item.ms_type == "personal"
-          ? "Notification"
-          : item.ms_type == "new_users"
-          ? "Notification"
-          : "";
+            ? "Notification"
+            : item.ms_type == "new_users"
+              ? "Notification"
+              : "";
       var storedDate = item.created_at.trim(); // Clean up any leading/trailing spaces
 
       let timezone = item.timezone.split(" ");
@@ -92,9 +97,10 @@ const txtPages = document.getElementById("trans-pages").innerText;
       html += `
                 <tr>
                     <td>${item.subject}</td>
-                    <td style ="max-width: 300px;word-wrap: break-word;overflow-wrap: break-word; white-space: normal;">${
-                      item.message
-                    }</td>
+                    
+                    <td title="${item.message}" style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            ${truncateToWords(item.message, 10)}
+        </td>
                     <td>${item.created_at}</td>
                     <td>${timezone}</td>
                     <td>${getTimeDifferenceFromNow(storedDate)}</td>
@@ -109,15 +115,12 @@ const txtPages = document.getElementById("trans-pages").innerText;
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
                         
-                        <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 editmsg" href="javascript:void(0);" datas ="${
-                          item.msg_id
-                        }"> 
+                        <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 editmsg" href="javascript:void(0);" datas ="${item.msg_id}"> 
                             <i class="bx bx-edit fs-5" ></i>${EdittText}
                         </a>
                         
-                            <a class="dropdown-item deletemessage cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="${
-                              item.msg_id
-                            }">
+                            <a class="dropdown-item deletemessage cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" datas="${item.msg_id
+        }">
                             <i class="bx bx-trash fs-5"></i>${DeleteeText}
                         </a>
                         </div>
@@ -154,8 +157,8 @@ const txtPages = document.getElementById("trans-pages").innerText;
       );
       // document.getElementById("paging_infofmessage").innerHTML =
       //   "Page " + page + " of " + data.totalPages + " pages";
-        document.getElementById("paging_infofmessage").innerHTML =
-    `${txtPage} ${page} ${txtOf} ${data.totalPages} ${txtPages}`;
+      document.getElementById("paging_infofmessage").innerHTML =
+        `${txtPage} ${page} ${txtOf} ${data.totalPages} ${txtPages}`;
 
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -170,8 +173,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
     callback
   ) {
     const createPageLink = (i, label = i, disabled = false, active = false) =>
-      `<li class='page-item ${disabled ? "disabled" : ""} ${
-        active ? "active" : ""
+      `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""
       }'>
     <a class='page-link' href='#' data-page='${i}'>${label}</a>
     </li>`;
@@ -278,8 +280,8 @@ const txtPages = document.getElementById("trans-pages").innerText;
           // document.getElementById("paging_infofmessage").innerHTML =
           //   "Page " + currentPage + " of " + data.totalPages + " pages";
 
-            document.getElementById("paging_infofmessage").innerHTML =
-    `${txtPage} ${page} ${txtOf} ${data.totalPages} ${txtPages}`;
+          document.getElementById("paging_infofmessage").innerHTML =
+            `${txtPage} ${page} ${txtOf} ${data.totalPages} ${txtPages}`;
 
         } catch (error) {
           console.error("Error parsing JSON response:", error);
@@ -590,13 +592,7 @@ const txtPages = document.getElementById("trans-pages").innerText;
       }
     });
 
-    // $(document).on("click", function (e) {
-    //     const $dropdownbet = $("#userfinaceDropdownnotify");
-    //     if (!$(e.target).closest("#financeinputnot, #userfinaceDropdownnotify").length) {
-    //         $dropdownbet.hide();
-    //     }
-    // });
-    // Handle manual input clearing
+   
     $(document).on("input", "#financeinputnot", function () {
       if (!$(this).val()) {
         $(".userIdFieldss").val(""); // Reset user ID if input is cleared

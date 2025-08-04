@@ -34,12 +34,7 @@ class adminController extends Controller
         $this->view->render();
     }
 
-    // public function admins($data)
-    // {
-    //     $this->view('exec/admins_exec', ['flag' => 'addNewAdmin', 'data' => $data]);
-    //     $this->view->render();
-    // }
-
+  
     public function admins($data)
     {
         $view = $this->view('exec/admins_exec', [
@@ -185,8 +180,6 @@ class adminController extends Controller
         $this->view->render();
     }
 
-
-    
     public function  addNewPaymentPlaftorm($partnerID, $paymentType, $paymentTypeName, $currency, $status, $fee, $maxAmount, $minAmount, $siteUrl, $adminSiteUrl, $info, $priority, $countries)
     {
         $this->view('exec/payment_platform', ['partner_id' => $partnerID, "paymentType" => $paymentType, "paymentTypeName" => $paymentTypeName, "currency" => $currency, "status" => $status, "fee" => $fee, "maxAmount" => $maxAmount, "minAmount" => $minAmount, "siteUrl" => $siteUrl, "adminSiteUrl" => $adminSiteUrl, "info" => $info, "priority" => $priority, "countries" => $countries, 'flag' => 'addNewPaymentPlaftorm']);
@@ -217,6 +210,7 @@ class adminController extends Controller
     }
 
    
+    
     public function fetchLoterytype()
     {
         $this->view('exec/account_manage', ["flag" => 'fetchLoterytype']);

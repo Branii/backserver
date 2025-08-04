@@ -1,24 +1,22 @@
-$(function () {
+$(function() {
+  const AccountTransactions = data => {
+    let html = "";
+    const status = {
+      1: "Deposit",
+      2: "Win Bonus",
+      3: "Bet Awarded",
+      4: "Withdrawal",
+      5: "Bet Cancelled",
+      6: "Bet Deduct",
+      7: "Rebates",
+      8: "Self Rebate",
+      9: "Send Red Envelope",
+      10: "Receive Red Envelope",
+      11: "Bet Refund"
+    };
 
-    const AccountTransactions = (data) => {
-
-        let html = "";
-        const status = {
-            1: "Deposit",
-            2: "Win Bonus",
-            3: "Bet Awarded",
-            4: "Withdrawal",
-            5: "Bet Cancelled",
-            6: "Bet Deduct",
-            7: "Rebates",
-            8: "Self Rebate",
-            9: "Send Red Envelope",
-            10: "Receive Red Envelope",
-            11: "Bet Refund"
-        }
-
-        data.forEach((item) => {
-            html += `
+    data.forEach(item => {
+      html += `
                       <tr>
                           <td>${item.order_id.substring(0, 7)}</td>
                           <td>${item.username}</td>
@@ -32,15 +30,14 @@ $(function () {
                   
                       </tr>
                   `;
-        });
-        return html;
-    };
+    });
+    return html;
+  };
 
-    const Gamebetting = (data) => {
-
-        let html = "";
-        data.forEach((item) => {
-            html += `
+  const Gamebetting = data => {
+    let html = "";
+    data.forEach(item => {
+      html += `
                       <tr>
                           <td>${item.uid}</td>
                           <td>${item.username}</td>
@@ -73,15 +70,14 @@ $(function () {
                           </td>
                       </tr>
                   `;
-        });
-        return html;
-    };
+    });
+    return html;
+  };
 
-    const Lottery = (data) => {
-
-        let html = "";
-        data.forEach((item) => {
-            html += `
+  const Lottery = data => {
+    let html = "";
+    data.forEach(item => {
+      html += `
                       <tr>
                           <td>${item.uid}</td>
                           <td>${item.username}</td>
@@ -114,9 +110,7 @@ $(function () {
                           </td>
                       </tr>
                   `;
-        });
-        return html;
-    };
-
-
-})
+    });
+    return html;
+  };
+});
