@@ -9,29 +9,21 @@ $(function () {
       duration: 3000 // auto-dismiss after 3s
     });
   }
-  const txtPage = document.getElementById("trans-page").innerText;
-  const txtOf = document.getElementById("trans-of").innerText;
-  const txtPages = document.getElementById("trans-pages").innerText;
-  const headsUpText = document.getElementById("trans-heads-up").textContent;
-  const selectFieldsText = document.getElementById(
-    "trans-select-fields"
-  ).textContent;
 
-  // showToast(headsUpText, selectFieldsText, "info");
+      const translatorScript = document.querySelector(".translations"); // Get the script tag
+    const translator = JSON.parse(translatorScript.textContent);
+  
+
+
   const bankcarddata = (data) => {
-    // const states = {
-    //   1: "In Force",
-    //   2: "Not Active",
-    //   3: "Terminated",
-    //   4: "Deleted"
-    // };
-
-    const bankStates = {
-      1: document.getElementById("bank_state_1").innerText,
-      2: document.getElementById("bank_state_2").innerText,
-      3: document.getElementById("bank_state_3").innerText,
-      4: document.getElementById("bank_state_4").innerText
+    const states = {
+      1: translator ["In Force"],
+      2: translator ["Not Active"],
+      3: translator ["Terminated"],
+      4: translator ["Deleted"]
     };
+
+  
     let html = "";
 
     data.forEach((item) => {
@@ -49,7 +41,7 @@ $(function () {
                       <td>${item.bind_time}</td>
                       <td>${timezone}</td>
                  
-                       <td>${bankStates[item.status] ?? item.status}</td>
+                       <td>${states[item.status] ?? item.status}</td>
                     </tr>
                   `;
     });
@@ -99,11 +91,12 @@ $(function () {
       renderPaginationlist(totalPages, pagebankcard, pageLimit, (newpage) =>
         fetchbankcard(newpage)
       );
+      document.getElementById("paging_infobankcard").innerHTML =
+  `${translator["Page"]} ${pagebankcard} ${translator["Of"]} ${totalPages} ${translator["Pages"]}`;
+
       // document.getElementById("paging_infobankcard").innerHTML =
       //   "Page " + pagebankcard + " of " + totalPages + " pages";
-      document.getElementById(
-        "paging_infobankcard"
-      ).innerHTML = `${txtPage} ${pagebankcard} ${txtOf} ${totalPages} ${txtPages}`;
+     
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -258,7 +251,7 @@ $(function () {
           response = JSON.parse(res);
         } catch (err) {
           console.error("Failed to parse JSON:", err);
-          showToast("Error", "Invalid server response", "error");
+          showToast(translator ["Error"], translator ["Invalid server response"], "error");
           return;
         }
 
@@ -281,13 +274,13 @@ $(function () {
 
           const totalPages = Math.ceil(bankCardObjs[0].total_records / pageLimit);
           renderPaginationlist(totalPages, currentPage, pageLimit, searchBankList);
-
           document.getElementById("paging_infobankcard").innerHTML =
             "Page " + currentPage + " of " + totalPages + " pages";
         }
       })
       .fail(function (xhr, status, error) {
         console.error("POST request failed:", error);
+
         showToast("Error", "Server error occurred", "error");
       })
       .always(function () {

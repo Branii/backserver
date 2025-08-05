@@ -23,26 +23,9 @@ $(function () {
             duration: 3000, // auto-dismiss after 3s
         });
     }
+    const translatorScript = document.querySelector(".translations"); // Get the script tag
+    const translator = JSON.parse(translatorScript.textContent);
 
-    const langStrings = {
-        Page: document.getElementById("tr_page").textContent,
-        of: document.getElementById("tr_of").textContent,
-        pages: document.getElementById("tr_pages").textContent
-    };
-
-
-    const status = {
-        1: document.getElementById('status_pending').innerText,
-        2: document.getElementById('status_success').innerText,
-        3: document.getElementById('status_failed').innerText
-    };
-
-    const withdrawal_channel = {
-        3: document.getElementById('channel_momo').innerText,
-        5: document.getElementById('channel_crypto').innerText,
-        2: document.getElementById('channel_bank').innerText,
-        4: document.getElementById('channel_manual').innerText
-    };
     function formatMoney(money) {
         let moneyStr = String(money);
         if (moneyStr.includes(".")) {
@@ -54,11 +37,11 @@ $(function () {
         }
         return moneyStr;
     }
-
     const withdrawdatas = (data) => {
         let html = "";
-        const status = { 1: "Pending", 2: "Approved", 3: "Rejected" };
-        const withdrawal_channel = { 3: "Momo", 5: "Crypto", 2: "Bank", 4: "Manual" }; // 3:momo 5:crypto 2:bank 4:manual
+
+        const status = { 1: translator["Pending"], 2: translator["Approved"], 3: translator["Rejected"] };
+        const withdrawal_channel = { 3: translator["Momo"], 5: translator["Crypto"], 2: translator["Bank"], 4: translator["Manual"] }; // 3:momo 5:crypto 2:bank 4:manual 
 
         data.forEach((item) => {
             let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
@@ -109,12 +92,14 @@ $(function () {
 
             let response = await fetch(`../financial/fetchwithdrawmanage/${currentPage}/${pageLimit}`);
             data = await response.json();
-           // console.log(data)
+            // console.log(data)
             //return
             $("#maskwithdraws").LoadingOverlay("hide");
             renderwithdraws(data.withdraws);
             renderwithdrawsPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchwithdrawmanage(newPage, pageLimit));
-            document.getElementById("paging_infowithdraws").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+
+            // document.getElementById("paging_infowithdraws").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            document.getElementById("paging_infowithdraws").innerHTML = `${translator["Page"]} ${currentPage} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -197,8 +182,7 @@ $(function () {
         if ($("#withdrawalnames").val() == "" && $("#widrl-channelss").val() == "" && $("#widrl-states").val() == "" && $("#widrl-IDs").val() == ""
             && $(".wdrl-startdates").val() == "" && $(".wdrl-enddates").val() == "") {
             // $("#danger-finance").modal("show");
-            showToast("Heads up!!", "Select one or more data fields to filter", "info")
-            // showToast(headsUpText, selectFieldsText, "info");
+            showToast(translator["Heads up!!"], translator["Select one or more data fields to filter"], "info")
             return;
         }
         const username = $("#withdrawalnames").val();
@@ -342,17 +326,17 @@ $(function () {
                 //  console.log(data)
                 //return
                 if (data === "success") {
-                    showToast("Success", "Withdrawal approved successfully", "success");
+                    showToast(translator["Success"], translator["Withdrawal approved successfully"], "success");
                     fetchwithdrawmanage(currentPage, pageLimit); // Refresh the list
                 } else {
-                    showToast("Error", "Failed to approve withdrawal", "error");
+                    showToast(translator["Error"], translator["Failed to approve withdrawal"], "error");
                 }
             } catch (error) {
-                console.error("Error parsing response:", error);
-                showToast("Error", "An error occurred while processing your request", "error");
+                // console.error("Error parsing response:", error);
+                showToast(translator["Error"], translator["An error occurred while processing your request"], "error");
             }
         }).fail(function () {
-            showToast("Error", "Failed to connect to the server", "error");
+            showToast(translator["Error"], translator["Failed to connect to the server"], "error");
         });
     });
 

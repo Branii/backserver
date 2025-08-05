@@ -14,32 +14,6 @@ $(() => {
     });
   }
 
-  const noUserTitle = document.getElementById("trans-no-user-selected-title")
-    .textContent;
-  const noUserMessage = document.getElementById("trans-no-user-selected-msg")
-    .textContent;
-  // Error toast
-  const errorTitle = document.getElementById("trans-error-title").textContent;
-  const errorMsg = document.getElementById("trans-error-msg").textContent;
-
-  // No User Selected
-  const noUser2Title = document.getElementById("trans-no-user-2-title")
-    .textContent;
-  const noUser2Msg = document.getElementById("trans-no-user-2-msg").textContent;
-
-  // Too Many Users
-  const tooManyTitle = document.getElementById("trans-too-many-title")
-    .textContent;
-  const tooManyMsg = document.getElementById("trans-too-many-msg").textContent;
-
-  const noDataTitle = document.getElementById("trans-no-data-title")
-    .textContent;
-  const noDataMsg = document.getElementById("trans-no-data-msg").textContent;
-  // showToast(noDataTitle, noDataMsg, "info");
-  // showToast(tooManyTitle, tooManyMsg, "info");
-  // showToast(noUser2Title, noUser2Msg, "info");
-  // showToast(errorTitle, errorMsg, "info");
-  // showToast(noUserTitle, noUserMessage, "info");
 
   const translatorScript = document.querySelector(".translations"); // Get the script tag
   const translator = JSON.parse(translatorScript.textContent);
@@ -84,9 +58,7 @@ $(() => {
         pagesStack = [];
       },
       error: function (xhr, status, error) {
-        // showToast("Error", "");
-
-        showToast(errorTitle, errorMsg, "info");
+        showToast(translator["Error"], translator["An Error occured, please try again later"], "info");
       },
       complete: function () {
         $("#win-loss-loader").css("display", "none");
@@ -121,8 +93,7 @@ $(() => {
   //
   $(document).on("click", ".ngp-go-back", function () {
     if (historyStack.length === 0) {
-      // showToast("No Data", "No data to show", "info");
-      showToast(noDataTitle, noDataMsg, "info");
+      showToast(translator["No Data"], translator["No data to show"], "info");
 
       return;
     }
@@ -178,9 +149,7 @@ $(() => {
     }
 
     if (userID.length === 0) {
-      // showToast("No User selected", "Select atleast one User.", "info");
-      showToast(noUserTitle, noUserMessage, "info");
-
+      showToast(translator["No User selected"], translator["Select at least one User"], "info");
       return;
     }
 
@@ -221,9 +190,7 @@ $(() => {
         $("#ngp-winLossDtholder").html(htmlMarkup);
       },
       error: function (xhr, status, error) {
-        // showToast("Error", "An Error occured, please try again later.", "info");
-
-        showToast(errorTitle, errorMsg, "info");
+        showToast(translator["Error"], translator["An Error occured, please try again later"], "info");
       },
       complete: function () {
         $($(element).find("i")[0])
@@ -239,9 +206,7 @@ $(() => {
     const numTableRows = $("#ngp-winLossDtholder").find("tr.ngp-wl-results");
 
     if (numTableRows.length === 0) {
-      // showToast("No User Selected.", "Please select a user.", "info");
-
-      showToast(noUserTitle, noUserMessage, "info");
+      showToast(translator["No User Selected"], translator["Please select a user"], "info");
       return;
     }
 
@@ -557,9 +522,7 @@ $(() => {
         );
       },
       error: function (xhr, status, error) {
-        // showToast("Error", "An Error occured, please try again later.", "info");
-
-        showToast(errorTitle, errorMsg, "info");
+        showToast(translator["Error"], translator["An Error occured, please try again later"], "info");
       },
       complete: function () {
         $($(element).find("i")[0])
@@ -640,9 +603,7 @@ $(() => {
         );
       },
       error: function (xhr, status, error) {
-        // showToast("Error", "An Error occured, please try again later.", "info");
-
-        showToast(errorTitle, errorMsg, "info");
+        showToast(translator["Error"], translator["An Error occured, please try again later"], "info");
       },
       complete: function () {
         $("#ngp-wl-tbl-wrapper").LoadingOverlay("hide");

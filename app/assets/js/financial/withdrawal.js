@@ -27,20 +27,6 @@ $(function () {
     const translatorScript = document.querySelector(".translations"); // Get the script tag
     const translator = JSON.parse(translatorScript.textContent);
 
-
-
-    const status = {
-        1: document.getElementById('status_pending').innerText,
-        2: document.getElementById('status_success').innerText,
-        3: document.getElementById('status_failed').innerText
-    };
-
-    const withdrawal_channel = {
-        3: document.getElementById('channel_momo').innerText,
-        5: document.getElementById('channel_crypto').innerText,
-        2: document.getElementById('channel_bank').innerText,
-        4: document.getElementById('channel_manual').innerText
-    };
     function formatMoney(money) {
         let moneyStr = String(money);
         if (moneyStr.includes(".")) {
@@ -184,7 +170,6 @@ $(function () {
             && $(".wdrl-startdate").val() == "" && $(".wdrl-enddate").val() == "") {
             // $("#danger-finance").modal("show");
             showToast(translator["Heads up!!"], translator["Select one or more data fields to filter"], "info")
-            // showToast(headsUpText, selectFieldsText, "info");
             return;
         }
         const username = $("#withdrawalname").val();
