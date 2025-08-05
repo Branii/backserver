@@ -460,3 +460,7 @@
         </div>
     </div>
 </div>
+
+<script class="translations" type="application/json">
+<?=json_encode($translator); ?>
+</script>

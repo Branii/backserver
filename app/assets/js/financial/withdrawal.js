@@ -24,12 +24,10 @@ $(function () {
       });
   }
 
-    const langStrings = {
-    Page: document.getElementById("tr_page").textContent,
-    of: document.getElementById("tr_of").textContent,
-    pages: document.getElementById("tr_pages").textContent
-    };
+    const translatorScript = document.querySelector(".translations"); // Get the script tag
+  const translator = JSON.parse(translatorScript.textContent);
 
+  
 
     const status = {
     1: document.getElementById('status_pending').innerText,
@@ -57,8 +55,8 @@ $(function () {
 
   const withdrawdata = (data) => {
       let html = "";
-      const status = { 1: "Pending", 2: "Approved", 3: "Rejected" };
-      const withdrawal_channel = { 3: "Momo", 5: "Crypto", 2: "Bank", 4: "Manual" }; // 3:momo 5:crypto 2:bank 4:manual
+     const status = { 1: translator["Pending"], 2: translator["Approved"], 3: translator["Rejected"] };
+      const withdrawal_channel = { 3: translator["Momo"], 5: translator ["Crypto"], 2: translator ["Bank"], 4: translator ["Manual"] }; // 3:momo 5:crypto 2:bank 4:manual 
       
       data.forEach((item) => {
          let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
@@ -78,7 +76,7 @@ $(function () {
             <td>${formatMoney(item.actual_withdrawal_amount)}</td>
             <td>${item.withdrawal_application_time.replace(" ", "/")}</td>
             <td>${timezone}</td>
-            <td>${status[item.withdrawal_state]}</td>
+          <td>${status[item.withdrawal_state]}</td>
             <td>${item.approved_by}</td>
         </tr>
           `;
@@ -102,7 +100,8 @@ $(function () {
             $("#maskwithdraw").LoadingOverlay("hide");
             renderwithdraw(data.withdraw);
             renderwithdrawPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchwithdraw(newPage, pageLimit));
-            document.getElementById("paging_infowithdraw").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            document.getElementById("paging_infowithdraw").innerHTML = `${translator["Page"]} ${currentPage} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
+            // document.getElementById("paging_infowithdraw").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -184,7 +183,7 @@ $(function () {
         if ($("#withdrawalname").val() == "" && $("#widrl-channels").val() == "" && $("#widrl-state").val() == ""&& $("#widrl-ID").val() == ""
         && $(".wdrl-startdate").val() == ""  && $(".wdrl-enddate").val() == "" ) {
             // $("#danger-finance").modal("show");
-             showToast("Heads up!!","Select one or more data fields to filter","info")
+             showToast(translator ["Heads up!!"],translator ["Select one or more data fields to filter"],"info")
             // showToast(headsUpText, selectFieldsText, "info");
             return;
         }

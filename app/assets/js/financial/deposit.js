@@ -14,7 +14,7 @@ $(function () {
    const translatorScript = document.querySelector(".translations"); // Get the script tag
   const translator = JSON.parse(translatorScript.textContent);
 
-  // showToast(alertTitle, userDoesNotExist, "info");
+
 
   function formatMoney(money) {
     let moneyStr = String(money);
@@ -140,8 +140,11 @@ const Depositdata = (data) => {
         pageLimit,
         (newPage, pageLimit) => fetchDeposit(newPage, pageLimit)
       );
-      document.getElementById("paging_infodeposit").innerHTML =
-        "Pages " + page + " of " + data.totalPages + " pages";
+      // document.getElementById("paging_infodeposit").innerHTML =
+      //   "Pages " + page + " of " + data.totalPages + " pages";
+
+        document.getElementById("paging_infodeposit").innerHTML = 
+    `${translator["Page"]} ${page} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
   
     } catch (error) {
       console.error("Error fetching data:", error);

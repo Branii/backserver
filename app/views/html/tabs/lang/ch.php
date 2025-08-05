@@ -958,6 +958,9 @@ return [
     'Bank Transfer' => '银行转帐',
     'Manual Deposit' => '手动存款',
     'Approved By' => '批准人',
+    'Approved' => '正式认可的',
+      'Rejected' =>'被拒绝',
+
     'Withdrawal Channel' => '提现渠道',
     'Search Withdrawal ID' => '查询提款ID',
     'Withdrawal Channels' => '提现渠道',
