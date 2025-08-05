@@ -1667,4 +1667,7 @@ return [
     'An error occurred while processing your request' => '处理您的请求时发生错误',
     'Failed to connect to the server' => '无法连接到服务器',
     'Invalid server response' => '无效的服务器响应',
+    'Server error occurred' => '获取数据时发生服务器错误',
+    'Request could not be completed, please try again' => '请求未完成，请重试。',
+    'Network or server error occurred' => '获取数据时发生网络或服务器错误',
 ];
