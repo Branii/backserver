@@ -18,28 +18,6 @@ $(() => {
   const translatorScript = document.querySelector(".translations"); // Get the script tag
   const translator = JSON.parse(translatorScript.textContent);
 
-  const noUserTitle = document.getElementById("trans-no-user-selected-title")
-    .textContent;
-  const noUserMessage = document.getElementById("trans-no-user-selected-msg")
-    .textContent;
-  // Error toast
-  const errorTitle = document.getElementById("trans-error-title").textContent;
-  const errorMsg = document.getElementById("trans-error-msg").textContent;
-
-  // No User Selected
-  const noUser2Title = document.getElementById("trans-no-user-2-title")
-    .textContent;
-  const noUser2Msg = document.getElementById("trans-no-user-2-msg").textContent;
-
-  // Too Many Users
-  const tooManyTitle = document.getElementById("trans-too-many-title")
-    .textContent;
-  const tooManyMsg = document.getElementById("trans-too-many-msg").textContent;
-
-  const noDataTitle = document.getElementById("trans-no-data-title")
-    .textContent;
-  const noDataMsg = document.getElementById("trans-no-data-msg").textContent;
-
   const fetchLotteryNames = () => {
     try {
       $.ajax({
@@ -65,10 +43,7 @@ $(() => {
   //
   $(document).on("click", ".go-back", function () {
     if (historyStack.length === 0) {
-      // showToast("No Data","No data to show","info");
-
-      showToast(noDataTitle, noDataMsg, "info");
-
+      showToast(translator["No Data"], translator["No data to show"], "info");
       return;
     }
     const content = historyStack.pop();
@@ -120,10 +95,7 @@ $(() => {
     const element = this;
 
     if (userID.length === 0) {
-      // showToast("No User selected","Select atleast one User.","info");
-
-      showToast(noUser2Title, noUser2Msg, "info");
-
+      showToast(translator["No User selected"], translator["Select at least one User"], "info");
       return;
     }
 
@@ -166,9 +138,7 @@ $(() => {
         $("#winLossDtholder").html(htmlMarkup);
       },
       error: function (xhr, status, error) {
-        // showToast("Error","An Error occured, please try again later.","info");
-
-        showToast(errorTitle, errorMsg, "info");
+        showToast(translator["Error"], translator["An Error occured, please try again later"], "info");
       },
       complete: function () {
         $($(element).find("i")[0])
@@ -184,17 +154,12 @@ $(() => {
     const numTableRows = $("#winLossDtholder").find("tr.wl-results");
 
     if (numTableRows.length === 0) {
-      // showToast("No User Selected.","Please select a user.",'info');
-
-      showToast(noUserTitle, noUserMessage, "info");
+      showToast(translator["No User Selected"], translator["Please select a user"], 'info');
       return;
     }
 
     if (numTableRows.length > 1) {
-      // showToast("Too many users available.","Please select a single user.",'info');
-
-      showToast(tooManyTitle, tooManyMsg, "info");
-
+      showToast(translator["Too many users available"], translator["Please select a single user"], 'info');
       return;
     }
 
@@ -210,10 +175,7 @@ $(() => {
     const element = this;
 
     if (userID.length === 0) {
-      // showToast("No User selected","Select atleast one User.","info");
-
-      showToast(noUser2Title, noUser2Msg, "info");
-
+      showToast(translator["No User selected"], translator["Select at least one User"], "info");
       return;
     }
 
@@ -258,9 +220,8 @@ $(() => {
         $("#winLossDtholder").html(htmlMarkup);
       },
       error: function (xhr, status, error) {
-        // showToast("Error","Request Error, please try again.","Error");
+        showToast(translator["Error"], translator["Request Error, please try again"], "Error");
 
-        showToast(errorTitle, errorMsg, "info");
       },
       complete: function () {
         $($(element).find("i")[0])
@@ -537,9 +498,7 @@ $(() => {
         );
       },
       error: function (xhr, status, error) {
-        // showToast("Error","An Error occured, please try again later.","info");
-
-        showToast(errorTitle, errorMsg, "info");
+        showToast(translator["Error"], translator["An Error occured, please try again later"], "info");
       },
       complete: function () {
         $($(element).find("i")[0])
@@ -619,9 +578,7 @@ $(() => {
         );
       },
       error: function (xhr, status, error) {
-        // showToast("Error","An Error occured, please try again later.","info");
-
-        showToast(errorTitle, errorMsg, "info");
+        showToast(translator["Error"], translator["An Error occured, please try again later."], "info");
       },
       complete: function () {
         $("#wl-tbl-wrapper").LoadingOverlay("hide");
@@ -686,11 +643,17 @@ $(() => {
 
     pagLink += "</ul>";
     document.getElementById("wl-pagination-wrapper").innerHTML = pagLink;
-    $("#paging_infowl").text(
-      `Page ${currentPagewithdraw} of ${totalPages} ${totalPages === 1
-        ? " Page "
-        : " Pages "} `
-    );
+    // $("#paging_infowl").text(
+    //   `Page ${currentPagewithdraw} of ${totalPages} ${totalPages === 1
+    //     ? " Page "
+    //     : " Pages "} `
+    // );
+// Set translated pagination text for #paging_infowl
+$("#paging_infowl").text(
+  `${translator["Page"]} ${currentPagewithdraw} ${translator["Of"]} ${totalPages} ` +
+  `${totalPages === 1 ? translator["Page"] : translator["Pages"]}`
+);
+
   };
 });
 

@@ -334,31 +334,6 @@
 </style>
 
 
-
-<span id="trans-no-user-selected-title" style="display: none;"><?php echo $translator['NO_USER_SELECTED_TITLE']; ?></span>
-<span id="trans-no-user-selected-msg" style="display: none;"><?php echo $translator['NO_USER_SELECTED_MSG']; ?></span>
-
-<!-- For Error -->
-<span id="trans-error-title" style="display:none;"><?php echo $translator['ERROR_TITLE']; ?></span>
-<span id="trans-error-msg" style="display:none;"><?php echo $translator['ERROR_MSG']; ?></span>
-
-<!-- For No User Selected -->
-<span id="trans-no-user-2-title" style="display:none;"><?php echo $translator['NO_USER_SELECTED_2_TITLE']; ?></span>
-<span id="trans-no-user-2-msg" style="display:none;"><?php echo $translator['NO_USER_SELECTED_2_MSG']; ?></span>
-
-<!-- For Too Many Users -->
-<span id="trans-too-many-title" style="display:none;"><?php echo $translator['TOO_MANY_USERS_TITLE']; ?></span>
-<span id="trans-too-many-msg" style="display:none;"><?php echo $translator['TOO_MANY_USERS_MSG']; ?></span>
-
-
-<span id="trans-no-data-title" style="display:none;"><?php echo $translator['NO_DATA_TITLE']; ?></span>
-<span id="trans-no-data-msg" style="display:none;"><?php echo $translator['NO_DATA_MSG']; ?></span>
-
-<span id="trans-no-data-title" style="display:none;"><?php echo $translator['NO_DATA_TITLE']; ?></span>
-<span id="trans-no-data-msg" style="display:none;"><?php echo $translator['NO_DATA_MSG']; ?></span>
-
-
-
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['GGP Win/Loss Report']; ?></h4>
@@ -468,12 +443,11 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowstrans" id="wl-numrowstans" style="font-size: 12px;">     
-            <option value="10"><?= $translator['10'] ?? '10' ?></option>
-            <option value="20"><?= $translator['20'] ?? '20' ?></option>
-            <option value="50"><?= $translator['50'] ?? '50' ?></option>
-            <option value="100"><?= $translator['100'] ?? '100' ?></option>
-            <option value="200"><?= $translator['200'] ?? '200' ?></option>
-            <option value="500"><?= $translator['500'] ?? '500' ?></option>
+          <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="500">500</option>
             </select>
             <span id="wl-pagination-wrapper" class="right-element">lsdsdsa;fdjs;lfda </span>
         </span>
@@ -765,3 +739,6 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+<script class="translations" type="application/json">
+<?=json_encode($translator); ?>
+</script>

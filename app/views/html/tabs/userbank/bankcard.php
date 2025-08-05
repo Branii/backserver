@@ -266,19 +266,6 @@
         margin: 0px 1rem;
     }
 </style>
-
-<span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
-<span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
-
-<span id="bank_state_1" style="display: none;"><?= $translator['bank_state_in_force'] ?></span>
-<span id="bank_state_2" style="display: none;"><?= $translator['bank_state_not_active'] ?></span>
-<span id="bank_state_3" style="display: none;"><?= $translator['bank_state_terminated'] ?></span>
-<span id="bank_state_4" style="display: none;"><?= $translator['bank_state_deleted'] ?></span>
-
-<span id="trans-page" class="hidden" style="display: none;"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" class="hidden" style="display: none;"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" class="hidden" style="display: none;"><?= $translator['pages'] ?? 'pages' ?></span>
-
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
         <h4 class="card-title mb-0"><?= $translator['Bank Card List']; ?></h4>
