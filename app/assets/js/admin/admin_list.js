@@ -9,34 +9,29 @@ $(function () {
         });
     }
 
-    function getTranslation(id, fallback) {
-        return document.getElementById(id)?.dataset.translation || fallback;
-    }
-const txtPage = document.getElementById("trans-page").innerText;
-const txtOf = document.getElementById("trans-of").innerText;
-const txtPages = document.getElementById("trans-pages").innerText;
+   
+
+    const translatorScript = document.querySelector(".translations"); // Get the script tag
+  const translator = JSON.parse(translatorScript.textContent);
 
 
+  
 
-    const viewprofile_text = document.getElementById("viewprofile-text")?.dataset.translation || "View Profile";
-
-    const activity_text = getTranslation("activity-text", "Activity Logs");
-    const permission_text = getTranslation("permission-text", "Permissions");
 
     const AdminTable = (data) => {
         let html = "";
         const status = {
-            1: { title: "Deposit", color: "#4CAF50" }, // Green
-            2: { title: "Win Bonus", color: "#FF9800" }, // Orange
-            3: { title: "Bet Awarded", color: "#03A9F4" }, // Light Blue
-            4: { title: "Withdrawal", color: "#F44336" }, // Red
-            5: { title: "Bet Cancelled", color: "#9E9E9E" }, // Grey
-            6: { title: "Bet Deduct", color: "#E91E63" }, // Pink
-            7: { title: "Rebates", color: "#8BC34A" }, // Light Green
-            8: { title: "Self Rebate", color: "#00BCD4" }, // Cyan
-            9: { title: "Send Red Envelope", color: "#FF5722" }, // Deep Orange
-            10: { title: "Receive Red Envelope", color: "#795548" }, // Brown
-            11: { title: "Bet Refund", color: "#FFC107" }, // Amber
+            1: { title: translator ["Deposit"], color: "#4CAF50" }, // Green
+            2: { title:  translator ["Win Bonus"], color: "#FF9800" }, // Orange
+            3: { title:  translator ["Bet Awarded"], color: "#03A9F4" }, // Light Blue
+            4: { title:  translator ["Withdrawal"], color: "#F44336" }, // Red
+            5: { title:  translator ["Bet Cancelled"], color: "#9E9E9E" }, // Grey
+            6: { title:  translator ["Bet Deduct"], color: "#E91E63" }, // Pink
+            7: { title:  translator ["Rebates"], color: "#8BC34A" }, // Light Green
+            8: { title:  translator ["Self Rebate"], color: "#00BCD4" }, // Cyan
+            9: { title:  translator ["Send Red Envelope"], color: "#FF5722" }, // Deep Orange
+            10: { title: translator [ "Receive Red Envelope"], color: "#795548" }, // Brown
+            11: { title: translator [ "Bet Refund"], color: "#FFC107" }, // Amber
         };
 
         data.forEach((item) => {
@@ -107,17 +102,17 @@ const txtPages = document.getElementById("trans-pages").innerText;
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li value='${JSON.stringify(item)}' class='admin_pro'>
                               <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view-profile">
-                                <i class='bx bx-show-alt'></i>${viewprofile_text}
+                                <i class='bx bx-show-alt'></i>${translator["View Profile"]}
                               </a>
                             </li>
                             <li value='${JSON.stringify(item)}' class='admin_logs'>
                               <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#view-activity-logs">
-                                <i class='bx bx-history' style='font-size:16px;'></i>${activity_text}
+                                <i class='bx bx-history' style='font-size:16px;'></i>${translator["Activity Logs"]}
                               </a>
                             </li>
                              <li value='${JSON.stringify(item)}' class='admin_per'>
                               <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#view-permissions">
-                                <i class='bx bx-edit-alt' style='font-size:16px;'></i>${permission_text}
+                                <i class='bx bx-edit-alt' style='font-size:16px;'></i>${translator["Permission"]}
                               </a>
                             </li>
                           </ul>
@@ -169,21 +164,14 @@ const txtPages = document.getElementById("trans-pages").innerText;
             renderAdmin(data.admins);
             // Render pagination
             renderPaginationForAdmin(data.totalPages, currentPage);
-            // document.getElementById("paging_info_admin").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+             document.getElementById("paging_info_admin").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
 
-            document.getElementById("paging_info_admin").innerHTML =
-    `${txtPage} ${currentPage} ${txtOf} ${data.totalPages} ${txtPages}`;
+           
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     }
 
-    const translations = {
-        success: document.getElementById("trans-success").dataset.translation,
-        newUser: document.getElementById("trans-new-user").dataset.translation,
-        headsUp: document.getElementById("trans-heads-up").dataset.translation,
-        mandatory: document.getElementById("trans-mandatory").dataset.translation,
-    };
 
     fetchAdmins(currentPage, pageLimit);
 
@@ -193,8 +181,8 @@ const txtPages = document.getElementById("trans-pages").innerText;
             console.log(data);
             $(".add-new").modal("hide");
             renderAdmin(data.admins);
-            // showToast("Success", "New user added successfuly", "success");
-            showToast(translations.success, translations.newUser, "success");
+             showToast(translator ["Success"], translator ["New user added successfuly"], "success");
+          
         });
     };
 
@@ -299,7 +287,9 @@ const txtPages = document.getElementById("trans-pages").innerText;
         const data = $("#admins").serialize();
         let isEmpty = params.some((param) => param === "");
         //console.log(params)
-        !isEmpty ? request(`../admin/admins/${data}`) : showToast(translations.headsUp, translations.mandatory, "info");
+        !isEmpty ? request(`../admin/admins/${data}`) : showToast(translator["Heads up!!"], translator["All fields are mandatory"], "info");
+        
+
     });
 
     function renderPaginationForAdmin(totalPages, currentPage) {
@@ -728,11 +718,9 @@ const txtPages = document.getElementById("trans-pages").innerText;
         const pageNumber = 1;
         const limit = 20;
 
-        const headsUpTitle = document.getElementById("trans-heads-up-title").textContent;
-        const selectAdminMsg = document.getElementById("trans-select-admin-msg").textContent;
-
         if (!username) {
-            showToast(headsUpTitle, selectAdminMsg, "info");
+    
+            showToast(translator["Heads up!!"], translator["User required"], "info");
             return;
         }
 

@@ -318,48 +318,6 @@
 </style> -->
 
 
-<span id="translation-type-admin" data-translation="<?= $translator['Please select or type an admin to search']; ?>" style="display:none;"></span>
-
-
-<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display:none;"></span>
-<span id="trans-new-user" data-translation="<?= $translator['NewUserAdded']; ?>" style="display:none;"></span>
-<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp']; ?>" style="display:none;"></span>
-<span id="trans-mandatory" data-translation="<?= $translator['AllFieldsMandatory']; ?>" style="display:none;"></span>
-
-
-<span id="viewprofile-text" data-translation="<?= $translator['View Profile'] ?? 'View Profile'; ?>" style="display:none;"></span>
-<span id="activity-text" data-translation="<?= $translator['Activity Logs'] ?? 'Activity Logs'; ?>" style="display:none;"></span>
-<span id="permission-text" data-translation="<?= $translator['Permissions'] ?? 'Permissions'; ?>" style="display:none;"></span>
-<!-- Hidden translatable message span -->
-<span id="translation-info" data-msg="<?= $translator['Information'] ?>" style="display:none;"></span>
-<span id="translation-noperm" data-msg="<?= $translator['No permissions selected. Update not sent.'] ?>" style="display:none;"></span>
-<span id="translation-select-dates" data-msg="<?= $translator['Select date(s) to filter'] ?>" style="display:none;"></span>
-
-<span id="status-active" data-msg="<?= $translator['active'] ?>"></span>
-<span id="status-suspended" data-msg="<?= $translator['suspended'] ?>"></span>
-<span id="status-deactivated" data-msg="<?= $translator['deactivated'] ?>"></span>
-
-<span id="msg-success" data-msg="<?= $translator['permissions_success'] ?>"></span>
-<span id="msg-error" data-msg="<?= $translator['permissions_error'] ?>"></span>
-<span id="msg-title-success" data-msg="<?= $translator['success'] ?>"></span>
-<span id="msg-title-error" data-msg="<?= $translator['error'] ?>"></span>
-
-
-<span id="trans-heads-up-title" style="display:none;"><?php echo $translator['HEADS_UP_TITLE']; ?></span>
-<span id="trans-select-admin-msg" style="display:none;"><?php echo $translator['SELECT_ADMIN_MSG']; ?></span>
-
-<span id="trans-status-active" style="display:none;"><?php echo $translator['STATUS_ACTIVE']; ?></span>
-<span id="trans-status-suspended" style="display:none;"><?php echo $translator['STATUS_SUSPENDED']; ?></span>
-<span id="trans-status-deactivated" style="display:none;"><?php echo $translator['STATUS_DEACTIVATED']; ?></span>
-
-
-<span id="trans-page" hidden class="hidden"><?= $translator['Page'] ?? 'Page' ?></span>
-<span id="trans-of" hidden class="hidden"><?= $translator['of'] ?? 'of' ?></span>
-<span id="trans-pages" hidden class="hidden"><?= $translator['pages'] ?? 'pages' ?></span>
-
-
-
-
 <div class="card w-100 position-relative overflow-hidden">
 
   <div class="px-4 py-3 border-bottom">
@@ -913,3 +871,7 @@
   </div>
 </div>
 </div>
+
+<script class="translations" type="application/json">
+<?=json_encode($translator); ?>
+</script>

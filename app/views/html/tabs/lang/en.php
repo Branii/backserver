@@ -695,6 +695,7 @@ return [
     'Withdrawal Status' => 'Withdrawal Status',
     'Approved' => 'Approved',
     'Rejected' => 'Rejected',
+     'Reject' => 'Reject',
     'Withdrawal Manage' => 'Withdrawal Manage',
 
     //(Basic Platform Configuration)
@@ -839,6 +840,7 @@ return [
     'Privacy and Policies' => 'Privacies And Policies',
     'System administrators and permission' => 'System administrators and permission',
     'Administrators' => 'Administrators',
+    'Permission' => 'Permission',
     'System information and app versions' => 'System information and app versions',
     'App Version' => 'App Version',
     'All fields are required! Select one or more data fields to filter' => 'All fields are required! Select one or more data fields to filter',
@@ -1568,8 +1570,13 @@ return [
     'Failed to connect to the server' => 'Failed to connect to the server',
     'Invalid server response' => 'Invalid server response',
     'Server error occurred' => 'Server error occurred',
- 'Request could not be completed, please try again' => 'Request could not be completed, please try again',
+    'Request could not be completed, please try again' => 'Request could not be completed, please try again',
      'Network or server error occurred' => 'Network or server error occurred',
+     'Are you sure you want to approve this withdrawal?'=>'Are you sure you want to approve this withdrawal?',
+    'New user added successfuly'=>'New user added successfuly',
+     'User required'=>'User required',
+        'Continue'=>'Continue',
 
+  
     
 ];

@@ -81,9 +81,9 @@ $(function () {
 
 
 const statusMap = {
-  pending: document.getElementById('status_pending').innerText,
-  success: document.getElementById('status_success').innerText,
-  failed: document.getElementById('status_failed').innerText
+  pending: 'pending',
+  success: 'success',
+  failed: 'failed'
 };
 
 const Depositdata = (data) => {

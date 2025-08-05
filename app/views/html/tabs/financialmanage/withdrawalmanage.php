@@ -245,19 +245,6 @@
 
 
 
-<span id="tr_page" style="display:none"><?= $translator['Page'] ?></span>
-<span id="tr_of" style="display:none"><?= $translator['of'] ?></span>
-<span id="tr_pages" style="display:none"><?= $translator['pages'] ?></span>
-
-<span id="status_pending" style="display:none;"><?= $translator['status_pending'] ?></span>
-<span id="status_success" style="display:none;"><?= $translator['status_success'] ?></span>
-<span id="status_failed" style="display:none;"><?= $translator['status_failed'] ?></span>
-
-<span id="channel_momo" style="display:none;"><?= $translator['channel_momo'] ?></span>
-<span id="channel_crypto" style="display:none;"><?= $translator['channel_crypto'] ?></span>
-<span id="channel_bank" style="display:none;"><?= $translator['channel_bank'] ?></span>
-<span id="channel_manual" style="display:none;"><?= $translator['channel_manual'] ?></span>
-
 
 <div class="card w-100 position-relative overflow-hidden">
 
@@ -410,28 +397,19 @@
     </div>
 
 </div>
-
-
-
-   
-    <!-- Button trigger modal -->
-    <!-- <button type="button" class="btn mb-1 bg-info-subtle text-info  px-4 fs-4 " data-bs-toggle="modal" data-bs-target="#al-info-alert">
-        Info Alert
-    </button> -->
-
-    <!-- Vertically centered modal -->
+   <!-- Vertically centered modal -->
     <div class="modal fade" id="al-info-alert" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content modal-filled bg-info-subtle">
                 <div class="modal-body p-4">
                     <div class="text-center text-gray">
                         <i class="bx bx-message-square-x tcloses fs-7"></i>
-                        <h4 class="mt-2">Heads up!</h4>
+                        <h4 class="mt-2"><?= $translator['Heads up!!']; ?></h4>
                         <p class="mt-3">
-                           Are you sure you want to approve this withdrawal?
+                           <?= $translator['Are you sure you want to approve this withdrawal?']; ?>
                         </p>
                         <button type="button" class="btn btn-light my-2 btncontinue" data-bs-dismiss="modal">
-                            Continue
+                            <?= $translator['Continue']; ?>
                         </button>
                     </div>
                 </div>
@@ -440,7 +418,9 @@
         </div>
     </div>
  
-  
+  <script class="translations" type="application/json">
+<?=json_encode($translator); ?>
+</script>
 
   
 

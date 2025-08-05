@@ -893,6 +893,7 @@ return [
     'Revenue' => '收入',
     'Track activities and system loggings' => '跟踪活动和系统日志',
     'Activity Logs' => '活动日志',
+    'Permission' => '允许',
     'System configuration and platform settings' => '系统配置和平台设置',
     'System Settings' => '系统设置',
     'View general system alert and notifications' => '查看一般系统警报和通知',
@@ -959,7 +960,7 @@ return [
     'Approved By' => '批准人',
     'Approved' => '正式认可的',
     'Rejected' => '被拒绝',
-
+    'Reject' => '拒绝',
     'Withdrawal Channel' => '提现渠道',
     'Search Withdrawal ID' => '查询提款ID',
     'Withdrawal Channels' => '提现渠道',
@@ -1670,4 +1671,10 @@ return [
     'Server error occurred' => '获取数据时发生服务器错误',
     'Request could not be completed, please try again' => '请求未完成，请重试。',
     'Network or server error occurred' => '获取数据时发生网络或服务器错误',
+    'Withdrawal Manage' => '提款管理',
+    'Withdrawal Status' => '提款状态',
+      'Are you sure you want to approve this withdrawal?'=>'你确定要批准这笔提款吗?',
+      'New user added successfuly'=>'新用户添加成功',
+      'Continue'=>'继续',
+       'User required'=>'用户需要',
 ];

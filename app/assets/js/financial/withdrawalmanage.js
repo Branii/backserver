@@ -65,10 +65,10 @@ $(function () {
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink-1"  style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
                             <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 btnapprove" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#al-info-alert" data-uid="${item.withdrawalid}">
-                                <i class="bx bx-check-double"></i>Approved
+                                <i class="bx bx-check-double"></i>${translator["Approved"]}
                             </a>
                             <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="er" data-uid="">
-                                <i class="bx bx-message-square-x fs-5"></i>Reject
+                                <i class="bx bx-message-square-x fs-5"></i>${translator["Reject"]}
                             </a> 
                         </div>
                     </div>

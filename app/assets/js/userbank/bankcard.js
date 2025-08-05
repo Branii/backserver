@@ -10,20 +10,20 @@ $(function () {
     });
   }
 
-      const translatorScript = document.querySelector(".translations"); // Get the script tag
-    const translator = JSON.parse(translatorScript.textContent);
-  
+  const translatorScript = document.querySelector(".translations"); // Get the script tag
+  const translator = JSON.parse(translatorScript.textContent);
+
 
 
   const bankcarddata = (data) => {
     const states = {
-      1: translator ["In Force"],
-      2: translator ["Not Active"],
-      3: translator ["Terminated"],
-      4: translator ["Deleted"]
+      1: translator["In Force"],
+      2: translator["Not Active"],
+      3: translator["Terminated"],
+      4: translator["Deleted"]
     };
 
-  
+
     let html = "";
 
     data.forEach((item) => {
@@ -92,11 +92,11 @@ $(function () {
         fetchbankcard(newpage)
       );
       document.getElementById("paging_infobankcard").innerHTML =
-  `${translator["Page"]} ${pagebankcard} ${translator["Of"]} ${totalPages} ${translator["Pages"]}`;
+        `${translator["Page"]} ${pagebankcard} ${translator["Of"]} ${totalPages} ${translator["Pages"]}`;
 
       // document.getElementById("paging_infobankcard").innerHTML =
       //   "Page " + pagebankcard + " of " + totalPages + " pages";
-     
+
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -234,7 +234,7 @@ $(function () {
     const pageLimit = 20;
 
     if (uid === "" && bankType === "" && cardNumber === "" && state === "") {
-      showToast(translator ["Heads up!!"], translator ["Select one or more data fields to filter"], "info");
+      showToast(translator["Heads up!!"], translator["Select one or more data fields to filter"], "info");
       return;
     }
 
@@ -251,7 +251,7 @@ $(function () {
           response = JSON.parse(res);
         } catch (err) {
           console.error("Failed to parse JSON:", err);
-          showToast(translator ["Error"], translator ["Invalid server response"], "error");
+          showToast(translator["Error"], translator["Invalid server response"], "error");
           return;
         }
 
@@ -281,7 +281,7 @@ $(function () {
       .fail(function (xhr, status, error) {
         console.error("POST request failed:", error);
 
-        showToast(translator ["Error"], translator ["Server error occurred"], "error");
+        showToast(translator["Error"], translator["Server error occurred"], "error");
       })
       .always(function () {
         // Stop spinner when request completes (success or fail)
@@ -329,12 +329,12 @@ $(function () {
           $(".bl-users-wrapper").show();
         } catch (error) {
           console.log(error);
-          showToast(translator ["Error"], translator ["Request could not be completed, please try again"], "error" );
+          showToast(translator["Error"], translator["Request could not be completed, please try again"], "error");
         }
       }
     ).fail(function () {
       console.log("Request failed");
-     showToast(translator ["Error"], translator ["Request could not be completed, please try again"], "error" );
+      showToast(translator["Error"], translator["Request could not be completed, please try again"], "error");
     });
   };
 
@@ -350,13 +350,13 @@ $(function () {
           response = JSON.parse(response);
         } catch (e) {
           // console.error("JSON parse error:", e);
- showToast(translator ["Error"], translator ["Invalid server response"], "error");
+          showToast(translator["Error"], translator["Invalid server response"], "error");
           return;
         }
 
         if (response.status === "error") {
           // console.error("Server error:", response);
-          showToast(translator ["Error"], translator ["Request could not be completed, please try again"], "error" );
+          showToast(translator["Error"], translator["Request could not be completed, please try again"], "error");
           return;
         }
 
@@ -383,14 +383,14 @@ $(function () {
       }).fail(function (xhr, status, err) {
         console.error("POST error:", status, err);
         console.error("Response:", xhr.responseText);
-        showToast("Error", "Network or server error occurred", "error");
+        showToast(translator["Error"], translator["Network or server error occurred"], "error");
       }).always(function () {
         // console.log("POST request completed.");
       });
 
     } catch (error) {
       console.error("Try-catch error:", error);
-   showToast(translator ["Error"], translator ["Request could not be completed, please try again"], "error" );
+      showToast(translator["Error"], translator["Request could not be completed, please try again"], "error");
     }
   };
 
