@@ -1,45 +1,45 @@
 $(function () {
     const partnerID = $("#partner-holder").attr("data-partner-id");
-  function tableScrollWithdraw() {
-      const tableContainerFinanceWidrl = document.querySelector(".table-wrapperwithdraw");
-      const headerRowFinanceWidrl = document.querySelector(".tbl-row-widrl");
+    function tableScrollWithdraw() {
+        const tableContainerFinanceWidrl = document.querySelector(".table-wrapperwithdraw");
+        const headerRowFinanceWidrl = document.querySelector(".tbl-row-widrl");
 
-      tableContainerFinanceWidrl.addEventListener("scroll", function () {
-          if (tableContainerFinanceWidrl.scrollTop > 0) {
-              headerRowFinanceWidrl.classList.add("sticky-table-head-widrl");
-          } else {
-              headerRowFinanceWidrl.classList.remove("sticky-table-head-widrl");
-          }
-      });
-  }
-  tableScrollWithdraw();
+        tableContainerFinanceWidrl.addEventListener("scroll", function () {
+            if (tableContainerFinanceWidrl.scrollTop > 0) {
+                headerRowFinanceWidrl.classList.add("sticky-table-head-widrl");
+            } else {
+                headerRowFinanceWidrl.classList.remove("sticky-table-head-widrl");
+            }
+        });
+    }
+    tableScrollWithdraw();
 
-  function showToast(title, message, type) {
-      $.toast({
-          position: "bottom-right",
-          title: title,
-          message: message,
-          type: type,
-          duration: 3000, // auto-dismiss after 3s
-      });
-  }
+    function showToast(title, message, type) {
+        $.toast({
+            position: "bottom-right",
+            title: title,
+            message: message,
+            type: type,
+            duration: 3000, // auto-dismiss after 3s
+        });
+    }
 
     const translatorScript = document.querySelector(".translations"); // Get the script tag
-  const translator = JSON.parse(translatorScript.textContent);
+    const translator = JSON.parse(translatorScript.textContent);
 
-  
+
 
     const status = {
-    1: document.getElementById('status_pending').innerText,
-    2: document.getElementById('status_success').innerText,
-    3: document.getElementById('status_failed').innerText
+        1: document.getElementById('status_pending').innerText,
+        2: document.getElementById('status_success').innerText,
+        3: document.getElementById('status_failed').innerText
     };
 
     const withdrawal_channel = {
-    3: document.getElementById('channel_momo').innerText,
-    5: document.getElementById('channel_crypto').innerText,
-    2: document.getElementById('channel_bank').innerText,
-    4: document.getElementById('channel_manual').innerText
+        3: document.getElementById('channel_momo').innerText,
+        5: document.getElementById('channel_crypto').innerText,
+        2: document.getElementById('channel_bank').innerText,
+        4: document.getElementById('channel_manual').innerText
     };
     function formatMoney(money) {
         let moneyStr = String(money);
@@ -53,16 +53,16 @@ $(function () {
         return moneyStr;
     }
 
-  const withdrawdata = (data) => {
-      let html = "";
-     const status = { 1: translator["Pending"], 2: translator["Approved"], 3: translator["Rejected"] };
-      const withdrawal_channel = { 3: translator["Momo"], 5: translator ["Crypto"], 2: translator ["Bank"], 4: translator ["Manual"] }; // 3:momo 5:crypto 2:bank 4:manual 
-      
-      data.forEach((item) => {
-         let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
-        let timezone = item.withdrawal_timezone.split(" ");
-        timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
-          html += `
+    const withdrawdata = (data) => {
+        let html = "";
+        const status = { 1: translator["Pending"], 2: translator["Approved"], 3: translator["Rejected"] };
+        const withdrawal_channel = { 3: translator["Momo"], 5: translator["Crypto"], 2: translator["Bank"], 4: translator["Manual"] }; // 3:momo 5:crypto 2:bank 4:manual 
+
+        data.forEach((item) => {
+            let username = item.reg_type === "email" ? item.email : item.reg_type === "username" ? item.username : item.contact;
+            let timezone = item.withdrawal_timezone.split(" ");
+            timezone = timezone[0] + `<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
+            html += `
         <tr>
             <td>${item.withdrawal_id}</td>
             <td>${username}</td>
@@ -80,21 +80,21 @@ $(function () {
             <td>${item.approved_by}</td>
         </tr>
           `;
-      });
-      return html;
-  };
+        });
+        return html;
+    };
 
-  const renderwithdraw = (data) => {
-      var html = withdrawdata(data);
-      $("#withdrawContainer").html(html);
-  };
+    const renderwithdraw = (data) => {
+        var html = withdrawdata(data);
+        $("#withdrawContainer").html(html);
+    };
 
-  let currentPage = 1;
-  let pageLimit = 20;
+    let currentPage = 1;
+    let pageLimit = 20;
 
-    async function fetchwithdraw(currentPage,pageLimit) {
+    async function fetchwithdraw(currentPage, pageLimit) {
         try {
-            
+
             let response = await fetch(`../financial/fetchwithdraw/${currentPage}/${pageLimit}`);
             data = await response.json();
             $("#maskwithdraw").LoadingOverlay("hide");
@@ -106,9 +106,9 @@ $(function () {
             console.error("Error fetching data:", error);
         }
     }
-   fetchwithdraw(currentPage,pageLimit)
+    fetchwithdraw(currentPage, pageLimit)
 
-     function renderwithdrawPagination(totalPages, currentPage, pageLimit, callback) {
+    function renderwithdrawPagination(totalPages, currentPage, pageLimit, callback) {
         const createPageLink = (i, label = i, disabled = false, active = false) =>
             `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}'>
           <a class='page-link' href='#' data-page='${i}'>${label}</a>
@@ -180,10 +180,10 @@ $(function () {
     });
 
     $(document).on("click", ".widrl-search", function () {
-        if ($("#withdrawalname").val() == "" && $("#widrl-channels").val() == "" && $("#widrl-state").val() == ""&& $("#widrl-ID").val() == ""
-        && $(".wdrl-startdate").val() == ""  && $(".wdrl-enddate").val() == "" ) {
+        if ($("#withdrawalname").val() == "" && $("#widrl-channels").val() == "" && $("#widrl-state").val() == "" && $("#widrl-ID").val() == ""
+            && $(".wdrl-startdate").val() == "" && $(".wdrl-enddate").val() == "") {
             // $("#danger-finance").modal("show");
-             showToast(translator ["Heads up!!"],translator ["Select one or more data fields to filter"],"info")
+            showToast(translator["Heads up!!"], translator["Select one or more data fields to filter"], "info")
             // showToast(headsUpText, selectFieldsText, "info");
             return;
         }
@@ -191,20 +191,20 @@ $(function () {
         const withrawchanels = $("#widrl-channels").val();
         const withdrawstate = $("#widrl-state").val();
         const withdrawid = $("#widrl-ID").val();
-        const startwithdraw= $(".wdrl-startdate").val();
-        const endwithdraw= $(".wdrl-enddate").val();
-     //   console.log(username,withrawchanels,withdrawstate,withdrawid,startwithdraw,endwithdraw)
-       //  return
-        filterwithdraw(username, withrawchanels, withdrawstate, withdrawid,startwithdraw,endwithdraw, currentPage, pageLimit);
+        const startwithdraw = $(".wdrl-startdate").val();
+        const endwithdraw = $(".wdrl-enddate").val();
+        //   console.log(username,withrawchanels,withdrawstate,withdrawid,startwithdraw,endwithdraw)
+        //  return
+        filterwithdraw(username, withrawchanels, withdrawstate, withdrawid, startwithdraw, endwithdraw, currentPage, pageLimit);
         $(".loaderwithdraw").removeClass("bx-check-double").addClass("bx-loader bx-spin");
     });
 
-    async function filterwithdraw(username, withrawchanels, withdrawstate,withdrawid, startwithdraw,endwithdraw, currentPage, pageLimit){
+    async function filterwithdraw(username, withrawchanels, withdrawstate, withdrawid, startwithdraw, endwithdraw, currentPage, pageLimit) {
         $.post(`../financial/filterwithdraw/${username}/${withrawchanels}/${withdrawstate}/${withdrawid}/${startwithdraw}/${endwithdraw}/${currentPage}/${pageLimit}`, function (response) {
             try {
                 const data = JSON.parse(response);
                 //console.log(data)
-               //  return
+                //  return
                 $(".loaderwithdraw").removeClass("bx-loader bx-spin").addClass("bx-check-double");
                 if (data.withdrawx.length < 1) {
                     $("#withdrawContainer").html(`
@@ -216,10 +216,10 @@ $(function () {
               `);
                     return;
                 }
-                  $("#maskwithdraw").LoadingOverlay("hide");
+                $("#maskwithdraw").LoadingOverlay("hide");
                 renderwithdraw(data.withdrawx);
-                renderwithdrawPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) =>filterwithdraw(username, withrawchanels, withdrawstate, startwithdraw,endwithdraw, newPage, pageLimit));
-               document.getElementById("paging_infowithdraw").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+                renderwithdrawPagination(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => filterwithdraw(username, withrawchanels, withdrawstate, startwithdraw, endwithdraw, newPage, pageLimit));
+                document.getElementById("paging_infowithdraw").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
             } catch (error) {
                 console.error("Error parsing JSON response:", error);
             } finally {
@@ -275,29 +275,29 @@ $(function () {
     // Function to fetch and display users
     function fetchUserss(query) {
         let optionsHtml = '';
-    
+
         $.post(`../admin/Searchusername/${encodeURIComponent(query)}`, function (response) {
             try {
-             response = typeof response === 'string' ? JSON.parse(response) : response;
-          response.forEach(user => {
-           let   displayValue;
-           let regname;
-            // Display based on regtype
-            if (user.regtype === "email") {
-               displayValue = user.email;
-               regname = user.email;  // Show email
-            } else if (user.regtype === "username") {
-              displayValue = user.username;
-              regname = user.username;  // Show username
-            } else if (user.regtype === "contact") {
-              displayValue = user.contact;
-              regname  = user.contact;  // Show contact
-            }else{
-              displayValue = 'no data found ...';
-             }
-              // Append the option to the optionsHtml string
-              optionsHtml += `<option class="optionlists" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
-          });
+                response = typeof response === 'string' ? JSON.parse(response) : response;
+                response.forEach(user => {
+                    let displayValue;
+                    let regname;
+                    // Display based on regtype
+                    if (user.regtype === "email") {
+                        displayValue = user.email;
+                        regname = user.email;  // Show email
+                    } else if (user.regtype === "username") {
+                        displayValue = user.username;
+                        regname = user.username;  // Show username
+                    } else if (user.regtype === "contact") {
+                        displayValue = user.contact;
+                        regname = user.contact;  // Show contact
+                    } else {
+                        displayValue = 'no data found ...';
+                    }
+                    // Append the option to the optionsHtml string
+                    optionsHtml += `<option class="optionlists" value="${user.uid}" data-usernames="${regname}">${displayValue}</option>`;
+                });
                 $('.withdrawDropdowns').html(optionsHtml).show();
             } catch (error) {
                 console.error("Error parsing response: ", error);
