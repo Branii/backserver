@@ -260,7 +260,6 @@ return [
     'Reviews' => '备注',
     'Action' => '操作',
     'state' => '状态',
-    'Success' => '成功',
     'Failed' => '失败',
     'Email Configuration' => '电子邮件配置',
     'SMS Configuration' => '短信配置',
@@ -1411,7 +1410,6 @@ return [
     'Failed to set inactive.' => '无法设置为非活动状态。',
 
     // toast messages
-    'Success' => '成功',
     'NewUserAdded' => '新用户添加成功',
     'HeadsUp' => '注意！！',
     'AllFieldsMandatory' => '所有字段都是必填的',
@@ -1488,7 +1486,6 @@ return [
     'deactivated' => '已停用',
     'permissions_success' => '权限更新成功。',
     'permissions_error' => '权限更新失败。',
-    'success' => '成功',
     'error' => '错误',
     'HEADS_UP' => '注意!!',
     'SELECT_FIELDS' => '选择一个或多个数据字段进行过滤。',
@@ -1517,13 +1514,11 @@ return [
     'UNREAD' => '未读',
     'ALL_FIELDS_REQUIRED' => '所有字段都是必需的',
     'CANNOT_UPDATE_IF_EMPTY' => '如果字段为空，无法更新',
-    'SUCCESS' => '成功',
     'HEADS_UP' => '注意!!',
     'ALL_FIELDS_REQUIRED' => '所有字段都是必需的',
     'ENTER_QUOTA_VALUE' => '请在保存之前输入配额值。',
-    'SUCCESS' => '成功',
     'QUOTA_UPDATED' => '配额已成功更新。',
-    'SUCCESS' => '成功',
+
     'UPDATED_SUCCESSFULLY' => '更新成功',
     'GAME_STATE_UPDATED' => '游戏状态已更新',
     'NO_CHANGES_MADE' => '未做任何更改',
@@ -1534,7 +1529,7 @@ return [
     'Turned On' => '已开启',
     'Turned Off' => ' 已关闭',
     'ERROR' => '错误',
-    'SUCCESS' => '成功',
+
     'LOTTERY_ALREADY' => '此彩票已被',
     'TURNED_ON' => '开启',
     'TURNED_OFF' => '关闭',
@@ -1639,22 +1634,6 @@ return [
     "Turned Off" => "已关闭",
     "Add Partner" => "添加合作伙伴",
     "Select State" => "选择州",
-    "Five" => "五",
-    "Ten" => "十",
-    "Twenty" => "二十",
-    "Fifty" => "五十",
-    "One Hundred" => "一百",
-    "Two Hundred" => "两百",
-    "Five Hundred" => "五百",
-
-    "5" => "五",
-    "10" => "十",
-    "20" => "二十",
-    "50" => "五十",
-    "100" => "一百",
-    "200" => "两百",
-    "500" => "五百",
-
     'game_name' => '游戏名称', // Game Name
     'game_type' => '游戏类型', // Game Type
     'game_group' => '游戏分组', // Game Group
@@ -1684,4 +1663,7 @@ return [
     'Select Game Model' => '选择游戏模式',
     'Select default image' => '选择默认图片',
     'select corresponding game image' => '选择对应游戏图片',
+    'All field are required'=>'所有欄位都是必填項',
+    'transaction successful'=>'交易成功',
+      'transaction failed'=>'转账失败',
 ];

@@ -286,28 +286,7 @@
 }
 </style>
 
-<!-- toast messages -->
 
-<span id="trans-failed-inactive" data-translation="<?= $translator['FailedToSetInactive']; ?>" style="display: none;"></span>
-<span id="trans-inactive-success" data-translation="<?= $translator['SetInactiveSuccess']; ?>" style="display: none;"></span>
-<span id="trans-select-fields" data-translation="<?= $translator['SelectFilterFields']; ?>" style="display: none;"></span>
-<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display: none;"></span>
-<span id="trans-alert" data-translation="<?= $translator['Alert']; ?>" style="display: none;"></span>
-<span id="trans-user-does-not-exist" data-translation="<?= $translator['UserDoesNotExist']; ?>" style="display: none;"></span>
-<span id="trans-heads-up" data-translation="<?= $translator['HeadsUp']; ?>" style="display: none;"></span>
-<span id="trans-all-fields-required" data-translation="<?= $translator['AllFieldsRequired']; ?>" style="display: none;"></span>
-
-<span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
-<span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
-
-<span id="tr_page" style="display: none;"><?= $translator['Page'] ?></span>
-<span id="tr_of" style="display: none;"><?= $translator['of'] ?></span>
-<span id="tr_pages" style="display: none;"><?= $translator['pages'] ?></span>
-
-<span id="finance_deposit" style="display: none;"><?= $translator['finance_deposit'] ?></span>
-<span id="finance_withdrawal" style="display: none;"><?= $translator['finance_withdrawal'] ?></span>
-
-<!-- toast messages ends here -->
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
@@ -334,13 +313,7 @@
                  <input name="startdate" type="date" class="form-control queryholderlistt startfinances" placeholder="Name" />
                  <input name="enddate" type="date" class="form-control queryholderlistt endfinances" placeholder="Name" />
 
-                  <!-- <div id="the-basics">
-                <input class="typeahead form-control" type="text" placeholder="Countries" />
-              </div> -->
-               <!-- <input type="text" id="" class="form-control" placeholder="Search user..." /> -->
-                <!-- <div id="bloodhound">
-                <input class="typeahead form-control" type="text" placeholder="Countries" />
-              </div> -->
+                
             </div>
         </span>
         <span class="toplist-center" aria-label=" navigation example">
@@ -520,3 +493,6 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+<script class="translations" type="application/json">
+    <?= json_encode($translator); ?>
+</script>

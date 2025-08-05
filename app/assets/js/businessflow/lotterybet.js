@@ -229,11 +229,7 @@ $(function () {
         $.post(`../businessflow/filterbetdata/${uidd}/${betOrderID}/${gametype}/${betsate}/${betstatus}/${startdates}/${enddates}/${currentPagebet}/${pageLimit}`).done(function (response) {
             try {
                 const data = JSON.parse(response);
-                if (data.response == "error") {
-                    showToast("Alert", "User does not exist", "info");
-                    $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
-                    return;
-                }
+               
 
                 $(".loaderbet").removeClass("bx bx-loader bx-spin").addClass("bx bx-check-double");
                 if (data.filterbet.length < 1) {
@@ -309,8 +305,7 @@ $(function () {
 
     $(".executebet").click(function () {
         if ($("#myInput").val() == "" && $(".typelottery").val() == "" && $(".startdates").val() == "" && $(".betsate").val() == "" && $(".betstatus").val() == "" && $("#lot-betID").val() == "") {
-            //   showToast("Heads up!!", "Select one or more data fields to filter", "info");
-            showToast(headsUpText, selectFieldsText, "info");
+               showToast(translator ["Heads up!!"], translator ["Select one or more data fields to filter"], "info");    
             return;
         }
         const uidd = $("#myInput").val();

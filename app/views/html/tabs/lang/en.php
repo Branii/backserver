@@ -271,7 +271,6 @@ return [
     'Bank Transfere' => 'Bank Transfere',
     'Manual Deposit' => 'Manual Deposit',
     'Approved By' => 'Approved By',
-    'Success' => 'Success',
     'Failed' => 'Failed',
 
     //'Withdrawal Management'=> '出款管理',
@@ -1315,8 +1314,6 @@ return [
     'payment logo url' => 'payment logo url',
 
     // toast messages
-
-    'Success' => 'Success',
     'NewUserAdded' => 'NewUserAdded',
     'HeadsUp' => 'HeadsUp',
     'AllFieldsMandatory' => 'AllFieldsMandatory',
@@ -1328,8 +1325,7 @@ return [
     'SelectDataFields' => 'SelectDataFields',
     'UserDoesNotExist' => 'UserDoesNotExist',
     'Alert' => 'Alert',
-    'AllFieldsRequired' => 'AllFieldsRequired',
-    'AllFieldsRequired' => 'All field are required',
+    'All field are required' => 'All field are required',
     'NoChangesMade' => 'NoChangesMade',
     'Error' => 'Error',
     'GenericErrorMessage' => 'GenericErrorMessage',
@@ -1396,7 +1392,6 @@ return [
     'deactivated' => 'deactivated',
     'permissions_success' => 'permissions_success',
     'permissions_error' => 'permissions_error',
-    'success' => 'success',
     'error' => 'error',
     'HEADS_UP' => 'Heads up!!',
     'SELECT_FIELDS' => 'Select one or more data fields to filter',
@@ -1404,10 +1399,8 @@ return [
     'NO_USER_SELECTED_MSG' => 'Select at least one User.',
     'ERROR_TITLE' => 'Error',
     'ERROR_MSG' => 'An Error occurred, please try again later.',
-
     'NO_USER_SELECTED_2_TITLE' => 'No User Selected.',
     'NO_USER_SELECTED_2_MSG' => 'Please select a user.',
-
     'TOO_MANY_USERS_TITLE' => 'Too many users available.',
     'TOO_MANY_USERS_MSG' => 'Please select a single user.',
     'NO_DATA_TITLE' => 'No Data',
@@ -1426,9 +1419,7 @@ return [
     'HEADS_UP' => 'Heads up!!',
 
     'ENTER_QUOTA_VALUE' => 'Please enter a quota value before saving.',
-    'SUCCESS' => 'Success',
     'QUOTA_UPDATED' => 'Quota updated successfully.',
-    'SUCCESS' => 'Success',
     'UPDATED_SUCCESSFULLY' => 'Updated successfully',
     'GAME_STATE_UPDATED' => 'Game state updated',
     'NO_CHANGES_MADE' => 'No changes made',
@@ -1439,7 +1430,6 @@ return [
     'SELECT_ADMIN_MSG' => 'Please select or enter an administrator to search.',
     'off' => 'off',
     'ERROR' => 'Error',
-    'SUCCESS' => 'Success',
     'LOTTERY_ALREADY' => 'This lottery has already been',
     'TURNED_ON' => 'Turned On',
     'TURNED_OFF' => 'Turned Off',
@@ -1497,7 +1487,6 @@ return [
     'channel_bank' => 'Bank',
     'channel_manual' => 'Manual',
     'status_pending' => 'Pending',
-    'status_success' => 'Success',
     'status_failed' => 'Failed',
 
     // Channels
@@ -1542,20 +1531,6 @@ return [
     "Turned Off" => "Turned Off",
     "Add Partner" => "Add Partner",
     "Select State" => "Select State",
-    "Five" => "5",
-    "Ten" => "10",
-    "Twenty" => "20",
-    "Fifty" => "50",
-    "One Hundred" => "100",
-    "Two Hundred" => "200",
-    "Five Hundred" => "500",
-    "5" => "5",
-    "10" => "10",
-    "20" => "20",
-    "50" => "50",
-    "100" => "100",
-    "200" => "200",
-    "500" => "500",
     'game_name' => 'Game Name',
     'game_type' => 'Game Type',
     'game_group' => 'Game Group',
@@ -1564,7 +1539,6 @@ return [
     'Select Lottery Type' => 'Select Lottery Type',
     'Select Seconds' => 'Select Seconds',
     'Error' => 'Error',
-    'Success' => 'Success',
     'Image upload failed.' => 'Image upload failed.',
     'Image is too large. Max 1MB allowed.' => 'Image is too large. Max 1MB allowed.',
     'Update Image' => 'Update Image',
@@ -1586,4 +1560,6 @@ return [
     'Select Game Model' => 'Select Game Model',
     'Select default image' => 'Select default image',
     'select corresponding game image' => 'select corresponding game image',
+    'transaction successful'=>'transaction successful',
+    'transaction failed'=>'transaction failed',
 ];

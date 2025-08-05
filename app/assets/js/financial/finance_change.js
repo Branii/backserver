@@ -10,37 +10,11 @@ $(function () {
         });
     }
 
-    const langStrings = {
-        Page: document.getElementById("tr_page").textContent,
-        of: document.getElementById("tr_of").textContent,
-        pages: document.getElementById("tr_pages").textContent,
-    };
+    
+    const translatorScript = document.querySelector(".translations"); // Get the script tag
+    const translator = JSON.parse(translatorScript.textContent);
 
-    const translations = {
-        headsUp: document.getElementById("trans-heads-up").dataset.translation,
-        failedInactive: document.getElementById("trans-failed-inactive").dataset.translation,
-        inactiveSuccess: document.getElementById("trans-inactive-success").dataset.translation,
-        selectFields: document.getElementById("trans-select-fields").dataset.translation,
-        success: document.getElementById("trans-success").dataset.translation,
-    };
-
-    // showToast(translations.headsUp, translations.failedInactive, "danger");
-
-    // showToast(translations.headsUp, translations.inactiveSuccess, "success");
-
-    // showToast(translations.headsUp, translations.selectFields, "info");
-
-    const alertTitle = document.getElementById("trans-alert").dataset.translation;
-    const userDoesNotExist = document.getElementById("trans-user-does-not-exist").dataset.translation;
-
-    // showToast(alertTitle, userDoesNotExist, "info");
-    const headsUp = document.getElementById("trans-heads-up").dataset.translation;
-    const allFieldsRequired = document.getElementById("trans-all-fields-required").dataset.translation;
-
-    const headsUpText = document.getElementById("trans-heads-up").textContent;
-    const selectFieldsText = document.getElementById("trans-select-fields").textContent;
-
-    // showToast(headsUp, allFieldsRequired, "info");
+  
 
     function formatMoney(money) {
         let moneyStr = String(money);
@@ -55,8 +29,8 @@ $(function () {
     }
   
     const financeTypes = {
-        1: document.getElementById("finance_deposit").innerText,
-        4: document.getElementById("finance_withdrawal").innerText,
+        1: translator ["deposit"],
+        4: translator ["withdrawal"],
     };
 
     const FinanceData = (data) => {
@@ -101,8 +75,9 @@ $(function () {
             $("#maskfinance").LoadingOverlay("hide");
             renderfinace(data.finance);
             renderfinacePagination(data.totalPages, page, pageLimit, (newPage, pageLimit) => fetchfinance(newPage, pageLimit));
-            // document.getElementById("paging_infofinance").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
-            document.getElementById("paging_infofinance").innerHTML = `${langStrings.Page} ${page} ${langStrings.of} ${data.totalPages} ${langStrings.pages}`;
+            //  document.getElementById("paging_infofinance").innerHTML = "Page " + page + " of " + data.totalPages + " pages";
+             document.getElementById("paging_infofinance").innerHTML =  `${translator["Page"]} ${page} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
+          
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -197,9 +172,7 @@ $(function () {
     $(document).on("click", ".executefinance", function () {
         if ($("#financefunds").val() == "" && $(".financetype").val() == "" && $(".startfinances").val() == "") {
             // $("#danger-finance").modal("show");
-            // showToast("Heads up!!","Select one or more data fields to filter","info")
-
-            showToast(headsUpText, selectFieldsText, "info");
+             showToast(translator ["Heads up!!"],translator ["Select one or more data fields to filter"],"info")
             return;
         }
         const financetype = $(".financetype").val();
@@ -221,10 +194,7 @@ $(function () {
         const approvedby = $(".approved").val();
      
         if (amount === "" || review === "" || usernames === "" || approvedby === "") {
-             showToast("Heads up!!", "All field are required", "info");
-
-            // showToast(headsUp, allFieldsRequired, "info");
-
+             showToast(translator ["Heads up!!"], translator ["All field are required"], "info");
             return false;
         }
         $("#addfinancemodal").modal("hide");
@@ -234,10 +204,10 @@ $(function () {
             const result = JSON.parse(response);
             if (result === "success") {
                 $(".loaderfinanc").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
-                showToast("Success", "transaction success", "success");
+                showToast( translator ["Success"], translator ["transaction successful"], "success");
                 fetchfinance(currentPage, pageLimit);
             } else {
-                showToast("Heads up!!", "transaction failed", "info");
+                showToast(translator ["Heads up!!"], translator ["transaction failed"], "info");
             }
         });
     });
