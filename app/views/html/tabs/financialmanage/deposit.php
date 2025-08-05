@@ -218,25 +218,6 @@
 
 <!-- toast messages -->
 
-<span id="trans-failed-inactive" data-translation="<?= $translator['FailedToSetInactive']; ?>" style="display: none;"></span>
-<span id="trans-inactive-success" data-translation="<?= $translator['SetInactiveSuccess']; ?>" style="display: none;"></span>
-<span id="trans-select-fields" data-translation="<?= $translator['SelectFilterFields']; ?>" style="display: none;"></span>
-<span id="trans-success" data-translation="<?= $translator['Success']; ?>" style="display: none;"></span>
-<span id="trans-alert" data-translation="<?= $translator['Alert']; ?>" style="display: none;"></span>
-<span id="trans-user-does-not-exist" data-translation="<?= $translator['UserDoesNotExist']; ?>" style="display: none;"></span>
-<span id="trans-heads-up" style="display: none;"><?php echo $translator['HEADS_UP']; ?></span>
-<span id="trans-select-fields" style="display: none;"><?php echo $translator['SELECT_FIELDS']; ?></span>
-<!-- Hidden spans with translated text -->
-<span id="tr_page" style="display: none;"><?= $translator['Page'] ?></span>
-<span id="tr_of" style="display: none;"><?= $translator['of'] ?></span>
-<span id="tr_pages" style="display: none;"><?= $translator['pages'] ?></span>
-<span id="channel_manual_deposit" style="display: none;"><?= $translator['channel_manual_deposit'] ?></span>
-<span id="channel_bank_transfer" style="display: none;"><?= $translator['channel_bank_transfer'] ?></span>
-<span id="channel_momo" style="display: none;"><?= $translator['channel_momo'] ?></span>
-<span id="channel_crypto" style="display: none;"><?= $translator['channel_crypto'] ?></span>
-<span id="status_pending" style="display: none;"><?= $translator['status_pending'] ?></span>
-<span id="status_success" style="display: none;"><?= $translator['status_success'] ?></span>
-<span id="status_failed" style="display: none;"><?= $translator['status_failed'] ?></span>
 <!-- toast messages ends here -->
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
@@ -391,3 +372,6 @@
         </span>
     </div>
 </div>
+<script class="translations" type="application/json">
+<?=json_encode($translator); ?>
+</script>

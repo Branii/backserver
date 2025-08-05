@@ -10,35 +10,9 @@ $(function () {
       duration: 3000 // auto-dismiss after 3s
     });
   }
-const langStrings = {
-  Page: document.getElementById("tr_page").textContent,
-  of: document.getElementById("tr_of").textContent,
-  pages: document.getElementById("tr_pages").textContent
-};
-  const translations = {
-    failedInactive: document.getElementById("trans-failed-inactive").dataset
-      .translation,
-    inactiveSuccess: document.getElementById("trans-inactive-success").dataset
-      .translation,
-    selectFields: document.getElementById("trans-select-fields").dataset
-      .translation,
-    success: document.getElementById("trans-success").dataset.translation
-  };
 
-  // showToast(translations.headsUp, translations.failedInactive, "danger");
-
-  // showToast(translations.headsUp, translations.inactiveSuccess, "success");
-
-  // showToast(translations.headsUp, translations.selectFields, "info");
-
-  const alertTitle = document.getElementById("trans-alert").dataset.translation;
-  const userDoesNotExist = document.getElementById("trans-user-does-not-exist")
-    .dataset.translation;
-
-  const headsUpText = document.getElementById("trans-heads-up").textContent;
-  const selectFieldsText = document.getElementById(
-    "trans-select-fields"
-  ).textContent;
+   const translatorScript = document.querySelector(".translations"); // Get the script tag
+  const translator = JSON.parse(translatorScript.textContent);
 
   // showToast(alertTitle, userDoesNotExist, "info");
 
@@ -53,12 +27,12 @@ const langStrings = {
     }
     return moneyStr;
   }
-  // const states = {
-  //   1: "Manual Deposit",
-  //   2: "Bank Transfer",
-  //   3: "Momo",
-  //   5: "Crypto"
-  // };
+  const states = {
+    1: translator["Manual Deposit"],
+    2: translator["Bank Transfer"],
+    3: translator["Momo"],
+    5: translator["Crypto"]
+  };
   // const Depositdata = (data) => {
   //   let html = "";
 
@@ -105,12 +79,6 @@ const langStrings = {
   // };
 
 
-    const states = {
-    1: document.getElementById('channel_manual_deposit').innerText,
-    2: document.getElementById('channel_bank_transfer').innerText,
-    3: document.getElementById('channel_momo').innerText,
-    5: document.getElementById('channel_crypto').innerText
-  };
 
 const statusMap = {
   pending: document.getElementById('status_pending').innerText,
@@ -126,7 +94,7 @@ const Depositdata = (data) => {
     let timezone = item.timezone.split(" ");
     timezone = `${timezone[0]}<span style="margin-left: 1rem;">GMT${timezone[1]}</span>`;
 
-    let statusText = statusMap[item.status.toLowerCase()] ?? item.status;
+    let status= statusMap[item.status.toLowerCase()] ?? item.status;
 
     html += `
       <tr>
@@ -141,7 +109,7 @@ const Depositdata = (data) => {
         <td>${timezone}</td>
         <td>${item.provider ?? "N/A"}</td>
         <td>${item.user_mobile}</td>
-        <td>${statusText}</td>
+        <td>${status}</td>
         <td>${item.approved_by}</td>
       </tr>
     `;
@@ -172,10 +140,9 @@ const Depositdata = (data) => {
         pageLimit,
         (newPage, pageLimit) => fetchDeposit(newPage, pageLimit)
       );
-      // document.getElementById("paging_infodeposit").innerHTML =
-      //   "Page " + page + " of " + data.totalPages + " pages";
-        document.getElementById("paging_infodeposit").innerHTML =
-  `${langStrings.Page} ${page} ${langStrings.of} ${data.totalPages} ${langStrings.pages}`;
+      document.getElementById("paging_infodeposit").innerHTML =
+        "Page " + page + " of " + data.totalPages + " pages";
+  
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -257,9 +224,9 @@ const Depositdata = (data) => {
 
       const data = await response.json();
       if (data.response == "error") {
-        // showToast("Alert", "User does not exist", "info");
+         showToast(translator["Alert"], translator["User does not exist"], "info");
 
-        showToast(alertTitle, userDoesNotExist, "info");
+     
         $(".loader")
           .removeClass("bx bx-loader bx-spin")
           .addClass("bx bx-check-double");
@@ -356,8 +323,8 @@ const Depositdata = (data) => {
       $(".depositstatus").val() == ""
     ) {
       // $("#danger-finance").modal("show");
-      // showToast("Heads up!!","Select one or more data fields to filter","info")
-      showToast(headsUpText, selectFieldsText, "info");
+      showToast(translator["Heads up!!"],translator["Select one or more data fields to filter"],"info")
+    
 
       return;
     }

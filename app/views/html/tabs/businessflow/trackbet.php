@@ -483,7 +483,7 @@
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Rule'];?></h6>
                   </th>
                   <th>
-                    <h6 class="fs-4 fw-semibold mb-0"><?=$translator['Track Time'];?></h6>
+                    <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Track Time'];?></h6>
                   </th>
                   <th>
                     <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs'];?></h6>
@@ -501,7 +501,7 @@
 
                     <tr class="no-resultslist">
                         <td colspan="9">
-                        <img src="<?= BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
+                        <img src="<?= BASE_URL;?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
                         </td>
                     </tr>
 
@@ -532,11 +532,11 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowstrack" style="font-size: 12px;">
-            <option value="20"><?= $translator['20'] ?? '20'?></option>
-            <option value="50"><?= $translator['50'] ?? '50'?></option>
-            <option value="100"><?= $translator['100'] ?? '100'?></option>
-            <option value="200"><?= $translator['200'] ?? '200'?></option>
-            <option value="500"><?= $translator['500'] ?? '500'?></option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="500">500</option>
             </select>
             <span class="toplist-right" id="paginationtrack" aria-label="Page navigation example">
             <!--Dynamic pagination-->
@@ -561,7 +561,7 @@
 
         <div class="text-center mt-2 mb-4">
           <div class="d-flex justify-content-between">
-            <div><?= $translator['Track Bet Info'];?></div>
+            <div><?=  $translator['Track Bet Info'];?></div>
             <div><i class='bx bx-message-square-x tclose' style='color:#868c87;font-size:25px;cursor:pointer;' data-bs-dismiss="modal" aria-label="Close"></i></div>
           </div>
         </div>
@@ -621,5 +621,5 @@
 </div>
 
 <script class="translations" type="application/json">
-<?=json_encode($translator); ?>
+<?=  json_encode($translator);?>
 </script>

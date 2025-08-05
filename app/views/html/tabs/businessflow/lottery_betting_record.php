@@ -242,13 +242,15 @@
         /* right: 10px; */
         top: 50%;
         transform: translateY(-50%);
-        pointer-events: none; /* Prevent interaction with the arrow */
+        pointer-events: none;
+        /* Prevent interaction with the arrow */
         font-size: 14px;
         color: #777;
     }
 
     .custom-dropdown select::-webkit-scrollbar {
-        width: 3px; /* Width of the scrollbar */
+        width: 3px;
+        /* Width of the scrollbar */
     }
 
     .custom-dropdown select::-webkit-scrollbar-thumb {
@@ -269,18 +271,17 @@
         /* Rounded corners */
     }
 
- .tbl-headerbet {
-    position: sticky;
-    top: 0;
-  }
+    .tbl-headerbet {
+        position: sticky;
+        top: 0;
+    }
 
-  .sticky-headerbet {
-    position: relative;
-    bottom: 1px;
-    background-color: red;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-  }
-
+    .sticky-headerbet {
+        position: relative;
+        bottom: 1px;
+        background-color: red;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    }
 </style>
 
 
@@ -288,48 +289,48 @@
 
 <div class="card w-100 position-relative overflow-hidden">
     <div class="px-4 py-3 border-bottom">
-        <h4 class="card-title mb-0"><?= $translator['Lottery Betting Record'];?></h4>
+        <h4 class="card-title mb-0"><?= $translator['Lottery Betting Record']; ?></h4>
     </div>
 
     <div class="px-4 py-3 border-bottom pagerlist1">
         <form action="" class="betform">
             <span class="top-left-btn">
                 <div class="btn-group mb-2" role="group" aria-label="Basic example" style="padding:6px;width:auto">
-                    <input type="text" id="myInput" class="form-control queryholderbet usernames" placeholder="<?= $translator['Search Username'];?>" />
+                    <input type="text" id="myInput" class="form-control queryholderbet usernames" placeholder="<?= $translator['Search Username']; ?>" />
                     <input name="usernames" type="hidden" class="userIdbet" />
-                    <input type="text" id="lot-betID" class="form-control queryholderbet search-betID" placeholder="<?= $translator['Search Bet Order ID'];?>" />
+                    <input type="text" id="lot-betID" class="form-control queryholderbet search-betID" placeholder="<?= $translator['Search Bet Order ID']; ?>" />
                     <select class="form-control userDropdownb" size="5" style="display: none;" id="userlotteryDropdown">
                         <!-- Options will be populated dynamically -->
                     </select>
-                      <div class="custom-dropdown" style="width:30%; margin-right: 5px;">
+                    <div class="custom-dropdown" style="width:30%; margin-right: 5px;">
                         <select name="lotteryname" class="form-control form-select queryholderbet typelottery selectlottery" data-bs-placeholder="Select Type">
 
                         </select>
-                        </div>
+                    </div>
 
                     <select name="betsate" class="form-control form-select queryholderbet betsate" data-bs-placeholder="Select Type">
-                        <option value=""> -<?= $translator['State'];?>-</option>
-                        <option value="1"> <?= $translator['Settled'];?></option>
-                        <option value="2"><?= $translator['Unsettled'];?></option>
-                        <option value="4"> <?= $translator['Cancelled Bet'];?></option>
+                        <option value=""> -<?= $translator['State']; ?>-</option>
+                        <option value="1"> <?= $translator['Settled']; ?></option>
+                        <option value="2"><?= $translator['Unsettled']; ?></option>
+                        <option value="4"> <?= $translator['Cancelled Bet']; ?></option>
 
                     </select>
 
                     <select name="betstatus" class="form-control form-select queryholderbet betstatus" data-bs-placeholder="Select Type">
                         <option value="">
                             -
-                            <?= $translator['Bet Status'];?>-
+                            <?= $translator['Bet Status']; ?>-
                         </option>
-                        <option value="2"><?= $translator['Win'];?></option>
-                        <option value="3"><?= $translator['Loss'];?></option>
-                        <option value="5"><?= $translator['Pending'];?></option>
-                        <option value="6"><?= $translator['Void'];?></option>
-                        <option value="7"><?= $translator['Refund'];?></option>
+                        <option value="2"><?= $translator['Win']; ?></option>
+                        <option value="3"><?= $translator['Loss']; ?></option>
+                        <option value="5"><?= $translator['Pending']; ?></option>
+                        <option value="6"><?= $translator['Void']; ?></option>
+                        <option value="7"><?= $translator['Refund']; ?></option>
                     </select>
 
                     <select name="lotteryname" class="form-control form-select queryholderbet selectpartner">
 
-                     </select>
+                    </select>
 
                     <input name="startdate" type="date" class="form-control queryholderbet startdates" aria-describedby="name" placeholder="Name" />
 
@@ -358,52 +359,52 @@
         <div class="table-responsive mb-4 border rounded-1 table-wrapperlottery" id="maskbet" style="height: 530px; overflow-y: scroll;">
             <table class="table text-nowrap mb-0 align-middle table-bordered table-hover">
                 <thead class="text-dark fs-4 tbl-headerbet">
-                <tr class="headrowbet">
+                    <tr class="headrowbet">
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0">
-                                <?= $translator['Bet Order ID'];?>
+                                <?= $translator['Bet Order ID']; ?>
                             </h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username'];?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Username']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Issue Number'];?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Issue Number']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Type'];?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Lottery Type']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Game Model'];?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Game Model']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Game Type'];?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Game Type']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Time'];?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Bet Time']; ?></h6>
                         </th>
                         <th>
-                         <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs'];?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Time Zone/Hrs']; ?></h6>
                         </th>
 
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Unit Stake'];?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Unit Stake']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Multiplier'];?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Multiplier']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bet Amount'];?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Total Bet Amount']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win Amount'];?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win Amount']; ?></h6>
                         </th>
-                     
+
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win/Loss'];?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Win/Loss']; ?></h6>
                         </th>
                         <th>
-                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status'];?></h6>
+                            <h6 class="fs-4 fw-semibold mb-0"><?= $translator['Status']; ?></h6>
                         </th>
                         <th>
                             <h6 class="fs-4 fw-semibold mb-0"><i class="bx bx-dots-vertical-rounded"></i></h6>
@@ -413,7 +414,7 @@
                 <tbody id="lotterydataContainer">
                     <tr class="no-resultslist">
                         <td colspan="13">
-                        <img src="<?= BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
+                            <img src="<?= BASE_URL; ?>assets/images/notfound.png" class="dark-logo" alt="Logo-Dark" />
                         </td>
                     </tr>
                 </tbody>
@@ -442,13 +443,13 @@
         </span>
         <span class="top-right-btn" aria-label="Page navigation example">
             <select class="left-element form-control numrowsbet" style="font-size: 12px;">
-            <option value="50"><?= $translator['50'] ?? '50'?></option>
-            <option value="100"><?= $translator['100'] ?? '100'?></option>
-            <option value="200"><?= $translator['200'] ?? '200'?></option>
-            <option value="500"><?= $translator['500'] ?? '500'?></option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="500">500</option>
             </select>
             <span class="toplist-right" id="paginationbet" class="right-element">
-            <!-- paginationation -->
+                <!-- paginationation -->
             </span>
 
         </span>
@@ -456,17 +457,14 @@
 
     </div>
 </div>
-
-
 <!--view bet modal -->
-
 <div id="viewbetsmodal" class="modal fade" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="text-center mt-2 mb-4">
                     <div class="d-flex justify-content-between">
-                        <div><?= $translator['Bet Info'];?></div>
+                        <div><?= $translator['Bet Info']; ?></div>
                         <div><i class="bx bx-message-square-x tclose" style="color: #868c87; font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"></i></div>
                     </div>
                 </div>
@@ -494,5 +492,5 @@
 </div>
 
 <script class="translations" type="application/json">
-<?=json_encode($translator); ?>
+    <?= json_encode($translator); ?>
 </script>
