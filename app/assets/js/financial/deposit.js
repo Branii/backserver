@@ -141,7 +141,7 @@ const Depositdata = (data) => {
         (newPage, pageLimit) => fetchDeposit(newPage, pageLimit)
       );
       document.getElementById("paging_infodeposit").innerHTML =
-        "Page " + page + " of " + data.totalPages + " pages";
+        "Pages " + page + " of " + data.totalPages + " pages";
   
     } catch (error) {
       console.error("Error fetching data:", error);
