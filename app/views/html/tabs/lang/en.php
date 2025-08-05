@@ -1367,9 +1367,6 @@ return [
     'PasswordLength' => 'Password must be at least 8 characters',
     'PasswordRequired' => 'Password is required',
 
-    'SelectFields' => 'Select one or more data fields to filter',
-
-    'SelectFieldss' => 'Select one or more data fields to filter',
     'Select one or more data fields to filter' => 'Select one or more data fields to filter',
     'All fields are required!' => 'All fields are required!',
     'FieldRequired' => 'Field {field} is required.',
@@ -1570,4 +1567,9 @@ return [
     'An error occurred while processing your request' => 'An error occurred while processing your request',
     'Failed to connect to the server' => 'Failed to connect to the server',
     'Invalid server response' => 'Invalid server response',
+    'Server error occurred' => 'Server error occurred',
+ 'Request could not be completed, please try again' => 'Request could not be completed, please try again',
+     'Network or server error occurred' => 'Network or server error occurred',
+
+    
 ];
