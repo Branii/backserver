@@ -164,18 +164,19 @@ class FinancialManageModel extends MEDOOHelper
 
         if ($desposittype == 1) {
             $depositSuccess     = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $username);
-            $newDepositSuccess  = self::insertIntoDepositsNew($uid, $amount, $username, $Data['contact'],$Data['username'],$Data['email']);
+            $newDepositSuccess  = self::insertIntoDepositsNew($uid, $amount, $username, $Data['contact'], $Data['username'], $Data['email']);
             $transactionSuccess = self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data);
 
             if ($depositSuccess && $newDepositSuccess && $transactionSuccess) {
                 self::updateBalance($uid, $recharge_balance);
+                self::updateUserCryptoWalletBalanceByAddressWithUserId($blockChainNetwork, $amount, $uid);
                 $success = true;
             }
 
         } elseif ($desposittype == 4) {
             $depositSuccess        = self::insertIntoDepositsAndWithdrawals($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $username);
             $transactionSuccess    = self::insertIntoTransaction($desposittype, $uid, $amount, $review, $depositid, $recharge_balance, $Data);
-            $withdrawManageSuccess = self::insertIntoWithdrawManage($uid, $amount, $Data['contact'],$Data['username'],$Data['email']);
+            $withdrawManageSuccess = self::insertIntoWithdrawManage($uid, $amount, $Data['contact'], $Data['username'], $Data['email']);
 
             if ($depositSuccess && $transactionSuccess && $withdrawManageSuccess) {
                 self::updateBalance($uid, $recharge_balance);
@@ -332,6 +333,24 @@ class FinancialManageModel extends MEDOOHelper
     public static function updateBalance($uid, $recharge_balance)
     {
         return $updateuserbalance = parent::query("UPDATE users_test SET balance = :balance WHERE uid = :uid", ["balance" => $recharge_balance, "uid" => $uid]);
+    }
+
+    public static function updateUserCryptoWalletBalanceByAddressWithUserId($blockChainNetwork, $amount, $uid)
+    {
+        $pdo             = (new Database())->openLink();
+        $allowedNetworks = ['bitcoin', 'ethereum', 'tron', 'btc', 'trx'];
+        if (! in_array($blockChainNetwork, $allowedNetworks)) {
+            throw new InvalidArgumentException("Invalid blockchain network: $blockChainNetwork");
+        }
+
+        // Step 1: Update the balance directly by adding to the existing one
+        $updateSql = sprintf(
+            "UPDATE users_test
+     SET crypto_wallets = JSON_SET( crypto_wallets,'$.%s.balance',
+     CAST((COALESCE(JSON_EXTRACT(crypto_wallets, '$.%s.balance'), 0) + ?) AS DECIMAL(20,10))) WHERE uid = ?", $blockChainNetwork, $blockChainNetwork);
+        $stmt = $pdo->prepare($updateSql);
+        return $stmt->execute([$newBalance, $uid]);
+
     }
 
     //NOTE -
