@@ -1,62 +1,62 @@
-$(function(){
+$(function () {
 
-    function showToast(title, message, type) {
-        $.toast({
-          position: "bottom-right",
-          title: title,
-          message: message,
-          type: type,
-          duration: 3000, // auto-dismiss after 3s
-        });
-      }
+  function showToast(title, message, type) {
+    $.toast({
+      position: "bottom-right",
+      title: title,
+      message: message,
+      type: type,
+      duration: 3000, // auto-dismiss after 3s
+    });
+  }
 
   function getTranslation(id, fallback) {
     return document.getElementById(id)?.dataset.translation || fallback;
-}
+  }
 
-const BackupText = document.getElementById("restbackup-text")?.dataset.translation || "Restore Backup";
-const EmailbackupText = getTranslation("emailbackup-text", "Email Backup");
-const DeletebackupText = getTranslation("deletebackup-text", "Delete Backup");
+  const BackupText = document.getElementById("restbackup-text")?.dataset.translation || "Restore Backup";
+  const EmailbackupText = getTranslation("emailbackup-text", "Email Backup");
+  const DeletebackupText = getTranslation("deletebackup-text", "Delete Backup");
 
-const txtPage = document.getElementById("trans-page").innerText;
-const txtOf = document.getElementById("trans-of").innerText;
-const txtPages = document.getElementById("trans-pages").innerText;
+  const txtPage = document.getElementById("trans-page").innerText;
+  const txtOf = document.getElementById("trans-of").innerText;
+  const txtPages = document.getElementById("trans-pages").innerText;
 
-// document.getElementById("paging_info_backup").innerHTML =
-//     `${txtPage} ${currentPage} ${txtOf} ${data.totalPages} ${txtPages}`;
-
-
+  // document.getElementById("paging_info_backup").innerHTML =
+  //     `${txtPage} ${currentPage} ${txtOf} ${data.totalPages} ${txtPages}`;
 
 
-const backupTable = (data) => {
-  let html = "";
 
-  data.forEach((item) => {
-    // language translate starts here
-    const status = item.backup_status?.toLowerCase() || '';
-    let badgeClass = '';
-    let translatedStatus = '';
 
-    switch (status) {
-      case 'active':
-        badgeClass = 'bg-success-subtle text-success';
-        translatedStatus = document.getElementById("trans-backup-active").textContent;
-        break;
-      case 'inactive':
-        badgeClass = 'bg-secondary-subtle text-secondary';
-        translatedStatus = document.getElementById("trans-backup-inactive").textContent;
-        break;
-      case 'suspended':
-        badgeClass = 'bg-warning-subtle text-warning';
-        translatedStatus = document.getElementById("trans-backup-suspended").textContent;
-        break;
-      default:
-        badgeClass = 'bg-dark-subtle text-dark';
-        translatedStatus = item.backup_status || 'Unknown';
-    }
-    // language translate ends here
+  const backupTable = (data) => {
+    let html = "";
 
-    html += `
+    data.forEach((item) => {
+      // language translate starts here
+      const status = item.backup_status?.toLowerCase() || '';
+      let badgeClass = '';
+      let translatedStatus = '';
+
+      switch (status) {
+        case 'active':
+          badgeClass = 'bg-success-subtle text-success';
+          translatedStatus = document.getElementById("trans-backup-active").textContent;
+          break;
+        case 'inactive':
+          badgeClass = 'bg-secondary-subtle text-secondary';
+          translatedStatus = document.getElementById("trans-backup-inactive").textContent;
+          break;
+        case 'suspended':
+          badgeClass = 'bg-warning-subtle text-warning';
+          translatedStatus = document.getElementById("trans-backup-suspended").textContent;
+          break;
+        default:
+          badgeClass = 'bg-dark-subtle text-dark';
+          translatedStatus = item.backup_status || 'Unknown';
+      }
+      // language translate ends here
+
+      html += `
       <tr class="trow">
         <td>${item.backup_id}</td>
         <td><div class="d-flex align-items-center"><i class='bx bx-sushi' style="font-size:30px"></i></div></td>
@@ -94,134 +94,133 @@ const backupTable = (data) => {
         </td>
       </tr>
     `;
-  });
+    });
 
-  return html;
-};
+    return html;
+  };
 
 
-    const renderAllBackups = (data) => {
-        var html = backupTable(data);
-        $("#dataContainerBackup").html(html);
-    };
+  const renderAllBackups = (data) => {
+    var html = backupTable(data);
+    $("#dataContainerBackup").html(html);
+  };
 
-    let currentPage = 1;
-    let pageLimit = 50;
-    let sibling = ''
+  let currentPage = 1;
+  let pageLimit = 50;
+  let sibling = ''
 
-    async function createNewBackup() {
-        try {
-          const response = await fetch(`../admin/backup`);
-          const data = await response.json();
-          console.log(data);
-          return
-          renderAllBackups(data.backups);
-          showToast("Success", "Backup created successfully", "success") 
-          sibling.removeClass("bx-loader bx-spin").addClass("bx-plus");
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      }
+  async function createNewBackup() {
+    try {
+      const response = await fetch(`../admin/backup`);
+      const data = await response.json();
+      console.log(data);
+      return
+      renderAllBackups(data.backups);
+      showToast("Success", "Backup created successfully", "success")
+      sibling.removeClass("bx-loader bx-spin").addClass("bx-plus");
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
 
-      async function getAllBackups(currentPage, pageLimit) {
-        try {
-          const response = await fetch(`../admin/getAllBackups/${currentPage}/${pageLimit}`);
-          const data = await response.json();
-          renderAllBackups(data.backups);
-          $("#maskk").LoadingOverlay("hide")
-          //Render pagination
-          renderPaginationForBackups(data.totalPages, currentPage);
-          // document.getElementById("paging_info_backup").innerHTML =
-          // "Page " + currentPage + " of " + data.totalPages + " pages";
-  document.getElementById("paging_info_backup").innerHTML =
-    `${txtPage} ${currentPage} ${txtOf} ${data.totalPages} ${txtPages}`;
+  async function getAllBackups(currentPage, pageLimit) {
+    try {
+      const response = await fetch(`../admin/getAllBackups/${currentPage}/${pageLimit}`);
+      const data = await response.json();
+      renderAllBackups(data.backups);
+      $("#maskk").LoadingOverlay("hide")
+      //Render pagination
+      renderPaginationForBackups(data.totalPages, currentPage);
+      // document.getElementById("paging_info_backup").innerHTML =
+      // "Page " + currentPage + " of " + data.totalPages + " pages";
+      document.getElementById("paging_info_backup").innerHTML =
+        `${txtPage} ${currentPage} ${txtOf} ${data.totalPages} ${txtPages}`;
 
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      }
-      getAllBackups(currentPage, pageLimit);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+  getAllBackups(currentPage, pageLimit);
 
-      function renderPaginationForBackups(totalPages, currentPage) {
-        const createPageLink = (i, label = i, disabled = false, active = false) =>
-          `<li class='page-item ${disabled ? "disabled" : ""} ${
-            active ? "active" : ""
-          }'>
+  function renderPaginationForBackups(totalPages, currentPage) {
+    const createPageLink = (i, label = i, disabled = false, active = false) =>
+      `<li class='page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""
+      }'>
                 <a class='page-link' href='#' data-page='${i}'>${label}</a>
               </li>`;
-        let pagLink = `<ul class='pagination justify-content-end'>`;
-    
-        // Previous Button
-        pagLink += createPageLink(
-          currentPage - 1,
-          `<i class='bx bx-chevron-left'></i>`,
-          currentPage === 1
-        );
-    
-        // Page numbers with ellipsis
-        for (let i = 1; i <= totalPages; i++) {
-          if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
-            pagLink += createPageLink(i, i, false, i === currentPage);
-          } else if (i === currentPage - 3 || i === currentPage + 3) {
-            pagLink += createPageLink(i, "...", true);
-          }
-        }
-    
-        // Next Button
-        pagLink += createPageLink(
-          currentPage + 1,
-          `<i class='bx bx-chevron-right'></i>`,
-          currentPage === totalPages
-        );
-        pagLink += "</ul>";
-    
-        document.getElementById("paginationBackup").innerHTML = pagLink;
-    
-        // Add click event listeners
-        document.querySelectorAll("#paginationBackup .page-link").forEach((link) => {
-          link.addEventListener("click", function (e) {
-            e.preventDefault();
-            const newPage = +this.getAttribute("data-page");
-            if (newPage > 0 && newPage <= totalPages) {
-              getAllBackups(newPage, pageLimit);
-            }
-          });
-        });
+    let pagLink = `<ul class='pagination justify-content-end'>`;
+
+    // Previous Button
+    pagLink += createPageLink(
+      currentPage - 1,
+      `<i class='bx bx-chevron-left'></i>`,
+      currentPage === 1
+    );
+
+    // Page numbers with ellipsis
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+        pagLink += createPageLink(i, i, false, i === currentPage);
+      } else if (i === currentPage - 3 || i === currentPage + 3) {
+        pagLink += createPageLink(i, "...", true);
       }
-
-
-    $(".createnew").on("click",function(){
-      sibling = $(this).find('.bx-plus')
-      sibling.removeClass("bx-plus").addClass("bx-loader bx-spin");
-      createNewBackup()
-    })
-
-    $(".refreshh").on("click",function(){
-      $("#maskk").LoadingOverlay("show", {
-        background: "rgb(90,106,133,0.1)",
-        size: 3
-      });
-      getAllBackups(currentPage, pageLimit);
-    })
-
-    $(".numrowsbackup").change(function(){ 
-      const numrow = $(this).val();
-      getAllBackups(currentPage,numrow);
-    })
-
-
-
-     function tableScrollBackup() {
-        const tableContainerBackup = document.querySelector(".table-wrappereBackup");
-        const headerRowBackup = document.querySelector(".headrowBackup");
-
-        tableContainerBackup.addEventListener("scroll", function () {
-            if (tableContainerBackup.scrollTop > 0) {
-                headerRowBackup.classList.add("sticky-headerBackup");
-            } else {
-                headerRowBackup.classList.remove("sticky-headerBackup");
-            }
-        });
     }
-    tableScrollBackup();
+
+    // Next Button
+    pagLink += createPageLink(
+      currentPage + 1,
+      `<i class='bx bx-chevron-right'></i>`,
+      currentPage === totalPages
+    );
+    pagLink += "</ul>";
+
+    document.getElementById("paginationBackup").innerHTML = pagLink;
+
+    // Add click event listeners
+    document.querySelectorAll("#paginationBackup .page-link").forEach((link) => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const newPage = +this.getAttribute("data-page");
+        if (newPage > 0 && newPage <= totalPages) {
+          getAllBackups(newPage, pageLimit);
+        }
+      });
+    });
+  }
+
+
+  $(".createnew").on("click", function () {
+    sibling = $(this).find('.bx-plus')
+    sibling.removeClass("bx-plus").addClass("bx-loader bx-spin");
+    createNewBackup()
+  })
+
+  $(".refreshh").on("click", function () {
+    $("#maskk").LoadingOverlay("show", {
+      background: "rgb(90,106,133,0.1)",
+      size: 3
+    });
+    getAllBackups(currentPage, pageLimit);
+  })
+
+  $(".numrowsbackup").change(function () {
+    const numrow = $(this).val();
+    getAllBackups(currentPage, numrow);
+  })
+
+
+
+  function tableScrollBackup() {
+    const tableContainerBackup = document.querySelector(".table-wrappereBackup");
+    const headerRowBackup = document.querySelector(".headrowBackup");
+
+    tableContainerBackup.addEventListener("scroll", function () {
+      if (tableContainerBackup.scrollTop > 0) {
+        headerRowBackup.classList.add("sticky-headerBackup");
+      } else {
+        headerRowBackup.classList.remove("sticky-headerBackup");
+      }
+    });
+  }
+  tableScrollBackup();
 })

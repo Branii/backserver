@@ -9,29 +9,29 @@ $(function () {
         });
     }
 
-   
-
-    const translatorScript = document.querySelector(".translations"); // Get the script tag
-  const translator = JSON.parse(translatorScript.textContent);
 
 
-  
+    const translatorScript = document.querySelector(".translations");
+    const translator = JSON.parse(translatorScript.textContent);
+
+
+
 
 
     const AdminTable = (data) => {
         let html = "";
         const status = {
-            1: { title: translator ["Deposit"], color: "#4CAF50" }, // Green
-            2: { title:  translator ["Win Bonus"], color: "#FF9800" }, // Orange
-            3: { title:  translator ["Bet Awarded"], color: "#03A9F4" }, // Light Blue
-            4: { title:  translator ["Withdrawal"], color: "#F44336" }, // Red
-            5: { title:  translator ["Bet Cancelled"], color: "#9E9E9E" }, // Grey
-            6: { title:  translator ["Bet Deduct"], color: "#E91E63" }, // Pink
-            7: { title:  translator ["Rebates"], color: "#8BC34A" }, // Light Green
-            8: { title:  translator ["Self Rebate"], color: "#00BCD4" }, // Cyan
-            9: { title:  translator ["Send Red Envelope"], color: "#FF5722" }, // Deep Orange
-            10: { title: translator [ "Receive Red Envelope"], color: "#795548" }, // Brown
-            11: { title: translator [ "Bet Refund"], color: "#FFC107" }, // Amber
+            1: { title: translator["Deposit"], color: "#4CAF50" }, // Green
+            2: { title: translator["Win Bonus"], color: "#FF9800" }, // Orange
+            3: { title: translator["Bet Awarded"], color: "#03A9F4" }, // Light Blue
+            4: { title: translator["Withdrawal"], color: "#F44336" }, // Red
+            5: { title: translator["Bet Cancelled"], color: "#9E9E9E" }, // Grey
+            6: { title: translator["Bet Deduct"], color: "#E91E63" }, // Pink
+            7: { title: translator["Rebates"], color: "#8BC34A" }, // Light Green
+            8: { title: translator["Self Rebate"], color: "#00BCD4" }, // Cyan
+            9: { title: translator["Send Red Envelope"], color: "#FF5722" }, // Deep Orange
+            10: { title: translator["Receive Red Envelope"], color: "#795548" }, // Brown
+            11: { title: translator["Bet Refund"], color: "#FFC107" }, // Amber
         };
 
         data.forEach((item) => {
@@ -45,15 +45,15 @@ $(function () {
             switch (status) {
                 case "active":
                     badgeClass = "bg-success-subtle text-success";
-                    translatedStatus = document.getElementById("trans-status-active").textContent;
+                    translatedStatus = translator["active"];
                     break;
                 case "suspended":
                     badgeClass = "bg-warning-subtle text-warning";
-                    translatedStatus = document.getElementById("trans-status-suspended").textContent;
+                    translatedStatus = translator["suspended"];
                     break;
                 case "deactivated":
                     badgeClass = "bg-danger-subtle text-danger";
-                    translatedStatus = document.getElementById("trans-status-deactivated").textContent;
+                    translatedStatus = translator["deactivated"];
                     break;
                 default:
                     badgeClass = "bg-secondary-subtle text-secondary";
@@ -164,9 +164,11 @@ $(function () {
             renderAdmin(data.admins);
             // Render pagination
             renderPaginationForAdmin(data.totalPages, currentPage);
-             document.getElementById("paging_info_admin").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            //  document.getElementById("paging_info_admin").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            document.getElementById("paging_info_admin").innerHTML =
+                `${translator["Page"]} ${currentPage} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
 
-           
+
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -181,8 +183,8 @@ $(function () {
             console.log(data);
             $(".add-new").modal("hide");
             renderAdmin(data.admins);
-             showToast(translator ["Success"], translator ["New user added successfuly"], "success");
-          
+            showToast(translator["Success"], translator["New user added successfuly"], "success");
+
         });
     };
 
@@ -288,7 +290,7 @@ $(function () {
         let isEmpty = params.some((param) => param === "");
         //console.log(params)
         !isEmpty ? request(`../admin/admins/${data}`) : showToast(translator["Heads up!!"], translator["All fields are mandatory"], "info");
-        
+
 
     });
 
@@ -513,7 +515,7 @@ $(function () {
         userId = userdata.admin_id;
 
         const sidebarMenu = {
-            1: { title: "Account Transaction Details", content: "account_transaction"},
+            1: { title: "Account Transaction Details", content: "account_transaction" },
             2: { title: "Game Betting Statistics", content: "Game" },
             3: { title: "Lottery Betting Record", content: "Lottery" },
             4: { title: "Track Records", content: "Track" },
@@ -524,7 +526,7 @@ $(function () {
             9: { title: "User List", content: "Userlist" },
             10: { title: "User Logs", content: "Userlogs" },
             11: { title: "Invitation & Referral Links", content: "Invitation" },
-            12: { title: "Bank Card List", content: "Bank" },   
+            12: { title: "Bank Card List", content: "Bank" },
             13: { title: "Quota Settings", content: "quota" },
             14: { title: "Lottery Draw Records", content: "lotterydraws" },
             15: { title: "Lottery Basic Parameters", content: "lotterybasic" },
@@ -543,7 +545,7 @@ $(function () {
             27: { title: "Email Configuration", content: "emailconfigure" },
             28: { title: "Lottery Exception", content: "lottery" },
             29: { title: "Withdrawal Manage", content: "wlottery" }
-       
+
         };
         const sidebarMain = {
             1: { category: "Business flow", items: [1, 2, 3, 4] },
@@ -559,7 +561,7 @@ $(function () {
             11: { category: "Payment Platform", items: [22] },
             12: { category: "Partner Management", items: [23] },
             13: { category: "Platform Setting", items: [26, 27] },
-        
+
         };
         let html = "";
         for (let key in sidebarMain) {
@@ -572,7 +574,7 @@ $(function () {
               <ul class="custom-list">`;
             // Check if the permissions object has the key
             if (sidebarMain.hasOwnProperty(key)) {
-               // console.log(`Value: ${sidebarMain[key].items}`);
+                // console.log(`Value: ${sidebarMain[key].items}`);
 
                 sidebarMain[key].items.forEach((item) => {
                     const value = `${key} ${item}`;
@@ -684,7 +686,7 @@ $(function () {
     $(document).on("click", ".admin_logs", function () {
         const userdata = JSON.parse($(this).attr("value"));
         adminId = JSON.parse(userdata.admin_id);
-      // console.log(adminId);
+        // console.log(adminId);
         $(".logname").text(userdata.full_name);
         getAdminLogs(currentPage, pageLimit, adminId);
     });
@@ -719,7 +721,7 @@ $(function () {
         const limit = 20;
 
         if (!username) {
-    
+
             showToast(translator["Heads up!!"], translator["User required"], "info");
             return;
         }
