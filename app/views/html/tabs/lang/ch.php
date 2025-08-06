@@ -1445,8 +1445,8 @@ return [
     'LotteryEnabled' => '彩票已启用',
     'LotteryDisabled' => '彩票已禁用。',
     'ErrorProcessing' => '处理请求时出错',
-    'RecordsUpdated' => '记录更新成功。',
-    'IPUpdated' => 'IP 状态更新成功。',
+    'Records successfully updated' => '记录更新成功。',
+    'IP state updated successfully' => 'IP 状态更新成功。',
     'NoAgentMessage' => '该用户没有关系。',
 
     //user gaemt details
@@ -1519,7 +1519,7 @@ return [
 
     'UPDATED_SUCCESSFULLY' => '更新成功',
     'GAME_STATE_UPDATED' => '游戏状态已更新',
-    'NO_CHANGES_MADE' => '未做任何更改',
+    'No changes made' => '未做任何更改',
     'SETTLED' => '已结算',
     'UNSETTLED' => '未结算',
     'PENDING' => '待定',
@@ -1630,9 +1630,9 @@ return [
     "Turned Off" => "已关闭",
     "Add Partner" => "添加合作伙伴",
     "Select State" => "选择州",
-    'game_name' => '游戏名称', // Game Name
-    'game_type' => '游戏类型', // Game Type
-    'game_group' => '游戏分组', // Game Group
+    'Game Name' => '游戏名称', // Game Name
+    'Game Type' => '游戏类型', // Game Type
+    'Game Group' => '游戏分组', // Game Group
     'Reset user Account' => '重置用户帐户',
     'Profit Limit' => '利润限制',
     'Select Lottery Type' => '选择彩票类型',
@@ -1677,4 +1677,21 @@ return [
       'New user added successfuly'=>'新用户添加成功',
       'Continue'=>'继续',
        'User required'=>'用户需要',
+       'User Games Updated sucessfully'=>'用户游戏更新成功',
+        'Unexpected server response'=>'获取数据时服务器响应异常',
+        'quota updated successfullly'=>'配额更新成功',
+        'no pages found'=>'没有找到页面',
+        'Please this User has already being blocked'=>'请注意，该用户已被封锁',
+        'Operation Invalid' =>'操作無效',
+        'blockUser' =>'封锁用户',
+        'deleteUser' =>'删除用户',
+        'User Successfully Blocked' =>'用戶已成功封鎖',
+        'User Successfully Deleted' =>'User Successfully Deleted',
+        'Lottery status updated' =>'彩票状态已更新',
+        'Login Ip state updated' =>'登入IP狀態已更新',
+        'User Games not  Updated' =>'用户游戏未更新',
+        'Subordinate' =>'下属',
+        'Already blocked' =>'已被屏蔽',
+
+       
 ];

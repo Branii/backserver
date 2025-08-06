@@ -10,57 +10,9 @@ $(function () {
         });
     };
 
-    const translations = {
-        headsUp: document.getElementById("trans-heads-up").dataset.translation,
-        failedInactive: document.getElementById("trans-failed-inactive").dataset.translation,
-        inactiveSuccess: document.getElementById("trans-inactive-success").dataset.translation,
-        selectFields: document.getElementById("trans-select-fields").dataset.translation,
-        success: document.getElementById("trans-success").dataset.translation,
-        noChanges: document.getElementById("trans-no-changes-made").dataset.translation,
-        alertTitle: document.getElementById("trans-alert").dataset.translation,
-        userDoesNotExist: document.getElementById("trans-user-does-not-exist").dataset.translation,
-        errorTitle: document.getElementById("trans-error").dataset.translation,
-        errorMessage: document.getElementById("trans-generic-error").dataset.translation,
-        noPages: document.getElementById("trans-no-pages").dataset.translation,
-        mainPageNotice: document.getElementById("trans-main-page-notice").dataset.translation,
-        success: document.getElementById("trans-success").dataset.translation,
-        agentAdded: document.getElementById("trans-agent-added").dataset.translation,
-        quotaUpdated: document.getElementById("trans-quota-updated").dataset.translation,
-        blocked: document.getElementById("trans-blocked").dataset.translation,
-        alreadyBlocked: document.getElementById("trans-already-blocked").dataset.translation,
-        delete: document.getElementById("trans-delete").dataset.translation,
-        invalidOperation: document.getElementById("trans-invalid-operation").dataset.translation,
-        error: document.getElementById("trans-error").dataset.translation,
-        genericError: document.getElementById("trans-generic-error").dataset.translation,
-        requestError: document.getElementById("trans-request-error").dataset.translation,
-        enabled: document.getElementById("trans-enabled").dataset.translation,
-        lotteryEnabled: document.getElementById("trans-lottery-enabled").dataset.translation,
-        disabled: document.getElementById("trans-disabled").dataset.translation,
-        lotteryDisabled: document.getElementById("trans-lottery-disabled").dataset.translation,
-        errorProcessing: document.getElementById("trans-error-processing").dataset.translation,
-        successful: document.getElementById("trans-successful").dataset.translation,
-        recordsUpdated: document.getElementById("trans-records-updated").dataset.translation,
-        notDone: document.getElementById("trans-not-done").dataset.translation,
-        ipUpdated: document.getElementById("trans-ip-updated").dataset.translation,
-        noAgent: document.getElementById("trans-no-agent").dataset.translation,
-        noAgentMessage: document.getElementById("trans-no-agent-message").dataset.translation,
-        emailExists: document.getElementById("trans-email-exists").dataset.translation,
-        usernamePattern: document.getElementById("trans-username-pattern").dataset.translation,
-        invalidEmail: document.getElementById("trans-invalid-email").dataset.translation,
-        passwordNumber: document.getElementById("trans-password-number").dataset.translation,
-        passwordCase: document.getElementById("trans-password-case").dataset.translation,
-        passwordSpecial: document.getElementById("trans-password-special").dataset.translation,
-        confirmPassword: document.getElementById("trans-confirm-password").dataset.translation,
-        passwordLength: document.getElementById("trans-password-length").dataset.translation,
-        passwordRequired: document.getElementById("trans-password-required").dataset.translation,
-    };
+        const translatorScript = document.querySelector(".translations");
+        const translator = JSON.parse(translatorScript.textContent);
 
-    const headsUpText = document.getElementById("trans-heads-up").textContent;
-    const selectFieldsText = document.getElementById("trans-select-fields").textContent;
-
-    const txtPage = document.getElementById("trans-page").innerText;
-    const txtOf = document.getElementById("trans-of").innerText;
-    const txtPages = document.getElementById("trans-pages").innerText;
 
     // editting the user from the userlist table
     $(document).on("click", ".manage-user-btn,.user-restrictions-btn", function () {
@@ -159,8 +111,8 @@ $(function () {
                 // renderwithdrawPagination(totalPages,parseInt(currentPage),'page-agent-subs');
             },
             error: function (xhr, status, error) {
-                // showToast("Error", "An Error occured, please try again later.", "info");
-                showToast(errorTitle, errorMessage, "info");
+                 showToast(translator ["Error"], translator ["An Error occured, please try again later"], "info");
+          
             },
             complete: function () {
                 $("#wl-tbl-wrapper").LoadingOverlay("hide");
@@ -170,22 +122,7 @@ $(function () {
         });
     };
 
-    function getTranslation(id, fallback) {
-        return document.getElementById(id)?.dataset.translation || fallback;
-    }
-
-    const viewText = document.getElementById("view-text")?.dataset.translation || "View";
-
-    const quotaText = getTranslation("quota-text", "Quota");
-    const subsText = getTranslation("subs-text", "Subs");
-    const accountChangeText = getTranslation("account-change-text", "Account Change");
-    const lotteryNameText = getTranslation("lottery-name-text", "Lottery Name");
-    const whiteListText = getTranslation("whitelist-text", "White List");
-    const deleteUserText = getTranslation("delete-user-text", "Delete User");
-    const deactivateUserText = getTranslation("deactivate-user-text", "Deactivate User");
-    const gamegroupTextss = getTranslation("deactivate-game-text", "Game Name");
-    const gamenameTexts = getTranslation("deactivate-game-type", "Game Type");
-    const gamegroupTexts = getTranslation("deactivate-game-group", "Game Group");
+   
 
     function formatMoney(money) {
         let moneyStr = String(money);
@@ -202,10 +139,10 @@ $(function () {
     const UserlistData = (data) => {
         let html = "";
         const status = {
-            1: "Enable", // Green
-            2: "Suspend", // Orange
-            3: "Forbbiden", // Light Blue
-            4: "Blocked", // Red
+            1: translator["Enable"], // Green
+            2:  translator["Suspend"], // Orange
+            3:  translator["Forbbiden"], // Light Blue
+            4:  translator["Blocked"], // Red
         };
 
         //   const account_type = {
@@ -282,27 +219,27 @@ $(function () {
                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${
                                         item.uid
                                     }">
-                                      <i class="bx bx-show fs-5"></i>${viewText}
+                                      <i class="bx bx-show fs-5"></i>${translator["View"]}
                                     </a>
                                     <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
-                                      <i class="bx bx-show fs-5" ></i>Quota
+                                      <i class="bx bx-show fs-5" ></i>${translator["Quota"]}
                                     </a>
                                      <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewsub" data-agent-id="${item.uid}" href="javascript:void(0);"data-uid="${item.subordinates}"> 
-                                      <i class="bx bx-show fs-5" ></i>Subs
+                                      <i class="bx bx-show fs-5" ></i>${translator["Subs"]}
                                     </a>
                                     <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1 acountbtn" href="javascript:void(0);"data-uid="${item.uid}">
-                                      <i class="bx bx-money fs-5"></i>Account Change
+                                      <i class="bx bx-money fs-5"></i>${translator["Account Change"]}
                                     </a>
                                      <a class="dropdown-item usr-deactivate-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                      <i class="bx bx-trash fs-5"></i>${viewText}
+                                      <i class="bx bx-trash fs-5"></i>${translator["View"]}
                                     </a> <a class="dropdown-item user-lottery-name cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                      <i class="bx bx-trash fs-5"></i>Lottery Name
+                                      <i class="bx bx-trash fs-5"></i>${translator["Lottery Name"]}
                                     </a>
                                      <a class="dropdown-item usr-white-list cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                      <i class="bx bx-trash fs-5"></i>White List
+                                      <i class="bx bx-trash fs-5"></i> ${translator["White List"]}
                                     </a>
                                      <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                      <i class="bx bx-trash fs-5"></i>Delete User
+                                      <i class="bx bx-trash fs-5"></i>${translator["Delete User"]}
                                     </a>
                                   </div>
                                 </div>
@@ -393,7 +330,7 @@ $(function () {
                     res = JSON.parse(response);
                 } catch (e) {
                     // console.error("Invalid JSON from server.");
-                    showToast("Error", "Unexpected server response.", "error");
+                    showToast(translator ["Error"], translator ["Unexpected server response"], "error");
                     return;
                 }
 
@@ -409,7 +346,7 @@ $(function () {
             },
             error: function (xhr, status, error) {
                 // console.error("Block Error:", error);
-                showToast("Error", "An error occurred, please try again.", "error");
+                showToast(translator ["Error"], translator ["An error occurred, please try again"], "error");
             },
         });
     });
@@ -453,8 +390,9 @@ $(function () {
                     // renderuserlist(data.users);
                     const totalPages = Math.ceil(data.data[0].total_records / pageLimit);
                     renderPaginationlist(totalPages, page, pageLimit, (newPage, pageLimit) => fetchUserlist(newPage, pageLimit));
-                    // document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + totalPages + " pages";
-                    document.getElementById("paging_infolist").innerHTML = `${txtPage} ${page} ${txtOf} ${totalPages} ${txtPages}`;
+                    //  document.getElementById("paging_infolist").innerHTML = "Page " + page + " of " + totalPages + " pages";
+                 document.getElementById("paging_infolist").innerHTML =`${translator["Page"]} ${page} ${translator["Of"]} ${totalPages} ${translator["Pages"]}`;
+
                 },
                 error: function () {},
                 complete: function () {
@@ -738,8 +676,7 @@ $(function () {
         const enddate = $("#usrl-end-date").val();
 
         if (uid == "" && state == "" && rechargeLevel == "" && startdate == "" && enddate == "") {
-            // showToast("Heads up!!", "Select one or more data fields to filter", "info");
-            showToast(headsUpText, selectFieldsText, "info");
+             showToast(translator ["Heads up!!"], translator ["Select one or more data fields to filter"], "info");
             return;
         }
         $(".loaderlist").removeClass("bx-check-double").addClass("bx-loader bx-spin");
@@ -833,6 +770,7 @@ $(function () {
                 }
             }
             if (message) {
+
                 showToast(translations.headsUp, message, "info");
                 return;
             } else {
@@ -840,8 +778,8 @@ $(function () {
                 setTimeout(function () {
                     $(".loaders").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
 
-                    // showToast("Success", "agent added sucessfully", "success");
-                    showToast(translations.success, translations.agentAdded, "success");
+                     showToast(translator ["Success"], translator ["agent added sucessfully"], "success");
+            
                     $("#addagentmodal").modal("hide");
                     fetchUserlist(currentPage, pageLimit);
                     $("#agentform")[0].reset();
@@ -958,11 +896,11 @@ $(function () {
                 $(".loaderquota").removeClass("bx-loader-circle bx-spin loader").addClass("bx-send");
                 if (result) {
                     $("#viewquota").modal("hide");
-                    // showToast("Success", "quota updated successfullly", "success");
-                    showToast(translations.success, translations.quotaUpdated, "success");
+                     showToast(translator ["Success"], translator ["quota updated successfullly"], "success");
+          
                 } else {
-                    // showToast("Heads up !!", "no changes made", "info");
-                    showToast(headsUp, noChanges, "info");
+                     showToast(translator ["Heads up!!"], translator ["no changes made"], "info");
+               
                 }
             }, 500); // Duration before showing the toast
         });
@@ -1019,22 +957,22 @@ $(function () {
     const UserlistDataV2 = (response) => {
         //  console.log(response);
         let html = "";
-        // const status = {
-        //     1: "Enable", // Green
-        //     2: "Suspend", // Orange
-        //     3: "Forbbiden to Log In", // Light Blue
-        //     4: "Blocked", // Red
-        //     5: "Forbbiden to Log Deposit", // Light Blue
-        //     6: "Forbbiden to Withdraw", // Red
-        // };
         const status = {
-            1: document.getElementById("status_enable").innerText,
-            2: document.getElementById("status_suspend").innerText,
-            3: document.getElementById("status_forbid_login").innerText,
-            4: document.getElementById("status_blocked").innerText,
-            5: document.getElementById("status_forbid_deposit").innerText,
-            6: document.getElementById("status_forbid_withdraw").innerText,
+            1: translator ["Enable"], // Green
+            2: translator ["Suspend"], // Orange
+            3: translator ["Forbbiden to Log In"], // Light Blue
+            4: translator ["Blocked"], // Red
+            5: translator ["Forbbiden to Log Deposit"], // Light Blue
+            6: translator ["Forbbiden to Withdraw"], // Red
         };
+        // const status = {
+        //     1: document.getElementById("status_enable").innerText,
+        //     2: document.getElementById("status_suspend").innerText,
+        //     3: document.getElementById("status_forbid_login").innerText,
+        //     4: document.getElementById("status_blocked").innerText,
+        //     5: document.getElementById("status_forbid_deposit").innerText,
+        //     6: document.getElementById("status_forbid_withdraw").innerText,
+        // };
 
         //   const account_type = {
         //     1 :"customer",
@@ -1132,42 +1070,42 @@ $(function () {
                                 <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewuserinfo" href="javascript:void(0);"data-bs-toggle="modal" data-bs-target="#usrl-manage-user" data-uid="${
                                     item.uid
                                 }">
-                                  <i class="bx bx-show fs-5"></i>${viewText}
+                                  <i class="bx bx-show fs-5"></i>${translator["View"]}
                                 </a>
                                 <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewquota" href="javascript:void(0);" data-rebate="${item.quota}"data-uid="${item.uid}"> 
-                                  <i class='bx bx-list-minus'></i>${quotaText}
+                                  <i class='bx bx-list-minus'></i>${translator["Quota"]}
                                 </a>
                                  <a class="dropdown-item kanban-item-edit cursor-pointer d-flex align-items-center gap-1 viewsub" data-agent-id="${item.uid}" href="javascript:void(0);"data-uid="${item.subordinates}"> 
-                                  <i class='bx bx-git-merge'></i>${subsText}
+                                  <i class='bx bx-git-merge'></i>${translator["Subordinate"]}
                                 </a>
                                 <a class="dropdown-item kanban-item-delete cursor-pointer d-flex align-items-center gap-1 acountbtn" href="javascript:void(0);"data-uid="${item.uid}">
-                                  <i class="bx bx-money fs-5"></i>${accountChangeText}
+                                  <i class="bx bx-money fs-5"></i>${translator["Account change"]}
                                 </a>
                                  <a class="dropdown-item usr-deactivate-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class='bx bx-user-x' ></i>${deactivateUserText}
+                                  <i class='bx bx-user-x' ></i>${translator["Deactivate User"]}
                                 </a> <a class="dropdown-item user-lottery-name cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class='bx bx-filter' ></i>${lotteryNameText}
+                                  <i class='bx bx-filter' ></i>${translator["Lottery Name"]}
                                 </a>
                                  <a class="dropdown-item  usr-gametype  cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class='bx bx-user-minus' ></i>${gamenameTexts}
+                                  <i class='bx bx-user-minus' ></i>${translator["Game Name"]}
                                 </a>
                                    <a class="dropdown-item  usergamegroup  cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class='bx bx-user-minus' ></i>${gamegroupTexts}
+                                  <i class='bx bx-user-minus' ></i>${translator["Game group"]}
                                 </a>
 
                                 </a>
                                    <a class="dropdown-item  usergamename cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class='bx bx-user-minus' ></i>${gamegroupTextss}
+                                  <i class='bx bx-user-minus' ></i>${translator["Game Type"]}
                                 </a>
                                  <a class="dropdown-item usr-white-list cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class="bx bx-trash fs-5"></i>${whiteListText}
+                                  <i class="bx bx-trash fs-5"></i>${translator["White List"]}
                                 </a>
                                  <a class="dropdown-item  usr-delete-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);"  data-uid="${item.uid}">
-                                  <i class='bx bx-user-minus' ></i>${deleteUserText} 
+                                  <i class='bx bx-user-minus' ></i>${translator["Delete User"]}
                                 </a>
                              
                                 <a class="dropdown-item usr-block-user cursor-pointer d-flex align-items-center gap-1" href="javascript:void(0);" data-uid="${item.uid}">
-                                    <i class='bx bx-log-in-circle'></i> Reset Login Attempt
+                                    <i class='bx bx-log-in-circle'></i>${translator["Reset Login Attempt"]}
                                 </a>
 
                               </div>
@@ -1190,7 +1128,7 @@ $(function () {
 
     $("#backButton").on("click", function () {
         if (navigationHistory.length === 0) {
-            showToast(translations.noPages, translations.mainPageNotice, "info");
+            showToast( translator ["Heads up!!"], translator ["no pages found"], "info");
             return;
         }
         const obj = navigationHistory.pop();
@@ -1237,39 +1175,39 @@ $(function () {
                 }
 
                 if (response.data == 0 && flag == "blockUser") {
-                    // showToast("Blocked", "Please this User has already being blocked.", "info");
-                    showToast(translations.blocked, translations.alreadyBlocked, "info");
+                    showToast(translator ["Blocked"], translator ["Please this User has already being blocked"], "info");
+            
 
                     return;
                 }
                 if (response.data == 0 && flag == "deleteUser") {
-                    // showToast("Delete", "Operation Invalid", "error");
-                    showToast(translations.delete, translations.invalidOperation, "error");
+                     showToast(translator ["Delete"], translator ["Operation Invalid"], "error");
+                  
                     return;
                 }
 
                 let msg = "";
                 switch (flag) {
                     case "blockUser":
-                        msg = "User Successfully Blocked.";
+                        msg = translator ["User Successfully Blocked"];
                         $("#usrl-state-" + userID).text("Blocked");
                         break;
-                    case "deleteUser":
-                        msg = "User Successfully Deleted";
+                    case translator ["deleteUser"]:
+                        msg = translator ["User Successfully Deleted"];
                         $("#usrl-tr-" + userID).remove();
                         break;
                     case "lottery-name":
-                        msg = "Lottery status updated";
+                        msg = translator ["Lottery status updated"];
                         break;
                     case "ips":
-                        msg = "Login Ip state updated";
+                        msg = translator ["Login Ip state updated"];
                         break;
                     default:
                         msg = "";
                 }
                 if (msg.length == 0) {
-                    // showToast("Error", "Invalid operation.", "error");
-                    showToast(translations.error, translations.invalidOperation, "error");
+                    showToast(translator ["Error"], translator ["Invalid operation."], "error");
+                   
                     return;
                 }
                 showToast("Completed", msg, "success");
@@ -1328,7 +1266,7 @@ $(function () {
                 showToast("Heads Up", "User Games Updated sucessfully", "success");
                 fetchUserlist((page = 1), (pageLimit = 20));
             } else {
-                showToast("Heads Up", "User Games not  Updated", "info");
+                showToast(translator ["Heads Up"], translator ["User Games not  Updated"], "info");
             }
         });
     });
@@ -1363,16 +1301,14 @@ $(function () {
                 }
 
                 if (response.data == 0) {
-                    // showToast("Error", `Request Error`, "error");
-                    showToast(translations.error, translations.requestError, "error");
+                     showToast(translator ["Error"], translator [`Request Error`], "error");    
                 }
 
                 if (toggle) {
-                    // showToast("Enabled", `Lottery Enabled`, "info");
-                    showToast(translations.enabled, translations.lotteryEnabled, "info");
+                     showToast(translator ["Enabled"], translator [`Lottery Enabled`], "info");
+                 
                 } else {
-                    // showToast("Disabled", `Lottery  Disabled.`, "error");
-                    showToast(translations.disabled, translations.lotteryDisabled, "error");
+                     showToast(translator ["Disabled"], translator [`Lottery  Disabled.`], "error"); 
                 }
             },
             error: function (res, status, error) {},
@@ -1501,14 +1437,11 @@ $(function () {
                 }
 
                 if (response.data == 0) {
-                    // showToast("Not Done", "Already blocked", "info");
-                    showToast(translations.notDone, translations.alreadyBlocked, "info");
-
+                     showToast("Not Done", "Already blocked", "info");
                     return;
                 }
-
-                // showToast("Completed", "IP state updated successfully.", "info");
-                showToast(translations.completed, translations.ipUpdated, "info");
+                showToast(translator ["Completed"], translator ["IP state updated successfully"], "info");
+         
             },
             error: function (res, status, error) {},
             complete: function () {
@@ -1603,7 +1536,7 @@ $(function () {
         });
     };
 
-    const translator = JSON.parse(document.getElementById("translation-container").getAttribute("data-translations"));
+  
     const AccountTransactionss = (data) => {
         let html = "";
 
@@ -1673,7 +1606,9 @@ $(function () {
             tableScrolluserLists();
             // Render pagination
             render(data.totalPages, currentPage, pageLimit, (newPage, pageLimit) => fetchaccount(userid, newPage, pageLimit));
-            document.getElementById("paging_infolistss").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            // document.getElementById("paging_infolistss").innerHTML = "Page " + currentPage + " of " + data.totalPages + " pages";
+            document.getElementById("paging_infolistss").innerHTML = `${translator["Page"]} ${currentPage} ${translator["Of"]} ${data.totalPages} ${translator["Pages"]}`;
+
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -1806,9 +1741,7 @@ $(function () {
 
     $(document).on("click", ".searchuseraccount", function () {
         if ($(".orderuserchange").val() == "" && $(".startdateusers").val() == "") {
-            // showToast("Heads up!!", "Select one or more data fields to filter", "info");
-            //  showToast(translations.headsUp, translations.selectFields, "info");
-            showToast(headsUpText, selectFieldsText, "info");
+             showToast(translator ["Heads up!!"], translator ["Select one or more data fields to filter"], "info");
             return;
         }
         const ordertype = $(".orderuserchange").val();
@@ -1980,7 +1913,7 @@ $(function () {
             console.log(res);
             if ((res = "success")) {
                 $("#usl-lottery-gameType-modal").modal("hide");
-                showToast("Heads Up", "User Games Updated sucessfully", "success");
+                showToast(translator ["Heads Up"], translator ["User Games Updated sucessfully"], "success");
                 fetchUserlist(currentPage, pageLimit);
             } else {
                 showToast("Heads Up", "User Games not  Updated", "info");

@@ -1237,24 +1237,19 @@ return [
     'Scan QRCode' => 'Scan QRCode',
     'Time Zone/Hrs' => 'Time Zone/Hrs',
     'Timezone/Hrs' => 'Timezone/Hrs',
-
     'Track Time' => 'Track Time',
     'Transaction Time' => 'Transaction Time',
     'Account Change Info' => 'Account Change Info',
     'Are you sure you want to' => 'Are you sure you want to',
     'Deactivate Agent 1 ?' => 'Deactivate Agent 1 ?',
     'Delete Agent 1 ?' => 'Delete Agent 1 ?',
-
     'White List Ips' => 'White List Ips',
-    'Delete User' => '删除用户',
-
     'Bank Payment Method' => 'Bank Payment Method',
     'Payment Method' => 'Payment Method',
     'Edit Lottery' => 'Edit Lottery',
     'Lottery Info' => 'Lottery Info',
     'Maximum Prize Amount Per Bet' => 'Maximum Prize Amount Per Bet',
     'Maximum Winnings Per Person Per Issue' => 'Maximum Winnings Per Person Per Issue',
-
     'Maximum Bet Amount Per Issue' => 'Maximum Bet Amount Per Issue',
     'Lock Time for Closing Bets' => 'Lock Time for Closing Bets',
     'Minimum Bet Amount Per Issue' => 'Minimum Bet Amount Per Issue',
@@ -1267,7 +1262,6 @@ return [
     'To change your personal detail , edit and save from here' => 'To change your personal detail , edit and save from here',
     'User name' => 'User name',
     'Email address' => 'Email address',
-
     'Mobile contact' => 'Mobile contact',
     'Recovery email' => 'Recovery email',
     'Account status' => 'Account status',
@@ -1353,9 +1347,9 @@ return [
     'LotteryEnabled' => 'Lottery enabled',
     'LotteryDisabled' => 'Lottery disabled.',
     'ErrorProcessing' => 'Error processing request',
-    'RecordsUpdated' => 'Records successfully updated.',
-    'IPUpdated' => 'IP state updated successfully.',
-    'NoAgentMessage' => 'This user has no relationship.',
+    'Records successfully updated' => 'Records successfully updated',
+    'IP state updated successfully' => 'IP state updated successfully',
+    'This user has no relationship' => 'This user has no relationship',
 
     //user agent details
     'HeadsUp' => 'Heads up',
@@ -1422,7 +1416,7 @@ return [
     'QUOTA_UPDATED' => 'Quota updated successfully.',
     'UPDATED_SUCCESSFULLY' => 'Updated successfully',
     'GAME_STATE_UPDATED' => 'Game state updated',
-    'NO_CHANGES_MADE' => 'No changes made',
+    'No changes made' => 'No changes made',
     'SETTLED' => 'Settled',
     'UNSETTLED' => 'Unsettled',
     'PENDING' => 'Pending',
@@ -1532,8 +1526,9 @@ return [
     "Add Partner" => "Add Partner",
     "Select State" => "Select State",
     'game_name' => 'Game Name',
-    'game_type' => 'Game Type',
-    'game_group' => 'Game Group',
+ 
+     'Game Type' => 'Game Type',
+        'Game Group' => 'Game Group',
     'Reset user Account' => 'Reset user Account',
     'Profit Limit' => 'Profit Limit',
     'Select Lottery Type' => 'Select Lottery Type',
@@ -1575,7 +1570,32 @@ return [
      'Are you sure you want to approve this withdrawal?'=>'Are you sure you want to approve this withdrawal?',
     'New user added successfuly'=>'New user added successfuly',
      'User required'=>'User required',
-        'Continue'=>'Continue',
+    'Continue'=>'Continue',
+     'User Games Updated sucessfully'=>'User Games Updated sucessfully',
+     'Unexpected server response'=>'Unexpected server response',
+    'quota updated successfullly'=>'quota updated successfullly',
+     'no pages found'=>'no pages found',
+    'Please this User has already being blocked'=>'Please this User has already being blocked',
+          'Operation Invalid' =>'Operation Invalid',
+'blockUser' =>'blockUser',
+'deleteUser' =>'deleteUser',
+'User Successfully Blocked' =>'User Successfully Blocked',
+'User Successfully Deleted' =>'User Successfully Deleted',
+'Lottery status updated' =>'Lottery status updated',
+'Login Ip state updated' =>'Login Ip state updated',
+'User Games not  Updated' =>'User Games not  Updated',
+'Subordinate' =>'Subordinate',
+'Already blocked' =>'Already blocked',
+
+
+
+
+
+
+
+
+          
+       
 
   
     
